@@ -197,4 +197,8 @@
   .headerlink {
     display: none !important;
   }
+  /* Hide MkDocs search results on mobile (using Google site search instead) */
+  .md-search__output {
+    display: none !important;
+  }
 }

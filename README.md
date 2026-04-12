@@ -1,6 +1,6 @@
 # 📚 AI Paper Notes
 
-- 📖 **11,000+** 篇 AI/LLM/NLP/CV 顶会论文解读，每篇 5 分钟读懂核心思想
+- 📖 **10,000+** 篇 AI/LLM/NLP/CV 顶会论文解读，每篇 5 分钟读懂核心思想
 - 🏛️ 覆盖 ICLR · CVPR · ACL · NeurIPS · ICML · AAAI · ICCV · ECCV 等顶会
 - 🔬 横跨 LLM Reasoning · 多模态 VLM · Agent · 对齐/RLHF · 模型压缩 · 图像生成 · AI 安全 · 强化学习 · 自动驾驶等 **45+** 研究方向
 - 🔄 持续更新中

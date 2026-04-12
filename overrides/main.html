@@ -23,4 +23,44 @@
 }
 </script>
 {% endif %}
+
+<!-- Mobile: kill search worker and use Google site search instead -->
+<script>
+(function() {
+  var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || window.innerWidth <= 960;
+  if (!isMobile) return;
+
+  // Terminate search worker to save ~800MB memory
+  if (window.Worker) {
+    var origWorker = window.Worker;
+    window.Worker = function(url) {
+      if (typeof url === 'string' && url.indexOf('search') !== -1) {
+        // Return a dummy worker that does nothing
+        var w = { postMessage: function(){}, terminate: function(){}, onmessage: null };
+        return w;
+      }
+      return new origWorker(url);
+    };
+  }
+
+  // After DOM ready, replace search with Google site search
+  document.addEventListener('DOMContentLoaded', function() {
+    var searchBtn = document.querySelector('.md-search__form');
+    if (searchBtn) {
+      var input = searchBtn.querySelector('input.md-search__input');
+      if (input) {
+        input.placeholder = '搜索 (Google)';
+        searchBtn.addEventListener('submit', function(e) { e.preventDefault(); });
+        input.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            var q = input.value.trim();
+            if (q) window.open('https://www.google.com/search?q=site:zhaoyang97.github.io/Paper-Notes/+' + encodeURIComponent(q), '_blank');
+          }
+        });
+      }
+    }
+  });
+})();
+</script>
 {% endblock %}

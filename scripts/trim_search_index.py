@@ -7,7 +7,7 @@ import json
 import sys
 from pathlib import Path
 
-MAX_TEXT_LEN = 800  # 每个文档最多保留 800 字符的搜索文本
+MAX_TEXT_LEN = 150  # 每个文档最多保留 150 字符的搜索文本（标题已够用）
 
 def main():
     site_dir = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("site")
@@ -33,6 +33,11 @@ def main():
         title = doc.get("title", "").strip()
         text = doc.get("text", "").strip()
 
+        # Skip index pages entirely - they just list paper titles
+        base_clean = base.rstrip("/")
+        if base_clean == "" or base_clean.count("/") < 2 or base_clean.endswith("index"):
+            continue
+
         if base not in pages:
             # 第一次见到这个页面（通常是页面级条目）
             pages[base] = {
@@ -54,9 +59,20 @@ def main():
                 extra += " " + text
             merged["text"] += extra
 
-    # 截断过长文本
+    # 截断过长文本，并去除 SEO description 前缀
     truncated = 0
     for doc in pages.values():
+        text = doc["text"]
+        # Strip SEO description that starts with 【论文笔记】
+        if text.startswith("【论文笔记】"):
+            # Find end of description (usually followed by paper title)
+            # Just remove everything before the first "一句话总结" or keep from "## "
+            idx = text.find("一句话总结")
+            if idx > 0:
+                text = text[idx:]
+            else:
+                text = ""
+            doc["text"] = text
         if len(doc["text"]) > MAX_TEXT_LEN:
             doc["text"] = doc["text"][:MAX_TEXT_LEN]
             truncated += 1
