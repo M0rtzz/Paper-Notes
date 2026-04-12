@@ -4,6 +4,11 @@ body:has(.hero) .md-header__button.md-icon[for="__drawer"] {
   display: none;
 }
 
+/* ── Hide logo icon in header ── */
+.md-header__button.md-logo {
+  display: none;
+}
+
 /* ── Light mode: custom dark header ── */
 :root,
 [data-md-color-scheme="default"] {
