@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 对齐/RLHF方向 47篇论文解读
+  NeurIPS2025 对齐/RLHF方向 50篇论文解读
 description: >-
-  47篇NeurIPS2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  50篇NeurIPS2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐/RLHF
 
-**🧠 NeurIPS2025** · 共 **47** 篇
+**🧠 NeurIPS2025** · 共 **50** 篇
 
 **[A Systematic Evaluation Of Preference Aggregation In Federated Rlhf For Pluralis](a_systematic_evaluation_of_preference_aggregation_in_federated_rlhf_for_pluralis.md)**
 
@@ -118,6 +118,10 @@ description: >-
 
 :   将多方偏好聚合的 RLHF 微调建模为机制设计问题，证明了在社会福利最大化训练规则下各方有动机虚报偏好，并通过扩展 VCG 支付机制实现了占优策略激励相容（DSIC），确保各方如实报告偏好。
 
+**[Metadefense Defending Finetuning-Based Jailbreak Attack Before And During Genera](metadefense_defending_finetuning-based_jailbreak_attack_before_and_during_genera.md)**
+
+:   提出 MetaDefense，一个两阶段（生成前+生成中）防御框架，通过训练 LLM 自身预测查询和部分响应的有害性来防御基于微调的越狱攻击，无需额外分类器，实现 2× 内存效率。
+
 **[Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preferen](mitigating_hallucination_through_theory-consistent_symmetric_multimodal_preferen.md)**
 
 :   提出 SymMPO（对称多模态偏好优化），通过对比图像的对称配对偏好学习和偏好边际一致性正则化，解决了现有视觉增强型 DPO 方法中目标函数不严格和间接偏好监督两大局限，在五个幻觉评测基准上取得了一致的性能提升。
@@ -153,6 +157,14 @@ description: >-
 **[Reinforcement Learning Finetunes Small Subnetworks In Large Language Models](reinforcement_learning_finetunes_small_subnetworks_in_large_language_models.md)**
 
 :   RL 微调 LLM 时实际上只更新了 5%-30% 的参数（稀疏子网络），且该子网络在不同种子、数据和算法间具有高度一致性，仅微调子网络即可复现完整微调的模型性能甚至参数值。
+
+**[Responserank Data-Efficient Reward Modeling Through Preference Strength Learning](responserank_data-efficient_reward_modeling_through_preference_strength_learning.md)**
+
+:   提出 ResponseRank 方法,通过利用偏好强度的代理信号（如响应时间和标注者一致性）的局部相对差异来鲁棒地学习效用差值,显著提升奖励模型的样本效率。
+
+**[Rethinking Direct Preference Optimization In Diffusion Models](rethinking_direct_preference_optimization_in_diffusion_models.md)**
+
+:   针对扩散模型中 DPO 的两个核心问题——有限探索和奖励尺度不平衡,提出稳定参考模型更新策略和时间步感知训练策略,可集成到各种偏好优化算法中。
 
 **[Robust Llm Alignment Via Distributionally Robust Direct Preference Optimization](robust_llm_alignment_via_distributionally_robust_direct_preference_optimization.md)**
 

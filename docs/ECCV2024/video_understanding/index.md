@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 视频理解方向 13篇论文解读
+  ECCV2024 视频理解方向 42篇论文解读
 description: >-
-  13篇ECCV2024 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  42篇ECCV2024 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频理解
 
-**🎞️ ECCV2024** · 共 **13** 篇
+**🎞️ ECCV2024** · 共 **42** 篇
 
 **[Actionswitch Class-Agnostic Detection Of Simultaneous Actions In Streaming Video](actionswitch_class-agnostic_detection_of_simultaneous_actions_in_streaming_video.md)**
 
@@ -54,10 +54,126 @@ description: >-
 
 :   提出 EgoPoser，仅从头显设备的头部和手部稀疏且间歇性追踪信号中，鲁棒地估计全身姿态，通过全局运动分解、真实视野建模、SlowFast时序融合和体型感知优化四大核心设计，在大规模真实场景中实现SOTA性能，推理速度超600fps。
 
+**[Elysium Exploring Object-Level Perception In Videos Via Mllm](elysium_exploring_object-level_perception_in_videos_via_mllm.md)**
+
+:   提出 Elysium，一个端到端可训练的 MLLM，通过构建百万级视频目标感知数据集 ElysiumTrack-1M 和设计 T-Selector 视觉 token 压缩网络，将 MLLM 的目标级感知能力从图像扩展到视频领域，支持单目标跟踪 (SOT)、引用式单目标跟踪 (RSOT) 和视频引用表达生成 (Video-REG) 等任务。
+
+**[Elysium Exploring Objectlevel Perception In Videos Via Mllm](elysium_exploring_objectlevel_perception_in_videos_via_mllm.md)**
+
+:   提出Elysium，首个端到端可训练的多模态大语言模型系统化处理视频目标级任务（如目标跟踪），构建了百万级ElysiumTrack-1M视频数据集支持SOT/RSOT/Video-REG三类任务，并设计T-Selector token压缩网络在保持性能的同时大幅减少视觉token消耗。
+
+**[Finepseudo Improving Pseudo-Labelling Through Temporal-Alignablity For Semi-Supe](finepseudo_improving_pseudo-labelling_through_temporal-alignablity_for_semi-supe.md)**
+
+:   提出 FinePseudo 框架，利用基于时序对齐性（temporal alignability）的度量学习来改善伪标签质量，首次系统性地解决半监督细粒度动作识别问题，在四个细粒度数据集上显著超越现有方法。
+
+**[Goldfish Vision-Language Understanding Of Arbitrarily Long Videos](goldfish_vision-language_understanding_of_arbitrarily_long_videos.md)**
+
+:   提出 Goldfish 框架，通过将长视频分割为短 clip 并利用基于文本相似度的检索机制选取与问题最相关的 top-k 片段，实现对任意长度视频的高效理解，同时提出 MiniGPT4-Video 短视频模型和 TVQA-long 长视频评测基准。
+
+**[Layeredflow A Real-World Benchmark For Non-Lambertian Multi-Layer Optical Flow](layeredflow_a_real-world_benchmark_for_non-lambertian_multi-layer_optical_flow.md)**
+
+:   提出 LayeredFlow——首个包含多层光流标注的真实世界非朗伯体基准数据集（150k 光流对，185 个场景，360 个物体），并提出多层光流任务定义、大规模合成训练数据集和基于 RAFT 的多层光流基线方法。
+
+**[Leveraging Temporal Contextualization For Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)**
+
+:   提出 **TC-CLIP** 框架，通过**时序上下文化(TC)** 机制将全局视频动作线索压缩为少量 context tokens 注入 CLIP 编码过程，并设计**视频条件提示(VP)** 模块将视觉信息注入文本端，在零样本、小样本、base-to-novel 和全监督四种设定下全面超越现有 CLIP-based 视频识别方法。
+
+**[Masked Video And Body-Worn Imu Autoencoder For Egocentric Action Recognition](masked_video_and_body-worn_imu_autoencoder_for_egocentric_action_recognition.md)**
+
+:   提出 EVI-MAE，首个联合第一人称视频与身体穿戴 IMU 的多模态表示学习方法，通过 MAE 自监督预训练学习视频-IMU 跨模态对齐，并用图神经网络建模多 IMU 设备间的协同运动关系，在动作识别中取得 SOTA 且具备优秀的鲁棒性。
+
+**[Motion-Prior Contrast Maximization For Dense Continuous-Time Motion Estimation](motion-prior_contrast_maximization_for_dense_continuous-time_motion_estimation.md)**
+
+:   本文提出一种将非线性运动先验（轨迹参数函数）引入对比度最大化框架的自监督方法，用于事件相机的稠密连续时间运动估计，在真实世界数据集 EVIMO2 上将合成数据预训练模型的零样本性能提升了 29%。
+
+**[Nymeria A Massive Collection Of Multimodal Egocentric Daily ](nymeria_a_massive_collection_of_multimodal_egocentric_daily_.md)**
+
+:   Nymeria是全球最大野外人体运动数据集，300h/264人多设备多模态自我中心数据和310.5K句语言描述。
+
+**[Nymeria A Massive Collection Of Multimodal Egocentric Daily Motion In The Wild](nymeria_a_massive_collection_of_multimodal_egocentric_daily_motion_in_the_wild.md)**
+
+:   Nymeria 是目前世界最大的野外人体运动数据集（300 小时、264 名参与者），首次提供同步定位的多设备多模态自我中心数据（Project Aria 眼镜+腕带+动捕服），并配套 310.5K 句层次化运动语言描述。
+
 **[On The Utility Of 3D Hand Poses For Action Recognition](on_the_utility_of_3d_hand_poses_for_action_recognition.md)**
 
 :   提出 HandFormer，一种轻量级多模态 Transformer，将密集采样的 3D 手部姿态（捕捉细粒度动作）与稀疏采样的 RGB 帧（提供场景语义）结合，通过 micro-action 时序分解和 trajectory 编码高效建模手-物交互，在 Assembly101 和 H2O 上达到 SOTA，且纯 pose 模型以 5× 更少 FLOPs 超越已有骨架方法。
 
+**[Pite Pixel-Temporal Alignment For Large Video-Language Model](pite_pixel-temporal_alignment_for_large_video-language_model.md)**
+
+:   提出 PiTe 模型，通过物体运动轨迹在像素级别实现视频与语言的时空对齐，构建 PiTe-143k 数据集，在零样本 QA、时序定位和密集描述任务上大幅超越现有方法。
+
+**[Pite Pixeltemporal Alignment For Large Videolanguage Mo](pite_pixeltemporal_alignment_for_large_videolanguage_mo.md)**
+
+:   提出 PiTe，一种通过物体轨迹引导的像素-时序对齐方法，利用自动构建的 PiTe-143K 数据集在空间和时间维度上实现视频与语言的精细对齐，显著提升视频理解能力。
+
 **[R2Tuning Efficient Imagetovideo Transfer Learning For Video](r2tuning_efficient_imagetovideo_transfer_learning_for_video.md)**
 
 :   R²-Tuning提出了一个仅需1.5%参数的轻量R²Block，通过从CLIP后层向前层的逆向递归方式聚合多层空间特征并精化时序关联，在6个VTG基准上以2.7M参数超越了使用额外时序骨干的4倍大方法。
+
+**[Referring Atomic Video Action Recognition](referring_atomic_video_action_recognition.md)**
+
+:   提出"基于文本引用的原子视频动作识别"（RAVAR）新任务和 RefAVA 数据集（36,630 实例），以及 RefAtomNet 方法，通过跨流 agent 注意力融合视觉、文本和位置-语义三路 token，在 mAP 上比最佳基线 BLIPv2 提升 3.85%/3.17%。
+
+**[Rethinking Video-Text Understanding Retrieval From Counterfactually Augmented Da](rethinking_video-text_understanding_retrieval_from_counterfactually_augmented_da.md)**
+
+:   提出反事实增强数据检索（RCAD）任务和 Feint6K 数据集，揭示 SOTA 视频文本模型在动作语义理解上远落后于人类（InternVideo 58.2% vs 人类 95.2%），并提出 LLM-teacher 通过 LLM 知识蒸馏改善动作嵌入学习。
+
+**[Rgnet A Unified Clip Retrieval And Grounding Network For Long Videos](rgnet_a_unified_clip_retrieval_and_grounding_network_for_long_videos.md)**
+
+:   提出 RGNet 将长视频时序定位的片段检索和时序定位两个阶段深度统一到单一网络中，通过 RG-Encoder 的稀疏注意力和对比片段采样实现端到端优化，在 MAD 和 Ego4D 上取得 SOTA。
+
+**[Sa-Dvae Improving Zero-Shot Skeleton-Based Action Recognition By Disentangled Va](sa-dvae_improving_zero-shot_skeleton-based_action_recognition_by_disentangled_va.md)**
+
+:   SA-DVAE 首次将特征解耦引入骨架零样本动作识别，通过双头 VAE 将骨架特征分离为语义相关和语义无关两个独立部分，仅用语义相关部分与文本对齐，配合对抗性总相关惩罚增强解耦效果，在 NTU RGB+D 60/120 和 PKU-MMD 三个基准上达到 SOTA。
+
+**[Safnet Selective Alignment Fusion Network For Efficient Hdr Imaging](safnet_selective_alignment_fusion_network_for_efficient_hdr_imaging.md)**
+
+:   SAFNet 提出选择性对齐融合策略，通过金字塔解码器联合精炼有价值区域掩码和跨曝光光流，仅在有价值区域进行精确对齐后显式融合 HDR 图像，在 Kalantari 17 和自建 Challenge123 数据集上超越 SOTA 的同时推理速度快一个数量级。
+
+**[Sea-Raft Simple Efficient Accurate Raft For Optical Flow](sea-raft_simple_efficient_accurate_raft_for_optical_flow.md)**
+
+:   SEA-RAFT 通过混合拉普拉斯损失(MoL)、直接回归初始光流和刚性流预训练三项改进，在保持简洁架构的同时实现了 SOTA 精度，并比现有方法快 2.3× 以上。
+
+**[Self-Supervised Any-Point Tracking By Contrastive Random Walks](self-supervised_any-point_tracking_by_contrastive_random_walks.md)**
+
+:   提出 GMRW（Global Matching Random Walk），将全局匹配 Transformer 架构与对比随机游走自监督目标结合，首次在无标注的情况下实现了强劲的"任意点跟踪"（TAP）性能，并设计 label warping 数据增强来避免 Transformer 的捷径解。
+
+**[Slack Semantic Location And Appearance Aware Open-Vocabulary Tracking](slack_semantic_location_and_appearance_aware_open-vocabulary_tracking.md)**
+
+:   SLAck 提出在多目标跟踪的关联阶段早期统一融合语义、位置和外观三种线索，通过轻量级时空目标图（STOG）学习隐式运动先验和跨线索协同，无需后处理启发式规则，在开放词汇 MOT 和 TAO TETA 基准上显著提升新类别跟踪性能。
+
+**[Spamming Labels Efficient Annotations For The Trackers Of Tomorrow](spamming_labels_efficient_annotations_for_the_trackers_of_tomorrow.md)**
+
+:   提出 SPAM 视频标注引擎，将合成数据预训练、伪标签自训练和基于图层级的主动学习相结合，仅需 3-20% 的人工标注量即可产生接近 GT 质量的多目标跟踪标注。
+
+**[Spherical World-Locking For Audio-Visual Localization In Egocentric Videos](spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)**
+
+:   提出球面世界锁定（Spherical World-Locking, SWL）框架，通过将多模态感知流隐式变换到世界锁定的球面坐标系中，消除自身运动带来的挑战，实现更精准的第一人称视频中的音视觉定位。
+
+**[Sync From The Sea Retrieving Alignable Videos From Large-Scale Datasets](sync_from_the_sea_retrieving_alignable_videos_from_large-scale_datasets.md)**
+
+:   提出可对齐视频检索（Alignable Video Retrieval, AVR）任务，通过 DRAQ 对齐质量指标从大规模视频数据库中识别并检索出最适合与查询视频进行时序对齐的视频，同时提出特征上下文化方法提升对齐性能。
+
+**[Text-Guided Video Masked Autoencoder](text-guided_video_masked_autoencoder.md)**
+
+:   提出文本引导掩码策略（TGM）利用自然语言描述替代运动先验来掩码视频显著区域，并统一 MAE 与视频-文本对比学习，在五个动作识别和一个自中心数据集上取得最佳相对性能。
+
+**[Towards Model-Agnostic Dataset Condensation By Heterogeneous Models](towards_model-agnostic_dataset_condensation_by_heterogeneous_models.md)**
+
+:   提出异构模型数据集压缩（HMDC）方法，通过同时使用两个结构不同的模型（如 ConvNet 和 ViT）进行数据集压缩，并设计梯度平衡模块和互蒸馏机制，生成对各种模型普遍适用的压缩图像，解决传统方法过度适配单一模型的问题。
+
+**[Uniinr Event-Guided Unified Rolling Shutter Correction Deblurring And Interpolat](uniinr_event-guided_unified_rolling_shutter_correction_deblurring_and_interpolat.md)**
+
+:   提出 UniINR 框架，利用统一的时空隐式神经表征（INR）从单张卷帘快门模糊帧和配对事件流中，一次性同时完成卷帘快门校正、去模糊和任意帧率的视频帧插值。
+
+**[Vamos Versatile Action Models For Video Understanding](vamos_versatile_action_models_for_video_understanding.md)**
+
+:   提出 Vamos 框架，以大语言模型作为推理器，灵活统一视觉嵌入和通用文本描述作为视频表征，发现纯文本表征在多个视频理解基准上一致性地取得竞争甚至更优性能，并设计 Token Bottleneck Model 实现可解释证据选择与 5 倍推理加速。
+
+**[Videomamba Spatio-Temporal Selective State Space Model](videomamba_spatio-temporal_selective_state_space_model.md)**
+
+:   提出基于纯 Mamba 架构的视频识别模型 VideoMamba（KAIST 版），通过设计时空前向-后向 SSM（Spatio-Temporal Forward and Backward SSM）来有效处理视频中非序列空间信息与序列时间信息的复杂交互，以线性复杂度实现了与 Transformer 竞争的性能。
+
+**[Videomamba State Space Model For Efficient Video Understanding](videomamba_state_space_model_for_efficient_video_understanding.md)**
+
+:   将 Mamba 的选择性状态空间模型创新性地适配到视频领域，提出纯 SSM 架构的 VideoMamba，以线性复杂度实现高效的时空上下文建模，在短视频和长视频理解任务上均展现出优越性能。

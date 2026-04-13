@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 人体理解方向 74篇论文解读
+  NeurIPS2025 人体理解方向 77篇论文解读
 description: >-
-  74篇NeurIPS2025 人体理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  77篇NeurIPS2025 人体理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**🧠 NeurIPS2025** · 共 **74** 篇
+**🧠 NeurIPS2025** · 共 **77** 篇
 
 **[A Differential And Pointwise Control Approach To Reinforceme](a_differential_and_pointwise_control_approach_to_reinforceme.md)**
 
@@ -218,6 +218,10 @@ description: >-
 
 :   提出基于幂均值的自适应集成聚合方法，通过对生成式天气预测模型的集成成员得分施加非线性聚合（幂指数$p>1$），显著提升极端高温事件的分类性能，尤其在高分位数阈值下效果更佳。
 
+**[Preference-Based Reinforcement Learning Beyond Pairwise Comparisons Benefits Of ](preference-based_reinforcement_learning_beyond_pairwise_comparisons_benefits_of_.md)**
+
+:   在偏好强化学习中提出 M-AUPO 算法,利用 Plackett-Luce 排序模型处理多选项比较反馈,首次从理论上证明更大的子集规模直接改善样本效率。
+
 **[Raptr Radar-Based 3D Pose Estimation Using Transformer](raptr_radar-based_3d_pose_estimation_using_transformer.md)**
 
 :   提出RAPTR，首个利用弱监督（3D BBox + 2D关键点标签）进行雷达3D人体姿态估计的Transformer框架，通过伪3D可变形注意力和结构化损失函数在两个室内数据集上大幅超过基线。
@@ -237,6 +241,10 @@ description: >-
 **[Semantic Retrieval Augmented Contrastive Learning For Sequential Recommendation](semantic_retrieval_augmented_contrastive_learning_for_sequential_recommendation.md)**
 
 :   提出SRA-CL框架，利用LLM的语义理解能力构建高质量对比样本对，通过语义检索+可学习样本合成器增强序列推荐的对比学习，以即插即用的方式在4个数据集上取得SOTA。
+
+**[Sharpness-Aware Minimization With Z-Score Gradient Filtering](sharpness-aware_minimization_with_z-score_gradient_filtering.md)**
+
+:   提出 Z-Score Filtered SAM (ZSAM)，通过对每层梯度进行 Z-Score 统计过滤，仅保留最显著的梯度分量进行扰动上升步骤，从而引导优化器更有效地搜索平坦极小值，在多个数据集和架构上一致提升测试精度。
 
 **[Spatial Understanding From Videos Structured Prompts Meet Simulation Data](spatial_understanding_from_videos_structured_prompts_meet_simulation_data.md)**
 
@@ -305,3 +313,7 @@ description: >-
 **[Vision Transformers For Cosmological Fields Application To Weak Lensing Mass Map](vision_transformers_for_cosmological_fields_application_to_weak_lensing_mass_map.md)**
 
 :   首次将 Vision Transformers（ViT 和 Swin Transformer）应用于弱引力透镜收敛场的宇宙学参数（$\Omega_m$ 和 $S_8$）约束，通过模拟推断框架系统比较了注意力架构与 CNN 的性能。
+
+**[Words That Unite The World A Unified Framework For Deciphering Central Bank Comm](words_that_unite_the_world_a_unified_framework_for_deciphering_central_bank_comm.md)**
+
+:   构建 World Central Banks (WCB) 数据集——迄今最全面的货币政策语料库（25家央行、38万句、28年历史），定义三项任务（立场检测、时间分类、不确定性估计），在 15,075 个基准实验中验证"整体大于部分之和"的跨央行聚合训练优势。

@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 图像恢复方向 3篇论文解读
+  ECCV2024 图像恢复方向 20篇论文解读
 description: >-
-  3篇ECCV2024 图像恢复方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  20篇ECCV2024 图像恢复方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**🎞️ ECCV2024** · 共 **3** 篇
+**🎞️ ECCV2024** · 共 **20** 篇
 
 **[Accelerating Image Super-Resolution Networks With Pixel-Level Classification](accelerating_image_super-resolution_networks_with_pixel-level_classification.md)**
 
@@ -21,3 +21,71 @@ description: >-
 **[Bamm Bidirectional Autoregressive Motion Model](bamm_bidirectional_autoregressive_motion_model.md)**
 
 :   提出 BAMM（双向自回归运动模型），通过统一生成掩码建模和自回归建模的混合注意力掩码策略，在一个框架中同时实现高质量运动生成、自适应长度预测和零样本运动编辑，在 HumanML3D 和 KIT-ML 上全面超越 SOTA。
+
+**[Denoisplit A Method For Joint Microscopy Image Splitting And Unsupervised Denois](denoisplit_a_method_for_joint_microscopy_image_splitting_and_unsupervised_denois.md)**
+
+:   提出 DenoiSplit，首个将语义图像分解（image splitting）和无监督去噪（unsupervised denoising）联合解决的方法，通过在层次化 VAE 中整合像素噪声模型和改进的 KL 散度损失加权策略，在荧光显微镜图像上实现了端到端的去噪+分解，性能显著优于先去噪再分解的串行方案。
+
+**[Domain-Adaptive Video Deblurring Via Test-Time Blurring](domain-adaptive_video_deblurring_via_test-time_blurring.md)**
+
+:   提出基于扩散模糊模型的测试时域适应方法，通过从模糊视频中检测相对清晰区域作为伪清晰图像，并生成域自适应的模糊条件来合成训练对，实现在未知域上对去模糊模型的微调，在 5 个真实数据集上最高提升 7.54dB。
+
+**[Efficient Diffusion Transformer With Step-Wise Dynamic Attention Mediators](efficient_diffusion_transformer_with_step-wise_dynamic_attention_mediators.md)**
+
+:   发现 Diffusion Transformer 中 query-key 交互存在显著冗余（尤其在去噪早期），提出 Attention Mediator 机制将注意力复杂度降至线性，并设计逐步动态调整策略，在 SiT-XL/2 上实现 SOTA FID 2.01，同时减少计算量。
+
+**[Joint Rgb-Spectral Decomposition Model Guided Image Enhancement In Mobile Photog](joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog.md)**
+
+:   提出 JDM-HDRNet，通过联合 RGB-光谱分解模型从低分辨率多光谱图像（Lr-MSI）中提取 shading、reflectance 和材质语义三种先验，将它们分别融入 HDRNet 以增强动态范围、色彩映射和语义网格专家学习，并构建了首个 RGB-高光谱配对的 Mobile-Spec 数据集。
+
+**[Kalman-Inspired Feature Propagation For Video Face Super-Resolution](kalman-inspired_feature_propagation_for_video_face_super-resolution.md)**
+
+:   受卡尔曼滤波启发，提出 KEEP 框架，通过在隐空间中循环融合先前帧的恢复信息和当前帧的观测信息来维持稳定的人脸先验，在视频人脸超分辨率任务上实现了高保真度和时序一致性的双重提升。
+
+**[Learning Exhaustive Correlation For Spectral Super-Resolution Where Spatial-Spec](learning_exhaustive_correlation_for_spectral_super-resolution_where_spatial-spec.md)**
+
+:   本文提出 Exhaustive Correlation Transformer (ECT)，通过光谱方向非连续3D切分策略 (SD3D) 建模统一的空间-光谱相关性，并通过动态低秩映射模块 (DLRM) 捕获多token间的线性依赖关系，在光谱超分辨率任务上以最少的参数量和最低的推理延迟实现了 SOTA 性能。
+
+**[Mambair A Simple Baseline For Image Restoration With State-Space Model](mambair_a_simple_baseline_for_image_restoration_with_state-space_model.md)**
+
+:   本文首次将 Mamba（选择性状态空间模型）引入底层图像修复任务，通过设计残差状态空间块（RSSB）中的局部卷积增强和通道注意力机制，解决了 vanilla Mamba 在 2D 图像上的局部像素遗忘和通道冗余问题，在图像超分辨率和去噪任务上以线性复杂度实现了与 Transformer 方法相当甚至更优的性能（SR 上超过 SwinIR 0.45dB）。
+
+**[Moe-Diffir Task-Customized Diffusion Priors For Universal Compressed Image Resto](moe-diffir_task-customized_diffusion_priors_for_universal_compressed_image_resto.md)**
+
+:   提出 MoE-DiffIR，首个基于扩散模型的通用压缩图像复原（CIR）框架，通过混合专家（MoE）Prompt 模块从 Stable Diffusion 中挖掘任务定制化的扩散先验，结合 Visual-to-Text 适配器激活 SD 的跨模态生成先验，并构建了覆盖 7 种编解码器 × 3 个压缩级别共 21 种退化的首个通用 CIR 基准数据集。
+
+**[Oapt Offset-Aware Partition Transformer For Double Jpeg Artifacts Removal](oapt_offset-aware_partition_transformer_for_double_jpeg_artifacts_removal.md)**
+
+:   针对双重 JPEG 压缩图像恢复问题，提出 OAPT，通过预测两次压缩之间的像素偏移量，将每个 8×8 block 中的四种不同模式进行聚类分组后分别进行自注意力处理，在双重 JPEG 恢复任务上超越 SOTA 方法 0.16 dB。
+
+**[Overcoming Distribution Mismatch In Quantizing Image Super-Resolution Networks](overcoming_distribution_mismatch_in_quantizing_image_super-resolution_networks.md)**
+
+:   本文提出 ODM 框架，通过协同失配正则化（cooperative mismatch regularization）和逐层权重裁剪校正（weight clipping correction）两个简单策略，在不引入推理时动态模块的前提下解决 SR 网络量化中的分布失配问题，以极小的额外开销达到 SOTA。
+
+**[Realviformer Investigating Attention For Real-World Video Super-Resolution](realviformer_investigating_attention_for_real-world_video_super-resolution.md)**
+
+:   本文系统研究了空间注意力和通道注意力在真实世界视频超分辨率（RWVSR）中的行为差异，发现通道注意力对退化伪影更鲁棒但会导致特征冗余，据此提出了带有改进通道注意力（ICA）和通道注意力融合（CAF）模块的 RealViformer，以更少的参数和更快的速度达到 SOTA。
+
+**[Restoring Images In Adverse Weather Conditions Via Histogram Transformer](restoring_images_in_adverse_weather_conditions_via_histogram_transformer.md)**
+
+:   提出 Histoformer，一种基于直方图自注意力机制的高效 Transformer，通过将空间特征按像素强度排序分箱（bin），在箱内和箱间执行自注意力，实现动态范围的空间注意力以高效处理天气退化像素，配合动态范围卷积和 Pearson 相关性损失，在去雪/去雨雾/去雨滴三大任务上统一建模并达到 SOTA。
+
+**[Rethinking Image Super-Resolution From Training Data Perspectives](rethinking_image_super-resolution_from_training_data_perspectives.md)**
+
+:   从训练数据角度重新思考图像超分辨率，提出自动化数据评估流水线构建 DiverSeg 数据集（低分辨率但高质量、目标多样的图像），证明在该数据集上训练的 SR 模型可以超越使用高分辨率数据集（DF2K、LSDIR）训练的模型。
+
+**[Seeing The Unseen A Frequency Prompt Guided Transformer For Image Restoration](seeing_the_unseen_a_frequency_prompt_guided_transformer_for_image_restoration.md)**
+
+:   提出 FPro，通过频域视角的 prompt learning 指导图像复原：使用 Gated Dynamic Decoupler 将特征解耦为低频/高频分量，再通过 Dual Prompt Block（HPM + LPM）分别对两个频带注入可学习 prompt 并与解码器特征交互，在去雨、去雨滴、去摩尔纹、去模糊、去雾 5 个任务上全面超越 SOTA。
+
+**[Spatially-Variant Degradation Model For Dataset-Free Super-Resolution](spatially-variant_degradation_model_for_dataset-free_super-resolution.md)**
+
+:   提出首个无需数据集训练的空间变化退化模型 SVDSR，每个像素的退化核由可学习的原子核字典的线性组合表示，系数矩阵通过模糊集的隶属函数从图像纹理信息推导，在 MAP 框架下用 Monte Carlo EM 算法推断，$2\times$ 超分平均提升 1 dB。
+
+**[Towards Real-World Event-Guided Low-Light Video Enhancement And Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)**
+
+:   本文首次提出事件相机引导的低光视频增强与去模糊联合任务，构建了基于分光棱镜的真实世界数据集 RELED，并设计了包含事件引导可变形时序对齐 (ED-TFA) 和频谱滤波跨模态增强 (SFCM-FE) 两个核心模块的端到端框架，在 PSNR 上比此前最佳方法提升 1.2dB 以上。
+
+**[Unrolled Decomposed Unpaired Learning For Controllable Low-Light Video Enhanceme](unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme.md)**
+
+:   提出 UDU-Net，将低光视频增强建模为 MAP 优化问题并展开为深度网络，通过 Intra/Inter 子网分别处理空间（光照）和时序（一致性）退化，支持无配对训练和人类感知反馈的可控增强。

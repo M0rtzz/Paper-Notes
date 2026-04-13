@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 医学图像方向 140篇论文解读
+  NeurIPS2025 医学图像方向 148篇论文解读
 description: >-
-  140篇NeurIPS2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  148篇NeurIPS2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🧠 NeurIPS2025** · 共 **140** 篇
+**🧠 NeurIPS2025** · 共 **148** 篇
 
 **[3Drad A Comprehensive 3D Radiology Medvqa Dataset With Multi](3drad_a_comprehensive_3d_radiology_medvqa_dataset_with_multi.md)**
 
@@ -222,6 +222,10 @@ description: >-
 
 :   将大语言模型可解释性研究中的稀疏自编码器（SAE）技术适配到语音帕金森病检测系统中，提出 Mask-based SAE 解决小数据集限制，发现模型预测主要基于低能量区域的频谱通量和频谱平坦度，并进一步揭示这些特征与 MRI 壳核体积显著相关，建立了从模型内部表征到临床生物标志物的桥梁。
 
+**[Generalizable Real-Time Neural Decoding With Hybrid State-Space Models](generalizable_real-time_neural_decoding_with_hybrid_state-space_models.md)**
+
+:   POSSM 提出了一种混合 SSM-注意力架构，结合 spike 级别 tokenization 和循环状态空间模型骨干，实现了可泛化的实时神经解码，在保持与 Transformer 可比的精度的同时，推理速度提升最高 9 倍。
+
 **[Generating Multi-Table Time Series Ehr From Latent Space With Minimal Preprocess](generating_multi-table_time_series_ehr_from_latent_space_with_minimal_preprocess.md)**
 
 :   提出 RawMed——首个以最小有损预处理合成多表时序 EHR 原始数据的框架：将事件文本化 → Residual Quantization 压缩至离散潜空间 → 自回归 Transformer 建模时序动态，在保真度、临床效用和隐私保护上全面超越现有基线。
@@ -246,6 +250,10 @@ description: >-
 
 :   通过系统化的特征抑制框架（而非冲突选择实验）重新评估 CNN 的特征依赖性，发现 CNN 并非天然偏向纹理，而是主要依赖局部形状特征；且不同领域（CV/MI/RS）的特征依赖模式显著不同。
 
+**[Interpretable Next-Token Prediction Via The Generalized Induction Head](interpretable_next-token_prediction_via_the_generalized_induction_head.md)**
+
+:   提出 Induction-Gram (GIM)，一种结合精确n-gram匹配与模糊匹配的可解释语言模型，通过构建"广义归纳头"在输入上下文中检索相似序列进行下一token预测，比可解释基线提升最高25%p准确率，并在fMRI脑响应预测中提升20%。
+
 **[Interpreting Gflownets For Drug Discovery Extracting Actionable Insights For Med](interpreting_gflownets_for_drug_discovery_extracting_actionable_insights_for_med.md)**
 
 :   为 SynFlowNet（基于合成反应模板的 GFlowNet）构建了一套多层次可解释性工具包，整合梯度显著性、反事实扰动、稀疏自编码器（SAE）和基序探针，揭示模型内部表征如何编码药物化学相关的理化性质和官能团信息。
@@ -257,6 +265,10 @@ description: >-
 **[Iterative Foundation Model Fine-Tuning On Multiple Rewards](iterative_foundation_model_fine-tuning_on_multiple_rewards.md)**
 
 :   提出 IterativeRS（迭代 Rewarded Soups），通过在多目标专家策略的独立微调和策略合并之间交替迭代，统一了奖励组合和专家合并两类方法，在小分子设计、DNA 序列生成和文本摘要任务上均优于 MORLHF 和 Rewarded Soups。
+
+**[Jamun Bridging Smoothed Molecular Dynamics And Score-Based Learning For Conforma](jamun_bridging_smoothed_molecular_dynamics_and_score-based_learning_for_conforma.md)**
+
+:   提出 JAMUN，一种基于 Walk-Jump Sampling 框架的分子构象集成生成方法，通过在加噪的平滑流形上执行朗之万动力学并用 SE(3) 等变去噪器跳回原始分布，实现了比传统分子动力学快一个数量级的肽段构象采样，且具备对训练外系统的迁移能力。
 
 **[Janusdna A Powerful Bi-Directional Hybrid Dna Foundation Model](janusdna_a_powerful_bi-directional_hybrid_dna_foundation_model.md)**
 
@@ -297,6 +309,10 @@ description: >-
 **[Match Multi-Faceted Adaptive Topo-Consistency For Semi-Supervised Histopathology](match_multi-faceted_adaptive_topo-consistency_for_semi-supervised_histopathology.md)**
 
 :   提出MATCH框架，通过将拓扑推理与半监督学习的"扰动鲁棒性"原则紧密耦合，利用跨随机扰动和时间训练快照的双层拓扑一致性，自适应识别可靠拓扑结构而无需人工阈值，显著降低了组织病理学图像分割中的拓扑错误。
+
+**[Medagentboard Benchmarking Multi-Agent Collaboration With Conventional Methods F](medagentboard_benchmarking_multi-agent_collaboration_with_conventional_methods_f.md)**
+
+:   提出 MedAgentBoard，一个系统评估多智能体协作、单 LLM 和传统方法在多样化医学任务上表现的综合基准，揭示多智能体协作并不总是优于强单模型或专用传统方法。
 
 **[Medmkg Benchmarking Medical Knowledge Exploitation With Multimodal Knowledge Gra](medmkg_benchmarking_medical_knowledge_exploitation_with_multimodal_knowledge_gra.md)**
 
@@ -362,6 +378,10 @@ description: >-
 
 :   提出 DiffATD，利用扩散模型的逆向过程构建 belief 分布来平衡探索与利用，在部分可观测环境中无需任何监督训练即可高效发现目标区域，适用于医学影像、物种发现和遥感等多领域。
 
+**[Ordinal Label-Distribution Learning With Constrained Asymmetric Priors For Imbal](ordinal_label-distribution_learning_with_constrained_asymmetric_priors_for_imbal.md)**
+
+:   提出 CAP-WAE（Constrained Asymmetric Prior Wasserstein Autoencoder），通过非对称先验、序数边距正交紧凑损失和方向感知序数损失三重创新，解决糖尿病视网膜病变分级中长尾分布和序数结构的挑战，在多个 DR 基准上达到 SOTA。
+
 **[Orochi Versatile Biomedical Image Processor](orochi_versatile_biomedical_image_processor.md)**
 
 :   提出 Orochi——首个面向底层生物医学图像处理的通用基础模型，通过任务相关联合嵌入预训练（TJP）和多头层级 Mamba 架构，在配准、融合、复原和超分辨率四大任务上以轻量微调（<5% 参数）即可达到或超越专用 SOTA 模型。
@@ -418,6 +438,10 @@ description: >-
 
 :   提出检索增强诊断框架RAD，通过从多源医学语料中检索疾病指南并注入多模态模型的特征提取和跨模态融合全流程，同时引入双轴可解释性评估体系，在四个不同解剖部位的数据集上达到SOTA。
 
+**[Radzero Similarity-Based Cross-Attention For Explainable Vision-Language Alignme](radzero_similarity-based_cross-attention_for_explainable_vision-language_alignme.md)**
+
+:   提出 RadZero 框架及核心组件 VL-CABS（基于相似度的视觉语言交叉注意力），在胸部X光上实现可解释的、细粒度的视觉语言对齐，支持零样本分类、定位和分割多任务。
+
 **[Ram-W600 A Multi-Task Wrist Dataset And Benchmark For Rheumatoid Arthritis](ram-w600_a_multi-task_wrist_dataset_and_benchmark_for_rheumatoid_arthritis.md)**
 
 :   首个公开的多任务腕骨常规X光数据集RAM-W600，包含1048张影像，支持腕骨实例分割和SvdH骨侵蚀评分两大任务，并提供全面的基准测试。
@@ -466,6 +490,10 @@ description: >-
 
 :   提出一种迭代式管道方法，利用鲁棒的无标签-无标签（UU）学习框架来精炼LLM生成的伪标签，仅需极少人工标注即可在分类和生成式安全对齐任务中超越GPT-4o和DeepSeek-R1的自我精炼方法。
 
+**[Semantic And Visual Crop-Guided Diffusion Models For Heterogeneous Tissue Synthe](semantic_and_visual_crop-guided_diffusion_models_for_heterogeneous_tissue_synthe.md)**
+
+:   提出双条件 Latent Diffusion 模型，结合语义分割图和组织特异性视觉裁剪来生成高保真异质性病理图像，Camelyon16 上 FD 从 430.1 降至 72.0（6×降低），合成数据训练的分割模型 IoU 达 0.71，接近真实数据的 0.72。
+
 **[Sequential Attention-Based Sampling For Histopathological Analysis](sequential_attention-based_sampling_for_histopathological_analysis.md)**
 
 :   提出 SASHA 框架，结合层次注意力多实例学习 (HAFED) 与深度强化学习 (RL)，仅采样 10-20% 的高分辨率 patch 即可达到全分辨率 SOTA 方法的分类性能，推理速度提升 4-8 倍，WSI 压缩率超 16 倍。
@@ -513,6 +541,10 @@ description: >-
 **[The Human Brain As A Combinatorial Complex](the_human_brain_as_a_combinatorial_complex.md)**
 
 :   本文提出从fMRI时间序列数据中直接构建组合复形（Combinatorial Complexes）的框架，利用S-信息和O-信息等信息论度量捕获大脑区域间的高阶协同交互，弥补传统图方法仅能捕获成对关系的根本局限。
+
+**[Thunder Tile-Level Histopathology Image Understanding Benchmark](thunder_tile-level_histopathology_image_understanding_benchmark.md)**
+
+:   提出 THUNDER，一个面向数字病理学基础模型的 tile 级别综合基准，支持 23 个基础模型在 16 个数据集上的高效比较，覆盖下游任务性能、特征空间分析、鲁棒性和不确定性评估。
 
 **[Toward A Vision-Language Foundation Model For Medical Data Multimodal Dataset An](toward_a_vision-language_foundation_model_for_medical_data_multimodal_dataset_an.md)**
 

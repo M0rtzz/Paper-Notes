@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2026 遥感方向 16篇论文解读
+  CVPR2026 遥感方向 17篇论文解读
 description: >-
-  16篇CVPR2026 遥感方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  17篇CVPR2026 遥感方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛰️ 遥感
 
-**📷 CVPR2026** · 共 **16** 篇
+**📷 CVPR2026** · 共 **17** 篇
 
 **[Acpv-Net All-Class Polygonal Vectorization For Seamless Vector Map Generation Fr](acpv-net_all-class_polygonal_vectorization_for_seamless_vector_map_generation_fr.md)**
 
@@ -33,6 +33,10 @@ description: >-
 **[Exploring Spatiotemporal Feature Propagation For Video-Level Compressive Spectra](exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)**
 
 :   首次将光谱压缩成像 (SCI) 从图像级推进到视频级重建，构建了首个高质量动态高光谱数据集 DynaSpec，提出 PG-SVRT Transformer 通过时空特征传播实现高光谱视频高质量、时间一致的重建。
+
+**[Geoflow Real-Time Fine-Grained Cross-View Geolocalization](geoflow_real-time_fine-grained_cross-view_geolocalization.md)**
+
+:   提出 GeoFlow，一种受流匹配启发的轻量级跨视图精细地理定位框架，通过学习概率位移场结合迭代精化采样（IRS）算法，在连续空间内实现从地面图像到卫星图像的精确 2-DoF 定位，以 29 FPS 的实时速度达到了与 SOTA 可比的精度。
 
 **[Geoflow Real-Time Fine-Grained Cross-View Geolocalization Via Iterative Flow Pre](geoflow_real-time_fine-grained_cross-view_geolocalization_via_iterative_flow_pre.md)**
 

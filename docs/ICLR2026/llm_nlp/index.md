@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 LLM/NLP方向 29篇论文解读
+  ICLR2026 LLM/NLP方向 36篇论文解读
 description: >-
-  29篇ICLR2026 LLM/NLP方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  36篇ICLR2026 LLM/NLP方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM/NLP
 
-**🔬 ICLR2026** · 共 **29** 篇
+**🔬 ICLR2026** · 共 **36** 篇
 
 **[Assetformer Modular 3D Assets Generation With Autoregressive Transformer](assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)**
 
@@ -26,9 +26,21 @@ description: >-
 
 :   DreamOn 通过引入 [expand] 和 [delete] 两个特殊状态解决了扩散语言模型（DLM）的固定长度生成限制，无需架构修改即可实现变长代码填充，在 HumanEval-Infilling 上比扩散基线平均提升 26.4%，达到与 SOTA 自回归模型持平的水平。
 
+**[Ellmob Event-Driven Human Mobility Generation With Self-Aligned Language Models](ellmob_event-driven_human_mobility_generation_with_self-aligned_language_models.md)**
+
+:   提出 ELLMob 框架，基于认知心理学的模糊痕迹理论（FTT），通过提取并迭代对齐"习惯 gist"和"事件 gist"来调和用户日常模式与社会事件约束之间的竞争，实现事件驱动的可解释轨迹生成。
+
 **[Ellmob Event-Driven Human Mobility Generation With Self-Aligned Llm Framework](ellmob_event-driven_human_mobility_generation_with_self-aligned_llm_framework.md)**
 
 :   提出 ELLMob，一个基于模糊痕迹理论（FTT）的自对齐 LLM 框架，通过提取并迭代对齐"习惯模式要旨"与"事件约束要旨"来生成兼顾日常规律与事件响应的人类移动轨迹。
+
+**[Enhancing Persona Following At Decoding Time Via Dynamic Importance-Guided Token](enhancing_persona_following_at_decoding_time_via_dynamic_importance-guided_token.md)**
+
+:   提出 Persona Dynamic Decoding (PDD) 框架，通过条件互信息动态估计人格属性的场景依赖重要性，并将重要性分数整合到多目标奖励引导解码中，实现无需微调的推理时人格跟随。
+
+**[Enhancing Persona Following At Decoding Time Via Dynamic Importance Estimation ](enhancing_persona_following_at_decoding_time_via_dynamic_importance_estimation_.md)**
+
+:   提出 Persona Dynamic Decoding (PDD) 框架，通过条件互信息动态估计人格属性的场景相关重要性，并以加权多目标奖励引导解码，实现无需微调的推理时自适应人格跟随。
 
 **[Enhancing Persona Following At Decoding Time Via Dynamic Importance Estimation F](enhancing_persona_following_at_decoding_time_via_dynamic_importance_estimation_f.md)**
 
@@ -50,6 +62,10 @@ description: >-
 
 :   提出 PCE（Planner-Composer-Evaluator）框架，将 LLM 推理链中隐含的环境假设显式提取并组织为决策树，通过似然度-增益-成本评分实现不确定性感知的行动选择，大幅减少多智能体协作中的通信开销。
 
+**[Function Induction And Task Generalization An Interpretability Study With Off-By](function_induction_and_task_generalization_an_interpretability_study_with_off-by.md)**
+
+:   通过 off-by-one addition（如 1+1=3, 2+2=5）这一反事实任务，利用 path patching 发现大语言模型内部存在 **function induction** 机制——一种超越 token 级别 pattern matching、在函数级别进行归纳推理的注意力头电路，并证明该机制可跨任务复用。
+
 **[Generative Value Conflicts Reveal Llm Priorities](generative_value_conflicts_reveal_llm_priorities.md)**
 
 :   提出 ConflictScope，一个自动生成价值冲突场景的 pipeline，通过开放式评估（非选择题）揭示 LLM 在冲突情境下的价值优先级排序，发现模型在开放式设置中从保护性价值（如无害性）转向个人价值（如用户自主性），且系统提示可将目标排序对齐提升 14%。
@@ -61,6 +77,10 @@ description: >-
 **[Kvcomm Enabling Efficient Llm Communication Through Selective Kv Sharing](kvcomm_enabling_efficient_llm_communication_through_selective_kv_sharing.md)**
 
 :   提出 KVComm 框架通过选择性共享 KV pairs 实现 LLM 间高效通信，发现 hidden states 存在"信息集中偏差"使其不适合跨模型传递，设计基于注意力重要性 + 高斯先验的层选择策略，仅传输 30% 层即可超越大多数 baseline。
+
+**[Llema Evolutionary Search With Llms For Multi-Objective Material Design](llema_evolutionary_search_with_llms_for_multi-objective_material_design.md)**
+
+:   提出 LLEMA 框架，将 LLM 的科学知识与化学规则引导的进化搜索和记忆驱动的迭代优化相结合，在 14 个多目标材料发现任务上实现了更高的命中率、稳定性和 Pareto 前沿质量。
 
 **[Llema Evolutionary Search With Llms For Multi-Objective Materials Discovery](llema_evolutionary_search_with_llms_for_multi-objective_materials_discovery.md)**
 
@@ -106,6 +126,10 @@ description: >-
 
 :   提出 LLM 的**格表示假说 (Lattice Representation Hypothesis)**：通过将线性表示假说与形式概念分析 (FCA) 统一，证明 LLM 嵌入空间中的属性方向通过半空间交集隐式编码了一个**概念格 (concept lattice)**，从而实现了连续几何与符号抽象之间的桥接。
 
+**[The Path Of Least Resistance Guiding Llm Reasoning Trajectories For Efficient Co](the_path_of_least_resistance_guiding_llm_reasoning_trajectories_for_efficient_co.md)**
+
+:   提出 PoLR（Path of Least Resistance），首个利用推理前缀一致性的推理时方法，通过聚类短前缀并仅扩展主导聚类来实现 Self-Consistency 的高效替代，可减少高达 60% token 使用和 50% 延迟。
+
 **[Trapped By Simplicity When Transformers Fail To Learn From Noisy Features](trapped_by_simplicity_when_transformers_fail_to_learn_from_noisy_features.md)**
 
 :   研究表明 Transformer 在从含特征噪声的数据中学习布尔函数时会失败——其简单性偏好（倾向学习低敏感度函数）导致模型被困在比目标函数更简单的最优噪声预测器上，无法恢复真实的无噪声目标函数。
@@ -125,3 +149,7 @@ description: >-
 **[When Stability Fails Hidden Failure Modes Of Llms In Data-Constrained Scientific](when_stability_fails_hidden_failure_modes_of_llms_in_data-constrained_scientific.md)**
 
 :   通过控制性行为评估框架，揭示 LLM 在数据约束的科学决策任务中的四种隐藏失败模式：高稳定性≠正确性、prompt 措辞敏感性、放宽阈值下的过度选择、以及幻觉产生无效标识符。
+
+**[When Stability Fails Hidden Failure Modes Of Llms In Data-Critical Statistical ](when_stability_fails_hidden_failure_modes_of_llms_in_data-critical_statistical_.md)**
+
+:   揭示 LLM 在数据约束的科学决策任务中的隐藏失败模式：模型可以展现近乎完美的运行间稳定性，同时系统性偏离统计学基准真值，表现为过度选择、prompt 敏感和幻觉基因标识符。

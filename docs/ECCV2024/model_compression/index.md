@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 模型压缩方向 7篇论文解读
+  ECCV2024 模型压缩方向 15篇论文解读
 description: >-
-  7篇ECCV2024 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  15篇ECCV2024 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🎞️ ECCV2024** · 共 **7** 篇
+**🎞️ ECCV2024** · 共 **15** 篇
 
 **[A Simple Lowbit Quantization Framework For Video Snapshot Co](a_simple_lowbit_quantization_framework_for_video_snapshot_co.md)**
 
@@ -37,3 +37,35 @@ description: >-
 **[Freestyleret Retrieving Images From Style-Diversified Queries](freestyleret_retrieving_images_from_style-diversified_queries.md)**
 
 :   提出首个风格多样化查询图像检索（Style-Diversified QBIR）任务及数据集DSR，设计了轻量即插即用的FreestyleRet框架，通过Gram矩阵提取查询的纹理/风格特征，构建风格空间并以此初始化prompt token，使冻结的视觉编码器能适配文本、草图、低分辨率、艺术画等多种查询风格的检索。
+
+**[Is Retain Set All You Need In Machine Unlearning Restoring Performance Of Unlear](is_retain_set_all_you_need_in_machine_unlearning_restoring_performance_of_unlear.md)**
+
+:   提出 SCAR（Selective-distillation for Class and Architecture-agnostic unleaRning），一种无需保留集的近似遗忘算法，通过 Mahalanobis 距离引导遗忘样本特征向量向最近错误类分布迁移，并利用 OOD 图像蒸馏保持模型性能。
+
+**[Isomorphic Pruning For Vision Models](isomorphic_pruning_for_vision_models.md)**
+
+:   提出 Isomorphic Pruning，通过将网络子结构建模为图并按图同构性分组，在同构组内独立排序剪枝，解决异构子结构间重要性不可比的问题，在 ViT 和 CNN 上均取得优于专门设计的剪枝方法的效果。
+
+**[Leveraging Hierarchical Feature Sharing For Efficient Dataset Condensation](leveraging_hierarchical_feature_sharing_for_efficient_dataset_condensation.md)**
+
+:   提出层级记忆网络（HMN），将数据蒸馏中的合成数据存储为三层结构（数据集级-类级-实例级记忆），通过层级化特征共享提升存储效率，并利用实例级剪枝进一步去除冗余，仅用低GPU内存的 batch-based loss 即超越所有基线方法。
+
+**[Metaaug Meta-Data Augmentation For Post-Training Quantization](metaaug_meta-data_augmentation_for_post-training_quantization.md)**
+
+:   提出 MetaAug，一种基于元学习的训练后量化（PTQ）方法，通过可学习的变换网络对校准数据进行增强，并以双层优化框架同时优化变换网络和量化模型，有效缓解 PTQ 在小校准集上的过拟合问题。
+
+**[Papr Training-Free One-Step Patch Pruning With Lightweight Convnets For Faster I](papr_training-free_one-step_patch_pruning_with_lightweight_convnets_for_faster_i.md)**
+
+:   提出 PaPr，利用轻量级 ConvNet 的卷积特征图生成 Patch Significance Map (PSM)，在**无需重训练**的情况下对 ViT/ConvNet/混合架构进行**一步式** patch 剪枝，实现显著的计算量削减（视频场景最高 3.7× FLOPs 减少），且精度损失极小。
+
+**[Simple Unsupervised Knowledge Distillation With Space Similarity](simple_unsupervised_knowledge_distillation_with_space_similarity.md)**
+
+:   CoSS 提出在无监督知识蒸馏中，除了常规的**特征维度余弦相似度**外，额外引入一个**空间维度余弦相似度（Space Similarity）**损失——将特征矩阵转置后在维度方向上对齐，从而弥补 $L_2$ 归一化导致的流形结构信息丢失，以极简的方式在多个 UKD benchmark 上达到 SOTA。
+
+**[Spacejam A Lightweight And Regularization-Free Method For Fast Joint Alignment O](spacejam_a_lightweight_and_regularization-free_method_for_fast_joint_alignment_o.md)**
+
+:   提出 SpaceJAM，一种仅约 16K 可训练参数的无监督图像联合对齐方法，无需正则化项或 atlas 维护，在 SPair-71K 和 CUB 数据集上匹配现有方法的对齐能力同时实现 10 倍以上加速。
+
+**[Token Compensator Altering Inference Cost Of Vision Transformer Without Re-Tunin](token_compensator_altering_inference_cost_of_vision_transformer_without_re-tunin.md)**
+
+:   提出 ToCom（Token Compensator），一个模型算术框架的轻量插件，通过快速的参数高效自蒸馏获得，可在推理时直接插入任意下游已训练模型以弥补 token 压缩度不匹配造成的性能损失，无需重新训练。

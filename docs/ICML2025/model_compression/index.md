@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICML2025 模型压缩方向 69篇论文解读
+  ICML2025 模型压缩方向 70篇论文解读
 description: >-
-  69篇ICML2025 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  70篇ICML2025 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🧪 ICML2025** · 共 **69** 篇
+**🧪 ICML2025** · 共 **70** 篇
 
 **[A Mathematical Framework For Ai-Human Integration In Work](a_mathematical_framework_for_ai-human_integration_in_work.md)**
 
@@ -77,6 +77,10 @@ description: >-
 **[Fgfp A Fractional Gaussian Filter And Pruning For Deep Neural Networks Compressi](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)**
 
 :   提出 FGFP 框架，将分数阶微积分与高斯函数结合构建分数阶高斯滤波器（FGF），每个卷积核仅需 7 个参数，配合自适应非结构化剪枝（AUP），在 CIFAR-10 上 ResNet-20 精度仅降 1.52% 即实现 85.2% 的模型压缩率，在 ImageNet 上 ResNet-50 精度降 1.63% 实现 69.1% 压缩率。
+
+**[Fgfp A Fractional Gaussian Filter And Pruning For Deep Neural Networks Compression](fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compression.md)**
+
+:   提出FGFP框架，将分数阶微积分与高斯函数结合构建分数阶高斯滤波器(FGF)替代标准卷积核，每个核仅需7个参数，配合自适应非结构化剪枝达到极高压缩比（ResNet-20 85.2%压缩仅降1.52%精度）。
 
 **[Flatquant Flatness Matters For Llm Quantization](flatquant_flatness_matters_for_llm_quantization.md)**
 

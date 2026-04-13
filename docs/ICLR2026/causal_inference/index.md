@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 因果推理方向 18篇论文解读
+  ICLR2026 因果推理方向 19篇论文解读
 description: >-
-  18篇ICLR2026 因果推理方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  19篇ICLR2026 因果推理方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔗 因果推理
 
-**🔬 ICLR2026** · 共 **18** 篇
+**🔬 ICLR2026** · 共 **19** 篇
 
 **[Action-Guided Attention For Video Action Anticipation](action-guided_attention_for_video_action_anticipation.md)**
 
@@ -65,6 +65,10 @@ description: >-
 **[Resisting Contextual Interference In Rag Via Parametric-Knowledge Reinforcement](resisting_contextual_interference_in_rag_via_parametric-knowledge_reinforcement.md)**
 
 :   提出 Knowledgeable-R1，一个基于强化学习的框架，通过联合采样参数知识（PK）和上下文知识（CK）的轨迹，结合局部/全局优势计算和自适应不对称优势变换，使 LLM 在 RAG 场景中能够抵抗误导性检索上下文的干扰，同时保留对可靠上下文的利用能力。
+
+**[Rfeval Benchmarking Reasoning Faithfulness Under Counterfactual Perturbations](rfeval_benchmarking_reasoning_faithfulness_under_counterfactual_perturbations.md)**
+
+:   本文提出推理忠实性的形式化框架（立场一致性 + 因果影响）和 RFEval 基准（7,186 实例 × 7 任务），通过输出层反事实干预评估 12 个开源 LRM，发现 49.7% 的输出不忠实，且准确率不是忠实性的可靠代理指标。
 
 **[Self-Supervised Learning From Structural Invariance](self-supervised_learning_from_structural_invariance.md)**
 

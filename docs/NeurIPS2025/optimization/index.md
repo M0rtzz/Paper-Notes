@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 优化/理论方向 102篇论文解读
+  NeurIPS2025 优化/理论方向 112篇论文解读
 description: >-
-  102篇NeurIPS2025 优化/理论方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  112篇NeurIPS2025 优化/理论方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**🧠 NeurIPS2025** · 共 **102** 篇
+**🧠 NeurIPS2025** · 共 **112** 篇
 
 **[A Single-Loop First-Order Algorithm For Linearly Constrained Bilevel Optimizatio](a_single-loop_first-order_algorithm_for_linearly_constrained_bilevel_optimizatio.md)**
 
@@ -138,6 +138,10 @@ description: >-
 
 :   本文在 $\alpha$-对称 $(L_0,L_1)$-Lipschitz 条件下（放松经典 $L$-Lipschitz 假设）为 extragradient (EG) 方法提出自适应步长策略 $\gamma_k = 1/(c_0 + c_1\|F(x_k)\|^\alpha)$，建立了强单调（线性收敛）、单调（次线性收敛）和 weak Minty（局部收敛）三类根问题的首个完整收敛保证。
 
+**[Fedqs Optimizing Gradient And Model Aggregation For Semi-Asynchronous Federated ](fedqs_optimizing_gradient_and_model_aggregation_for_semi-asynchronous_federated_.md)**
+
+:   提出 FedQS，首个同时优化半异步联邦学习（SAFL）中梯度聚合和模型聚合策略的框架，通过将客户端分为四类并自适应调整训练策略，在准确率、收敛速度和稳定性上全面超越基线。
+
 **[Fedrts Federated Robust Pruning Via Combinatorial Thompson Sampling](fedrts_federated_robust_pruning_via_combinatorial_thompson_sampling.md)**
 
 :   将联邦动态剪枝重新建模为组合多臂赌博机(CMAB)问题，提出基于 Thompson Sampling 的拓扑调整机制 TSAdj，通过概率性决策替代确定性决策来获得更鲁棒的稀疏模型拓扑，同时显著降低通信开销。
@@ -222,6 +226,10 @@ description: >-
 
 :   首次严格证明了基于unrolling的Learn to Optimize (L2O)框架（Math-L2O）的训练收敛性，利用NTK理论建立了线性收敛速率，并提出确定性初始化策略确保L2O可证明地改善梯度下降算法的收敛性能，实验验证相比标准GD提升超50%的最优性。
 
+**[Learning Quadratic Neural Networks In High Dimensions Sgd Dynamics And Scaling L](learning_quadratic_neural_networks_in_high_dimensions_sgd_dynamics_and_scaling_l.md)**
+
+:   对高维情形下二次激活函数两层神经网络的梯度训练进行了精确分析，针对数据由 $f_*(x) \propto \sum_{j=1}^r \lambda_j \sigma(\langle \theta_j, x \rangle)$ 生成的设定，在宽度 $r \asymp d^\beta$ 和系数幂律衰减 $\lambda_j \asymp j^{-\alpha}$ 下，推导出预测风险关于优化时间、样本量和模型宽度的缩放律。
+
 **[Learning Reconfigurable Representations For Multimodal Federated Learning With M](learning_reconfigurable_representations_for_multimodal_federated_learning_with_m.md)**
 
 :   提出 PEPSY 框架，通过学习客户端侧的嵌入控制来编码数据缺失模式，将全局聚合表示重新配置为适应各客户端本地上下文的数据完整特征，在多模态联邦学习中处理模态缺失和特征缺失两类问题。
@@ -270,6 +278,10 @@ description: >-
 
 :   提出MOBO-OSD算法，通过在逼近的个体极小值凸包（CHIM）上定义正交搜索方向来生成多样化的Pareto最优解，结合Pareto前沿估计和批量选择策略，在合成与真实基准上持续超越SOTA多目标贝叶斯优化方法。
 
+**[Multi-Head Transformers Provably Learn Symbolic Multi-Step Reasoning Via Gradien](multi-head_transformers_provably_learn_symbolic_multi-step_reasoning_via_gradien.md)**
+
+:   从梯度下降训练动力学出发，严格证明了单层多头 Transformer 通过 CoT 过程可学会树路径查找的前向和后向推理任务，并揭示不同注意力头会自主专业化以协调解决多阶段子任务。
+
 **[Multiplayer Federated Learning Reaching Equilibrium With Less Communication](multiplayer_federated_learning_reaching_equilibrium_with_less_communication.md)**
 
 :   提出多人联邦学习（MpFL）框架，将FL中的客户端建模为博弈论中的理性玩家，并设计PEARL-SGD算法通过局部更新减少通信开销，同时收敛到Nash均衡。
@@ -278,9 +290,17 @@ description: >-
 
 :   研究使用自然梯度下降优化器 iVON 替代标准 SGD 来优化变分推断中的 BNN 参数，在射电星系分类中获得更好的不确定性校准，同时保持与 HMC 和 BBB-VI 相当的预测性能。
 
+**[Natural Gradient Vi Guarantees For Non-Conjugate Models](natural_gradient_vi_guarantees_for_non-conjugate_models.md)**
+
+:   在 mean-field 参数化下，为非共轭模型的自然梯度变分推断（NGVI）建立了三个关键理论结果：变分损失的相对光滑性条件、带非欧投影的修正 NGVI 的全局收敛到驻点保证、以及在额外结构假设下的隐藏凸性和快速全局收敛保证。
+
 **[Near-Exponential Savings For Mean Estimation With Active Learning](near-exponential_savings_for_mean_estimation_with_active_learning.md)**
 
 :   提出 PartiBandits 算法，结合基于分歧的主动学习与 UCB 风格的分层抽样，在辅助信息 $X$ 对目标变量 $Y$ 有预测力时，实现了均值估计的近指数级标签节省。
+
+**[Neural Thermodynamics Entropic Forces In Deep And Universal Representation Learn](neural_thermodynamics_entropic_forces_in_deep_and_universal_representation_learn.md)**
+
+:   本文提出了一种严格的熵力理论来理解 SGD 训练的神经网络的学习动力学，证明了随机性和离散时间更新产生的熵力会系统性地破坏连续参数对称性、保留离散对称性，从而解释了深度学习中的多种涌现现象，包括 Platonic 表示假说。
 
 **[Neuro-Symbolic Entity Alignment Via Variational Inference](neuro-symbolic_entity_alignment_via_variational_inference.md)**
 
@@ -326,9 +346,17 @@ description: >-
 
 :   提出FedAux框架，通过可微分的辅助投影向量（APV）将节点嵌入映射到一维空间并用高斯核进行软排序聚合，APV既作为局部子图的紧凑隐私保护摘要用于服务器端相似度计算，又参与客户端的联合优化，实现了个性化的子图联邦学习。
 
+**[Preference Learning With Response Time Robust Losses And Guarantees](preference_learning_with_response_time_robust_losses_and_guarantees.md)**
+
+:   将用户决策的响应时间信息融入偏好学习框架中，通过 Neyman 正交损失函数将奖励模型学习的误差从指数级缩减到多项式级。
+
 **[Probing Neural Combinatorial Optimization Models](probing_neural_combinatorial_optimization_models.md)**
 
 :   首次系统性地将探针(probing)方法引入神经组合优化(NCO)模型的研究，提出CS-Probing工具来分析模型表示中编码的决策知识、归纳偏置和泛化机制，并发现关键嵌入维度可用于提升模型泛化性能。
+
+**[Problem-Parameter-Free Decentralized Bilevel Optimization](problem-parameter-free_decentralized_bilevel_optimization.md)**
+
+:   提出 AdaSDBO，一种完全无需问题参数先验知识的去中心化双层优化算法，通过基于累积梯度范数的自适应步长实现 $\tilde{O}(1/\sqrt{T})$ 收敛率。
 
 **[Profit A Specialized Optimizer For Deep Fine Tuning](profit_a_specialized_optimizer_for_deep_fine_tuning.md)**
 
@@ -345,6 +373,10 @@ description: >-
 **[Quantitative Convergence Of Trained Single Layer Neural Networks To Gaussian Pro](quantitative_convergence_of_trained_single_layer_neural_networks_to_gaussian_pro.md)**
 
 :   为梯度下降训练的浅层神经网络提供了在任意正训练时间 $t \geq 0$ 下向高斯过程收敛的显式定量上界，证明了二次Wasserstein距离以 $O(\log n_1 / n_1)$ 的速率多项式衰减。
+
+**[Rao-Blackwellised Reparameterisation Gradients](rao-blackwellised_reparameterisation_gradients.md)**
+
+:   提出 R2-G2 估计器作为重参数化梯度的 Rao-Blackwell 化版本，证明 Bayesian MLP 的局部重参数化是其特例，并将低方差梯度的优势推广到一系列概率模型。
 
 **[Rethinking Neural Combinatorial Optimization For Vehicle Routing Problems With D](rethinking_neural_combinatorial_optimization_for_vehicle_routing_problems_with_d.md)**
 
@@ -366,6 +398,10 @@ description: >-
 
 :   本文提出"集合光滑性"(set smoothness)这一新的结构性质，证明它在非凸-PŁ双层优化中自然成立，并据此揭示超目标函数隐藏的弱凸/弱凹结构，首次建立了非光滑超目标函数Clarke稳定点的可计算性保证。
 
+**[Sharper Convergence Rates For Nonconvex Optimisation Via Reduction Mappings](sharper_convergence_rates_for_nonconvex_optimisation_via_reduction_mappings.md)**
+
+:   提出 Reduction Mapping 框架，利用最优解集的流形结构（由过参数化或对称性产生）重参数化优化问题，证明这能改善曲率性质并理论上加速基于梯度方法的收敛。
+
 **[Small Batch Size Training For Language Models When Vanilla Sgd Works And Why Gra](small_batch_size_training_for_language_models_when_vanilla_sgd_works_and_why_gra.md)**
 
 :   本文系统研究了小批量（甚至batch size=1）在语言模型预训练和微调中的表现，提出了基于"token半衰期"固定的Adam β₂缩放规则，发现小批量不仅训练稳定，还使vanilla SGD具备与自适应优化器相当的竞争力，并建议避免使用梯度累积。
@@ -373,6 +409,10 @@ description: >-
 **[Streaming Federated Learning With Markovian Data](streaming_federated_learning_with_markovian_data.md)**
 
 :   首次严格分析了非凸目标函数下具有马尔可夫数据流的流式联邦学习，证明 Minibatch SGD、Local SGD 和 Local SGD-M 均能实现与客户端数成反比的样本复杂度（线性加速），且 Local SGD-M 无需异质性假设即可匹配 Minibatch SGD 的通信复杂度。
+
+**[The Implicit Bias Of Structured State Space Models Can Be Poisoned With Clean La](the_implicit_bias_of_structured_state_space_models_can_be_poisoned_with_clean_la.md)**
+
+:   本文首次从理论上证明结构化状态空间模型 (SSM) 的隐式偏置可以被干净标签 (clean-label) 训练样本"投毒"——存在特殊的训练样本，尽管它们的标签由教师模型正确标注，但其加入会彻底扭曲 SSM 的隐式偏置，导致泛化彻底失败。
 
 **[The Rich And The Simple On The Implicit Bias Of Adam And Sgd](the_rich_and_the_simple_on_the_implicit_bias_of_adam_and_sgd.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 医学图像方向 40篇论文解读
+  CVPR2025 医学图像方向 44篇论文解读
 description: >-
-  40篇CVPR2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  44篇CVPR2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**📷 CVPR2025** · 共 **40** 篇
+**📷 CVPR2025** · 共 **44** 篇
 
 **[A Semi-Supervised Framework For Breast Ultrasound Segmentation With Training-Fre](a_semi-supervised_framework_for_breast_ultrasound_segmentation_with_training-fre.md)**
 
@@ -42,9 +42,19 @@ description: >-
 
 :   BiCLIP 提出了一种双向一致性视觉-语言分割框架，通过双向多模态融合（BMF，让视觉特征反向精炼文本嵌入）和图像增强一致性（IAC，跨弱/强扰动正则化），在 COVID-19 CT 分割上以仅 1% 标注数据即可保持鲁棒性能，且对临床图像退化（噪声/模糊）具有容忍力。
 
+**[Boltzmann Attention Sampling For Image Analysis With Small Objects](boltzmann_attention_sampling_for_image_analysis_with_small_objects.md)**
+
+:   提出BoltzFormer——一种新型transformer decoder架构，通过玻尔兹曼分布动态采样稀疏注意力区域来聚焦小目标，结合退火温度调度（早期层探索、后期层利用）和PiGMA多query聚合模块，在占图像面积<0.1%的小目标分割上比SOTA提升3-12% Dice分数，同时减少一个数量级的注意力计算。
+
+**[Cholectrack20 A Multi-Perspective Tracking Dataset For Surgical Tools](cholectrack20_a_multi-perspective_tracking_dataset_for_surgical_tools.md)**
+
 **[Cloe Expert Consistency Learning For Missing Modality Segmentation](cloe_expert_consistency_learning_for_missing_modality_segmentation.md)**
 
 :   提出 CLoE 框架，将缺失模态分割的鲁棒性问题重新定义为决策层专家一致性控制问题，通过全局模态专家一致性(MEC)和区域专家一致性(REC)双分支约束减少专家漂移，并用轻量门控网络将一致性分数转化为可靠性权重指导特征融合，在 BraTS 2020 和 MSD Prostate 上超越 SOTA。
+
+**[Crosssdf 3D Reconstruction Of Thin Structures From Cross-Sections](crosssdf_3d_reconstruction_of_thin_structures_from_cross-sections.md)**
+
+:   提出 CrossSDF，通过从 2D 截面符号距离场重建 3D SDF，结合混合编码（哈希网格 + 随机傅里叶特征）和对称差损失，首次实现对薄管状结构（如血管）的精确重建。
 
 **[Cycleulm A Unified Label-Free Deep Learning Framework For Ultrasound Localisatio](cycleulm_a_unified_label-free_deep_learning_framework_for_ultrasound_localisatio.md)**
 
@@ -61,6 +71,10 @@ description: >-
 **[Developing Foundation Models For Universal Segmentation From 3D Whole-Body Posit](developing_foundation_models_for_universal_segmentation_from_3d_whole-body_posit.md)**
 
 :   构建了最大规模 PET 分割数据集 PETWB-Seg11K（11,041 例全身 PET + 59,831 个分割掩码），并提出 SegAnyPET——基于 3D 架构 + prompt 工程的 PET 通用分割基础模型，在多中心、多示踪剂、多疾病场景下展现强零样本泛化能力。
+
+**[Dflmoe Decentralized Federated Learning Via Mixture Of Experts For Medical Data ](dflmoe_decentralized_federated_learning_via_mixture_of_experts_for_medical_data_.md)**
+
+:   提出 DFLMoE 在去中心化联邦学习中使用混合专家（MoE）机制处理医疗数据异质性，无需中心服务器即可在保护隐私的前提下协同训练
 
 **[Diffusion-Based Feature Denoising And Using Nnmf For Robust Brain Tumor Classifi](diffusion-based_feature_denoising_and_using_nnmf_for_robust_brain_tumor_classifi.md)**
 

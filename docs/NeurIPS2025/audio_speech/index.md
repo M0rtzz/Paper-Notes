@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 音频/语音方向 36篇论文解读
+  NeurIPS2025 音频/语音方向 40篇论文解读
 description: >-
-  36篇NeurIPS2025 音频/语音方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  40篇NeurIPS2025 音频/语音方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**🧠 NeurIPS2025** · 共 **36** 篇
+**🧠 NeurIPS2025** · 共 **40** 篇
 
 **[A Controllable Examination For Longcontext Language Models](a_controllable_examination_for_longcontext_language_models.md)**
 
@@ -74,6 +74,10 @@ description: >-
 
 :   提出可扩展的开源 pipeline，从 22 个欧洲议会录音中自动构建 EuroSpeech 数据集——61K 小时、覆盖 22 种语言的高质量语音-文本对齐数据，其中 19 种语言超 1K 小时，微调 Whisper 后平均 WER 降低 41.8%。
 
+**[From Generation To Attribution Music Ai Agent Architectures For The Post-Streami](from_generation_to_attribution_music_ai_agent_architectures_for_the_post-streami.md)**
+
+:   本文提出了一种基于内容的音乐 AI Agent 架构，通过 Block 级别的检索和智能体编排，将归因机制直接嵌入创作工作流中，解决 AI 生成音乐时代的版权追溯和公平分配问题。
+
 **[Generating Physically Sound Designs From Text And A Set Of Physical Constraints](generating_physically_sound_designs_from_text_and_a_set_of_physical_constraints.md)**
 
 :   提出 TIDES 框架，将预训练文本-图像模型（CLIP）的视觉引导与可微有限元物理仿真器结合，通过联合优化视觉相似度损失和结构合规性损失，从文本描述和物理约束出发生成既满足工程性能要求又具备文本指定特征的承载结构设计，并通过 3D 打印三点弯曲实验验证了方法的有效性。
@@ -90,9 +94,17 @@ description: >-
 
 :   提出 LeVo 歌曲生成框架，通过语言模型并行建模混合 token 和双轨 token 以兼顾人声-伴奏和谐性和音质，并创新性地引入基于 DPO 的多偏好对齐方法提升音乐性和指令跟随能力。
 
+**[Levo High-Quality Song Generation With Multi-Processing Refined Supervision](levo_high-quality_song_generation_with_multi-processing_refined_supervision.md)**
+
+:   LeVo 提出一种基于语言模型的歌曲生成框架，通过并行预测混合 token 和双轨 token 来同时优化人声-伴奏和谐度与音质，并引入基于 DPO 的多偏好对齐方法提升音乐性和指令跟随能力，在学术方法中全面领先且接近工业系统水平。
+
 **[Megadance Mixture-Of-Experts Architecture For Genre-Aware 3D Dance Generation](megadance_mixture-of-experts_architecture_for_genre-aware_3d_dance_generation.md)**
 
 :   提出 MEGADance，首个基于混合专家 (MoE) 架构的音乐驱动 3D 舞蹈生成方法，通过将编舞一致性解耦为"舞蹈通用性"（Universal Expert）和"风格特异性"（Specialized Expert），配合 FSQ 量化和 Mamba-Transformer 混合骨干网络，实现了 SOTA 的舞蹈质量和强风格可控性。
+
+**[Mixed Monotonicity Reachability Analysis Of Neural Ode A Trade-Off Between Tight](mixed_monotonicity_reachability_analysis_of_neural_ode_a_trade-off_between_tight.md)**
+
+:   将连续时间混合单调性技术应用于 Neural ODE 的可达性分析，通过将 Neural ODE 动力学嵌入混合单调系统，利用区间盒的几何简洁性实现高效过逼近，在紧致性（tightness）和计算效率之间提供可控的权衡。
 
 **[Mome Mixture Of Matryoshka Experts For Audio-Visual Speech Recognition](mome_mixture_of_matryoshka_experts_for_audio-visual_speech_recognition.md)**
 
@@ -125,6 +137,10 @@ description: >-
 **[Simulmega Moe Routers Are Advanced Policy Makers For Simultaneous Speech Transla](simulmega_moe_routers_are_advanced_policy_makers_for_simultaneous_speech_transla.md)**
 
 :   提出SimulMEGA框架，结合前缀训练与混合专家(MoE)精炼模块，实现无监督的读/写策略学习，使500M参数模型在6种语言的同时语音翻译中以1.5秒延迟仅损失<7% BLEU，并扩展到流式TTS。
+
+**[Slimmable Nam Neural Amp Models With Adjustable Runtime Computational Cost](slimmable_nam_neural_amp_models_with_adjustable_runtime_computational_cost.md)**
+
+:   将 Slimmable Networks 思想应用到 Neural Amp Modeler (NAM) 中，通过训练期间随机裁剪 WaveNet 层宽度，实现模型在推理时可以无额外训练代价地动态调整网络大小，使音乐家能实时平衡音质精度与计算成本。
 
 **[Sound Logical Explanations For Mean Aggregation Graph Neural Networks](sound_logical_explanations_for_mean_aggregation_graph_neural_networks.md)**
 

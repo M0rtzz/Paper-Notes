@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 语义分割方向 14篇论文解读
+  CVPR2025 语义分割方向 22篇论文解读
 description: >-
-  14篇CVPR2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  22篇CVPR2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📷 CVPR2025** · 共 **14** 篇
+**📷 CVPR2025** · 共 **22** 篇
 
 **[2Dmamba Efficient State Space Model For Image Representation With Applications O](2dmamba_efficient_state_space_model_for_image_representation_with_applications_o.md)**
 
@@ -18,13 +18,39 @@ description: >-
 
 :   提出SAM2.1++的干扰物感知记忆模型（DAM），将SAM2的记忆拆分为近期外观记忆（RAM，确保分割精度）和干扰物解析记忆（DRM，确保跟踪鲁棒性），通过内省式更新策略检测干扰物并自动存储锚帧，在7个基准上设立新SOTA。
 
+**[Assessing And Learning Alignment Of Unimodal Vision And Language Model](assessing_and_learning_alignment_of_unimodal_vision_and_language_model.md)**
+
+:   提出 SAIL 框架——先通过 alignment probing 评估单模态视觉和语言模型的对齐潜力（发现 k-NN 聚类质量比线性可分性更重要），再用轻量级 GLU 对齐层 + Sigmoid 损失 + 多正样本策略高效对齐 DINOv2 和预训练语言模型，仅用 6% 的 CLIP 训练数据即超越 CLIP。
+
+**[Assessing And Learning Alignment Of Unimodal Vision And Language Models](assessing_and_learning_alignment_of_unimodal_vision_and_language_models.md)**
+
+**[Audio-Visual Instance Segmentation](audio-visual_instance_segmentation.md)**
+
 **[Binwang2Hfnet Geogran-Aware Hierarchical Feature Fusion Network For Salient Obje](binwang2hfnet_geogran-aware_hierarchical_feature_fusion_network_for_salient_obje.md)**
 
 :   提出 G2HFNet，通过多尺度细节增强 (MDE)、双分支几何-粒度互补 (DGC)、深层语义感知 (DSP) 和局部-全局引导融合 (LGF) 四个模块，针对不同层级特征设计差异化优化策略，在三个遥感显著性检测数据集上全面超越 SOTA。
 
+**[Condensing Action Segmentation Datasets Via Generative Network Inversion](condensing_action_segmentation_datasets_via_generative_network_inversion.md)**
+
+**[Continuous Locomotive Crowd Behavior Generation](continuous_locomotive_crowd_behavior_generation.md)**
+
+:   生成连续的人群运动行为，实现轨迹和动作的联合合成，产生自然且多样的群体运动模式
+
+**[Cosmos Cross-Modality Self-Distillation For Vision Language Pre-Training](cosmos_cross-modality_self-distillation_for_vision_language_pre-training.md)**
+
+:   COSMOS 提出了一种跨模态自蒸馏框架，通过文本裁剪策略和交叉注意力模块在学生-教师结构中学习细粒度的跨模态表征，在仅使用 30M 数据预训练的情况下，在零样本检索、分类和语义分割任务上全面超越 CLIP 类基线，甚至超越在数十亿数据上训练的 OpenCLIP。
+
 **[Crossearth-Sar A Sar-Centric And Billion-Scale Geospatial Foundation Model For D](crossearth-sar_a_sar-centric_and_billion-scale_geospatial_foundation_model_for_d.md)**
 
 :   提出首个十亿参数级 SAR 视觉基础模型 CrossEarth-SAR，基于物理引导的稀疏混合专家 (MoE) 架构，构建了包含 200K 图像的训练集和 22 个子基准的评估体系，在 20/22 个跨域语义分割基准上达到 SOTA。
+
+**[Declip Decoupled Learning For Open-Vocabulary Dense Perception](declip_decoupled_learning_for_open-vocabulary_dense_perception.md)**
+
+:   DeCLIP 发现 CLIP 的自注意力中存在"代理 token"现象导致图像 token 无法聚合空间相关信息，提出将自注意力模块解耦为"内容"和"上下文"特征并分别用 CLIP 自蒸馏和视觉基础模型蒸馏进行优化的框架，在开放词汇目标检测和语义分割上全面超越现有方法。
+
+**[Defmamba Deformable Visual State Space Model](defmamba_deformable_visual_state_space_model.md)**
+
+:   DefMamba 提出了一种基于可变形机制的视觉状态空间模型，通过可变形扫描策略动态调整扫描路径（参考点偏移 + 扫描顺序偏移），克服了现有 Visual Mamba 方法使用固定扫描顺序导致的空间结构信息丢失问题，在 ImageNet 分类、COCO 检测和 ADE20K 分割上达到 SOTA。
 
 **[Efficient Rgb-D Scene Understanding Via Multi-Task Adaptive Learning And Cross-D](efficient_rgb-d_scene_understanding_via_multi-task_adaptive_learning_and_cross-d.md)**
 

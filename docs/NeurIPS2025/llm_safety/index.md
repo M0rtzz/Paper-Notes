@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 LLM安全方向 9篇论文解读
+  NeurIPS2025 LLM安全方向 10篇论文解读
 description: >-
-  9篇NeurIPS2025 LLM安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  10篇NeurIPS2025 LLM安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM安全
 
-**🧠 NeurIPS2025** · 共 **9** 篇
+**🧠 NeurIPS2025** · 共 **10** 篇
 
 **[A Cramrvon Mises Approach To Incentivizing Truthful Data Sha](a_cramrvon_mises_approach_to_incentivizing_truthful_data_sha.md)**
 
@@ -45,3 +45,7 @@ description: >-
 **[Teaming Llms To Detect And Mitigate Hallucinations](teaming_llms_to_detect_and_mitigate_hallucinations.md)**
 
 :   提出 Consortium Consistency 方法，将单模型一致性方法（Self-Consistency 和 Semantic Entropy）扩展到多模型协作设置，通过聚合多个异构 LLM 的响应来实现更可靠的幻觉检测和缓解，同时降低推理成本。
+
+**[Trust -- Transformer-Driven U-Net For Sparse Target Recovery](trust_--_transformer-driven_u-net_for_sparse_target_recovery.md)**
+
+:   提出 TRUST 架构，将 Transformer 的注意力机制与 U-Net 解码器结合，在感知矩阵未知的条件下同时学习感知算子和重建稀疏信号，在 SSIM 和 PSNR 上显著超越传统方法。

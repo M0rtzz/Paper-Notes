@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 可解释性方向 78篇论文解读
+  NeurIPS2025 可解释性方向 80篇论文解读
 description: >-
-  78篇NeurIPS2025 可解释性方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  80篇NeurIPS2025 可解释性方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🧠 NeurIPS2025** · 共 **78** 篇
+**🧠 NeurIPS2025** · 共 **80** 篇
 
 **[A Is For Absorption Studying Feature Splitting And Absorption In Sparse Autoenco](a_is_for_absorption_studying_feature_splitting_and_absorption_in_sparse_autoenco.md)**
 
@@ -190,6 +190,10 @@ description: >-
 
 :   STaPLe 提出后验正则化的蒙特卡洛 EM 算法，让 7-8B 小模型自行发现指导自我修正的"原则"（latent principle），通过迭代发现-学习循环实现自我改进，在 AlpacaEval 上提升 8-10% 胜率、MT-Bench 平均提升 +0.3，并可通过聚类压缩至可解释的 constitution。
 
+**[Learning To Focus Causal Attention Distillation Via Gradient-Guided Token Prunin](learning_to_focus_causal_attention_distillation_via_gradient-guided_token_prunin.md)**
+
+:   提出Learning to Focus (LeaF)框架，通过梯度引导识别训练数据中的"混淆token"（confounding tokens），在知识蒸馏过程中剪枝这些token以构建反事实样本，使学生模型的注意力对齐到教师模型关注的关键上下文token上，从而提升数学推理和代码生成的准确性。
+
 **[Llm Probing With Contrastive Eigenproblems Improving Understanding And Applicabi](llm_probing_with_contrastive_eigenproblems_improving_understanding_and_applicabi.md)**
 
 :   本文对无监督探测方法 CCS（Contrast-Consistent Search）进行了深入分析，提出将 CCS 重新表述为特征值问题（Contrastive Eigenproblems），获得闭式解和可解释的特征值，避免了 CCS 对随机初始化的敏感性，并自然扩展到多变量设置。
@@ -295,6 +299,10 @@ description: >-
 **[Tropical Attention Neural Algorithmic Reasoning For Combinatorial Algorithms](tropical_attention_neural_algorithmic_reasoning_for_combinatorial_algorithms.md)**
 
 :   提出 Tropical Attention，将注意力机制提升到热带射影空间中进行分段线性推理，在组合算法的 OOD 泛化上大幅超越 softmax 基线，同时推理速度快 3-9 倍、参数少 ~20%。
+
+**[Uncovering Graph Reasoning In Decoder-Only Transformers With Circuit Tracing](uncovering_graph_reasoning_in_decoder-only_transformers_with_circuit_tracing.md)**
+
+:   通过电路追踪 (circuit tracing) 框架分析 decoder-only Transformer 在图推理任务上的内部机制，发现了 token merging 和 structural memorization 两个核心推理机制。
 
 **[Urls Help Topics Guide Understanding Metadata Utility In Llm Training](urls_help_topics_guide_understanding_metadata_utility_in_llm_training.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 多模态VLM方向 136篇论文解读
+  NeurIPS2025 多模态VLM方向 142篇论文解读
 description: >-
-  136篇NeurIPS2025 多模态VLM方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  142篇NeurIPS2025 多模态VLM方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态VLM
 
-**🧠 NeurIPS2025** · 共 **136** 篇
+**🧠 NeurIPS2025** · 共 **142** 篇
 
 **[A Frustratingly Simple Yet Highly Effective Attack Baseline](a_frustratingly_simple_yet_highly_effective_attack_baseline.md)**
 
@@ -150,6 +150,10 @@ description: >-
 
 :   提出 DVL-Suite 框架，包含 DVL-Bench 基准和 DVL-Instruct 指令微调数据集，覆盖 42 座美国城市、14,871 张高分辨率多时相遥感影像，系统评估 18 个 MLLM 在长期城市动态理解上的能力，并开发了 DVLChat 基线模型。
 
+**[Efficient Multi-Modal Large Language Models Via Progressive Consistency Distilla](efficient_multi-modal_large_language_models_via_progressive_consistency_distilla.md)**
+
+:   提出EPIC框架，通过渐进式一致性蒸馏（Token和Layer两个维度）解决视觉token压缩训练中特征空间扰动导致的学习困难，在不修改模型架构的前提下实现高效多模态LLM。
+
 **[Elasticmm Efficient Multimodal Llms Serving With Elastic Multimodal Parallelism](elasticmm_efficient_multimodal_llms_serving_with_elastic_multimodal_parallelism.md)**
 
 :   提出弹性多模态并行（EMP）范式和 ElasticMM 系统，通过模态感知负载均衡和弹性分区调度将多模态推理的不同阶段解耦到独立实例，相比 vLLM TTFT 降低最高 4.2 倍、吞吐量提升 3.2-4.5 倍。
@@ -189,6 +193,10 @@ description: >-
 **[Flowcut Rethinking Redundancy Via Information Flow For Effic](flowcut_rethinking_redundancy_via_information_flow_for_effic.md)**
 
 :   从信息流（Information Flow）视角重新理解VLM中视觉token的冗余性：发现CLS token是信息中继站、冗余渐进式涌现、单层单标准评分不够可靠，提出FlowCut——基于信息流感知的多标准累积重要性剪枝框架，在LLaVA-1.5-7B上以88.9%的token减少率超越SOTA 1.6%，在LLaVA-NeXT-7B上超越4.3%。
+
+**[Flysearch Exploring How Vision-Language Models Explore](flysearch_exploring_how_vision-language_models_explore.md)**
+
+:   FlySearch 提出了一个基于 Unreal Engine 5 的 3D 户外真实感环境，评估 VLM 的探索能力，发现最先进的 VLM 在简单搜索任务上也无法可靠完成，且与人类的差距随任务难度增加而急剧扩大。
 
 **[Focus Internal Mllm Representations For Efficient Fine-Grained Visual Question A](focus_internal_mllm_representations_for_efficient_fine-grained_visual_question_a.md)**
 
@@ -422,6 +430,10 @@ description: >-
 
 :   提出 SpatialThinker，通过在线 RL 结合多目标密集空间奖励（格式→计数→准确性→空间定位的字典序门控）训练 MLLM 构建场景图并进行结构化空间推理，仅用 7K 样本超越 GPT-4o 在 3DSRBench 上 12.1%。
 
+**[Spatialtracegen High-Fidelity Traces For Efficient Vlm Spatial Reasoning Distill](spatialtracegen_high-fidelity_traces_for_efficient_vlm_spatial_reasoning_distill.md)**
+
+:   提出 SpatialTraceGen 框架，通过自动化验证器从大型教师模型蒸馏高质量多步工具使用推理轨迹，用于高效微调小型 VLM 的空间推理能力。
+
 **[Srpo Enhancing Multimodal Llm Reasoning Via Reflection-Aware Reinforcement Learn](srpo_enhancing_multimodal_llm_reasoning_via_reflection-aware_reinforcement_learn.md)**
 
 :   提出 SRPO（Self-Reflection enhanced reasoning with Group Relative Policy Optimization），一个两阶段反思感知 RL 框架：第一阶段用大模型生成反思数据做 SFT cold-start，第二阶段设计反思感知奖励函数在 GRPO 中强化简洁有效的自我反思能力，在 MathVista/MathVision/MMMU-Pro 等多模态推理基准上以 7B/32B 模型显著超越同规模 SOTA。
@@ -433,6 +445,10 @@ description: >-
 **[Struct2D A Perception-Guided Framework For Spatial Reasoning In Mllms](struct2d_a_perception-guided_framework_for_spatial_reasoning_in_mllms.md)**
 
 :   提出 Struct2D，一种感知引导的提示框架，通过将3D感知输出转化为结构化2D表示（BEV图像+对象标记+元数据），使MLLM无需显式3D输入即可完成复杂空间推理任务，并构建了200K QA对的大规模指令微调数据集 Struct2D-Set。
+
+**[Structure-Aware Fusion With Progressive Injection For Multimodal Molecular Repre](structure-aware_fusion_with_progressive_injection_for_multimodal_molecular_repre.md)**
+
+:   提出 MuMo 框架，通过结构化融合管线（SFP）将 2D 拓扑与 3D 几何融合为稳定的结构先验，再通过渐进注入（PI）机制非对称地整合到序列流中，在 29 个分子属性预测基准任务中平均提升 2.7%，在 22 个任务上排名第一。
 
 **[Systematic Reward Gap Optimization For Mitigating Vlm Hallucinations](systematic_reward_gap_optimization_for_mitigating_vlm_hallucinations.md)**
 
@@ -461,6 +477,10 @@ description: >-
 **[Tomcat Test-Time Comprehensive Knowledge Accumulation For Compositional Zero-Sho](tomcat_test-time_comprehensive_knowledge_accumulation_for_compositional_zero-sho.md)**
 
 :   提出 TOMCAT，通过在测试时从无标签数据中累积文本和视觉双模态知识来动态更新组合原型，克服标签分布偏移问题，在四个 CZSL 基准上实现 SOTA。
+
+**[Towards Comprehensive Scene Understanding Integrating First And Third-Person Vie](towards_comprehensive_scene_understanding_integrating_first_and_third-person_vie.md)**
+
+:   提出 E3VQA 基准（首个多视角 VQA 基准）和 M3CoT 提示技术（融合三种互补视角的场景图），增强大型视觉语言模型 (LVLM) 的多视角场景理解能力，GPT-4o 提升 4.84%、Gemini 2.0 Flash 提升 5.94%。
 
 **[Towards Evaluating Proactive Risk Awareness Of Multimodal Language Models](towards_evaluating_proactive_risk_awareness_of_multimodal_language_models.md)**
 
@@ -537,6 +557,10 @@ description: >-
 **[Watch And Listen Understanding Audio-Visual-Speech Moments With Multimodal Llm](watch_and_listen_understanding_audio-visual-speech_moments_with_multimodal_llm.md)**
 
 :   提出 TriSense——一个三模态（视觉+音频+语音）大语言模型，通过 Query-Based Connector 自适应调节各模态权重实现鲁棒的视频时序理解，并构建了包含200万标注的 TriSense-2M 数据集支撑训练。
+
+**[Wearvqa A Visual Question Answering Benchmark For Wearables In Egocentric Authen](wearvqa_a_visual_question_answering_benchmark_for_wearables_in_egocentric_authen.md)**
+
+:   提出 WearVQA，首个面向可穿戴设备（智能眼镜等）的 VQA 基准，包含 2520 个三元组、7 个图像领域、10 种认知任务类型和 6 种质量问题，当前最优模型仅达 24-52% 准确率。
 
 **[What Can Rl Bring To Vla Generalization An Empirical Study](what_can_rl_bring_to_vla_generalization_an_empirical_study.md)**
 

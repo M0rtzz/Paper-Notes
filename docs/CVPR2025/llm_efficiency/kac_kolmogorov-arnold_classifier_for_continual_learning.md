@@ -2,81 +2,129 @@
 title: >-
   [论文解读] KAC: Kolmogorov-Arnold Classifier for Continual Learning
 description: >-
-  [CVPR 2025][LLM效率][待补充] > 基于摘要：Continual learning requires models to train continuously across consecutive tasks without forgetting. Most existing methods utilize linear classifiers, which struggle to maintain a stable classification space while learning new tasks. Inspired by the success of Kolmogorov-Arnold Networks (KAN) in pr
+  [CVPR 2025][LLM效率][KAN] 首次将 Kolmogorov-Arnold Network (KAN) 应用于持续学习，通过将 B-spline 替换为径向基函数 (RBF) 构建分类器 KAC，仅增加 0.23M 参数即可在多种持续学习方法上获得一致且显著的性能提升（CUB200 40-step 最高 +20.70%）。
 tags:
   - CVPR 2025
   - LLM效率
-  - 待补充
+  - KAN
+  - continual learning
+  - RBF
+  - Kolmogorov-Arnold
+  - classifier
 ---
 
 # KAC: Kolmogorov-Arnold Classifier for Continual Learning
 
 **会议**: CVPR 2025  
-**arXiv**: 见CVF  
-**代码**: 待确认  
+**arXiv**: [2503.21076](https://arxiv.org/abs/2503.21076)  
+**代码**: https://github.com/Ethanhuhuhu/KAC  
 **领域**: LLM效率  
-**关键词**: 待补充
+**关键词**: KAN, continual learning, RBF, Kolmogorov-Arnold, classifier
 
 ## 一句话总结
-> 基于摘要：Continual learning requires models to train continuously across consecutive tasks without forgetting. Most existing methods utilize linear classifiers, which struggle to maintain a stable classification space while learning new tasks. Inspired by the success of Kolmogorov-Arnold Networks (KAN) in pr
+首次将 Kolmogorov-Arnold Network (KAN) 应用于持续学习，通过将 B-spline 替换为径向基函数 (RBF) 构建分类器 KAC，仅增加 0.23M 参数即可在多种持续学习方法上获得一致且显著的性能提升（CUB200 40-step 最高 +20.70%）。
 
 ## 研究背景与动机
-1. **领域现状**：本文研究的问题属于 LLM效率 方向。Continual learning requires models to train continuously across consecutive tasks without forgetting. Most existing methods utilize linear classifiers, which struggle to maintain a stable classification space while learning new tasks.
-2. **现有痛点**：现有方法存在局限性——效率、精度或泛化性方面有改进空间。
-3. **核心矛盾**：需要在效果与效率/泛化性之间找到更好的平衡。
-4. **本文要解决什么？** 针对上述问题，作者提出了新方法。
-5. **切入角度**：从新的技术视角或观察出发。
-6. **核心idea一句话**：Inspired by the success of Kolmogorov-Arnold Networks (KAN) in preserving learning stability during simple continual regression tasks, we set out to explore their potential in more complex continual l
+
+1. **领域现状**：基于预训练 ViT 的持续学习方法（L2P、DualPrompt、CODAPrompt、CPrompt）在增量学习中取得显著进展，但通常使用简单的线性分类头，限制了模型在新旧任务间的判别能力。
+
+2. **现有痛点**：线性分类器表达能力有限，无法充分建模复杂类别边界。任务数增多时问题尤为严重——40-step 增量学习场景中性能急剧下降。用 MLP 替代效果反而更差（相同参数量下准确率降低 0.36%），说明简单增加非线性层不是解决方案。
+
+3. **核心矛盾**：持续学习需要分类器既有强大表达能力以区分累积的大量类别，又要足够轻量以避免在有限数据上过拟合。线性分类器太弱，MLP 又容易过拟合。
+
+4. **本文要解决什么？** 设计一个轻量但表达力强的分类器，即插即用地改善现有持续学习方法。
+
+5. **切入角度**：Kolmogorov-Arnold 表示定理表明任何连续多变量函数可用单变量函数的组合和加法表示。KAN 通过在边上放置可学习激活函数提供更灵活的函数逼近能力。
+
+6. **核心idea一句话**：用 RBF 替代 KAN 中的 B-spline，利用 RBF 的高斯混合解释和局部化特性，构建参数极少但表达力强的持续学习分类器。
 
 ## 方法详解
 
 ### 整体框架
-本文提出的方法概述如下（基于摘要信息）：
-
-Inspired by the success of Kolmogorov-Arnold Networks (KAN) in preserving learning stability during simple continual regression tasks, we set out to explore their potential in more complex continual learning scenarios. In this paper, we introduce the Kolmogorov-Arnold Classifier (KAC), a novel classifier developed for continual learning based on the KAN structure.
+KAC 以即插即用方式替换现有持续学习方法中的线性分类头。输入为 ViT backbone 提取的特征，经 Layer Normalization 后进入 KAC 分类器输出类别预测。仅改变分类头，不修改 backbone 或 prompt 机制。
 
 ### 关键设计
 
-1. **核心模块**:
-   - 做什么：解决上述痛点的关键技术组件
-   - 核心思路：详见论文方法部分
-   - 设计动机：提升性能或效率
+1. **RBF-based KAN Layer**
+   - 做什么：用径向基函数替代 KAN 中的 B-spline 激活函数
+   - 核心思路：paper_notes/docs/CVPR2025/ai_safety/deal_data-efficient_adversarial_learning_for_high-quality_infrared_imaging.md(x) = \sum_p \Phi_p \sum_{i=1}^N \omega_{p,i} arphi(||x_p - c_i||)$，其中 $arphi(r) = \exp(-r^2/(2\sigma_i^2))$ 为高斯 RBF
+   - 分布解释：$\sum_i \omega_{p,i} \mathcal{N}(c_i, \sigma_i^2)$ 等价于高斯混合模型
+   - 设计动机：B-spline 在持续学习中需频繁更新网格点不够稳定；RBF 中心固定（-2到2均匀分布），宽度固定（$\sigma=1$），仅需学习权重 $\omega$
+
+2. **KAC 架构设计**
+   - 做什么：将 RBF-KAN 具体化为分类器
+   - 核心思路：输入经 LayerNorm → N=4 个高斯 RBF 映射 → $	ext{Diag}(W_C \cdot \Phi(	ext{LN}(F(x))) \cdot W_q)$
+   -  \in \mathbb{R}^{C 	imes n}$ 为输出权重， \in \mathbb{R}^{N 	imes C}$ 为类别特定 RBF 权重
+   - 设计动机：对角化确保每个类别有独立激活模式，仅增加 0.23M 参数（vs ViT-B/16 的 86M）
 
 ### 损失函数 / 训练策略
-详见论文全文（缓存不足，无法提取具体训练细节）。
+- 直接使用原始持续学习方法的损失函数，KAC 只替换分类头
+- 不引入额外正则化或蒸馏损失
+- 与 L2P、DualPrompt、CODAPrompt、CPrompt 四种方法均兼容
 
 ## 实验关键数据
 
 ### 主实验
-基于摘要的实验信息：We delve into the impact of KAN's spline functions and introduce Radial Basis Functions (RBF) for improved compatibility with continual learning. We replace linear classifiers with KAC in several recent approaches and conduct experiments across various continual learning benchmarks, all of which demonstrate performance improvements, highlighting the effectiveness and robustness of KAC in continual learning.
 
-| 数据集 | 指标 | 本文 | 之前SOTA | 提升 |
-|--------|------|------|----------|------|
-| 详见论文 | - | - | - | - |
+**ImageNet-R（40-step）：**
+
+| 方法 | Baseline | +KAC | 提升 |
+|------|---------|------|------|
+| L2P | 74.28 | 76.34 | +2.06 |
+| DualPrompt | 74.51 | 76.87 | +2.36 |
+| CODAPrompt | 76.80 | 79.79 | +2.99 |
+| CPrompt | 78.98 | 80.89 | +1.91 |
+
+**CUB200（40-step，提升最显著）：**
+
+| 方法 | Baseline | +KAC | 提升 |
+|------|---------|------|------|
+| L2P | 46.84 | 66.08 | **+19.24** |
+| DualPrompt | 50.61 | 71.31 | **+20.70** |
+| CODAPrompt | 52.57 | 71.36 | +18.79 |
+| CPrompt | 77.34 | 85.11 | +7.77 |
 
 ### 消融实验
-| 配置 | 关键指标 | 说明 |
-|------|---------|------|
-| 完整模型 | 最优 | 完整方法 |
-| 去除核心模块 | 下降 | 验证核心贡献 |
+
+| 配置 | ImageNet-R 20-step |
+|------|-------------------|
+| Linear classifier | 80.92% |
+| MLP (same params) | 80.56% |
+| MLP (fixed) | 65.87% |
+| **KAC (RBF)** | **83.59%** |
+
+| N (RBF数) | 表现 |
+|-----------|------|
+| 2 | 最低 |
+| 4 | 最优 ✓ |
+| 8 | 与N=4相当 |
+| 16 | 轻微下降 |
 
 ### 关键发现
-- 本文方法在目标任务上取得显著改进
-- 各核心模块均对最终性能有贡献
+- **任务步数越多，KAC 增益越大**：5-step 提升 0.2-4.4%，40-step 提升 2-20%
+- **细粒度数据集增益最大**：CUB200 提升远超 ImageNet-R，RBF 的局部化特性擅长精细类别边界
+- **稳定性显著提升**：L2P 在 CUB200 上标准差从 5.06 降至 0.57
+- MLP 不如线性分类器（-0.36%），证明问题在于 KAN 特有的可学习激活设计
 
 ## 亮点与洞察
-- 问题定义清晰，方法针对性强
-- 核心设计思路可能可以迁移到相关场景
+- **极简但极效**：仅 0.23M 参数的改动就在所有方法上获得一致提升
+- **RBF 的高斯混合解释巧妙**：将分类转化为特征在高斯混合空间中的定位
+- **步数越多增益越大**：现实应用中增量步数往往很多，这是现有方法最薄弱的环节
+- 可迁移到 few-shot learning、open-set recognition 等需要轻量有效分类器的场景
 
 ## 局限性 / 可改进方向
-- 需要阅读全文才能深入分析方法细节和局限
-- 泛化性和可扩展性有待进一步验证
+- 所有实验基于 ViT-B/16 backbone，未验证与其他 backbone 兼容性
+- RBF 中心和宽度手动设定，自适应确定可能进一步提升
+- 未与 exemplar-based 方法（DER、BiC）结合验证
+- DomainNet 上提升较小（+1-2%），domain incremental 可能需额外机制
 
 ## 相关工作与启发
-- 本文在该领域的既有方法基础上做出了改进
+- **vs Linear Classifier**: 表达力不足，尤其长序列和细粒度任务
+- **vs MLP**: 相同参数量下性能更差，证明 KAN 优势不在于简单加深网络
+- **vs 原始 KAN (B-spline)**: B-spline 需网格更新，RBF 固定中心只学权重，更适合增量场景
 
 ## 评分
-- 新颖性: ⭐⭐⭐ 基于摘要初评，有一定创新
-- 实验充分度: ⭐⭐⭐ 需读全文验证
-- 写作质量: ⭐⭐⭐ 基于摘要初评
-- 价值: ⭐⭐⭐ 在该领域有贡献
+- 新颖性: ⭐⭐⭐⭐ 首次将 KAN 引入持续学习，RBF 替代 B-spline 动机清晰
+- 实验充分度: ⭐⭐⭐⭐⭐ 四种方法、四个数据集、多步数设置
+- 写作质量: ⭐⭐⭐⭐ 结构清晰，实验丰富
+- 价值: ⭐⭐⭐⭐ 即插即用特性使其很容易被采用

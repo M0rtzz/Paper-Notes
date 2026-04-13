@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 模型压缩方向 99篇论文解读
+  ICLR2026 模型压缩方向 100篇论文解读
 description: >-
-  99篇ICLR2026 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  100篇ICLR2026 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🔬 ICLR2026** · 共 **99** 篇
+**🔬 ICLR2026** · 共 **100** 篇
 
 **[A Fano-Style Accuracy Upper Bound For Llm Single-Pass Reasoning In Multi-Hop Qa](a_fano-style_accuracy_upper_bound_for_llm_single-pass_reasoning_in_multi-hop_qa.md)**
 
@@ -133,6 +133,10 @@ description: >-
 **[Fine-Tuning Quantized Neural Networks With Zeroth-Order Optimization](fine-tuning_quantized_neural_networks_with_zeroth-order_optimization.md)**
 
 :   提出QZO方法，通过对量化缩放因子（而非离散权重）做零阶扰动来估计梯度，配合方向导数裁剪稳定训练，实现4-bit/2-bit LLM的极致内存高效微调，总内存降低18倍以上。
+
+**[Flyprompt Brain-Inspired Random-Expanded Routing](flyprompt_brain-inspired_random-expanded_routing.md)**
+
+:   受果蝇蘑菇体稀疏扩展和模块化集成的神经生物学启发，提出 FlyPrompt 框架用于通用持续学习（GCL），通过随机扩展解析路由器（REAR）实现非迭代的专家选择，结合多时间尺度 EMA 输出头的时序集成（TE²）提升专家能力，在 CIFAR-100/ImageNet-R/CUB-200 上分别取得最高 11.23%/12.43%/7.62% 的增益。
 
 **[Flyprompt Brain-Inspired Random-Expanded Routing With Temporal-Ensemble Experts ](flyprompt_brain-inspired_random-expanded_routing_with_temporal-ensemble_experts_.md)**
 

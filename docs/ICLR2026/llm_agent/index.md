@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 LLM Agent方向 41篇论文解读
+  ICLR2026 LLM Agent方向 47篇论文解读
 description: >-
-  41篇ICLR2026 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  47篇ICLR2026 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🔬 ICLR2026** · 共 **41** 篇
+**🔬 ICLR2026** · 共 **47** 篇
 
 **[A Benchmark For Deep Information Synthesis](a_benchmark_for_deep_information_synthesis.md)**
 
@@ -70,13 +70,25 @@ description: >-
 
 :   提出 Judge Reliability Harness（JRH），一个开源框架，通过 label flip、格式不变性、语义改写、冗余偏差、随机稳定性 等合成测试系统评估 LLM Judge 的可靠性，在四个基准（FORTRESS、HarmBench、Persuade、AgentHarm）上对四个 SOTA Judge 进行压力测试，发现没有任何一个 Judge 在所有场景下都可靠。
 
+**[Livenewsbench Evaluating Llm Web Search Capabilities With Fresh News](livenewsbench_evaluating_llm_web_search_capabilities_with_fresh_news.md)**
+
+:   提出 LiveNewsBench，一个定期更新的、基于新鲜新闻事件自动生成 QA 对的基准，用于评估 LLM 代理式网页搜索能力，有效隔离了模型内部记忆与真实搜索能力。
+
 **[Livenewsbench Evaluating Llm Web Search Capabilities With Freshly Curated News](livenewsbench_evaluating_llm_web_search_capabilities_with_freshly_curated_news.md)**
 
 :   提出 LiveNewsBench，一个自动从近期新闻生成的、定期更新的 benchmark，通过多跳、事实性问答评估 LLM 的 agentic web search 能力，有效分离模型内部知识与检索能力，性能范围从 11% 到 90%，展现出强区分力。
 
+**[M2-Miner Multi-Agent Enhanced Mcts For Mobile Gui Agent](m2-miner_multi-agent_enhanced_mcts_for_mobile_gui_agent.md)**
+
+:   提出 M2-Miner，首个基于 MCTS 的自动化移动 GUI 代理数据挖掘框架，通过 InferAgent/OrchestraAgent/JudgeAgent 三代理协作、意图回收策略和渐进式模型闭环训练，以 18 倍低于人工标注的成本生成 SOTA 质量的数据。
+
 **[M2-Miner Multi-Agent Enhanced Mcts For Mobile Gui Agent Data Mining](m2-miner_multi-agent_enhanced_mcts_for_mobile_gui_agent_data_mining.md)**
 
 :   提出 M²-Miner，首个基于 MCTS 的移动端 GUI agent 自动数据挖掘框架，通过 InferAgent/OrchestraAgent/JudgeAgent 三智能体协作将挖掘效率提升 64 倍，结合 intent recycling 策略丰富意图多样性，训练的 GUI agent 在多个 benchmark 上达到 SOTA。
+
+**[Mc-Search Evaluating And Enhancing Multimodal Agentic Search](mc-search_evaluating_and_enhancing_multimodal_agentic_search.md)**
+
+:   提出 MC-Search，首个面向代理式多模态 RAG 的基准，包含 3,333 个高质量样本、5 种推理拓扑结构和步级标注的推理链，同时引入过程级评估指标和 Search-Align 对齐框架显著提升开源 MLLM 的搜索规划能力。
 
 **[Mc-Search Evaluating And Enhancing Multimodal Agentic Search With Structured Lon](mc-search_evaluating_and_enhancing_multimodal_agentic_search_with_structured_lon.md)**
 
@@ -134,6 +146,10 @@ description: >-
 
 :   提出 Agentic Military AI Governance Framework (AMAGF)，将人类对军事AI agent的控制从"有/无"的二元判断转变为以 Control Quality Score (CQS) 为核心的连续量化监控体系，涵盖预防-侦测-纠正三大支柱。
 
+**[The Controllability Trap A Governance Framework For Military Ai Systems](the_controllability_trap_a_governance_framework_for_military_ai_systems.md)**
+
+:   提出 Agentic Military AI Governance Framework (AMAGF)，一个围绕可测量的控制质量分数 (CQS) 构建的军事 AI 代理治理框架，通过预防-检测-纠正三个支柱应对六类代理治理失败。
+
 **[The Tool Decathlon Benchmarking Language Agents For Diverse Realistic And Long-H](the_tool_decathlon_benchmarking_language_agents_for_diverse_realistic_and_long-h.md)**
 
 :   提出 Toolathlon，一个覆盖 32 个软件应用、604 个工具和 108 个任务的语言 Agent 基准，强调真实多样的环境状态和长程多步交互（平均约 20 轮工具调用），最强模型 Claude-4.5-Sonnet 仅达 38.6% 成功率。
@@ -158,9 +174,17 @@ description: >-
 
 :   提出 VideoMind，一个基于角色分工的视频语言Agent框架，通过 Planner-Grounder-Verifier-Answerer 四角色协作实现时序grounded视频推理，核心创新是 Chain-of-LoRA 机制——在统一基座模型上通过切换LoRA适配器实现角色无缝切换，2B模型即超越GPT-4o和Gemini-1.5-Pro。
 
+**[Videomind A Chain-Of-Lora Agent For Temporal-Grounded Video Understanding](videomind_a_chain-of-lora_agent_for_temporal-grounded_video_understanding.md)**
+
+:   VideoMind 提出一种基于 Chain-of-LoRA 机制的视频语言 Agent，通过 Planner、Grounder、Verifier、Answerer 四个角色的协同工作，在统一 LMM 骨干上实现高效的时序定位视频推理，2B 模型即超越 GPT-4o 和 Gemini-1.5-Pro。
+
 **[Web-Cogreasoner Towards Knowledge-Induced Cognitive Reasoning For Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_for_web_agents.md)**
 
 :   受Bloom教育分类学启发，提出 Web-CogKnowledge Framework，将Web Agent能力分解为 Factual→Conceptual→Procedural 三层知识的渐进式学习，配合 Knowledge-driven CoT 推理框架训练得到 Web-CogReasoner，在Web-CogBench上以84.4%超越Claude Sonnet 4 (76.8%)和Gemini 2.5 Pro (80.4%)。
+
+**[Web-Cogreasoner Towards Knowledge-Induced Cognitive Reasoning In Web Agents](web-cogreasoner_towards_knowledge-induced_cognitive_reasoning_in_web_agents.md)**
+
+:   Web-CogReasoner 借鉴 Bloom 教育分类法，将 Web Agent 的能力分解为事实知识、概念知识和程序性知识三层体系，构建结构化的知识驱动 CoT 推理框架，在 Web 导航任务上显著超越现有方法。
 
 **[Webarbiter A Principle-Guided Reasoning Process Reward Model For Web Agents](webarbiter_a_principle-guided_reasoning_process_reward_model_for_web_agents.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 时间序列方向 47篇论文解读
+  NeurIPS2025 时间序列方向 52篇论文解读
 description: >-
-  47篇NeurIPS2025 时间序列方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  52篇NeurIPS2025 时间序列方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🧠 NeurIPS2025** · 共 **47** 篇
+**🧠 NeurIPS2025** · 共 **52** 篇
 
 **[A Graph Neural Network Approach For Localized And High-Resolution Temperature Fo](a_graph_neural_network_approach_for_localized_and_high-resolution_temperature_fo.md)**
 
@@ -54,6 +54,10 @@ description: >-
 
 :   提出 UrbanDiT，首个基于 Diffusion Transformer 的开放世界城市时空基础模型，通过统一的 prompt learning 框架整合异构数据类型（grid/graph）和多种任务（预测/插值/外推/填补），在多城市多场景下实现 SOTA 性能并展现强大的 zero-shot 泛化能力。
 
+**[Diffusion Transformers For Imputation Statistical Efficiency And Uncertainty Qua](diffusion_transformers_for_imputation_statistical_efficiency_and_uncertainty_qua.md)**
+
+:   本文从统计学习角度分析了条件扩散Transformer（DiT）在时间序列插补任务中的样本复杂度和不确定性量化性能，并提出混合掩码训练策略提升插补效果。
+
 **[Ecocast A Spatio-Temporal Model For Continual Biodiversity And Climate Risk Fore](ecocast_a_spatio-temporal_model_for_continual_biodiversity_and_climate_risk_fore.md)**
 
 :   提出EcoCast，基于Transformer的时空模型，整合Sentinel-2、ERA5和GBIF数据进行近期物种分布预测，配合EWC持续学习机制，在非洲鸟类分布预测上F1从0.31提升至0.65。
@@ -78,9 +82,17 @@ description: >-
 
 :   PIR 提出实例感知的事后修正框架——通过不确定性估计识别预测失败实例，用局部修正（协变量+外生变量 Transformer）和全局修正（检索相似训练实例加权平均）的残差组合，作为即插即用模块使 SparseTSF MSE 降低 25.87%，PatchTST 降低 8.99%。
 
+**[In-Context Learning Of Stochastic Differential Equations With Foundation Inferen](in-context_learning_of_stochastic_differential_equations_with_foundation_inferen.md)**
+
+:   提出FIM-SDE（基础推断模型），一个预训练的识别模型，能够从噪声时间序列数据中进行零样本(in-context)估计低维SDE的漂移和扩散函数，并通过快速微调进一步超越所有基线方法。
+
 **[Ioncast A Deep Learning Framework For Forecasting Ionospheric Dynamics](ioncast_a_deep_learning_framework_for_forecasting_ionospheric_dynamics.md)**
 
 :   提出 IonCast 框架，基于 GraphCast 启发的图神经网络架构，融合多源异构物理驱动数据，实现全球总电子含量（TEC）的高精度时空预测。
+
+**[Ioncast A Deep Learning Framework For Forecasting Ionospheric Total Electron Con](ioncast_a_deep_learning_framework_for_forecasting_ionospheric_total_electron_con.md)**
+
+:   提出IonCast框架，包含基于GraphCast的GNN模型和ConvLSTM基线，融合多源异构空间天气数据（TEC图、太阳风、地磁指数、轨道力学等）进行全球电离层总电子含量（TEC）的时空预测，在地磁风暴条件下优于持续性基线和IRI经验模型。
 
 **[Learning Time-Scale Invariant Population-Level Neural Representations](learning_time-scale_invariant_population-level_neural_representations.md)**
 
@@ -142,6 +154,10 @@ description: >-
 
 :   提出"散射性"（scattering）作为异常检测的新归纳偏置——异常样本在高维表示空间中比正常样本分布更分散，通过双编码器（时间+拓扑）+ 超球面散射中心约束 + 对比融合学习时拓扑联合表示，在 6 个工业 IoT 数据集上 15/24 设置取得最佳。
 
+**[Selective Learning For Deep Time Series Forecasting](selective_learning_for_deep_time_series_forecasting.md)**
+
+:   提出选择性学习（Selective Learning）策略，通过不确定性掩码和异常掩码组成的双掩码机制筛选可泛化时间步计算 MSE 损失，在 8 个数据集上为 Informer 降低 37.4% MSE、TimesNet 降低 8.4%、iTransformer 降低 6.5%。
+
 **[Sempo Lightweight Foundation Models For Time Series Forecasting](sempo_lightweight_foundation_models_for_time_series_forecasting.md)**
 
 :   提出SEMPO——仅用6.5M参数和83M时间点预训练的轻量级时间序列基础模型，通过能量感知频谱分解和混合提示Transformer，在零样本和少样本预测中超越参数量百倍以上的大型基础模型。
@@ -189,6 +205,10 @@ description: >-
 **[Universal Spectral Tokenization Via Self-Supervised Panchromatic Representation ](universal_spectral_tokenization_via_self-supervised_panchromatic_representation_.md)**
 
 :   提出首个通用光谱 Tokenizer，通过连续波长嵌入和自监督重建目标，在原始波长网格上联合训练异构天文光谱数据（SDSS/DESI/GALAH/APOGEE），生成对齐、均匀且物理有意义的表征。
+
+**[Walrus Wavelets For Long-Range Representation Using Ssms](walrus_wavelets_for_long-range_representation_using_ssms.md)**
+
+:   提出 WaLRUS，基于 Daubechies 小波构建状态空间模型 (SSM)，作为 SaFARi 框架的新实现，扩展了 SSM 家族的多样性，在长程依赖建模中展现独特优势。
 
 **[Wavelet Canonical Coherence For Nonstationary Signals](wavelet_canonical_coherence_for_nonstationary_signals.md)**
 

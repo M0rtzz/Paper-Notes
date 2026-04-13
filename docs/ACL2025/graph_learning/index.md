@@ -1,14 +1,14 @@
 ---
 title: >-
-  ACL2025 图学习方向 22篇论文解读
+  ACL2025 图学习方向 23篇论文解读
 description: >-
-  22篇ACL2025 图学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  23篇ACL2025 图学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🕸️ 图学习
 
-**💬 ACL2025** · 共 **22** 篇
+**💬 ACL2025** · 共 **23** 篇
 
 **[Beyond Completion A Foundation Model For General Knowledge Graph Reasoning](beyond_completion_a_foundation_model_for_general_knowledge_graph_reasoning.md)**
 
@@ -93,6 +93,10 @@ description: >-
 **[Simgrag Leveraging Similar Subgraphs For Knowledge Graphs Driven Retrieval-Augme](simgrag_leveraging_similar_subgraphs_for_knowledge_graphs_driven_retrieval-augme.md)**
 
 :   提出 SimGRAG 方法，通过"查询→模式图→子图"两阶段对齐策略，利用 LLM 将查询转化为图模式，再用图语义距离（GSD）度量在知识图谱中高效检索语义最相似的子图，实现即插即用的 KG 驱动 RAG，在问答和事实验证任务上超越所有现有方法。
+
+**[The Role Of Exploration Modules In Small Language Models For Knowledge Graph Comp](the_role_of_exploration_modules_in_small_language_models_for_knowledge_graph_comp.md)**
+
+:   本文发现小语言模型（SLM）在知识图谱问答中的性能瓶颈在于图探索（exploration）阶段，提出用轻量级检索模块（SentenceBERT/GTR）替代 SLM 自身进行知识图谱遍历，显著提升了 SLM 在 KGQA 任务上的表现。
 
 **[The Role Of Exploration Modules In Small Language Models For Knowledge Graph Que](the_role_of_exploration_modules_in_small_language_models_for_knowledge_graph_que.md)**
 

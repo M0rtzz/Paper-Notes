@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 强化学习方向 147篇论文解读
+  NeurIPS2025 强化学习方向 160篇论文解读
 description: >-
-  147篇NeurIPS2025 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  160篇NeurIPS2025 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🧠 NeurIPS2025** · 共 **147** 篇
+**🧠 NeurIPS2025** · 共 **160** 篇
 
 **[A Generalized Bisimulation Metric Of State Similarity Betwee](a_generalized_bisimulation_metric_of_state_similarity_betwee.md)**
 
@@ -33,6 +33,10 @@ description: >-
 **[Actorfree Continuous Control Via Structurally Maximizable Qf](actorfree_continuous_control_via_structurally_maximizable_qf.md)**
 
 :   提出Q3C（Q-learning for Continuous Control with Control-points），一种无actor的纯基于值函数的连续控制方法，通过控制点插值逼近任意形状的Q函数，在复杂（非凸、受限）Q函数景观中显著优于actor-critic方法。
+
+**[Adaptive Cooperative Transmission Design For Ultra-Reliable Low-Latency Communic](adaptive_cooperative_transmission_design_for_ultra-reliable_low-latency_communic.md)**
+
+:   提出 DRL-CoLA 算法，用双 Agent DQN 分别在源节点和中继节点上自适应配置 5G NR 传输参数（numerology、mini-slot、MCS），在两跳中继系统中仅用本地 CSI 即可达到接近全局 CSI 最优的 URLLC 可靠性。
 
 **[Adaptive Neighborhoodconstrained Q Learning For Offline Rein](adaptive_neighborhoodconstrained_q_learning_for_offline_rein.md)**
 
@@ -193,6 +197,10 @@ description: >-
 **[Feel-Good Thompson Sampling For Contextual Bandits A Markov Chain Monte Carlo Sh](feel-good_thompson_sampling_for_contextual_bandits_a_markov_chain_monte_carlo_sh.md)**
 
 :   首次系统性实证评估 Feel-Good Thompson Sampling (FG-TS) 及其平滑变体 SFG-TS 在近似后验下的表现，横跨线性/逻辑/神经三类上下文赌博机设置和十四个基准，发现 FG-TS 在精确后验场景（线性/逻辑）下优于标准 TS，但在神经赌博机中反而退化，揭示了乐观偏差与采样噪声之间的关键权衡。
+
+**[Financial Instruction Following Evaluation Fife](financial_instruction_following_evaluation_fife.md)**
+
+:   FIFE 提出了一个高难度的金融领域指令遵循基准，包含 88 个人工编写的复杂提示和可链式验证的约束系统，对 53 个模型进行零样本评测，发现开放权重模型优于专有模型，但所有模型仍无法完美遵循复杂指令。
 
 **[Finite-Sample Analysis Of Policy Evaluation For Robust Average Reward Reinforcem](finite-sample_analysis_of_policy_evaluation_for_robust_average_reward_reinforcem.md)**
 
@@ -406,6 +414,10 @@ description: >-
 
 :   提出 Explained Variance Adaptation (EVA)，通过对激活向量进行增量 SVD 来初始化 LoRA 矩阵，可证明地最大化期望梯度信号，并结合自适应秩分配机制在语言生成/理解、图像分类、强化学习等多领域建立了精度-效率的新 Pareto 前沿。
 
+**[Periodic Skill Discovery](periodic_skill_discovery.md)**
+
+:   提出 Periodic Skill Discovery (PSD) 框架，通过将状态映射到圆形潜空间来自然编码周期性，实现无监督地发现具有不同周期的多样化运动技能。
+
 **[Prompt Tuning Decision Transformers With Structured And Scalable Bandits](prompt_tuning_decision_transformers_with_structured_and_scalable_bandits.md)**
 
 :   提出一种基于多臂老虎机的结构化prompt调优方法，通过将prompt分解为独立segment并利用预训练PDT作为特征提取器，将prompt搜索复杂度从组合爆炸降为线性，在多任务离线RL中显著提升冻结PDT骨干网络的推理性能。
@@ -433,6 +445,14 @@ description: >-
 **[Reinforcement Learning Teachers Of Test Time Scaling](reinforcement_learning_teachers_of_test_time_scaling.md)**
 
 :   提出强化学习教师（RLT）框架，将问题和答案同时提供给教师模型，训练其生成有效的解释性推理链条，而非从零解题，从而用7B参数的小教师模型产出比数量级更大模型更优的蒸馏数据。
+
+**[Reinforcement Learning With Action Chunking](reinforcement_learning_with_action_chunking.md)**
+
+:   提出 Q-chunking,将动作分块技术从模仿学习推广到基于 TD 的强化学习方法中,通过在"分块"动作空间上直接运行 RL 来改善长horizon稀疏奖励任务的探索和学习效率。
+
+**[Repic Reinforced Post-Training For Personalizing Multi-Modal Language Models](repic_reinforced_post-training_for_personalizing_multi-modal_language_models.md)**
+
+:   提出首个基于强化学习的多模态大模型后训练框架 RePIC,用于个性化图像描述生成,在多概念场景中显著优于基于 SFT 的方法。
 
 **[Retrosynthesis Planning Via Worst-Path Policy Optimisation In Tree-Structured Md](retrosynthesis_planning_via_worst-path_policy_optimisation_in_tree-structured_md.md)**
 
@@ -482,6 +502,10 @@ description: >-
 
 :   提出 Ensemble++，通过共享因子矩阵的增量更新机制，仅需 $\Theta(d\log T)$ 的集成大小即可实现与精确 Thompson Sampling 相当的遗憾界，并自然扩展到非线性/神经网络场景。
 
+**[Scalable Neural Incentive Design With Parameterized Mean-Field Approximation](scalable_neural_incentive_design_with_parameterized_mean-field_approximation.md)**
+
+:   提出 AMID 算法，将多智能体激励设计（ID）问题形式化为参数化平均场博弈（PMFG），证明有限$N$智能体目标以$\mathscr{O}(1/\sqrt{N})$速率逼近无限种群极限，在多种拍卖场景大幅提升收益。
+
 **[Scalable Policy-Based Rl Algorithms For Pomdps](scalable_policy-based_rl_algorithms_for_pomdps.md)**
 
 :   提出将 POMDP 近似为有限状态的 Superstate MDP（状态为截断历史），给出更紧的最优值函数差上界（随历史长度指数衰减），并首次证明标准 TD 学习 + 策略优化在此非马尔可夫采样下的有限时间收敛保证。
@@ -490,9 +514,17 @@ description: >-
 
 :   本文提出一种面向具身基础模型的两阶段后训练方法：第一阶段通过行为克隆和 steps-to-go 预测进行监督微调，第二阶段利用 steps-to-go 预测生成的自奖励函数和成功检测器实现在线 RL 自我改进，仅需 1-3% 额外数据即可实现 1.5x 以上的成功率提升，并首次展示了机器人自主学习超出模仿数据分布之外的新技能。
 
+**[Sequential Monte Carlo For Policy Optimization In Continuous Pomdps](sequential_monte_carlo_for_policy_optimization_in_continuous_pomdps.md)**
+
+:   提出基于非马尔可夫 Feynman-Kac 模型的嵌套 SMC（Sequential Monte Carlo）算法，在连续 POMDP 中实现策略优化，天然捕获信息收集价值而无需手工启发式。
+
 **[Sequential Multi-Agent Dynamic Algorithm Configuration](sequential_multi-agent_dynamic_algorithm_configuration.md)**
 
 :   提出 Seq-MADAC 框架，将多超参数动态配置建模为上下文顺序多智能体 MDP，通过顺序优势分解网络（SADN）利用参数间的固有依赖关系，在多目标优化算法配置上超越现有 MARL 方法。
+
+**[Shift Before You Learn Enabling Low-Rank Representations In Reinforcement Learni](shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)**
+
+:   揭示了强化学习中后继度量（successor measure）本身并非近似低秩的，但"位移后继度量"（shifted successor measure）自然具有低秩结构；通过引入新的 Type II Poincaré 不等式量化所需位移量，为目标导向 RL 提供了有限样本理论保证和实践改进。
 
 **[Simultaneous Swap Regret Minimization Via Kl-Calibration](simultaneous_swap_regret_minimization_via_kl-calibration.md)**
 
@@ -513,6 +545,10 @@ description: >-
 **[Stair Addressing Stage Misalignment Through Temporal-Aligned Preference Reinforc](stair_addressing_stage_misalignment_through_temporal-aligned_preference_reinforc.md)**
 
 :   发现并形式化了偏好强化学习（PbRL）中的"阶段错位"问题——比较不同阶段的行为片段会产生无效反馈，提出STAIR方法通过对比学习获取时间距离来近似阶段差异，用四边形距离选择阶段对齐的查询，在多阶段任务中显著超越现有PbRL方法。
+
+**[Strategic Costs Of Perceived Bias In Fair Selection](strategic_costs_of_perceived_bias_in_fair_selection.md)**
+
+:   通过博弈论模型揭示"感知驱动偏差"机制：在完全基于能力的选拔系统中，不同社会经济群体对选拔后价值的感知差异会导致理性的努力差异，从而在"公平"的流程中系统性地传播不平等。
 
 **[Structural Information-Based Hierarchical Diffusion For Offline Reinforcement Le](structural_information-based_hierarchical_diffusion_for_offline_reinforcement_le.md)**
 
@@ -550,9 +586,21 @@ description: >-
 
 :   提出 MOL-TS，首个具有 Pareto regret 保证的多目标线性上下文 Bandit Thompson 采样算法，通过乐观采样策略和新定义的有效 Pareto 最优概念，实现 $\widetilde{O}(d^{3/2}\sqrt{T})$ 的 regret 上界。
 
+**[Thompson Sampling In Function Spaces Via Neural Operators](thompson_sampling_in_function_spaces_via_neural_operators.md)**
+
+:   将 Thompson 采样 (TS) 从有限维参数空间扩展到无限维函数空间，利用神经算子 (Neural Operators) 作为高斯过程后验的近似采样器，实现了对涉及偏微分方程 (PDE) 的功能优化问题的高效求解。
+
 **[Time Reversal Symmetry For Efficient Robotic Manipulations In Deep Reinforcement](time_reversal_symmetry_for_efficient_robotic_manipulations_in_deep_reinforcement.md)**
 
 :   提出 TR-DRL 框架，利用机器人操作任务中的时间反转对称性——通过轨迹反转增强（完全可逆的转移）和时间反转引导的势函数奖励塑形（部分可逆的转移）——显著提升 DRL 在成对任务（如开门/关门）中的样本效率和最终性能。
+
+**[To Distill Or Decide Understanding The Algorithmic Trade-Off In Partially Observ](to_distill_or_decide_understanding_the_algorithmic_trade-off_in_partially_observ.md)**
+
+:   通过一个理论模型（perturbed Block MDP）和模拟运动控制实验，系统研究了部分可观测 RL 中**特权专家蒸馏** (privileged expert distillation) 与**标准 RL**（无特权信息）之间的算法权衡，发现权衡关键取决于隐状态动力学的随机性。
+
+**[Towards Provable Emergence Of In-Context Reinforcement Learning](towards_provable_emergence_of_in-context_reinforcement_learning.md)**
+
+:   本文从理论上证明了 Transformer 经过标准 RL 预训练后，其全局最优参数能够实现 in-context temporal difference (TD) 学习，为 in-context RL (ICRL) 现象提供了首个可证明的理论支撑。
 
 **[Tractable Multinomial Logit Contextual Bandits With Non-Linear Utilities](tractable_multinomial_logit_contextual_bandits_with_non-linear_utilities.md)**
 
@@ -577,6 +625,10 @@ description: >-
 **[Videorft Incentivizing Video Reasoning Capability In Mllms Via Reinforced Fine-T](videorft_incentivizing_video_reasoning_capability_in_mllms_via_reinforced_fine-t.md)**
 
 :   提出 VideoRFT，通过认知启发的多专家 CoT 数据构建流水线和新颖的语义一致性奖励，将强化微调（RFT）范式扩展到视频推理领域，分别构建 VideoRFT-CoT-102K（SFT 用）和 VideoRFT-RL-310K（RL 用）两个数据集，在 6 个视频推理基准上达到 SOTA。
+
+**[Viki-R Coordinating Embodied Multi-Agent Cooperation Via Reinforcement Learning](viki-r_coordinating_embodied_multi-agent_cooperation_via_reinforcement_learning.md)**
+
+:   提出 VIKI-Bench（首个面向具身多智能体合作的层次基准）和 VIKI-R（基于 VLM + RL 的两阶段合作框架），在智能体激活、任务规划和轨迹感知三个层级上显著超越基线。
 
 **[Volleybots A Testbed For Multi-Drone Volleyball Game Combining Motion Control An](volleybots_a_testbed_for_multi-drone_volleyball_game_combining_motion_control_an.md)**
 

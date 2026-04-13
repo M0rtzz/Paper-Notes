@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2026 目标检测方向 60篇论文解读
+  CVPR2026 目标检测方向 61篇论文解读
 description: >-
-  60篇CVPR2026 目标检测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  61篇CVPR2026 目标检测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**📷 CVPR2026** · 共 **60** 篇
+**📷 CVPR2026** · 共 **61** 篇
 
 **[A Closer Look At Cross-Domain Few-Shot Object Detection Fine-Tuning Matters And ](a_closer_look_at_cross-domain_few-shot_object_detection_fine-tuning_matters_and_.md)**
 
@@ -73,6 +73,10 @@ description: >-
 **[Da-Mamba Learning Domain-Aware State Space Model For Global-Local Alignment In D](da-mamba_learning_domain-aware_state_space_model_for_global-local_alignment_in_d.md)**
 
 :   提出 DA-Mamba，一种 CNN-SSM 混合架构，通过 Image-Aware SSM（IA-SSM）和 Object-Aware SSM（OA-SSM）两个模块，以线性复杂度实现图像级和实例级的全局-局部域不变特征对齐，在四个域自适应检测基准上达到 SOTA。
+
+**[Detecting Unknown Objects Via Energy-Based Separation](detecting_unknown_objects_via_energy-based_separation.md)**
+
+:   提出 DEUS 框架，通过 ETF 子空间未知目标分离（EUS）在几何正交的已知/未知子空间中利用能量分数有效分离已知、未知和背景提案，并设计能量基已知区分损失（EKD）减少增量学习中新旧类的交叉干扰，在 OWOD 基准上大幅提升未知目标召回率。
 
 **[Detecting Unknown Objects Via Energy-Based Separation For Open World Object Dete](detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)**
 

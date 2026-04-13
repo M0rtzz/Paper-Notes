@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 知识编辑方向 8篇论文解读
+  ICLR2026 知识编辑方向 9篇论文解读
 description: >-
-  8篇ICLR2026 知识编辑方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  9篇ICLR2026 知识编辑方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✏️ 知识编辑
 
-**🔬 ICLR2026** · 共 **8** 篇
+**🔬 ICLR2026** · 共 **9** 篇
 
 **[Bilinear Representation Mitigates Reversal Curse And Enables Consistent Model Ed](bilinear_representation_mitigates_reversal_curse_and_enables_consistent_model_ed.md)**
 
@@ -37,6 +37,10 @@ description: >-
 **[Rote Learning Considered Useful Generalizing Over Memorized Data In Llms](rote_learning_considered_useful_generalizing_over_memorized_data_in_llms.md)**
 
 :   提出"记忆-再泛化"（memorize-then-generalize）框架，通过先用无语义合成 token 死记硬背事实关联、再用少量语义提示微调的两阶段策略，揭示 LLM 能从死记硬背数据中泛化，且记忆越深泛化越好，同时指出该机制可被恶意利用的安全隐患。
+
+**[Rote Learning Considered Useful Generalizing Over Memorized Training Examples](rote_learning_considered_useful_generalizing_over_memorized_training_examples.md)**
+
+:   本文提出"先记忆再泛化"两阶段框架，证明 LLM 可以在死记硬背合成关键 token 后，通过极少量语义微调实现泛化，挑战了"记忆阻碍泛化"的传统观点。
 
 **[When Large Multimodal Models Confront Evolving Knowledge Challenges And Explorat](when_large_multimodal_models_confront_evolving_knowledge_challenges_and_explorat.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICCV2025 图像生成方向 214篇论文解读
+  ICCV2025 图像生成方向 216篇论文解读
 description: >-
-  214篇ICCV2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  216篇ICCV2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📹 ICCV2025** · 共 **214** 篇
+**📹 ICCV2025** · 共 **216** 篇
 
 **[A0 An Affordance-Aware Hierarchical Model For General Robotic Manipulation](a0_an_affordance-aware_hierarchical_model_for_general_robotic_manipulation.md)**
 
@@ -82,6 +82,10 @@ description: >-
 
 :   提出TDSM（Triplet Diffusion for Skeleton-Text Matching），首次将扩散模型应用于零样本骨骼动作识别，通过反向扩散过程实现骨骼特征与文本prompt的隐式对齐，并引入triplet diffusion损失增强判别力，在NTU-60/120和PKU-MMD上大幅超越SOTA（2.36%到13.05%的提升幅度）。
 
+**[Bridging The Skeleton Text Modality Gap Diffusion Powered Modality Alignment For](bridging_the_skeleton_text_modality_gap_diffusion_powered_modality_alignment_for.md)**
+
+:   提出TDSM（Triplet Diffusion for Skeleton-Text Matching），首次将扩散模型应用于零样本骨骼动作识别，通过反向扩散过程实现骨骼特征与文本prompt的隐式对齐，并引入triplet diffusion损失增强判别力，在NTU-60/120和PKU-MMD上大幅超越SOTA（2.36%到13.05%的提升幅度）。
+
 **[Bvinet Unlocking Blind Video Inpainting With Zero Annotations](bvinet_unlocking_blind_video_inpainting_with_zero_annotations.md)**
 
 :   首次定义并解决"盲视频修复"（blind video inpainting）任务——在无需任何损坏区域标注的情况下，端到端地同时完成"哪里需要修复"和"如何修复"，通过 mask 预测网络与视频补全网络的一致性约束互相增强，在合成数据和真实应用（弹幕去除/划痕修复）中均取得优异效果。
@@ -105,6 +109,10 @@ description: >-
 **[Chords Diffusion Sampling Accelerator With Multi-Core Hierarchical Ode Solvers](chords_diffusion_sampling_accelerator_with_multi-core_hierarchical_ode_solvers.md)**
 
 :   提出 Chords，一种基于多核层次 ODE 求解器的扩散采样加速框架，通过慢到快的核间纠正机制（inter-core rectification），在 4-8 个 GPU 上实现 2.1×~2.9× 加速，且不牺牲生成质量。
+
+**[Chords Diffusion Sampling Accelerator With Multi Core Hierarchical Ode Solvers](chords_diffusion_sampling_accelerator_with_multi_core_hierarchical_ode_solvers.md)**
+
+:   提出 Chords，一种基于多核层级 ODE 求解器的无训练、模型无关扩散采样加速框架，通过慢到快的求解器层级和核间纠偏机制，在 4~8 个 GPU 核上实现最高 2.9× 加速而不损失生成质量。
 
 **[Cns-Bench Benchmarking Image Classifier Robustness Under Continuous Nuisance Shi](cns-bench_benchmarking_image_classifier_robustness_under_continuous_nuisance_shi.md)**
 

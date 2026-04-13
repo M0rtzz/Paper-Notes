@@ -1,18 +1,34 @@
 ---
 title: >-
-  CVPR2025 机器人/具身智能方向 9篇论文解读
+  CVPR2025 机器人/具身智能方向 14篇论文解读
 description: >-
-  9篇CVPR2025 机器人/具身智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  14篇CVPR2025 机器人/具身智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**📷 CVPR2025** · 共 **9** 篇
+**📷 CVPR2025** · 共 **14** 篇
 
 **[3D-Mvp 3D Multiview Pretraining For Manipulation](3d-mvp_3d_multiview_pretraining_for_manipulation.md)**
 
 :   提出3D-MVP，将Masked Autoencoder预训练从2D扩展到3D多视角设定——在Objaverse的200K个3D物体上预训练RVT的多视角Transformer编码器，下游微调后在RLBench上平均成功率从62.9%提升到67.5%，在COLOSSEUM上显著提升对纹理、大小、光照等环境变化的鲁棒性。
+
+**[A Data-Centric Revisit Of Pre-Trained Vision Models For Robot Learning](a_data-centric_revisit_of_pre-trained_vision_models_for_robot_learning.md)**
+
+:   通过系统评估发现DINO/iBOT在机器人任务上优于MAE但在非物体中心(NOC)数据上性能退化，原因是丧失了物体中心表示能力。提出SlotMIM方法，通过语义瓶颈（减少原型数量促进objectness涌现）和跨视图一致性正则+slot级对比学习，使模型在NOC数据上也能学到物体中心表示，仅用241K样本即超越用>1M样本的MVP/VC-1。
+
+**[Asap Advancing Semantic Alignment Promotes Multi-Modal Manipulation De](asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_de.md)**
+
+:   提出ASAP框架，通过大模型辅助对齐(LMA)、篡改引导交叉注意力(MGCA)和补丁篡改建模(PMM)三个核心模块，系统性地推进图文语义对齐以提升多模态篡改检测与定位性能——在DGM4基准上AUC达94.38%，文本定位F1达76.52%，显著超越现有方法。
+
+**[Asap Advancing Semantic Alignment Promotes Multi-Modal Manipulation Detecting An](asap_advancing_semantic_alignment_promotes_multi-modal_manipulation_detecting_an.md)**
+
+**[Chapter-Llama Efficient Chaptering In Hour-Long Videos With Llms](chapter-llama_efficient_chaptering_in_hour-long_videos_with_llms.md)**
+
+**[Drawer Digital Reconstruction And Articulation With Environment Realism](drawer_digital_reconstruction_and_articulation_with_environment_realism.md)**
+
+:   提出 DRAWER 框架，从静态场景视频自动构建可交互数字孪生，结合 SDF + 高斯泼溅双场景表示实现高保真渲染和精细几何，支持铰接体识别与仿真、Unreal Engine 游戏创建、以及 real-to-sim-to-real 机器人策略迁移。
 
 **[Expert Pyramid Tuning Efficient Parameter Fine-Tuning For Expertise-Driven Task ](expert_pyramid_tuning_efficient_parameter_fine-tuning_for_expertise-driven_task_.md)**
 

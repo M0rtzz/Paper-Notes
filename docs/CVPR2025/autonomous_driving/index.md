@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 自动驾驶方向 14篇论文解读
+  CVPR2025 自动驾驶方向 24篇论文解读
 description: >-
-  14篇CVPR2025 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  24篇CVPR2025 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**📷 CVPR2025** · 共 **14** 篇
+**📷 CVPR2025** · 共 **24** 篇
 
 **[3D-Avs Lidar-Based 3D Auto-Vocabulary Segmentation](3d-avs_lidar-based_3d_auto-vocabulary_segmentation.md)**
 
@@ -30,9 +30,45 @@ description: >-
 
 :   CAWM-Mamba 首次提出端到端统一处理红外-可见光图像融合与复合恶劣天气（如雾+雨、雨+雪）场景的框架，通过天气感知预处理、跨模态特征交互和小波域频率-SSM 解耦多频退化，在 AWMM-100K 和标准融合数据集上全面超越 SOTA。
 
+**[Certified Human Trajectory Prediction](certified_human_trajectory_prediction.md)**
+
+:   首次将随机平滑（Randomized Smoothing）认证技术引入人类轨迹预测任务，通过mean/median聚合函数和扩散去噪器为轨迹预测模型提供保证性鲁棒性——即无论输入噪声如何扰动（在半径R内），输出始终保持在认证边界内。
+
+**[Climbingcap Multi-Modal Dataset And Method For Rock Climbing In World ](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_.md)**
+
+:   构建了首个大规模攀岩运动多模态数据集 AscendMotion（412K帧，RGB+LiDAR+IMU），并提出 ClimbingCap 方法通过分离坐标解码、后处理优化和半监督训练，在世界坐标系中精确恢复攀岩者的3D运动。
+
+**[Climbingcap Multi-Modal Dataset And Method For Rock Climbing In World Coordinate](climbingcap_multi-modal_dataset_and_method_for_rock_climbing_in_world_coordinate.md)**
+
+:   提出首个攀岩运动多模态数据集 AscendMotion（412K 帧 RGB+LiDAR+IMU，22 名专业攀岩者，12 面攀岩墙），以及 ClimbingCap 方法通过分离坐标解码、三重后处理优化和半监督训练实现世界坐标系下的 3D 攀岩动作恢复，MPJPE 达 75.45mm。
+
+**[Closed-Loop Supervised Fine-Tuning Of Tokenized Traffic Models](closed-loop_supervised_fine-tuning_of_tokenized_traffic_models.md)**
+
 **[Composing Driving Worlds Through Disentangled Control For Adversarial Scenario G](composing_driving_worlds_through_disentangled_control_for_adversarial_scenario_g.md)**
 
 :   CompoSIA 提出一种基于 Flow Matching DiT 的组合式驾驶视频生成框架，通过解耦结构（3D bbox）、身份（单参考图像）和自车动作（相机轨迹）三类控制信号的注入方式，实现精细独立控制和组合编辑，用于系统化合成对抗性驾驶场景，FVD 提升 17%，碰撞率增加 173%。
+
+**[Cubify Anything Scaling Indoor 3D Object Detection](cubify_anything_scaling_indoor_3d_object_detection.md)**
+
+**[Decoupledgaussian Object-Scene Decoupling For Physics-Based Interaction](decoupledgaussian_object-scene_decoupling_for_physics-based_interaction.md)**
+
+:   将 3DGS 场景中的物体与背景解耦，使物体支持物理仿真（碰撞、抓取等），同时保持场景的高质量渲染
+
+**[Diffusiondrive Truncated Diffusion Model For End-To-End Autonomous Driving](diffusiondrive_truncated_diffusion_model_for_end-to-end_autonomous_driving.md)**
+
+:   本文提出DiffusionDrive，通过截断扩散策略（将去噪步骤从20步减少到2步）和级联扩散解码器，首次将扩散模型成功应用于端到端自动驾驶的实时多模态轨迹规划，在NAVSIM数据集上以88.1 PDMS刷新记录，同时保持45 FPS的实时速度。
+
+**[Distilling Monocular Foundation Model For Fine-Grained Depth Completion](distilling_monocular_foundation_model_for_fine-grained_depth_completion.md)**
+
+:   本文提出DMD3C，一个两阶段知识蒸馏框架，将单目深度基础模型（如Depth Anything V2）的几何知识迁移到深度补全网络，第一阶段通过合成训练数据进行预训练，第二阶段通过尺度-偏移不变损失（SSI Loss）在真实数据上微调，在KITTI深度补全排行榜上取得第一名。
+
+**[Distilling Multi-Modal Large Language Models For Autonomous Driving](distilling_multi-modal_large_language_models_for_autonomous_driving.md)**
+
+:   本文提出DiMA框架，通过联合训练在多模态大语言模型（MLLM）和视觉端到端规划器之间进行知识蒸馏，设计了遮蔽重建、未来预测和场景编辑三种代理任务来丰富场景表示，推理时可丢弃LLM仅用视觉规划器，在nuScenes上实现L2轨迹误差降低37%、碰撞率降低80%。
+
+**[Driving By The Rules A Benchmark For Integrating Traffic Sign Regulations Into V](driving_by_the_rules_a_benchmark_for_integrating_traffic_sign_regulations_into_v.md)**
+
+:   本文首次定义了将交通标志规则集成到在线向量化高精地图的任务，构建了包含10000+视频片段和18000+车道级规则的MapDR数据集，并提出模块化（VLE-MEE）和端到端（RuleVLM）两种基线方案，其中RuleVLM在整体F1指标上达到64.2%。
 
 **[Lr-Sgs Robust Lidar-Reflectance-Guided Salient Gaussian Splatting For Self-Drivi](lr-sgs_robust_lidar-reflectance-guided_salient_gaussian_splatting_for_self-drivi.md)**
 

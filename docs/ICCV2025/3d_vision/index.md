@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICCV2025 3D视觉方向 289篇论文解读
+  ICCV2025 3D视觉方向 292篇论文解读
 description: >-
-  289篇ICCV2025 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  292篇ICCV2025 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D视觉
 
-**📹 ICCV2025** · 共 **289** 篇
+**📹 ICCV2025** · 共 **292** 篇
 
 **[2D Gaussian Splattingbased Sparseview Transparent Object Dep](2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)**
 
@@ -238,6 +238,10 @@ description: >-
 
 :   提出DM-Calib——基于扩散模型的单目相机内参估计方法：设计Camera Image表示（将内参无损编码为3通道图像=方位角+仰角+灰度图），微调Stable Diffusion生成Camera Image，用RANSAC提取内参，在5个零样本数据集上超越所有基线，并将相机标定扩展到度量深度估计、位姿估计和稀疏视角3D重建。
 
+**[Boosting Multi-View Indoor 3D Object Detection Via Adaptive 3D Volume](boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume.md)**
+
+:   提出SGCDet框架，通过几何与上下文感知聚合模块（自适应特征提升）和稀疏体素构建策略（粗到细的自适应体素选择），在不依赖GT场景几何的前提下，实现了高效且高精度的多视图室内3D目标检测。
+
 **[Boosting Multi-View Indoor 3D Object Detection Via Adaptive 3D Volume Constructi](boosting_multi-view_indoor_3d_object_detection_via_adaptive_3d_volume_constructi.md)**
 
 :   SGCDet 通过自适应稀疏3D体素构建和几何-上下文感知聚合，实现了高效精准的多视图室内3D目标检测，无需真实几何监督即超越现有方法。
@@ -261,6 +265,10 @@ description: >-
 **[Boxdreamer Dreaming Box Corners For Generalizable Object Pose Estimation](boxdreamer_dreaming_box_corners_for_generalizable_object_pose_estimation.md)**
 
 :   提出 BoxDreamer，以 3D 包围盒角点作为中间表示，通过基于参考视角的点合成器预测查询图像中的 2D 角点投影，建立 2D-3D 对应关系后用 PnP 算法恢复物体位姿，在稀疏视角和严重遮挡场景下显著优于现有方法。
+
+**[Bridging 3D Anomaly Localization And Repair Via High-Qualit](bridging_3d_anomaly_localization_and_repair_via_high-qualit.md)**
+
+:   提出 PASDF 框架，通过姿态感知的签名距离函数（SDF）实现连续几何表征，统一了3D异常检测与修复任务，在 Real3D-AD 和 Anomaly-ShapeNet 上取得 SOTA。
 
 **[Bridging 3D Anomaly Localization And Repair Via High-Quality Continuous Geometri](bridging_3d_anomaly_localization_and_repair_via_high-quality_continuous_geometri.md)**
 
@@ -369,6 +377,10 @@ description: >-
 **[Cuts3D Cutting Semantics In 3D For 2D Unsupervised Instance Segmentation](cuts3d_cutting_semantics_in_3d_for_2d_unsupervised_instance_segmentation.md)**
 
 :   提出CutS3D方法，首次将3D信息（单目深度估计）引入无监督实例分割，通过在3D点云中切割语义区域来分离2D中重叠的实例，并引入空间置信度机制提升伪标签质量，在多个基准上超越CutLER等SoTA。
+
+**[Dap-Mae Domain-Adaptive Point Cloud Masked Autoencoder For E](dap-mae_domain-adaptive_point_cloud_masked_autoencoder_for_e.md)**
+
+:   提出 DAP-MAE，通过异构域适配器（HDA）和域特征生成器（DFG）协同学习多域点云数据，仅需一次预训练即可适配物体分类、表情识别、部件分割和3D检测等多种下游任务。
 
 **[Dap-Mae Domain-Adaptive Point Cloud Masked Autoencoder For Effective Cross-Domai](dap-mae_domain-adaptive_point_cloud_masked_autoencoder_for_effective_cross-domai.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 AI安全方向 47篇论文解读
+  ICLR2026 AI安全方向 49篇论文解读
 description: >-
-  47篇ICLR2026 AI安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  49篇ICLR2026 AI安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI安全
 
-**🔬 ICLR2026** · 共 **47** 篇
+**🔬 ICLR2026** · 共 **49** 篇
 
 **[Action-Free Offline-To-Online Rl Via Discretised State Policies](action-free_offline-to-online_rl_via_discretised_state_policies.md)**
 
@@ -142,6 +142,10 @@ description: >-
 
 :   本文首次研究了分布鲁棒马尔可夫博弈（DRMGs）的在线学习问题，提出 MORNAVI 算法，在无需模拟器或离线数据的情况下，通过在线交互高效学习最优鲁棒策略，并提供了 TV 散度和 KL 散度不确定性集下的首个可证明遗憾界。
 
+**[Secp-Tuning Efficient Privacy-Preserving Prompt Tuning For Large Language Mode](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_mode.md)**
+
+:   提出首个基于安全多方计算（MPC）的隐私保护提示调优框架 SecP-Tuning，通过前向调优消除反向传播开销、通过隐私保护随机特征注意力（RFA）替代 softmax 降低通信复杂度，实现约 12-16 倍加速和 17-20 倍通信量缩减。
+
 **[Secp-Tuning Efficient Privacy-Preserving Prompt Tuning For Large Language Models](secp-tuning_efficient_privacy-preserving_prompt_tuning_for_large_language_models.md)**
 
 :   提出SecP-Tuning，首个基于MPC的隐私保护Prompt微调框架——通过前向only微调(FoT)消除反向传播的隐私计算开销，用随机特征注意力(RFA)将softmax的二次复杂度降为线性且避免MPC不兼容的非线性操作，相比SFT实现12×加速和17×通信降低。
@@ -153,6 +157,10 @@ description: >-
 **[Shield Suppressing Hallucinations In Lvlm Encoders Via Bias And Vulnerability De](shield_suppressing_hallucinations_in_lvlm_encoders_via_bias_and_vulnerability_de.md)**
 
 :   首次将LVLM对象幻觉系统性追溯到视觉编码器，识别出统计偏差（高频模式token过度强调）、固有偏差（预训练主导对象的残余表示）、脆弱性（微小扰动即导致特征失真）三大问题，并提出SHIELD——一个完全免训练的框架，通过token重加权、token减法和对比解码三策略协同防御，在LLaVA-1.5/InstructBLIP/Qwen-VL上全面超越VCD和OPERA等方法。
+
+**[Skirting Additive Error Barriers For Private Turnstile Streaming](skirting_additive_error_barriers_for_private_turnstile_streaming.md)**
+
+:   本文证明了在差分隐私的 turnstile 流模型中，通过允许乘性误差（multiplicative error）可以绕过已知的多项式加性误差下界，将 distinct elements 和 F₂ 矩估计的加性误差从多项式级别降至 polylog(T)。
 
 **[Skirting Additive Error Barriers For Private Turnstile Streams](skirting_additive_error_barriers_for_private_turnstile_streams.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 推荐系统方向 19篇论文解读
+  NeurIPS2025 推荐系统方向 22篇论文解读
 description: >-
-  19篇NeurIPS2025 推荐系统方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  22篇NeurIPS2025 推荐系统方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎁 推荐系统
 
-**🧠 NeurIPS2025** · 共 **19** 篇
+**🧠 NeurIPS2025** · 共 **22** 篇
 
 **[Asap An Agentic Solution To Auto-Optimize Performance Of Large-Scale Llm Trainin](asap_an_agentic_solution_to_auto-optimize_performance_of_large-scale_llm_trainin.md)**
 
@@ -62,6 +62,10 @@ description: >-
 
 :   提出 Radial Neighborhood Estimator (RNE)，通过将隐空间距离用观测矩阵的行/列 L2 范数近似估计，构建同时包含重叠和部分重叠用户-物品对的径向邻域，用局部核回归做平滑插补，在理论保证和实验中均优于传统协同过滤和矩阵分解方法，并天然缓解冷启动问题。
 
+**[The Coming Crisis Of Multi-Agent Misalignment Ai Alignment Must Be A Dynamic And](the_coming_crisis_of_multi-agent_misalignment_ai_alignment_must_be_a_dynamic_and.md)**
+
+:   立场论文，主张多智能体系统（MAS）中的 AI 对齐应被视为动态的、依赖交互的社会过程，而非孤立问题；借鉴社会科学理论分析了社会结构如何破坏群体和个体价值，并呼吁 AI 社区建立专门的仿真环境、基准测试和评估框架来应对这一挑战。
+
 **[The More You Automate The Less You See Hidden Pitfalls Of Ai Scientist Systems](the_more_you_automate_the_less_you_see_hidden_pitfalls_of_ai_scientist_systems.md)**
 
 :   本文系统性地识别了当前 AI 科学家系统的四种方法论陷阱（不当基准选择、数据泄漏、指标误用、事后选择偏差），通过精心设计的合成任务 SPR 对 Agent Laboratory 和 The AI Scientist v2 进行受控实验，发现两个系统均存在不同程度的问题，并证明审计 trace log + 代码比仅审查最终论文的检测准确率高 27 个百分点（82% vs 55%）。
@@ -73,6 +77,14 @@ description: >-
 **[Transformer Copilot Learning From The Mistake Log In Llm Fine-Tuning](transformer_copilot_learning_from_the_mistake_log_in_llm_fine-tuning.md)**
 
 :   提出 Transformer Copilot 框架，在 LLM 微调过程中系统记录"错误日志"(Mistake Log)，训练一个辅助 Copilot 模型学习 Pilot 的错误模式，推理时通过 logits 修正提升生成质量，在 12 个基准上最高提升 34.5%。
+
+**[Tv-Rec Time-Variant Convolutional Filter For Sequential Recommendation](tv-rec_time-variant_convolutional_filter_for_sequential_recommendation.md)**
+
+:   提出 TV-Rec，基于图信号处理的时变卷积滤波器替代传统固定卷积和自注意力机制，实现更高表达力的序列推荐，在 6 个基准数据集上平均提升 7.49%。
+
+**[Validating Llm-As-A-Judge Systems Under Rating Indeterminacy](validating_llm-as-a-judge_systems_under_rating_indeterminacy.md)**
+
+:   提出在评分不确定性 (rating indeterminacy) 条件下验证 LLM-as-a-Judge 系统的框架，通过 "response set" 多标签评分方案替代强制选择评分，使选出的 judge 系统性能提升高达 31%。
 
 **[Visuallens Personalization Through Task-Agnostic Visual History](visuallens_personalization_through_task-agnostic_visual_history.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  AAAI2026 AI安全方向 60篇论文解读
+  AAAI2026 AI安全方向 61篇论文解读
 description: >-
-  60篇AAAI2026 AI安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  61篇AAAI2026 AI安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI安全
 
-**🤖 AAAI2026** · 共 **60** 篇
+**🤖 AAAI2026** · 共 **61** 篇
 
 **[Alternative Fairness And Accuracy Optimization In Criminal J](alternative_fairness_and_accuracy_optimization_in_criminal_j.md)**
 
@@ -21,6 +21,10 @@ description: >-
 **[An Information Theoretic Evaluation Metric For Strong Unlear](an_information_theoretic_evaluation_metric_for_strong_unlear.md)**
 
 :   提出 Information Difference Index (IDI)，一种基于信息论的白盒评估指标，通过度量中间层特征与遗忘标签之间的互信息来衡量机器遗忘的彻底程度，揭示了现有黑盒指标（MIA、JSD等）无法捕捉的中间层残留信息问题，并提出 COLA 方法在特征层面消除残余信息。
+
+**[An Information Theoretic Evaluation Metric For Strong Unlearning](an_information_theoretic_evaluation_metric_for_strong_unlearning.md)**
+
+:   揭示现有黑盒遗忘评估指标（MIA/JSD等）的根本缺陷——仅修改最后一层即可满足所有黑盒指标但中间层完整保留遗忘数据信息，提出IDI白盒指标通过InfoNCE估计各层与遗忘标签的互信息差异来量化遗忘效果，并提出COLA方法在CIFAR-10/100和ImageNet-1K上实现接近Retrain的IDI得分。
 
 **[An Llm-Based Simulation Framework For Embodied Conversationa](an_llm-based_simulation_framework_for_embodied_conversationa.md)**
 

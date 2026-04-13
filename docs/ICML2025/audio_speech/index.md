@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICML2025 音频/语音方向 6篇论文解读
+  ICML2025 音频/语音方向 7篇论文解读
 description: >-
-  6篇ICML2025 音频/语音方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  7篇ICML2025 音频/语音方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**🧪 ICML2025** · 共 **6** 篇
+**🧪 ICML2025** · 共 **7** 篇
 
 **[Bridging The Language Gap Synthetic Voice Diversity Via Latent Mixup For Equitab](bridging_the_language_gap_synthetic_voice_diversity_via_latent_mixup_for_equitab.md)**
 
@@ -17,6 +17,10 @@ description: >-
 **[Flam Frame-Wise Language-Audio Modeling](flam_frame-wise_language-audio_modeling.md)**
 
 :   提出 FLAM，一个帧级音频-语言对比模型，通过文本依赖的 logit 偏置校正和百万级合成 SED 数据集，实现开放词汇声音事件的精确时间定位，同时保持全局检索和零样本分类性能。
+
+**[Impact Iterative Mask-Based Parallel Decoding For Text-To-Audio Generation](impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation.md)**
+
+:   IMPACT将迭代掩码并行解码引入连续潜在空间+轻量MLP扩散头，实现文本到音频生成的高质量+快速推理，在AudioCaps上FD/FAD达SOTA且延迟接近最快的MAGNET-S。
 
 **[Omniaudio Generating Spatial Audio From 360-Degree Video](omniaudio_generating_spatial_audio_from_360-degree_video.md)**
 

@@ -1,18 +1,22 @@
 ---
 title: >-
-  NeurIPS2025 其他方向 121篇论文解读
+  NeurIPS2025 其他方向 135篇论文解读
 description: >-
-  121篇NeurIPS2025 其他方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  135篇NeurIPS2025 其他方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧠 NeurIPS2025** · 共 **121** 篇
+**🧠 NeurIPS2025** · 共 **135** 篇
 
 **[4Dgt Learning A 4D Gaussian Transformer Using Realworld Mono](4dgt_learning_a_4d_gaussian_transformer_using_realworld_mono.md)**
 
 :   提出4DGT——一种基于4D高斯的Transformer模型，完全在真实世界单目带位姿视频上训练，以前馈方式在几秒内完成动态场景重建，显著优于同类前馈网络，并达到与优化类方法可比的精度。
+
+**[A Differentiable Model Of Supply-Chain Shocks](a_differentiable_model_of_supply-chain_shocks.md)**
+
+:   用 JAX 实现可微分的供应链 Agent-Based Model（~1000 家企业），通过 GPU 并行化 + 自动微分实现比传统 ABC 快 3 个数量级的贝叶斯参数校准，为全球供应链网络的冲击传播建模铺平道路。
 
 **[A Generalized Label Shift Perspective For Crossdomain Gaze E](a_generalized_label_shift_perspective_for_crossdomain_gaze_e.md)**
 
@@ -134,6 +138,10 @@ description: >-
 
 :   本文提出 Directional Predictability Amplification (DPA)，一种基于可预测性的偏差放大度量指标，是唯一同时满足方向性、适用于平衡/非平衡数据集、能正确识别正负偏差放大的一站式指标，通过测量模型偏差与数据集偏差的相对变化来量化偏差放大程度。
 
+**[Efficient Kernelized Learning In Polyhedral Games Beyond Full-Information From C](efficient_kernelized_learning_in_polyhedral_games_beyond_full-information_from_c.md)**
+
+:   提出基于核化（kernelization）的框架，在部分信息反馈设定下为多面体博弈（Colonel Blotto、图拟阵拥堵博弈、网络拥堵博弈）设计了计算高效的无遗憾学习算法，显著改进了学习粗关联均衡（CCE）的运行时复杂度。
+
 **[Efficient Parametric Svd Of Koopman Operator For Stochastic Dynamical Systems](efficient_parametric_svd_of_koopman_operator_for_stochastic_dynamical_systems.md)**
 
 :   提出基于 low-rank approximation (LoRA) 的目标函数来学习随机动力系统 Koopman 算子的 top-k 奇异函数，完全避免了 VAMPnet/DPNet 中数值不稳定的矩阵分解操作，且梯度天然无偏。
@@ -198,6 +206,10 @@ description: >-
 
 :   发现 Feature Resonance 现象——优化已知 ID 节点表征时未知 ID 节点的表征变化显著大于 OOD 节点，且该现象与标签无关，据此提出无需多类标签的图 OOD 节点检测框架 RSL，在 13 个数据集上达到 SOTA。
 
+**[Hessian-Guided Perturbed Wasserstein Gradient Flows For Escaping Saddle Points](hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)**
+
+:   提出扰动Wasserstein梯度流(PWGF)算法，通过基于Hessian构造的高斯过程注入噪声扰动，使概率测度优化能够高效逃离鞍点并达到二阶最优性。
+
 **[Houselayout3D A Benchmark And Training-Free Baseline For 3D Layout Estimation In](houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)**
 
 :   提出 HouseLayout3D——首个面向大规模多层建筑的真实世界 3D layout 估计基准，以及 MultiFloor3D——一个无需训练的基线方法，通过组合现代 3D 重建和分割模型在多层建筑 layout 估计上超越现有深度学习方法。
@@ -214,6 +226,10 @@ description: >-
 
 :   系统揭示了LayerNorm在Pre-LN和Post-LN Transformer中的**截然不同**角色：Pre-LN中LN对学习至关重要，移除会破坏泛化；Post-LN中LN驱动记忆化，移除可抑制记忆化并恢复真实标签。
 
+**[Improving Decision Trees Through The Lens Of Parameterized Local Search](improving_decision_trees_through_the_lens_of_parameterized_local_search.md)**
+
+:   从参数化复杂度的视角分析决策树的局部搜索优化操作，揭示问题的难度来源，并证明特征数与值域大小的组合可实现固定参数可解(FPT)，同时提供了概念验证实现。
+
 **[Improving Forecasts Of Suicide Attempts For Patients With Little Data](improving_forecasts_of_suicide_attempts_for_patients_with_little_data.md)**
 
 :   提出 Latent Similarity Gaussian Process (LSGP)，将患者嵌入连续隐空间以捕获异质性，使数据稀少的患者能从相似患者"借用"预测趋势，从而改进基于 EMA 数据的自杀未遂预测。
@@ -221,6 +237,10 @@ description: >-
 **[Incomplete Multi-View Clustering Via Hierarchical Semantic Alignment And Coopera](incomplete_multi-view_clustering_via_hierarchical_semantic_alignment_and_coopera.md)**
 
 :   提出 HSACC 框架，通过双层语义空间设计（低层互信息对齐 + 高层自适应加权融合）和联合优化的缺失视图隐式恢复策略，解决不完整多视图聚类中静态融合和两阶段流水线（先补全后聚类）的误差传播问题，在 5 个基准数据集上全面超越 SOTA。
+
+**[Information-Computation Tradeoffs For Noiseless Linear Regression With Oblivious](information-computation_tradeoffs_for_noiseless_linear_regression_with_oblivious.md)**
+
+:   对无噪声线性回归在Oblivious污染模型下，形式化证明任何高效Statistical Query算法都需要 $\tilde{\Omega}(d^{1/2}/\alpha^2)$ 的VSTAT复杂度，给出了 $1/\alpha$ 的二次依赖对高效算法具有本质性的计算下界证据。
 
 **[Is Prm Necessary Problem-Solving Rl Implicitly Induces Prm Capability In Llms](is_prm_necessary_problem-solving_rl_implicitly_induces_prm_capability_in_llms.md)**
 
@@ -237,6 +257,10 @@ description: >-
 **[Learning-Augmented Online Bipartite Fractional Matching](learning-augmented_online_bipartite_fractional_matching.md)**
 
 :   本文提出了两个学习增强算法（LAB 和 PAW），用于在线二部分数匹配问题，在给定可能不准确的建议匹配的情况下，首次在整个鲁棒性范围内 Pareto 优于朴素的 CoinFlip 策略。
+
+**[Learning-Augmented Streaming Algorithms For Correlation Clustering](learning-augmented_streaming_algorithms_for_correlation_clustering.md)**
+
+:   提出了首个面向相关聚类（Correlation Clustering）的学习增强流算法，利用成对距离预测，在完全图上实现优于3的近似比（$\tilde{O}(n)$ 空间），在一般图上实现 $O(\log|E^-|)$ 近似比（$\tilde{O}(n)$ 空间），在空间-近似比权衡上显著改进了已有的非学习算法。
 
 **[Learning Dynamics Of Rnns In Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)**
 
@@ -314,13 +338,25 @@ description: >-
 
 :   本文提出利用离散图曲率（Forman-Ricci 和 Ollivier-Ricci 曲率）分析超扫描（hyperscanning）中的脑间网络动态重构，克服传统基于相关性的脑间同步性指标在机制性解释方面的局限。
 
+**[On Agnostic Pac Learning In The Small Error Regime](on_agnostic_pac_learning_in_the_small_error_regime.md)**
+
+:   本文在不可知 PAC 学习的小误差域（$\tau \approx d/m$）中，构造了一个基于 ERM 聚合的计算高效学习器，实现了 $c \cdot \tau + O(\sqrt{\tau d/m} + d/m)$ 的误差上界（$c \leq 2.1$），匹配了已知下界，推进了不可知学习的精确复杂度刻画。
+
 **[On The Surprising Effectiveness Of Large Learning Rates Under Standard Width Sca](on_the_surprising_effectiveness_of_large_learning_rates_under_standard_width_sca.md)**
 
 :   揭示在标准参数化(SP)下，cross-entropy 损失函数使得"不稳定"区间实际分为灾难性不稳定和受控发散两个子区间：在受控发散区间（学习率 $\eta_n = \Theta(n^{-1/2})$）logits 发散但梯度和激活保持稳定，从而首次为 SP 提供了一个实用的、具有特征学习能力的无穷宽极限。
 
+**[On Topological Descriptors For Graph Products](on_topological_descriptors_for_graph_products.md)**
+
+:   系统研究在图的（box）积上施加各种滤过时拓扑描述子（欧拉特征 EC 和持续同调 PH）的表达能力，证明 PH 图积描述子严格强于对单图的计算，而 EC 不具备此性质，并给出高效 PH 计算算法。
+
 **[On Universality Classes Of Equivariant Networks](on_universality_classes_of_equivariant_networks.md)**
 
 :   本文证明等变神经网络的分离能力（区分对称等价输入的能力）不足以完全刻画其表达能力——具有相同分离能力的模型可能拥有不同的逼近能力，并给出了浅层不变网络通用性类的完整刻画及失败的充分条件。
+
+**[One Sample Is Enough To Make Conformal Prediction Robust](one_sample_is_enough_to_make_conformal_prediction_robust.md)**
+
+:   提出 RCP1（单样本鲁棒共形预测），通过认证共形过程本身而非单个 conformity score，仅需一次随机扰动前向传播即可获得比需要 100 次前向传播的 SOTA 方法更小的鲁棒预测集。
 
 **[Optimism Without Regularization Constant Regret In Zero-Sum Games](optimism_without_regularization_constant_regret_in_zero-sum_games.md)**
 
@@ -390,6 +426,18 @@ description: >-
 
 :   证明残差网络与前馈网络居于不同的函数空间（非简单重参数化），并通过后训练部分线性化实验表明变深度架构（类ResNet）即使在排除可训练性差异后仍优于固定深度架构，暗示残差连接提供了超越优化的归纳偏好。
 
+**[Rethinking Pca Through Duality](rethinking_pca_through_duality.md)**
+
+:   通过 Difference-of-Convex (DC) 框架重新审视 PCA,建立了核化和样本外推广能力,揭示了同步迭代是 DCA 的特例,并提出了鲁棒 $\ell_1$-PCA 的核化对偶公式。
+
+**[Revisiting Agnostic Boosting](revisiting_agnostic_boosting.md)**
+
+:   提出新的不可知 Boosting 算法,在非常一般的假设下大幅改善了此前工作的样本复杂度,并建立近匹配下界,从而在对数因子意义下解决了不可知 Boosting 的样本复杂度问题。
+
+**[Rnns Perform Task Computations By Dynamically Warping Neural Representations](rnns_perform_task_computations_by_dynamically_warping_neural_representations.md)**
+
+:   提出一种黎曼几何框架来分析RNN如何通过动态变形（warping）神经表示的几何结构来执行计算任务，揭示了动态变形是RNN计算的基本特征。
+
 **[Robust Sampling For Active Statistical Inference](robust_sampling_for_active_statistical_inference.md)**
 
 :   提出基于预算保持路径的鲁棒采样策略，通过在均匀采样和主动采样之间最优插值，确保估计器的方差永远不比两者中任何一个更差，解决了主动统计推断中不确定性估计不准确导致性能恶化的问题。
@@ -450,6 +498,10 @@ description: >-
 
 :   系统梳理了ReLU网络"线性区域"的六种非等价定义，证明对所有定义计数线性区域都是#P-hard的（一层隐藏层即如此），并在多层网络中证明了强不可近似结果和多项式空间上界。
 
+**[The Cost Of Robustness Tighter Bounds On Parameter Complexity For Robust Memoriz](the_cost_of_robustness_tighter_bounds_on_parameter_complexity_for_robust_memoriz.md)**
+
+:   研究 ReLU 网络鲁棒记忆（robust memorization）的参数复杂度，即在保证每个训练样本 $\mu$-邻域内预测一致的条件下插值任意数据集所需的参数数量，在鲁棒性比率 $\rho = \mu/\epsilon$ 的全范围 $(0,1)$ 内建立了更紧的上下界。
+
 **[The Parameterized Complexity Of Computing The Vc-Dimension](the_parameterized_complexity_of_computing_the_vc-dimension.md)**
 
 :   本文系统研究了计算VC维的参数化复杂性，证明朴素穷举算法在ETH假设下是渐近最优的，提出按最大度参数化的FPT 1-可加近似算法和按树宽参数化的2^{O(tw·log tw)}·|V|时间精确算法。
@@ -461,6 +513,10 @@ description: >-
 **[The Structural Complexity Of Matrix-Vector Multiplication](the_structural_complexity_of_matrix-vector_multiplication.md)**
 
 :   证明对于 corrupted VC-dimension 为 $d$ 的布尔矩阵 $\mathbf{M} \in \{0,1\}^{m \times n}$，矩阵-向量乘法可在 $\widetilde{O}(nm^{1-1/d}+m)$ 时间内完成，首次为结构化矩阵提供了真亚二次时间上界，推翻了 OMv 猜想在结构化输入上的适用性，并导出了动态 Laplacian 求解器、有效电阻、三角检测等问题的首个高精度亚二次算法。
+
+**[Tight Bounds On The Distortion Of Randomized And Deterministic Distributed Votin](tight_bounds_on_the_distortion_of_randomized_and_deterministic_distributed_votin.md)**
+
+:   本文研究分布式投票模型中的度量扭曲 (metric distortion) 问题，针对四种代价目标 ($\text{avg-avg}$, $\text{avg-max}$, $\text{max-avg}$, $\text{max-max}$)，在确定性和随机机制下给出了改进的紧界或近紧界，几乎完整地刻画了这一模型的扭曲特性。
 
 **[Training The Untrainable Introducing Inductive Bias Via Representational Alignme](training_the_untrainable_introducing_inductive_bias_via_representational_alignme.md)**
 

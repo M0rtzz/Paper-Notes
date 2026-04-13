@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 LLM评测方向 46篇论文解读
+  ICLR2026 LLM评测方向 51篇论文解读
 description: >-
-  46篇ICLR2026 LLM评测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  51篇ICLR2026 LLM评测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM评测
 
-**🔬 ICLR2026** · 共 **46** 篇
+**🔬 ICLR2026** · 共 **51** 篇
 
 **[Accessible Realistic And Fair Evaluation Of Positive-Unlabeled Learning Algorith](accessible_realistic_and_fair_evaluation_of_positive-unlabeled_learning_algorith.md)**
 
@@ -114,9 +114,17 @@ description: >-
 
 :   提出 rBridge，通过使用 frontier 模型的推理 trace 作为 gold label 并按 token 级任务对齐加权 NLL，使 ≤1B 的小模型能有效预测 13B-32B 大模型的推理性能，在数据集排名任务中实现 100× 以上的计算节省。
 
+**[Predicting Llm Reasoning Performance With Small Proxy Models](predicting_llm_reasoning_performance_with_small_proxy_models.md)**
+
+:   提出 rBridge 方法，通过结合前沿模型推理轨迹 (reasoning trace) 的 NLL 评估与 token 级任务对齐权重，使 ≤1B 的小模型能有效预测 13B-32B 大模型的推理性能，数据排序计算成本降低 100 倍以上。
+
 **[Preference Leakage A Contamination Problem In Llm-As-A-Judge](preference_leakage_a_contamination_problem_in_llm-as-a-judge.md)**
 
 :   首次定义并系统研究 LLM-as-a-Judge 中的 **偏好泄漏 (Preference Leakage)** 问题——当合成数据生成器 $M_G$ 与评估器 $M_J$ 存在关联（同模型/继承/同家族）时，评委会对"相关学生模型"产生系统性偏好，同模型场景下 PLS 高达 28.7%（Arena-Hard），且该偏差比自中心偏差更隐蔽、更难检测。
+
+**[Prompt And Parameter Co-Optimization For Large Language Model Task Adaptation](prompt_and_parameter_co-optimization_for_large_language_model_task_adaptation.md)**
+
+:   提出 MetaTuner 框架，通过共享元编码器同时生成查询特定的提示和 LoRA 参数，使提示优化与微调相互增强，并设计监督正则化损失解决离散-连续混合优化问题，在 MATH、GSM8K、HotpotQA、CosmosQA 上一致超越独立的提示优化和微调方法。
 
 **[Prompt And Parameter Co-Optimization For Large Language Models](prompt_and_parameter_co-optimization_for_large_language_models.md)**
 
@@ -137,6 +145,10 @@ description: >-
 **[Simpletom Exposing The Gap Between Explicit Tom Inference And Implicit Tom Appli](simpletom_exposing_the_gap_between_explicit_tom_inference_and_implicit_tom_appli.md)**
 
 :   SimpleToM 揭示了 LLM 在 Theory of Mind 上的关键缺陷：前沿模型能准确推断他人心理状态（显式 ToM），但在将此知识应用于行为预测和行为判断时性能急剧下降（应用 ToM），暴露了"知道什么"与"如何使用所知"之间的重大鸿沟。
+
+**[Simuhome A Temporal- And Environment-Aware Benchmark For Smart Home Agents](simuhome_a_temporal-_and_environment-aware_benchmark_for_smart_home_agents.md)**
+
+:   SimuHome 是一个基于 Matter 协议的高保真智能家居仿真器和 600 集评估基准，支持环境变量动态变化和时间加速调度评估，揭示了工作流调度是当前 LLM 代理最持久的挑战。
 
 **[Soft Quality-Diversity Optimization](soft_quality-diversity_optimization.md)**
 
@@ -170,6 +182,10 @@ description: >-
 
 :   识别并形式化"未索引信息检索"(UIS) 问题——搜索引擎无法直接检索的动态网页/嵌入文件/交互式内容，提出首个 UIS 基准 UIS-QA（110 题）和多 Agent 框架 UIS-Digger，以 ~30B 参数模型经 SFT+RFT 训练后达到 27.27% 准确率，超越集成 O3/GPT-4.1 的系统。
 
+**[Unpacking Human Preference For Llms Demographically Aware Evaluation Of Long-Fo](unpacking_human_preference_for_llms_demographically_aware_evaluation_of_long-fo.md)**
+
+:   提出 HUMAINE 框架，通过 23,404 名人口统计分层参与者对 28 个 SOTA 模型进行多维度（5 维）、多轮对话的人类偏好评估，用层次贝叶斯 BTD 模型揭示年龄是偏好异质性的最大驱动因素（平均排名偏移 ±2.8），证明单一聚合排行榜不足以反映不同人群的真实偏好。
+
 **[Unpacking Human Preference For Llms Demographically Aware Evaluation With The Hu](unpacking_human_preference_for_llms_demographically_aware_evaluation_with_the_hu.md)**
 
 :   提出 HUMAINE 框架，通过 23,404 名人口统计学分层参与者对 28 个模型的多维度评估，揭示了人类偏好中年龄是最大分歧轴、单一排行榜掩盖关键差异的发现。
@@ -181,6 +197,10 @@ description: >-
 **[When And Where To Reset Matters For Long-Term Test-Time Adaptation](when_and_where_to_reset_matters_for_long-term_test-time_adaptation.md)**
 
 :   ASR提出自适应选择性重置方案，通过预测集中度 $\mathcal{C}_t$ 动态判断何时重置（避免固定周期的次优性），通过从output层向input层渐进的层选择策略判断重置哪些层（保留有价值的适应知识），配合importance-aware正则化恢复被重置的关键知识和on-the-fly适应调整，在CCC-Hard上比SOTA提升44.12%。
+
+**[When Priors Backfire On The Vulnerability Of Unlearnable Examples To Data Augmen](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_data_augmen.md)**
+
+:   揭示了 Unlearnable Examples (UE) 在面对预训练模型时的根本脆弱性——预训练先验使模型绕过 UE 注入的虚假快捷方式，并提出 BAIT 双层优化框架通过将扰动绑定到错误标签来对抗预训练先验。
 
 **[When Priors Backfire On The Vulnerability Of Unlearnable Examples To Pretraining](when_priors_backfire_on_the_vulnerability_of_unlearnable_examples_to_pretraining.md)**
 

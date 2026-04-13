@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2026 1321篇论文解读
+  CVPR2026 1328篇论文解读
 description: >-
-  1321篇CVPR2026论文深度解读，每篇5分钟读懂核心思想。覆盖多模态VLM、3D视觉、图像生成、医学图像、自动驾驶、语义分割等40个研究领域，每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  1328篇CVPR2026论文深度解读，每篇5分钟读懂核心思想。覆盖多模态VLM、3D视觉、图像生成、医学图像、自动驾驶、语义分割等40个研究领域，每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2026 论文笔记
 
-共 **1321** 篇笔记，覆盖 **40** 个领域。
+共 **1328** 篇笔记，覆盖 **40** 个领域。
 
 ## 领域概览
 
@@ -16,25 +16,25 @@ description: >-
 |:-----|-----:|
 | 🧩 [多模态VLM](#multimodal_vlm) | 173 |
 | 🧊 [3D视觉](#3d_vision) | 172 |
-| 🎨 [图像生成](#image_generation) | 163 |
+| 🎨 [图像生成](#image_generation) | 164 |
 | 🏥 [医学图像](#medical_imaging) | 130 |
 | 🚗 [自动驾驶](#autonomous_driving) | 78 |
 | ✂️ [语义分割](#segmentation) | 70 |
 | 🎬 [视频理解](#video_understanding) | 62 |
-| 🎯 [目标检测](#object_detection) | 60 |
+| 🎯 [目标检测](#object_detection) | 61 |
 | 🧑 [人体理解](#human_understanding) | 48 |
-| 🤖 [机器人/具身智能](#robotics) | 39 |
+| 🤖 [机器人/具身智能](#robotics) | 40 |
 | 📦 [模型压缩](#model_compression) | 34 |
 | 🔬 [可解释性](#interpretability) | 29 |
 | 🖼️ [图像恢复](#image_restoration) | 25 |
 | 🛡️ [AI安全](#ai_safety) | 18 |
+| 🛰️ [遥感](#remote_sensing) | 17 |
 | 🔄 [自监督/表示学习](#self_supervised) | 17 |
-| 🛰️ [遥感](#remote_sensing) | 16 |
 | 🎵 [音频/语音](#audio_speech) | 15 |
-| 🎮 [强化学习](#reinforcement_learning) | 14 |
+| 🎮 [强化学习](#reinforcement_learning) | 15 |
+| 🦾 [LLM Agent](#llm_agent) | 13 |
 | 📊 [LLM评测](#llm_evaluation) | 13 |
-| 🦾 [LLM Agent](#llm_agent) | 12 |
-| 💡 [LLM推理](#llm_reasoning) | 12 |
+| 💡 [LLM推理](#llm_reasoning) | 13 |
 | ⚖️ [对齐/RLHF](#llm_alignment) | 11 |
 | 📚 [预训练/数据](#llm_pretraining) | 8 |
 | 📐 [优化/理论](#optimization) | 8 |
@@ -1590,6 +1590,10 @@ description: >-
 **[Cinematic Audio Source Separation Using Visual Cues](image_generation/cinematic_audio_source_separation_using_visual_cues.md)**
 
 :   提出首个音视频影视音频源分离（AV-CASS）框架，利用面部和场景双视频流的视觉线索，通过条件流匹配进行生成式三路音频分离（语音/音效/音乐），仅在合成数据上训练即可泛化到真实电影。
+
+**[Circuit Mechanisms For Spatial Relation Generation In Diffusion Models](image_generation/circuit_mechanisms_for_spatial_relation_generation_in_diffusion_models.md)**
+
+:   通过机械可解释性方法揭示了扩散Transformer（DiT）生成空间关系的内部电路机制：随机嵌入模型使用两阶段模块化电路（关系头+物体生成头），T5编码器模型则将关系信息融合到物体token中通过单token解码，两种机制的鲁棒性差异显著。
 
 **[Circuit Mechanisms For Spatial Relation Generation In Diffusion Transformers](image_generation/circuit_mechanisms_for_spatial_relation_generation_in_diffusion_transformers.md)**
 
@@ -3541,6 +3545,10 @@ description: >-
 
 :   提出 DA-Mamba，一种 CNN-SSM 混合架构，通过 Image-Aware SSM（IA-SSM）和 Object-Aware SSM（OA-SSM）两个模块，以线性复杂度实现图像级和实例级的全局-局部域不变特征对齐，在四个域自适应检测基准上达到 SOTA。
 
+**[Detecting Unknown Objects Via Energy-Based Separation](object_detection/detecting_unknown_objects_via_energy-based_separation.md)**
+
+:   提出 DEUS 框架，通过 ETF 子空间未知目标分离（EUS）在几何正交的已知/未知子空间中利用能量分数有效分离已知、未知和背景提案，并设计能量基已知区分损失（EKD）减少增量学习中新旧类的交叉干扰，在 OWOD 基准上大幅提升未知目标召回率。
+
 **[Detecting Unknown Objects Via Energy-Based Separation For Open World Object Dete](object_detection/detecting_unknown_objects_via_energy-based_separation_for_open_world_object_dete.md)**
 
 :   提出 DEUS 框架，通过 Simplex ETF 构建正交的已知/未知子空间并用能量分数引导特征分离（EUS），同时用能量区分损失（EKD）缓解新旧类别间的干扰，在 OWOD 基准上取得了大幅领先的未知目标召回率。
@@ -3952,6 +3960,10 @@ description: >-
 **[Dawn Pixel Motion Diffusion Robot Control](robotics/dawn_pixel_motion_diffusion_robot_control.md)**
 
 :   提出 DAWN，一个两阶段全扩散的视觉语言动作框架——Motion Director（潜扩散模型）生成稠密像素运动场作为可解释的中间表示，Action Expert（扩散 Transformer 策略）将像素运动转换为可执行机器人动作；在 CALVIN 基准上取得 SOTA（平均长度 4.00），并在真实世界单臂/双臂操控中展现强泛化能力。
+
+**[Diagnose Correct And Learn From Manipulation Failures](robotics/diagnose_correct_and_learn_from_manipulation_failures.md)**
+
+:   提出 ViFailback 框架，利用显式视觉符号（箭头、准星等）高效标注真实世界机器人操作失败数据，构建 58,128 条 VQA 对的大规模数据集，并微调得到 ViFailback-8B 模型，在真实机器人实验中结合 VLA 模型实现失败恢复，平均成功率提升 22.2%。
 
 **[Diagnose Correct And Learn From Manipulation Failures Via Visual Symbols](robotics/diagnose_correct_and_learn_from_manipulation_failures_via_visual_symbols.md)**
 
@@ -4513,6 +4525,78 @@ description: >-
 
 ---
 
+## 🛰️ 遥感 { #remote_sensing }
+
+**[Acpv-Net All-Class Polygonal Vectorization For Seamless Vector Map Generation Fr](remote_sensing/acpv-net_all-class_polygonal_vectorization_for_seamless_vector_map_generation_fr.md)**
+
+:   提出 ACPV-Net，首个从航空影像一次性生成拓扑一致的全类别多边形矢量地图的框架，通过语义监督条件化扩散模型生成顶点热图，并借助命题驱动的 PSLG 重建确保零间隙/零重叠。
+
+**[Asking Like Socrates Socrates Helps Vlms Understand Remote Sensing Images](remote_sensing/asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)**
+
+:   揭示遥感VLM中的"伪推理"现象（显式推理链反而导致性能下降），归因于"一瞥效应"（单次粗浅感知不足），提出RS-EoT(Evidence-of-Thought)迭代证据搜索范式，通过SocraticAgent自博弈合成推理轨迹做SFT冷启动，再用两阶段渐进RL（grounding→VQA）增强和泛化，RS-EoT-7B在多个遥感VQA和grounding基准上达SOTA。
+
+**[Avion Aerial Vision-Language Instruction From Offline Teacher To Prompt-Tuned Ne](remote_sensing/avion_aerial_vision-language_instruction_from_offline_teacher_to_prompt-tuned_ne.md)**
+
+:   提出 AVION 知识蒸馏框架，通过 LLM 生成语义丰富的文本原型和视觉-文本双侧提示调优，解决遥感 VLM 适配中的语义贫乏和视觉刚性问题，在少样本分类、基类到新类泛化和跨模态检索上全面超越 SOTA。
+
+**[Avion Aerial Visionlanguage Instruction From Offli](remote_sensing/avion_aerial_visionlanguage_instruction_from_offli.md)**
+
+:   提出 AVION 蒸馏框架，通过 LLM 生成并视觉验证的文本原型解决遥感 VLM 的"语义贫乏"，通过双模态 Prompt Tuning 解决"视觉刚性"，在 6 个遥感基准上实现少样本和 base-to-novel 同时提升。
+
+**[Cross-Modal Fuzzy Alignment Network For Text-Aerial Person Retrieval And A Large](remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)**
+
+:   提出跨模态模糊对齐网络 CFAN，利用模糊逻辑量化 token 级可靠性实现精细对齐，并引入地面视图作为桥接代理缓解航拍图像与文本的语义鸿沟，同时构建了大规模文本-航拍行人检索基准 AERI-PEDES。
+
+**[Exploring Spatiotemporal Feature Propagation For Video-Level Compressive Spectra](remote_sensing/exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)**
+
+:   首次将光谱压缩成像 (SCI) 从图像级推进到视频级重建，构建了首个高质量动态高光谱数据集 DynaSpec，提出 PG-SVRT Transformer 通过时空特征传播实现高光谱视频高质量、时间一致的重建。
+
+**[Geoflow Real-Time Fine-Grained Cross-View Geolocalization](remote_sensing/geoflow_real-time_fine-grained_cross-view_geolocalization.md)**
+
+:   提出 GeoFlow，一种受流匹配启发的轻量级跨视图精细地理定位框架，通过学习概率位移场结合迭代精化采样（IRS）算法，在连续空间内实现从地面图像到卫星图像的精确 2-DoF 定位，以 29 FPS 的实时速度达到了与 SOTA 可比的精度。
+
+**[Geoflow Real-Time Fine-Grained Cross-View Geolocalization Via Iterative Flow Pre](remote_sensing/geoflow_real-time_fine-grained_cross-view_geolocalization_via_iterative_flow_pre.md)**
+
+:   提出GeoFlow，将精细跨视图地理定位(FG-CVG)重新表述为概率位移回归——模型学习从任意假设位置到真实位置的位移场(距离+方向的概率分布)，配合迭代精化采样(IRS)算法让多个随机假设从不同起点"流向"共识位置，以7.8×更少参数和4×更少计算量实现29FPS实时推理+竞争性定位精度。
+
+**[Joint And Streamwise Distributed Mimo Satellite Co](remote_sensing/joint_and_streamwise_distributed_mimo_satellite_co.md)**
+
+:   针对多LEO卫星协同服务多天线地面用户的下行链路，基于统计CSI提出联合非相干传输（WMMSE迭代预编码，支持一般凸功率约束）和流式分布传输（每流由单颗卫星发送，通过匈牙利算法做特征模式-卫星关联），在UE侧信道正交时流式传输几乎无损，非正交时呈现性能-开销权衡。
+
+**[Joint And Streamwise Distributed Mimo Satellite Communications With Multi-Antenn](remote_sensing/joint_and_streamwise_distributed_mimo_satellite_communications_with_multi-antenn.md)**
+
+:   提出面向多天线地面用户的分布式LEO卫星下行链路两种传输方案（联合传输 & 流式传输），通过基于统计CSI的WMMSE预编码设计和基于匈牙利算法的流-卫星关联策略，在无需卫星间相位同步的前提下实现了高频谱效率与低前传开销的灵活折中。
+
+**[Lumosaic Hyperspectral Video Via Active Illumination And Coded-Exposure Pixels](remote_sensing/lumosaic_hyperspectral_video_via_active_illumination_and_coded-exposure_pixels.md)**
+
+:   Lumosaic 是紧凑的主动高光谱视频系统，将窄带 LED 阵列与编码曝光像素 (CEP) 相机结合，在每帧视频内联合编码空间-时间-光谱信息，实现 30fps VGA 31 通道（400-700nm）运动鲁棒高光谱视频。
+
+**[Metaspectra A Compact Broadband Metasurface Camera](remote_sensing/metaspectra_a_compact_broadband_metasurface_camera.md)**
+
+:   提出MetaSpectra+，一种基于双层超表面-折射光学混合设计的紧凑型相机，可在单次快照中同时获取高光谱数据立方体和HDR/偏振图像，工作带宽达250nm覆盖几乎整个可见光谱，在基准数据集上实现了最高的高光谱重建精度和最短的系统总光程长度。
+
+**[Metaspectra A Compact Broadband Metasurface Camera For Snapshot Hyperspectral Im](remote_sensing/metaspectra_a_compact_broadband_metasurface_camera_for_snapshot_hyperspectral_im.md)**
+
+:   MetaSpectra+ 利用新型超表面-折射透镜混合光学系统，将入射光分为 4 个独立可控色散/曝光/偏振的通道，实现最紧凑且精度最高的快照式高光谱+HDR/偏振多功能成像。
+
+**[No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](remote_sensing/no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)**
+
+:   无监督在线视频稳定框架，经典三阶段管线+多线程缓冲，引入UAV多模态航拍测试集
+
+**[Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](remote_sensing/olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)**
+
+:   首个大规模真实航拍反照率-着色分解数据集（5664张UAV图像），通过物理逆渲染管线生成真值
+
+**[Rho Robust Holistic Osm-Based Metric Cross-View Geo-Localization](remote_sensing/rho_robust_holistic_osm-based_metric_cross-view_geo-localization.md)**
+
+:   提出首个面向恶劣天气和传感器噪声的OSM-based度量级跨视角定位基准CV-RHO（270万+ 图像），并设计双分支Pin-Pan架构RHO模型，结合全景去畸变（SUM）和位置-朝向融合（POF）机制，在多种退化条件下将定位性能提升高达20%。
+
+**[Sdfnet Structureaware Disentangled Feature Learnin](remote_sensing/sdfnet_structureaware_disentangled_feature_learnin.md)**
+
+:   提出SDF-Net——物理引导的结构感知解耦特征学习网络，通过中间层梯度能量提取几何结构一致性(SCL)和终端层共享/模态专用特征解耦(DFL)+无参数加法融合，在HOSS-ReID上mAP达60.9%(+3.5% vs SOTA TransOSS)。
+
+---
+
 ## 🔄 自监督/表示学习 { #self_supervised }
 
 **[Bd-Merging Bias-Aware Dynamic Model Merging With Evidence-Guided Contrastive Lea](self_supervised/bd-merging_bias-aware_dynamic_model_merging_with_evidence-guided_contrastive_lea.md)**
@@ -4582,74 +4666,6 @@ description: >-
 **[Vit Need More Than Registers](self_supervised/vit_need_more_than_registers.md)**
 
 :   系统揭示ViT注意力伪影的根因是"惰性聚合"——全局注意力+粗粒度语义监督驱动模型用语义无关的背景patch作为全局语义的捷径表示，提出选择性patch特征集成方案在12个基准上跨三种监督范式一致提升性能。
-
----
-
-## 🛰️ 遥感 { #remote_sensing }
-
-**[Acpv-Net All-Class Polygonal Vectorization For Seamless Vector Map Generation Fr](remote_sensing/acpv-net_all-class_polygonal_vectorization_for_seamless_vector_map_generation_fr.md)**
-
-:   提出 ACPV-Net，首个从航空影像一次性生成拓扑一致的全类别多边形矢量地图的框架，通过语义监督条件化扩散模型生成顶点热图，并借助命题驱动的 PSLG 重建确保零间隙/零重叠。
-
-**[Asking Like Socrates Socrates Helps Vlms Understand Remote Sensing Images](remote_sensing/asking_like_socrates_socrates_helps_vlms_understand_remote_sensing_images.md)**
-
-:   揭示遥感VLM中的"伪推理"现象（显式推理链反而导致性能下降），归因于"一瞥效应"（单次粗浅感知不足），提出RS-EoT(Evidence-of-Thought)迭代证据搜索范式，通过SocraticAgent自博弈合成推理轨迹做SFT冷启动，再用两阶段渐进RL（grounding→VQA）增强和泛化，RS-EoT-7B在多个遥感VQA和grounding基准上达SOTA。
-
-**[Avion Aerial Vision-Language Instruction From Offline Teacher To Prompt-Tuned Ne](remote_sensing/avion_aerial_vision-language_instruction_from_offline_teacher_to_prompt-tuned_ne.md)**
-
-:   提出 AVION 知识蒸馏框架，通过 LLM 生成语义丰富的文本原型和视觉-文本双侧提示调优，解决遥感 VLM 适配中的语义贫乏和视觉刚性问题，在少样本分类、基类到新类泛化和跨模态检索上全面超越 SOTA。
-
-**[Avion Aerial Visionlanguage Instruction From Offli](remote_sensing/avion_aerial_visionlanguage_instruction_from_offli.md)**
-
-:   提出 AVION 蒸馏框架，通过 LLM 生成并视觉验证的文本原型解决遥感 VLM 的"语义贫乏"，通过双模态 Prompt Tuning 解决"视觉刚性"，在 6 个遥感基准上实现少样本和 base-to-novel 同时提升。
-
-**[Cross-Modal Fuzzy Alignment Network For Text-Aerial Person Retrieval And A Large](remote_sensing/cross-modal_fuzzy_alignment_network_for_text-aerial_person_retrieval_and_a_large.md)**
-
-:   提出跨模态模糊对齐网络 CFAN，利用模糊逻辑量化 token 级可靠性实现精细对齐，并引入地面视图作为桥接代理缓解航拍图像与文本的语义鸿沟，同时构建了大规模文本-航拍行人检索基准 AERI-PEDES。
-
-**[Exploring Spatiotemporal Feature Propagation For Video-Level Compressive Spectra](remote_sensing/exploring_spatiotemporal_feature_propagation_for_video-level_compressive_spectra.md)**
-
-:   首次将光谱压缩成像 (SCI) 从图像级推进到视频级重建，构建了首个高质量动态高光谱数据集 DynaSpec，提出 PG-SVRT Transformer 通过时空特征传播实现高光谱视频高质量、时间一致的重建。
-
-**[Geoflow Real-Time Fine-Grained Cross-View Geolocalization Via Iterative Flow Pre](remote_sensing/geoflow_real-time_fine-grained_cross-view_geolocalization_via_iterative_flow_pre.md)**
-
-:   提出GeoFlow，将精细跨视图地理定位(FG-CVG)重新表述为概率位移回归——模型学习从任意假设位置到真实位置的位移场(距离+方向的概率分布)，配合迭代精化采样(IRS)算法让多个随机假设从不同起点"流向"共识位置，以7.8×更少参数和4×更少计算量实现29FPS实时推理+竞争性定位精度。
-
-**[Joint And Streamwise Distributed Mimo Satellite Co](remote_sensing/joint_and_streamwise_distributed_mimo_satellite_co.md)**
-
-:   针对多LEO卫星协同服务多天线地面用户的下行链路，基于统计CSI提出联合非相干传输（WMMSE迭代预编码，支持一般凸功率约束）和流式分布传输（每流由单颗卫星发送，通过匈牙利算法做特征模式-卫星关联），在UE侧信道正交时流式传输几乎无损，非正交时呈现性能-开销权衡。
-
-**[Joint And Streamwise Distributed Mimo Satellite Communications With Multi-Antenn](remote_sensing/joint_and_streamwise_distributed_mimo_satellite_communications_with_multi-antenn.md)**
-
-:   提出面向多天线地面用户的分布式LEO卫星下行链路两种传输方案（联合传输 & 流式传输），通过基于统计CSI的WMMSE预编码设计和基于匈牙利算法的流-卫星关联策略，在无需卫星间相位同步的前提下实现了高频谱效率与低前传开销的灵活折中。
-
-**[Lumosaic Hyperspectral Video Via Active Illumination And Coded-Exposure Pixels](remote_sensing/lumosaic_hyperspectral_video_via_active_illumination_and_coded-exposure_pixels.md)**
-
-:   Lumosaic 是紧凑的主动高光谱视频系统，将窄带 LED 阵列与编码曝光像素 (CEP) 相机结合，在每帧视频内联合编码空间-时间-光谱信息，实现 30fps VGA 31 通道（400-700nm）运动鲁棒高光谱视频。
-
-**[Metaspectra A Compact Broadband Metasurface Camera](remote_sensing/metaspectra_a_compact_broadband_metasurface_camera.md)**
-
-:   提出MetaSpectra+，一种基于双层超表面-折射光学混合设计的紧凑型相机，可在单次快照中同时获取高光谱数据立方体和HDR/偏振图像，工作带宽达250nm覆盖几乎整个可见光谱，在基准数据集上实现了最高的高光谱重建精度和最短的系统总光程长度。
-
-**[Metaspectra A Compact Broadband Metasurface Camera For Snapshot Hyperspectral Im](remote_sensing/metaspectra_a_compact_broadband_metasurface_camera_for_snapshot_hyperspectral_im.md)**
-
-:   MetaSpectra+ 利用新型超表面-折射透镜混合光学系统，将入射光分为 4 个独立可控色散/曝光/偏振的通道，实现最紧凑且精度最高的快照式高光谱+HDR/偏振多功能成像。
-
-**[No Labels, No Look-Ahead: Unsupervised Online Video Stabilization with Classical Priors](remote_sensing/no_labels_no_look-ahead_unsupervised_online_video_stabilization_with_classical_p.md)**
-
-:   无监督在线视频稳定框架，经典三阶段管线+多线程缓冲，引入UAV多模态航拍测试集
-
-**[Olbedo: An Albedo and Shading Aerial Dataset for Large-Scale Outdoor Environments](remote_sensing/olbedo_an_albedo_and_shading_aerial_dataset_for_large-scale_outdoor_environments.md)**
-
-:   首个大规模真实航拍反照率-着色分解数据集（5664张UAV图像），通过物理逆渲染管线生成真值
-
-**[Rho Robust Holistic Osm-Based Metric Cross-View Geo-Localization](remote_sensing/rho_robust_holistic_osm-based_metric_cross-view_geo-localization.md)**
-
-:   提出首个面向恶劣天气和传感器噪声的OSM-based度量级跨视角定位基准CV-RHO（270万+ 图像），并设计双分支Pin-Pan架构RHO模型，结合全景去畸变（SUM）和位置-朝向融合（POF）机制，在多种退化条件下将定位性能提升高达20%。
-
-**[Sdfnet Structureaware Disentangled Feature Learnin](remote_sensing/sdfnet_structureaware_disentangled_feature_learnin.md)**
-
-:   提出SDF-Net——物理引导的结构感知解耦特征学习网络，通过中间层梯度能量提取几何结构一致性(SCL)和终端层共享/模态专用特征解耦(DFL)+无参数加法融合，在HOSS-ReID上mAP达60.9%(+3.5% vs SOTA TransOSS)。
 
 ---
 
@@ -4759,6 +4775,10 @@ description: >-
 
 :   揭示 MLLM 的严重置信度失校准问题（视觉输入退化时准确率暴跌但置信度不变），提出 CDRL（基于原始-噪声图像对的置信度驱动 RL）进行感知敏感性训练，并利用校准后的置信度实现自适应测试时缩放（CA-TTS），在四个基准上平均提升 8.8%。
 
+**[Msrl Scaling Generative Multimodal Reward Modeling](reinforcement_learning/msrl_scaling_generative_multimodal_reward_modeling.md)**
+
+:   提出多阶段强化学习（MSRL）方法，通过先在大规模文本偏好数据上学习奖励推理能力，再逐步迁移到多模态任务，解决多模态奖励模型训练中标注数据稀缺的瓶颈问题，在 VL-RewardBench 上将准确率从 66.6% 提升至 75.9%。
+
 **[Msrl Scaling Generative Multimodal Reward Modeling Via Multi-Stage Reinforcement](reinforcement_learning/msrl_scaling_generative_multimodal_reward_modeling_via_multi-stage_reinforcement.md)**
 
 :   提出MSRL(Multi-Stage Reinforcement Learning)，通过多阶段RL扩展生成式多模态奖励建模——先在大规模文本偏好数据(400K)上做RL学习通用奖励推理能力，再经caption-based RL和跨模态知识蒸馏向多模态迁移，最后用少量多模态偏好数据微调适配，无需额外多模态标注即在VL-RewardBench上从66.6%提升到75.9%、GenAI-Bench上从70.2%到75.7%。
@@ -4774,6 +4794,62 @@ description: >-
 **[See It Say It Sorted An Iterative Training-Free Framework For Visually-Grounded ](reinforcement_learning/see_it_say_it_sorted_an_iterative_training-free_framework_for_visually-grounded_.md)**
 
 :   提出一个无需训练的迭代框架，通过"看到-说出-排序"的循环过程增强大视觉语言模型的视觉定位多模态推理能力，在多个推理任务上显著提升性能。
+
+---
+
+## 🦾 LLM Agent { #llm_agent }
+
+**[Carepilot A Multi-Agent Framework For Long-Horizon Computer Task Automation In H](llm_agent/carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)**
+
+:   提出CareFlow基准（1050个医疗软件长视界工作流任务，8-24步，覆盖DICOM/3D Slicer/EMR/LIS四大系统）和CarePilot框架（基于Actor-Critic范式，集成工具grounding和双记忆机制），在CareFlow上超越GPT-5约15%的任务准确率。
+
+**[Echotrail-Gui Building Actionable Memory For Gui Agents](llm_agent/echotrail-gui_building_actionable_memory_for_gui_agents.md)**
+
+:   提出 EchoTrail-GUI 框架，通过评论模型引导的自主探索构建高质量操作记忆库，并在推理时动态检索相关经验注入提示，将 GPT-4o 在 AndroidWorld 上的任务成功率从 34.5% 提升至 51.7%。
+
+**[Echotrail-Gui Building Actionable Memory For Gui Agents Via Critic-Guided Self-E](llm_agent/echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e.md)**
+
+:   提出EchoTrail-GUI，通过"学习-记忆-应用"三阶段闭环为GUI Agent构建可操作记忆——探索Agent自主交互GUI环境生成轨迹→Critic奖励模型过滤高质量轨迹存入记忆库→新任务时混合检索(密集+稀疏)最相关轨迹注入prompt引导推理，在AndroidWorld和AndroidLab上显著提升任务成功率。
+
+**[Gui-Ceval A Hierarchical And Comprehensive Chinese Benchmark For Mobile Gui Agen](llm_agent/gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)**
+
+:   提出 GUI-CEval，首个面向中文移动端 GUI Agent 的综合评测基准，覆盖 201 个主流中文 App、4 种设备类型，采用"基础能力+应用能力"两层结构从感知、规划、反思、执行、评估五个维度进行细粒度诊断，在 20 个代表性模型上的实验揭示当前模型在反思和自我评估方面仍有明显短板。
+
+**[Hats Hardness-Aware Trajectory Synthesis For Gui Agents](llm_agent/hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)**
+
+:   提出难度感知的轨迹合成框架 HATS，通过 hardness-driven exploration 和 alignment-guided refinement 的闭环机制，专注采集和修正语义歧义动作的训练轨迹，大幅提升 GUI Agent 在复杂真实场景中的泛化能力。
+
+**[Hats Hardnessaware Trajectory Synthesis Gui Agent](llm_agent/hats_hardnessaware_trajectory_synthesis_gui_agent.md)**
+
+:   提出HATS框架，通过定义动作的"语义模糊度"作为难度信号，以难度驱动探索+对齐引导修复的闭环管线合成高质量GUI轨迹数据，显著提升agent泛化能力。
+
+**[Nerfify A Multi-Agent Framework For Turning Nerf Papers Into Code](llm_agent/nerfify_a_multi-agent_framework_for_turning_nerf_papers_into_code.md)**
+
+:   提出 Nerfify，通过上下文无关文法(CFG)约束、图思维链(GoT)代码合成、组合式引用恢复和视觉反馈四阶段，将NeRF论文自动转化为可训练的Nerfstudio插件，在30篇论文基准上达到100%可执行率（通用基线仅5%），视觉质量在专家实现的±0.5dB PSNR内。
+
+**[Realm An Mllm-Agent Framework For Open World 3D Reasoning Segmentation And Editi](llm_agent/realm_an_mllm-agent_framework_for_open_world_3d_reasoning_segmentation_and_editi.md)**
+
+:   提出 REALM 框架，通过 MLLM agent 对 3D 高斯泼溅(3DGS)渲染的视图进行推理分割，设计全局-局部空间接地策略(GLSpaG)聚合多视角MLLM推理结果，在隐式指令下的3D分割中大幅超越现有方法（LERF上mIoU 92.88% vs 基线44.82%），并支持3D编辑。
+
+**[Realm Mllm Agent 3D Reasoning Gaussian](llm_agent/realm_mllm_agent_3d_reasoning_gaussian.md)**
+
+:   提出 REALM，一个基于 MLLM-Agent 的开放世界 3D 推理分割框架，利用 3DGS 渲染新视角供 MLLM 理解复杂指令，通过全局到局部空间定位策略实现精确 3D 分割——无需 3D 特定后训练即可处理隐式推理指令，并支持物体移除、替换和风格迁移等 3D 交互任务。
+
+**[Sceneassistant A Visual Feedback Agent For Open-Vocabulary 3D Scene Generation](llm_agent/sceneassistant_a_visual_feedback_agent_for_open-vocabulary_3d_scene_generation.md)**
+
+:   提出 SceneAssistant，通过为VLM agent提供完整的原子操作API集（13种动作涵盖物体管理、6-DoF操作、相机控制）和纯视觉反馈闭环，实现开放词汇的文本到3D场景生成，在人类评估中布局正确性和物体质量均大幅优于Holodeck和SceneWeaver。
+
+**[Sceneassistant A Visual Feedback Agent For Openvoc](llm_agent/sceneassistant_a_visual_feedback_agent_for_openvoc.md)**
+
+:   提出基于视觉反馈的VLM agent框架，通过14个完备Action API让VLM在ReAct闭环中迭代优化3D场景布局，无需预定义空间关系模板，在人类评估中Layout得分7.600（vs SceneWeaver 5.800），Human Preference 65%。
+
+**[Think Then Verify A Hypothesis-Verification Multi-Agent Framework For Long Video](llm_agent/think_then_verify_a_hypothesis-verification_multi-agent_framework_for_long_video.md)**
+
+:   提出 VideoHV-Agent，将长视频问答重新建模为"假设-验证"过程：Thinker 将答案选项改写为可测试假设，Judge 提取区分性线索，Verifier 在视频中定位证据进行验证，Answer 综合证据给出最终答案，在 EgoSchema/NextQA/IntentQA 三个基准上取得 SOTA，同时推理效率优于现有 Agent 方法。
+
+**[Towards Gui Agents Vision-Language Diffusion Models For Gui Grounding](llm_agent/towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)**
+
+:   首次系统研究离散扩散视觉语言模型（DVLM）在 GUI Grounding 中的应用，将 LLaDA-V 适配为单步动作预测，并提出混合掩码调度（线性+确定性）以捕获边界框坐标间的几何层次依赖，在 Web/Desktop/Mobile 界面上展示了扩散模型作为 GUI Agent 基础的可行性。
 
 ---
 
@@ -4833,58 +4909,6 @@ description: >-
 
 ---
 
-## 🦾 LLM Agent { #llm_agent }
-
-**[Carepilot A Multi-Agent Framework For Long-Horizon Computer Task Automation In H](llm_agent/carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)**
-
-:   提出CareFlow基准（1050个医疗软件长视界工作流任务，8-24步，覆盖DICOM/3D Slicer/EMR/LIS四大系统）和CarePilot框架（基于Actor-Critic范式，集成工具grounding和双记忆机制），在CareFlow上超越GPT-5约15%的任务准确率。
-
-**[Echotrail-Gui Building Actionable Memory For Gui Agents Via Critic-Guided Self-E](llm_agent/echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e.md)**
-
-:   提出EchoTrail-GUI，通过"学习-记忆-应用"三阶段闭环为GUI Agent构建可操作记忆——探索Agent自主交互GUI环境生成轨迹→Critic奖励模型过滤高质量轨迹存入记忆库→新任务时混合检索(密集+稀疏)最相关轨迹注入prompt引导推理，在AndroidWorld和AndroidLab上显著提升任务成功率。
-
-**[Gui-Ceval A Hierarchical And Comprehensive Chinese Benchmark For Mobile Gui Agen](llm_agent/gui-ceval_a_hierarchical_and_comprehensive_chinese_benchmark_for_mobile_gui_agen.md)**
-
-:   提出 GUI-CEval，首个面向中文移动端 GUI Agent 的综合评测基准，覆盖 201 个主流中文 App、4 种设备类型，采用"基础能力+应用能力"两层结构从感知、规划、反思、执行、评估五个维度进行细粒度诊断，在 20 个代表性模型上的实验揭示当前模型在反思和自我评估方面仍有明显短板。
-
-**[Hats Hardness-Aware Trajectory Synthesis For Gui Agents](llm_agent/hats_hardness-aware_trajectory_synthesis_for_gui_agents.md)**
-
-:   提出难度感知的轨迹合成框架 HATS，通过 hardness-driven exploration 和 alignment-guided refinement 的闭环机制，专注采集和修正语义歧义动作的训练轨迹，大幅提升 GUI Agent 在复杂真实场景中的泛化能力。
-
-**[Hats Hardnessaware Trajectory Synthesis Gui Agent](llm_agent/hats_hardnessaware_trajectory_synthesis_gui_agent.md)**
-
-:   提出HATS框架，通过定义动作的"语义模糊度"作为难度信号，以难度驱动探索+对齐引导修复的闭环管线合成高质量GUI轨迹数据，显著提升agent泛化能力。
-
-**[Nerfify A Multi-Agent Framework For Turning Nerf Papers Into Code](llm_agent/nerfify_a_multi-agent_framework_for_turning_nerf_papers_into_code.md)**
-
-:   提出 Nerfify，通过上下文无关文法(CFG)约束、图思维链(GoT)代码合成、组合式引用恢复和视觉反馈四阶段，将NeRF论文自动转化为可训练的Nerfstudio插件，在30篇论文基准上达到100%可执行率（通用基线仅5%），视觉质量在专家实现的±0.5dB PSNR内。
-
-**[Realm An Mllm-Agent Framework For Open World 3D Reasoning Segmentation And Editi](llm_agent/realm_an_mllm-agent_framework_for_open_world_3d_reasoning_segmentation_and_editi.md)**
-
-:   提出 REALM 框架，通过 MLLM agent 对 3D 高斯泼溅(3DGS)渲染的视图进行推理分割，设计全局-局部空间接地策略(GLSpaG)聚合多视角MLLM推理结果，在隐式指令下的3D分割中大幅超越现有方法（LERF上mIoU 92.88% vs 基线44.82%），并支持3D编辑。
-
-**[Realm Mllm Agent 3D Reasoning Gaussian](llm_agent/realm_mllm_agent_3d_reasoning_gaussian.md)**
-
-:   提出 REALM，一个基于 MLLM-Agent 的开放世界 3D 推理分割框架，利用 3DGS 渲染新视角供 MLLM 理解复杂指令，通过全局到局部空间定位策略实现精确 3D 分割——无需 3D 特定后训练即可处理隐式推理指令，并支持物体移除、替换和风格迁移等 3D 交互任务。
-
-**[Sceneassistant A Visual Feedback Agent For Open-Vocabulary 3D Scene Generation](llm_agent/sceneassistant_a_visual_feedback_agent_for_open-vocabulary_3d_scene_generation.md)**
-
-:   提出 SceneAssistant，通过为VLM agent提供完整的原子操作API集（13种动作涵盖物体管理、6-DoF操作、相机控制）和纯视觉反馈闭环，实现开放词汇的文本到3D场景生成，在人类评估中布局正确性和物体质量均大幅优于Holodeck和SceneWeaver。
-
-**[Sceneassistant A Visual Feedback Agent For Openvoc](llm_agent/sceneassistant_a_visual_feedback_agent_for_openvoc.md)**
-
-:   提出基于视觉反馈的VLM agent框架，通过14个完备Action API让VLM在ReAct闭环中迭代优化3D场景布局，无需预定义空间关系模板，在人类评估中Layout得分7.600（vs SceneWeaver 5.800），Human Preference 65%。
-
-**[Think Then Verify A Hypothesis-Verification Multi-Agent Framework For Long Video](llm_agent/think_then_verify_a_hypothesis-verification_multi-agent_framework_for_long_video.md)**
-
-:   提出 VideoHV-Agent，将长视频问答重新建模为"假设-验证"过程：Thinker 将答案选项改写为可测试假设，Judge 提取区分性线索，Verifier 在视频中定位证据进行验证，Answer 综合证据给出最终答案，在 EgoSchema/NextQA/IntentQA 三个基准上取得 SOTA，同时推理效率优于现有 Agent 方法。
-
-**[Towards Gui Agents Vision-Language Diffusion Models For Gui Grounding](llm_agent/towards_gui_agents_vision-language_diffusion_models_for_gui_grounding.md)**
-
-:   首次系统研究离散扩散视觉语言模型（DVLM）在 GUI Grounding 中的应用，将 LLaDA-V 适配为单步动作预测，并提出混合掩码调度（线性+确定性）以捕获边界框坐标间的几何层次依赖，在 Web/Desktop/Mobile 界面上展示了扩散模型作为 GUI Agent 基础的可行性。
-
----
-
 ## 💡 LLM推理 { #llm_reasoning }
 
 **[Beyond Geometry Artistic Disparity Synthesis For Immersive 2D-To-3D](llm_reasoning/beyond_geometry_artistic_disparity_synthesis_for_immersive_2d-to-3d.md)**
@@ -4906,6 +4930,10 @@ description: >-
 **[Graze Grounded Refinement And Motion-Aware Zero-Shot Event Localization](llm_reasoning/graze_grounded_refinement_and_motion-aware_zero-shot_event_localization.md)**
 
 :   提出GRAZE，一种完全无训练的时空事件定位管线——用Grounding DINO发现候选player-dummy交互对，通过运动感知的几何评分（位移幅度+方向余弦相似度）排序候选，再用SAM2掩码传播作为独立的像素级接触验证器（而非依赖检测置信度），配合两阶段后向精化恢复事件起始帧，在738个橄榄球练习视频上97.4%有效输出率、77.5%在±10帧内定位。
+
+**[Graze Grounded Refinement And Motion-Aware Zero-Shot Generation](llm_reasoning/graze_grounded_refinement_and_motion-aware_zero-shot_generation.md)**
+
+:   提出 GRAZE，一个无需训练的管线，利用 Grounding DINO 发现候选交互、SAM2 掩码重叠作为像素级接触验证器，在 738 段美式橄榄球训练视频中实现 97.4% 覆盖率和 ±10 帧内 77.5% 的接触起始帧定位精度。
 
 **[Harnessing Chain-Of-Thought Reasoning In Multimodal Large Language Models For Fa](llm_reasoning/harnessing_chain-of-thought_reasoning_in_multimodal_large_language_models_for_fa.md)**
 

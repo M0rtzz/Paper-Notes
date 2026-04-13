@@ -1,18 +1,22 @@
 ---
 title: >-
-  ICCV2025 语义分割方向 73篇论文解读
+  ICCV2025 语义分割方向 75篇论文解读
 description: >-
-  73篇ICCV2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  75篇ICCV2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**📹 ICCV2025** · 共 **73** 篇
+**📹 ICCV2025** · 共 **75** 篇
 
 **[2Handedafforder Learning Precise Actionable Bimanual Affordances From Human Vide](2handedafforder_learning_precise_actionable_bimanual_affordances_from_human_vide.md)**
 
 :   本文提出从人类活动视频中自动提取精确的双手可操作区域(affordance)数据集 2HANDS，并训练基于 VLM 的 2HandedAfforder 模型，实现根据文本提示预测双手抓握的精确物体区域分割，在新提出的 ActAffordance 基准上显著优于现有方法。
+
+**[A Plug-And-Play Physical Motion Restoration Approach For In-](a_plug-and-play_physical_motion_restoration_approach_for_in-.md)**
+
+:   提出即插即用的物理动作恢复方法，通过Mask条件运动修正模块（MCM）修复视频动捕中的瑕疵帧，以及基于预训练+测试时适应的物理运动迁移模块（PTM）实现高难度野外动作的物理仿真，显著提升动作的物理真实性。
 
 **[A Plug-And-Play Physical Motion Restoration Approach For In-The-Wild High-Diffic](a_plug-and-play_physical_motion_restoration_approach_for_in-the-wild_high-diffic.md)**
 
@@ -133,6 +137,10 @@ description: >-
 **[Latent Expression Generation For Referring Image Segmentation And Grounding](latent_expression_generation_for_referring_image_segmentation_and_grounding.md)**
 
 :   提出 Latent-VG 框架，通过从单个文本描述生成多个潜在表达式（共享同一主语、但具有不同视觉属性），利用互补的视觉细节弥补稀疏文本与丰富视觉信息之间的语义差距，在指代图像分割和指代表达理解任务上同时达到 SOTA。
+
+**[Lawdis Language-Window-Based Controllable Dichotomous Image Segmentati](lawdis_language-window-based_controllable_dichotomous_image_segmentati.md)**
+
+:   提出LawDIS，一种基于Stable Diffusion的语言-窗口双控可控二分图像分割框架，在宏观模式下通过语言提示指导目标分割，在微观模式下通过可变尺寸窗口精细化局部细节，在DIS5K上全面超越11种SOTA方法。
 
 **[Lawdis Language-Window-Based Controllable Dichotomous Image Segmentation](lawdis_language-window-based_controllable_dichotomous_image_segmentation.md)**
 

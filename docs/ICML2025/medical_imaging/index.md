@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICML2025 医学图像方向 63篇论文解读
+  ICML2025 医学图像方向 64篇论文解读
 description: >-
-  63篇ICML2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  64篇ICML2025 医学图像方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🧪 ICML2025** · 共 **63** 篇
+**🧪 ICML2025** · 共 **64** 篇
 
 **[Adios Antibody Development Via Opponent Shaping](adios_antibody_development_via_opponent_shaping.md)**
 
@@ -245,6 +245,10 @@ description: >-
 **[The Four Color Theorem For Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)**
 
 :   将四色定理引入细胞实例分割，将每个细胞视为"国家"、背景为"海洋"，用仅 4 类语义分割替代实例分割，并设计渐进训练策略和编码变换方法解决四色编码的非唯一性问题，在多种成像模式上达到 SOTA 性能同时大幅降低模型复杂度。
+
+**[Training Flexible Models Of Genetic Variant Effects From Functional Annotations](training_flexible_models_of_genetic_variant_effects_from_functional_annotations.md)**
+
+:   利用现代快速线性代数技术训练大规模神经网络预测基因变异效应——将连锁不平衡(LD)矩阵做带状近似+小批量训练，首次在百万变异规模上优化全似然而非摘要统计量，发现更大模型只在全似然下才有效。
 
 **[Training Flexible Models Of Genetic Variant Effects From Functional Annotations ](training_flexible_models_of_genetic_variant_effects_from_functional_annotations_.md)**
 

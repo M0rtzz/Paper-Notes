@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 视频理解方向 9篇论文解读
+  CVPR2025 视频理解方向 16篇论文解读
 description: >-
-  9篇CVPR2025 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  16篇CVPR2025 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频理解
 
-**📷 CVPR2025** · 共 **9** 篇
+**📷 CVPR2025** · 共 **16** 篇
 
 **[Animateanything Consistent And Controllable Animation For Video Generation](animateanything_consistent_and_controllable_animation_for_video_generation.md)**
 
@@ -21,6 +21,30 @@ description: >-
 **[Beyond Single-Sample Reliable Multi-Sample Distillation For Video Understanding](beyond_single-sample_reliable_multi-sample_distillation_for_video_understanding.md)**
 
 :   提出 R-MSD（Reliable Multi-Sample Distillation），通过对每个输入采样多个教师响应并结合任务自适应质量匹配，解决视频 LVLM 黑盒蒸馏中单样本教师监督不可靠的问题，4B 学生模型在 VideoMME (+1.5%)、Video-MMMU (+3.2%)、MathVerse (+3.6%) 等基准上取得一致提升。
+
+**[Bim-Vfi Bidirectional Motion Field-Guided Frame Interpolation For Video With Non](bim-vfi_bidirectional_motion_field-guided_frame_interpolation_for_video_with_non.md)**
+
+**[Bimba Selective-Scan Compression For Long-Range Video Question Answering](bimba_selective-scan_compression_for_long-range_video_question_answering.md)**
+
+**[Bootstrap Your Own Views Masked Ego-Exo Modeling For Fine-Grained View-Invariant](bootstrap_your_own_views_masked_ego-exo_modeling_for_fine-grained_view-invariant.md)**
+
+:   通过掩码建模在自我中心和外部视角之间学习细粒度视图不变表示，无需配对标注即可从两种视角的关联中自监督学习
+
+**[Can Text-To-Video Generation Help Video-Language Alignment](can_text-to-video_generation_help_video-language_alignment.md)**
+
+:   本文首次探索利用文本到视频生成模型产生的合成视频来改善视频语言对齐（VLA）的时序理解，提出SynViTA方法通过对齐质量加权和语义一致性正则化来有效利用合成视频，在多个VLA基准上取得了平均性能提升。
+
+**[Coarse Correspondences Boost Spatial-Temporal Reasoning In Multimodal Language M](coarse_correspondences_boost_spatial-temporal_reasoning_in_multimodal_language_m.md)**
+
+:   本文提出Coarse Correspondences，一种轻量级的training-free视觉提示方法，通过在图像帧上叠加目标跟踪得到的粗粒度实例对应关系标记，显著增强MLLM的空间时序推理能力，在ScanQA上提升+20.5%、OpenEQA上+9.7%、EgoSchema上+6.0%和R2R导航上+11%。
+
+**[Conmo Controllable Motion Disentanglement And Recomposition For Zero-Shot Motion](conmo_controllable_motion_disentanglement_and_recomposition_for_zero-shot_motion.md)**
+
+:   ConMo提出了一种零样本运动迁移框架，通过将参考视频中的复合运动解耦为独立的主体运动和背景（相机）运动，再在目标视频生成时可控地重组这些运动，实现了多主体运动迁移、语义/形状变换、主体去除、相机运动模拟等多种应用，在运动保真度和文本对齐上显著超越现有方法。
+
+**[Context-Enhanced Memory-Refined Transformer For Online Action Detection](context-enhanced_memory-refined_transformer_for_online_action_detection.md)**
+
+:   本文揭示了现有在线动作检测（OAD）方法中的训练-推理不一致问题——短时记忆帧的不均衡上下文暴露和伪未来引入的非因果信息泄漏导致学习偏向中间帧——并提出CMeRT通过近过去上下文增强编码器和基于近未来的记忆精炼解码器来解决该问题，在THUMOS'14、CrossTask和EK100上实现SOTA。
 
 **[Fc-Track Overlap-Aware Post-Association Correction For Online Multi-Object Track](fc-track_overlap-aware_post-association_correction_for_online_multi-object_track.md)**
 

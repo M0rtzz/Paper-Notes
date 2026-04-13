@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 3D视觉方向 65篇论文解读
+  ICLR2026 3D视觉方向 67篇论文解读
 description: >-
-  65篇ICLR2026 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  67篇ICLR2026 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D视觉
 
-**🔬 ICLR2026** · 共 **65** 篇
+**🔬 ICLR2026** · 共 **67** 篇
 
 **[3Dgeer 3D Gaussian Rendering Made Exact And Efficient For Generic Cameras](3dgeer_3d_gaussian_rendering_made_exact_and_efficient_for_generic_cameras.md)**
 
@@ -118,6 +118,10 @@ description: >-
 
 :   提出 HDR-NSFF，将 HDR 视频重建从传统的 2D 像素级融合范式转变为 4D 时空建模，从交替曝光单目视频中联合重建 HDR 辐射场、3D 场景流、几何和色调映射，实现了时空一致的动态 HDR 新视角合成。
 
+**[Into The Rabbit Hull From Task-Relevant Concepts](into_the_rabbit_hull_from_task-relevant_concepts.md)**
+
+:   本文通过稀疏自编码器（SAE）从 DINOv2 中提取 32,000 个视觉概念字典，系统研究了不同下游任务（分类/分割/深度估计）如何选择性地使用这些概念，揭示了表示空间的几何结构超越了线性稀疏编码假说（LRH），并提出了基于 Minkowski 和的新表示假说（MRH），认为 token 是多个凸混合的叠加。
+
 **[Into The Rabbit Hull From Task-Relevant Concepts In Dino To Minkowski Geometry](into_the_rabbit_hull_from_task-relevant_concepts_in_dino_to_minkowski_geometry.md)**
 
 :   通过在 DINOv2 上训练 32,000 单元的 Sparse Autoencoder 字典，系统分析了下游任务如何招募不同概念，发现表征几何偏离线性稀疏假说（LRH），进而提出 Minkowski Representation Hypothesis（MRH），认为 token 表征是多个凸多面体的 Minkowski 和，概念由原型点的邻近性而非线性方向定义。
@@ -169,6 +173,10 @@ description: >-
 **[Omni-View Unlocking How Generation Facilitates Understanding In Unified 3D Model](omni-view_unlocking_how_generation_facilitates_understanding_in_unified_3d_model.md)**
 
 :   构建统一的3D场景理解与生成模型 Omni-View，通过纹理模块（新视角合成）和几何模块（深度/位姿估计）的生成能力增强理解性能，在 VSI-Bench 上达到 55.4 分超越所有现有专用3D理解模型。
+
+**[One2Scene Geometric Consistent Explorable 3D Scene Generation From A Single Ima](one2scene_geometric_consistent_explorable_3d_scene_generation_from_a_single_ima.md)**
+
+:   提出 One2Scene 三阶段框架，将单图生成可探索 3D 场景分解为全景生成→前馈 3D 高斯溅射构建几何支架→支架引导的新视角合成，通过将全景深度估计重新表述为多视图立体匹配问题，实现几何一致且可自由探索的 3D 场景生成。
 
 **[One2Scene Geometric Consistent Explorable 3D Scene Generation From A Single Imag](one2scene_geometric_consistent_explorable_3d_scene_generation_from_a_single_imag.md)**
 

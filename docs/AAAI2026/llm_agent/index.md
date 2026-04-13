@@ -1,18 +1,26 @@
 ---
 title: >-
-  AAAI2026 LLM Agent方向 42篇论文解读
+  AAAI2026 LLM Agent方向 46篇论文解读
 description: >-
-  42篇AAAI2026 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  46篇AAAI2026 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🤖 AAAI2026** · 共 **42** 篇
+**🤖 AAAI2026** · 共 **46** 篇
 
 **[A2Flow Automating Agentic Workflow Generation Via Self-Adaptive Abstraction Oper](a2flow_automating_agentic_workflow_generation_via_self-adaptive_abstraction_oper.md)**
 
 :   提出 A2Flow 框架，通过三阶段流水线（案例生成→功能聚类→深度提取）从专家数据中全自动提取可复用的抽象执行算子，替代人工预定义算子，并引入算子记忆机制累积中间输出辅助节点决策，在 8 个基准上整体超越 AFLOW 等 SOTA，资源消耗降低 37%。
+
+**[A Multi-Agent Conversational Bandit Approach To Online Evaluation And Selection ](a_multi-agent_conversational_bandit_approach_to_online_evaluation_and_selection_.md)**
+
+:   提出 MACO（Multi-Agent Conversational Online Learning），将 LLM 回复选择建模为多 Agent 对话式赌博机问题，通过本地 Agent 淘汰低质量回复 + 云端自适应关键词对话收集偏好，实现近似最优的在线回复评估和用户偏好对齐。
+
+**[A Multi-Agent Llm Framework For Multi-Domain Low-Resource In-Context Ner Via Kno](a_multi-agent_llm_framework_for_multi-domain_low-resource_in-context_ner_via_kno.md)**
+
+:   提出 KDR-Agent 多 Agent 框架，通过中央规划器协调知识检索、上下文消歧和反思纠错三个专用 Agent，结合自然语言类型定义和实体级正负对比示例，无需微调即可在 5 个领域 10 个低资源 NER 数据集上全面超越 zero-shot 和 few-shot 基线（GPT-4o 上 BC5CDR F1=82.47，WNUT-17 F1=80.78）。
 
 **[A Multi-Agent Llm Framework For Multi-Domain Low-Resource In](a_multi-agent_llm_framework_for_multi-domain_low-resource_in.md)**
 
@@ -34,6 +42,10 @@ description: >-
 
 :   提出ARCANE框架，将对齐建模为多智能体协作问题——manager agent通过与stakeholder对话学习生成自然语言rubric（加权可验证准则集），作为worker agent的可解释代理奖励函数，通过SFT+GSPO两阶段训练实现测试时可配置的对齐，在GDPVal基准上GSPO版本的mean return从0.58提升至0.74（N=8）。
 
+**[Autoglm Autonomous Foundation Agents For Guis](autoglm_autonomous_foundation_agents_for_guis.md)**
+
+:   AutoGLM 基于 ChatGLM 构建了面向 Web 浏览器和 Android 手机的 GUI 基础智能体，通过中间接口设计分离规划与定位行为，并提出自进化在线课程强化学习框架，在 VAB-WebArena-Lite 上达到 55.2% 成功率，大幅超越 GPT-4o 的 18.2%。
+
 **[Automating Complex Document Workflows Via Stepwise And Rollback-Enabled Operatio](automating_complex_document_workflows_via_stepwise_and_rollback-enabled_operatio.md)**
 
 :   提出AutoDW框架，通过逐步规划（每次生成一个API调用）+自适应回滚（参数级+API级两层回滚）实现复杂文档工作流自动化，在250会话/1708指令的DWBench上达到90%指令级和62%会话级完成率，分别超越最强基线40%和76%。
@@ -41,6 +53,10 @@ description: >-
 **[Autotool Efficient Tool Selection For Large Language Model A](autotool_efficient_tool_selection_for_large_language_model_a.md)**
 
 :   提出AutoTool，一个基于图的免训练工具选择框架，通过发现并利用"工具使用惯性"（tool usage inertia）——即工具调用遵循可预测的顺序模式这一经验现象——构建工具惯性图（TIG），用统计方法代替部分LLM推理来高效选择工具和填充参数，在保持任务完成率的同时减少15-40%的推理成本。
+
+**[Autotool Efficient Tool Selection For Large Language Model Agents](autotool_efficient_tool_selection_for_large_language_model_agents.md)**
+
+:   提出 AutoTool，一种基于图的工具选择框架，利用工具使用惯性（tool usage inertia）构建工具惯性图（TIG），通过统计结构绕过重复的 LLM 推理来选择工具和填充参数，在保持任务完成率的同时减少最多 30% 的推理开销。
 
 **[Bayesagent Bayesian Agentic Reasoning Under Uncertainty Via ](bayesagent_bayesian_agentic_reasoning_under_uncertainty_via_.md)**
 

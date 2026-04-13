@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 3D视觉方向 51篇论文解读
+  ECCV2024 3D视觉方向 156篇论文解读
 description: >-
-  51篇ECCV2024 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  156篇ECCV2024 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D视觉
 
-**🎞️ ECCV2024** · 共 **51** 篇
+**🎞️ ECCV2024** · 共 **156** 篇
 
 **[3D Congealing 3D-Aware Image Alignment In The Wild](3d_congealing_3d-aware_image_alignment_in_the_wild.md)**
 
@@ -114,6 +114,10 @@ description: >-
 
 :   提出 Cross-Reference（CR）图像质量评估新范式，通过对比查询图像与多个不同视角参考图像，利用 cross-attention 神经网络预测与 SSIM 高度相关的像素级质量分数，无需 ground truth 参考图像即可评估新视角合成质量。
 
+**[Crossscore Towards Multiview Image Evaluation And Scori](crossscore_towards_multiview_image_evaluation_and_scori.md)**
+
+:   提出 CrossScore——一种新型的交叉参考图像质量评估方法，利用多视角参考图像替代真实参考图，通过 cross-attention 机制预测 SSIM 分数图，在无需 ground truth 的条件下实现接近全参考指标的评估精度。
+
 **[D-Sco Dual-Stream Conditional Diffusion For Monocular Hand-Held Object Reconstru](d-sco_dual-stream_conditional_diffusion_for_monocular_hand-held_object_reconstru.md)**
 
 :   提出双流条件扩散模型 D-SCo 从单张 RGB 图像重建手持物体点云，通过统一手-物语义嵌入和手关节几何嵌入两个分支分别提供语义和几何先验，配合手约束质心固定策略稳定扩散过程，在 ObMan 上 F-5 达 0.61（超 DDF-HO 10.9%），真实数据集 HO3D/MOW 上也大幅领先。
@@ -137,6 +141,10 @@ description: >-
 **[Dg-Pic Domain Generalized Point-In-Context Learning For Point Cloud Understandin](dg-pic_domain_generalized_point-in-context_learning_for_point_cloud_understandin.md)**
 
 :   提出 DG-PIC，首个在统一模型中同时处理多领域多任务的点云理解框架，通过双层次源域原型估计和测试时特征平移机制，在不更新模型的情况下提升对未知域的泛化能力。
+
+**[Dgpic Domain Generalized Pointincontext Learning For Po](dgpic_domain_generalized_pointincontext_learning_for_po.md)**
+
+:   提出 DG-PIC，首个在统一模型中同时处理多域多任务点云理解的方法，通过双层源域原型估计和双层测试时特征平移机制，在无需模型更新的情况下提升对未见域的泛化能力。
 
 **[Differentiable Convex Polyhedra Optimization From Multi-View Images](differentiable_convex_polyhedra_optimization_from_multi-view_images.md)**
 
@@ -162,6 +170,10 @@ description: >-
 
 :   提出DreamDrone——一个零样本、无需训练的无限飞行场景生成管线，通过直接对预训练扩散模型的中间latent code进行warping（而非图像级warping），结合特征对应引导和高通滤波策略，实现高质量、几何一致的无界场景生成。
 
+**[Dreamdrone Texttoimage Diffusion Models Are Zeroshot Perpetu](dreamdrone_texttoimage_diffusion_models_are_zeroshot_perpetu.md)**
+
+:   DreamDrone提出零样本、免训练的无限场景飞越生成pipeline，核心创新是在扩散模型的latent空间进行视角变换（而非像素空间），并通过特征对应引导和高通滤波策略保证帧间的几何一致性和高频细节一致性。
+
 **[Dreamscene360 Unconstrained Text-To-3D Scene Generation With Panoramic Gaussian ](dreamscene360_unconstrained_text-to-3d_scene_generation_with_panoramic_gaussian_.md)**
 
 :   提出DreamScene360，利用全景图像作为中间表示，结合GPT-4V自精炼机制和全景3D高斯溅射技术，实现从文本到沉浸式360°3D场景的快速生成。
@@ -169,6 +181,10 @@ description: >-
 **[Dreamview Injecting View-Specific Text Guidance Into Text-To-3D Generation](dreamview_injecting_view-specific_text_guidance_into_text-to-3d_generation.md)**
 
 :   提出DreamView，通过自适应文本引导注入模块，将视角特定的文本描述和全局文本描述协同注入扩散模型，实现可定制化且多视角一致的文本到3D生成。
+
+**[Dreamview Injecting Viewspecific Text Guidance Into Textto3D](dreamview_injecting_viewspecific_text_guidance_into_textto3d.md)**
+
+:   DreamView通过自适应引导注入模块协调全局和视角特定文本实现3D定制化生成。
 
 **[Dspdet3D 3D Small Object Detection With Dynamic Spatial Pruning](dspdet3d_3d_small_object_detection_with_dynamic_spatial_pruning.md)**
 
@@ -178,38 +194,442 @@ description: >-
 
 :   提出双层自适应自标注方法，通过半松弛最优传输处理类别不平衡问题，并结合区域级表示增强点级分类器的学习，在点云分割中实现高效的新类发现。
 
+**[Dynamic Neural Radiance Field From Defocused Monocular Video](dynamic_neural_radiance_field_from_defocused_monocular_video.md)**
+
+:   提出 $D^2RF$，首个从散焦单目视频中恢复清晰动态NeRF的方法，通过将景深(DoF)渲染与体积渲染统一，引入分层DoF体积渲染来建模散焦模糊并恢复清晰新视角。
+
+**[Efficient Depth-Guided Urban View Synthesis](efficient_depth-guided_urban_view_synthesis.md)**
+
+:   提出EDUS方法，利用噪声几何先验（单目/双目深度）引导可泛化NeRF，通过前景3D CNN + 背景/天空图像渲染的三部分分解，实现稀疏街景视角下的快速前馈推理和高效逐场景微调。
+
+**[Equi-Gspr Equivariant Se3 Graph Network Model For Sparse Point Cloud Registratio](equi-gspr_equivariant_se3_graph_network_model_for_sparse_point_cloud_registratio.md)**
+
+:   提出基于SE(3)等变图神经网络的稀疏点云配准方法Equi-GSPR，通过等变消息传播、低秩特征变换（LRFT）和隐式特征空间相似度匹配，在室内外数据集上以低模型复杂度实现SOTA配准性能。
+
+**[Explicitly Guided Information Interaction Network For Cross-Modal Point Cloud Co](explicitly_guided_information_interaction_network_for_cross-modal_point_cloud_co.md)**
+
+:   提出EGIInet框架，通过统一编码器实现模态对齐，并利用显式引导的信息交互策略（FT-Loss）让网络精准识别图像中的关键结构信息，在视图引导点云补全任务上以更少参数实现了超越XMFnet 16% CD的性能。
+
+**[External Knowledge Enhanced 3D Scene Generation From Sketch](external_knowledge_enhanced_3d_scene_generation_from_sketch.md)**
+
+:   提出SEK框架，结合手绘草图和外部物体关系知识库作为扩散模型的条件，通过知识增强图推理和频谱滤波器，端到端地同时生成3D室内场景的布局和物体几何形状。
+
+**[Falip Visual Prompt As Foveal Attention Boosts Clip Zer](falip_visual_prompt_as_foveal_attention_boosts_clip_zer.md)**
+
+:   提出 FALIP（Foveal-Attention CLIP），通过在 CLIP 的多头自注意力模块中插入类似人眼中央凹的注意力掩码，在不修改原始图像内容的前提下引导模型关注特定区域，显著提升指代表达理解、图像分类和 3D 点云识别等零样本任务的性能。
+
+**[Falip Visual Prompt As Foveal Attention Boosts Clip Zero-Shot Performance](falip_visual_prompt_as_foveal_attention_boosts_clip_zero-shot_performance.md)**
+
+:   提出FALIP（Foveal-Attention CLIP），一种免训练方法，通过在CLIP的多头自注意力模块中插入类似人类中央凹视觉的注意力掩码，在不修改原始图像的情况下增强CLIP的区域感知能力，在指代表达理解、图像分类和3D点云识别等零样本任务上均取得提升。
+
+**[Fastcad Real-Time Cad Retrieval And Alignment From Scans And Videos](fastcad_real-time_cad_retrieval_and_alignment_from_scans_and_videos.md)**
+
+:   提出FastCAD，通过对比学习嵌入空间蒸馏和直接参数预测，实现50ms内完成场景中所有物体的CAD模型检索与对齐，比现有方法快50倍且精度更优。
+
+**[Flash Cache Reducing Bias In Radiance Cache Based Inverse Rendering](flash_cache_reducing_bias_in_radiance_cache_based_inverse_rendering.md)**
+
+:   提出一种无偏的辐射缓存逆渲染方法，通过遮挡感知的vMF重要性采样和快速缓存控制变量技术，在保持计算效率的同时消除现有方法中的渲染偏差，提升材质和光照分解的质量。
+
+**[Flashsplat 2D To 3D Gaussian Splatting Segmentation Solved Optimally](flashsplat_2d_to_3d_gaussian_splatting_segmentation_solved_optimally.md)**
+
+:   将3D高斯溅射的2D-to-3D分割问题建模为整数线性规划，利用alpha混合的线性性质得到闭式最优解，仅需30秒完成优化，比现有方法快50倍。
+
+**[Flashtex Fast Relightable Mesh Texturing With Lightcontrolnet](flashtex_fast_relightable_mesh_texturing_with_lightcontrolnet.md)**
+
+:   提出LightControlNet——一种光照感知的ControlNet变体，结合两阶段纹理优化pipeline，能在约4分钟内为3D网格生成高质量、可重光照的PBR纹理，速度比现有方法快3-10倍。
+
+**[Flying With Photons Rendering Novel Views Of Propagating Light](flying_with_photons_rendering_novel_views_of_propagating_light.md)**
+
+:   提出瞬态场（Transient Field）表示，结合首创的多视点超快成像数据集，首次实现从动态新视角渲染真实场景中传播光的视频，能处理散射、反射、折射和衍射等复杂光传输效果。
+
+**[Forest2Seq Revitalizing Order Prior For Sequential Indoor Scene Synthesis](forest2seq_revitalizing_order_prior_for_sequential_indoor_scene_synthesis.md)**
+
+:   提出Forest2Seq框架，通过将无序的室内场景物体组织为层次化的场景树/森林结构，用广度优先遍历导出有意义的排列顺序作为先验知识，配合Transformer自回归解码器显著提升室内场景合成质量。
+
+**[Formula-Supervised Visual-Geometric Pre-Training](formula-supervised_visual-geometric_pre-training.md)**
+
+:   提出FSVGP，利用分形几何的数学公式自动生成对齐的合成图像和点云，通过公式监督一致性标签在统一Transformer上实现跨模态视觉-几何预训练，在图像和3D物体的分类、检测、分割六项任务上均超越单模态FDSL方法。
+
+**[Futuredepth Learning To Predict The Future Improves Video Depth Estimation](futuredepth_learning_to_predict_the_future_improves_video_depth_estimation.md)**
+
+:   提出FutureDepth，通过未来预测网络(F-Net)学习运动线索和重建网络(R-Net)学习多帧对应关系，将隐式的运动和场景特征注入深度解码器，在NYUDv2、KITTI、DDAD、Sintel四个数据集上达到SOTA精度和时序一致性，且推理效率显著优于现有视频深度方法。
+
+**[G3R Gradient Guided Generalizable Reconstruction](g3r_gradient_guided_generalizable_reconstruction.md)**
+
+:   提出G3R，一种梯度引导的可泛化重建方法，通过学习一个重建网络迭代地利用可微渲染的3D梯度反馈更新3D Neural Gaussians表示，在大规模场景（>10,000m²）上实现2分钟内重建，加速至少10倍且达到与3DGS可比或更优的渲染质量。
+
+**[Gaura Generalizable Approach For Unified Restoration And Rendering Of Arbitrary ](gaura_generalizable_approach_for_unified_restoration_and_rendering_of_arbitrary_.md)**
+
+:   提出GAURA，一种基于可泛化NeRF的统一复原与渲染框架，通过可学习的退化感知latent codes在特征聚合和渲染阶段动态适应不同图像退化类型，无需逐场景优化即可从退化图像中渲染清晰的新视角。
+
+**[Gaussctrl Multi-View Consistent Text-Driven 3D Gaussian Splatting Editing](gaussctrl_multi-view_consistent_text-driven_3d_gaussian_splatting_editing.md)**
+
+:   提出GaussCtrl，利用深度条件化的ControlNet编辑和注意力对齐模块实现多视角一致的文本驱动3DGS场景编辑，支持一次编辑所有视角并仅需一次3D模型更新。
+
 **[Gaussian Grouping Segment And Edit Anything In 3D Scenes](gaussian_grouping_segment_and_edit_anything_in_3d_scenes.md)**
 
 :   为 3D Gaussian Splatting 中的每个高斯学习 16 维 Identity Encoding 实现实例级分组，使用 SAM + DEVA 视频跟踪生成多视图一致的 2D 伪标签做监督，在 LERF-Mask 开放词汇分割上 mIoU 达 69-77%（超 LERF 2 倍+），全景分割超 Panoptic Lifting 4.9% mIoU 且 14× 更快，同时支持 3D 物体移除/修复/着色/风格迁移等多种编辑。
+
+**[Gaussianimage 1000 Fps Image Representation And Compression By 2D Gaussian Splat](gaussianimage_1000_fps_image_representation_and_compression_by_2d_gaussian_splat.md)**
+
+:   提出GaussianImage，首次将2D Gaussian Splatting用于图像表示与压缩，通过紧凑的8参数2D高斯和累积求和光栅化算法，实现了2000 FPS的解码速度，同时与INR方法在表示质量和压缩性能上持平。
+
+**[Gaussreg Fast 3D Registration With Gaussian Splatting](gaussreg_fast_3d_registration_with_gaussian_splatting.md)**
+
+:   首次探索3D Gaussian Splatting场景之间的配准问题，提出粗到精的GaussReg框架——粗阶段利用点云配准方法估计初始变换，精阶段通过渲染图像提取体积特征进行精细对齐，速度比HLoc快44倍且精度可比。
+
+**[Generative Camera Dolly Extreme Monocular Dynamic Novel View Synthesis](generative_camera_dolly_extreme_monocular_dynamic_novel_view_synthesis.md)**
+
+:   提出GCD（Generative Camera Dolly），通过微调Stable Video Diffusion模型实现从单目视频生成任意视角的同步动态新视角视频，支持最高180°的极端相机变换，无需深度输入或显式3D建模。
+
+**[Geometrysticker Enabling Ownership Claim Of Recolorized Neural Radiance Fields](geometrysticker_enabling_ownership_claim_of_recolorized_neural_radiance_fields.md)**
+
+:   提出GeometrySticker，将二进制版权信息"贴"在NeRF的**几何组件**（而非颜色组件）上，使得即使NeRF被重着色（recolorization），原始创建者仍能从渲染图像中提取水印来主张所有权。
+
+**[Gpsformer A Global Perception And Local Structure Fitting-Based Transformer For ](gpsformer_a_global_perception_and_local_structure_fitting-based_transformer_for_.md)**
+
+:   提出GPSFormer，通过全局感知模块(GPM)学习点云短程和长程依赖，结合Taylor级数启发的局部结构拟合卷积(LSFConv)精确捕获局部几何细节，在ScanObjectNN上以纯监督学习方式达到95.4%准确率，超越所有预训练方法。
+
+**[Grm Large Gaussian Reconstruction Model For Efficient 3D Reconstruction And Gene](grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)**
+
+:   提出GRM，一种基于纯Transformer架构的前馈式3D重建模型，将稀疏视图(4张图)的像素通过pixel-aligned Gaussians转化为稠密的3D高斯表示，约0.1秒完成重建，结合多视图扩散模型可实现文本/图像到3D生成。
+
+**[Gvgen Text-To-3D Generation With Volumetric Representation](gvgen_text-to-3d_generation_with_volumetric_representation.md)**
+
+:   提出GVGEN，首个直接从文本前馈生成3D高斯的框架，通过将无序高斯组织为结构化体积表示(GaussianVolume)，并设计从粗到精的生成管线（先生成几何体积再预测高斯属性），在约7秒内完成文本到3D生成。
+
+**[Hac Hash-Grid Assisted Context For 3D Gaussian Splatting Compression](hac_hash-grid_assisted_context_for_3d_gaussian_splatting_compression.md)**
+
+:   利用结构化二值哈希网格为无序的3DGS锚点建立空间上下文关系，通过条件概率建模和自适应量化实现高效熵编码，达到相比vanilla 3DGS **75×** 的压缩率，同时保持甚至提升渲染质量。
+
+**[Headgas Real-Time Animatable Head Avatars Via 3D Gaussian Splatting](headgas_real-time_animatable_head_avatars_via_3d_gaussian_splatting.md)**
+
+:   提出HeadGaS，通过为每个3D高斯基元配备可学习的潜在特征基底，利用表情参数线性混合特征并经MLP预测表情相关的颜色和不透明度，实现**实时（250+ fps）**且高质量的可动画头部重建，PSNR超越基线约2 dB。
+
+**[High-Precision Self-Supervised Monocular Depth Estimation With Rich-Resource Pri](high-precision_self-supervised_monocular_depth_estimation_with_rich-resource_pri.md)**
+
+:   提出RPrDepth，在训练阶段利用多帧/高分辨率等"富资源"模型的特征和预测作为先验，通过先验深度融合模块和富资源引导损失，使仅用**低分辨率单张图像**推理的模型达到甚至超过多帧高分辨率模型的深度估计精度。
+
+**[Idol Unified Dual-Modal Latent Diffusion For Human-Centric Joint Video-Depth Gen](idol_unified_dual-modal_latent_diffusion_for_human-centric_joint_video-depth_gen.md)**
+
+:   提出IDOL框架，通过统一双模态U-Net和运动一致性损失，实现以人为中心的视频与深度图联合生成，显著优于现有方法。
+
+**[Implicit Filtering For Learning Neural Signed Distance Functions From 3D Point C](implicit_filtering_for_learning_neural_signed_distance_functions_from_3d_point_c.md)**
+
+:   提出一种非线性隐式滤波器，在不需要法线的情况下对神经SDF的隐式场进行平滑同时保留尖锐几何细节，并通过扩展到非零等值面实现全场一致性正则化。
+
+**[Improving 2D Feature Representations By 3D-Aware Fine-Tuning](improving_2d_feature_representations_by_3d-aware_fine-tuning.md)**
+
+:   通过将2D基础模型特征提升到3D Gaussian表示中实现多视角融合，再用渲染的3D感知特征反向微调2D模型，以线性探测即可提升语义分割和深度估计性能。
+
+**[Improving Domain Generalization In Self-Supervised Monocular Depth Estimation Vi](improving_domain_generalization_in_self-supervised_monocular_depth_estimation_vi.md)**
+
+:   提出 SCAT 框架，通过缩放深度网络（SDN）降低 UNet 跳跃连接对扰动的敏感性，并引入冲突梯度手术（CGS）解决对抗增强导致的双重优化冲突，首次将对抗数据增强成功应用于自监督单目深度估计以提升跨域泛化能力。
+
+**[Invertible Neural Warp For Nerf](invertible_neural_warp_for_nerf.md)**
+
+:   提出用可逆神经网络（INN）过参数化相机位姿的刚性变换函数，在 NeRF 联合优化中显著提升位姿估计精度和重建质量，证明可逆性是 MLP 建模刚性 warp 的关键约束。
+
+**[Jointdreamer Ensuring Geometry Consistency And Text Congruen](jointdreamer_ensuring_geometry_consistency_and_text_congruen.md)**
+
+:   JointDreamer提出JSD通过能量函数建模多视角联合分布确保3D一致性。
+
+**[Jointdreamer Ensuring Geometry Consistency And Text Congruence In Text-To-3D Gen](jointdreamer_ensuring_geometry_consistency_and_text_congruence_in_text-to-3d_gen.md)**
+
+:   提出联合分数蒸馏（JSD），通过能量函数建模多视图去噪图像的联合分布，将 SDS 从单视图独立优化扩展为多视图联合优化，有效解决 3D 生成中的 Janus 问题，同时保持对复杂文本的生成保真度。
+
+**[Lagrangian Hashing For Compressed Neural Field Representations](lagrangian_hashing_for_compressed_neural_field_representations.md)**
+
+:   将InstantNGP的欧拉网格哈希表与拉格朗日点云表示相结合，在哈希桶中存储可移动的高斯特征点，实现**参数量减少1.8-2.8倍**但重建质量不降的紧凑神经场表示。
+
+**[Language-Driven 6-Dof Grasp Detection Using Negative Prompt Guidance](language-driven_6-dof_grasp_detection_using_negative_prompt_guidance.md)**
+
+:   提出大规模语言驱动6-DoF抓取数据集Grasp-Anything-6D（1M场景、200M抓取姿态），以及基于扩散模型的LGrasp6D方法，核心创新是**负提示引导（Negative Prompt Guidance）**策略，在推理时引导抓取姿态远离非目标物体。
+
+**[Lara Efficient Large-Baseline Radiance Fields](lara_efficient_large-baseline_radiance_fields.md)**
+
+:   提出LaRa前馈重建模型，通过**高斯体积（Gaussian Volume）**表示和**分组注意力层（Group Attention Layer）**统一局部与全局推理，仅需4张图像即可从大基线视角重建360°辐射场，且仅用**4×A100训练2天**即可超越LGM等费时方法。
+
+**[Learning 3D-Aware Gans From Unposed Images With Template Feature Field](learning_3d-aware_gans_from_unposed_images_with_template_feature_field.md)**
+
+:   提出模板特征场(TeFF)，通过联合学习生成辐射场和语义特征场，从无姿态标注的野外图像中自动提取3D模板并在线估计相机位姿，从而实现完整3D几何的生成对抗学习。
+
+**[Learning 3D Geometry And Feature Consistent Gaussian Splatting For Object Remova](learning_3d_geometry_and_feature_consistent_gaussian_splatting_for_object_remova.md)**
+
+:   提出 GScream 框架，通过单目深度引导训练和交叉注意力特征正则化，在 3D Gaussian Splatting 表示下实现高质量的物体移除，同时保持几何一致性和纹理连贯性。
+
+**[Learning To Generate Conditional Tri-Plane For 3D-Aware Expression Controllable ](learning_to_generate_conditional_tri-plane_for_3d-aware_expression_controllable_.md)**
+
+:   提出 Export3D，通过对比预训练获取与外观解耦的表情表示（CLeBS），结合表情自适应层归一化（EAdaLN）直接生成条件tri-plane，实现无外观交换的跨身份3D-aware人像表情动画。
+
+**[Leia Latent View-Invariant Embeddings For Implicit 3D Articulation](leia_latent_view-invariant_embeddings_for_implicit_3d_articulation.md)**
+
+:   提出LEIA方法，通过学习视角不变的潜在嵌入来表征铰接物体的不同状态，利用超网络(HyperNetwork)调制NeRF权重，实现在未见过的铰接配置之间进行平滑插值，无需任何运动先验或3D监督。
+
+**[Ln3Diff Scalable Latent Neural Fields Diffusion For Speedy 3D Generation](ln3diff_scalable_latent_neural_fields_diffusion_for_speedy_3d_generation.md)**
+
+:   提出LN3Diff++框架，通过3D感知的VAE将多视角图像压缩到紧凑的3D潜在空间，在该空间上训练扩散模型（U-Net或DiT），实现高质量、快速、通用的条件3D生成，包括文本到3D和图像到3D。
+
+**[Mariner Enhancing Novel Views By Matching Rendered Images With Nearby References](mariner_enhancing_novel_views_by_matching_rendered_images_with_nearby_references.md)**
+
+:   提出MaRINeR方法，利用附近参考图像通过深度特征匹配和层次化细节传输来增强3D重建的渲染图像质量，适用于显式（mesh）和隐式（NeRF）等多种3D表示的渲染后处理。
+
+**[Megascenes Scene-Level View Synthesis At Scale](megascenes_scene-level_view_synthesis_at_scale.md)**
+
+:   从Wikimedia Commons互联网照片构建包含10万+SfM重建的大规模场景级3D数据集MegaScenes，并结合warp条件和位姿条件提升场景级新视角合成的位姿一致性。
+
+**[Mesh2Nerf Direct Mesh Supervision For Neural Radiance Field Representation And G](mesh2nerf_direct_mesh_supervision_for_neural_radiance_field_representation_and_g.md)**
+
+:   提出Mesh2NeRF，通过解析解直接从纹理网格(textured mesh)构造GT辐射场，用occupancy函数建模密度场、用反射模型建模颜色场，为NeRF表示与生成任务提供精确的3D逐点监督。
+
+**[Meshfeat Multi-Resolution Features For Neural Fields On Meshes](meshfeat_multi-resolution_features_for_neural_fields_on_meshes.md)**
+
+:   提出MeshFeat，一种适用于mesh上神经场的参数化多分辨率特征编码方法，利用网格简化算法构建多分辨率特征表示，在保持重建质量的同时实现13倍推理加速。
+
+**[Migs Multi-Identity Gaussian Splatting Via Tensor Decomposition](migs_multi-identity_gaussian_splatting_via_tensor_decomposition.md)**
+
+:   提出MIGS，通过CP张量分解将多个人体身份的3DGS参数统一到一个低秩张量中，在大幅减少参数量的同时实现了对未见姿态的鲁棒动画。
 
 **[Milliflow Scene Flow Estimation On Mmwave Radar Point Cloud For Human Motion Sen](milliflow_scene_flow_estimation_on_mmwave_radar_point_cloud_for_human_motion_sen.md)**
 
 :   提出首个毫米波雷达点云场景流估计方法 milliFlow，通过多尺度特征提取、全局聚合、GRU 时序传播和约束回归，在自建数据集上将 EPE3D 从次优 0.107m 降至 0.046m（cm 级精度），并展示场景流特征对人体活动识别（+7.9%）、人体部位解析（+3.6%）、人体追踪等下游任务的增强效果。
 
+**[Mvdd Multi-View Depth Diffusion Models](mvdd_multi-view_depth_diffusion_models.md)**
+
+:   提出MVDD，一个基于多视角深度图表示的扩散模型，通过极线"线段"注意力和去噪深度融合实现3D一致的高质量形状生成，可生成20K+点的稠密点云。
+
 **[Mvsgaussian Fast Generalizable Gaussian Splatting Reconstruction From Multi-View](mvsgaussian_fast_generalizable_gaussian_splatting_reconstruction_from_multi-view.md)**
 
 :   将MVS的代价体深度估计与3D高斯溅射结合，通过混合渲染(splatting+volume rendering)提升泛化性，并提出基于多视图几何一致性的点云聚合策略，使per-scene优化仅需45秒就超越3D-GS的10分钟效果。
+
+**[Mvsplat Efficient 3D Gaussian Splatting From Sparse Multi-View Images](mvsplat_efficient_3d_gaussian_splatting_from_sparse_multi-view_images.md)**
+
+:   提出MVSplat，通过plane-sweep构建代价体（cost volume）来精确定位Gaussian中心，以极少参数量（pixelSplat的1/10）和最快推理速度（22fps）实现了稀疏视角前馈式3D Gaussian预测的SOTA。
+
+**[Ngp-Rt Fusing Multi-Level Hash Features With Lightweight Attention For Real-Time](ngp-rt_fusing_multi-level_hash_features_with_lightweight_attention_for_real-time.md)**
+
+:   提出NGP-RT，通过轻量注意力机制聚合多级显式哈希特征替代per-point MLP，并引入占用距离网格减少光线行进中的内存访问，在Mip-NeRF 360数据集上实现1080p 108fps的实时NeRF渲染。
 
 **[Novum Neural Object Volumes For Robust Object Classification](novum_neural_object_volumes_for_robust_object_classification.md)**
 
 :   提出 NOVUM 架构，为每个物体类别维护一个由 3D 高斯组成的神经体积表征，通过将图像特征与各类别的高斯特征匹配实现分类，在遮挡/损坏/真实 OOD 场景下相比 ResNet/ViT/Swin 等标准架构分类准确率提升 6-33%，同时支持 3D 位姿估计和可解释性可视化。
 
+**[Omni-Recon Harnessing Image-Based Rendering For General-Purpose Neural Radiance ](omni-recon_harnessing_image-based_rendering_for_general-purpose_neural_radiance_.md)**
+
+:   提出Omni-Recon框架，通过基于图像的渲染（IBR）管线构建通用NeRF，利用解耦的几何/外观双分支设计，首次在单一模型中实现可泛化3D重建、零样本多任务场景理解和实时渲染、场景编辑等多种下游3D任务的适配。
+
+**[Omni6D Large-Vocabulary 3D Object Dataset For Category-Level 6D Object Pose Esti](omni6d_large-vocabulary_3d_object_dataset_for_category-level_6d_object_pose_esti.md)**
+
+:   构建了 **Omni6D**——首个大规模类别级 6DoF 姿态估计 RGBD 数据集，覆盖 **166 个类别、4688 个实例、80 万张图像**，远超现有 NOCS 等数据集（仅 6 类），并提出对称感知评估指标和渐进式微调策略。
+
+**[On The Error Analysis Of 3D Gaussian Splatting And An Optimal Projection Strateg](on_the_error_analysis_of_3d_gaussian_splatting_and_an_optimal_projection_strateg.md)**
+
+:   从数学上系统分析3D Gaussian Splatting中局部仿射近似引入的投影误差，证明误差函数在Gaussian均值方向与投影平面法线重合时取极小值，据此提出每个Gaussian投影到各自切平面的最优投影策略(Optimal Gaussian Splatting)，在不影响实时性能的前提下显著降低渲染伪影。
+
+**[Open-Vocabulary 3D Semantic Segmentation With Text-To-Image Diffusion Models](open-vocabulary_3d_semantic_segmentation_with_text-to-image_diffusion_models.md)**
+
+:   提出 Diff2Scene，首次将预训练的文本-图像扩散模型（Stable Diffusion）用于开放词汇3D语义分割，通过创新的掩码蒸馏方法将2D基础模型的语义丰富mask嵌入迁移到3D几何感知mask模型，在 ScanNet200 上超越 SOTA 12%。
+
+**[Open Vocabulary 3D Scene Understanding Via Geometry Guided Self-Distillation](open_vocabulary_3d_scene_understanding_via_geometry_guided_self-distillation.md)**
+
+:   提出 GGSD 框架，利用3D几何先验（超点语义一致性）引导从2D模型到3D模型的知识蒸馏，并通过自蒸馏机制进一步挖掘3D数据的表征优势，在室内外开放词汇3D场景理解任务上大幅超越现有方法。
+
+**[P2P-Bridge Diffusion Bridges For 3D Point Cloud Denoising](p2p-bridge_diffusion_bridges_for_3d_point_cloud_denoising.md)**
+
+:   提出 P2P-Bridge，将点云去噪建模为 Schrödinger Bridge 问题，学习噪声点云到干净点云之间的最优传输计划，首次引入数据到数据（而非数据到噪声）的扩散范式，在合成数据和真实室内场景（ScanNet++、ARKitScenes）上均大幅超越现有方法。
+
+**[Part2Object Hierarchical Unsupervised 3D Instance Segmentation](part2object_hierarchical_unsupervised_3d_instance_segmentation.md)**
+
+:   提出 Part2Object 层次聚类框架，利用自监督特征和3D物体性先验（objectness prior），从零件级过分割逐层合并到物体级实例，生成高质量伪标签用于自训练 Hi-Mask3D，实现无需人工标注的3D实例分割。
+
+**[Pcf-Lift Panoptic Lifting By Probabilistic Contrastive Fusion](pcf-lift_panoptic_lifting_by_probabilistic_contrastive_fusion.md)**
+
+:   提出 PCF-Lift，通过概率特征嵌入（多元高斯分布）替代确定性特征，结合概率乘积核（PP Kernel）的对比损失和跨视图约束，有效应对2D分割中的不一致分割和不一致ID问题，在 ScanNet 和 Messy Room 数据集上显著超越前沿方法。
+
+**[Per-Gaussian Embedding-Based Deformation For Deformable 3D Gaussian Splatting](per-gaussian_embedding-based_deformation_for_deformable_3d_gaussian_splatting.md)**
+
+:   提出基于逐高斯嵌入（Per-Gaussian Embedding）的形变表示方法，将形变定义为逐高斯潜在嵌入与时间嵌入的函数，辅以粗细形变分解和局部平滑正则化，在多个动态场景数据集上取得了质量、速度和模型容量的全面优势。
+
+**[Physdreamer Physics-Based Interaction With 3D Objects Via Video Generation](physdreamer_physics-based_interaction_with_3d_objects_via_video_generation.md)**
+
+:   利用视频生成模型中隐含的物理动力学先验，为静态3D高斯对象估计空间变化的杨氏模量材料场，从而实现物理合理的交互式3D动力学合成。
+
 **[Pointllm Empowering Large Language Models To Understand Point Clouds](pointllm_empowering_large_language_models_to_understand_point_clouds.md)**
 
 :   将点云编码器（Point-BERT）通过 MLP 投影层对接 LLaMA 大语言模型，构建 PointLLM；利用 730K 指令数据（660K 简述 + 70K 复杂指令）两阶段训练后，在 3D 物体分类上达到 53.4% 生成式准确率（超越 LLaVA-13B 的 44.2%），在物体描述任务上人类评估胜率 55%（超越人工标注）。
+
+**[Prodepth Boosting Self-Supervised Multi-Frame Monocular Depth With Probabilistic](prodepth_boosting_self-supervised_multi-frame_monocular_depth_with_probabilistic.md)**
+
+:   提出一种概率融合框架 ProDepth，通过辅助解码器推断动态区域不确定性，以加权几何均值自适应融合单帧和多帧深度概率分布来修正代价体中的错误匹配代价，并配合不确定性感知的损失重加权策略，在自监督多帧单目深度估计中取得 SOTA。
 
 **[Progressive Classifier And Feature Extractor Adaptation For Unsupervised Domain ](progressive_classifier_and_feature_extractor_adaptation_for_unsupervised_domain_.md)**
 
 :   提出 PCFEA 方法用于点云无监督域自适应，通过渐进构建从源域到目标域的中间域，在宏观层面用目标风格特征增强训练分类器（PTFA），微观层面引导特征提取器向中间域对齐（IDFA），在 PointDA-10 上均值准确率达 76.5%（超 SOTA +2.9%），GraspNetPC-10 上达 87.6%（超 SOTA +13.7%）。
 
+**[Ray-Distance Volume Rendering For Neural Scene Reconstruction](ray-distance_volume_rendering_for_neural_scene_reconstruction.md)**
+
+:   提出 RS-Recon 方法，用射线方向相关的有符号射线距离函数（SRDF）替代传统 SDF 来参数化体渲染中的密度函数，结合 SRDF-SDF 一致性损失和自监督可见性任务，在多物体室内场景重建中取得更准确的表面和视图合成。
+
+**[Reconstruction And Simulation Of Elastic Objects With Spring-Mass 3D Gaussians](reconstruction_and_simulation_of_elastic_objects_with_spring-mass_3d_gaussians.md)**
+
+:   提出 Spring-Gaus，将3D弹簧-质点模型集成到3D高斯表示中，从多视角视频中重建弹性物体的外观、几何和物理动力学属性，实现未来预测和不同环境条件下的仿真。
+
+**[Reloo Reconstructing Humans Dressed In Loose Garments From Monocular Video In Th](reloo_reconstructing_humans_dressed_in_loose_garments_from_monocular_video_in_th.md)**
+
+:   提出 ReLoo，通过分层神经人体表示和非层级虚拟骨骼变形模块，从单目野外视频中重建穿着宽松服装的高质量3D人体模型。
+
+**[Risurconv Rotation Invariant Surface Attention-Augmented Convolutions For 3D Poi](risurconv_rotation_invariant_surface_attention-augmented_convolutions_for_3d_poi.md)**
+
+:   提出 RISurConv，通过构建局部三角表面并提取高表达力旋转不变表面属性（RISP），结合注意力增强卷积，实现首次在精度上超越非旋转不变方法的旋转不变点云分析网络。
+
+**[Roguenerf A Robust Geometry-Consistent Universal Enhancer For Nerf](roguenerf_a_robust_geometry-consistent_universal_enhancer_for_nerf.md)**
+
+:   提出 RoGUENeRF，通过结合3D对齐、非刚性精炼和几何感知注意力机制，作为NeRF的后处理增强器，显著提升多种NeRF基线的渲染质量，同时保持视角一致性和对不准确相机标定的鲁棒性。
+
+**[Rpbg Towards Robust Neural Point-Based Graphics In The Wild](rpbg_towards_robust_neural_point-based_graphics_in_the_wild.md)**
+
+:   提出 RPBG，通过退化感知卷积（DAC）模块增强神经渲染器、轻量环境建模和点云增强策略，使基于点的神经重渲染在各类野外场景中表现稳定优越。
+
+**[Sags Structure-Aware 3D Gaussian Splatting](sags_structure-aware_3d_gaussian_splatting.md)**
+
+:   提出 SAGS，通过局部-全局图表示和图神经网络隐式编码场景几何结构，在保持实时渲染的同时提升3DGS的渲染质量、减少存储需求（最高24×压缩），并显著抑制浮点伪影。
+
+**[Sapiens Foundation For Human Vision Models](sapiens_foundation_for_human_vision_models.md)**
+
+:   Sapiens 提出了一个以人为中心的视觉基础模型家族（0.3B-2B参数），通过在3亿张人体图像上进行 MAE 自监督预训练，原生支持1K高分辨率推理，在2D姿态估计、身体部位分割、深度估计和表面法线预测四个人体视觉任务上全面超越现有SOTA。
+
 **[Scanreason Empowering 3D Visual Grounding With Reasoning Capabilities](scanreason_empowering_3d_visual_grounding_with_reasoning_capabilities.md)**
 
 :   提出 3D reasoning grounding 新任务和 ScanReason 基准（10K+ QA-location pairs，5种推理类型），设计 ReGround3D 框架将 MLLM 推理与 3D grounding 模块通过 Chain-of-Grounding 机制协同，在隐式指令下实现准确的 3D 目标定位。
+
+**[Scatterformer Efficient Voxel Transformer With Scattered Linear Attention](scatterformer_efficient_voxel_transformer_with_scattered_linear_attention.md)**
+
+:   提出 ScatterFormer，首个直接对跨窗口的变长体素序列施加线性注意力的体素 Transformer，通过 Scattered Linear Attention (SLA) 模块和 chunk-wise 矩阵乘法算法实现亚毫秒级延迟，配合 Cross-Window Interaction (CWI) 模块替代窗口平移，在 Waymo 和 nuScenes 上达到 SOTA 精度的同时保持 23 FPS 的检测速度。
+
+**[Scenegraphloc Cross-Modal Coarse Visual Localization On 3D Scene Graphs](scenegraphloc_cross-modal_coarse_visual_localization_on_3d_scene_graphs.md)**
+
+:   提出 SceneGraphLoc，将查询图像在由多模态 3D 场景图组成的参考地图中进行粗定位，在不依赖大规模图像数据库的前提下，实现了接近 SOTA 图像级方法的定位精度，同时存储需求降低三个数量级。
+
+**[Scenegraphloc Crossmodal Coarse Visual Localization On 3D Sc](scenegraphloc_crossmodal_coarse_visual_localization_on_3d_sc.md)**
+
+:   提出SceneGraphLoc，首次将queryimage在多模态3D场景图数据库中进行粗定位，通过学习场景图节点和图像patch的统一嵌入空间，在存储效率提升1000倍的同时接近图像检索方法的定位精度。
+
+**[Sceneverse Scaling 3D Vision-Language Learning For Grounded Scene Understanding](sceneverse_scaling_3d_vision-language_learning_for_grounded_scene_understanding.md)**
+
+:   提出首个百万级 3D 视觉-语言数据集 SceneVerse（68K 室内场景 + 2.5M 场景-语言对），结合多层级对比预训练框架 GPS，在 3D visual grounding 和 QA 任务上取得 SOTA，并展现零样本迁移能力。
+
+**[Sceneverse Scaling 3D Visionlanguage Learning For Grounded S](sceneverse_scaling_3d_visionlanguage_learning_for_grounded_s.md)**
+
+:   提出SceneVerse——首个百万级3D视觉语言数据集（68K场景+250万语言描述），通过结合人工标注和基于场景图的自动生成pipeline构建多粒度描述，并设计GPS预训练框架实现多层次场景-文本对齐，在3D grounding和QA基准上达到SOTA。
+
+**[Seed A Simple And Effective 3D Detr In Point Clouds](seed_a_simple_and_effective_3d_detr_in_point_clouds.md)**
+
+:   SEED 提出了一种简洁高效的 3D DETR 检测器，通过双重查询选择（DQS）模块以粗到精方式获取高质量查询，结合可变形网格注意力（DGA）模块利用 3D 物体的几何结构信息实现灵活的查询交互，在 Waymo 和 nuScenes 上达到新 SOTA。
+
+**[Segpoint Segment Any Point Cloud Via Large Language Model](segpoint_segment_any_point_cloud_via_large_language_model.md)**
+
+:   提出 SegPoint，首个利用多模态 LLM 推理能力在统一框架中完成 3D 指令分割、引用分割、语义分割和开放词汇分割四种任务的模型，并构建 Instruct3D 基准测试（2,565 对），mIoU 达 27.5%。
+
+**[Semantichuman-Hd High-Resolution Semantic Disentangled 3D Human Generation](semantichuman-hd_high-resolution_semantic_disentangled_3d_human_generation.md)**
+
+:   提出SemanticHuman-HD，首个实现语义解耦的3D人体图像合成方法，通过K个独立局部生成器和3D感知超分模块，实现1024²分辨率的语义可控人体生成。
+
+**[Sgs-Slam Semantic Gaussian Splatting For Neural Dense Slam](sgs-slam_semantic_gaussian_splatting_for_neural_dense_slam.md)**
+
+:   提出SGS-SLAM，首个基于Gaussian Splatting的语义视觉SLAM系统，通过多通道优化融合外观、几何和语义特征，在相机姿态估计、地图重建和语义分割方面均达到SOTA。
+
+**[Sinder Repairing The Singular Defects Of Dinov2](sinder_repairing_the_singular_defects_of_dinov2.md)**
+
+:   揭示DINOv2特征图中高范数缺陷token的根源是网络权重的主左奇异向量（singular defect），并提出SINDER——仅需小数据集微调奇异值即可修复缺陷，同时保持特征质量。
+
+**[Slotlifter Slot-Guided Feature Lifting For Learning Object-Centric Radiance Fiel](slotlifter_slot-guided_feature_lifting_for_learning_object-centric_radiance_fiel.md)**
+
+:   提出SlotLifter，通过将2D特征提升为3D并与Slot Attention结合的slot-guided feature lifting设计，在场景分解和新视角合成上同时达到SOTA，且训练效率提升约5倍。
+
+**[Sparsessp 3D Subcellular Structure Prediction From Sparse-View Transmitted Light](sparsessp_3d_subcellular_structure_prediction_from_sparse-view_transmitted_light.md)**
+
+:   提出SparseSSP，通过混合维度拓扑（3D编码+2D解码）和一对多体素映射，从稀疏透射光切片预测3D荧光体素网格，最多减少87.5%成像频率且保持领先性能。
+
+**[Supergaussian Repurposing Video Models For 3D Super Resolution](supergaussian_repurposing_video_models_for_3d_super_resolution.md)**
+
+:   提出SuperGaussian，通过复用预训练视频上采样模型实现3D超分辨率，无需类别特定训练，可处理多种3D输入格式（高斯、NeRF、网格等），输出高质量Gaussian Splat模型。
+
+**[T-Mae Temporal Masked Autoencoders For Point Cloud Representation Learning](t-mae_temporal_masked_autoencoders_for_point_cloud_representation_learning.md)**
+
+:   T-MAE 提出了一种时序掩码自编码器预训练策略，以时序相邻两帧为输入，通过掩码当前帧并借助历史帧信息重建来学习时序依赖关系，配合设计的 SiamWCA（孪生编码器+窗口交叉注意力）架构，在 Waymo 和 ONCE 数据集上以更少标注数据和更少训练迭代次数超越 SOTA 自监督方法。
+
+**[Talkinggaussian Structure-Persistent 3D Talking Head Synthesis Via Gaussian Spla](talkinggaussian_structure-persistent_3d_talking_head_synthesis_via_gaussian_spla.md)**
+
+:   提出TalkingGaussian，基于3D高斯溅射的形变驱动说话人头部合成框架，通过对持久性高斯基元施加平滑形变表示面部运动，并分解面部和口腔内部区域以解决运动不一致问题。
+
+**[Taming Latent Diffusion Model For Neural Radiance Field Inpainting](taming_latent_diffusion_model_for_neural_radiance_field_inpainting.md)**
+
+:   提出MALD-NeRF，通过掩码对抗训练和场景定制的潜在扩散模型实现高质量NeRF修复，有效解决扩散模型的多视角不一致和纹理偏移问题。
+
+**[Temporally Consistent Stereo Matching](temporally_consistent_stereo_matching.md)**
+
+:   提出TC-Stereo，通过时序视差补全提供良好初始化、时序状态融合保持隐藏态连贯性，以及双空间（视差+视差梯度）迭代精炼改善病态区域，实现时间一致的立体匹配。
+
+**[Texture-Gs Disentangling The Geometry And Texture For 3D Gaussian Splatting Edit](texture-gs_disentangling_the_geometry_and_texture_for_3d_gaussian_splatting_edit.md)**
+
+:   提出Texture-GS，首次为3D高斯溅射解耦几何与纹理，通过UV映射MLP和局部Taylor展开将外观表示为2D纹理图，实现实时纹理替换和编辑（58 FPS，RTX 2080 Ti）。
+
+**[The Nerfect Match Exploring Nerf Features For Visual Localization](the_nerfect_match_exploring_nerf_features_for_visual_localization.md)**
+
+:   提出NeRFMatch，探索NeRF内部特征作为3D描述子的潜力，建立基于注意力机制的2D-3D匹配网络，在Cambridge Landmarks上实现有竞争力的定位性能，验证了NeRF作为定位场景表示的可行性。
+
+**[Thermal3D-Gs Physics-Induced 3D Gaussians For Thermal Infrared Novel-View Synthe](thermal3d-gs_physics-induced_3d_gaussians_for_thermal_infrared_novel-view_synthe.md)**
+
+:   提出Thermal3D-GS，通过神经网络建模大气传输效应和热传导物理过程，并引入温度一致性约束，实现热红外图像的高质量新视角合成，创建了首个大规模热红外新视角合成数据集TI-NSD。
+
+**[Tpa3D Triplane Attention For Fast Text-To-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)**
+
+:   提出TPA3D，一个基于GAN的文本引导3D生成框架，通过三平面注意力（TPA）模块在句子级和词级特征上进行逐层细化，实现快速且细粒度的文本到3D纹理网格生成。
+
+**[Track Everything Everywhere Fast And Robustly](track_everything_everywhere_fast_and_robustly.md)**
+
+:   提出一种高效鲁棒的测试时优化像素跟踪方法，通过引入CaDeX++可逆变形网络、单目深度先验和DINOv2长期语义一致性，将训练速度提升10倍以上，同时显著提高了跟踪精度和鲁棒性。
+
+**[Tracknerf Bundle Adjusting Nerf From Sparse And Noisy Views Via Feature Tracks](tracknerf_bundle_adjusting_nerf_from_sparse_and_noisy_views_via_feature_tracks.md)**
+
+:   提出TrackNeRF，将SfM中的特征轨迹（feature tracks）引入NeRF训练，通过全局多视角重投影一致性损失替代传统的成对对应损失，显著提升稀疏+有噪声位姿下的NeRF重建质量和位姿优化精度。
+
+**[Tram Global Trajectory And Motion Of 3D Humans From In-The-Wild Videos](tram_global_trajectory_and_motion_of_3d_humans_from_in-the-wild_videos.md)**
+
+:   提出TRAM，一个两阶段方法，通过鲁棒化SLAM恢复度量尺度相机运动 + 视频Transformer（VIMO）回归相机坐标系下的人体运动，组合两者实现准确的世界坐标系3D人体全局轨迹与动作重建。
+
+**[Transferable 3D Adversarial Shape Completion Using Diffusion Models](transferable_3d_adversarial_shape_completion_using_diffusion_models.md)**
+
+:   提出3DAdvDiff，利用3D扩散模型通过对抗性形状补全生成高质量的迁移性3D对抗点云，结合模型不确定性、集成对抗引导和显著性评分策略，在黑盒设置下对最新3D模型实现SOTA攻击成功率。
+
+**[Unidream Unifying Diffusion Priors For Relightable Text-To-3D Generation](unidream_unifying_diffusion_priors_for_relightable_text-to-3d_generation.md)**
+
+:   提出UniDream，通过训练albedo-法线对齐的多视角扩散模型（AN-MVM），结合Transformer重建模型和分阶段SDS优化，实现可重光照的文本到3D生成，生成的3D物体具有干净的albedo纹理和PBR材质。
+
+**[Vcd-Texture Variance Alignment Based 3D-2D Co-Denoising For Text-Guided Texturin](vcd-texture_variance_alignment_based_3d-2d_co-denoising_for_text-guided_texturin.md)**
+
+:   提出VCD-Texture，在Stable Diffusion去噪过程中统一2D和3D自注意力学习（JNP），通过方差对齐（VA）解决光栅化引起的方差衰减问题，并用修复细化处理不一致区域，实现高保真、高一致性的3D纹理合成。
 
 **[View Selection For 3D Captioning Via Diffusion Ranking](view_selection_for_3d_captioning_via_diffusion_ranking.md)**
 
 :   DiffuRank用预训练text-to-3D扩散模型评估视角对齐度选择最佳视角减少幻觉。
 
+**[Vista3D Unravel The 3D Darkside Of A Single Image](vista3d_unravel_the_3d_darkside_of_a_single_image.md)**
+
+:   提出Vista3D，通过粗到细的两阶段框架（高斯溅射→FlexiCubes等值面细化+解耦纹理），结合角度扩散先验组合，5分钟内从单张图像生成多样且一致的高保真3D网格。
+
+**[Wast-3D Wasserstein-2 Distance For Scene-To-Scene Stylization On 3D Gaussians](wast-3d_wasserstein-2_distance_for_scene-to-scene_stylization_on_3d_gaussians.md)**
+
+:   提出WaSt-3D，利用3D高斯溅射表示将风格迁移重新定义为两个高斯分布之间的最优传输问题，通过Sinkhorn散度匹配内容场景和风格场景的3D分布，首次实现了3D场景到场景的几何风格迁移。
+
 **[When Do We Not Need Larger Vision Models](when_do_we_not_need_larger_vision_models.md)**
 
 :   提出 Scaling on Scales (S2) 策略：冻结小模型（如 ViT-B）在多个图像尺度上运行并拼接特征，无需增加参数即可在分类、分割、深度估计、MLLM 等任务上匹敌甚至超越大模型（ViT-H/G），并从理论和实验上论证了大模型学到的表征大部分可由多尺度小模型线性近似。
+
+**[Zero-Shot Multi-Object Scene Completion](zero-shot_multi-object_scene_completion.md)**
+
+:   提出OctMAE，一种融合Octree U-Net和隐空间3D MAE的混合架构，从单张RGB-D图像实现高质量近实时的多物体场景形状补全，通过遮挡掩码策略和3D旋转位置编码显著提升效率和泛化能力。
+
+**[Zest Zero-Shot Material Transfer From A Single Image](zest_zero-shot_material_transfer_from_a_single_image.md)**
+
+:   提出ZeST，一种零样本免训练的材质迁移方法，通过IP-Adapter提取材质表示、ControlNet提供几何引导、前景灰度图提供光照线索，三条分支组合实现从单张材质样本图像到目标物体的2D材质迁移。

@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICCV2025 视频理解方向 72篇论文解读
+  ICCV2025 视频理解方向 73篇论文解读
 description: >-
-  72篇ICCV2025 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  73篇ICCV2025 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频理解
 
-**📹 ICCV2025** · 共 **72** 篇
+**📹 ICCV2025** · 共 **73** 篇
 
 **[4D-Bench Benchmarking Multi-Modal Large Language Models For 4D Object Understand](4d-bench_benchmarking_multi-modal_large_language_models_for_4d_object_understand.md)**
 
@@ -193,6 +193,10 @@ description: >-
 **[Ovg-Hq Online Video Grounding With Hybrid-Modal Queries](ovg-hq_online_video_grounding_with_hybrid-modal_queries.md)**
 
 :   提出在线视频定位新任务 OVG-HQ，支持文本/图像/视频片段等混合模态查询，通过参数化记忆块（PMB）保留历史信息和混合蒸馏策略缓解模态不平衡，在流式视频中实时定位目标片段。
+
+**[Prior-Flow Enhancing Primitive Panoramic Optical Flow With O](prior-flow_enhancing_primitive_panoramic_optical_flow_with_o.md)**
+
+:   提出双分支框架 PriOr-Flow，利用正交视图的低畸变先验来补偿 ERP 全景图像极区的严重畸变，从而显著提升全景光流估计精度，在 MPFDataset 和 FlowScape 上分别降低 EPE 30.0% 和 29.6%。
 
 **[Prior-Flow Enhancing Primitive Panoramic Optical Flow With Orthogonal View](prior-flow_enhancing_primitive_panoramic_optical_flow_with_orthogonal_view.md)**
 

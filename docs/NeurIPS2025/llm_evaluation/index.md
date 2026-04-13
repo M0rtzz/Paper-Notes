@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 LLM评测方向 66篇论文解读
+  NeurIPS2025 LLM评测方向 69篇论文解读
 description: >-
-  66篇NeurIPS2025 LLM评测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  69篇NeurIPS2025 LLM评测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM评测
 
-**🧠 NeurIPS2025** · 共 **66** 篇
+**🧠 NeurIPS2025** · 共 **69** 篇
 
 **[A Highdimensional Statistical Method For Optimizing Transfer](a_highdimensional_statistical_method_for_optimizing_transfer.md)**
 
@@ -198,6 +198,10 @@ description: >-
 
 :   提出 OptiTree，通过构建建模树（modeling tree）组织运筹优化问题的层次化分类与建模思维，利用树搜索将复杂问题自适应分解为更简单的子问题序列，显著提升 LLM 在优化建模任务上的准确率（在多个困难基准上提升超过 10%）。
 
+**[Parrot A Benchmark For Evaluating Llms In Cross-System Sql Translation](parrot_a_benchmark_for_evaluating_llms_in_cross-system_sql_translation.md)**
+
+:   提出 PARROT，首个面向跨数据库系统 SQL 翻译 (SQL-to-SQL) 的实用基准，包含598个核心翻译对、覆盖22个生产级数据库系统，揭示了 LLM 在系统特定 SQL 方言理解上的显著不足（平均准确率低于38.53%）。
+
 **[Path Attention Position Encoding Via Accumulating Householder Transformations](path_attention_position_encoding_via_accumulating_householder_transformations.md)**
 
 :   提出 PaTH（Position encoding via accumulating Householder Transformations），一种数据依赖的乘法位置编码方案，通过累积 Householder 变换替代 RoPE 的静态旋转矩阵，在理论表达力和实际语言建模性能上均优于 RoPE。
@@ -229,6 +233,10 @@ description: >-
 **[Rgb-To-Polarization Estimation A New Task And Benchmark Study](rgb-to-polarization_estimation_a_new_task_and_benchmark_study.md)**
 
 :   定义了从标准RGB图像估计偏振信息的新任务，建立首个全面基准，系统评估修复型和生成型深度学习模型在该任务上的表现，揭示不同模型家族的优势与局限。
+
+**[Risk Management For Mitigating Benchmark Failure Modes Benchrisk](risk_management_for_mitigating_benchmark_failure_modes_benchrisk.md)**
+
+:   基于NIST风险管理流程，系统分析了26个LLM基准测试中的57种失败模式，提出196种缓解策略，并构建了BenchRisk元评估框架对基准测试本身的可靠性进行评分。
 
 **[Scmrdr A Scalable And Flexible Framework For Unpaired Single-Cell Multi-Omics Da](scmrdr_a_scalable_and_flexible_framework_for_unpaired_single-cell_multi-omics_da.md)**
 
@@ -265,6 +273,10 @@ description: >-
 **[Turbocharging Gaussian Process Inference With Approximate Sketch-And-Project](turbocharging_gaussian_process_inference_with_approximate_sketch-and-project.md)**
 
 :   提出 ADASAP 算法，通过近似子空间预条件、分布式计算和 Nesterov 加速，将 sketch-and-project 方法扩展到大规模 GP 推断，首次将精确 GP 推断扩展到 $>3\times10^8$ 样本规模，同时在理论上证明了 SAP 方法的 condition number-free 收敛性。
+
+**[Unlocking Transfer Learning For Open-World Few-Shot Recognition](unlocking_transfer_learning_for_open-world_few-shot_recognition.md)**
+
+:   提出两阶段方法，通过开集感知元学习 + 开集无关迁移学习，首次将迁移学习范式成功应用于少样本开集识别 (FSOSR)，在 miniImageNet 和 tieredImageNet 上达到 SOTA。
 
 **[What Does It Take To Build A Performant Selective Classifier](what_does_it_take_to_build_a_performant_selective_classifier.md)**
 

@@ -1,14 +1,18 @@
 ---
 title: >-
-  ICML2025 图像生成方向 115篇论文解读
+  ICML2025 图像生成方向 117篇论文解读
 description: >-
-  115篇ICML2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  117篇ICML2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧪 ICML2025** · 共 **115** 篇
+**🧪 ICML2025** · 共 **117** 篇
+
+**[Action-Minimization Meets Generative Modeling Efficient Transition Pat](action-minimization_meets_generative_modeling_efficient_transition_pat.md)**
+
+:   将预训练扩散/flow matching模型的score函数解释为随机动力学的漂移项，通过最小化Onsager-Machlup (OM)作用量泛函实现零样本转移路径采样，无需任务特定训练即可在分子系统上高效生成多样且物理真实的转移路径。
 
 **[Action-Minimization Meets Generative Modeling Efficient Transition Path Sampling](action-minimization_meets_generative_modeling_efficient_transition_path_sampling.md)**
 
@@ -465,6 +469,10 @@ description: >-
 **[When Model Knowledge Meets Diffusion Model Diffusion-Assisted Data-Free Image Sy](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_sy.md)**
 
 :   提出 DDIS，首次将 T2I 扩散模型作为强图像先验用于无数据图像合成，通过域对齐引导（DAG）和类对齐 Token（CAT）使生成图像在域和类两个层面精准对齐预训练模型的训练数据分布，在 PACS 和 ImageNet 的无数据 KD/剪枝中达到 SOTA。
+
+**[When Model Knowledge Meets Diffusion Model Diffusion-Assisted Data-Free Image Synthesis](when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)**
+
+:   首次利用T2I扩散模型作为图像先验辅助无数据图像合成(DFIS)，通过Domain Alignment Guidance对齐BN统计量和Class Alignment Token编码类特定属性，生成与训练集分布高度匹配的合成数据。
 
 **[Zero-Shot Adaptation Of Parameter-Efficient Fine-Tuning In Diffusion Models](zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)**
 

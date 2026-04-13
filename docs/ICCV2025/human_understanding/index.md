@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICCV2025 人体理解方向 68篇论文解读
+  ICCV2025 人体理解方向 69篇论文解读
 description: >-
-  68篇ICCV2025 人体理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  69篇ICCV2025 人体理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📹 ICCV2025** · 共 **68** 篇
+**📹 ICCV2025** · 共 **69** 篇
 
 **[A Quality-Guided Mixture Of Score-Fusion Experts Framework For Human Recognition](a_quality-guided_mixture_of_score-fusion_experts_framework_for_human_recognition.md)**
 
@@ -35,6 +35,10 @@ description: >-
 :   提出BLADES方法，通过双层优化（bi-level optimization）将自监督预训练与AI生成人脸检测目标显式对齐：内层优化视觉编码器学习EXIF分类/排序和人脸篡改检测等前置任务，外层优化各任务权重以提升代理检测任务性能，实现不依赖合成人脸的跨生成器泛化检测。
 
 **[Cargait Cross-Attention Based Re-Ranking For Gait Recognition](cargait_cross-attention_based_re-ranking_for_gait_recognition.md)**
+
+:   提出CarGait，一种基于交叉注意力的步态识别重排序方法，通过probe与候选序列之间的strip-wise交叉注意力学习细粒度的步态对应关系，将预训练单阶段模型的全局特征映射到新的判别性嵌入空间，在Gait3D、GREW和OU-MVLP三大基准上对七种步态模型均取得一致的Rank-1/5精度提升。
+
+**[Cargait Cross Attention Based Re Ranking For Gait Recognition](cargait_cross_attention_based_re_ranking_for_gait_recognition.md)**
 
 :   提出CarGait，一种基于交叉注意力的步态识别重排序方法，通过probe与候选序列之间的strip-wise交叉注意力学习细粒度的步态对应关系，将预训练单阶段模型的全局特征映射到新的判别性嵌入空间，在Gait3D、GREW和OU-MVLP三大基准上对七种步态模型均取得一致的Rank-1/5精度提升。
 

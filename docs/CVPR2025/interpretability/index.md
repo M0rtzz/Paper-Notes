@@ -1,14 +1,18 @@
 ---
 title: >-
-  CVPR2025 可解释性方向 3篇论文解读
+  CVPR2025 可解释性方向 4篇论文解读
 description: >-
-  3篇CVPR2025 可解释性方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  4篇CVPR2025 可解释性方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**📷 CVPR2025** · 共 **3** 篇
+**📷 CVPR2025** · 共 **4** 篇
+
+**[Differentiable Inverse Rendering With Interpretable Basis Brdfs](differentiable_inverse_rendering_with_interpretable_basis_brdfs.md)**
+
+:   提出基于可解释基 BRDF 的可微逆渲染方法，将材质分解为有物理意义的基函数组合，实现可解释的材质估计
 
 **[Geometry-Guided Camera Motion Understanding In Videollms](geometry-guided_camera_motion_understanding_in_videollms.md)**
 

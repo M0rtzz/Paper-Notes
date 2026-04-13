@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 LLM/NLP方向 48篇论文解读
+  NeurIPS2025 LLM/NLP方向 50篇论文解读
 description: >-
-  48篇NeurIPS2025 LLM/NLP方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  50篇NeurIPS2025 LLM/NLP方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 LLM/NLP
 
-**🧠 NeurIPS2025** · 共 **48** 篇
+**🧠 NeurIPS2025** · 共 **50** 篇
 
 **[Acesearcher Bootstrapping Reasoning And Search For Llms Via Reinforced Self-Play](acesearcher_bootstrapping_reasoning_and_search_for_llms_via_reinforced_self-play.md)**
 
@@ -106,6 +106,10 @@ description: >-
 
 :   本文研究社交网络中通过修改 k 个关键节点的内部意见来最大化整体意见的优化问题，提出了两种基于采样的近似算法（随机游走和森林采样）以及一种基于异步更新的精确算法 MIS，后者在理论上保证收敛到最优解，并在数千万节点的真实网络上展示了卓越的效率与精度。
 
+**[Out-Of-Distribution Generalisation Is Hard Evidence From Arc-Like Tasks](out-of-distribution_generalisation_is_hard_evidence_from_arc-like_tasks.md)**
+
+:   通过构建具有明确OOD度量的ARC类任务，证明标准神经网络(MLP/CNN/Transformer)无法实现组合OOD泛化，即使设计具有正确归纳偏置的架构达到近乎完美的OOD性能，也可能学到错误的组合特征。
+
 **[Pluralistic Behavior Suite Stress-Testing Multi-Turn Adherence To Custom Behavio](pluralistic_behavior_suite_stress-testing_multi-turn_adherence_to_custom_behavio.md)**
 
 :   提出 PBSuite，一个包含 300 个行业定制行为策略和动态多轮对抗评估框架的评测套件，揭示了主流 LLM 在单轮设置下合规率高（违规 <4%），但在多轮对抗交互中合规性急剧下降（违规高达 84%）。
@@ -149,6 +153,10 @@ description: >-
 **[Spectral Conditioning Of Attention Improves Transformer Performance](spectral_conditioning_of_attention_improves_transformer_performance.md)**
 
 :   理论分析了 Transformer 注意力层 Jacobian 的条件数受 Query/Key/Value 矩阵条件数控制，提出谱调节注意力（Spectral Conditioned Attention），通过向 Q/K/V 矩阵添加固定校正项降低条件数，作为即插即用模块在图像分类、目标检测、NLP 等多任务上一致提升性能。
+
+**[Speculate Deep And Accurate Lossless And Training-Free Acceleration For Offloade](speculate_deep_and_accurate_lossless_and_training-free_acceleration_for_offloade.md)**
+
+:   提出 SubSpec，一种即插即用的无损、无需训练的参数卸载 LLM 加速方法，通过从卸载的目标模型构建高对齐度的量化替代草稿模型，在 8GB 显存限制下实现 Qwen2.5 7B 的 9.1 倍加速。
 
 **[Strassen Attention Split Vc Dimension And Compositionality In Transformers](strassen_attention_split_vc_dimension_and_compositionality_in_transformers.md)**
 

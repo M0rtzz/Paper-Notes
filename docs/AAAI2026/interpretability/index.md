@@ -1,14 +1,14 @@
 ---
 title: >-
-  AAAI2026 可解释性方向 31篇论文解读
+  AAAI2026 可解释性方向 32篇论文解读
 description: >-
-  31篇AAAI2026 可解释性方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  32篇AAAI2026 可解释性方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔬 可解释性
 
-**🤖 AAAI2026** · 共 **31** 篇
+**🤖 AAAI2026** · 共 **32** 篇
 
 **[A Closer Look At Knowledge Distillation In Spiking Neural Ne](a_closer_look_at_knowledge_distillation_in_spiking_neural_ne.md)**
 
@@ -105,6 +105,10 @@ description: >-
 **[Induce Align Predict Zero-Shot Stance Detection Via Cognitive Inductive Reasonin](induce_align_predict_zero-shot_stance_detection_via_cognitive_inductive_reasonin.md)**
 
 :   提出CIRF（Cognitive Inductive Reasoning Framework），受认知科学启发，从原始文本中无监督归纳一阶逻辑推理模式（schema），构建多关系schema图，用图核模型对齐输入与schema模板实现可解释的零样本立场推理，在SemEval-2016、VAST和COVID-19-Stance上达到SOTA，仅30%数据即可匹配全量。
+
+**[Llm Circuit Analyses Consistent Across Training And Scale](llm_circuit_analyses_consistent_across_training_and_scale.md)**
+
+:   本文首次系统追踪 decoder-only LLM 的内部电路（circuits）在 3000 亿 token 训练过程中和 70M–2.8B 参数规模间的演化，发现虽然具体注意力头会发生更替，但执行的算法保持稳定，且跨规模具有一致性，表明在小模型上做的电路分析可推广到更大模型和更长训练。
 
 **[Probing Preference Representations A Multi-Dimensional Evaluation And Analysis M](probing_preference_representations_a_multi-dimensional_evaluation_and_analysis_m.md)**
 

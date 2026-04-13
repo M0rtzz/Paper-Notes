@@ -1,33 +1,33 @@
 ---
 title: >-
-  ICML2025 1054篇论文解读
+  ICML2025 1071篇论文解读
 description: >-
-  1054篇ICML2025论文深度解读，每篇5分钟读懂核心思想。覆盖图像生成、强化学习、模型压缩、医学图像、AI安全、优化/理论等40个研究领域，每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  1071篇ICML2025论文深度解读，每篇5分钟读懂核心思想。覆盖图像生成、强化学习、模型压缩、医学图像、AI安全、优化/理论等40个研究领域，每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧪 ICML2025 论文笔记
 
-共 **1054** 篇笔记，覆盖 **40** 个领域。
+共 **1071** 篇笔记，覆盖 **40** 个领域。
 
 ## 领域概览
 
 | 领域 | 篇数 |
 |:-----|-----:|
-| 🎨 [图像生成](#image_generation) | 115 |
-| 🎮 [强化学习](#reinforcement_learning) | 77 |
-| 📦 [模型压缩](#model_compression) | 69 |
-| 🏥 [医学图像](#medical_imaging) | 63 |
-| 🛡️ [AI安全](#ai_safety) | 56 |
+| 🎨 [图像生成](#image_generation) | 117 |
+| 🎮 [强化学习](#reinforcement_learning) | 79 |
+| 📦 [模型压缩](#model_compression) | 70 |
+| 🏥 [医学图像](#medical_imaging) | 64 |
+| 🛡️ [AI安全](#ai_safety) | 60 |
 | 📐 [优化/理论](#optimization) | 55 |
-| 🧩 [多模态VLM](#multimodal_vlm) | 49 |
+| 🧩 [多模态VLM](#multimodal_vlm) | 50 |
 | 🧑 [人体理解](#human_understanding) | 39 |
 | 📊 [LLM评测](#llm_evaluation) | 35 |
 | 🕸️ [图学习](#graph_learning) | 31 |
 | 🔬 [可解释性](#interpretability) | 29 |
 | 📚 [预训练/数据](#llm_pretraining) | 29 |
 | ⚖️ [对齐/RLHF](#llm_alignment) | 27 |
-| 📈 [时间序列](#time_series) | 24 |
+| 📈 [时间序列](#time_series) | 25 |
 | 🔄 [自监督/表示学习](#self_supervised) | 23 |
 | ⚡ [LLM效率](#llm_efficiency) | 22 |
 | ✂️ [语义分割](#segmentation) | 20 |
@@ -35,17 +35,17 @@ description: >-
 | 🔗 [因果推理](#causal_inference) | 16 |
 | 🎁 [推荐系统](#recommender) | 16 |
 | 🤖 [机器人/具身智能](#robotics) | 15 |
-| 🦾 [LLM Agent](#llm_agent) | 13 |
+| 🦾 [LLM Agent](#llm_agent) | 14 |
+| 💡 [LLM推理](#llm_reasoning) | 13 |
 | 🧊 [3D视觉](#3d_vision) | 12 |
 | 🚗 [自动驾驶](#autonomous_driving) | 11 |
 | 💻 [代码智能](#code_intelligence) | 10 |
-| 💡 [LLM推理](#llm_reasoning) | 10 |
 | 🎯 [目标检测](#object_detection) | 10 |
 | 🎬 [视频理解](#video_understanding) | 10 |
+| 🎵 [音频/语音](#audio_speech) | 7 |
 | 🛰️ [遥感](#remote_sensing) | 7 |
 | 🧮 [科学计算](#scientific_computing) | 7 |
 | 👥 [社会计算](#social_computing) | 7 |
-| 🎵 [音频/语音](#audio_speech) | 6 |
 | 🖼️ [图像恢复](#image_restoration) | 6 |
 | 🔍 [信息检索/RAG](#information_retrieval) | 6 |
 | 🔒 [LLM安全](#llm_safety) | 6 |
@@ -58,6 +58,10 @@ description: >-
 ---
 
 ## 🎨 图像生成 { #image_generation }
+
+**[Action-Minimization Meets Generative Modeling Efficient Transition Pat](image_generation/action-minimization_meets_generative_modeling_efficient_transition_pat.md)**
+
+:   将预训练扩散/flow matching模型的score函数解释为随机动力学的漂移项，通过最小化Onsager-Machlup (OM)作用量泛函实现零样本转移路径采样，无需任务特定训练即可在分子系统上高效生成多样且物理真实的转移路径。
 
 **[Action-Minimization Meets Generative Modeling Efficient Transition Path Sampling](image_generation/action-minimization_meets_generative_modeling_efficient_transition_path_sampling.md)**
 
@@ -515,6 +519,10 @@ description: >-
 
 :   提出 DDIS，首次将 T2I 扩散模型作为强图像先验用于无数据图像合成，通过域对齐引导（DAG）和类对齐 Token（CAT）使生成图像在域和类两个层面精准对齐预训练模型的训练数据分布，在 PACS 和 ImageNet 的无数据 KD/剪枝中达到 SOTA。
 
+**[When Model Knowledge Meets Diffusion Model Diffusion-Assisted Data-Free Image Synthesis](image_generation/when_model_knowledge_meets_diffusion_model_diffusion-assisted_data-free_image_synthesis.md)**
+
+:   首次利用T2I扩散模型作为图像先验辅助无数据图像合成(DFIS)，通过Domain Alignment Guidance对齐BN统计量和Class Alignment Token编码类特定属性，生成与训练集分布高度匹配的合成数据。
+
 **[Zero-Shot Adaptation Of Parameter-Efficient Fine-Tuning In Diffusion Models](image_generation/zero-shot_adaptation_of_parameter-efficient_fine-tuning_in_diffusion_models.md)**
 
 :   提出 ProLoRA，一种免训练的闭式 LoRA 跨模型迁移方法，通过将源 LoRA 在源模型权重子空间和零空间的投影分解重新投射到目标模型的对应空间，实现风格/概念/加速 LoRA 在不同扩散模型间的无损迁移。
@@ -635,6 +643,10 @@ description: >-
 
 :   提出 Flow of Reasoning (FoR)，将多步 LLM 推理建模为 DAG 上的马尔可夫流，借助 GFlowNet 的轨迹平衡目标微调 LLM，使其仅用极少训练样本（如15个）即可采样出概率正比于奖励的多条高质量且多样化的推理路径。
 
+**[Gradual Transition From Bellman Optimality Operator To Bellman Operator In](reinforcement_learning/gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in.md)**
+
+:   揭示Actor-Critic中Bellman最优算子(加速学习但过估计)和Bellman算子(减少偏差但慢)的权衡，提出Annealed Q-Learning(AQ-L)——用expectile loss从最优算子渐进过渡到标准算子，在TD3/SAC上显著提升性能。
+
 **[Gradual Transition From Bellman Optimality Operator To Bellman Operator In Onlin](reinforcement_learning/gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in_onlin.md)**
 
 :   提出 Annealed Q-learning (AQ-L)，通过期望分位损失（expectile loss）的参数 τ 从接近1退火至0.5，实现从 Bellman 最优算子到 Bellman 算子的平滑过渡，在连续动作空间中既加速了早期学习又抑制了后期过估计偏差，与 TD3/SAC 结合后在多种运动控制和操控任务上显著优于基线。
@@ -694,6 +706,10 @@ description: >-
 **[Mastering Massive Multi-Task Reinforcement Learning Via Mixture-Of-Expert Decisi](reinforcement_learning/mastering_massive_multi-task_reinforcement_learning_via_mixture-of-expert_decisi.md)**
 
 :   提出 M3DT 框架，将 Mixture-of-Experts (MoE) 引入 Decision Transformer 架构，通过任务分组让每个专家只学习少量任务的特定知识，并设计三阶段训练机制（骨干→专家→路由器）依次优化各模块，成功将离线多任务 RL 扩展到 160 个仿真控制任务且性能持续提升。
+
+**[Mastering Massive Multi-Task Reinforcement Learning Via Mixture Of Expert Decision Transformer](reinforcement_learning/mastering_massive_multi-task_reinforcement_learning_via_mixture_of_expert_decision_transformer.md)**
+
+:   提出M3DT，将MoE引入Decision Transformer解决大规模多任务RL的扩展性问题：通过任务分组让每个专家只学习任务子集，配合三阶段训练策略，成功扩展到160个任务。
 
 **[Maximum Total Correlation Reinforcement Learning](reinforcement_learning/maximum_total_correlation_reinforcement_learning.md)**
 
@@ -902,6 +918,10 @@ description: >-
 **[Fgfp A Fractional Gaussian Filter And Pruning For Deep Neural Networks Compressi](model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compressi.md)**
 
 :   提出 FGFP 框架，将分数阶微积分与高斯函数结合构建分数阶高斯滤波器（FGF），每个卷积核仅需 7 个参数，配合自适应非结构化剪枝（AUP），在 CIFAR-10 上 ResNet-20 精度仅降 1.52% 即实现 85.2% 的模型压缩率，在 ImageNet 上 ResNet-50 精度降 1.63% 实现 69.1% 压缩率。
+
+**[Fgfp A Fractional Gaussian Filter And Pruning For Deep Neural Networks Compression](model_compression/fgfp_a_fractional_gaussian_filter_and_pruning_for_deep_neural_networks_compression.md)**
+
+:   提出FGFP框架，将分数阶微积分与高斯函数结合构建分数阶高斯滤波器(FGF)替代标准卷积核，每个核仅需7个参数，配合自适应非结构化剪枝达到极高压缩比（ResNet-20 85.2%压缩仅降1.52%精度）。
 
 **[Flatquant Flatness Matters For Llm Quantization](model_compression/flatquant_flatness_matters_for_llm_quantization.md)**
 
@@ -1351,6 +1371,10 @@ description: >-
 
 :   将四色定理引入细胞实例分割，将每个细胞视为"国家"、背景为"海洋"，用仅 4 类语义分割替代实例分割，并设计渐进训练策略和编码变换方法解决四色编码的非唯一性问题，在多种成像模式上达到 SOTA 性能同时大幅降低模型复杂度。
 
+**[Training Flexible Models Of Genetic Variant Effects From Functional Annotations](medical_imaging/training_flexible_models_of_genetic_variant_effects_from_functional_annotations.md)**
+
+:   利用现代快速线性代数技术训练大规模神经网络预测基因变异效应——将连锁不平衡(LD)矩阵做带状近似+小批量训练，首次在百万变异规模上优化全似然而非摘要统计量，发现更大模型只在全似然下才有效。
+
 **[Training Flexible Models Of Genetic Variant Effects From Functional Annotations ](medical_imaging/training_flexible_models_of_genetic_variant_effects_from_functional_annotations_.md)**
 
 :   本文提出 DeepWAS（Deep genome Wide Association Studies），利用现代快速线性代数技术（带状矩阵近似 + 迭代求解）解决 GWAS 中大规模 LD 矩阵求逆的计算瓶颈，首次实现用大规模神经网络最大化全似然来训练功能注释驱动的遗传变异效应预测模型，且发现只有在全似然训练下（而非传统 summary statistics 拟合）更大的模型才能带来更好的性能。
@@ -1422,6 +1446,10 @@ description: >-
 **[Collaborative Mean Estimation Among Heterogeneous Strategic Agents Individual Ra](ai_safety/collaborative_mean_estimation_among_heterogeneous_strategic_agents_individual_ra.md)**
 
 :   针对异构成本的多智能体协作均值估计问题，设计了同时满足个体理性(IR)、激励相容(IC)和公平性的无货币机制，在最坏情况下实现 $\mathcal{O}(\sqrt{m})$ 近似比，并证明了三条不可能性结果。
+
+**[Connecting Thompson Sampling And Ucb Towards More Efficient Best-Fixed Action ](ai_safety/connecting_thompson_sampling_and_ucb_towards_more_efficient_best-fixed_action_.md)**
+
+:   本文提出 DP-TS-UCB 算法，通过限制每轮高斯采样次数并在采样预算耗尽后切换为 UCB 式探索，实现了隐私与遗憾的参数化权衡，将 GDP 保证从 $O(\sqrt{T})$ 大幅改善至 $\tilde{O}(T^{0.25(1-\alpha)})$，同时保持近最优的遗憾界。
 
 **[Connecting Thompson Sampling And Ucb Towards More Efficient Trade-Offs Between P](ai_safety/connecting_thompson_sampling_and_ucb_towards_more_efficient_trade-offs_between_p.md)**
 
@@ -1515,6 +1543,10 @@ description: >-
 
 :   论文提出 SaP（Safety Polytope）：在 LLM 表征空间中学习一个“安全多面体”，并在推理时把不安全生成轨迹几何地拉回安全区域，以在不改模型权重的前提下实现可解释的安全约束。
 
+**[On Differential Privacy For Adaptively Solving Search Problems](ai_safety/on_differential_privacy_for_adaptively_solving_search_problems.md)**
+
+:   本文首次将差分隐私技术扩展到搜索问题（返回解向量而非数值），提出用于自适应近似近邻搜索和回归问题的高效数据结构，在温和假设下实现 $O(\sqrt{T})$ 份数据结构副本即可正确回答 $T$ 个自适应查询。
+
 **[On Differential Privacy For Adaptively Solving Search Problems Via Sketching](ai_safety/on_differential_privacy_for_adaptively_solving_search_problems_via_sketching.md)**
 
 :   首次将差分隐私技术拓展到**搜索问题**（近似最近邻查询和回归解向量输出），在稀疏邻域假设和良好条件数假设下，实现仅需 $\widetilde{O}(\sqrt{T})$ 份数据结构副本即可应对 $T$ 次自适应查询的搜索型数据结构。
@@ -1538,6 +1570,10 @@ description: >-
 **[Rethinking The Bias Of Foundation Model Under Long-Tailed Distribution](ai_safety/rethinking_the_bias_of_foundation_model_under_long-tailed_distribution.md)**
 
 :   揭示基础模型微调在长尾任务上受"参数不平衡"（预训练数据偏差）和"数据不平衡"（下游数据偏差）的双重影响，发现参数不平衡更关键且无法被现有 logit 调整方法解决，提出基于因果后门调整的方法消除不完整语义因子的混杂效应，在三个长尾基准上平均提升约 1.67%。
+
+**[Retraining With Predicted Hard Labels Provably Increases Model Accurac](ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accurac.md)**
+
+:   在噪声标签下，用模型自身预测的硬标签（0/1标签）对训练集重新标注并重训练，可以**理论上可证明地**提升模型准确率；进一步提出 consensus-based retraining（仅对预测标签与给定标签一致的样本重训练），在 label DP 场景下无额外隐私代价即可大幅提升性能。
 
 **[Retraining With Predicted Hard Labels Provably Increases Model Accuracy](ai_safety/retraining_with_predicted_hard_labels_provably_increases_model_accuracy.md)**
 
@@ -1570,6 +1606,10 @@ description: >-
 **[The Ripple Effect On Unforeseen Complications Of Backdoor Attacks](ai_safety/the_ripple_effect_on_unforeseen_complications_of_backdoor_attacks.md)**
 
 :   首次系统量化了后门预训练语言模型在无关下游任务上的"并发症"现象——后门触发词会使下游模型的输出分布严重偏斜（甚至99%集中到单一类别），并提出基于多任务学习的无需下游任务知识的缓解方法。
+
+**[Theoretically Unmasking Inference Attacks Against Ldp-Protected Client Data In ](ai_safety/theoretically_unmasking_inference_attacks_against_ldp-protected_client_data_in_.md)**
+
+:   本文为联邦学习中恶意服务器的主动成员推断攻击（AMI）提供了首个理论分析框架，推导出即使在 LDP 保护下攻击成功率的下界和上界，揭示 LDP 保护强度与模型效用之间的根本矛盾。
 
 **[Theoretically Unmasking Inference Attacks Against Ldp-Protected Clients In Feder](ai_safety/theoretically_unmasking_inference_attacks_against_ldp-protected_clients_in_feder.md)**
 
@@ -1934,6 +1974,10 @@ description: >-
 **[Omnibal Towards Fast Instruction-Tuning For Vision-Language Models Via Omniverse](multimodal_vlm/omnibal_towards_fast_instruction-tuning_for_vision-language_models_via_omniverse.md)**
 
 :   针对大规模视觉语言模型 instruction-tuning 训练中因数据和模型异构性导致的计算不平衡问题，提出 OmniBal 框架从数据、模型、内存三个层面系统性平衡跨设备计算负载，在 InternVL-Chat 上实现约 1.8× 训练加速。
+
+**[Overcoming Multi-Step Complexity In Multimodal Theory-Of-Mind Reasoning](multimodal_vlm/overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning.md)**
+
+:   提出可扩展的贝叶斯心智理论规划器，通过逐步贝叶斯更新分解多步ToM推理复杂度，并用弱到强控制机制将小模型的ToM专业能力迁移到大模型(405B)，在多模态ToM基准上超越SOTA 4.6%。
 
 **[Overcoming Multi-Step Complexity In Multimodal Theory-Of-Mind Reasoning A Scalab](multimodal_vlm/overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning_a_scalab.md)**
 
@@ -2899,6 +2943,10 @@ description: >-
 
 :   提出 Anomaly to Prompt (A2P) 框架，通过异常感知预测 (AAF) 和合成异常提示 (SAP) 两大模块，首次有效解决时间序列中"未来异常预测"(Anomaly Prediction) 这一新任务——不仅预测未来信号走势，还能精准定位未来哪些时间点会出现异常。
 
+**[When Will It Fail Anomaly To Prompt For Forecasting Future Anomalies In Time Seri](time_series/when_will_it_fail_anomaly_to_prompt_for_forecasting_future_anomalies_in_time_seri.md)**
+
+:   提出A2P框架解决"异常预测(AP)"新任务——预测未来哪些时间点会发生异常，通过Anomaly-Aware Forecasting让预测模型学习异常关系+Synthetic Anomaly Prompting用可学习prompt模拟多样异常模式。
+
 **[Winner-Takes-All For Multivariate Probabilistic Time Series Forecasting](time_series/winner-takes-all_for_multivariate_probabilistic_time_series_forecasting.md)**
 
 :   提出 TimeMCL，将 Multiple Choice Learning 的 Winner-Takes-All (WTA) 损失引入多变量概率时序预测，通过多头网络单次前向传播即可生成多样且具代表性的未来轨迹，兼顾预测质量与计算效率。
@@ -3499,6 +3547,10 @@ description: >-
 
 :   本文提出 TAMAS，首个系统评估多智能体 LLM 系统安全性的基准，覆盖 5 个高风险领域、6 种攻击类型、300 个对抗样本和 10 个骨干模型，揭示多智能体系统在协作场景中存在严重的对抗脆弱性，并引入 ERS 指标衡量安全-效用权衡。
 
+**[Theorem-Of-Thought A Multi-Agent Framework For Abductive Deductive And Inductive](llm_agent/theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)**
+
+:   提出 Theorem-of-Thought (ToTh) 框架，通过三个分别模拟溯因、演绎和归纳推理的 Agent 独立生成推理轨迹，将其构建为形式化推理图 (FRG)，再用 NLI 校准的贝叶斯置信传播进行一致性评分，选取最优图的终端节点作为最终答案，在符号和数值推理任务上一致超越 CoT、Self-Consistency 和 CoT-Decoding。
+
 **[Towards Llm Agents For Earth Observation](llm_agent/towards_llm_agents_for_earth_observation.md)**
 
 :   引入UnivEARTH基准（140个是/否问题，覆盖13个主题和17种卫星传感器），发现使用Google Earth Engine API作为工具的LLM Agent准确率仅33%——主要因为58%以上的代码无法运行——揭示了AI自动化地球观测的重大挑战。
@@ -3506,6 +3558,62 @@ description: >-
 **[Xchemagents Agentic Ai For Explainable Quantum Chemistry](llm_agent/xchemagents_agentic_ai_for_explainable_quantum_chemistry.md)**
 
 :   xChemAgents 提出了一个 Selector-Validator 双 Agent 协作框架，将物理感知的推理注入多模态分子性质预测中：Selector Agent 自适应选择稀疏加权描述符子集并给出自然语言解释，Validator Agent 通过量纲一致性和标度律检验迭代验证，在 QM9 基准上实现最高 22% 的 MAE 降低。
+
+---
+
+## 💡 LLM推理 { #llm_reasoning }
+
+**[Ad-Hoc Human-Ai Coordination Challenge](llm_reasoning/ad-hoc_human-ai_coordination_challenge.md)**
+
+:   提出 AH2AC2 挑战——基于 Hanabi 合作卡牌游戏，通过行为克隆+正则化强化学习构建人类代理智能体，并开源有限人类数据集，为 Human-AI 临时协作研究提供标准化、可复现的评估框架。
+
+**[Adadecode Accelerating Llm Decoding With Adaptive Layer Parallelism](llm_reasoning/adadecode_accelerating_llm_decoding_with_adaptive_layer_parallelism.md)**
+
+:   AdaDecode 通过在中间层训练轻量级 LM Head 实现高置信度的 token 早期预测，将后续层的 KV cache 计算延迟并行化执行，在保证与标准自回归解码完全一致输出的同时，实现最高 1.73× 的解码吞吐量加速。
+
+**[Adversarial Manipulation Of Reasoning Models Using Internal Representations](llm_reasoning/adversarial_manipulation_of_reasoning_models_using_internal_representations.md)**
+
+:   本文发现推理模型（如 DeepSeek-R1-Distill-Llama-8B）在 CoT 生成阶段存在一个线性"谨慎方向"（caution direction），通过消融该方向可有效越狱模型，揭示了 CoT 本身是对抗攻击的新靶点。
+
+**[Evaluating Judges As Evaluators The Jetts Benchmark Of Llm-As-Judges As Test-Tim](llm_reasoning/evaluating_judges_as_evaluators_the_jetts_benchmark_of_llm-as-judges_as_test-tim.md)**
+
+:   本文提出 JETTS 基准，系统评估 LLM-judge 在 test-time scaling 场景（response reranking、step-level beam search、critique-based refinement）中作为评估器的表现，发现 judge 在 reranking 中与 outcome reward model 竞争力相当但在 beam search 中显著弱于 process reward model，且自然语言 critique 目前无法有效引导生成器改进。
+
+**[Fmc Formalization Of Natural Language Mathematical Competition Problems](llm_reasoning/fmc_formalization_of_natural_language_mathematical_competition_problems.md)**
+
+:   本文提出基于 LLM 错误反馈的全自动形式化流水线，将自然语言数学竞赛题转化为 Lean 形式化表示，构建了包含 3,922 道自然语言与 9,787 条 Lean 形式化对齐的奥赛级数据集 FMC，并验证了其作为自动定理证明基准的价值。
+
+**[Improving Rationality In The Reasoning Process Of Language Models Through Self-P](llm_reasoning/improving_rationality_in_the_reasoning_process_of_language_models_through_self-p.md)**
+
+:   本文提出 Critic-Discernment Game（CDG），通过自博弈语言游戏让 LLM 与"有帮助的批评者"和"误导性批评者"互动，用 ReST 强化学习联合优化三个角色，无需人类或更强模型的监督即可显著提升 LLM 对自身推理过程的理性理解，在数学推理、逐步错误检测、自我纠错和长链推理四个任务上均取得一致提升。
+
+**[No Soundness In The Real World On The Challenges Of The Verification Of Deployed](llm_reasoning/no_soundness_in_the_real_world_on_the_challenges_of_the_verification_of_deployed.md)**
+
+:   本文证明所有当前最先进的神经网络验证器都只提供"理论健全性"（约束全精度输出）而非"实际健全性"（约束部署环境中的浮点输出），并通过构造环境敏感的对抗性后门网络，实证验证了所有测试验证器均可被欺骗。
+
+**[One Missing Piece For Open-Source Reasoning Models A Dataset To Mitigate Cold-St](llm_reasoning/one_missing_piece_for_open-source_reasoning_models_a_dataset_to_mitigate_cold-st.md)**
+
+:   提出 Long CoT Collection——一个由短CoT LLM（如GPT-4o）标注的100K长链推理数据集，通过从o1提取推理流程（reasoning flow）作为间接引导，使短CoT模型也能生成高质量长推理链，从而有效缓解开源推理模型在强化学习阶段的冷启动问题，初始化后的模型在RLVR中获得2-3倍的性能提升。
+
+**[Pcot Persuasion-Augmented Chain Of Thought For Detecting Fake News And Social Me](llm_reasoning/pcot_persuasion-augmented_chain_of_thought_for_detecting_fake_news_and_social_me.md)**
+
+:   提出 PCoT（Persuasion-Augmented Chain of Thought），通过两阶段推理——先让 LLM 识别文本中的说服策略，再将说服分析结果注入虚假信息检测推理——在零样本设置下，跨 5 个 LLM 和 5 个数据集平均提升 F1 约 15%。
+
+**[Proofcompass Enhancing Specialized Provers With Llm Guidance](llm_reasoning/proofcompass_enhancing_specialized_provers_with_llm_guidance.md)**
+
+:   ProofCompass 提出一种无需额外训练的混合方法，用通用 LLM 为专业定理证明器（如 DeepSeek-Prover-v1.5-RL）提供自然语言证明策略和中间引理选择，在 miniF2F 上用 25 倍少的尝试次数超越了基线性能（54.9% → 55.3%）。
+
+**[Putnam-Axiom A Functional And Static Benchmark For Measuring Higher Level Mathem](llm_reasoning/putnam-axiom_a_functional_and_static_benchmark_for_measuring_higher_level_mathem.md)**
+
+:   提出 Putnam-AXIOM —— 522 道大学级 Putnam 竞赛数学题 + 100 道程序化功能变体，揭示 LLM 数学推理中的记忆依赖，并引入 Teacher-Forced Accuracy (TFA) 作为超越最终答案的推理质量评估指标。
+
+**[Rethinking External Slow-Thinking From Snowball Errors To Probability Of Correct](llm_reasoning/rethinking_external_slow-thinking_from_snowball_errors_to_probability_of_correct.md)**
+
+:   本文从信息论视角系统分析了 LLM 推理中的"雪球误差"现象，建立了雪球误差与推理正确概率之间的理论联系，证明了外部慢思考方法（如 BoN、MCTS）本质上是通过扩展搜索宽度来缓解误差累积，并在理论和实验上证明了方法效果主要取决于总推理代价和奖励函数可靠性，而非搜索框架本身。
+
+**[Towards Better Chain-Of-Thought A Reflection On Effectiveness And Faithfulness](llm_reasoning/towards_better_chain-of-thought_a_reflection_on_effectiveness_and_faithfulness.md)**
+
+:   本文从有效性（effectiveness）和忠实性（faithfulness）两个维度系统分析了 CoT 的性能影响因素，发现问题难度、信息增益和信息流是影响 CoT 有效性的关键因子，而不忠实 CoT 的根因在于模型在预测答案时绕过 CoT 直接从问题中召回了正确信息，并据此提出 QUIRE 方法同时提升 CoT 的有效性和忠实性。
 
 ---
 
@@ -3653,50 +3761,6 @@ description: >-
 
 ---
 
-## 💡 LLM推理 { #llm_reasoning }
-
-**[Ad-Hoc Human-Ai Coordination Challenge](llm_reasoning/ad-hoc_human-ai_coordination_challenge.md)**
-
-:   提出 AH2AC2 挑战——基于 Hanabi 合作卡牌游戏，通过行为克隆+正则化强化学习构建人类代理智能体，并开源有限人类数据集，为 Human-AI 临时协作研究提供标准化、可复现的评估框架。
-
-**[Adadecode Accelerating Llm Decoding With Adaptive Layer Parallelism](llm_reasoning/adadecode_accelerating_llm_decoding_with_adaptive_layer_parallelism.md)**
-
-:   AdaDecode 通过在中间层训练轻量级 LM Head 实现高置信度的 token 早期预测，将后续层的 KV cache 计算延迟并行化执行，在保证与标准自回归解码完全一致输出的同时，实现最高 1.73× 的解码吞吐量加速。
-
-**[Adversarial Manipulation Of Reasoning Models Using Internal Representations](llm_reasoning/adversarial_manipulation_of_reasoning_models_using_internal_representations.md)**
-
-:   本文发现推理模型（如 DeepSeek-R1-Distill-Llama-8B）在 CoT 生成阶段存在一个线性"谨慎方向"（caution direction），通过消融该方向可有效越狱模型，揭示了 CoT 本身是对抗攻击的新靶点。
-
-**[Evaluating Judges As Evaluators The Jetts Benchmark Of Llm-As-Judges As Test-Tim](llm_reasoning/evaluating_judges_as_evaluators_the_jetts_benchmark_of_llm-as-judges_as_test-tim.md)**
-
-:   本文提出 JETTS 基准，系统评估 LLM-judge 在 test-time scaling 场景（response reranking、step-level beam search、critique-based refinement）中作为评估器的表现，发现 judge 在 reranking 中与 outcome reward model 竞争力相当但在 beam search 中显著弱于 process reward model，且自然语言 critique 目前无法有效引导生成器改进。
-
-**[Fmc Formalization Of Natural Language Mathematical Competition Problems](llm_reasoning/fmc_formalization_of_natural_language_mathematical_competition_problems.md)**
-
-:   本文提出基于 LLM 错误反馈的全自动形式化流水线，将自然语言数学竞赛题转化为 Lean 形式化表示，构建了包含 3,922 道自然语言与 9,787 条 Lean 形式化对齐的奥赛级数据集 FMC，并验证了其作为自动定理证明基准的价值。
-
-**[Improving Rationality In The Reasoning Process Of Language Models Through Self-P](llm_reasoning/improving_rationality_in_the_reasoning_process_of_language_models_through_self-p.md)**
-
-:   本文提出 Critic-Discernment Game（CDG），通过自博弈语言游戏让 LLM 与"有帮助的批评者"和"误导性批评者"互动，用 ReST 强化学习联合优化三个角色，无需人类或更强模型的监督即可显著提升 LLM 对自身推理过程的理性理解，在数学推理、逐步错误检测、自我纠错和长链推理四个任务上均取得一致提升。
-
-**[No Soundness In The Real World On The Challenges Of The Verification Of Deployed](llm_reasoning/no_soundness_in_the_real_world_on_the_challenges_of_the_verification_of_deployed.md)**
-
-:   本文证明所有当前最先进的神经网络验证器都只提供"理论健全性"（约束全精度输出）而非"实际健全性"（约束部署环境中的浮点输出），并通过构造环境敏感的对抗性后门网络，实证验证了所有测试验证器均可被欺骗。
-
-**[Proofcompass Enhancing Specialized Provers With Llm Guidance](llm_reasoning/proofcompass_enhancing_specialized_provers_with_llm_guidance.md)**
-
-:   ProofCompass 提出一种无需额外训练的混合方法，用通用 LLM 为专业定理证明器（如 DeepSeek-Prover-v1.5-RL）提供自然语言证明策略和中间引理选择，在 miniF2F 上用 25 倍少的尝试次数超越了基线性能（54.9% → 55.3%）。
-
-**[Putnam-Axiom A Functional And Static Benchmark For Measuring Higher Level Mathem](llm_reasoning/putnam-axiom_a_functional_and_static_benchmark_for_measuring_higher_level_mathem.md)**
-
-:   提出 Putnam-AXIOM —— 522 道大学级 Putnam 竞赛数学题 + 100 道程序化功能变体，揭示 LLM 数学推理中的记忆依赖，并引入 Teacher-Forced Accuracy (TFA) 作为超越最终答案的推理质量评估指标。
-
-**[Rethinking External Slow-Thinking From Snowball Errors To Probability Of Correct](llm_reasoning/rethinking_external_slow-thinking_from_snowball_errors_to_probability_of_correct.md)**
-
-:   本文从信息论视角系统分析了 LLM 推理中的"雪球误差"现象，建立了雪球误差与推理正确概率之间的理论联系，证明了外部慢思考方法（如 BoN、MCTS）本质上是通过扩展搜索宽度来缓解误差累积，并在理论和实验上证明了方法效果主要取决于总推理代价和奖励函数可靠性，而非搜索框架本身。
-
----
-
 ## 🎯 目标检测 { #object_detection }
 
 **[Blueglass A Framework For Composite Ai Safety](object_detection/blueglass_a_framework_for_composite_ai_safety.md)**
@@ -3782,6 +3846,38 @@ description: >-
 **[Unifying Specialized Visual Encoders For Video Language Models](video_understanding/unifying_specialized_visual_encoders_for_video_language_models.md)**
 
 :   MERV 提出了多编码器视频表示方法，将四种专长不同的视觉编码器（DINOv2、ViViT、SigLIP、LanguageBind）通过时空对齐和跨注意力融合整合到单一 VideoLLM 中，在视频推理基准上比基线 Video-LLaVA 提升最高 4.62%，并验证了不同编码器的互补专长。
+
+---
+
+## 🎵 音频/语音 { #audio_speech }
+
+**[Bridging The Language Gap Synthetic Voice Diversity Via Latent Mixup For Equitab](audio_speech/bridging_the_language_gap_synthetic_voice_diversity_via_latent_mixup_for_equitab.md)**
+
+:   提出LatentVoiceMix——在语音转换模型的风格编码器潜在空间中做Mixup，通过扩展说话人特征的凸包来增加合成语音多样性，显著提升低资源语言ASR性能并优于现有增强策略。
+
+**[Flam Frame-Wise Language-Audio Modeling](audio_speech/flam_frame-wise_language-audio_modeling.md)**
+
+:   提出 FLAM，一个帧级音频-语言对比模型，通过文本依赖的 logit 偏置校正和百万级合成 SED 数据集，实现开放词汇声音事件的精确时间定位，同时保持全局检索和零样本分类性能。
+
+**[Impact Iterative Mask-Based Parallel Decoding For Text-To-Audio Generation](audio_speech/impact_iterative_mask-based_parallel_decoding_for_text-to-audio_generation.md)**
+
+:   IMPACT将迭代掩码并行解码引入连续潜在空间+轻量MLP扩散头，实现文本到音频生成的高质量+快速推理，在AudioCaps上FD/FAD达SOTA且延迟接近最快的MAGNET-S。
+
+**[Omniaudio Generating Spatial Audio From 360-Degree Video](audio_speech/omniaudio_generating_spatial_audio_from_360-degree_video.md)**
+
+:   提出 OmniAudio 框架，首次实现从 360 度全景视频生成 First-order Ambisonics (FOA) 空间音频，通过 coarse-to-fine 自监督预训练和双分支视频编码架构，在自建的 Sphere360 数据集上取得 SOTA 性能。
+
+**[One Wave To Explain Them All A Unifying Perspective On Feature Attribution](audio_speech/one_wave_to_explain_them_all_a_unifying_perspective_on_feature_attribution.md)**
+
+:   提出 Wavelet Attribution Method (WAM)，将特征归因从像素域迁移到小波域，利用小波系数的空间-尺度局部性为音频、图像、体数据提供统一且更具结构信息的模型解释。
+
+**[Sortformer A Novel Approach For Permutation-Resolved Speaker Supervision In Spee](audio_speech/sortformer_a_novel_approach_for_permutation-resolved_speaker_supervision_in_spee.md)**
+
+:   提出 Sortformer——一个基于编码器的说话人日志模型，通过 Sort Loss 按说话人到达时间排序来解决排列问题，替代或辅助传统的排列不变损失（PIL），并设计正弦核函数将说话人标签注入 ASR 编码器，使多说话人 ASR 训练可直接使用标准交叉熵损失，在 LibriSpeechMix 上实现 2-mix/3-mix 相对误差降低 30%/25%。
+
+**[Teaching Physical Awareness To Llms Through Sounds](audio_speech/teaching_physical_awareness_to_llms_through_sounds.md)**
+
+:   提出 ACORN 框架，通过基于物理的声学通道仿真器生成大规模训练数据，配合同时捕获幅度和相位信息的音频编码器，教会 LLM 从声音中理解物理世界现象。
 
 ---
 
@@ -3878,34 +3974,6 @@ description: >-
 **[When Bad Data Leads To Good Models](social_computing/when_bad_data_leads_to_good_models.md)**
 
 :   本文提出"预训练-后训练协同设计"视角，通过受控实验证明在预训练数据中加入适量有毒数据（~10%）反而能降低毒性特征的纠缠度，使模型在后训练阶段（如 ITI 激活引导）更容易去毒，最终在 Toxigen 上将毒性从 41.40 降至 2.63，同时保持语言能力。
-
----
-
-## 🎵 音频/语音 { #audio_speech }
-
-**[Bridging The Language Gap Synthetic Voice Diversity Via Latent Mixup For Equitab](audio_speech/bridging_the_language_gap_synthetic_voice_diversity_via_latent_mixup_for_equitab.md)**
-
-:   提出LatentVoiceMix——在语音转换模型的风格编码器潜在空间中做Mixup，通过扩展说话人特征的凸包来增加合成语音多样性，显著提升低资源语言ASR性能并优于现有增强策略。
-
-**[Flam Frame-Wise Language-Audio Modeling](audio_speech/flam_frame-wise_language-audio_modeling.md)**
-
-:   提出 FLAM，一个帧级音频-语言对比模型，通过文本依赖的 logit 偏置校正和百万级合成 SED 数据集，实现开放词汇声音事件的精确时间定位，同时保持全局检索和零样本分类性能。
-
-**[Omniaudio Generating Spatial Audio From 360-Degree Video](audio_speech/omniaudio_generating_spatial_audio_from_360-degree_video.md)**
-
-:   提出 OmniAudio 框架，首次实现从 360 度全景视频生成 First-order Ambisonics (FOA) 空间音频，通过 coarse-to-fine 自监督预训练和双分支视频编码架构，在自建的 Sphere360 数据集上取得 SOTA 性能。
-
-**[One Wave To Explain Them All A Unifying Perspective On Feature Attribution](audio_speech/one_wave_to_explain_them_all_a_unifying_perspective_on_feature_attribution.md)**
-
-:   提出 Wavelet Attribution Method (WAM)，将特征归因从像素域迁移到小波域，利用小波系数的空间-尺度局部性为音频、图像、体数据提供统一且更具结构信息的模型解释。
-
-**[Sortformer A Novel Approach For Permutation-Resolved Speaker Supervision In Spee](audio_speech/sortformer_a_novel_approach_for_permutation-resolved_speaker_supervision_in_spee.md)**
-
-:   提出 Sortformer——一个基于编码器的说话人日志模型，通过 Sort Loss 按说话人到达时间排序来解决排列问题，替代或辅助传统的排列不变损失（PIL），并设计正弦核函数将说话人标签注入 ASR 编码器，使多说话人 ASR 训练可直接使用标准交叉熵损失，在 LibriSpeechMix 上实现 2-mix/3-mix 相对误差降低 30%/25%。
-
-**[Teaching Physical Awareness To Llms Through Sounds](audio_speech/teaching_physical_awareness_to_llms_through_sounds.md)**
-
-:   提出 ACORN 框架，通过基于物理的声学通道仿真器生成大规模训练数据，配合同时捕获幅度和相位信息的音频编码器，教会 LLM 从声音中理解物理世界现象。
 
 ---
 

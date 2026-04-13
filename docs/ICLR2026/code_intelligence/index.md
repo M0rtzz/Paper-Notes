@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 代码智能方向 19篇论文解读
+  ICLR2026 代码智能方向 21篇论文解读
 description: >-
-  19篇ICLR2026 代码智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  21篇ICLR2026 代码智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**🔬 ICLR2026** · 共 **19** 篇
+**🔬 ICLR2026** · 共 **21** 篇
 
 **[Ambig-Swe Interactive Agents To Overcome Underspecificity In Software Engineerin](ambig-swe_interactive_agents_to_overcome_underspecificity_in_software_engineerin.md)**
 
@@ -25,6 +25,10 @@ description: >-
 **[Diablo Diagonal Blocks Are Sufficient For Finetuning](diablo_diagonal_blocks_are_sufficient_for_finetuning.md)**
 
 :   提出 DiaBlo，仅微调权重矩阵的对角块作为参数高效微调方法：避免了 LoRA 低秩矩阵乘积的优化难题，zero 初始化即可稳定收敛，GPU 友好的 batched 矩阵乘法实现，理论证明在参数预算相同时表达力严格优于 LoRA，在常识推理/算术推理/代码生成/安全对齐上全面优于 LoRA 及其变体。
+
+**[Dro-Instructzero Distributionally Robust Prompt Optimization For Instruction Fol](dro-instructzero_distributionally_robust_prompt_optimization_for_instruction_fol.md)**
+
+:   将分布鲁棒优化（DRO）引入贝叶斯优化框架以实现零样本指令优化，使优化后的指令在分布偏移和对抗性评估条件下仍保持可靠性能。
 
 **[Dro-Instructzero Distributionally Robust Prompt Optimization For Large Language ](dro-instructzero_distributionally_robust_prompt_optimization_for_large_language_.md)**
 
@@ -85,3 +89,7 @@ description: >-
 **[Training Large Language Models To Reason In Parallel With Global Forking Tokens](training_large_language_models_to_reason_in_parallel_with_global_forking_tokens.md)**
 
 :   提出 Set Supervised Fine-Tuning (SSFT)，通过二分图匹配将全局分叉令牌 (global forking tokens) 与多样推理轨迹对齐，使 LLM 能从单个控制令牌全局引导不同推理模式，在数学推理和代码生成任务上显著优于标准 SFT 和 GRPO。
+
+**[Training Large Language Models To Reason In Parallel With Global Reflection](training_large_language_models_to_reason_in_parallel_with_global_reflection.md)**
+
+:   提出 Set Supervised Fine-Tuning (SSFT)，通过引入全局分叉 token 和基于二部匹配的集合损失，训练 LLM 从单个控制 token 触发多样且正确的推理模式，在 Pass@1 和 Cons@k 上均超越标准 SFT+GRPO。

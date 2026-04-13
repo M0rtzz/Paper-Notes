@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 预训练/数据方向 38篇论文解读
+  NeurIPS2025 预训练/数据方向 39篇论文解读
 description: >-
-  38篇NeurIPS2025 预训练/数据方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  39篇NeurIPS2025 预训练/数据方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📚 预训练/数据
 
-**🧠 NeurIPS2025** · 共 **38** 篇
+**🧠 NeurIPS2025** · 共 **39** 篇
 
 **[Ai Progress Should Be Measured By Capability-Per-Resource Not Scale Alone A Fram](ai_progress_should_be_measured_by_capability-per-resource_not_scale_alone_a_fram.md)**
 
@@ -69,6 +69,10 @@ description: >-
 **[Gemstones A Model Suite For Multi-Faceted Scaling Laws](gemstones_a_model_suite_for_multi-faceted_scaling_laws.md)**
 
 :   Gemstones开源4000+检查点数据集（至2B参数），系统研究宽度-深度-训练代币在缩放律中的影响，揭示缩放律对设计选择的高度敏感性。
+
+**[Generalization Bounds For Rank-Sparse Neural Networks](generalization_bounds_for_rank-sparse_neural_networks.md)**
+
+:   本文证明了利用神经网络权重矩阵近似低秩结构的泛化界，当 Schatten $p$ 拟范数较小时，样本复杂度仅为 $\widetilde{O}(WrL^2)$，其中 $W$, $L$, $r$ 分别为宽度、深度和权重矩阵的秩。
 
 **[Global Minimizers Of Sigmoid Contrastive Loss](global_minimizers_of_sigmoid_contrastive_loss.md)**
 

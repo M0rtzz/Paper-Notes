@@ -1,18 +1,30 @@
 ---
 title: >-
-  CVPR2025 目标检测方向 5篇论文解读
+  CVPR2025 目标检测方向 8篇论文解读
 description: >-
-  5篇CVPR2025 目标检测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  8篇CVPR2025 目标检测方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**📷 CVPR2025** · 共 **5** 篇
+**📷 CVPR2025** · 共 **8** 篇
+
+**[A Bias-Free Training Paradigm For More General Ai-Generated Image Detection](a_bias-free_training_paradigm_for_more_general_ai-generated_image_detection.md)**
+
+:   提出B-Free训练范式——通过stable diffusion的自条件重构从真实图像生成语义对齐的假图，结合inpainting内容增强，消除格式/内容/分辨率等偏差，使检测器聚焦于生成器特有的伪影痕迹，在27种生成模型（含FLUX、SD 3.5等最新模型）上泛化AUC>99%，balanced accuracy达95.2%。
 
 **[Abra Teleporting Fine-Tuned Knowledge Across Domains For Open-Vocabulary Object ](abra_teleporting_fine-tuned_knowledge_across_domains_for_open-vocabulary_object_.md)**
 
 :   提出 ABRA（Aligned Basis Relocation for Adaptation），通过在权重空间中进行 SVD 分解与正交旋转对齐，将源域的类别特定检测知识"传送"到无标注数据的目标域，实现零样本跨域目标检测。
+
+**[Any6D Model-Free 6D Pose Estimation Of Novel Objects](any6d_model-free_6d_pose_estimation_of_novel_objects.md)**
+
+:   提出 Any6D 框架，仅从单张 RGB-D 锚点图像即可估计未知物体的 6D 位姿和尺寸，通过 InstantMesh 3D 重建 + 朝向包围盒粗对齐 + 联合尺寸-位姿精细化，在 HO3D 上 ADD-S 达 98.7% 远超 GEDI 的 71.9%。
+
+**[Boosting Domain Incremental Learning Selecting The Optimal Parameters Is All You](boosting_domain_incremental_learning_selecting_the_optimal_parameters_is_all_you.md)**
+
+:   发现在域增量学习中选择最优参数子集比微调全部参数更有效，提出参数选择策略解决域增量目标检测的灾难性遗忘
 
 **[Dreamvideo-Omni Omni-Motion Controlled Multi-Subject Video Customization With La](dreamvideo-omni_omni-motion_controlled_multi-subject_video_customization_with_la.md)**
 

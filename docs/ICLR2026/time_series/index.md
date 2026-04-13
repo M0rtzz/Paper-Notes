@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 时间序列方向 32篇论文解读
+  ICLR2026 时间序列方向 34篇论文解读
 description: >-
-  32篇ICLR2026 时间序列方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  34篇ICLR2026 时间序列方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📈 时间序列
 
-**🔬 ICLR2026** · 共 **32** 篇
+**🔬 ICLR2026** · 共 **34** 篇
 
 **[Adapt Data To Model Adaptive Transformation Optimization For Domain-Shared Time ](adapt_data_to_model_adaptive_transformation_optimization_for_domain-shared_time_.md)**
 
@@ -21,6 +21,10 @@ description: >-
 **[Cpiri Channel Permutation-Invariant Relational Interaction For Multivariate Time](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time.md)**
 
 :   提出 CPiRi 框架，通过冻结的预训练时序编码器 + 轻量空间 Transformer + 通道打乱训练策略，实现通道排列不变 (CPI) 的跨通道关系建模，在 5 个基准上达到 SOTA 且通道打乱后性能几乎无损 ($\Delta$WAPE < 0.25%)。
+
+**[Cpiri Channel Permutation-Invariant Relational Interaction For Multivariate Time Se](cpiri_channel_permutation-invariant_relational_interaction_for_multivariate_time_se.md)**
+
+:   提出 CPiRi 框架，通过冻结预训练时序编码器 + 可训练置换等变空间模块 + 通道打乱训练策略，在不牺牲跨通道建模能力的前提下实现通道排序不变性（CPI），在多个交通基准上达到 SOTA。
 
 **[Delta-Xai A Unified Framework For Explaining Prediction Changes In Online Time S](delta-xai_a_unified_framework_for_explaining_prediction_changes_in_online_time_s.md)**
 
@@ -45,6 +49,10 @@ description: >-
 **[Gtm A General Time-Series Model For Enhanced Representation Learning Of Time-Ser](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-ser.md)**
 
 :   提出 GTM，一个通过频域注意力机制捕获时间粒度感知特征的通用时序基础模型，结合混合掩码预训练策略，首次实现无需任务特定修改即可适配所有生成式时序任务。
+
+**[Gtm A General Time-Series Model For Enhanced Representation Learning Of Time-Series](gtm_a_general_time-series_model_for_enhanced_representation_learning_of_time-series.md)**
+
+:   提出 GTM，一个通过频域注意力机制捕获时间粒度感知特征、并通过混合掩码统一重建与自回归预训练目标的通用时间序列基础模型，在预测、补全、异常检测、分类等多任务上均达到 SOTA。
 
 **[Hivid Llm-Guided Video Saliency For Content-Aware Vod And Live Streaming](hivid_llm-guided_video_saliency_for_content-aware_vod_and_live_streaming.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 对齐/RLHF方向 5篇论文解读
+  CVPR2025 对齐/RLHF方向 7篇论文解读
 description: >-
-  5篇CVPR2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  7篇CVPR2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐/RLHF
 
-**📷 CVPR2025** · 共 **5** 篇
+**📷 CVPR2025** · 共 **7** 篇
 
 **[Bases Of Steerable Kernels For Equivariant Cnns From 2D Rotations To The Lorentz](bases_of_steerable_kernels_for_equivariant_cnns_from_2d_rotations_to_the_lorentz.md)**
 
@@ -21,6 +21,14 @@ description: >-
 **[Continual Sft Matches Multimodal Rlhf With Negative Supervision](continual_sft_matches_multimodal_rlhf_with_negative_supervision.md)**
 
 :   通过梯度分析发现多模态 RLHF 相比持续 SFT 的核心优势在于 rejected response 中的负监督信号，据此提出 nSFT 方法，用 LLM 从拒绝回复中提取错误信息并构造纠正性对话数据，仅用 SFT loss 就能匹配甚至超越 DPO/PPO 等 RLHF 方法，且只需 1 个模型，显存效率大幅提升。
+
+**[Curriculum Direct Preference Optimization For Diffusion And Consistency Models](curriculum_direct_preference_optimization_for_diffusion_and_consistency_models.md)**
+
+:   首次将课程学习引入 DPO 并首次将 DPO 适配到一致性模型，通过从"容易区分的偏好对"到"难以区分的偏好对"渐进训练，在文本对齐、美学和人类偏好上全面超越标准 DPO 和 DDPO，且仅需 1/10 训练数据量。
+
+**[Jailbreaking The Non-Transferable Barrier Via Test-Time Data Disguising](jailbreaking_the_non-transferable_barrier_via_test-time_data_disguising.md)**
+
+:   提出 JailNTL，首个针对 Non-Transferable Learning (NTL) 模型的黑盒攻击方法，通过测试时数据伪装将未授权域的数据"变装"为授权域的数据，仅用 1% 授权样本即可将未授权域准确率提升最高 55.7%，无需修改模型。
 
 **[Physmodpo Physically-Plausible Humanoid Motion With Preference Optimization](physmodpo_physically-plausible_humanoid_motion_with_preference_optimization.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 机器人/具身智能方向 50篇论文解读
+  NeurIPS2025 机器人/具身智能方向 55篇论文解读
 description: >-
-  50篇NeurIPS2025 机器人/具身智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  55篇NeurIPS2025 机器人/具身智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🤖 机器人/具身智能
 
-**🧠 NeurIPS2025** · 共 **50** 篇
+**🧠 NeurIPS2025** · 共 **55** 篇
 
 **[A Snapshot Of Influence A Local Data Attribution Framework F](a_snapshot_of_influence_a_local_data_attribution_framework_f.md)**
 
@@ -110,6 +110,10 @@ description: >-
 
 :   LLMscape 是一个交互式投影映射沙盘装置，让人类参与者和多个 LLM 驱动的 AI 代理在共同的不确定环境中共同构建意义，探索人类与机器在认识论层面的共通局限。
 
+**[Mango - Adaptable Graph Network Simulators Via Meta-Learning](mango_-_adaptable_graph_network_simulators_via_meta-learning.md)**
+
+:   提出 MaNGO（Meta Neural Graph Operator），通过元学习和条件神经过程（CNP）学习不同物理参数下仿真任务的共享潜在结构，实现对新物理参数的快速适应，无需重新训练。
+
 **[Manipulating Feature Visualizations With Gradient Slingshots](manipulating_feature_visualizations_with_gradient_slingshots.md)**
 
 :   提出梯度弹弓攻击，通过利用分布外梯度轨迹操纵神经网络特征可视化结果，无需修改模型参数，揭示特征可视化作为解释性工具的脆弱性。
@@ -138,9 +142,17 @@ description: >-
 
 :   mmWalk 构建了首个面向视障人群步行辅助的多模态多视角数据集（CARLA 仿真器生成 62K 帧/559K 全景图 + 69K VQA 对），基准测试发现 SOTA VLM 在风险评估和导航地标识别等安全关键任务上表现不足（最优仅 55.21%），微调后在真实数据集上泛化提升 16.7%。
 
+**[Nesypr Neurosymbolic Proceduralization For Efficient Embodied Reasoning](nesypr_neurosymbolic_proceduralization_for_efficient_embodied_reasoning.md)**
+
+:   NeSyPr 提出了一种神经符号过程化框架，将符号规划器生成的任务计划转化为可组合的过程化表示，嵌入到语言模型的推理过程中，从而在资源受限的环境中实现高效的具身推理。
+
 **[Operation Veja Fixing Fundamental Concepts Missing From Modern Roleplaying Train](operation_veja_fixing_fundamental_concepts_missing_from_modern_roleplaying_train.md)**
 
 :   提出 VEJA（Values-Experiences-Judgments-Abilities）框架，通过结构化角色定义指导人工数据策化，解决现有角色扮演模型缺乏内在价值冲突推理和角色深度的系统性问题。
+
+**[Physics Of Language Models Part 41 Architecture Design And The Magic Of Canon La](physics_of_language_models_part_41_architecture_design_and_the_magic_of_canon_la.md)**
+
+:   通过受控合成预训练任务系统性比较语言模型架构，发现 Canon 层——一种轻量级的邻近token加权求和组件——能显著提升推理深度（2-4倍）、推理广度、知识容量等核心能力，让 NoPE 匹配 RoPE，让 GLA 匹敌 Mamba2/GDN。
 
 **[Predicting The Performance Of Black-Box Llms Through Follow-Up Queries](predicting_the_performance_of_black-box_llms_through_follow-up_queries.md)**
 
@@ -196,9 +208,17 @@ description: >-
 
 **[Toward Engineering AGI: Benchmarking the Engineering Design Capabilities of LLMs](toward_engineering_agi_benchmarking_the_engineering_design_capabilities_of_llms.md)**
 
+**[Towards Reliable Code-As-Policies A Neuro-Symbolic Framework For Embodied Task P](towards_reliable_code-as-policies_a_neuro-symbolic_framework_for_embodied_task_p.md)**
+
+:   提出一种神经-符号具身任务规划框架，在 LLM 代码生成过程中引入符号验证和交互式验证，使任务成功率比 Code-as-Policies 基线提升 46.2%，可执行性达 86.8%。
+
 **[Understanding Prompt Tuning And In-Context Learning Via Meta-Learning](understanding_prompt_tuning_and_in-context_learning_via_meta-learning.md)**
 
 :   从贝叶斯元学习视角系统分析了提示调优（prompt tuning）的理论基础与局限性，证明了软提示可以在预训练分布内的单一目标任务上实现最优适配，但对多任务混合目标分布存在根本性限制，且软前缀能通过操纵非token空间的激活来超越最优硬token序列。
+
+**[Vitrix-Clipin Enhancing Fine-Grained Visual Understanding In Clip Via Instructio](vitrix-clipin_enhancing_fine-grained_visual_understanding_in_clip_via_instructio.md)**
+
+:   提出 CLIP-IN 框架，利用指令编辑数据集作为硬负样本和长描述增强 CLIP 的细粒度视觉理解能力，在 MMVP 等基准上显著提升且不损害零样本性能，集成到 MLLM 中可减少视觉幻觉。
 
 **[Vla-Cache Efficient Vision-Language-Action Manipulation Via Adaptive Token Cachi](vla-cache_efficient_vision-language-action_manipulation_via_adaptive_token_cachi.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 语义分割方向 42篇论文解读
+  NeurIPS2025 语义分割方向 47篇论文解读
 description: >-
-  42篇NeurIPS2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  47篇NeurIPS2025 语义分割方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ✂️ 语义分割
 
-**🧠 NeurIPS2025** · 共 **42** 篇
+**🧠 NeurIPS2025** · 共 **47** 篇
 
 **[Alligat0R Pre-Training Through Co-Visibility Segmentation For Relative Camera Po](alligat0r_pre-training_through_co-visibility_segmentation_for_relative_camera_po.md)**
 
@@ -29,6 +29,14 @@ description: >-
 **[Cos3D Collaborative Open-Vocabulary 3D Segmentation](cos3d_collaborative_open-vocabulary_3d_segmentation.md)**
 
 :   提出COS3D协作式开放词汇3D分割框架，在3D Gaussian Splatting中同时维护instance field（学习清晰边界）和language field（学习语义），通过两阶段训练实现Ins2Lang映射，推理时Language→Instance prompt精化实现互补协作，在LeRF数据集上mIoU达50.76%，大幅超越Dr.Splat（43.58%）。
+
+**[Diffusion-Driven Two-Stage Active Learning For Low-Budget Semantic Segmentation](diffusion-driven_two-stage_active_learning_for_low-budget_semantic_segmentation.md)**
+
+:   提出两阶段主动学习流程（覆盖性→不确定性），利用预训练扩散模型的多尺度特征实现极低标注预算下的高效语义分割。
+
+**[Exploring Structural Degradation In Dense Representations For Self-Supervised Le](exploring_structural_degradation_in_dense_representations_for_self-supervised_le.md)**
+
+:   发现并系统研究了自监督学习中"稠密退化"（SDD）现象——训练越久分类越好但稠密任务性能反而下降，提出 DSE 度量和基于 DSE 的模型选择/正则化策略，平均提升 mIoU 3.0%。
 
 **[Fast And Fluent Diffusion Language Models Via Convolutional Decoding And Rejecti](fast_and_fluent_diffusion_language_models_via_convolutional_decoding_and_rejecti.md)**
 
@@ -74,6 +82,10 @@ description: >-
 
 :   本文提出 Mars-Bench——首个面向火星科学任务的综合基准，涵盖20个数据集（分类/分割/目标检测三大任务类型），系统评估了 ImageNet 预训练模型、地球观测基础模型和视觉语言模型在火星数据上的表现，发现当前通用模型在火星领域仍有明显不足，呼吁开发火星专用基础模型。
 
+**[Mechanistic Interpretability Of Rnns Emulating Hidden Mar](mechanistic_interpretability_of_rnns_emulating_hidden_mar.md)**
+
+:   训练 vanilla RNN 复现 HMM 的发射统计，然后通过反向工程揭示 RNN 实现离散随机状态转换的机制：噪声驱动的轨道动力学 + "kick 神经元"触发的快速转换，本质是自诱导随机共振（SISR），该动力学基元可组合复用以模拟更复杂的离散潜在结构。
+
 **[Mechanistic Interpretability Of Rnns Emulating Hidden Markov Models](mechanistic_interpretability_of_rnns_emulating_hidden_markov_models.md)**
 
 :   训练vanilla RNN复现隐马尔可夫模型（HMM）的发射统计量，然后通过逆向工程揭示RNN利用噪声维持的轨道动力学、"kick neuron"电路和自致随机共振机制来实现离散随机状态转换的计算原理。
@@ -118,6 +130,10 @@ description: >-
 
 :   提出RoMA——首个面向遥感领域的Mamba架构自监督自回归预训练框架，通过自适应旋转编码策略和多尺度token预测机制，解决遥感图像的方向多样性和尺度极端变化问题，验证了Mamba在遥感领域遵循数据和参数缩放定律。
 
+**[Safire Saccade-Fixation Reiteration With Mamba For Referring Image Segmentation](safire_saccade-fixation_reiteration_with_mamba_for_referring_image_segmentation.md)**
+
+:   提出 SaFiRe 框架，模拟人类"扫视-注视"两阶段认知过程，利用 Mamba 的扫描-更新特性实现线性复杂度的多轮细化，有效处理歧义指代表达下的图像分割任务。
+
 **[Sam-R1 Leveraging Sam For Reward Feedback In Multimodal Segmentation Via Reinfor](sam-r1_leveraging_sam_for_reward_feedback_in_multimodal_segmentation_via_reinfor.md)**
 
 :   SAM-R1 提出了一个端到端的推理分割框架，首次将 SAM 作为强化学习训练回路中的奖励提供者，结合分级IoU精度奖励、非对称裁剪和 token 级损失归一化的改进 GRPO 算法，仅用 3K 训练样本即在 ReasonSeg 零样本设定下超越 Seg-Zero 等方法，gIoU 达 60.2%。
@@ -149,6 +165,10 @@ description: >-
 **[Step A Unified Spiking Transformer Evaluation Platform For Fair And Reproducible](step_a_unified_spiking_transformer_evaluation_platform_for_fair_and_reproducible.md)**
 
 :   STEP 是首个统一的脉冲 Transformer (Spiking Transformer) 评估平台，支持分类/分割/检测多任务、多后端（SpikingJelly/BrainCog/BrainPy），通过系统消融揭示了当前脉冲 Transformer 严重依赖卷积前端、注意力贡献有限、时序建模能力不足的关键发现，并提出了考虑位宽稀疏性和内存访问的统一能耗分析框架。
+
+**[Tabrag Improving Tabular Document Question Answering For Retrieval Augmented Gen](tabrag_improving_tabular_document_question_answering_for_retrieval_augmented_gen.md)**
+
+:   提出 TabRAG，一种基于解析的 RAG 框架，通过布局分割将文档分解为细粒度组件，使用视觉语言模型将表格提取为层次化结构表示，并集成自生成上下文学习模块来适配多种表格格式，在表格文档问答上全面优于现有解析技术。
 
 **[Torch-Uncertainty A Deep Learning Framework For Uncertainty Quantification](torch-uncertainty_a_deep_learning_framework_for_uncertainty_quantification.md)**
 

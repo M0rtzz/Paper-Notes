@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 LLM Agent方向 51篇论文解读
+  NeurIPS2025 LLM Agent方向 52篇论文解读
 description: >-
-  51篇NeurIPS2025 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  52篇NeurIPS2025 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🧠 NeurIPS2025** · 共 **51** 篇
+**🧠 NeurIPS2025** · 共 **52** 篇
 
 **[A-Mem Agentic Memory For Llm Agents](a-mem_agentic_memory_for_llm_agents.md)**
 
@@ -141,6 +141,10 @@ description: >-
 **[Its Lit Reliability-Optimized Llms With Inspectable Tools](its_lit_reliability-optimized_llms_with_inspectable_tools.md)**
 
 :   通过为每个外部工具定义可靠性/可调试性成本函数，引导 LLM 在多候选方案中选择成本最低（最透明可审计）的工具调用路径，在 61/65 测试场景中提升可解释性的同时保持甚至提升任务准确率。
+
+**[Lc-Opt Benchmarking Reinforcement Learning And Agentic Ai For End-To-End Liquid ](lc-opt_benchmarking_reinforcement_learning_and_agentic_ai_for_end-to-end_liquid_.md)**
+
+:   提出 LC-Opt，一个基于 Oak Ridge 国家实验室 Frontier 超级计算机冷却系统高保真数字孪生的液冷基准环境，支持强化学习控制策略的端到端液冷优化，涵盖集中式/分散式多智能体RL、策略蒸馏为可解释决策树、以及 LLM 驱动的智能体网格架构。
 
 **[Lessons Learned A Multi-Agent Framework For Code Llms To Learn And Improve](lessons_learned_a_multi-agent_framework_for_code_llms_to_learn_and_improve.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 图学习方向 48篇论文解读
+  NeurIPS2025 图学习方向 53篇论文解读
 description: >-
-  48篇NeurIPS2025 图学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  53篇NeurIPS2025 图学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🕸️ 图学习
 
-**🧠 NeurIPS2025** · 共 **48** 篇
+**🧠 NeurIPS2025** · 共 **53** 篇
 
 **[Bliss Bandit Layer Importance Sampling Strategy For Efficient Training Of Graph ](bliss_bandit_layer_importance_sampling_strategy_for_efficient_training_of_graph_.md)**
 
@@ -38,9 +38,17 @@ description: >-
 
 :   本文在 FB15k-237 上系统评估了弹性权重固化（EWC）对 TransE 知识图谱嵌入持续学习的效果，发现 EWC 将灾难性遗忘从 12.62% 降至 6.85%（减少 45.7%），并揭示了任务划分策略（基于关系 vs 随机）对遗忘度量的显著影响（9.8 个百分点差异）。
 
+**[Esca Contextualizing Embodied Agents Via Scene-Graph Generation](esca_contextualizing_embodied_agents_via_scene-graph_generation.md)**
+
+:   提出 ESCA 框架，通过开放域场景图生成（SGClip 模型）为 MLLM 驱动的具身智能体提供结构化视觉理解上下文，显著降低了感知错误率并提升了任务完成率。
+
 **[Falcon An Ml Framework For Fully Automated Layout-Constrained Analog Circuit Des](falcon_an_ml_framework_for_fully_automated_layout-constrained_analog_circuit_des.md)**
 
 :   FALCON 提出端到端的模拟/RF 电路自动化设计框架，通过 MLP 拓扑选择 + 边中心 GNN 性能预测 + 可微版图约束梯度推理三阶段流水线，在 100 万级 Cadence 仿真数据集上实现 >99% 拓扑选择准确率、<10% 性能预测误差，单实例推理不到 1 秒。
+
+**[Fastjam A Fast Joint Alignment Model For Images](fastjam_a_fast_joint_alignment_model_for_images.md)**
+
+:   提出 FastJAM，一种基于图的快速图像联合对齐方法，使用现成的图像匹配器 + 非参数聚类 + GNN + 反向合成损失，将对齐时间从数小时/分钟降至数十秒，同时保持或超越现有方法的对齐质量。
 
 **[From Sequence To Structure Uncovering Substructure Reasoning In Transformers](from_sequence_to_structure_uncovering_substructure_reasoning_in_transformers.md)**
 
@@ -98,6 +106,10 @@ description: >-
 
 :   提出 GRIN（Graph Repetition-Invariant Network），通过 Max 聚合和特殊的图构建策略使 GNN 对聚合物重复单元的拼接数量不变，解决了聚合物表示中的基本对称性问题。
 
+**[Logical Expressiveness Of Graph Neural Networks With Hierarchical Node Individua](logical_expressiveness_of_graph_neural_networks_with_hierarchical_node_individua.md)**
+
+:   提出了分层自我图神经网络（Hierarchical Ego GNNs，HEGNNs），通过层次化的节点个体化机制泛化了子图GNN，形成表达力递增的模型层级；在有界度图上，证明HEGNN节点分类器的区分能力等价于分级杂合逻辑（graded hybrid logic），从而统一了多种GNN变体的表达力分析。
+
 **[Making Classic Gnns Strong Baselines Across Varying Homophily A Smoothness-Gener](making_classic_gnns_strong_baselines_across_varying_homophily_a_smoothness-gener.md)**
 
 :   从理论上揭示了 GNN 消息传递中平滑性（smoothness）与泛化性（generalization）之间的两难困境，提出 IGNN 框架通过三个简约设计原则（分离邻域变换、感知聚合、邻域关系学习）缓解该困境，在 30 个基线中表现最优且具备跨同质/异质图的通用性。
@@ -125,6 +137,10 @@ description: >-
 **[P-Drum Post-Hoc Descriptor-Based Residual Uncertainty Modeling For Machine Learn](p-drum_post-hoc_descriptor-based_residual_uncertainty_modeling_for_machine_learn.md)**
 
 :   提出 P-DRUM，一种简单高效的事后（post-hoc）不确定性量化框架，利用已训练图神经网络势的描述子来估计预测残差，作为不确定性代理，无需修改原模型架构或训练流程。
+
+**[Practical Bayes-Optimal Membership Inference Attacks](practical_bayes-optimal_membership_inference_attacks.md)**
+
+:   提出 BASE 和 G-BASE 两种实用的贝叶斯最优成员推断攻击方法，分别针对 i.i.d. 数据和图结构数据,在保持理论最优性的同时大幅降低计算成本。
 
 **[Preference-Driven Knowledge Distillation For Few-Shot Node Classification](preference-driven_knowledge_distillation_for_few-shot_node_classification.md)**
 
@@ -161,6 +177,10 @@ description: >-
 **[Solar-Geco Perovskite Solar Cell Property Prediction With Geometric-Aware Co-Att](solar-geco_perovskite_solar_cell_property_prediction_with_geometric-aware_co-att.md)**
 
 :   提出Solar-GECO多模态框架，将钙钛矿吸收层的3D晶体结构通过几何GNN编码、器件其他层通过LLM文本嵌入编码，经共注意力融合后预测光电转换效率(PCE)及其不确定性，MAE从3.066降至2.936。
+
+**[Spatio-Temporal Directed Graph Learning For Account Takeover Fraud Detection](spatio-temporal_directed_graph_learning_for_account_takeover_fraud_detection.md)**
+
+:   提出 ATLAS 框架，将账户接管（ATO）欺诈检测重新建模为时空有向图上的节点分类问题，在 Capital One 大规模生产环境中实现 6.38% AUC 提升和超过 50% 的用户摩擦降低。
 
 **[Spot-Trip Dual-Preference Driven Out-Of-Town Trip Recommendation](spot-trip_dual-preference_driven_out-of-town_trip_recommendation.md)**
 

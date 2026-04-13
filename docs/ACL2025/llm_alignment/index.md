@@ -1,14 +1,14 @@
 ---
 title: >-
-  ACL2025 对齐/RLHF方向 60篇论文解读
+  ACL2025 对齐/RLHF方向 61篇论文解读
 description: >-
-  60篇ACL2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  61篇ACL2025 对齐/RLHF方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚖️ 对齐/RLHF
 
-**💬 ACL2025** · 共 **60** 篇
+**💬 ACL2025** · 共 **61** 篇
 
 **[Agentalign Navigating Safety Alignment In The Shift From Informative To Agentic ](agentalign_navigating_safety_alignment_in_the_shift_from_informative_to_agentic_.md)**
 
@@ -55,6 +55,10 @@ description: >-
 :   基于精细化可能性模型 (ELM) 将越狱策略分解为四类可独立进化的组件（角色/内容支撑/语境/沟通技巧），提出 CL-GSO 遗传算法在组件级进行交叉与变异，将策略空间从既有方法的 40 种扩展到 839 种，在 Claude-3.5 上实现 96% 攻击成功率（此前方法最高仅 4%），同时提出基于意图一致性的评估机制，准确率达 96.5% 超越专用安全模型。
 
 **[Call for Rigor in Reporting Quality of Instruction Tuning Data](call_for_rigor_in_reporting_quality_of_instruction_tuning_data.md)**
+
+**[Chain-of-Jailbreak Attack for Image Generation Models via Editing Step by Step](chain-of-jailbreak_attack_for_image_generation_models_via_ed.md)**
+
+:   提出 CoJ（Chain-of-Jailbreak）攻击，将生成恶意图像的单步请求分解为多步编辑指令链（从无害种子图像逐步编辑到目标），绕过图像生成模型的安全过滤器，在 GPT-4o 等模型上达到高攻击成功率。
 
 **[Chain-Of-Jailbreak Attack For Image Generation Models Via Editing Step By Step](chain-of-jailbreak_attack_for_image_generation_models_via_editing_step_by_step.md)**
 

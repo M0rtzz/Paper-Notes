@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICML2025 LLM Agent方向 13篇论文解读
+  ICML2025 LLM Agent方向 14篇论文解读
 description: >-
-  13篇ICML2025 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  14篇ICML2025 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🧪 ICML2025** · 共 **13** 篇
+**🧪 ICML2025** · 共 **14** 篇
 
 **[Advagent Controllable Blackbox Red-Teaming On Web Agents](advagent_controllable_blackbox_red-teaming_on_web_agents.md)**
 
@@ -53,6 +53,10 @@ description: >-
 **[Tamas Benchmarking Adversarial Risks In Multi-Agent Llm Systems](tamas_benchmarking_adversarial_risks_in_multi-agent_llm_systems.md)**
 
 :   本文提出 TAMAS，首个系统评估多智能体 LLM 系统安全性的基准，覆盖 5 个高风险领域、6 种攻击类型、300 个对抗样本和 10 个骨干模型，揭示多智能体系统在协作场景中存在严重的对抗脆弱性，并引入 ERS 指标衡量安全-效用权衡。
+
+**[Theorem-Of-Thought A Multi-Agent Framework For Abductive Deductive And Inductive](theorem-of-thought_a_multi-agent_framework_for_abductive_deductive_and_inductive.md)**
+
+:   提出 Theorem-of-Thought (ToTh) 框架，通过三个分别模拟溯因、演绎和归纳推理的 Agent 独立生成推理轨迹，将其构建为形式化推理图 (FRG)，再用 NLI 校准的贝叶斯置信传播进行一致性评分，选取最优图的终端节点作为最终答案，在符号和数值推理任务上一致超越 CoT、Self-Consistency 和 CoT-Decoding。
 
 **[Towards Llm Agents For Earth Observation](towards_llm_agents_for_earth_observation.md)**
 

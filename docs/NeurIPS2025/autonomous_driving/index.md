@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 自动驾驶方向 50篇论文解读
+  NeurIPS2025 自动驾驶方向 51篇论文解读
 description: >-
-  50篇NeurIPS2025 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  51篇NeurIPS2025 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🧠 NeurIPS2025** · 共 **50** 篇
+**🧠 NeurIPS2025** · 共 **51** 篇
 
 **[3Eed Ground Everything Everywhere In 3D](3eed_ground_everything_everywhere_in_3d.md)**
 
@@ -145,6 +145,10 @@ description: >-
 **[Sdtagnet Leveraging Text-Annotated Navigation Maps For Online Hd Map Constructio](sdtagnet_leveraging_text-annotated_navigation_maps_for_online_hd_map_constructio.md)**
 
 :   提出 SDTagNet，首次通过 BERT 编码 OpenStreetMap 文本标注（路名/车道数/单行道等）并用点级图 Transformer 编码所有 SD 地图元素（点/线/关系），在远距离 HD 地图构建上相比无先验方法提升 +5.9 mAP（+45%），超越已有 SD 地图先验方法 +3.2 mAP（+20%）。
+
+**[Self-Supervised Learning Of Graph Representations For Network Intrusion Detectio](self-supervised_learning_of_graph_representations_for_network_intrusion_detectio.md)**
+
+:   提出 GraphIDS，一种自监督入侵检测模型，通过掩码自编码器统一图表示学习与异常检测，在多个 NetFlow 基准上 PR-AUC 达 99.98%、宏 F1 达 99.61%，超越基线 5-25 个百分点。
 
 **[Semantic Glitch Agency And Artistry In An Autonomous Pixel Cloud](semantic_glitch_agency_and_artistry_in_an_autonomous_pixel_cloud.md)**
 

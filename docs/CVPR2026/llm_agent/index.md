@@ -1,18 +1,22 @@
 ---
 title: >-
-  CVPR2026 LLM Agent方向 12篇论文解读
+  CVPR2026 LLM Agent方向 13篇论文解读
 description: >-
-  12篇CVPR2026 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  13篇CVPR2026 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**📷 CVPR2026** · 共 **12** 篇
+**📷 CVPR2026** · 共 **13** 篇
 
 **[Carepilot A Multi-Agent Framework For Long-Horizon Computer Task Automation In H](carepilot_a_multi-agent_framework_for_long-horizon_computer_task_automation_in_h.md)**
 
 :   提出CareFlow基准（1050个医疗软件长视界工作流任务，8-24步，覆盖DICOM/3D Slicer/EMR/LIS四大系统）和CarePilot框架（基于Actor-Critic范式，集成工具grounding和双记忆机制），在CareFlow上超越GPT-5约15%的任务准确率。
+
+**[Echotrail-Gui Building Actionable Memory For Gui Agents](echotrail-gui_building_actionable_memory_for_gui_agents.md)**
+
+:   提出 EchoTrail-GUI 框架，通过评论模型引导的自主探索构建高质量操作记忆库，并在推理时动态检索相关经验注入提示，将 GPT-4o 在 AndroidWorld 上的任务成功率从 34.5% 提升至 51.7%。
 
 **[Echotrail-Gui Building Actionable Memory For Gui Agents Via Critic-Guided Self-E](echotrail-gui_building_actionable_memory_for_gui_agents_via_critic-guided_self-e.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 多模态VLM方向 77篇论文解读
+  ICLR2026 多模态VLM方向 78篇论文解读
 description: >-
-  77篇ICLR2026 多模态VLM方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  78篇ICLR2026 多模态VLM方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态VLM
 
-**🔬 ICLR2026** · 共 **77** 篇
+**🔬 ICLR2026** · 共 **78** 篇
 
 **[A-Tpt Angular Diversity Calibration Properties For Test-Time Prompt Tuning Of Vi](a-tpt_angular_diversity_calibration_properties_for_test-time_prompt_tuning_of_vi.md)**
 
@@ -313,6 +313,10 @@ description: >-
 **[Why Keep Your Doubts To Yourself Trading Visual Uncertainties In Multi-Agent Ban](why_keep_your_doubts_to_yourself_trading_visual_uncertainties_in_multi-agent_ban.md)**
 
 :   提出 Agora 框架，将多智能体 VLM 协调问题重构为去中心化的不确定性交易市场——将认知不确定性铸造为可量化的三维可交易资产（感知/语义/推理），通过利润驱动的交易协议和市场感知的 Thompson Sampling Broker 实现成本高效的均衡分配，在 5 个多模态基准上一致超越启发式方法（如 MMMU 上 +8.5% 准确率同时成本降低 3 倍以上）。
+
+**[Why Keep Your Doubts To Yourself Trading Visual Uncertainty](why_keep_your_doubts_to_yourself_trading_visual_uncertainty.md)**
+
+:   提出 Agora 框架，将多智能体 VLM 协调问题重新建模为去中心化的不确定性交易市场，通过将认知不确定性拆分为可交易资产（感知/语义/推理三维），并用基于盈利性驱动的交易协议和 Thompson Sampling 代理人实现成本感知的最优分配，在五个多模态基准上以超 3 倍成本节省获得至多 +8.5% 准确率提升。
 
 **[Why Reinforcement Fine-Tuning Enables Mllms Preserve Prior Knowledge Better A Da](why_reinforcement_fine-tuning_enables_mllms_preserve_prior_knowledge_better_a_da.md)**
 

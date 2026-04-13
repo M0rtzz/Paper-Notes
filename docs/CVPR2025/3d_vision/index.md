@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 3D视觉方向 30篇论文解读
+  CVPR2025 3D视觉方向 36篇论文解读
 description: >-
-  30篇CVPR2025 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  36篇CVPR2025 3D视觉方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D视觉
 
-**📷 CVPR2025** · 共 **30** 篇
+**📷 CVPR2025** · 共 **36** 篇
 
 **[3D-Grand A Million-Scale Dataset For 3D-Llms With Better Grounding And Less Hall](3d-grand_a_million-scale_dataset_for_3d-llms_with_better_grounding_and_less_hall.md)**
 
@@ -58,13 +58,33 @@ description: >-
 
 :   提出一个基于多视图潜在扩散模型的3D增强框架，通过姿态感知编码器、多视图行注意力和近视图极线聚合模块，在保持跨视图一致性的前提下显著提升低质量3D生成结果的纹理质量。
 
+**[3Dgut Enabling Distorted Cameras And Secondary Rays In Gaussian Splatting](3dgut_enabling_distorted_cameras_and_secondary_rays_in_gaussian_splatting.md)**
+
+**[4Deform Neural Surface Deformation For Robust Shape Interpolation](4deform_neural_surface_deformation_for_robust_shape_interpolation.md)**
+
 **[4Dequine Disentangling Motion And Appearance For 4D Equine Reconstruction From M](4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)**
 
 :   将单目视频的4D马匹重建解耦为运动估计（AniMoFormer时空Transformer）和外观重建（EquineGS单图前馈3DGS），依托VAREN参数化模型和两个大规模合成数据集，在真实数据上达到SOTA几何+外观重建效果，且能零样本泛化到驴和斑马。
 
+**[4Dtam Non-Rigid Tracking And Mapping Via Dynamic Surface Gaussians](4dtam_non-rigid_tracking_and_mapping_via_dynamic_surface_gaussians.md)**
+
+:   本文提出了首个基于可微渲染和2D高斯表面基元的4D跟踪与建图方法（4DTAM），通过联合优化相机位姿、场景几何、外观和动态变形场，从单目RGB-D视频流实现非刚性动态场景的实时重建，并发布了全新的合成4D数据集Sim4D用于评估。
+
+**[A Lightweight Udf Learning Framework For 3D Reconstruction Based On Local Shape ](a_lightweight_udf_learning_framework_for_3d_reconstruction_based_on_local_shape_.md)**
+
+:   本文提出LoSF-UDF，一种基于局部形状函数学习无符号距离场（UDF）的轻量级框架，仅需在合成的局部点云patch上训练一次（653KB参数、0.5GB数据），即可泛化重建各种类型的3D表面，且对噪声和离群点具有鲁棒性。
+
+**[A Unified Image-Dense Annotation Generation Model For Underwater Scenes](a_unified_image-dense_annotation_generation_model_for_underwater_scenes.md)**
+
+:   本文提出TIDE，一种统一的文本到图像和密集标注生成方法，仅以文本为输入就能同时生成高度一致的水下图像、深度图和语义掩码，通过隐式布局共享（ILS）和时间自适应归一化（TAN）机制确保多模态输出的一致性，合成的SynTIDE数据集显著提升了水下深度估计和语义分割性能。
+
 **[Activegamer Active Gaussian Mapping Through Efficient Rendering](activegamer_active_gaussian_mapping_through_efficient_rendering.md)**
 
 :   提出 ActiveGAMER，首次将 3D Gaussian Splatting 用于主动建图，通过基于渲染的信息增益模块高效选择最优下一视角，结合粗到细探索、后精修和全局-局部关键帧策略，在 Replica 和 MP3D 数据集上大幅超越 NeRF-based 方法的几何精度和渲染保真度。
+
+**[Aerialmegadepth Learning Aerial-Ground Reconstruction And View Synthesis](aerialmegadepth_learning_aerial-ground_reconstruction_and_view_synthesis.md)**
+
+:   本文提出AerialMegaDepth数据集生成框架，通过将Google Earth的伪合成航空渲染与MegaDepth的真实地面图像联合配准到统一坐标系中，构建了13.2万张混合高度图像的大规模训练数据，微调DUSt3R后将地空配对的相机旋转估计准确率从5%提升到56%，同时显著改善了新视角合成质量。
 
 **[Framevggt Frame Evidence Rolling Memory For Streaming Vggt](framevggt_frame_evidence_rolling_memory_for_streaming_vggt.md)**
 

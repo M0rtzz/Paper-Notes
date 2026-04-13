@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 强化学习方向 3篇论文解读
+  ECCV2024 强化学习方向 4篇论文解读
 description: >-
-  3篇ECCV2024 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  4篇ECCV2024 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🎞️ ECCV2024** · 共 **3** 篇
+**🎞️ ECCV2024** · 共 **4** 篇
 
 **[Adaglimpse Active Visual Exploration With Arbitrary Glimpse Position And Scale](adaglimpse_active_visual_exploration_with_arbitrary_glimpse_position_and_scale.md)**
 
@@ -17,6 +17,10 @@ description: >-
 **[Octopus Embodied Vision-Language Programmer From Environmental Feedback](octopus_embodied_vision-language_programmer_from_environmental_feedback.md)**
 
 :   提出 Octopus，一个具身视觉-语言编程模型，通过生成可执行代码来连接高层规划与底层操控，并引入 Reinforcement Learning with Environmental Feedback (RLEF) 训练方案来提升决策质量。
+
+**[Octopus Embodied Visionlanguage Programmer From Environmental Feedback](octopus_embodied_visionlanguage_programmer_from_environmental_feedback.md)**
+
+:   Octopus 是一个具身视觉-语言编程模型，通过将 VLM 与可执行代码生成相结合，利用 GPT-4 收集训练数据并引入 RLEF（环境反馈强化学习）进行微调，在三个不同模拟器（OmniGibson、Minecraft、GTA-V）中实现了端到端的视觉感知→计划→代码生成→执行闭环。
 
 **[Visual Grounding For Object-Level Generalization In Reinforcement Learning](visual_grounding_for_object-level_generalization_in_reinforcement_learning.md)**
 

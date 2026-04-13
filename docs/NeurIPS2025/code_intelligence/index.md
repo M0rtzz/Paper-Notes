@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 代码智能方向 19篇论文解读
+  NeurIPS2025 代码智能方向 20篇论文解读
 description: >-
-  19篇NeurIPS2025 代码智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  20篇NeurIPS2025 代码智能方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💻 代码智能
 
-**🧠 NeurIPS2025** · 共 **19** 篇
+**🧠 NeurIPS2025** · 共 **20** 篇
 
 **[A Selfimproving Coding Agent](a_selfimproving_coding_agent.md)**
 
@@ -65,6 +65,10 @@ description: >-
 **[Preserving Llm Capabilities Through Calibration Data Curation From Analysis To O](preserving_llm_capabilities_through_calibration_data_curation_from_analysis_to_o.md)**
 
 :   系统研究了校准数据的组成特性（序列长度/样本量/来源/格式）和领域对应关系对LLM压缩后能力保持的影响，发现激活空间中的代表性和多样性是数据质量的本质决定因素，并据此提出三阶段校准数据策展框架COLA。
+
+**[Principled Fine-Tuning Of Llms From User-Edits A Medley Of Preference Supervisio](principled_fine-tuning_of_llms_from_user-edits_a_medley_of_preference_supervisio.md)**
+
+:   系统研究如何利用用户编辑数据微调 LLM，将偏好、监督标签和代价三种反馈类型统一起来，并提出一种简单的集成方法，在不同用户分布下实现鲁棒适应。
 
 **[Program Synthesis Via Test-Time Transduction](program_synthesis_via_test-time_transduction.md)**
 

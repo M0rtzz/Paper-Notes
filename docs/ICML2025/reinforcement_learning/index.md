@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICML2025 强化学习方向 77篇论文解读
+  ICML2025 强化学习方向 79篇论文解读
 description: >-
-  77篇ICML2025 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  79篇ICML2025 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🧪 ICML2025** · 共 **77** 篇
+**🧪 ICML2025** · 共 **79** 篇
 
 **[A Theoretical Study Of Hyper Self-Attention Through The Lens Of Interactions Rep](a_theoretical_study_of_hyper_self-attention_through_the_lens_of_interactions_rep.md)**
 
@@ -122,6 +122,10 @@ description: >-
 
 :   提出 Flow of Reasoning (FoR)，将多步 LLM 推理建模为 DAG 上的马尔可夫流，借助 GFlowNet 的轨迹平衡目标微调 LLM，使其仅用极少训练样本（如15个）即可采样出概率正比于奖励的多条高质量且多样化的推理路径。
 
+**[Gradual Transition From Bellman Optimality Operator To Bellman Operator In](gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in.md)**
+
+:   揭示Actor-Critic中Bellman最优算子(加速学习但过估计)和Bellman算子(减少偏差但慢)的权衡，提出Annealed Q-Learning(AQ-L)——用expectile loss从最优算子渐进过渡到标准算子，在TD3/SAC上显著提升性能。
+
 **[Gradual Transition From Bellman Optimality Operator To Bellman Operator In Onlin](gradual_transition_from_bellman_optimality_operator_to_bellman_operator_in_onlin.md)**
 
 :   提出 Annealed Q-learning (AQ-L)，通过期望分位损失（expectile loss）的参数 τ 从接近1退火至0.5，实现从 Bellman 最优算子到 Bellman 算子的平滑过渡，在连续动作空间中既加速了早期学习又抑制了后期过估计偏差，与 TD3/SAC 结合后在多种运动控制和操控任务上显著优于基线。
@@ -181,6 +185,10 @@ description: >-
 **[Mastering Massive Multi-Task Reinforcement Learning Via Mixture-Of-Expert Decisi](mastering_massive_multi-task_reinforcement_learning_via_mixture-of-expert_decisi.md)**
 
 :   提出 M3DT 框架，将 Mixture-of-Experts (MoE) 引入 Decision Transformer 架构，通过任务分组让每个专家只学习少量任务的特定知识，并设计三阶段训练机制（骨干→专家→路由器）依次优化各模块，成功将离线多任务 RL 扩展到 160 个仿真控制任务且性能持续提升。
+
+**[Mastering Massive Multi-Task Reinforcement Learning Via Mixture Of Expert Decision Transformer](mastering_massive_multi-task_reinforcement_learning_via_mixture_of_expert_decision_transformer.md)**
+
+:   提出M3DT，将MoE引入Decision Transformer解决大规模多任务RL的扩展性问题：通过任务分组让每个专家只学习任务子集，配合三阶段训练策略，成功扩展到160个任务。
 
 **[Maximum Total Correlation Reinforcement Learning](maximum_total_correlation_reinforcement_learning.md)**
 

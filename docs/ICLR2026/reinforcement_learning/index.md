@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICLR2026 强化学习方向 128篇论文解读
+  ICLR2026 强化学习方向 130篇论文解读
 description: >-
-  128篇ICLR2026 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  130篇ICLR2026 强化学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎮 强化学习
 
-**🔬 ICLR2026** · 共 **128** 篇
+**🔬 ICLR2026** · 共 **130** 篇
 
 **[A Unifying View Of Coverage In Linear Off-Policy Evaluation](a_unifying_view_of_coverage_in_linear_off-policy_evaluation.md)**
 
@@ -334,6 +334,10 @@ description: >-
 
 :   将LLM层剪枝建模为合作博弈（每层=玩家，模型性能=效用）→精确Shapley值计算不可行（$2^L$种组合）→提出两阶段近似：(1)分层蒙特卡洛采样生成mask+评估PPL作为监督信号→(2)训练轻量代理网络预测任意mask的性能→高效估算每层Shapley值→捕获层间依赖→显著优于静态启发式剪枝基线。
 
+**[Remot Reinforcement Learning With Motion Contrast Triplets](remot_reinforcement_learning_with_motion_contrast_triplets.md)**
+
+:   ReMoT 提出一个统一的训练范式，通过规则驱动的运动对比三元组数据集（ReMoT-16K）和 Group Relative Policy Optimization（GRPO）组合奖励优化，系统性地提升 VLM 在时空一致性推理上的能力，在时空推理任务上实现 25.1% 的性能跃升。
+
 **[Retaining Suboptimal Actions To Follow Shifting Optima In Multi-Agent Reinforcem](retaining_suboptimal_actions_to_follow_shifting_optima_in_multi-agent_reinforcem.md)**
 
 :   提出S2Q解决合作MARL中值函数最优点在训练中漂移→次优收敛：逐步学习K个sub-value函数保留替代高价值动作+Softmax行为策略持续探索→最优变化时快速适应，SMAC Hard+和GRF上一致超越基线。
@@ -449,6 +453,10 @@ description: >-
 **[Thinking On The Fly Test-Time Reasoning Enhancement Via Latent Thought Policy Op](thinking_on_the_fly_test-time_reasoning_enhancement_via_latent_thought_policy_op.md)**
 
 :   本文提出潜在思维策略优化（LTPO），一种无需更新模型参数的测试时推理增强框架，通过将中间潜在"思维"向量视为可优化的动态参数，利用在线策略梯度方法和内在置信度奖励信号来增强冻结LLM的推理能力。
+
+**[Toward A Dynamic Stackelberg Game-Theoretic Framework For Agent-Based Conversat](toward_a_dynamic_stackelberg_game-theoretic_framework_for_agent-based_conversat.md)**
+
+:   将 LLM 越狱攻防形式化为动态 Stackelberg 扩展形式博弈，结合快速扩展随机树 (RRT) 搜索提示空间，提出 Purple Agent 防御架构实现"红队思维，蓝队行动"的预见性防御。
 
 **[Towards Bridging The Gap Between Large-Scale Pretraining And Efficient Finetunin](towards_bridging_the_gap_between_large-scale_pretraining_and_efficient_finetunin.md)**
 

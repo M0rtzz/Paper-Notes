@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 其他方向 13篇论文解读
+  CVPR2025 其他方向 15篇论文解读
 description: >-
-  13篇CVPR2025 其他方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  15篇CVPR2025 其他方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2025** · 共 **13** 篇
+**📷 CVPR2025** · 共 **15** 篇
 
 **[4Real-Video Learning Generalizable Photo-Realistic 4D Video Diffusion](4real-video_learning_generalizable_photo-realistic_4d_video_diffusion.md)**
 
@@ -18,6 +18,10 @@ description: >-
 
 :   构建了包含100万+复杂CAD模型、超1000万多模态标注（高分辨率3D扫描、手绘3D草图、文本描述、BRep拓扑标签）的A2Z数据集，是目前最大的CAD逆向工程数据集，并基于此训练了BRep边界和角点检测的基础模型。
 
+**[Anomalyncd Towards Novel Anomaly Class Discovery In Industrial Scenarios](anomalyncd_towards_novel_anomaly_class_discovery_in_industrial_scenarios.md)**
+
+:   提出 AnomalyNCD，首个基于自监督的工业多类异常分类方法：MEBin 提取主要异常区域 → 掩码引导 ViT 聚焦弱语义异常 → 区域融合策略实现灵活的区域/图像级分类，MVTec AD 上 F1 提升 10.8%，NMI 提升 8.8%。
+
 **[Bendfm A Taxonomy And Synthetic Cad Dataset For Manufacturability Assessment In ](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)**
 
 :   提出一个面向板金弯曲工艺的可制造性度量分类法（按配置依赖性×可行性/复杂度两个维度划分为四象限），并构建首个包含20,000个零件（含可制造与不可制造样本）的合成数据集BenDFM，基准测试表明图结构表示（UV-Net）优于点云（PointNext），配置依赖性指标的预测更具挑战性。
@@ -25,6 +29,8 @@ description: >-
 **[Bounds On Agreement Between Subjective And Objective Measurements](bounds_on_agreement_between_subjective_and_objective_measurements.md)**
 
 :   通过仅假设投票均值收敛于真实质量，推导出主观测试（MOS）与客观估计器之间PCC（上界）和MSE（下界）的数学界限，并提出基于二项分布的投票模型BinoVotes，使得即使在投票方差不可用时也能计算这些界限，18个主观测试数据的验证表明BinoVotes界限与全数据驱动界限高度吻合。
+
+**[Cadcrafter Generating Computer-Aided Design Models From Unconstrained Images](cadcrafter_generating_computer-aided_design_models_from_unconstrained_images.md)**
 
 **[Deconstructing The Failure Of Ideal Noise Correction A Three-Pillar Diagnosis](deconstructing_the_failure_of_ideal_noise_correction_a_three-pillar_diagnosis.md)**
 

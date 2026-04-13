@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 视频理解方向 66篇论文解读
+  NeurIPS2025 视频理解方向 72篇论文解读
 description: >-
-  66篇NeurIPS2025 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  72篇NeurIPS2025 视频理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎬 视频理解
 
-**🧠 NeurIPS2025** · 共 **66** 篇
+**🧠 NeurIPS2025** · 共 **72** 篇
 
 **[A Little Depth Goes A Long Way The Expressive Power Of Logde](a_little_depth_goes_a_long_way_the_expressive_power_of_logde.md)**
 
@@ -49,6 +49,10 @@ description: >-
 **[Dense Sae Latents Are Features Not Bugs](dense_sae_latents_are_features_not_bugs.md)**
 
 :   本文系统研究了稀疏自编码器(SAE)中频繁激活的"dense latents"，证明它们不是训练噪声，而是语言模型残差流中固有的密集子空间的反映，并提出了一套包含位置追踪、上下文绑定、零空间、字母、词性和PCA等六类dense latent的分类体系。
+
+**[Disentangled Concepts Speak Louder Than Words Explainable Video Action Recogniti](disentangled_concepts_speak_louder_than_words_explainable_video_action_recogniti.md)**
+
+:   提出DANCE框架，通过将动作解释解耦为运动动态、物体和场景三类概念，实现结构化和运动感知的可解释视频动作识别。
 
 **[Dsas A Universal Plug-And-Play Framework For Attention Optimization In Multi-Doc](dsas_a_universal_plug-and-play_framework_for_attention_optimization_in_multi-doc.md)**
 
@@ -94,9 +98,17 @@ description: >-
 
 :   提出 EgoGazeVQA——首个利用注视（gaze）信号评估 MLLM 对第一人称视频中用户意图理解能力的基准，并设计三种 gaze-guided prompting 策略显著提升模型表现。
 
+**[Infinipot-V Memory-Constrained Kv Cache Compression For Streaming Video Understa](infinipot-v_memory-constrained_kv_cache_compression_for_streaming_video_understa.md)**
+
+:   提出首个无需训练、查询无关的流式视频理解框架InfiniPot-V，通过时序冗余度（TaR）和值范数（VaN）两个度量实现KV缓存的在线压缩，在固定内存约束下支持任意长度的流式视频理解。
+
 **[Influx A Benchmark For Self-Calibration Of Dynamic Intrinsics Of Video Cameras](influx_a_benchmark_for_self-calibration_of_dynamic_intrinsics_of_video_cameras.md)**
 
 :   提出首个包含逐帧动态相机内参真值的真实视频基准 InFlux（386 视频、143K+ 标注帧），通过镜头元数据到内参的查找表（LUT）实现精确标注，并揭示现有内参预测方法在动态内参场景下表现不佳。
+
+**[Inst-It Boosting Instance Understanding Via Explicit Visual Prompt Instruction T](inst-it_boosting_instance_understanding_via_explicit_visual_prompt_instruction_t.md)**
+
+:   提出Inst-IT完整方案：通过GPT-4o辅助的自动标注管线生成实例级细粒度数据，构建Inst-IT Bench评测基准和335K QA对的指令微调数据集，以持续微调范式有效提升LMM的实例级理解能力，同时增强通用图像/视频理解。
 
 **[Kungfubot Physics-Based Humanoid Whole-Body Control For Learning Highly-Dynamic ](kungfubot_physics-based_humanoid_whole-body_control_for_learning_highly-dynamic_.md)**
 
@@ -117,6 +129,10 @@ description: >-
 **[Livestar Live Streaming Assistant For Real-World Online Video Understanding](livestar_live_streaming_assistant_for_real-world_online_video_understanding.md)**
 
 :   提出 LiveStar，一个始终在线的直播流视频理解助手，通过 Streaming Causal Attention Masks (SCAM) 训练策略和 Streaming Verification Decoding (SVeD) 推理框架，实现自适应响应时机判断，在 OmniStar 基准上语义正确性提升 19.5%，时间偏差降低 18.1%。
+
+**[Memtrack Evaluating Long-Term Memory And State Tracking In Multi-Platform Dynami](memtrack_evaluating_long-term_memory_and_state_tracking_in_multi-platform_dynami.md)**
+
+:   提出 MEMTRACK 基准，评估 LLM 智能体在多平台（Slack/Linear/Git）动态环境中的长期记忆和状态追踪能力，揭示即使最强的 GPT-5 也仅达 60% 正确率。
 
 **[Mimeqa Towards Socially-Intelligent Nonverbal Foundation Models](mimeqa_towards_socially-intelligent_nonverbal_foundation_models.md)**
 
@@ -173,6 +189,10 @@ description: >-
 **[Revisiting Bi-Linear State Transitions In Recurrent Neural Networks](revisiting_bi-linear_state_transitions_in_recurrent_neural_networks.md)**
 
 :   系统性地重新审视 RNN 中的双线性状态转移（隐状态与输入的乘法交互），理论证明双线性 RNN 可模拟任意有限状态机，并展示其在去除加性项后形成了一个从对角到全结构的自然表达力层次，揭示了 Mamba 等流行线性 RNN 处于该层次最低端。
+
+**[Sama Towards Multi-Turn Referential Grounded Video Chat With Large Language Mode](sama_towards_multi-turn_referential_grounded_video_chat_with_large_language_mode.md)**
+
+:   提出 SAMA 框架，通过构建统一的数据集（SAMA-239K）、模型（时空上下文聚合器 + SAM）和基准（SAMA-Bench），首次实现了多轮引用式视频对话中细粒度时空理解与grounding的联合建模。
 
 **[Scaling Rl To Long Videos](scaling_rl_to_long_videos.md)**
 
@@ -235,6 +255,10 @@ description: >-
 **[Two Causally Related Needles In A Video Haystack](two_causally_related_needles_in_a_video_haystack.md)**
 
 :   提出CAUSAL2NEEDLES benchmark评估VLM的长视频双针(2-needle)因果推理能力：需要从视频两个不同位置提取因果关联的事件信息并联合推理，利用"桥接实体"迫使模型先理解结果再追溯原因，揭示即使GPT-4o在2-needle因果问题上仅达13.4%的Both准确率（vs人类79.3%）。
+
+**[Unleashing Hour-Scale Video Training For Long Video-Language Understanding](unleashing_hour-scale_video_training_for_long_video-language_understanding.md)**
+
+:   提出 VideoMarathon 大规模小时级视频指令跟随数据集（9700小时、330万QA对）和 Hour-LLaVA 模型，通过记忆增强模块实现 1-FPS 的小时级视频训练和推理，在多个长视频基准上达到最优。
 
 **[Vgent Graph-Based Retrieval-Reasoning-Augmented Generation For Long Video Unders](vgent_graph-based_retrieval-reasoning-augmented_generation_for_long_video_unders.md)**
 

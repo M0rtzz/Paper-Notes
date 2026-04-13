@@ -1,14 +1,14 @@
 ---
 title: >-
-  ICML2025 多模态VLM方向 49篇论文解读
+  ICML2025 多模态VLM方向 50篇论文解读
 description: >-
-  49篇ICML2025 多模态VLM方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  50篇ICML2025 多模态VLM方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧩 多模态VLM
 
-**🧪 ICML2025** · 共 **49** 篇
+**🧪 ICML2025** · 共 **50** 篇
 
 **[Bring Reason To Vision Understanding Perception And Reasoning Through Model Merg](bring_reason_to_vision_understanding_perception_and_reasoning_through_model_merg.md)**
 
@@ -121,6 +121,10 @@ description: >-
 **[Omnibal Towards Fast Instruction-Tuning For Vision-Language Models Via Omniverse](omnibal_towards_fast_instruction-tuning_for_vision-language_models_via_omniverse.md)**
 
 :   针对大规模视觉语言模型 instruction-tuning 训练中因数据和模型异构性导致的计算不平衡问题，提出 OmniBal 框架从数据、模型、内存三个层面系统性平衡跨设备计算负载，在 InternVL-Chat 上实现约 1.8× 训练加速。
+
+**[Overcoming Multi-Step Complexity In Multimodal Theory-Of-Mind Reasoning](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning.md)**
+
+:   提出可扩展的贝叶斯心智理论规划器，通过逐步贝叶斯更新分解多步ToM推理复杂度，并用弱到强控制机制将小模型的ToM专业能力迁移到大模型(405B)，在多模态ToM基准上超越SOTA 4.6%。
 
 **[Overcoming Multi-Step Complexity In Multimodal Theory-Of-Mind Reasoning A Scalab](overcoming_multi-step_complexity_in_multimodal_theory-of-mind_reasoning_a_scalab.md)**
 

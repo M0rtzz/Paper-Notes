@@ -1,14 +1,14 @@
 ---
 title: >-
-  ACL2025 LLM Agent方向 44篇论文解读
+  ACL2025 LLM Agent方向 45篇论文解读
 description: >-
-  44篇ACL2025 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  45篇ACL2025 LLM Agent方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**💬 ACL2025** · 共 **44** 篇
+**💬 ACL2025** · 共 **45** 篇
 
 **[A Multi-Agent Framework For Mitigating Dialect Biases In Privacy Policy Question](a_multi-agent_framework_for_mitigating_dialect_biases_in_privacy_policy_question.md)**
 
@@ -141,6 +141,10 @@ description: >-
 **[R2D2 Reflective Agentic Memory](r2d2_reflective_agentic_memory.md)**
 
 :   R2D2 提出了一个结合 Remember（经验回放缓冲区 + A* 搜索导航）和 Reflect（错误反思 + 反思记忆存储）两范式的 Web Agent 框架，将 Web 导航从 Unknown MDP 转化为 Known MDP，在 WebArena 上导航错误减少 50%，任务完成率提升 3 倍，超越 SOTA 17%。
+
+**[Repro-Bench Can Agentic Ai Systems Assess The Reproducibility Of Research Claims](repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_research_claims.md)**
+
+:   本文提出 REPRO-Bench，一个包含 112 个社会科学论文实例的基准，用于评估 AI Agent 自动化评估论文可重复性的能力；现有最佳 Agent 准确率仅 21.4%（低于随机猜测的 25%），作者进一步开发的 REPRO-Agent 将准确率提升至 36.6%（71% 相对提升）。
 
 **[Repro-Bench Can Agentic Ai Systems Assess The Reproducibility Of Social Science ](repro-bench_can_agentic_ai_systems_assess_the_reproducibility_of_social_science_.md)**
 

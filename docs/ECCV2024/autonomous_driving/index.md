@@ -1,14 +1,14 @@
 ---
 title: >-
-  ECCV2024 自动驾驶方向 14篇论文解读
+  ECCV2024 自动驾驶方向 52篇论文解读
 description: >-
-  14篇ECCV2024 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  52篇ECCV2024 自动驾驶方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🚗 自动驾驶
 
-**🎞️ ECCV2024** · 共 **14** 篇
+**🎞️ ECCV2024** · 共 **52** 篇
 
 **[4D Contrastive Superflows Are Dense 3D Representation Learners](4d_contrastive_superflows_are_dense_3d_representation_learners.md)**
 
@@ -33,6 +33,10 @@ description: >-
 **[Dvlo Deep Visual-Lidar Odometry With Local-To-Global Feature Fusion And Bi-Direc](dvlo_deep_visual-lidar_odometry_with_local-to-global_feature_fusion_and_bi-direc.md)**
 
 :   提出基于聚类的 Local-to-Global 融合网络 DVLO，通过双向结构对齐（图像→伪点云 + 点云→伪图像）解决视觉与 LiDAR 的数据结构不一致问题，在 KITTI 里程计和 FlyingThings3D 场景流任务上均取得 SOTA。
+
+**[Dvlo Deep Visuallidar Odometry With Localtoglobal Featu](dvlo_deep_visuallidar_odometry_with_localtoglobal_featu.md)**
+
+:   提出 DVLO——基于从局部到全局融合 + 双向结构对齐的视觉-LiDAR 里程计网络，通过将图像视为伪点云进行局部聚类融合、将点云投影为伪图像进行全局自适应融合，解决了两种模态间固有的数据结构不一致问题。
 
 **[Enhancing Vectorized Map Perception With Historical Rasterized Maps](enhancing_vectorized_map_perception_with_historical_rasterized_maps.md)**
 
@@ -65,3 +69,151 @@ description: >-
 **[Ittakestwo Leveraging Peer Representations For Semi-Supervised Lidar Semantic Se](ittakestwo_leveraging_peer_representations_for_semi-supervised_lidar_semantic_se.md)**
 
 :   提出IT2框架，通过利用LiDAR数据的对等表示（range image + voxel grid）之间的一致性学习作为新型扰动形式，并引入基于高斯混合模型的跨分布对比学习，大幅提升半监督LiDAR语义分割性能。
+
+**[Lidar-Event Stereo Fusion With Hallucinations](lidar-event_stereo_fusion_with_hallucinations.md)**
+
+:   提出将LiDAR稀疏深度点与事件立体相机融合的首个框架，通过在事件堆叠表示（VSH）或原始事件流（BTH）中"幻觉"（插入虚构事件）来弥补事件相机在无运动/无纹理区域的信息缺失，大幅提升事件立体匹配精度。
+
+**[Lidarevent Stereo Fusion With Hallucinations](lidarevent_stereo_fusion_with_hallucinations.md)**
+
+:   首次探索 LiDAR 与事件立体相机的融合，提出虚拟堆叠幻觉（VSH）和回溯时间幻觉（BTH）两种策略，通过在事件流/堆叠中注入虚拟事件来增强匹配可辨别性，大幅提升事件立体匹配精度。
+
+**[Livehps Robust And Coherent Motion Capture In Dynamic Free Environment](livehps_robust_and_coherent_motion_capture_in_dynamic_free_environment.md)**
+
+:   提出 LiveHPS++，一种基于单 LiDAR 的鲁棒人体动作捕捉方法，通过轨迹引导身体追踪器、噪声不敏感速度预测器和运动学感知姿态优化器三个模块，隐式和显式建模人体运动的动力学和运动学特征，在复杂噪声环境下实现精确且连贯的全局人体运动捕捉。
+
+**[Mapdistill Boosting Efficient Camera-Based Hd Map Construction Via Camera-Lidar ](mapdistill_boosting_efficient_camera-based_hd_map_construction_via_camera-lidar_.md)**
+
+:   首次将知识蒸馏引入 HD 地图构建任务，提出 MapDistill 框架，通过双 BEV 变换模块、跨模态关系蒸馏、双层特征蒸馏和 Map Head 蒸馏，将相机-LiDAR 融合教师模型的知识迁移至轻量纯相机学生模型，在 nuScenes 上实现 **+7.7 mAP** 或 **4.5倍加速**。
+
+**[Maptracker Tracking With Strided Memory Fusion For Consistent Vector Hd Mapping](maptracker_tracking_with_strided_memory_fusion_for_consistent_vector_hd_mapping.md)**
+
+:   将在线向量高精地图构建重新定义为追踪任务，通过双表示（BEV栅格+道路元素向量）的步进式记忆缓冲区融合机制实现时间一致的高精地图重建，在nuScenes和Argoverse2上分别以76.1和76.9 mAP大幅超越现有方法。
+
+**[Monocular Occupancy Prediction For Scalable Indoor Scenes](monocular_occupancy_prediction_for_scalable_indoor_scenes.md)**
+
+:   提出 ISO（Indoor Scene Occupancy）方法，通过预训练深度模型和 D-FLoSP（双特征视线投影）模块实现室内场景的单目 3D 占用预测，并构建了规模比 NYUv2 大 40 倍的 Occ-ScanNet 基准数据集。
+
+**[Monowad Weather-Adaptive Diffusion Model For Robust Monocular 3D Object Detectio](monowad_weather-adaptive_diffusion_model_for_robust_monocular_3d_object_detectio.md)**
+
+:   提出 MonoWAD，通过天气码本学习晴天知识作为参考，结合天气自适应扩散模型将雾效建模为噪声进行特征增强，实现在各种天气条件下鲁棒的单目3D目标检测。
+
+**[Navigation Instruction Generation With Bev](navigation_instruction_generation_with_bev.md)**
+
+:   提出 BEVInstructor，将鸟瞰图 (BEV) 特征融入多模态大语言模型 (MLLM) 用于导航指令生成，通过 Perspective-BEV 视觉编码、参数高效 prompt tuning 和实例引导的迭代精化，在室内外多个数据集上全面超越 SOTA。
+
+**[Navigation Instruction Generation With Bev Perception And Large Language Models](navigation_instruction_generation_with_bev_perception_and_large_language_models.md)**
+
+:   提出 BEVInstructor，将鸟瞰图 (BEV) 特征融合到多模态大语言模型中，通过 Perspective-BEV 融合编码器、参数高效的 Prompt Tuning 以及实例引导的迭代优化策略，在室内外导航指令生成任务上取得 SOTA。
+
+**[Neuroncap Photorealistic Closed-Loop Safety Testing For Autonomous Driving](neuroncap_photorealistic_closed-loop_safety_testing_for_autonomous_driving.md)**
+
+:   提出 NeuroNCAP，一个基于 NeRF 渲染的真实感闭环自动驾驶安全测试框架，受 Euro NCAP 碰撞避免协议启发设计三类安全关键场景（静止/正面/侧面碰撞），揭示当前 SOTA 端到端规划器（UniAD、VAD）在闭环安全场景中严重失败——碰撞率高达 88-92%——尽管其感知模块准确运行。
+
+**[Occgen Generative Multi-Modal 3D Occupancy Prediction For Autonomous Driving](occgen_generative_multi-modal_3d_occupancy_prediction_for_autonomous_driving.md)**
+
+:   OccGen 将 3D 语义占用预测重新定义为"noise-to-occupancy"的生成式范式，通过条件编码器提取多模态特征、渐进式精炼解码器执行扩散去噪，以由粗到精的方式逐步生成占用图，在 nuScenes-Occupancy 上多模态/纯LiDAR/纯相机设置下分别相对提升 9.5%/6.3%/13.3% 的 mIoU。
+
+**[Occgen Generative Multimodal 3D Occupancy Prediction For Aut](occgen_generative_multimodal_3d_occupancy_prediction_for_aut.md)**
+
+:   提出OccGen，首次将扩散模型的"噪声到占据"生成范式引入3D语义占据预测任务，通过条件编码器+渐进式精炼解码器实现由粗到精的占据图生成，在nuScenes-Occupancy上多模态/纯LiDAR/纯相机设置下分别提升mIoU 9.5%/6.3%/13.3%。
+
+**[Occworld Learning A 3D Occupancy World Model For Autonomous Driving](occworld_learning_a_3d_occupancy_world_model_for_autonomous_driving.md)**
+
+:   OccWorld 提出在 3D 占用空间中学习世界模型，用 VQ-VAE 对 3D occupancy 进行 token 化，再通过 GPT 风格的时空生成 Transformer 自回归预测未来场景演化和自车轨迹，在 nuScenes 上无需实例和地图标注即可实现有竞争力的规划性能。
+
+**[Open Object-Wise Position Embedding For Multi-View 3D Object Detection](open_object-wise_position_embedding_for_multi-view_3d_object_detection.md)**
+
+:   提出 OPEN，通过目标级深度编码器（ODE）从像素级深度先验中预测物体中心深度，并设计目标级位置编码（OPE）将该信息注入 Transformer 解码器，生成 3D 目标感知特征，在 nuScenes 上达到 64.4% NDS 的 SOTA 性能。
+
+**[Optimizing Diffusion Models For Joint Trajectory Prediction And Controllable Gen](optimizing_diffusion_models_for_joint_trajectory_prediction_and_controllable_gen.md)**
+
+:   本文提出 Optimal Gaussian Diffusion (OGD) 和 Estimated Clean Manifold (ECM) Guidance 两项技术，分别通过优化扩散先验分布和在干净流形上直接注入引导梯度，将联合轨迹预测的扩散步数减少到原来的 1/12，引导采样步数减少到 1/5，同时在 Argoverse 2 上取得更优性能。
+
+**[Panovos Bridging Non-Panoramic And Panoramic Views With Transformer For Video Se](panovos_bridging_non-panoramic_and_panoramic_views_with_transformer_for_video_se.md)**
+
+:   提出首个全景视频目标分割数据集 PanoVOS（150个视频、19K实例标注），揭示现有 VOS 模型无法处理全景视频的像素不连续和严重畸变问题，并设计 PSCFormer 利用全景空间一致性注意力解决左右边界连续性问题。
+
+**[Progressive Pretext Task Learning For Human Trajectory Prediction](progressive_pretext_task_learning_for_human_trajectory_prediction.md)**
+
+:   提出渐进式前置任务学习框架 PPT，通过三阶段训练（逐步下一位置预测 → 目的地预测 → 完整轨迹预测）逐步增强模型对短期动态和长期依赖的捕获能力，配合高效的两步非自回归 Transformer 预测器，在多个行人轨迹预测基准上取得 SOTA。
+
+**[Random Walk On Pixel Manifolds For Anomaly Segmentation Of Complex Driving Scene](random_walk_on_pixel_manifolds_for_anomaly_segmentation_of_complex_driving_scene.md)**
+
+:   提出 Random Walk on Pixel Manifolds (RWPM)，利用随机游走捕获像素嵌入的流形结构来修正因驾驶场景多样性导致的流形畸变，从而提升异常分割评分函数的准确性，无需额外训练即可即插即用地集成到现有异常分割框架中。
+
+**[Rapid-Seg Range-Aware Pointwise Distance Distribution Networks For 3D Lidar Segm](rapid-seg_range-aware_pointwise_distance_distribution_networks_for_3d_lidar_segm.md)**
+
+:   本文提出 RAPiD 特征（Range-Aware Pointwise Distance Distribution），一种对刚体变换不变且适应点密度变化的 LiDAR 点云局部几何特征，配合双层嵌套自编码器和通道注意力融合，在 SemanticKITTI（76.1 mIoU）和 nuScenes（83.6 mIoU）上达到 SOTA 分割性能。
+
+**[Reason2Drive Towards Interpretable And Chain-Based Reasoning For Autonomous Driv](reason2drive_towards_interpretable_and_chain-based_reasoning_for_autonomous_driv.md)**
+
+:   Reason2Drive 构建了一个包含 60 万+视频-文本对的大规模自动驾驶推理数据集，将驾驶决策拆解为感知→预测→推理的链式过程，并提出 ADRScore 评估指标和带 prior tokenizer + instructed vision decoder 的 VLM 框架，显著提升了驾驶场景的链式推理准确性。
+
+**[Reason2Drive Towards Interpretable And Chainbased Reasoning](reason2drive_towards_interpretable_and_chainbased_reasoning.md)**
+
+:   构建 Reason2Drive 基准数据集（600K+ 视频-文本对，覆盖感知-预测-推理链式任务），提出 ADRScore 评估链式推理正确性的新指标，并设计 Prior Tokenizer + Instructed Vision Decoder 框架增强 VLM 的目标级感知和推理能力，在自动驾驶推理任务上显著超越所有基线。
+
+**[Reliability In Semantic Segmentation Can We Use Synthetic Data](reliability_in_semantic_segmentation_can_we_use_synthetic_data.md)**
+
+:   首次系统地利用 Stable Diffusion 生成合成 OOD 数据来全面评估语义分割模型的可靠性，包括协变量偏移下的鲁棒性评估、OOD 物体检测评估和模型校准，并证明合成数据与真实 OOD 数据的评估结果高度相关。
+
+**[Rethinking Data Augmentation For Robust Lidar Semantic Segmentation In Adverse W](rethinking_data_augmentation_for_robust_lidar_semantic_segmentation_in_adverse_w.md)**
+
+:   通过数据中心分析识别出恶劣天气对 LiDAR 的两大核心干扰模式（几何扰动和点丢失），提出 Selective Jittering 和 Learnable Point Drop 两种针对性数据增强方法，在 SemanticKITTI→SemanticSTF 基准上将 baseline 提升 8.1 mIoU 达到 SOTA。
+
+**[Rethinking Lidar Domain Generalization Single Source As Multiple Density Domains](rethinking_lidar_domain_generalization_single_source_as_multiple_density_domains.md)**
+
+:   提出密度判别特征嵌入（DDFE）模块，利用单一 LiDAR 源域点云中固有的密度多样性（近处密/远处疏），学习密度感知的特征表示，实现对不同传感器配置下未见域的泛化，无需目标域数据。
+
+**[Roofdiffusion Constructing Roofs From Severely Corrupted Point Data Via Diffusio](roofdiffusion_constructing_roofs_from_severely_corrupted_point_data_via_diffusio.md)**
+
+:   RoofDiffusion 提出了一种基于条件扩散概率模型的端到端自监督方法，用于从严重稀疏（最高99%缺失）、不完整（80%区域遮挡）且含噪的屋顶高程图中恢复完整干净的高程信息，在自建的 PoznanRD 数据集和 BuildingNet 上显著超越传统插值方法和现有深度补全方法。
+
+**[Safe-Sim Safety-Critical Closed-Loop Traffic Simulation With Diffusion-Cont](safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-cont.md)**
+
+:   Safe-Sim 提出了一个基于扩散模型的闭环安全关键仿真框架，通过在扩散去噪过程中引入对抗项和部分扩散（Partial Diffusion）机制，实现了对抗车辆行为类型（碰撞角度、相对速度、碰撞类型）的细粒度控制，在 nuScenes 和 nuPlan 上验证了对多种 planner 的有效评估能力。
+
+**[Safe-Sim Safety-Critical Closed-Loop Traffic Simulation With Diffusion-Controlla](safe-sim_safety-critical_closed-loop_traffic_simulation_with_diffusion-controlla.md)**
+
+:   Safe-Sim 提出了一种基于扩散模型的闭环安全关键仿真框架，通过在去噪过程中注入对抗性引导目标和部分扩散（Partial Diffusion）机制，生成真实且可控的对抗场景来评估自动驾驶规划算法，支持控制碰撞类型、相对速度和 TTC 等关键参数。
+
+**[Seflow A Self-Supervised Scene Flow Method In Autonomous Driving](seflow_a_self-supervised_scene_flow_method_in_autonomous_driving.md)**
+
+:   SeFlow 提出将传统的基于 ray-casting 的动态点分类融入自监督场景流学习管线，通过专门的动态/静态损失函数和基于聚类的物体级运动一致性约束，在 Argoverse 2 和 Waymo 上以实时速度（48ms/帧）取得自监督场景流 SOTA 性能，甚至超越部分有监督方法。
+
+**[Sfpnet Sparse Focal Point Network For Semantic Segmentation On General Lidar Poi](sfpnet_sparse_focal_point_network_for_semantic_segmentation_on_general_lidar_poi.md)**
+
+:   SFPNet 提出稀疏焦点调制（SFPM）替代 window-attention，通过多层级上下文提取和门控自适应聚合来避免针对特定 LiDAR 类型的归纳偏置设计，在机械旋转式、固态和混合固态三种 LiDAR 数据集上均取得领先或竞争性性能，并发布了首个混合固态 LiDAR 语义分割数据集 S.MID。
+
+**[Simpb A Single Model For 2D And 3D Object Detection From Multiple Cameras](simpb_a_single_model_for_2d_and_3d_object_detection_from_multiple_cameras.md)**
+
+:   提出 SimPB 统一模型，通过混合解码器（multi-view 2D decoder + 3D decoder）以循环 3D→2D→3D 的方式同时完成多相机 2D 检测和 BEV 空间 3D 检测，在 nuScenes 上两项任务均取得优秀结果。
+
+**[Sledge Synthesizing Driving Environments With Generative Models And Rule-Based T](sledge_synthesizing_driving_environments_with_generative_models_and_rule-based_t.md)**
+
+:   SLEDGE 提出了首个基于生成模型的驾驶仿真器，通过 Raster-to-Vector 自编码器将驾驶场景编码为栅格化潜在图（RLM），再利用 Diffusion Transformer 生成高质量的车道图和交通参与者，实现了比 nuPlan 少 500 倍存储（<4GB）的仿真环境，同时支持 500m 长路线测试，暴露了 SOTA 规划器 PDM-Closed 超过 40% 的失败率。
+
+**[Stream Query Denoising For Vectorized Hd-Map Construction](stream_query_denoising_for_vectorized_hd-map_construction.md)**
+
+:   提出 Stream Query Denoising (SQD) 策略，通过对前一帧 GT 添加噪声并训练网络恢复当前帧 GT 来增强流式 HD 地图构建中的时序一致性建模，在 nuScenes 和 Argoverse2 上全面超越 StreamMapNet。
+
+**[Tod3Cap Towards 3D Dense Captioning In Outdoor Scenes](tod3cap_towards_3d_dense_captioning_in_outdoor_scenes.md)**
+
+:   首次提出户外 3D 密集描述任务，构建百万级 TOD3Cap 数据集（850 场景 2.3M 描述），设计基于 BEV 特征 + Relation Q-Former + LLaMA-Adapter 的端到端网络，超越适配后的室内方法 +9.6 CIDEr@0.5IoU。
+
+**[Unitraj A Unified Framework For Scalable Vehicle Trajectory Prediction](unitraj_a_unified_framework_for_scalable_vehicle_trajectory_prediction.md)**
+
+:   UniTraj 构建了一个统一多数据集（nuScenes、Argoverse 2、WOMD）、多模型（AutoBot、MTR、Wayformer）和多评估策略的车辆轨迹预测框架，揭示模型跨数据集泛化能力显著下降，但通过扩大数据规模和多样性可大幅提升性能，合并训练在 nuScenes 排行榜达到第 1 名。
+
+**[Visiontrap Vision-Augmented Trajectory Prediction Guided By Textual Descriptions](visiontrap_vision-augmented_trajectory_prediction_guided_by_textual_descriptions.md)**
+
+:   提出 VisionTrap，将环视相机图像和文本描述引入轨迹预测任务，通过 BEV 视觉语义编码器和文本驱动的去偏对比学习引导模型学习视觉语义线索（如行人姿态、转向灯等），在保持 53ms 实时推理的同时显著提升预测精度并发布 nuScenes-Text 数据集。
+
+**[Visiontrap Visionaugmented Trajectory Prediction Guided](visiontrap_visionaugmented_trajectory_prediction_guided.md)**
+
+:   提出 VisionTrap，利用环视相机视觉输入和 VLM/LLM 生成的文本描述作为训练监督，增强自动驾驶场景下的多智能体轨迹预测，同时保持 53ms 实时推理速度。
+
+**[Weakly Supervised 3D Object Detection Via Multi-Level Visual Guidance](weakly_supervised_3d_object_detection_via_multi-level_visual_guidance.md)**
+
+:   提出 VG-W3D 框架，仅使用 2D 标注（无需任何 3D 标签），通过特征级、输出级和训练级三层视觉引导来训练 3D 目标检测器，在 KITTI 上取得了与使用 500 帧 3D 标注方法相当的性能。

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 模型压缩方向 129篇论文解读
+  NeurIPS2025 模型压缩方向 140篇论文解读
 description: >-
-  129篇NeurIPS2025 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  140篇NeurIPS2025 模型压缩方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📦 模型压缩
 
-**🧠 NeurIPS2025** · 共 **129** 篇
+**🧠 NeurIPS2025** · 共 **140** 篇
 
 **[3Did Direct 3D Inverse Design For Aerodynamics With Physics-Aware Optimization](3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)**
 
@@ -194,6 +194,10 @@ description: >-
 
 :   提出 FastLongSpeech，通过迭代融合策略压缩冗余语音表征和动态压缩训练转移短语音能力到长语音场景，使 LSLM 无需长语音训练数据即可高效处理长语音，在长语音 QA 上实现最优性能且推理效率提升 70%。
 
+**[Find Your Needle Small Object Image Retrieval Via Multi-Object Attention Optimiz](find_your_needle_small_object_image_retrieval_via_multi-object_attention_optimiz.md)**
+
+:   MaO 提出了一种针对小目标图像检索（SoIR）的新方法，通过多目标预训练和基于注意力的特征优化，将多个目标的表示融合为单一全局描述符，在多个基准上大幅超越现有检索方法。
+
 **[Fira Can We Achieve Full-Rank Training Of Llms Under Low-Rank Constraint](fira_can_we_achieve_full-rank_training_of_llms_under_low-rank_constraint.md)**
 
 :   提出 Fira，首个在低秩约束下实现全秩训练（全秩梯度+全秩权重）的 LLM 训练框架，通过观察到低秩与全秩训练中优化器的缩放因子高度相似，用低秩缩放因子近似校正子空间外梯度，配合 norm-growth limiter 防止 loss spike，在预训练和微调中均超越 LoRA 和 GaLore。
@@ -205,6 +209,14 @@ description: >-
 **[Geometric Data Valuation Via Leverage Scores](geometric_data_valuation_via_leverage_scores.md)**
 
 :   提出基于**统计杠杆分数（leverage scores）**的几何数据估值方法，作为 Data Shapley 值的高效代理，满足对称性、效率性和虚拟玩家等公理，并通过 ridge leverage 扩展解决维度饱和问题，提供 $O(\varepsilon)$ 近似最优的理论保证。
+
+**[Geometry Of Decision Making In Language Models](geometry_of_decision_making_in_language_models.md)**
+
+:   通过在 28 个开源 Transformer 模型上大规模测量各层隐藏表示的**内在维度（Intrinsic Dimension, ID）**，揭示了一致的"低-高-低"维度变化模式：早期层在低维流形上操作，中间层扩展空间，后期层再压缩至与决策相关的低维表示。
+
+**[Global Minimizers Of Ellp-Regularized Objectives Yield The Sparsest Relu Neural ](global_minimizers_of_ellp-regularized_objectives_yield_the_sparsest_relu_neural_.md)**
+
+:   证明了对于单隐层 ReLU 网络，最小化 $\ell^p$（$0 < p < 1$）路径范数的全局最优解恰好对应于**最稀疏**的数据插值网络，从而将组合优化的稀疏插值问题重新表述为连续可微的优化任务。
 
 **[Gora Gradient-Driven Adaptive Low Rank Adaptation](gora_gradient-driven_adaptive_low_rank_adaptation.md)**
 
@@ -242,6 +254,10 @@ description: >-
 
 :   发现 LLM token 嵌入具有幂律分布和树状双曲结构，据此提出 HypLoRA——在 Lorentz 双曲流形上直接执行低秩适配（避免切空间映射的相消效应），在算术推理和常识推理任务上相比标准 LoRA 取得显著提升（如 Qwen2.5-7B 上 M.AVG +7.5%）。
 
+**[Inference-Time Hyper-Scaling With Kv Cache Compression](inference-time_hyper-scaling_with_kv_cache_compression.md)**
+
+:   提出"推理时超缩放"（Inference-Time Hyper-Scaling）范式：通过高效压缩KV缓存，在相同计算/内存预算下生成更长或更多并行推理序列，显著提升推理模型在数学、代码、科学推理等任务上的准确率。
+
 **[Infrequent Exploration In Linear Bandits](infrequent_exploration_in_linear_bandits.md)**
 
 :   提出 INFEX 框架，按给定调度表在探索步执行基线算法（如 LinUCB/LinTS）、其余时刻贪心选臂，证明只要探索次数超过 $\omega(\log T)$ 即可达到与全时刻探索相同的多项对数 regret，同时大幅降低计算开销（80%-99% 时间步为贪心）。
@@ -261,6 +277,10 @@ description: >-
 **[Ktae A Model-Free Algorithm To Key-Tokens Advantage Estimation In Mathematical R](ktae_a_model-free_algorithm_to_key-tokens_advantage_estimation_in_mathematical_r.md)**
 
 :   KTAE 提出了一种不依赖额外模型的 token 级优势估计算法，通过 Fisher 精确检验和信息增益量化每个 token 与正确推理结果的统计关联，将细粒度 token 重要性叠加到 GRPO/DAPO 的 rollout 级优势上，在5个数学推理基准上超越基线并显著缩短生成长度。
+
+**[Kvzip Query-Agnostic Kv Cache Compression With Context Reconstruction](kvzip_query-agnostic_kv_cache_compression_with_context_reconstruction.md)**
+
+:   提出 KVzip，一种查询无关的 KV Cache 驱逐方法，通过利用 LLM 自身从缓存的 KV 对中重建原始上下文来量化每个 KV 对的重要性，实现 3-4× 的 KV Cache 压缩率和约 2× 的 FlashAttention 解码延迟降低，同时在多查询场景下显著优于现有查询感知方法。
 
 **[Layerif Estimating Layer Quality For Large Language Models Using Influence Funct](layerif_estimating_layer_quality_for_large_language_models_using_influence_funct.md)**
 
@@ -290,6 +310,10 @@ description: >-
 
 :   提出 LittleBit 框架，通过低秩潜空间矩阵分解 + 二值化 + 多尺度补偿机制，实现低至 0.1 BPW（每权重比特）的极端 LLM 压缩，将 Llama2-13B 压缩到不足 0.9GB，在子1比特领域大幅超越 STBLLM。
 
+**[Loquetier A Virtualized Multi-Lora Framework For Unified Llm Fine-Tuning And Ser](loquetier_a_virtualized_multi-lora_framework_for_unified_llm_fine-tuning_and_ser.md)**
+
+:   提出Loquetier框架，通过虚拟化模块（Virtualized Module）和分段多LoRA乘法内核（SMLM），将多个LoRA适配器的微调和推理统一到单一运行时中，实现推理任务3.0×吞吐率提升和统一任务46.4×更高的SLO达成率。
+
 **[Lt-Soups Bridging Head And Tail Classes Via Subsampled Model Soups](lt-soups_bridging_head_and_tail_classes_via_subsampled_model_soups.md)**
 
 :   提出 LT-Soups，一个两阶段模型融合框架，通过在不同不平衡比例的子采样数据上训练多个模型并进行权重平均，在长尾分布的全频谱上实现头部类和尾部类的均衡性能。
@@ -301,6 +325,10 @@ description: >-
 **[Memory-Efficient Training With In-Place Fft Implementation](memory-efficient_training_with_in-place_fft_implementation.md)**
 
 :   提出 rdFFT——首个真正原地（in-place）的实数域快速傅里叶变换框架，通过隐式复数编码方案消除中间缓冲区，实现训练时零额外内存开销的 FFT/IFFT 计算，内存效率最高提升 1500 倍以上。
+
+**[Mitigating Semantic Collapse In Partially Relevant Video Retrieval](mitigating_semantic_collapse_in_partially_relevant_video_retrieval.md)**
+
+:   针对部分相关视频检索（PRVR）中的语义坍塌问题，提出文本相关性保持学习和跨分支视频对齐（CBVA）方法，在文本和视频嵌入空间中分别解决坍塌现象，显著提升检索准确率。
 
 **[Mixture Of Noise For Pre-Trained Model-Based Class-Incremental Learning](mixture_of_noise_for_pre-trained_model-based_class-incremental_learning.md)**
 
@@ -334,6 +362,10 @@ description: >-
 
 :   提出OneDC——首个一步扩散生成式图像编解码器，将超先验（hyperprior）替代文本作为扩散模型的语义引导并通过语义蒸馏增强其表示能力，实现了比多步扩散编解码器节省39%码率、解码加速20倍的SOTA感知质量。
 
+**[Online Mixture Of Experts No-Regret Learning For Optimal Collective Decision-Mak](online_mixture_of_experts_no-regret_learning_for_optimal_collective_decision-mak.md)**
+
+:   提出在线专家混合（OMoE）框架，包含 UCB 逐步消除和在线加权多数投票两种算法，理论上保证无遗憾（no-regret），并应用于 LLM 专家的在线动态聚合。
+
 **[Optimizing Distributional Geometry Alignment With Optimal Transport For Generati](optimizing_distributional_geometry_alignment_with_optimal_transport_for_generati.md)**
 
 :   将数据集蒸馏重新表述为最优传输（OT）距离最小化问题，通过三阶段（OT引导扩散采样、标签-图像对齐软重标注、OT logit匹配）实现细粒度分布几何对齐，在ImageNet-1K IPC=10上比之前SOTA提升至少4%。
@@ -349,6 +381,10 @@ description: >-
 **[Ppg-Distill Efficient Photoplethysmography Signals Analysis Via Foundation Model](ppg-distill_efficient_photoplethysmography_signals_analysis_via_foundation_model.md)**
 
 :   PPG-Distill提出一种针对PPG信号的知识蒸馏框架，通过预测级、特征级和Patch级（形态+节律）蒸馏，将大型PPG基础模型的知识迁移到轻量学生模型，在保持性能（最高提升21.8%）的同时实现7倍推理加速和19倍内存压缩。
+
+**[Q-Palette Fractional-Bit Quantizers Toward Optimal Bit Allocation For Efficient ](q-palette_fractional-bit_quantizers_toward_optimal_bit_allocation_for_efficient_.md)**
+
+:   从信息论角度推导高斯化权重的最优比特分配,提出 Q-Palette 分数位量化器集合和混合方案量化框架,在 LLM 推理中实现近最优的量化性能和推理加速。
 
 **[Qsvd Efficient Low-Rank Approximation For Unified Query-Key-Value Weight Compres](qsvd_efficient_low-rank_approximation_for_unified_query-key-value_weight_compres.md)**
 
@@ -409,6 +445,10 @@ description: >-
 **[Robust Federated Finetuning Of Llms Via Alternating Optimization Of Lora](robust_federated_finetuning_of_llms_via_alternating_optimization_of_lora.md)**
 
 :   提出 RoLoRA，通过交替优化 LoRA 的 down-projection (A) 和 up-projection (B) 矩阵，解决联邦学习中 LoRA 聚合不精确和表达力受限的问题，在 RoBERTa-Large 和 Llama-2-7B 上显著优于 FedAVG of LoRA 和 FFA-LoRA。
+
+**[Robustifying Learning-Augmented Caching Efficiently Without Compromising 1-Consi](robustifying_learning-augmented_caching_efficiently_without_compromising_1-consi.md)**
+
+:   提出 Guard 框架，一种轻量级鲁棒化方法，将广泛的学习增强缓存算法的鲁棒性提升至 $2H_{k-1}+2$，同时保持 1-一致性和 O(1) 的额外请求开销。
 
 **[S2M-Former Spiking Symmetric Mixing Branchformer For Brain Auditory Attention De](s2m-former_spiking_symmetric_mixing_branchformer_for_brain_auditory_attention_de.md)**
 
@@ -493,6 +533,10 @@ description: >-
 **[Twilight Adaptive Attention Sparsity With Hierarchical Top-P Pruning](twilight_adaptive_attention_sparsity_with_hierarchical_top-p_pruning.md)**
 
 :   提出 Twilight，借鉴 top-p 采样（nucleus sampling）的思想替代固定预算 top-k 做注意力稀疏——动态选择注意力权重累积达 p% 的最少 Token，自适应不同注意力头的分布特征，在保持精度的同时比 SOTA 稀疏注意力再提速 1.4x。
+
+**[Ultrametric Cluster Hierarchies I Want Em All](ultrametric_cluster_hierarchies_i_want_em_all.md)**
+
+:   证明了对于任意合理的聚类层次树，都可以快速找到任意中心型聚类目标（如 k-means）的最优解，且这些解本身也是层次化的，从而从一棵树中解锁大量等价有意义的层次结构。
 
 **[Understanding Differential Transformer Unchains Pretrained Self-Attentions](understanding_differential_transformer_unchains_pretrained_self-attentions.md)**
 

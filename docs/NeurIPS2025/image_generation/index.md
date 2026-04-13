@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 图像生成方向 236篇论文解读
+  NeurIPS2025 图像生成方向 252篇论文解读
 description: >-
-  236篇NeurIPS2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  252篇NeurIPS2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🧠 NeurIPS2025** · 共 **236** 篇
+**🧠 NeurIPS2025** · 共 **252** 篇
 
 **[70 Size 100 Accuracy Lossless Llm Compression For Efficient](70_size_100_accuracy_lossless_llm_compression_for_efficient.md)**
 
@@ -326,6 +326,10 @@ description: >-
 
 :   探索变分图自编码器（VGAE）生成合成配电网拓扑的能力，评估四种解码器架构在两个数据集上的表现，揭示 VGAE 在小型同质网络上效果良好但在大型异质网络上面临挑战。
 
+**[Failure Prediction At Runtime For Generative Robot Policies](failure_prediction_at_runtime_for_generative_robot_policies.md)**
+
+:   提出 FIPER 框架，通过结合观测空间的 OOD 检测（RND）和动作空间的不确定性量化（ACE），在生成式机器人策略运行时无需失败数据即可实现早期失败预测。
+
 **[Fairimagen Post-Processing For Bias Mitigation In Text-To-Image Models](fairimagen_post-processing_for_bias_mitigation_in_text-to-image_models.md)**
 
 :   提出 FairImagen 后处理去偏框架，通过在 CLIP prompt 嵌入空间应用 FairPCA 投影去除人口统计信息，结合经验噪声注入和跨人口统计联合去偏，在不重训模型的前提下显著提升文本到图像生成的公平性。
@@ -402,6 +406,10 @@ description: >-
 
 :   提出基于图神经网络的空间天气神经模拟器，在 Vlasiator 混合 Vlasov 模拟数据上训练，实现确定性和概率性自回归预测近地空间状态，速度比原始模拟快 100 倍以上，并通过隐变量生成集合预报来量化预测不确定性。
 
+**[Graph Diffusion That Can Insert And Delete](graph_diffusion_that_can_insert_and_delete.md)**
+
+:   提出 GrIDDD 模型，首次将离散去噪扩散模型（DDPM）扩展为支持在生成过程中**动态插入和删除图节点**，使分子图的大小可在扩散过程中自适应变化，在性质靶向和分子优化任务上达到或超过现有方法。
+
 **[Grasp2Grasp Vision-Based Dexterous Grasp Translation Via Schrödinger Bridges](grasp2grasp_vision-based_dexterous_grasp_translation_via_schrödinger_bridges.md)**
 
 :   提出将跨手形态的视觉灵巧抓取迁移建模为 Schrödinger Bridge 问题，通过在潜空间中学习得分与流匹配（[SF]²M），并设计物理感知的最优传输代价函数（位姿/接触图/力旋量空间/雅可比可操作性），在无需配对数据的条件下实现不同机械手之间抓取意图的分布级迁移。
@@ -418,6 +426,10 @@ description: >-
 
 :   提出 GuideFlow3D，一种无需训练的 3D 外观迁移框架，通过在预训练 rectified flow 模型的采样过程中交替注入可微引导损失（部件感知外观损失 + 自相似性损失），实现几何差异显著的物体间鲁棒的纹理与几何细节迁移。
 
+**[Hallucination As An Upper Bound A New Perspective On Text-To-Image Evaluation](hallucination_as_an_upper_bound_a_new_perspective_on_text-to-image_evaluation.md)**
+
+:   提出将文本到图像（T2I）模型中的幻觉定义为**偏差驱动的偏离**，建立了包含属性、关系和物体三类幻觉的分类学，并论证幻觉评估作为提示对齐评估的"上界"，可揭示模型隐藏偏差。
+
 **[Head Pursuit Probing Attention Specialization In Multimodal](head_pursuit_probing_attention_specialization_in_multimodal.md)**
 
 :   用信号处理中的Simultaneous Orthogonal Matching Pursuit (SOMP)算法分解注意力头在unembedding矩阵上的稀疏表示，揭示注意力头的语义特化现象（如政治/国籍/月份/数字等），仅编辑1%的头即可可靠地抑制或增强特定概念——在语言和视觉-语言模型上均验证有效。
@@ -433,6 +445,10 @@ description: >-
 **[High-Order Equivariant Flow Matching For Density Functional Theory Hamiltonian P](high-order_equivariant_flow_matching_for_density_functional_theory_hamiltonian_p.md)**
 
 :   提出 QHFlow，首次将条件 flow matching 引入密度泛函理论（DFT）哈密顿矩阵预测任务，通过高阶 SE(3) 等变向量场和对称性感知先验分布，在 MD17 上将哈密顿预测误差降低 73%，并可作为 SCF 初始化加速 DFT 计算达 54%。
+
+**[Highlighting What Matters Promptable Embeddings For Attribute-Focused Image Retr](highlighting_what_matters_promptable_embeddings_for_attribute-focused_image_retr.md)**
+
+:   提出可提示图像嵌入(Promptable Embeddings)方法，通过在检索时高亮目标视觉属性来提升属性聚焦的文本到图像检索性能，同时构建了COCO-Facet基准数据集。
 
 **[Hollowflow Efficient Sample Likelihood Evaluation Using Hollow Message Passing](hollowflow_efficient_sample_likelihood_evaluation_using_hollow_message_passing.md)**
 
@@ -481,6 +497,10 @@ description: >-
 **[Information Theoretic Learning For Diffusion Models With Warm Start](information_theoretic_learning_for_diffusion_models_with_warm_start.md)**
 
 :   提出将经典 KL 散度-Fisher 信息关系推广到任意各向同性噪声扰动的似然估计框架，结合 warm-start 噪声注入和重要性采样，消除训练-测试差距并实现更紧的似然上界，在 ImageNet 多分辨率上达到 SOTA NLL。
+
+**[Instance-Level Composed Image Retrieval](instance-level_composed_image_retrieval.md)**
+
+:   提出实例级组合图像检索（i-CIR）基准和训练免费方法BASIC，通过独立估计图像和文本查询的相似度并进行乘法融合，在无需训练的情况下在i-CIR和现有CIR数据集上均达到SOTA。
 
 **[Is Artificial Intelligence Generated Image Detection A Solved Problem](is_artificial_intelligence_generated_image_detection_a_solved_problem.md)**
 
@@ -582,9 +602,17 @@ description: >-
 
 :   提出基于 Transformer 的多模态流匹配框架（MMF），将连续流匹配与连续时间马尔可夫跳跃桥联合建模，实现对 LHC 喷注中粒子运动学（连续）和 flavor 量子数（离散）的统一生成。
 
+**[Neural Entropy](neural_entropy.md)**
+
+:   本文通过扩散模型的范式探索深度学习与信息论的联系，引入"神经熵"度量来量化扩散过程中存储在神经网络里的信息量，揭示了图像扩散模型对结构化数据具有极高的压缩效率。
+
 **[Next Semantic Scale Prediction Via Hierarchical Diffusion Language Models](next_semantic_scale_prediction_via_hierarchical_diffusion_language_models.md)**
 
 :   提出 HDLM（Hierarchical Diffusion Language Model），通过在 clean token 和 mask token 之间引入具有粗粒度语义的聚类 token 中间层级，实现"下一语义尺度预测"的离散扩散语言建模，推导闭式 ELBO，在 OpenWebText 上困惑度一致优于 MDLM/GIDD，随机扰动后生成困惑度降低 62%。
+
+**[Non-Asymptotic Analysis Of Data Augmentation For Precision Matrix Estimation](non-asymptotic_analysis_of_data_augmentation_for_precision_matrix_estimation.md)**
+
+:   本文从非渐近角度分析了高维精度矩阵（逆协方差矩阵）估计中数据增强（DA）的效果，建立了线性收缩估计器和 DA 估计器的二次误差集中界，并引入了广义预解矩阵的新型确定性等价工具。
 
 **[Non-Markovian Discrete Diffusion With Causal Language Models](non-markovian_discrete_diffusion_with_causal_language_models.md)**
 
@@ -698,6 +726,10 @@ description: >-
 
 :   提出Ψ-Sampler框架，在SMC（序贯蒙特卡洛）推理时奖励对齐中引入基于pCNL（预条件Crank-Nicolson Langevin）算法的初始粒子采样，从奖励感知的后验分布初始化粒子，显著提升布局生成、数量感知生成和美学偏好生成的对齐效果。
 
+**[Rare Text Semantics Were Always There In Your Diffusion Transformer](rare_text_semantics_were_always_there_in_your_diffusion_transformer.md)**
+
+:   发现通过在 MM-DiT 的联合注意力块前对文本 token 嵌入进行方差放大,即可在无需额外训练或外部模块的情况下让扩散模型呈现稀有文本语义。
+
 **[Real-Time Execution Of Action Chunking Flow Policies](real-time_execution_of_action_chunking_flow_policies.md)**
 
 :   提出 Real-Time Chunking (RTC)，将异步动作分块执行建模为修复（inpainting）问题，通过冻结已执行动作并"修复"其余部分，实现扩散/流策略的实时平滑执行，无需重新训练。
@@ -714,6 +746,10 @@ description: >-
 
 :   提出 ReMDM 采样器，通过在生成过程中允许已解码 token 被重新掩码（remask），赋予离散掩码扩散模型迭代纠错能力，实现推理时计算缩放，在文本、图像和分子设计任务上显著提升采样质量。
 
+**[Repldm Reprogramming Pretrained Latent Diffusion Models For High-Quality High-Ef](repldm_reprogramming_pretrained_latent_diffusion_models_for_high-quality_high-ef.md)**
+
+:   提出 RepLDM 重编程框架,通过注意力引导阶段和渐进上采样两个阶段,让预训练的潜在扩散模型无需重训练即可生成高质量高分辨率图像,同时大幅提升效率。
+
 **[Respodiff Dual-Module Bottleneck Transformation For Responsible Faithful T2I Gen](respodiff_dual-module_bottleneck_transformation_for_responsible_faithful_t2i_gen.md)**
 
 :   提出RespoDiff框架，在扩散模型UNet的瓶颈层引入双模块可学习变换——负责任概念对齐模块(RAM)和语义对齐模块(SAM)，通过分数匹配目标实现公平和安全的文本到图像生成，同时保持图像质量和语义忠实度。
@@ -725,6 +761,14 @@ description: >-
 **[Rlvr-World Training World Models With Reinforcement Learning](rlvr-world_training_world_models_with_reinforcement_learning.md)**
 
 :   提出 RLVR-World 框架，将强化学习可验证奖励（RLVR）范式拓展到世界模型训练，通过将目标度量（如预测准确率、感知质量）作为可验证奖励直接优化，在语言和视频两类世界模型上取得显著提升。
+
+**[Rlzero Direct Policy Inference From Language Without In-Domain Supervision](rlzero_direct_policy_inference_from_language_without_in-domain_supervision.md)**
+
+:   提出RLZero框架，通过"想象-投影-模仿"三步流程，利用视频生成模型将自然语言指令转化为观测序列，再由无监督预训练的RL智能体即时模仿，实现零样本语言到行为的生成。
+
+**[Robustness In Both Domains Clip Needs A Robust Text Encoder](robustness_in_both_domains_clip_needs_a_robust_text_encoder.md)**
+
+:   提出 LEAF (Levenshtein Efficient Adversarial Finetuning)，首个针对 CLIP 文本编码器的对抗微调方法，在字符级文本扰动下显著提升零样本分类、文本-图像检索和图像生成的鲁棒性，同时保持图像域性能。
 
 **[Safe And Stable Control Via Lyapunov-Guided Diffusion Models](safe_and_stable_control_via_lyapunov-guided_diffusion_models.md)**
 
@@ -769,6 +813,10 @@ description: >-
 **[Schrödinger Bridge Matching For Tree-Structured Costs And Entropic Wasserstein B](schrödinger_bridge_matching_for_tree-structured_costs_and_entropic_wasserstein_b.md)**
 
 :   将Iterative Markovian Fitting (IMF)程序推广到树结构Schrödinger Bridge问题，提出TreeDSBM算法，在Wasserstein重心计算中将IMF迭代与不动点迭代优雅合并，仅需廉价的bridge-matching步骤即可高效求解。
+
+**[Score-Informed Neural Operator For Enhancing Ordering-Based Causal Discovery](score-informed_neural_operator_for_enhancing_ordering-based_causal_discovery.md)**
+
+:   提出 SciNO（Score-informed Neural Operator），一种在光滑函数空间中设计的概率生成模型，稳定近似 log-密度 Hessian 对角以提升排序式因果发现，合成图上 order divergence 降低 42.7%，真实数据降低 31.5%。
 
 **[Self Forcing Bridging The Train-Test Gap In Autoregressive Video Diffusion](self_forcing_bridging_the_train-test_gap_in_autoregressive_video_diffusion.md)**
 
@@ -842,6 +890,10 @@ description: >-
 
 :   提出 Token Perturbation Guidance（TPG），通过对扩散模型中间 token 表示进行保范数的 shuffling 扰动来构造负分数信号，实现无需训练的条件无关引导，在无条件生成中将 SDXL 的 FID 提升近 2 倍，在条件生成中接近 CFG 效果。
 
+**[Tortoise And Hare Guidance Accelerating Diffusion Model Inference With Multirate](tortoise_and_hare_guidance_accelerating_diffusion_model_inference_with_multirate.md)**
+
+:   提出 Tortoise and Hare Guidance (THG)，一种免训练的扩散采样加速策略，将 classifier-free guidance (CFG) ODE 重构为多速率 ODE 系统，噪声估计使用细粒度步长（乌龟方程），附加引导项使用粗粒度步长（兔子方程），减少最多 30% 的函数评估次数 (NFE) 而几乎不损失生成质量。
+
 **[Toward A Unified Geometry Understanding Riemannian Diffusion Framework For Graph](toward_a_unified_geometry_understanding_riemannian_diffusion_framework_for_graph.md)**
 
 :   提出 GeoMancer 框架，通过黎曼 GyroKernel 自编码器替代数值不稳定的指数映射，将多层级图特征解耦到任务特定的积流形上，并引入流形约束扩散和自引导生成策略，在分子生成、节点分类和图回归等任务上统一建模并取得 SOTA 性能。
@@ -869,6 +921,10 @@ description: >-
 **[Training-Free Constrained Generation With Stable Diffusion Models](training-free_constrained_generation_with_stable_diffusion_models.md)**
 
 :   提出一种无需重新训练的约束生成方法，通过在 Stable Diffusion 的反向去噪过程中嵌入近端 Langevin 动力学（Proximal Langevin Dynamics），将图像空间中的约束通过解码器反向传播到潜空间，实现对生成输出的严格约束满足。
+
+**[Training-Free Efficient Video Generation Via Dynamic Token Carving](training-free_efficient_video_generation_via_dynamic_token_carving.md)**
+
+:   提出 Jenga，一种即插即用的视频扩散 Transformer 推理加速方案，通过动态注意力剪裁和渐进分辨率生成实现 8.83× 加速，VBench 性能仅下降 0.01%。
 
 **[Training-Free Safe Text Embedding Guidance For Text-To-Image Diffusion Models](training-free_safe_text_embedding_guidance_for_text-to-image_diffusion_models.md)**
 
@@ -918,6 +974,10 @@ description: >-
 
 :   提出VGG-Flow方法，利用最优控制理论中的Hamilton-Jacobi-Bellman方程，将流匹配模型对齐问题转化为"残差速度场匹配值函数梯度"的梯度匹配任务，实现高效且保持先验分布的奖励对齐。
 
+**[Vicinity-Guided Discriminative Latent Diffusion For Privacy-Preserving Domain Ad](vicinity-guided_discriminative_latent_diffusion_for_privacy-preserving_domain_ad.md)**
+
+:   提出 Discriminative Vicinity Diffusion (DVD)，首次将潜扩散模型用于判别式知识迁移，通过在源域特征的近邻潜空间中训练扩散模型生成源样式线索，实现无需源数据访问的域适应，在标准 SFDA 基准上超越 SOTA。
+
 **[Video Diffusion Models Excel At Tracking Similar-Looking Objects Without Supervi](video_diffusion_models_excel_at_tracking_similar-looking_objects_without_supervi.md)**
 
 :   本文发现预训练视频扩散模型在高噪声去噪阶段内在地学到了运动表征，无需任何跟踪专用训练即可用于跟踪外观相似的物体，提出的 TED 方法在 DAVIS 等基准上以最高 6% 的改进超越了 17 种自监督方法。
@@ -945,6 +1005,10 @@ description: >-
 **[Why Diffusion Models Dont Memorize The Role Of Implicit Dynamical Regularization](why_diffusion_models_dont_memorize_the_role_of_implicit_dynamical_regularization.md)**
 
 :   通过数值实验和理论分析揭示扩散模型训练中存在两个关键时间尺度——泛化时间 $\tau_{\text{gen}}$ 和记忆化时间 $\tau_{\text{mem}}$，后者随训练集大小 $n$ 线性增长而前者保持恒定，由此产生的隐式动力学正则化使模型即使在高度过参数化情况下也能通过早停避免记忆化。
+
+**[Why Diffusion Models Dont Memorize The Role Of Implicit Regularization](why_diffusion_models_dont_memorize_the_role_of_implicit_regularization.md)**
+
+:   本文从数值实验和理论分析两个层面揭示扩散模型训练中存在**隐式动态正则化**机制：生成高质量样本的时间尺度 τ_gen 与出现记忆化的时间尺度 τ_mem 之间的间隔随训练集大小 n 线性增长，为"早停"提供了理论支撑。
 
 **[Why Knowledge Distillation Works In Generative Models A Minimal Working Explanat](why_knowledge_distillation_works_in_generative_models_a_minimal_working_explanat.md)**
 

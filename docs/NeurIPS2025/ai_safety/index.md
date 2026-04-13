@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 AI安全方向 105篇论文解读
+  NeurIPS2025 AI安全方向 116篇论文解读
 description: >-
-  105篇NeurIPS2025 AI安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  116篇NeurIPS2025 AI安全方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI安全
 
-**🧠 NeurIPS2025** · 共 **105** 篇
+**🧠 NeurIPS2025** · 共 **116** 篇
 
 **[A Set Of Generalized Components To Achieve Effective Poison-Only Clean-Label Bac](a_set_of_generalized_components_to_achieve_effective_poison-only_clean-label_bac.md)**
 
@@ -210,9 +210,17 @@ description: >-
 
 :   首个系统评估小语言模型 (SLMs, 1-4B参数) 在移动与可穿戴健康监测任务上表现的基准，覆盖zero-shot/few-shot/指令微调三种范式，并在iPhone上验证了端侧部署的可行性。
 
+**[Impact Of Dataset Properties On Membership Inference](impact_of_dataset_properties_on_membership_inference.md)**
+
+:   本文理论推导并实验验证了深度迁移学习中成员推理攻击（MIA）脆弱性与每类样本数之间的幂律关系 $\log(\text{tpr}-\text{fpr}) = -\beta_S \log(S) - \beta_0$，发现增加数据量可降低平均和最坏情况脆弱性，但保护最脆弱样本需要极大量数据。
+
 **[Impact Of Dataset Properties On Membership Inference Vulnerability Of Deep Trans](impact_of_dataset_properties_on_membership_inference_vulnerability_of_deep_trans.md)**
 
 :   从理论和实验两方面揭示深度迁移学习中成员推断攻击 (MIA) 脆弱性与每类样本数之间存在幂律关系：随着每类样本数 $S$ 增加，MIA 优势按 $S^{-1/2}$ 下降，但保护最脆弱样本所需的数据量极大，凸显了差分隐私形式化保障的不可替代性。
+
+**[Improved Balanced Classification With Theoretically Grounded Loss Functions](improved_balanced_classification_with_theoretically_grounded_loss_functions.md)**
+
+:   提出两个理论驱动的代理损失函数族——广义Logit调整(GLA)损失和广义类感知加权(GCA)损失，为类别不平衡下的多类分类提供更强的理论保证和实证性能。
 
 **[Incentivizing Time-Aware Fairness In Data Sharing](incentivizing_time-aware_fairness_in_data_sharing.md)**
 
@@ -233,6 +241,10 @@ description: >-
 **[Keep It Real Challenges In Attacking Compression-Based Adversarial Purification](keep_it_real_challenges_in_attacking_compression-based_adversarial_purification.md)**
 
 :   本文系统评估了基于图像压缩的对抗净化防御，发现重建图像的"真实感"（realism）是提升防御鲁棒性的关键因素——高真实感压缩模型在面对强自适应攻击时仍能保持显著鲁棒性，而这并非源于梯度掩蔽。
+
+**[Learning-Augmented Facility Location Mechanisms For Envy Ratio](learning-augmented_facility_location_mechanisms_for_envy_ratio.md)**
+
+:   针对一维设施选址问题中的**嫉妒比**（envy ratio）目标，设计了确定性和随机化的学习增强机制：确定性的 $\alpha$-BIM 机制在一致性和鲁棒性之间实现最优权衡，随机化的BAM机制进一步改善保证；同时解决了Ding等人提出的公开问题，将无预测的随机机制近似比从2改进至约1.8944。
 
 **[Llm Strategic Reasoning Agentic Study Through Behavioral Gam](llm_strategic_reasoning_agentic_study_through_behavioral_gam.md)**
 
@@ -269,6 +281,10 @@ description: >-
 **[Mixat Combining Continuous And Discrete Adversarial Training For Llms](mixat_combining_continuous_and_discrete_adversarial_training_for_llms.md)**
 
 :   提出MixAT方法，将离散对抗攻击（PAP改写）与连续嵌入空间扰动相结合进行LLM对抗训练，在保持高效用的同时实现对多种攻击的鲁棒性（ALO-ASR从50%+降至20%以下），且训练成本仅与纯连续方法相当。
+
+**[Model Inversion With Layer-Specific Modeling And Alignment For Data-Free Continu](model_inversion_with_layer-specific_modeling_and_alignment_for_data-free_continu.md)**
+
+:   在无数据持续学习场景中，提出逐层模型反演（PMI）来加速图像合成，并通过类别级高斯特征建模和对比学习缓解合成-真实数据间的特征漂移，实现高效且高质量的无数据知识回放。
 
 **[Mpcache Mpc-Friendly Kv Cache Eviction For Efficient Private Llm Inference](mpcache_mpc-friendly_kv_cache_eviction_for_efficient_private_llm_inference.md)**
 
@@ -310,9 +326,17 @@ description: >-
 
 :   首次系统性研究差分隐私（DP）约束下策略优化的样本复杂度，提出统一的元算法框架，分析DP-PG、DP-NPG和DP-REBEL三种隐私策略优化算法，证明隐私代价通常仅作为样本复杂度的低阶项出现。
 
+**[Optimal Adjustment Sets For Nonparametric Estimation Of Weighted Controlled Dire](optimal_adjustment_sets_for_nonparametric_estimation_of_weighted_controlled_dire.md)**
+
+:   针对加权控制直接效应（WCDE）建立三项基础理论：唯一可识别性的充要条件、非参数估计的影响函数推导、以及最小化渐近方差的最优协变量调整集刻画。
+
 **[Orbit -- Open Recommendation Benchmark For Reproducible Research With Hidden Tes](orbit_--_open_recommendation_benchmark_for_reproducible_research_with_hidden_tes.md)**
 
 :   提出ORBIT统一推荐系统基准，包含5个标准化公开数据集评估和基于真实浏览历史构建的隐私安全ClueWeb-Reco隐藏测试集，系统评估了12个推荐模型并引入LLM-QueryGen基线，揭示了现有方法在大规模真实推荐场景中的局限性。
+
+**[Poly-Guard Massive Multi-Domain Safety Policy-Grounded Guardrail Dataset](poly-guard_massive_multi-domain_safety_policy-grounded_guardrail_dataset.md)**
+
+:   提出 Poly-Guard，首个大规模多领域安全策略驱动的护栏数据集，覆盖8个安全关键领域，基于真实行业安全指南构建风险分类体系，并对19个先进护栏模型进行系统性评估。
 
 **[Position Bridge The Gaps Between Machine Unlearning And Ai Regulation](position_bridge_the_gaps_between_machine_unlearning_and_ai_regulation.md)**
 
@@ -325,6 +349,10 @@ description: >-
 **[Private Continual Counting Of Unbounded Streams](private_continual_counting_of_unbounded_streams.md)**
 
 :   提出基于对数扰动的新型矩阵分解方法，首次实现同时满足"无界流"、"平滑误差"和"近最优渐近误差"三大性质的差分隐私持续计数算法，对任意 $\alpha > 0$ 在时间步 $t$ 处的方差为 $O(\log^{2+2\alpha}(t))$。
+
+**[Private Zeroth-Order Optimization With Public Data](private_zeroth-order_optimization_with_public_data.md)**
+
+:   提出 PAZO 框架，利用公共数据引导私有零阶优化算法的梯度近似，在视觉和文本任务上实现了优于 DP-SGD 的隐私-效用权衡，同时获得最高 16 倍的速度提升。
 
 **[Probabilistic Reasoning With Llms For K-Anonymity Estimation](probabilistic_reasoning_with_llms_for_k-anonymity_estimation.md)**
 
@@ -350,6 +378,10 @@ description: >-
 
 :   ReliabilityRAG 提出了一种利用文档可靠性信号（如搜索排名）进行对抗防御的 RAG 框架，通过在矛盾图上寻找最大独立集（MIS）来识别一致的文档子集并优先选择高可靠性文档，提供可证明的鲁棒性保证，同时在良性场景和长文本生成任务上保持高准确率。
 
+**[Reverse Engineering Human Preferences With Reinforcement Learning](reverse_engineering_human_preferences_with_reinforcement_learning.md)**
+
+:   使用强化学习训练前导文本生成器来提升下游 LLM 的评分成绩,揭示了 LLM-as-a-Judge 评估框架的脆弱性,且该攻击方式几乎不可检测并具有跨模型迁移能力。
+
 **[Rewind-To-Delete Certified Machine Unlearning For Nonconvex Functions](rewind-to-delete_certified_machine_unlearning_for_nonconvex_functions.md)**
 
 :   本文提出R2D（Rewind-to-Delete），首个适用于一般非凸损失函数的一阶、黑盒认证机器遗忘算法，通过"回溯"到训练过程中的较早检查点再对保留数据执行梯度下降来实现数据删除，同时提供(ε,δ)认证遗忘保证和隐私-效用-效率的理论权衡。
@@ -361,6 +393,10 @@ description: >-
 **[Saemark Steering Personalized Multilingual Llm Watermarks With Sparse Autoencode](saemark_steering_personalized_multilingual_llm_watermarks_with_sparse_autoencode.md)**
 
 :   提出SAEMark框架，利用稀疏自编码器（SAE）提取文本的语义特征浓度评分，通过推理阶段的特征引导拒绝采样实现多比特水印嵌入，无需修改模型权重或logits，天然支持黑盒API、多语言和代码等场景，在英文/中文/代码上均达到领先的水印精度与文本质量。
+
+**[Seca Semantically Equivalent And Coherent Attacks For Eliciting Llm Hallucinatio](seca_semantically_equivalent_and_coherent_attacks_for_eliciting_llm_hallucinatio.md)**
+
+:   提出 SECA（Semantically Equivalent and Coherent Attacks），通过保持语义等价和语义连贯性的现实主义提示修改来诱发 LLM 幻觉，在多选 QA 任务上实现更高攻击成功率且几乎无语义错误。
 
 **[Self-Refining Language Model Anonymizers Via Adversarial Distillation](self-refining_language_model_anonymizers_via_adversarial_distillation.md)**
 
@@ -377,6 +413,10 @@ description: >-
 **[Spectral Perturbation Bounds For Low-Rank Approximation With Applications To Pri](spectral_perturbation_bounds_for_low-rank_approximation_with_applications_to_pri.md)**
 
 :   建立了对称矩阵低秩近似在谱范数下的新型高概率扰动界，改进了经典 Eckart-Young-Mirsky 定理，并解决了差分隐私 PCA 中的一个公开问题。
+
+**[Stochastic Regret Guarantees For Online Zeroth- And First-Order Bilevel Optimiza](stochastic_regret_guarantees_for_online_zeroth-_and_first-order_bilevel_optimiza.md)**
+
+:   提出了一种新的搜索方向并证明基于该方向的一阶和零阶在线双层优化算法能够在不需要窗口平滑的条件下实现次线性随机双层遗憾保证，同时通过降低 oracle 依赖、并行更新和零阶 Hessian/Jacobian 估计来提升效率。
 
 **[Swe-Sql Illuminating Llm Pathways To Solve User Sql Issues In Real-World Applica](swe-sql_illuminating_llm_pathways_to_solve_user_sql_issues_in_real-world_applica.md)**
 
@@ -417,6 +457,10 @@ description: >-
 **[Unifying Proportional Fairness In Centroid And Non-Centroid Clustering](unifying_proportional_fairness_in_centroid_and_non-centroid_clustering.md)**
 
 :   将质心聚类(centroid)和非质心聚类(non-centroid)的比例公平性研究统一到"半质心聚类"框架中，证明了两者不可同时实现的不可能性定理，并设计了新算法在双度量损失下实现常数倍近似的核(core)保证。
+
+**[Unifying Re-Identification Attribute Inference And Data Reconstruction Risks In ](unifying_re-identification_attribute_inference_and_data_reconstruction_risks_in_.md)**
+
+:   基于假设检验解释的 f-DP 框架，统一了差分隐私中重识别、属性推断和数据重建三类隐私风险的界定，提供更紧致一致的风险上界，使噪声校准可减少 20% 且不降低安全性。
 
 **[Unlearning As Ablation Toward A Falsifiable Benchmark For Generative Scientific ](unlearning_as_ablation_toward_a_falsifiable_benchmark_for_generative_scientific_.md)**
 

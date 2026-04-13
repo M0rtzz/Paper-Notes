@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 人体理解方向 9篇论文解读
+  CVPR2025 人体理解方向 13篇论文解读
 description: >-
-  9篇CVPR2025 人体理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  13篇CVPR2025 人体理解方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📷 CVPR2025** · 共 **9** 篇
+**📷 CVPR2025** · 共 **13** 篇
 
 **[3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)**
 
@@ -18,9 +18,19 @@ description: >-
 
 :   首次系统研究3D手势估计中合成数据到真实数据的域差距，通过可控数据合成管线分解并分析了前臂、频谱统计、手势分布、物体遮挡四个关键因素的影响，证明合理整合这些因素后纯合成数据可达到与真实数据同等的精度。
 
+**[Anomize Better Open Vocabulary Video Anomaly Detection](anomize_better_open_vocabulary_video_anomaly_detection.md)**
+
 **[Breaking The Tuning Barrier Zero-Hyperparameters Yield Multi-Corner Analysis Via](breaking_the_tuning_barrier_zero-hyperparameters_yield_multi-corner_analysis_via.md)**
 
 :   用预训练的Foundation Model（TabPFN）替代传统手工先验，实现零超参数调优的电路Yield Multi-Corner Analysis：冻结backbone做in-context learning，自动跨corner迁移知识，结合自动特征选择（1152D→48D），在SRAM benchmarks上达到SOTA精度（MRE低至0.11%）且验证成本降低10倍以上。
+
+**[Chatgarment Garment Estimation Generation And Editing Via Large Language Models](chatgarment_garment_estimation_generation_and_editing_via_large_language_models.md)**
+
+**[Co-Op Correspondence-Based Novel Object Pose Estimation](co-op_correspondence-based_novel_object_pose_estimation.md)**
+
+**[Conformal Prediction For Zero-Shot Models](conformal_prediction_for_zero-shot_models.md)**
+
+:   将保形预测（Conformal Prediction）应用于零样本模型，为 CLIP 等模型的预测提供有理论保证的不确定性量化和校准预测集
 
 **[L2Gtx From Local To Global Time Series Explanations](l2gtx_from_local_to_global_time_series_explanations.md)**
 

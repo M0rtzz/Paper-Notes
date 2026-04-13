@@ -1,14 +1,14 @@
 ---
 title: >-
-  CVPR2025 图像生成方向 21篇论文解读
+  CVPR2025 图像生成方向 30篇论文解读
 description: >-
-  21篇CVPR2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  30篇CVPR2025 图像生成方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**📷 CVPR2025** · 共 **21** 篇
+**📷 CVPR2025** · 共 **30** 篇
 
 **[3Dtopia-Xl Scaling High-Quality 3D Asset Generation Via Primitive Diffusion](3dtopia-xl_scaling_high-quality_3d_asset_generation_via_primitive_diffusion.md)**
 
@@ -18,9 +18,39 @@ description: >-
 
 :   系统研究了使用decoder-only LLM作为文本到图像扩散模型文本编码器的效果，发现直接使用最后一层embedding效果差于T5，但通过层归一化平均（layer-normalized averaging）聚合所有层的embedding可显著超越T5基线。
 
+**[Amo Sampler Enhancing Text Rendering With Overshooting](amo_sampler_enhancing_text_rendering_with_overshooting.md)**
+
+:   提出AMO（Attention-Modulated Overshooting）采样器，一种无需训练的推理时增强方法，通过在rectified flow模型的采样过程中引入过冲-噪声补偿的Langevin动力学校正，并利用文本-图像交叉注意力分数自适应控制过冲强度，显著提升文本渲染的准确率，同时保持生成图像的整体质量。
+
+**[An Image-Like Diffusion Method For Human-Object Interaction Detection](an_image-like_diffusion_method_for_human-object_interaction_detection.md)**
+
+**[Anidoc Animation Creation Made Easier](anidoc_animation_creation_made_easier.md)**
+
+**[Animer Animal Pose And Shape Estimation Using Family Aware Transformer](animer_animal_pose_and_shape_estimation_using_family_aware_transformer.md)**
+
+**[Any-Resolution Ai-Generated Image Detection By Spectral Learning](any-resolution_ai-generated_image_detection_by_spectral_learning.md)**
+
+:   提出一种基于频谱学习的 AI 生成图像检测方法，通过在频域提取分辨率不变的特征，使检测器能够在任意分辨率的输入图像上保持鲁棒性，解决了现有方法对特定分辨率依赖的问题。
+
+**[Arbitrary-Steps Image Super-Resolution Via Diffusion Inversion](arbitrary-steps_image_super-resolution_via_diffusion_inversion.md)**
+
+:   本文提出InvSR，通过训练一个噪声预测网络来实现扩散反演（Diffusion Inversion），利用预训练扩散模型的图像先验进行超分辨率，支持1-5步任意步数采样，即使单步采样也能达到或超过现有SOTA方法的效果。
+
+**[Articulated Kinematics Distillation From Video Diffusion Models](articulated_kinematics_distillation_from_video_diffusion_models.md)**
+
+:   本文提出AKD（Articulated Kinematics Distillation），通过将骨骼动画的low-DoF参数化与视频扩散模型的SDS蒸馏相结合，从文本驱动生成高保真3D角色动画，在3D一致性和运动质量上超过现有text-to-4D方法，并支持物理仿真进一步增强物理合理性。
+
+**[Artifade Learning To Generate High-Quality Subject From Blemished Images](artifade_learning_to_generate_high-quality_subject_from_blemished_images.md)**
+
+:   本文提出ArtiFade，首个解决"瑕疵主题驱动生成"问题的方法，通过构建瑕疵-无瑕疵配对数据集、部分微调扩散模型的cross-attention权重并优化artifact-free embedding，使得现有主题驱动方法（Textual Inversion、DreamBooth）能从带水印/贴纸/对抗噪声等瑕疵的图像中生成高质量无伪影的主题图像。
+
 **[As-Bridge A Bidirectional Generative Framework Bridging Next-Generation Astronom](as-bridge_a_bidirectional_generative_framework_bridging_next-generation_astronom.md)**
 
 :   提出 AS-Bridge，用双向布朗桥扩散模型建模地面 LSST 和太空 Euclid 两大天文巡天之间的随机映射关系，实现概率性跨巡天翻译与稀有事件检测（强引力透镜），并证明 epsilon-prediction 训练目标兼具重建质量和似然性优势。
+
+**[Autopresent Designing Structured Visuals From Scratch](autopresent_designing_structured_visuals_from_scratch.md)**
+
+:   本文提出AutoPresent框架和SlidesBench基准，首次系统研究从自然语言指令生成演示幻灯片的任务——通过让LLM生成Python代码（而非端到端图像生成）来创建PPTX幻灯片，配合SlidesLib工具库和迭代优化，8B参数的开源模型达到接近GPT-4o的效果。
 
 **[Beyond Convolution A Taxonomy Of Structured Operators For Learning-Based Image P](beyond_convolution_a_taxonomy_of_structured_operators_for_learning-based_image_p.md)**
 

@@ -1,14 +1,14 @@
 ---
 title: >-
-  NeurIPS2025 自监督/表示学习方向 27篇论文解读
+  NeurIPS2025 自监督/表示学习方向 28篇论文解读
 description: >-
-  27篇NeurIPS2025 自监督/表示学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
+  28篇NeurIPS2025 自监督/表示学习方向论文深度解读，每篇5分钟读懂核心思想。每篇笔记含一句话总结、背景动机、方法详解、实验数据、亮点洞察与局限性分析。
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🧠 NeurIPS2025** · 共 **27** 篇
+**🧠 NeurIPS2025** · 共 **28** 篇
 
 **[A Joint Learning Approach To Hardware Caching And Prefetching](a_joint_learning_approach_to_hardware_caching_and_prefetching.md)**
 
@@ -73,6 +73,10 @@ description: >-
 **[Minimal Semantic Sufficiency Meets Unsupervised Domain Generalization](minimal_semantic_sufficiency_meets_unsupervised_domain_generalization.md)**
 
 :   MS-UDG 在无类别标签和域标签的条件下，通过信息解纠缠模块（IDM）将表征分解为语义和变异成分，配合最小语义充分性优化模块（SROM）最大化语义信息同时最小化变异干扰，在 PACS 上达 72.89% 准确率（+1.5% vs CycleMAE），理论证明最小充分语义表征最小化下游贝叶斯错误率。
+
+**[Mitra Mixed Synthetic Priors For Enhancing Tabular Foundation Models](mitra_mixed_synthetic_priors_for_enhancing_tabular_foundation_models.md)**
+
+:   首次系统研究合成先验的设计原则，发现多样性、独特性和真实数据对齐是关键属性，据此提出 Mitra——一个基于精心筛选的混合合成先验训练的表格基础模型，在分类和回归基准上一致超越 TabPFNv2 和 TabICL。
 
 **[One Filters All A Generalist Filter For State Estimation](one_filters_all_a_generalist_filter_for_state_estimation.md)**
 
