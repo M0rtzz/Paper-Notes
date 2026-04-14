@@ -24,7 +24,9 @@ jobs:
           python-version: '3.11'
       - run: pip install mkdocs-material
       - name: Update build_date to today
-        run: sed -i "s/build_date: '.*'/build_date: '$(date +%Y-%m-%d)'/" mkdocs.yml
+        run: |
+          today=$(date +%Y-%m-%d)
+          sed -i "s/build_date: '.*'/build_date: '${today}'/" mkdocs.yml
       - run: mkdocs build --strict
         continue-on-error: true
       - run: mkdocs build
