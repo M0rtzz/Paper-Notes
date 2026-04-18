@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Novel View Synthesis in High Dynamic Range
 description: >-
@@ -110,7 +110,7 @@ $$\mathbf{c}_t^l = g_\theta([\log \mathbf{c}_t^h + \log e_t, \mathbf{f}_t])$$
 4. **双重监督策略**：像素级 + 光线级联合约束有效缓解了 3D 色调映射的过拟合问题
 5. **效率优势显著**：在大幅提升质量的同时保持了实时级推理速度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **运动区域结构退化**：在可移动区域仍存在结构退化，作者归因于底层 4DGS 表示能力的固有限制，未来可探索更强的动态表示
 2. **真实场景 HDR 指标不够突出**：HDR-4D-Real 上 HDR PSNR（LDR-only 监督时 14.50）低于 HDR-HexPlane（9.306），但作者指出是 HDR 真值噪声和 PSNR 偏好模糊重建所致，视觉质量实际更优

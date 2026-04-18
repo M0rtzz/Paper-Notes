@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DCcluster-Opt: Benchmarking Dynamic Multi-Objective Optimization for Geo-Distributed Data Center Workloads
 description: >-
@@ -153,7 +153,7 @@ DCcluster-Opt 构建了一个由多个地理分布式数据中心组成的仿真
 - **模块化设计**：奖励函数、数据中心配置、区域数量都可灵活配置
 - **标准接口**：Gymnasium API 使得各种 RL 算法可以即插即用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仿真-真实差距**：虽然使用物理模型和真实数据，但仿真终究与真实数据中心运营有偏差
 2. **网络模型简化**：当前的延迟和传输成本模型相对简单，未考虑动态路由和拥塞

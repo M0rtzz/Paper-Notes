@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TurboReg: TurboClique for Robust and Efficient Point Cloud Registration
 description: >-
@@ -111,7 +111,7 @@ TurboReg 是一个无需训练的方法。模型估计阶段使用 Kabsch 求解
 2. **实用价值突出**：无需训练、无需GPU即可在CPU上达到实时（2.73 FPS on CPU），对嵌入式部署友好
 3. **并行设计精妙**：TurboClique 验证简化为矩阵元素乘法，PGS 具有两层并行性（枢轴级+搜索级），非常适合 GPU 加速
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 兼容性阈值 $\tau$ 需要根据点云分辨率调整，在分辨率变化剧烈的场景中可能需要自适应策略
 2. RE 和 TE 略高于部分方法——因为召回了更多困难样本，但对精度敏感的应用可能需要后处理

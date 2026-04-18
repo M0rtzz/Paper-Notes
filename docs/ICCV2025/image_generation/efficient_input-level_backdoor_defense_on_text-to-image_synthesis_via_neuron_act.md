@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Input-Level Backdoor Defense on Text-to-Image Synthesis via Neuron Activation Variation
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{D}(c) = \mathbb{1}[\mathcal{S}(c) > \mu_\text{clean} + m \cdot \sigma
 3. **实用性极强**：无需训练、无需额外数据、仅一步扩散、即插即用
 4. **对 DiT 架构也有效**：不限于 UNet，展示了方法的架构通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 EvilEdit（85.5% AUROC）的检测效果相对较弱，因为该攻击更加隐蔽
 - 假设触发器是当前 T2I 攻击中的常见形式（文本 token），纯视觉触发器未讨论

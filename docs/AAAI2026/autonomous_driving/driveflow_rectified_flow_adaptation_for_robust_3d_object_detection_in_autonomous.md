@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DriveFlow: Rectified Flow Adaptation for Robust 3D Object Detection in Autonomous Driving
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{obj} + \lambda_2 \mathcal{L}_{div
 - 仅需 2D bbox 和目标场景描述即可完成编辑，标注可完全复用（annotation reuse），零额外标注成本
 - 23.8× 加速对大规模数据增强具有显著实际意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练 T2I Flow 模型的质量，若模型对驾驶场景理解不足可能限制编辑效果
 - 高斯模糊核参数需手动调节，可能不是最优的频率分解方式（可探索可学习频率分解）

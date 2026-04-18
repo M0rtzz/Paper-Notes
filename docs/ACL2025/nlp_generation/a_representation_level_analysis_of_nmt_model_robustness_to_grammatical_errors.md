@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Representation Level Analysis of NMT Model Robustness to Grammatical Errors
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **三层互证的分析范式**：GED 探测、CKA 距离、注意力头分析从不同角度支持同一假设，说服力极强
 - **实验规模充分**：4 模型 × 5 语言方向 × 3 错误类型 + MORPHEUS 对抗攻击，排除了偶然性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限语法错误**：拼写错误、词序错误、语义错误等噪声类型未覆盖
 - **合成错误的自然度**：每句仅一个错误且按统计分布采样，可能不完全反映真实非母语者错误

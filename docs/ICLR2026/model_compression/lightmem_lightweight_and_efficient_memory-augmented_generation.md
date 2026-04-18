@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LightMem: Lightweight and Efficient Memory-Augmented Generation
 description: >-
@@ -95,7 +95,7 @@ LightMem 是一个无需训练的管道式系统，核心参数是压缩率 $r$ 
 - 无训练、即插即用的设计使其易于与任何LLM后端集成
 - 压缩反而提升性能的发现对记忆系统设计有指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 压缩模型（LLMLingua-2）的质量会影响下游效果
 - 主题分割阈值需要调优，跨领域泛化性存疑
 - 离线更新的触发时机和频率没有自适应机制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RefiDiff: Progressive Refinement Diffusion for Efficient Missing Data Imputation
 description: >-
@@ -81,7 +81,7 @@ $$\mathcal{L}_{\text{SM}}(\theta_2) = \mathbb{E}_{X_0,\varepsilon,t}\left[\|\the
 - **理论保障**: 提供 KL 散度量化上界，证明 conditional sampling 的正确性
 - **MNAR 显著优势**: 在最具挑战性的 MNAR 场景下提升最为明显
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分类特征采用 binary encoding 再做连续扩散，可能损失语义保真度
 - 仅在 UCI 等中等规模数据集验证，百万级超大规模场景待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Alberta Wells Dataset: Pinpointing Oil and Gas Wells from Satellite Imagery
 description: >-
@@ -162,7 +162,7 @@ tags:
 - **多光谱的价值**：实验证明近红外波段对检测地面凹陷等井位特征至关重要
 - **问题建模的洞察**：将井位识别同时建模为分割和检测，发现分割更适合此任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **标注噪声**：依赖 AER 官方记录，可能有未记录的真实井位导致假阴性标注
 2. **地理局限性**：仅覆盖 Alberta 省，迁移到其他地区的 zero/few-shot 能力未验证

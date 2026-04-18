@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPHINX: Structural Prediction using Hypergraph Inference Network
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：将超边发现重新定义为聚类问题——每个超边对应一个节点子集的聚类——然后利用近年differentiable k-subset sampling的突破来在保持可微性的同时产生精确k个节点的离散超边。
 
-**核心idea一句话**：用序列化slot attention做软聚类产生超边概率分布，再用k-subset可微采样产生离散稀疏超图，仅靠下游任务损失做端到端弱监督训练。
+**核心 idea**：用序列化slot attention做软聚类产生超边概率分布，再用k-subset可微采样产生离散稀疏超图，仅靠下游任务损失做端到端弱监督训练。
 
 ## 方法详解
 

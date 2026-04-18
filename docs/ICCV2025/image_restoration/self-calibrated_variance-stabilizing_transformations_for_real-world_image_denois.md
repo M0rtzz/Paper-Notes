@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Calibrated Variance-Stabilizing Transformations for Real-World Image Denoising
 description: >-
@@ -128,7 +128,7 @@ $$\hat{\boldsymbol{s}} = (f^{\text{inv}}_{\boldsymbol{\theta},\alpha,\beta} \cir
 - **零样本 + 高性能**：在不使用任何外部数据的情况下，达到了接近有监督方法的性能，在荧光显微镜数据上甚至超越
 - **训练/推理解耦**：训练用盲点去噪器保证理论正确性，推理用标准去噪器提升质量，设计简洁巧妙
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 假设噪声空间独立，对于 sRGB 空间中经过 demosaicking 的图像（噪声已产生空间相关性），效果可能受限
 2. 每张图像都需要单独训练 VST，虽然时间可接受（~50 秒），但无法做到即时去噪

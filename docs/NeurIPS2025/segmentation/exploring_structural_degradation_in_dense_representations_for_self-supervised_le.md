@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring Structural Degradation in Dense Representations for Self-supervised Learning
 description: >-
@@ -138,7 +138,7 @@ $$\mathcal{L} = \mathcal{L}_{original} - \beta \cdot \text{DSE}$$
 3. **实用价值极高**：模型选择仅需 0.025 GPU·h，即可平均提升 3.0% mIoU
 4. **命题 1 的洞察**：揭示了用 k-means 伪标签的实例级距离度量永远预测准确率为 1 的根本问题，进而设计类级半径度量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论分析主要针对 linear probing 设置，未充分考虑 transfer learning 中的分布偏移
 2. DSE 在深度估计等回归任务上的预测能力相对较弱（Kendall's τ 较低）

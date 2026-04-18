@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RadarLLM: Empowering Large Language Models to Understand Human Motion from Millimeter-Wave Point Cloud Sequence
 description: >-
@@ -54,7 +54,7 @@ RadarLLM 包含三个核心组件（Figure 3）：
 
 #### 1. **物理感知虚拟数据合成（Physics-Aware Data Synthesis）**
 
-**做什么**：从运动-文本数据集（HumanML3D, 13308条 SMPL-X 序列含文本标注）合成逼真的雷达点云-文本配对。
+**功能**：从运动-文本数据集（HumanML3D, 13308条 SMPL-X 序列含文本标注）合成逼真的雷达点云-文本配对。
 
 合成管线（Figure 2）：
 - **IF信号仿真**：在渲染的人体网格和虚拟雷达天线之间进行射线追踪。采用 RF 自适应采样聚焦人体区域，使用物理光学积分（POI）累积射线信息。加入高斯噪声模拟真实噪底：
@@ -69,7 +69,7 @@ $$R'_{IF}(t) = R_{IF}(t) + \sqrt{P_{\text{signal}} / 10^{\text{SNR}/10}} \cdot \
 
 #### 2. **运动引导雷达分词器（Motion-Guided Radar Tokenizer）**
 
-**做什么**：将稀疏、噪声的雷达点云序列压缩为 LLM 可处理的离散语义token。基于创新的 Aggregate VQ-VAE 架构（Figure 4）。
+**功能**：将稀疏、噪声的雷达点云序列压缩为 LLM 可处理的离散语义token。基于创新的 Aggregate VQ-VAE 架构（Figure 4）。
 
 **三个阶段**：
 
@@ -103,7 +103,7 @@ $$\mathcal{L}_{VQ} = \mathcal{L}_{rec} + \mathcal{L}_{emb} + \mathcal{L}_{commit
 
 #### 3. **雷达感知语言模型（Radar-Aware Language Model）**
 
-**做什么**：将雷达token与文本token在统一空间中对齐，自回归生成运动描述。
+**功能**：将雷达token与文本token在统一空间中对齐，自回归生成运动描述。
 
 基于 T5 架构，统一词表 $\mathcal{V} = \mathcal{V}_{\text{text}} \cup \mathcal{V}_{\text{radar}}$（32768 WordPieces + $K$ 个雷达token + 特殊标记）。
 
@@ -180,7 +180,7 @@ $$\mathcal{L}_{\text{pretrain}} = \lambda_1 \mathcal{L}_{\text{pred}} + \lambda_
 3. **Aggregate VQ-VAE 设计精巧**：模板分组→掩码聚合→运动引导量化的层层推进设计，每一步都有明确的技术动机。
 4. **隐私保护 + 环境鲁棒**：毫米波雷达天然满足这两个日益重要的需求。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仿真参数针对特定雷达硬件（TI AWR1843BOOST）校准，跨硬件泛化有待验证。
 2. 合成数据不包含环境上下文和人-物交互，限制了场景理解的丰富度。

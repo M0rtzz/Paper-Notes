@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Cocoercive Conservative Denoisers via Helmholtz Decomposition for Poisson Inverse Problems
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：收敛性要求去噪器具有Lipschitz性质（如非扩张），但这种约束越强去噪性能越差；要让去噪器成为近端算子还需保守性（conservative），现有方法要么显式构造势函数导致性能下降（如GS-DRUNet），要么不能保证近端算子性质。
 
-**本文要解决什么**：（a）找到比非扩张更弱但仍能保证近端算子性质的Lipschitz条件；（b）不显式构造势函数而是直接正则化去噪器来促进保守性。
+**本文目标**：（a）找到比非扩张更弱但仍能保证近端算子性质的Lipschitz条件；（b）不显式构造势函数而是直接正则化去噪器来促进保守性。
 
 **切入角度**：从共循环性（cocoerciveness，Lipschitz条件的放宽版本）+ Helmholtz分解（将向量场分解为保守场+Hamiltonian场）两个数学工具出发。
 
@@ -116,7 +116,7 @@ tags:
 - **Helmholtz分解的去噪几何直觉**：将去噪器decompose为保守场+Hamiltonian场，用二维向量场图直观解释为什么Hamiltonian分量有害（旋转不贡献去噪），这种几何理解非常优雅。
 - **理论-实践闭环**：从数学性质（共循环+保守）→训练策略（两个正则化）→收敛证明→实验验证，逻辑完整且每一步都有rigor。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Jacobian谱范数的随机估计增加训练开销，论文未详细报告训练时间对比。
 - $\gamma$ 的选择需要手动调优（论文选 $\gamma=0.25$），更小的 $\gamma$ 理论上性能更好但收敛条件更严格。
 - 方法基于DRUNet架构，是否对更现代的去噪架构（如Restormer、NAFNet）同样有效未验证。

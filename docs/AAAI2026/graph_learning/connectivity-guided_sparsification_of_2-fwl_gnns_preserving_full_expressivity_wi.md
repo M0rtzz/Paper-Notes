@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Connectivity-Guided Sparsification of 2-FWL GNNs Preserving Full Expressivity
 description: >-
@@ -133,7 +133,7 @@ CoSp-PPGN 在所有子结构计数任务上匹配或超过 PPGN。
 - 实现优雅：仅需 O(n+m) 预处理，然后消息传递遵循标准 2-FWL 格式
 - 表达力和效率不是对立的——通过结构洞察可以两者兼得
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在需要长程依赖的任务（如 Peptides-struct）上，HOGNN 的 over-squashing 问题导致性能不佳
 - 仅聚焦 2-FWL 层级，未扩展到更高阶（k>2）

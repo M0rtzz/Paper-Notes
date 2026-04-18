@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPA-VL: A Comprehensive Safety Preference Alignment Dataset for Vision Language Models
 description: >-
@@ -92,7 +92,7 @@ SPA-VL 的构建分三阶段：(1) 图像收集：基于层级化有害内容分
 - "安全性和帮助性同时提升"的实验结论打破了两者对立的直觉，说明好的偏好数据可以两全
 - 12个不同模型作为回答源的设计确保了偏好数据的多样性和泛化性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据中的有害图像来自 LAION-5B 通过CLIP检索，可能存在检索噪声
 - GPT-4V 作为偏好标注器本身也有偏见，无完全可靠的ground truth
 - 仅在 LLaVA-1.5 (7B) 上验证，对更大模型和更新架构的效果未知

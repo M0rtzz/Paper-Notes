@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vanish into Thin Air: Cross-prompt Universal Adversarial Attacks for SAM2
 description: >-
@@ -96,7 +96,7 @@ UAP-SAM2在视频分割上的平均mIoU为37.72%，比最好的基线UAPGD低10.
 - 对比学习思想的引入（特征偏移攻击）使对抗样本的特征偏离本征语义空间
 - 首次揭示了视频分割基础模型的安全漏洞，对安全关键应用有重要警示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对SAM2系列模型，能否推广到其他视频分割模型（如XMem、Cutie）未知
 - 当前UAP需要渐进优化，实时攻击场景下的效率可能不足

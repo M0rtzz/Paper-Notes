@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MT-RAIG: Novel Benchmark and Evaluation Framework for Retrieval-Augmented Insight Generation over Multiple Tables
 description: >-
@@ -126,7 +126,7 @@ MT-RAIG Eval在两个维度上均大幅超越现有指标，与人类判断的Pe
 - **深度分析发现**：(1) 检索更多表格并非总有益，超过阈值后性能下降；(2) 忠实度对噪声表格极为敏感，而完整度相对稳健；(3) 即使无噪声，模型随参考表格数量增加性能显著下降
 - **推理时间缩放有效**：DeepSeek-R1-8B以8B参数量达到与闭源模型可比的性能，验证了推理时缩放在表格洞察任务上的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **合成数据固有风险**：尽管有Human-in-the-loop，LLM生成的问题仍可能存在语言多样性不足和不自然描述的问题
 - **领域覆盖有限**：仅包含关系数据库和Wikipedia表格，未覆盖金融、科学、医疗等专业领域

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STAIR: Addressing Stage Misalignment through Temporal-Aligned Preference Reinforcement Learning
 description: >-
@@ -145,7 +145,7 @@ $$I(\sigma_0, \sigma_1) = (c_{\text{stage}} - d_{\text{stage}}(\sigma_0, \sigma_
 - **人类认知一致性**：STAIR选出的查询被人类判断为"同阶段"的比例是PEBBLE的2倍，验证了方法与人类认知的对齐
 - 在单阶段任务中的良好表现暗示了一种**隐式课程学习**机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 四边形距离仅评估成对片段差异，难以扩展到其他偏好格式（如排序、评分）
 - 时间距离的学习依赖足够的on-policy数据，在训练初期可能不够准确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Accuracy of Uncertainty Estimation in Appearance-based Gaze Tracking with Probabilistic Evaluation and Calibration
 description: >-
@@ -108,7 +108,7 @@ tags:
 - 后验校准方法极度简洁（isotonic regression + ~50 样本），即插即用，不修改原模型
 - 实验设计非常系统：4 种域偏移场景 × 2 种 backbone × 3 折交叉验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 校准假设校准集和测试集来自相同分布，当域偏移持续变化时（如从室内到室外）可能需要在线更新校准器
 - 仅在 ResNet-18/50 + 高斯分布假设的模型上验证，未测试更复杂的模型架构（如 Transformer）或非参数分布
 - MPIIGaze 和 RTGene 都是相对受控的数据集，更大域偏移（如极端光照、不同种族）的表现未知

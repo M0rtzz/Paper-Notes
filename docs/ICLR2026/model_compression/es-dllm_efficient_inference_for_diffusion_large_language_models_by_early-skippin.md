@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ES-dLLM: Efficient Inference for Diffusion Large Language Models by Early-Skipping
 description: >-
@@ -112,7 +112,7 @@ DualCache（Fast-dLLM）缓存当前 block 之外的 KV，但仍需计算整个 
 4. **与现有方法正交**：可与稀疏注意力、并行解码等技术组合使用
 5. **内存开销可忽略**：相比模型权重 10GB+，额外缓存仅需数百 MB
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **重要性估计依赖简单启发式**：置信度 + L1 变化的线性组合可能不够精确，可训练轻量级模型预测重要性
 2. **部分 KV 更新偏离训练假设**：dLLM 训练时假设完整状态更新，跳过可能引入分布偏移

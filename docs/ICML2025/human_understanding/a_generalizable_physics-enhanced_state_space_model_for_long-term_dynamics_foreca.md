@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Generalizable Physics-Enhanced State Space Model for Long-Term Dynamics Forecasting in Complex Environments
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{VAE}} + \lambda \mathcal{L}_{\text{reg}}$$
 4. **物理状态正则化**：巧妙地在 VAE 框架中约束先验-后验对齐，使物理一致性从模型架构延伸到训练目标
 5. **摆系统 Walk-Through**：通过具体的摆系统实例清晰展示了状态扩展、矩阵分解、掩码设计的完整流程，极具工程参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要领域专家手动设计**：$A_{\text{knw}}$ 矩阵和知识掩码 $M$ 需要根据具体系统手动构造，自动化程度不足，迁移到新领域时需要物理建模知识
 2. **线性化假设**：通过状态扩展将非线性转为线性 SSM，但对高度非线性系统（如湍流）可能需要极高维扩展状态

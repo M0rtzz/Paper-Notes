@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SCAN: Self-Denoising Monte Carlo Annotation for Robust Process Reward Learning
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L}_{\text{SCAN}}(\theta) = -\mathbb{E}_{(x_{\leq t}, y_t) \sim D_{\te
 - 置信度重加权巧妙解决了多模型混合标注的一致性问题
 - 仅 101K 样本 + 1.5B 模型 = 媲美人工标注，验证了"小模型 + 好策略"的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 容忍距离 $d$ 需手动选择，可探索自适应设定
 - self-confidence 度量依赖足够的采样（16次），采样不足时估计不准

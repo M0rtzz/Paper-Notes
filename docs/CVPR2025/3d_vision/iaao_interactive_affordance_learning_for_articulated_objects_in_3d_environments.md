@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IAAO: Interactive Affordance Learning for Articulated Objects in 3D Environments
 description: >-
@@ -46,13 +46,13 @@ tags:
 ### 关键设计
 
 **1. 视角一致的 Mask 聚类与层次化特征场**
-- **做什么**: 使用 SAM 生成逐视图的类不可知 mask，通过 mask 图聚类将 2D mask 关联为 3D 一致实例；同时用低维特征场 + 解码器蒸馏 MaskCLIP 和 DINOv2 特征。
+- **功能**: 使用 SAM 生成逐视图的类不可知 mask，通过 mask 图聚类将 2D mask 关联为 3D 一致实例；同时用低维特征场 + 解码器蒸馏 MaskCLIP 和 DINOv2 特征。
 - **核心思路**: 构建 mask 图 $\mathcal{G}^t_0 = (\mathcal{V}^t_0, \mathcal{E}^t_0)$，每个节点是 2D mask，通过特征相似性聚类得到跨视角一致的 3D 实例。解码器 $\mathcal{D}$ 用小型 MLP 投影渲染特征到三个分支（instance/part-level CLIP + DINO）。
 - **设计动机**: 直接嵌入高维 2D 特征内存开销大；mask 图聚类解决了 SAM 跨视角不一致、过分割等问题。
 - **损失函数**: 特征蒸馏损失 $\mathcal{L}_{feat} = \|\mathcal{D}(\hat{F}^t(I^t_i)) - F^t(I^t_i)\|_2^2$ + 标签场的交叉熵损失 $\mathcal{L}_{label}$
 
 **2. 全局-局部运动恢复**
-- **做什么**: 先用 GeoTransformer 从静态部分的 3D Gaussians 估计粗糙全局对齐 $\xi_g^t = (s_g^t, R_g^t, T_g^t)$，再对每个铰接部件估计局部变换 $\xi_o^t = (R_o^t, T_o^t)$。
+- **功能**: 先用 GeoTransformer 从静态部分的 3D Gaussians 估计粗糙全局对齐 $\xi_g^t = (s_g^t, R_g^t, T_g^t)$，再对每个铰接部件估计局部变换 $\xi_o^t = (R_o^t, T_o^t)$。
 - **核心思路**: 通过 DINO 特征计算 3D-to-2D 对应关系：对采样的 Gaussian 点与目标状态的 mask 像素计算特征相似度矩阵 $\alpha_{p \to o}$，经 softmax 得到权重 $\beta_{p \to o}$，加权求和获得对应 2D 像素位置。
 - **关键损失**:
     - 匹配损失: $\mathcal{L}_{match} = \|\pi^{t'}_n(p^{t \to t'}) - s^{t'}_{p \to n}(I^{t'}_n)\|_2^2$
@@ -61,7 +61,7 @@ tags:
 - **设计动机**: 3DGS 的点云稀疏且有噪声，直接做 3D-3D 配准困难；通过 3D-to-2D 投影和特征匹配间接建立对应关系更鲁棒。
 
 **3. 功能 Affordance 预测**
-- **做什么**: 给定任务描述（如"open the drawer"），用 CLIP 文本编码器编码后与特征场计算相似度，定位对应的功能区域（如抽屉把手）。
+- **功能**: 给定任务描述（如"open the drawer"），用 CLIP 文本编码器编码后与特征场计算相似度，定位对应的功能区域（如抽屉把手）。
 - **核心思路**: 显式 3DGS 原语允许直接在 3D 空间做特征查询，无需渲染。支持语言、点、mask 等多种提示形式。
 - **设计动机**: 不同于 NeRF 需要渲染整张图再提取特征，显式 Gaussian 原语可直接操作，高效实现物体/部件级定位。
 
@@ -112,7 +112,7 @@ tags:
 - 支持任意类别、任意数量可动部件，远优于需要类别预训练的方法
 - Mask 图聚类解决 SAM 跨视角不一致性的思路具有启发性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅支持旋转/平移两种关节类型，未涵盖更复杂的运动（如柔性变形）
 - 依赖两个已知关节状态的多视角图像，获取成本高

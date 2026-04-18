@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PlanU: Large Language Model Reasoning through Planning under Uncertainty
 description: >-
@@ -134,7 +134,7 @@ PlanU在TravelPlanner上任务完成率提升61%（vs LATS），WebShop成功率
 - **UCC设计巧妙**：融合RND思想的新颖性奖励 + 文本编码器消除LLM文本不确定性，形成了完整的探索机制
 - **跨场景泛化能力强**：在5个基准（积木堆叠、烹饪、家居、旅行规划、网购）和3种LLM上均表现最优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算开销大**：分位数分布维护 + RND网络训练 + 文本编码器推理，相比标准MCTS增加了显著开销，论文未报告运行时间对比
 - **环境不确定性是人工注入的**：Blocksworld等原始环境是确定性的，通过添加固定失败率模拟随机性，未在天然随机环境中验证

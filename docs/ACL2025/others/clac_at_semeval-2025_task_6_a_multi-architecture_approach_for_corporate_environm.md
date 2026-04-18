@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLaC at SemEval-2025 Task 6: A Multi-Architecture Approach for Corporate Environmental Promise Verification
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **诚实报告了有限的提升**：仅超基线0.004，但通过分析解释了原因（数据少、ESG-BERT冗余、负迁移），这种诚实的分析比吹嘘偏小的改进更有学术价值
 - **代码开源**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据量是最大制约**：400个训练样本对于任何深度学习方法都极其有限。数据增强、少样本学习或利用外部ESG报告预训练可能有帮助
 - **Model 3仅覆盖子任务1和2**：子任务3和4未能纳入联合模型，四个子任务的全联合建模可能更好地捕捉任务间依赖

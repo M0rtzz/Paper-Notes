@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AXIS: Efficient Human-Agent-Computer Interaction with API-First LLM-Based Agents
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **核心矛盾**: 现有 UI 是 HCI（人-计算机交互）范式的产物，用于 HACI（人-Agent-计算机交互）范式效率低下。类比蒸汽时代到电力时代的工厂改造——不能只替换动力源，需要重新设计整个流程。
 
-**本文要解决什么**: 如何让 LLM Agent 高效、可靠地完成应用操作任务。
+**本文目标**: 如何让 LLM Agent 高效、可靠地完成应用操作任务。
 
 **切入角度**: API 调用比 UI 操作更高效——一次 API 调用可替代多步 UI 交互（如"插入 2×2 表格"从 UI 的"Insert→Table→2×2"三步变为一次 API 调用）。
 

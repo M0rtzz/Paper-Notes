@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unsupervised Evaluation of Multi-Turn Objective-Driven Interactions
 description: >-
@@ -152,7 +152,7 @@ $$P_{D'}(\texttt{end} \mid c) > P_{D'}(\texttt{end} \mid c')$$
 4. **响应树创新**：比 semantic entropy（需多次高温采样）更结构化、信息更丰富
 5. **分布适应性**：通过 LoRA 微调适应不同领域的 token 分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **聚类算法依赖初始 $k_1$ 设定**，限制了可发现的最大聚类数
 2. **完整性检测对松散结构对话效果不佳**（如 Code-Feedback，第一轮即可回答后续为追问）

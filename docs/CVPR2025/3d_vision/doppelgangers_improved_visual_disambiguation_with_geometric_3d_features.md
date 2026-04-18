@@ -1,4 +1,4 @@
----
+﻿---
 title: "Doppelgangers++: Improved Visual Disambiguation with Geometric 3D Features"
 description: "利用MASt3R的3D几何特征和多样化训练数据改进视觉消歧，显著提升SfM在重复结构场景中的重建精度"
 tags: ["视觉消歧", "SfM", "3D重建", "MASt3R", "Transformer", "重复结构"]
@@ -28,7 +28,7 @@ tags: ["视觉消歧", "SfM", "3D重建", "MASt3R", "Transformer", "重复结构
 
 **核心矛盾**：SfM 的准确性要求分类器达到近乎完美的精度（precision），而仅在地标数据上训练的模型难以泛化到多样化的日常场景。
 
-**本文要解决什么？** 如何构建一个精度高、泛化好、对阈值不敏感的 doppelganger 分类器？
+**本文目标** 如何构建一个精度高、泛化好、对阈值不敏感的 doppelganger 分类器？
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ Doppelgangers++ 在所有场景上 IR 均优于或等于 DG-OG，且使用统一
 - **自动化的 SfM 评估方法**：利用 Mapillary 地理标签替代人工检查，使 SfM 消歧的评估可扩展到大规模数据集（如 MegaScenes 100K+ SfM 结果）。
 - 论文揭示了一个关键事实：即使 MASt3R 在特征匹配层面会被 doppelganger 欺骗，其内部特征仍包含区分真假匹配的信号——这启示我们基础模型的"失败"表面下可能隐藏着可利用的信息。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分类头仍需有标注的 doppelganger 数据训练，VisymScenes 的自动挖掘规则可能引入噪声标签。
 - 对于非结构化场景（如自然环境中的岩石重复纹理）的效果未评估。

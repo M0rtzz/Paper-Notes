@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AirCache: Activating Inter-Modal Relevancy KV Cache Compression for Efficient Large Vision-Language Model Inference
 description: >-
@@ -215,7 +215,7 @@ Token pruning 在极端压缩比下性能崩溃，AirCache 仍保持良好性能
 4. **实际部署价值高**：10% 保留率 + 不到 1% 性能损失 + 最高 66% 解码延迟降低，适合大规模部署
 5. **KV Cache 压缩 vs Token Pruning 的深度对比**：清晰展示了两类方法的根本差异——prefill 阶段的信息聚合使得 KV Cache 压缩天然优于 Token Pruning
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Prefill 阶段无加速**：AirCache 在 prefill 后执行压缩，不减少 prefill 时间（甚至略增约 5-12%）
 2. **一次性压缩**：在 prefill 完成后统一压缩所有层的 KV Cache，不支持 decoding 过程中的动态调整

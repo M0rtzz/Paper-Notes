@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FACT-GS: Frequency-Aligned Complexity-Aware Texture Reparameterization for 2D Gaussian Splatting
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**: 增大纹理分辨率会使内存和带宽二次方增长，但收益极其有限（因为采样模式仍然均匀）；神经纹理场虽能解决此问题但破坏了实时渲染性能
 
-**本文要解决什么**: 在固定纹理分辨率下，如何将更多采样容量分配给高频区域
+**本文目标**: 在固定纹理分辨率下，如何将更多采样容量分配给高频区域
 
 **切入角度**: 从自适应采样理论出发，将纹理参数化视为采样密度分配问题
 
@@ -54,7 +54,7 @@ FACT-GS基于2D Gaussian Splatting构建，采用两阶段优化：
 
 1. **频率对齐的变形场（Frequency-Aligned Deformation Field）**
 
-   **做什么**: 为每个高斯学习一个变形场 $\mathbf{D}_i \in \mathbb{R}^{\tau \times \tau \times 2}$，预测逐纹素位移
+   **功能**: 为每个高斯学习一个变形场 $\mathbf{D}_i \in \mathbb{R}^{\tau \times \tau \times 2}$，预测逐纹素位移
    
    **核心思路**: 变形坐标通过残差形式获得：
    $$(u', v') = (u, v) + \lambda \mathbf{D}_i(u, v)$$
@@ -68,7 +68,7 @@ FACT-GS基于2D Gaussian Splatting构建，采用两阶段优化：
 
 2. **梯度调制机制（Gradient Modulation）**
 
-   **做什么**: 变形场自动调制纹理的局部梯度场
+   **功能**: 变形场自动调制纹理的局部梯度场
    
    **核心思路**: 通过链式法则，变形纹理的梯度为：
    $$\nabla c_i^{\text{tex}}(u,v) = J_{\Phi_i}(u,v)^\top \nabla \mathbf{T}_i^{\text{RGB}}(\Phi_i(u,v))$$
@@ -79,7 +79,7 @@ FACT-GS基于2D Gaussian Splatting构建，采用两阶段优化：
 
 3. **参数高效设计**
 
-   **做什么**: 变形场与原始纹理共享分辨率，仅额外增加2通道
+   **功能**: 变形场与原始纹理共享分辨率，仅额外增加2通道
    
    **核心思路**: 对于每个高斯，变形场 $\mathbf{D}_i \in \mathbb{R}^{\tau \times \tau \times 2}$ 在原 $\tau \times \tau \times 4$ 纹理基础上仅增加50%参数，但通过非均匀采样实现远超分辨率增加的质量提升。
    
@@ -124,7 +124,7 @@ $$\mathcal{L} = \eta \mathcal{L}_1 + (1-\eta)\mathcal{L}_{\text{SSIM}} + \mathca
 - **实时友好**: 仅修改纹理参数化方式，渲染管线完全不变
 - **从"几何驱动"到"信息驱动"**: 将纹理布局从静态空间均匀转变为动态频率感知
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在完整参数预算下提升相对有限（0.1-0.4 PSNR），主要优势体现在参数受限场景
 - 变形场本身也需要学习和存储，对超大规模场景的可扩展性需验证

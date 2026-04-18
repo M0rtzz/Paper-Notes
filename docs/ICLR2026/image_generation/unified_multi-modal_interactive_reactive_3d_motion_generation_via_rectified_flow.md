@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unified Multi-Modal Interactive & Reactive 3D Motion Generation via Rectified Flow
 description: >-
@@ -32,11 +32,11 @@ DualFlow提出首个统一框架，通过Rectified Flow和检索增强生成（R
 
 **核心矛盾**：双人运动需要同时建模两人间的相互响应、物理合理性和多模态信号对齐，但现有方法缺乏统一建模能力。
 
-**本文要解决什么**：如何在单一架构中统一交互式和反应式运动生成，同时支持文本+音乐多模态条件？
+**本文目标**：如何在单一架构中统一交互式和反应式运动生成，同时支持文本+音乐多模态条件？
 
 **切入角度**：利用Rectified Flow的直线传输路径实现快速推理，通过对称/非对称掩码机制切换任务，RAG提供语义引导。
 
-**核心idea一句话**：通过级联DualFlow块的双分支架构实现任务统一切换，结合对比Rectified Flow和LLM分解的RAG模块实现多模态语义对齐。
+**核心 idea**：通过级联DualFlow块的双分支架构实现任务统一切换，结合对比Rectified Flow和LLM分解的RAG模块实现多模态语义对齐。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CRF}} + \lambda_{\text{geo}} \m
 - **RAG适应双人场景的创新**：LLM分解文本为空间关系/身体动作/节奏三维度是处理交互描述的巧妙方案
 - **Rectified Flow的实用优势**：20步推理即可达到优质结果，适合实时应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖GPT-4o进行文本分解，增加计算成本和API依赖
 - 当前仅支持双人场景，多人（>2）场景需要架构扩展
 - 运动质量评估依赖自动指标，主观感知质量需更多用户研究

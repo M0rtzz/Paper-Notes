@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Last Vote: A Multi-Stakeholder Framework for Language Model Governance
 description: >-
@@ -124,7 +124,7 @@ ISS聚合方式对比：
 - 明确指出风险量化本身就是政治行为，选择"显性政治"而非"隐性中立"
 - 冲突解决协议设计周到：不可调和时默认采取最保护性评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 权重聚合假设理性行为，可能忽视权力动态和策略性操纵
 - 文化特异性偏向西方民主语境，全球适用性存疑

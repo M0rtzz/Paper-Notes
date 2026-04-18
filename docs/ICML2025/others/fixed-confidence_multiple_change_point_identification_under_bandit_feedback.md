@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fixed-Confidence Multiple Change Point Identification under Bandit Feedback
 description: >-
@@ -130,7 +130,7 @@ $$\limsup_{\delta \to 0} \frac{\mathbb{E}[\tau_\delta]}{\log(1/\delta)} \leq 8\s
 - **与经典统计的联系**：停止时间的形式与离线变点分析中的 CUSUM/GLR 检验有内在关联
 - **优于聚类 bandit**：实验表明 MCPI 大幅优于将问题视为聚类 bandit（Yang et al., 2022）的方法，因为后者未利用分段常数的空间结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **高斯噪声假设**：理论结果依赖已知方差的高斯噪声假设，推广到亚高斯或更一般分布仍为开放问题
 - **一维动作空间**：仅考虑了一维分段常数函数，高维变化面（change surface）的扩展未涉及

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Localizing Events in Videos with Multimodal Queries
 description: >-
@@ -114,7 +114,7 @@ ICQ 包含三大贡献：
 - t-SNE 可视化直观展示了 SUIT 如何缓解分布偏移
 - 大规模系统基准（12 模型 × 4 适配方法 × 4 风格）为后续研究提供了完整参考
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ICQ-Highlight 基于 QVHighlights 验证集，规模有限，且参考图像为合成而非真实用户输入
 - 修正文本的类型分布可能不均匀，某些类型（如"关系"）样本较少

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Progressive Inference-Time Annealing of Diffusion Models for Sampling from Boltzmann Densities
 description: >-
@@ -122,7 +122,7 @@ PITA 是首个能对丙氨酸三肽进行笛卡尔坐标下平衡态采样的扩
 - Proposition 2 保证了无退火时权重方差为零，确保了小步长退火的稳定性
 - 渐进式训练（从高温到低温）的顺序微调策略在实践中非常有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要同时训练 score 模型和 EBM，EBM 训练本身就是一个挑战性问题
 - 如何自动确定最优的温度调度（步数和步长）仍待解决

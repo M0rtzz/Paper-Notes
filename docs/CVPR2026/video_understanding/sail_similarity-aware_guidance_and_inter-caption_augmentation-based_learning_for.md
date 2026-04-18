@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAIL: Similarity-Aware Guidance and Inter-Caption Augmentation-based Learning for Weakly-Supervised Dense Video Captioning
 description: >-
@@ -103,7 +103,7 @@ SAIL 弱监督在多数指标上超越全监督方法 CM2 和 E2DVC。
 2. **LLM 增强的精妙用法**：不直接将合成字幕混入主损失（会引入噪声），而是通过 inter-mask 作为独立辅助信号——"软叙事引导"而非"硬约束"
 3. **弱监督超越全监督**：在 ActivityNet 定位 F1 上与全监督方法持平，字幕质量部分指标超越，说明语义对齐是比时间边界标注更本质的监督信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 - SODA_c 提升幅度较小（+0.21），叙事连贯性改善有限
 - LLM 生成的合成字幕质量取决于 LLM 的世界知识，可能在专业领域（如烹饪、体育）不够精确
 - inter-mask 宽度 $w^{inter}$ 为固定超参，未自适应调整

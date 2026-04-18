@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FouriScale: A Frequency Perspective on Training-Free High-Resolution Image Synthesis
 description: >-
@@ -182,7 +182,7 @@ $$e^{-j2\pi(\frac{p'·m}{d_h·M} + \frac{q'·n}{d_w·N})} = e^{-j2\pi(\frac{pm}{
 4. **退火策略的直觉**：前期用 FouriScale 确定结构，后期用原始 UNet 填充细节——这种分阶段思想很有启发性
 5. **FouriScale Guidance 的设计**：巧妙地利用 attention map 替换在结构正确性和细节丰富性之间取得平衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **超高分辨率仍有挑战**：4096×4096 等极端分辨率下仍可能出现伪影
 2. **仅适用于 UNet 架构**：方法聚焦于卷积层操作，不适用于纯 Transformer（如 DiT）架构的扩散模型

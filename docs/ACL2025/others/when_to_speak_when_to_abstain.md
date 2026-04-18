@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When to Speak, When to Abstain: Contrastive Decoding with Abstention
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：弃权需要精确评估知识相关性并将其整合到生成过程——两者都具有挑战性。
 
-**本文要解决什么？** 设计一个覆盖所有四种场景的免训练解码方法：$\mathcal{P}$=1,$\mathcal{C}$=1（回答）；$\mathcal{P}$=1,$\mathcal{C}$=0（依赖参数）；$\mathcal{P}$=0,$\mathcal{C}$=1（依赖上下文）；$\mathcal{P}$=0,$\mathcal{C}$=0（弃权）。
+**本文目标** 设计一个覆盖所有四种场景的免训练解码方法：$\mathcal{P}$=1,$\mathcal{C}$=1（回答）；$\mathcal{P}$=1,$\mathcal{C}$=0（依赖参数）；$\mathcal{P}$=0,$\mathcal{C}$=1（依赖上下文）；$\mathcal{P}$=0,$\mathcal{C}$=0（弃权）。
 
 ## 方法详解
 
@@ -80,7 +80,7 @@ CDA 在所有场景下均超越现有 CCD 方法（Zhao et al., Shi et al.等）
 - **三分布融合的自动弃权机制**：不需要显式判断"是否弃权"，而是通过权重自然衰减到弃权分布——优雅且无需阈值设置。
 - **免训练**：直接应用于任何现成 LLM，不改参数不改架构——实用性极强。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 弃权指令模板的设计可能影响效果，需要良好的 prompt engineering。
 - 每步解码需要 3 次前向传播（参数/上下文/弃权），推理成本约 3x。
 - 熵校准中"内容无关"提示的选择可能不够鲁棒。

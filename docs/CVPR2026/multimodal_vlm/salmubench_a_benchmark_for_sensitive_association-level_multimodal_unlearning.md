@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SALMUBench: A Benchmark for Sensitive Association-Level Multimodal Unlearning
 description: >-
@@ -106,7 +106,7 @@ SALMUBench 提供完整的遗忘评估生态系统，包含三个核心组件：
 - 合成数据流水线设计精良：IP-Adapter 身份保持 + CLIP 过滤 + LLM 改写 + Faker 生成 PII，可复用性强
 - **三种失败模式的分类学**为未来方法研究提供了清晰的目标：需要同时解决遗忘效力、效用保持、和避免过度泛化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅针对 CLIP 双编码器，对以 CLIP 为 backbone 的扩散模型中敏感信息传播的评估是自然扩展方向
 - 仅覆盖结构化 PII（姓名、电话等），对隐式敏感概念（艺术风格、政治立场等）的泛化未知
 - 缺少**可恢复性诊断**——遗忘后的模型能否通过微调快速重新学习被遗忘的信息？

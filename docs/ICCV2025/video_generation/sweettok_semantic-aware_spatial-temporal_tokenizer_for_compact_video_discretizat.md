@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SweetTok: Semantic-Aware Spatial-Temporal Tokenizer for Compact Video Discretization
 description: >-
@@ -159,7 +159,7 @@ SweetTok 包含两个核心组件：
 - **一个 tokenizer，多任务通用**：重建、生成、图像处理、few-shot 理解全部覆盖。
 - **帧间残差的巧妙利用**：时间 tokenization 使用残差而非原始帧，天然去除时间冗余。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 空间 token 数 (256) 和时间 token 数 (1024) 的比例固定，不同视频内容应有不同最优分配。
 - 仅支持固定长度视频（17帧），自适应长度支持值得探索。

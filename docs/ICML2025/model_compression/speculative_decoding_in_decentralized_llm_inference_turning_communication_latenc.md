@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Speculative Decoding in Decentralized LLM Inference: Turning Communication Latency into Computation Throughput
 description: >-
@@ -139,7 +139,7 @@ DSD 的核心优势之一是**完全不需要训练或微调**：
 - **实用工作区间明确**：明确指出 $3 \leq N \leq 8$、$3t_0 < t_1 < 10t_0$ 的最优工作区间，为实际部署提供了清晰的适用性判断标准
 - **Roofline 分析视角**：通过计算强度（arithmetic intensity）分析，清晰解释了推测解码如何将 memory-bound 的逐 token 解码推向 compute-bound 区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Draft 模型选择未深入讨论**：论文使用现成的 draft 模型对，但未探讨如何为去中心化场景专门设计或优化 draft 模型
 - **节点异构性处理**：当前分析假设节点计算能力同构（统一 $t_0$），但实际去中心化部署中节点硬件差异可能很大

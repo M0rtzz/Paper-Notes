@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learned Image Compression with Hierarchical Progressive Context Modeling
 description: >-
@@ -117,7 +117,7 @@ tags:
 - 参数共享的编码步复用设计在减少参数的同时保持了上下文感知的适应能力
 - 优化算术编码的 Python-C 接口也是实用的工程贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 编码/解码时间 (~80-90ms) 虽优于部分方法但仍可优化，特别是算术编码的串行瓶颈
 - (2,3,6) 编码步数是手动选择的 trade-off，可以探索学习端自动分配

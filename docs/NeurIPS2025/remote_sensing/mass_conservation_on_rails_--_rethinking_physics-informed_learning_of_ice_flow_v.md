@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mass Conservation on Rails – Rethinking Physics-Informed Learning of Ice Flow Vector Fields
 description: >-
@@ -87,7 +87,7 @@ $$\mathcal{L} = (1-w_{dir}) \cdot \mathcal{L}_{MSE} + w_{dir} \cdot \mathcal{L}_
 - 实验设计严谨：真实南极数据、棋盘格划分测试、5次独立运行取均值和标准差
 - 代码开源、实验可复现，使用CodeCarbon监测碳排放体现负责任研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在2D稳态假设下验证，未考虑时间演变
 - Byrd冰川代表性有限，需在更多区域验证

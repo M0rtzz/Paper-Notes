@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{\text{total}} = \sum_i \left(e^{-s_i} \mathcal{L}_i + s_i\right)$
 - Welford 在线统计+对角高斯伪回放的无数据蒸馏方案极简有效
 - 不确定性加权避免了多损失项的手动调参
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在分类任务上验证，未扩展到分割/检测等密集预测任务
 - 提示池扩展是单调递增的，缺乏压缩/修剪机制，长期运行可能参数膨胀

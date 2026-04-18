@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Static Benchmarks to Dynamic Protocol: Agent-Centric Text Anomaly Detection for Evaluating LLM Reasoning
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **为何选文本异常检测**：(a) 需要跨句逻辑推理 (b) 抵抗模式匹配快捷方式和训练数据泄露 (c) 支持客观、细粒度评分。
 
-**核心idea一句话**：三 agent 竞争+验证循环自动生成难度适配的推理评估题目，基准随模型进步共进化。
+**核心 idea**：三 agent 竞争+验证循环自动生成难度适配的推理评估题目，基准随模型进步共进化。
 
 ## 方法详解
 

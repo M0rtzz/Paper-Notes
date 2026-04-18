@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hybrid eTFCE-GRF: Exact Cluster-Size Retrieval with Analytical p-Values for Voxel-Based Morphometry
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：pTFCE 快但不精确，eTFCE 精确但慢——两者的优势互补但从未被组合
 
-**本文要解决什么**：同时实现精确聚类大小检索和无置换解析推断
+**本文目标**：同时实现精确聚类大小检索和无置换解析推断
 
 **切入角度**：并查集是算法无关的数据结构，其聚类大小输出可以接入任何下游推断方式（不管是置换检验还是 GRF）——二者的组合没有技术障碍
 
-**核心idea一句话**：用 eTFCE 的并查集查询精确聚类大小，再送入 pTFCE 的 GRF 解析推断管线
+**核心 idea**：用 eTFCE 的并查集查询精确聚类大小，再送入 pTFCE 的 GRF 解析推断管线
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **pytfce 工程贡献**：纯Python实现、pip install 即用、无R/FSL依赖，极大降低使用门槛
 - 严格的6实验 Monte Carlo 验证协议值得学习——null FWER、power curve、runtime、smoothness、concordance 面面俱到
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍依赖 GRF 假设（平稳性、充分平滑），对低平滑度数据可能过于保守或反保守；非高斯分布的统计图（如 chi-square 或 F 统计量）需要额外近似
 - hybrid 版本 (~85s) 比 baseline pTFCE (~5s) 慢 17 倍，在不需要精确聚类的场景中 baseline 更实用；并查集的 $O(N\log N)$ 排序开销在超高分辨率数据上可能成为瓶颈
 - 残余的阈值网格离散化（来自证据累积的求和）仍存在，虽可通过增大 n 缓解但无法消除

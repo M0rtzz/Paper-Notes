@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniCombine: Unified Multi-Conditional Combination with Diffusion Transformer
 description: >-
@@ -32,11 +32,11 @@ UniCombine 提出基于 DiT 的多条件可控生成框架，通过 Conditional 
 
 **核心矛盾**：多个条件嵌入在 attention 中直接拼接会导致：(1) 计算复杂度随条件数平方增长 $O(N^2)$；(2) 不同条件信号在 attention 计算中相互干扰，难以有效利用预训练的单条件 LoRA 权重。
 
-**本文要解决什么？** (1) 设计统一框架处理任意条件组合；(2) 实现高效可扩展的多条件 attention 机制；(3) 构建多条件生成数据集。
+**本文目标** (1) 设计统一框架处理任意条件组合；(2) 实现高效可扩展的多条件 attention 机制；(3) 构建多条件生成数据集。
 
 **切入角度**：OminiControl 已经证明在 MMDiT 中通过 Condition-LoRA 可以处理单条件控制。关键观察是：OminiControl 是 UniCombine 在单条件设置下的特例——只需设计合适的多条件 attention 和 LoRA 管理机制就能扩展到多条件。
 
-**核心 idea 一句话**：通过 LoRA Switching 模块动态激活对应条件的预训练 LoRA 权重，并用 Conditional MMDiT Attention 限制条件分支间的信息交换（只允许 denoising/text 分支看到所有条件），实现高效且去耦的多条件融合。
+**核心 idea**：通过 LoRA Switching 模块动态激活对应条件的预训练 LoRA 权重，并用 Conditional MMDiT Attention 限制条件分支间的信息交换（只允许 denoising/text 分支看到所有条件），实现高效且去耦的多条件融合。
 
 ## 方法详解
 

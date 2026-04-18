@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoPrivacy: What Your First-Person Camera Says About You?
 description: >-
@@ -118,7 +118,7 @@ $$f^{\text{RAA}}(\mathbf{x}^E, \{\mathbf{x}_{1:M}^X\}) = \mathcal{A}\big(f(\math
 3. **零样本即高威胁**：开源基础模型无任何额外数据即可恢复敏感人口统计属性，对隐私法规和设备设计敲响警钟。
 4. **统一公式化**：用 SupCon 损失的正对定义变化统一个体/情境两大类检索任务，优雅简洁。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **标签体系粗糙**：性别仅 Male/Female，种族仅 Asian/Black/White（由标注者主观判断），年龄仅三档，遗漏大量多样性。
 2. **数据集偏差**：Ego-Exo4D 以实验室/特定活动场景为主，Charades-Ego 限于家庭室内，缺少户外/城市/驾驶等高频 ego 场景。

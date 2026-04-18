@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HD2-SSC: High-Dimension High-Density Semantic Scene Completion for Autonomous Driving
 description: >-
@@ -130,7 +130,7 @@ HD2-SSC = 图像编码器（ResNet50+FPN 提取 2D 特征）→ HSD 模块（解
 - **检测-精炼的两阶段设计**：先粗后精，几何关键体素提供结构先验，语义关键体素提供类别先验，KL 散度对齐确保一致性
 - **效率与性能兼得**：在更小的特征网格（128^3）上操作，性能更好且推理更快
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 严重遮挡和远距区域仍有失败案例（错误占用预测和不完整边界）
 - 伪体素化缺少显式的像素语义标签监督，展开维度的语义可能不够精确
 - 仅在 KITTI 系列数据集上验证，nuScenes 验证较初步

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PATCH: Psychometrics-Assisted Benchmarking of LLMs Against Human Populations
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **56 个国家/地区的明确人类参照**解决了现有基准“与谁比”的问题
 - **IRT vs 准确率的排名差异**说明简单指标可能严重误导
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试 8 年级数学，未覆盖更高级别或其他学科
 - IRT 假设 LLM 和人类遵循同一测量模型，可能不完全成立
 - 改进方向：多学科拓展、自适应 IRT 测试

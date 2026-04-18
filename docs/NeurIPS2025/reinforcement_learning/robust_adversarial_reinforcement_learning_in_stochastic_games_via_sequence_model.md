@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust Adversarial Reinforcement Learning in Stochastic Games via Sequence Modeling
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{\text{DT}}(\theta) = -\mathbb{E}[\log \pi_\theta(a_t | \tau_{0:t-
 - 将Nash Q-Learning的思想优雅地融入Decision Transformer框架，通过轨迹重标注实现
 - Expectile Regression作为min/max的可微近似是一个通用技巧，使得Q-learning和极值优化可以联合高效进行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在合成短视野随机博弈上进行，未在Poker等更复杂的多智能体竞争环境中验证
 - 离线设定限制了数据覆盖——如果行为策略未充分探索关键状态，NashQ估计可能不准确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Framework for Double-Blind Federated Adaptation of Foundation Models
 description: >-
@@ -133,7 +133,7 @@ BlindFed的整体流程分为三个阶段：
 - **SBS策略的双重价值**：不仅防止模型提取攻击，还可能作为正则化手段提升泛化
 - **辅助数据集可以OOD**：蒸馏阶段使用的辅助数据不需要与下游任务同分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **计算代价极高**：单个样本通过单个block的加密推理需136秒，12个block×多个样本×50轮通信，实际部署几乎不可行
 - **通信开销大**：密文膨胀2.8×，且需要逐block传输，总通信量 $N_k \times L \times C$
 - **半诚实假设过强**：实际中恶意参与者可能不遵循协议

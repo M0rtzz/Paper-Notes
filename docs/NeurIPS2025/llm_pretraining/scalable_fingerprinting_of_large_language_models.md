@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Fingerprinting of Large Language Models
 description: >-
@@ -96,7 +96,7 @@ tags:
 3. **正则化与指纹设计正交**：消融证明两者独立贡献
 4. **简单高效的共谋防御**：随机分配 + $\log(N)$ 的指纹数量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 主要实验使用 1-token response，多 token 场景待深入
 2. 未充分评估微调+共谋等组合攻击

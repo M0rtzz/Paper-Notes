@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Assigning Distinct Roles to Quantized and Low-Rank Matrices Toward Optimal Weight Decomposition
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：零初始化让LR沦为"误差修正项"，而权重分解初始化让LR担当"主要权重表示"——两者都不是最优的角色分配。
 
-**本文要解决什么**：找到联合Q+LR优化中低秩分量的最优初始化策略，使Q和LR各自发挥所长。
+**本文目标**：找到联合Q+LR优化中低秩分量的最优初始化策略，使Q和LR各自发挥所长。
 
 **切入角度**：量化最怕激活异常值(extreme activations放大权重敏感性)，而低秩分量(两个低bit因子的乘积)实际等效于更高bit表示——因此应让LR专门捕获异常值敏感权重。
 
@@ -112,7 +112,7 @@ k值影响(Llama2-7B, rank=256)：
 - **物理直觉**：异常值→高方差→量化误差大，让低秩分量"吸收"这些异常值是自然的
 - **统一框架视角**：将先量化/先分解理解为初始化选择，开辟了新的优化空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅关注weight-only量化，未涉及activation量化和KV cache量化
 - 仅在CALDERA框架中验证，可推广到其他Q+LR算法

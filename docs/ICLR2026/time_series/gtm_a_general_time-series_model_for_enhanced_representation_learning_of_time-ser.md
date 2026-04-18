@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GTM: A General Time-series Model for Enhanced Representation Learning of Time-Series Data
 description: >-
@@ -119,7 +119,7 @@ GTM 参数量 35.73M，训练速度 0.290s/iter，推理内存 1.25GB，在 A100
 3. **混合掩码预训练**：巧妙地通过概率控制将重建和自回归统一为单一预训练目标
 4. **实验全面**：覆盖预测、插补、异常检测、分类、zero-shot、few-shot、消融、可扩展性、计算效率等多维度评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 频域粒度仅编码为 5 种类型，对不规则采样或混合粒度的时序可能不够灵活
 2. 分类任务仍需替换投影层，未实现完全的任务无关性

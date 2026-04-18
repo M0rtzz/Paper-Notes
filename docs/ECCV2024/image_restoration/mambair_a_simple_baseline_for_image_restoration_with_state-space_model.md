@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaIR: A Simple Baseline for Image Restoration with State-Space Model
 description: >-
@@ -126,7 +126,7 @@ RSSB 设计消融（Set5/Set14/Urban100 PSNR）：
 3. **关于全局感受野的洞察**：通过 ERF 可视化清晰展示 MambaIR 实现了类似全注意力的全局感受野，但复杂度是线性的
 4. **可学习缩放因子**：控制跳跃连接，让网络自适应调节残差信息流
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 四方向扫描仍是一种启发式的 2D 适配方案，可能不是最优的空间建模方式
 2. 消融实验显示在某些数据集上 MambaIR 的提升不是特别显著（如 Set5 上仅 +0.06 vs SRFormer）

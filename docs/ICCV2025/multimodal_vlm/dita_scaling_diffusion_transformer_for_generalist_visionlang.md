@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dita: Scaling Diffusion Transformer for Generalist Vision-Language-Action Policy
 description: >-
@@ -30,9 +30,9 @@ tags:
 - **领域现状**：通用机器人策略通过在OXE等大规模跨embodiment数据上预训练取得进展。
 - **现有痛点**：(1) 离散化动作(OpenVLA)限制异构动作空间的适应性；(2) 用MLP/小DiT作为扩散head的方法(Octo/π₀)在大规模数据的多样性面前表达能力不足；(3) 在embedding上去噪丢失了历史观测的视觉细节。
 - **核心矛盾**：异构的跨embodiment动作空间 vs 需要统一的策略表示。
-- **本文要解决什么**：设计表达力强、可扩展的通用机器人策略架构。
+- **本文目标**：设计表达力强、可扩展的通用机器人策略架构。
 - **切入角度**：将动作去噪直接放入causal Transformer中与视觉token交互。
-- **核心idea一句话**：动作去噪不应在压缩的embedding上进行，而应直接与原始视觉patch token做in-context attention。
+- **核心 idea**：动作去噪不应在压缩的embedding上进行，而应直接与原始视觉patch token做in-context attention。
 
 ## 方法详解
 
@@ -43,17 +43,17 @@ CLIP编码语言→DINOv2+Q-Former提取图像特征→拼接[语言, 图像, ti
 ### 关键设计
 
 **设计1：In-Context Conditioning扩散**
-- **做什么**：将噪声动作token与视觉/语言token在同一causal Transformer中处理。
+- **功能**：将噪声动作token与视觉/语言token在同一causal Transformer中处理。
 - **核心思路**：动作token直接参与注意力计算，可以attend到每个图像patch token，捕捉微妙的动作增量和环境细节。
 - **设计动机**：先前方法在单个embedding上条件化去噪，丢失了空间细节；in-context conditioning保留了完整的视觉信息。
 
 **设计2：DINOv2端到端微调+Q-Former**
-- **做什么**：DINOv2提取多尺度特征，Q-Former基于语言指令上下文查询关键视觉特征。
+- **功能**：DINOv2提取多尺度特征，Q-Former基于语言指令上下文查询关键视觉特征。
 - **核心思路**：DINOv2在网络数据上预训练与机器人数据有gap，端到端微调弥合差距。Q-Former用FiLM conditioning从DINOv2 patch特征中选择任务相关信息，减少计算量。
 - **设计动机**：冻结的视觉编码器在机器人领域不够好，但全微调token过多需要Q-Former压缩。
 
 **设计3：轻量可扩展架构**
-- **做什么**：仅用334M参数实现SOTA性能。
+- **功能**：仅用334M参数实现SOTA性能。
 - **核心思路**：LLaMA风格causal Transformer，无需大型VLM(如PaliGemma)。DDPM训练(1000步)+DDIM推理(20步)。
 - **设计动机**：提供简洁、轻量、开源的baseline，降低社区入门门槛。
 
@@ -100,7 +100,7 @@ CLIP编码语言→DINOv2+Q-Former提取图像特征→拼接[语言, 图像, ti
 2. 轻量开源baseline对社区价值大。
 3. 跨embodiment预训练+10-shot真实世界微调的范式实用性极强。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅用第三人称视角，加入腕部相机/触觉可进一步提升。
 2. Q-Former的查询数量对性能的敏感度未充分分析。

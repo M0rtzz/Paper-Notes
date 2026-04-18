@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generative Social Choice: The Next Generation
 description: >-
@@ -121,7 +121,7 @@ $$\frac{\mathrm{sup}(\alpha^*, S, \ell - \delta)}{\max_{\alpha \in \mathcal{U}: 
 4. **实用性强**: PROSE 只需无结构文本输入，无需数据集特定调参，适用场景广泛
 5. **算法不需知道误差大小**: DemocraticProcess 在执行时无需知道 $\beta, \gamma, \delta, \mu$ 的具体值
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **GPT-4o 的不透明性**: 查询实现依赖黑盒 LLM，无法保证单次响应质量，可能存在偏见和幻觉
 2. **Complex-DemocraticProcess 计算开销大**: $C=[B]$ 导致内层循环遍历所有成本值，实际部署时需权衡
 3. **生成查询实现困难**: 作者观察到 GPT-4o 在识别偏好一致子群方面表现不佳，需依赖额外的嵌入聚类步骤

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Comprehensive Study of Decoder-Only LLMs for Text-to-Image Generation
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **层归一化平均的优雅性**：不需要任何训练，仅改变embedding提取方式就能获得巨大提升。这个trick可直接应用于任何使用LLM做文本编码器的系统
 - **系统性benchmark设计**：27个模型×统一训练配置×10维技能评估，控制变量严谨，结论可信度高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在256×256分辨率的U-Net架构上验证，未测试DiT架构和更高分辨率
 - 计算成本高：每个模型训练7天×32 A100，27个模型的系统研究耗费巨大

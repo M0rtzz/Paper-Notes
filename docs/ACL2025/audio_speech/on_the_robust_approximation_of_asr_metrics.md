@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Robust Approximation of ASR Metrics
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 需要在没有标签的情况下获得可靠的 ASR 性能量化指标，且要在分布外数据和不同 ASR 模型间保持鲁棒性。
 
-**本文要解决什么**: 在四个评估场景下（IID-Source、IID-Target、OOD-Source、OOD-Target）实现鲁棒的 ASR 指标近似，覆盖 40+ 模型 × 14 数据集。
+**本文目标**: 在四个评估场景下（IID-Source、IID-Target、OOD-Source、OOD-Target）实现鲁棒的 ASR 指标近似，覆盖 40+ 模型 × 14 数据集。
 
 **切入角度**: 结合 SONAR 多模态统一 embedding 的语音-文本相似度和高质量 proxy 模型的 WER/CER 作为特征，训练集成回归模型。
 
-**核心idea一句话**: 用语音-转录在统一表示空间中的余弦相似度 + proxy 模型的错误率作为特征，训练回归模型预测真实 WER/CER。
+**核心 idea**: 用语音-转录在统一表示空间中的余弦相似度 + proxy 模型的错误率作为特征，训练回归模型预测真实 WER/CER。
 
 ## 方法详解
 
@@ -125,7 +125,7 @@ $$\text{Similarity}(x_{\text{speech}}, x_{\text{text}}) = \frac{e_{\text{speech}
 - **Proxy 选择策略灵活**: 动态排名选择最佳 proxy，避免自参照偏差
 - **规模令人印象深刻**: 40+ 模型 × 14 数据集 × 4 评估设置 = 极其全面的评估
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 对极高错误率模型（WER > 80%）的近似精度较低，可能需要非线性特征
 2. Proxy 模型的选择依赖于对多个模型的预评估，初始设置成本较高

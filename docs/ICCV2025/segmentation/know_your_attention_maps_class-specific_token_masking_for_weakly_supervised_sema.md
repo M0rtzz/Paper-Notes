@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Know Your Attention Maps: Class-specific Token Masking for Weakly Supervised Semantic Segmentation
 description: >-
@@ -111,7 +111,7 @@ tags:
 - 在标注稀缺的专业领域（遥感/医学）上特别有效，减少了对大规模标注数据的依赖
 - 在 DFC2020 遥感数据集上超越全监督方法，说明弱监督 + 好的注意力利用可以胜过粗糙的全监督
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 随着类别数增加，[CLS] token 数量线性增长，模型参数和计算复杂度随之上升，**可扩展性受限**
 - ADE20K（150 类）等大规模类别场景下的效率是公开挑战

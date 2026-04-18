@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Emergent Misalignment is Easy, Narrow Misalignment is Hard
 description: >-
@@ -95,7 +95,7 @@ tags:
 
 - **缓解策略的启示**：KL 正则化有效但需要 OOD 数据，说明安全微调需要显式的行为约束。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要在 Qwen-Coder-32B-Instruct 和 Qwen 系列上验证，覆盖 0.5B-32B，但仅两个泛化案例（EM + 技术文本）
 

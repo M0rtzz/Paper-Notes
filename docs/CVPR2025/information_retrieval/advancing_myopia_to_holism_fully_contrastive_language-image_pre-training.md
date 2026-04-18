@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Advancing Myopia To Holism: Fully Contrastive Language-Image Pre-training
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **推理灵活性**：多分支输出的多个embedding可在推理时按需选择和组合——粗粒度分类用全局embedding，细粒度检索用多embedding融合，实用价值高
 - **语义可解释性**：不同分支的embedding自然形成语义分解（如一个捕获物体、一个捕获风格、一个捕获空间关系），增强了模型可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VLM caption需要额外计算开销（尤其多VLM方案），大规模数据集上成本显著
 - M个分支的语义角色是隐式学习的，没有显式约束保证每个分支的专门化

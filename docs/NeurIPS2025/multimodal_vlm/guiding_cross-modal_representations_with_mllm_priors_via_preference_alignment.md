@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Guiding Cross-Modal Representations with MLLM Priors via Preference Alignment
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L} = \lambda \mathcal{L}_{RPA} + (1 - \lambda) \mathcal{L}_{contrast}
 3. **偏好权重设计细腻**：用 MLLM 对齐分数差作为偏好强度权重，更关注有明确偏好的样本对
 4. **统一的模态间隙度量**：基于 Wasserstein 距离的度量可比较不同架构（logit-based vs embedding-based）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 跨模态表示可能继承 MLLM 的内在偏见
 2. 未在更复杂的任务上验证（如组合检索 composed retrieval）

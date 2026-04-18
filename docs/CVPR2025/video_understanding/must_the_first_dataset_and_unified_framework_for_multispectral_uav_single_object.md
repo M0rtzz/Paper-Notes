@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MUST: The First Dataset and Unified Framework for Multispectral UAV Single Object Tracking
 description: >-
@@ -119,7 +119,7 @@ HOT 数据集上 SOTA 精度 + 最快速度（37 FPS）。GOT10K 上与 SOTA 持
 - **光谱提示的持续更新机制**：类似 memory bank 但更轻量，仅 1 个 token 即可编码目标光谱特性
 - 参数重建策略简单实用：仅通过插值即可将 RGB 预训练扩展到 MSI
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多光谱相机帧率仅 5 FPS，限制了高速运动场景
 - 8 个光谱波段有限，更多波段可能带来更好表征

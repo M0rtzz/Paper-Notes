@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation
 description: >-
@@ -99,7 +99,7 @@ GaRAGe 本身是评估基准而非模型，不涉及训练。评估使用 GPT-4o
 - RAF 指标的提出具有重要意义：传统 factuality 只关心是否有依据，而 RAF 进一步要求依据必须是相关的、新鲜的
 - 数据集同时覆盖 Web 和私有 KB 的混合检索场景，贴近企业部署的真实需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅有英语数据，缺乏多语言支持
 2. 评价使用 GPT-4o 作为 judge，可能存在对 GPT 系列模型的偏好

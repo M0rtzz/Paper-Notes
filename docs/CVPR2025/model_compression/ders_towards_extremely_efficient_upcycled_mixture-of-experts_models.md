@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeRS: Towards Extremely Efficient Upcycled Mixture-of-Experts Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：upcycled MoE的专家虽然功能上有差异化，但权重空间中的差异极其微小（delta权重相比基础权重可以忽略不计），当前没有方法利用这一特性减少参数。
 
-**本文要解决什么？** 如何利用upcycled MoE专家间的高相似性特征，在训练和推理两个阶段都实现极致的参数压缩。
+**本文目标** 如何利用upcycled MoE专家间的高相似性特征，在训练和推理两个阶段都实现极致的参数压缩。
 
 **切入角度**：将每个专家$W_i$分解为共享基础$W_{base}$加专家特有的微小调整$\Delta_i$，然后用轻量形式表示$\Delta_i$。
 
-**核心idea一句话**：upcycled MoE的专家差异只在微小的delta权重上，用稀疏/量化/低秩压缩delta即可在几乎不损性能的情况下极大减少参数。
+**核心 idea**：upcycled MoE的专家差异只在微小的delta权重上，用稀疏/量化/低秩压缩delta即可在几乎不损性能的情况下极大减少参数。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ DeRS范式三步走：Decompose（将N个专家权重分解为$W_{base} + \Delta
 - **参数减少2270倍仍能工作**：这个数字令人震惊，说明upcycled MoE中专家差异化的信息量远比大家想象的少得多
 - **训练和推理双阶段适用**：DeRS Compression（后训练压缩）和DeRS Upcycling（参数高效训练）涵盖了MoE的全生命周期
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅适用于upcycled MoE，对从头训练的MoE（如Switch Transformer）不适用，因为专家间没有共享初始化
 - 稀疏矩阵的索引$I_i$是随机固定的，探索学习索引位置可能进一步提升性能
 - DeRS Compression中的在线合成$W_{base} + \mathcal{F}(\Delta_i)$引入额外计算，未分析推理延时影响

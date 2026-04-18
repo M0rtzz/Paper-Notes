@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAR-FL: A Communication Efficient Peer-to-Peer Federated Learning System
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **模块化无服务设计**：完全分散化，无单点故障，DHT 仅传元数据。
 - **隐私保护自然扩展**：DP 适配不需要中心协调，保留了隐私保证。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 相比中心化 FedAvg 仍有性能缺口（虽然相对 P2P baseline 优势明显）
 - 参与率 <50% 时性能明显下降

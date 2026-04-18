@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Statistical Validity and Power in Hybrid Controlled Trials: A Randomization Inference Approach with Conformal Selective Borrowing
 description: >-
@@ -132,7 +132,7 @@ $$\hat{\tau}_\gamma = \frac{1}{n_\mathcal{R}} \sum_{i=1}^n \left[S_i \hat{\mu}_{
 4. **Post-selection有效性**：允许 $\hat{\mathcal{E}}(\gamma)$ 随FRT重采样变化，正确纳入选择不确定性
 5. **非渐近理论**：超额风险界和MSE估计误差界均为非渐近的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **No-free-lunch**：当偏差不可忽略又难以检测时（$b=2,3,4$），CSB可能比NB功效更低——这是所有选择性借用方法的固有限制
 - Fisher零假设是强零假设（所有个体处理效应均为零），弱零假设（平均处理效应为零）需进一步扩展

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Retrospective In-Context Learning for Temporal Credit Assignment with Large Language Models
 description: >-
@@ -101,7 +101,7 @@ $$\min_\pi \mathbb{E}_{s \sim d_{\pi_0}}\left[D_{KL}\left(\frac{1}{Z(s)} \odot \
 - 理论基础扎实：Theorem 4.1 为方法提供了规范性支撑
 - 适用于模拟预算有限（1k-10k 步）的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持离散有限动作空间（需要枚举所有动作计算归一化项 $Z$）
 - BabyAI 任务相对简单，更复杂推理任务的效果未知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SparseLoRA: Accelerating LLM Fine-Tuning with Contextual Sparsity
 description: >-
@@ -114,7 +114,7 @@ $$\mathbf{s} = \mathbf{q} \odot \mathbf{k}$$
 4. **与现有 PEFT 正交**：SparseLoRA 减少计算量，LoRA/QLoRA 减少内存，可组合使用
 5. 在 LLaMA2-13B 上 SparseLoRA 甚至**超过 LoRA 精度**（85.0 vs 84.7），说明适度稀疏有正则化效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **敏感性分析需要离线搜索**：层稀疏配置依赖代理任务的敏感性分析，换任务可能需要重做
 2. **实测加速 < 理论加速**：FLOPs 减少 2.2× 但实测仅 1.6×，受限于 GPU 稀疏计算效率和内存带宽

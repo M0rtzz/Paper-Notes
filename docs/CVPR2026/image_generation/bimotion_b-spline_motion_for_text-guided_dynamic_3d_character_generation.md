@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiMotion: B-spline Motion for Text-guided Dynamic 3D Character Generation
 description: >-
@@ -127,7 +127,7 @@ $$\mathcal{L}_{VAE} = \mathcal{L}_{Fit} + 0.3 \cdot \mathcal{L}_{Corr} + 0.1 \cd
 - **多层级嵌入创新**：受小波分解启发的控制点嵌入显著优于标准频率编码
 - **高质量数据管线**：构建 39K 级别带丰富标注的运动数据集，自动标注管线含 inspector 迭代校验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对高频复杂运动（如快速振动）表达能力受限，需增加控制点数量
 - 假设固定拓扑 mesh，不支持拓扑变化的运动（如分裂、流体等）

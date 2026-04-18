@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Transformers Through Conditioned Embedded Tokens
 description: >-
@@ -51,7 +51,7 @@ Transformer 的核心是自注意力机制，它通过 $\mathbf{A}(X) = \text{so
 
 #### 1. 自注意力条件数分析
 
-- **做什么**：建立自注意力矩阵条件数的理论上界
+- **功能**：建立自注意力矩阵条件数的理论上界
 - **核心结果**（Proposition 4.2）：
     - 线性注意力：$\kappa(\mathbf{LA}(X)) \leq \kappa(W_Q) \cdot \kappa(W_K) \cdot \kappa(W_V) \cdot \kappa(X)^3$
     - Softmax 注意力：$\kappa(\mathbf{A}(X)) \leq \kappa(\text{softmax}(XW_QW_K^TX^T)) \cdot \kappa(X) \cdot \kappa(W_V)$
@@ -59,14 +59,14 @@ Transformer 的核心是自注意力机制，它通过 $\mathbf{A}(X) = \text{so
 
 #### 2. Conditioned Embedded Tokens
 
-- **做什么**：构造修正矩阵 $C$ 使 $\kappa(X+C) \leq 2$
+- **功能**：构造修正矩阵 $C$ 使 $\kappa(X+C) \leq 2$
 - **核心定理**（Theorem 4.4）：对任意 $\kappa(X) > 2$ 的嵌入矩阵，存在 $C$ 使得 $\kappa(X+C) \leq 2$
 - **具体方法**：对 $X$ 做 SVD 分解，通过调整奇异值来构造最优修正项。修正项的计算是确定性的，不引入额外可学习参数
 - **设计动机**：即使上界只是近似估计，实验表明条件数的降低与性能提升高度相关
 
 #### 3. 跨层传播效应
 
-- **做什么**：验证第一层的条件数改善能传播到后续层
+- **功能**：验证第一层的条件数改善能传播到后续层
 - **核心发现**：虽然理论只证明了第一层，但实验显示所有层（平均）的自注意力条件数都显著降低
 - **设计动机**：第一层的输出作为第二层的输入，条件数的改善具有级联效应
 
@@ -142,7 +142,7 @@ Transformer 的核心是自注意力机制，它通过 $\mathbf{A}(X) = \text{so
 3. **实现简洁**：仅需对嵌入矩阵做 SVD 并添加修正项，不需要修改训练配置或引入超参数
 4. **揭示了被忽视的优化瓶颈**：嵌入令牌的条件数经常达到 10³ 量级，这个问题之前几乎未被关注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论缺失最后一步**：未证明条件数改善→NTK 改善→优化收敛加速的完整链条
 2. **softmax 注意力的条件数上界需要额外假设**（Eq.14 的条件假设）

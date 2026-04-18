@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fleet of Agents: Coordinated Problem Solving with Large Language Models
 description: >-
@@ -90,7 +90,7 @@ CoT等方法成本低但不适合需要环境交互的序列决策任务。
 4. 在Game of 24/WebShop等多样任务上一致有效。
 5. 不需要回溯使得实现更简单。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 启发式价值函数的设计需要任务特定知识。
 2. n×t的固定预算可能不够灵活。

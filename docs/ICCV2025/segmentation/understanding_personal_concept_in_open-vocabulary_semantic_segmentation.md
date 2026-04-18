@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Personalized OVSS: Understanding Personal Concept in Open-Vocabulary Semantic Segmentation
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **极少参数量**：仅需训练一个文本嵌入向量 + 两个线性层，200次迭代即可完成
 - **基准建设贡献**：建立了FSS$^{\text{per}}$、CUB$^{\text{per}}$、ADE$^{\text{per}}$三个新基准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当同类物体外观极其相似时（如只有微小logo差异的杯子），区分能力可能不足
 - 评估基准主要基于FSS-1000和CUB-200，真实场景的复杂度可能更高

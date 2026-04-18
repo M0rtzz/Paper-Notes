@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Document Summarization with Conformal Importance Guarantees
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：摘要天然需要压缩（shorter is better），但安全关键场景要求不遗漏重要信息（complete is better）——需要在简洁性和完整性之间提供可控的平衡。
 
-**本文要解决什么**：如何为摘要提供形式化的统计保证——以 $\geq 1-\alpha$ 的概率保留 $\geq \beta$ 比例的重要句子？
+**本文目标**：如何为摘要提供形式化的统计保证——以 $\geq 1-\alpha$ 的概率保留 $\geq \beta$ 比例的重要句子？
 
 **切入角度**：Conformal Prediction已在分类/回归/QA中提供分布无关保证，本文将其从"精度保证"（conformal factuality ensuring retained claims are factual）扩展为"召回保证"（ensuring important sentences are retained）。
 
@@ -103,7 +103,7 @@ $$1 - \alpha \leq \mathbb{P}[B(F_{\hat{q}}(x_{n+1}); y^*_{n+1}) \geq \beta] < 1 
 - **极致简洁的框架**：核心只需要一个评分函数+校准阈值+过滤，可以无缝叠加到任何现有方法上。任何能给句子打分的方法都可以用。
 - **$\alpha$-$\beta$双参数控制**：用户可以精细控制"我能接受多少风险（$\alpha$）"和"至少保留多少比例的重要信息（$\beta$）"，这在高风险应用中非常实用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要有ground truth标注的校准集，虽然100个样本不多，但在新领域获取标注仍有成本。
 - 重要性完全由评分函数 $R$ 决定——如果 $R$ 质量差，满足覆盖但摘要会非常长（不够简洁）。
 - 按句子粒度分割可能不适合所有场景（如对话数据、表格数据）。

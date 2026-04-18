@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QKV Projections Require a Fraction of Their Memory
 description: >-
@@ -114,7 +114,7 @@ PAMM 分两阶段工作：(1) 前向时将 $X$ 压缩为少量生成点和辅助
 - 与 FlashAttention 等完全正交，可直接叠加使用
 - 惊喜发现：高压缩比下 PPL 反而略有改善，暗示正则化效应
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅应用于 QKV 投影，未探索 FFN 层的激活压缩
 - 邻域条件参数 $\varepsilon$ 的最优设置为 $\infty$（即不使用），理论解释不充分

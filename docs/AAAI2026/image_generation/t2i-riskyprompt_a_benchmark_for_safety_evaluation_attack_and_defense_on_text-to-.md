@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] T2I-RiskyPrompt: A Benchmark for Safety Evaluation, Attack, and Defense on Text-to-Image Model
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：现有数据集的prompt语义模糊导致T2I模型生成风险图像的概率低，无法有效评估模型安全性
 
-**本文要解决什么？** 构建一个覆盖全面、标注精细、有效性高的T2I风险prompt基准
+**本文目标** 构建一个覆盖全面、标注精细、有效性高的T2I风险prompt基准
 
 **切入角度**：分析7个平台的使用政策提出层次化风险分类，6阶段pipeline确保数据质量，reason-driven检测方法替代传统分类器
 
-**核心idea一句话**：层次化风险分类 + 6阶段数据构建pipeline + reason-driven MLLM检测 = 全面评估T2I安全的新基准
+**核心 idea**：层次化风险分类 + 6阶段数据构建pipeline + reason-driven MLLM检测 = 全面评估T2I安全的新基准
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **"有效性过滤"环节**很重要：先生成验证再保留，确保每条prompt都能真正触发风险内容
 - **9条key insights**为T2I安全社区提供了系统性的认知框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据构建依赖大量人工标注，扩展到更多语言/文化的风险类型成本高
 - 只评估了开源T2I模型，商用模型（Midjourney、DALL-E 3）因API限制未覆盖
 - 风险分类体系可能需要随社会发展持续更新

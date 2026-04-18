@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GlycanAA: Modeling All-Atom Glycan Structures via Hierarchical Message Passing and Multi-Scale Pre-training
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **填补空白**：首个有效的全原子级糖链编码器
 - **自监督预训练价值**：多尺度掩码让模型理解不同层级的依赖关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 缓存截断在方法部分后段，完整实验数表未获取
 - 糖链-蛋白质交互建模可作为下一步扩展

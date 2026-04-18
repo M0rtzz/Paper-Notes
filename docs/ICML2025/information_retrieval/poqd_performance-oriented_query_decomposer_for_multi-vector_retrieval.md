@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] POQD: Performance-Oriented Query Decomposer for Multi-Vector Retrieval
 description: >-
@@ -156,7 +156,7 @@ $$\mathcal{L}(\Theta^*(p^{\text{old}}); p^{\text{old}}) - \mathcal{L}(\Theta^*(p
 4. **动机示例极具说服力**："Hong Kong" → "Kong" 匹配 King Kong 的案例直观展示了 token 级分解的荒谬性
 5. **通用性强**：POQD 可无缝集成到任意基于检索的系统中，不限于 RAG
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **LLM 调用成本**：每次优化 prompt 和分解查询都需要调用 LLM，对大规模部署可能有额外开销
 2. **检索模型冻结**：当前仅训练生成器，若能联合更新检索模型可能带来更大收益（但计算开销也更大）

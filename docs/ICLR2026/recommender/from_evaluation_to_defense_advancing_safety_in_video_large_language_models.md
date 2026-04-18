@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Evaluation to Defense: Advancing Safety in Video Large Language Models
 description: >-
@@ -93,7 +93,7 @@ VideoSafety-R1 是一个后训练框架，包含三个创新组件：VideoSafety
 - 动态奖励适应机制优雅地平衡了安全性和响应质量——分类正确时放松 ROUGE 约束鼓励自然回复
 - 双模态独立标注（视频有害性 vs 文本有害性）的设计使模型能区分不同来源的风险
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 安全分类的二值标签（有害/安全）可能过于粗糙，细粒度风险等级未考虑
 - 过度防御（误拒率）需要与安全性做权衡——VSE-SafeQ 子集可评估但论文未深入分析
 - 基线模型为 VideoLLaMA3-2B（2B 参数），对更大模型（7B+）的效果未充分验证

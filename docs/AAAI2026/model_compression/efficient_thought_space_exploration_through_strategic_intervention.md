@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Thought Space Exploration Through Strategic Intervention
 description: >-
@@ -63,7 +63,7 @@ HPR 采用两个角色：
 
 1. **分布不一致性（Distributional Inconsistency, DI）**:
 
-    - **做什么**：量化当前推理树与 Hinter 目标分布之间的差距
+    - **功能**：量化当前推理树与 Hinter 目标分布之间的差距
     - **核心思路**：定义特征分布 $Q_V$（将 Hinter 分布 $P_\theta$ 投影到已探索路径集合 $V$ 上），然后计算 $D_{KL}(Q_V || P_\theta)$
     - **特征分布公式**：
     $Q_V(r_i|\mathbf{x}, \mathbf{r}_{1:i-1}) = \frac{P_\theta(r_i|\mathbf{x}, \mathbf{r}_{1:i-1})}{\sum_{r'_i \in N_V(\mathbf{r}_{1:i-1})} P_\theta(\mathbf{r}'_i|r_{1:i-1})}$
@@ -71,7 +71,7 @@ HPR 采用两个角色：
 
 2. **分布不一致性缩减（DIR）**:
 
-    - **做什么**：估计从某个节点 $\mathbf{z}$ 扩展新分支能带来的 KL 散度减少量
+    - **功能**：估计从某个节点 $\mathbf{z}$ 扩展新分支能带来的 KL 散度减少量
     - **核心公式**（节点版本）：
     $\text{DIR}(\mathbf{z}; V, P_\theta) = D_{KL}(Q_V||P_\theta) - D_{KL}(Q_{V \cup \{\mathbf{v}\}}||P_\theta)$
       分解为三项：前缀概率项 × （next-token KL差 + 子树KL贡献）
@@ -156,7 +156,7 @@ HPR 采用两个角色：
 4. **案例分析生动**：数学题案例清晰地展示了 Hinter 如何在关键位置修正 Practitioner 的错误推导
 5. **通用框架**：可推广到非推理场景（如领域知识模型 + 通用模型协作）
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. Hinter 的概率评估需要对新路径做前向传播，虽然是单次但仍有额外成本
 2. 目前仅支持同一模型家族（如 Qwen 系列）的大小模型组合，跨家族的词汇表对齐是待解决问题
 3. Hint 长度是超参数，不同任务需要调整（数学32 vs 常识16）

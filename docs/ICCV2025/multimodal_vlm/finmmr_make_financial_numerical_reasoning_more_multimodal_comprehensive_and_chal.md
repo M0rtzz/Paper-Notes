@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FinMMR: Make Financial Numerical Reasoning More Multimodal, Comprehensive, and Challenging
 description: >-
@@ -109,7 +109,7 @@ FinMMR 基准由两个数据来源构成：
 - **知识增强实验**展示了结构化领域知识（3,133 个 Python 金融函数库）对 MLLM 推理的巨大提升潜力
 - **数据质量保障**：16名金融研究生+2名CFA持证人历时3个月标注验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 测试集答案未公开（防泄露），依赖在线评测平台，可能限制复现和深度分析
 - 干扰图片仅用于中文子集，英文子集缺乏此类挑战
@@ -225,7 +225,7 @@ FinMMR 的构建分为两条路径：
 - **知识增强的有效性**：通过结构化金融函数库 + MLLM 引导检索 + MLLM 判断，弱模型可逼近 SOTA 性能
 - **关于 Extended Thinking 的洞察**：提升有限（+2.2pp）但 token 消耗增加 12 倍，引出效率与效果的权衡问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅评估了 zero-shot 设置，未探索 few-shot 或微调场景
 - CRRQA 部分依赖 Qwen-VL-Max 生成初始问题，可能引入模型偏差

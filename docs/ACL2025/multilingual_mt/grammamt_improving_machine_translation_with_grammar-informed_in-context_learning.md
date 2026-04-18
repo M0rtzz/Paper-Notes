@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GrammaMT: Improving Machine Translation with Grammar-Informed In-Context Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: 低资源/濒危语言的翻译需求迫切，但可用数据和语言资源极度匮乏。如何用最少、最易获取的语言学信息最大化翻译质量是核心问题。
 
-**本文要解决什么**: 设计一种无需训练、仅需少量语言学注释就能提升 LLM 翻译低资源语言能力的方法。
+**本文目标**: 设计一种无需训练、仅需少量语言学注释就能提升 LLM 翻译低资源语言能力的方法。
 
 **切入角度**: 利用 Interlinear Glossed Text (IGT)——语言学中常见的语素级注释格式，包含源句、注释行和目标翻译的三元组——作为语法信息注入 LLM prompt。
 
-**核心 idea 一句话**: 将 IGT 语法注释嵌入 few-shot prompt 中，用最小的语言学标注成本换取低资源翻译的显著提升。
+**核心 idea**: 将 IGT 语法注释嵌入 few-shot prompt 中，用最小的语言学标注成本换取低资源翻译的显著提升。
 
 ## 方法详解
 
@@ -140,7 +140,7 @@ Urdu 和 Russian 上 chain-gloss 比 few-shot 高出 2.5+ BLEU。
 - **链式思维的语言学实例化**: chain-gloss 是 CoT 在翻译任务中的自然变体，且语法注释比"让模型一步步思考"有更明确的结构
 - **三种策略覆盖不同场景**: model-gloss 适合有 gloss 模型的语言，chain-gloss 适合通用场景，gloss-shot 适合域外迁移
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 主要评估翻译到英语（→en）方向，反向翻译（en→）仅做了初步探索
 - gloss-shot 的可解释性较差，不清楚非相关示例中的 gloss 如何影响翻译

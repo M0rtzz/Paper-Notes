@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do We Need Perfect Data? Leveraging Noise for Domain Generalized Segmentation
 description: >-
@@ -141,7 +141,7 @@ Sigmoid 衰减 vs 线性衰减 vs 无衰减：Sigmoid 38.04% > 无衰减 36.82% 
 3. **自适应学习聚焦**：UBE 基于预测熵自动识别困难区域，免除人工调整边界权重
 4. **渐进式课程学习**：HAS 的 sigmoid 衰减调度确保早期探索充分、后期聚焦困难样本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练扩散模型生成合成数据（如 DGInStyle/ALDM），无法脱离合成数据使用
 - HAS 在标准域上有轻微性能下降，难例聚焦与全域均衡之间的权衡尚可进一步优化

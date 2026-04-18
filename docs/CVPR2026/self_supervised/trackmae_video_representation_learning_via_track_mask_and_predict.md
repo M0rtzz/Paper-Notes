@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TrackMAE: Video Representation Learning via Track, Mask, and Predict
 description: >-
@@ -150,7 +150,7 @@ TrackMAE（图2）在标准MVM基础上增加两个组件：
 4. **特征目标互补性分析**：CLIP与轨迹的互补性最强（+4.0%），为高层语义 + 运动信号的联合学习提供了有力佐证
 5. **完全在线提取**：轨迹从RGB视频在线提取（而非MME的预计算光流），简化了训练流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CoTracker3的运行开销：虽然采用离线模式和稀疏网格，但仍增加了训练时间
 - 仅验证了ViT-B/L，对更大模型（如ViT-H/Giant）和更大数据集的缩放行为未知

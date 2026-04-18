@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement
 description: >-
@@ -108,7 +108,7 @@ $$W^* = \arg\min_W \|Y - XW\|_F^2 + \alpha\|W\|_F^2$$
 3. ⭐⭐ **揭示全嵌入的偏差**：标准 LLM 嵌入的脑预测成功主要归因于浅层特征，掩盖了更微妙的深层认知贡献——这对所有脑-LLM 对齐研究是重要的方法论警示
 4. ⭐⭐ **方法通用性**：解纠缠框架可推广到任何层级式表征的分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模**：仅 9 名患者的 ECoG 数据，电极覆盖受限于临床需要而非实验设计
 2. **线性假设**：残差解纠缠和脑编码均使用线性模型（Ridge 回归），可能遗漏非线性映射

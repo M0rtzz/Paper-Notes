@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SecP-Tuning: Efficient Privacy-Preserving Prompt Tuning for Large Language Models via MPC
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 3. **核心矛盾**: MPC环境中大量非线性操作（Softmax、GELU、LayerNorm）需要分解为加法/乘法/比较的组合来近似，通信效率极低。梯度高效微调方法（LoRA等）虽减少参数更新量，但无法消除反向传播和softmax的MPC通信开销。
 
-4. **本文要解决什么？**: 如何在MPC环境中高效且高性能地实现LLM的隐私保护领域适配？
+4. **本文目标**: 如何在MPC环境中高效且高性能地实现LLM的隐私保护领域适配？
 
 5. **切入角度**: 结合前向调优（Forward-only Tuning）消除反向传播，使用随机特征注意力（RFA）替代softmax降低注意力计算复杂度，并设计"Server-Client"架构将MPC不友好的操作卸载到客户端。
 
-6. **核心idea一句话**: 通过无梯度的前向调优避免反向传播的MPC开销，结合线性化注意力避免softmax的非线性操作，实现端到端的高效隐私保护微调。
+6. **核心 idea**: 通过无梯度的前向调优避免反向传播的MPC开销，结合线性化注意力避免softmax的非线性操作，实现端到端的高效隐私保护微调。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ LAN环境（3Gbps，0.8ms延迟）下RoBERTa-LARGE效率对比：
 - **$\Pi_{\text{cosine}}$协议的理论与工程价值**: 仅一轮通信实现安全余弦计算的高效协议
 - **实用性强**: 支持黑盒API模式，可直接部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在RoBERTa-LARGE上验证，未扩展到更大的GPT/LLaMA级LLM
 - RFA对softmax的近似在某些任务上可能影响性能（如RTE得分偏低）

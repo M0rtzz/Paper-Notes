@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Procedural-aware Video Representations through State-Grounded Hierarchy Unfolding
 description: >-
@@ -132,7 +132,7 @@ tags:
 - LLM 生成状态描述的方法实用且可扩展
 - Path-4 vs Path-5 的对比精确揭示了语义鸿沟的存在和步骤层的桥梁作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 S3D 编码器和 wikiHow 语料，可能限制在更广泛视频类型上的适用性
 - LLM 生成的状态描述可能不够准确，尤其对于抽象或复杂操作
 - 仅在 COIN 和 CrossTask 上评估，这两个数据集规模相对有限

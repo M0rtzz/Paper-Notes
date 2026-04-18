@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pose-Aware Self-Supervised Learning with Viewpoint Trajectory Regularization
 description: >-
@@ -120,7 +120,7 @@ tags:
 - "中间层更适合姿态"这一发现虽非技术贡献但具有重要实践价值，改变了SSL特征选择的默认思路
 - 从"局部线性变化涌现全局姿态感知"的角度理解SSL表征学习，与slow feature analysis形成漂亮的理论连接
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基准主要基于合成数据(ShapeNet渲染)，真实场景的姿态多样性和遮挡、光照变化未被覆盖
 - 仅用3D姿态估计(方位角+仰角)评估几何表征，6-DoF位姿估计、深度预测等更全面的几何任务未涉及

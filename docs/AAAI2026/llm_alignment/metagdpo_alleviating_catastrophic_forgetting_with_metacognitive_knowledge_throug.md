@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MetaGDPO: Alleviating Catastrophic Forgetting with Metacognitive Knowledge through Group Direct Preference Optimization
 description: >-
@@ -33,11 +33,11 @@ tags:
    - **数据侧**：现有高质量数据集（LIMO、s1k）以难度为选择标准，忽略了训练数据与模型固有知识的关系，导致模型为学难题而遗忘简单知识
    - **训练侧**：SFT直接让模型模仿大模型response但不约束参数漂移；GRPO虽有reference约束但需要在线采样，资源消耗大
 
-**本文要解决什么？** 在有限资源下，如何提升小模型（<8B）推理能力的同时减少灾难性遗忘？
+**本文目标** 在有限资源下，如何提升小模型（<8B）推理能力的同时减少灾难性遗忘？
 
 **切入角度**：引入"元认知知识"(metacognitive knowledge)概念——标注每道题需要的知识技能，根据模型对各技能的掌握程度来选数据；用GDPO替代GRPO，用大模型的离线response group做preference learning
 
-**核心idea一句话**：基于模型技能画像的数据筛选 + 大模型response group的离线preference优化，双管齐下缓解小模型蒸馏中的灾难性遗忘
+**核心 idea**：基于模型技能画像的数据筛选 + 大模型response group的离线preference优化，双管齐下缓解小模型蒸馏中的灾难性遗忘
 
 ## 方法详解
 
@@ -120,7 +120,7 @@ Qwen3-8B上的知识&安全结果：
 - **GDPO的设计很实用**：用大模型的离线response group替代GRPO的在线采样，在资源受限场景下很有价值。从$O(G^2)$到$O(G)$的简化有严格的理论误差bound
 - **数据+训练的协同设计**：两个创新点不是独立的——MetaKL确保数据覆盖新旧知识，GDPO的reference约束防止在学习过程中过度偏离，两者协同效果远超各自单独使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖GPT-4o做知识标注**：知识标注的质量取决于GPT-4o，如果标注不准确可能影响数据筛选质量
 - **知识单元聚类的粒度**：8,325种知识单元是否合适？太粗可能遗漏重要区分，太细增加标注成本
 - **仅在<8B模型上验证**：方法对更大模型（32B+）是否还有优势不清楚——更大的模型可能本身不太受灾难性遗忘影响

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAMA: Towards Multi-Turn Referential Grounded Video Chat with Large Language Models
 description: >-
@@ -122,7 +122,7 @@ SAMA 从三个核心维度——数据集、模型、基准——全面解决上
 3. **高质量数据集**：SAMA-239K 的构建方法论具有借鉴意义——从 15K 视频中生成 239K 条多样化指令
 4. **SAM 集成范式**：展示了如何将视觉基础模型（SAM）有效集成到视频LMM中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：集成 SAM 增加了推理时的计算成本
 2. **长视频支持**：当前实验主要集中在中等长度的视频片段

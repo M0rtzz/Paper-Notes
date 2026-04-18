@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the Robustness of RAG Against Misleading Retrievals
 description: >-
@@ -145,7 +145,7 @@ RAGuard 数据集构建分三个阶段：
     - "将观点混淆为事实"：模型将主观语气误读为事实证据
     - "缺乏时间推理"：无法区分不同时间节点的信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **GPT-4 标注偏差**：虽通过跨模型一致性验证缓解，但标注基于单一模型的行为仍有偏差风险
 2. **政治领域特异性**：仅涵盖政治声明，未验证在医疗、法律等其他高风险领域的适用性

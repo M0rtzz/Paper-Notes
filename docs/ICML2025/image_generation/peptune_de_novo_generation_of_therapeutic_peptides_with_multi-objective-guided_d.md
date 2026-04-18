@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PepTune: De Novo Generation of Therapeutic Peptides with Multi-Objective-Guided Discrete Diffusion
 description: >-
@@ -32,11 +32,11 @@ PepTune 结合 Masked Discrete Language Model (MDLM) 和蒙特卡罗树搜索 (M
 
 **核心矛盾**：治疗性肽需要含非天然氨基酸(nAAs)和环化修饰（提高稳定性和通透性），但现有深度学习模型只能处理 20 种标准氨基酸；同时，多目标引导在离散空间极为困难——梯度无法直接计算。
 
-**本文要解决什么**：构建一个能在离散肽 SMILES 空间中进行多目标条件生成的扩散模型。
+**本文目标**：构建一个能在离散肽 SMILES 空间中进行多目标条件生成的扩散模型。
 
 **切入角度**：(1)用 SMILES 而非氨基酸序列表示肽→支持 nAAs 和环化；(2)用 MCTS 而非梯度引导→解决离散空间引导难题。
 
-**核心 idea 一句话**：MDLM 负责探索离散肽空间的有效结构，MCTS 负责引导生成向多个治疗目标的 Pareto 最优方向演化。
+**核心 idea**：MDLM 负责探索离散肽空间的有效结构，MCTS 负责引导生成向多个治疗目标的 Pareto 最优方向演化。
 
 ## 方法详解
 
@@ -119,7 +119,7 @@ PepTune 结合 Masked Discrete Language Model (MDLM) 和蒙特卡罗树搜索 (M
 3. **状态依赖 masking 的物理直觉**：先骨架后侧链的生成顺序与化学直觉一致
 4. **临床相关性**：多个真实治疗靶点的案例研究，有下游实验验证前景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖合成肽数据（CycloPs），稀有 nAAs 可能增加合成难度和成本
 2. 属性分类器的质量是瓶颈——膜通透性等属性缺乏外部验证

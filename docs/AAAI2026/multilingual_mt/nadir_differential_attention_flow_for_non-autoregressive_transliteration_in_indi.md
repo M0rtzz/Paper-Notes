@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NADIR: Differential Attention Flow for Non-Autoregressive Transliteration in Indic Languages
 description: >-
@@ -117,7 +117,7 @@ NADIR 在 Telugu、Malayalam、Tamil、Kannada、Sanskrit 等 5 种语言上的 
 4. **隐式长度预测**：通过 EOS token 和截断损失优雅地避免了显式长度预测网络，减少了一个主要的不稳定源
 5. **实用价值突出**：13× 的推理加速使得大规模多语言音译部署成为可能（约 1005 words/sec vs. 77 words/sec）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **精度仍有差距**：NADIR 的 CER 比 IndicXLIT 高约 1-1.3 个百分点，在对精度要求极高的场景仍需改进
 2. **低资源语言表现较差**：Kashmiri（训练数据仅 46k）的 CER 高达 34.32%，远高于均值，MoE 的动态路由尚未完全解决数据不均衡问题

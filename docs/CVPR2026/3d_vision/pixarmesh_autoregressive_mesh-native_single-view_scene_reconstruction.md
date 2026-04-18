@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PixARMesh: Autoregressive Mesh-Native Single-View Scene Reconstruction
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：利用预训练的物体级自回归 mesh 生成器（EdgeRunner/BPT），增强其点云编码器以融入外观和全局上下文，用统一 token 序列实现位姿+mesh 联合预测
 
-**核心idea一句话**：在单个自回归序列中联合预测物体位姿（tokenized 为包围盒角点）和原生mesh（tokenized 为顶点/面），避免 SDF 提取和后处理布局优化
+**核心 idea**：在单个自回归序列中联合预测物体位姿（tokenized 为包围盒角点）和原生mesh（tokenized 为顶点/面），避免 SDF 提取和后处理布局优化
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ tags:
 - **联合建模的涌现效应**：位姿预测和 mesh 生成互相促进——几何信息帮助定位，位姿上下文帮助补全几何。这在两阶段方案中无法实现
 - **输出的 mesh 可以直接用于图形应用**（编辑、渲染、模拟），而 SDF 方法的 Marching Cubes 输出需要大量后处理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 物体级几何精度不如 DepR 等扩散式 SDF 方法，自回归 mesh 在精细曲面细节上有天然劣势
 - 目前仅在 3D-FRONT 室内家具场景上训练，物体种类有限
 - 依赖 Grounded-SAM 分割和 Depth Pro 深度估计，上游模型的错误会级联传播

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT
 description: >-
@@ -104,7 +104,7 @@ FlexHook 是首个两阶段方法在所有基准上全面超越一阶段 SOTA。
 3. **Neighboring Grid Sampling 的训练-推理一致性设计**：通过噪声注入模拟 tracker 输出不确定性，优雅地弥合 GT/tracker 分布差异
 4. **两阶段范式的复兴**：以极低训练成本（1.91h）超越需 51.68h 的一阶段方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖外部检测器-跟踪器的质量，弱检测器会影响上限
 - 当前在自动驾驶场景（Refer-KITTI）的表达类型有限（主要是 car/pedestrian），更复杂的表达场景（如室内、复杂运动描述）尚需验证
 - 参考点坍缩问题需要额外正则化，暗示学习过程中的优化不稳定性

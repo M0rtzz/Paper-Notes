@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Wavelet Enhanced Adaptive Frequency Filter for Sequential Recommendation
 description: >-
@@ -98,7 +98,7 @@ tags:
 - 傅里叶（全局频率分析）+小波（时频局部化）的互补组合在信号处理中有理论基础，本文是将这一经典思路成功引入推荐系统的首次尝试。
 - 完全不使用self-attention和对比学习，靠纯频域/时频分析实现SOTA，且训练速度反而更快，说明频域方法在序列推荐中有巨大潜力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用Haar小波（最简单的小波基），复杂小波基（Daubechies、Symlet等）可能在捕获更精细时频特征上更优
 - $\alpha$ 为全局固定超参数，可改为样本自适应或层自适应的可学习权重

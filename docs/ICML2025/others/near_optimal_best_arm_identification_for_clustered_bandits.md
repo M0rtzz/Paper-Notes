@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Near Optimal Best Arm Identification for Clustered Bandits
 description: >-
@@ -100,7 +100,7 @@ $$\mathbb{E}[T_\delta^\nu(\mathcal{A})] \gtrsim \max\{M(K-M),\; N\} \cdot \frac{
 3. **完整的理论保证**：$\delta$-PC 正确性、样本复杂度上界、minimax 下界，且当 $M$ 为常数时证明达到最优
 4. **通信-样本复杂度权衡的清晰分析**：体现了联邦学习中利用协作以采样换通信的核心思想
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可分离性假设较强**：Assumption 2.1 要求不同 bandit 的最优臂不同且差距至少为 $\eta$，$\eta$ 过小时聚类阶段采样量 $\sim \eta^{-2}$ 可能主导总复杂度
 2. **簇大小需均匀**：BAI-Cl 的分析假设智能体均匀分配到 $M$ 个簇，非均匀情况虽可推广但未深入分析

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Reinforcement Learning with Targeted Causal Interventions
 description: >-
@@ -127,7 +127,7 @@ SSD 多边数远低于 SDI，总体 SHD 降低 38%。
 - **定制化因果发现**：SSD 针对 HRL 的 AND/OR 子目标结构做专门设计，比通用算法更精确
 - **双排序规则互补**：因果效应规则适合 AND 类型，最短路径规则适合 OR 类型，另有混合规则
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 资源变量假设为**离散二值**，连续/高维状态空间需额外的解耦表示学习
 - 假设子目标一旦达成永不丢失（Assumption 4.2），不适用于可逆环境

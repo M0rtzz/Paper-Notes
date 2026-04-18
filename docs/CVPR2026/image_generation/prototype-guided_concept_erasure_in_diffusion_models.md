@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prototype-Guided Concept Erasure in Diffusion Models
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **跨模态迁移**（图像原型→文本原型）利用 CLIP 的对齐空间，只需优化 soft prompt 而无需修改扩散模型
 - 完全 training-free + 多模型兼容（SD1.4/SDXL/SD3.5），部署友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **对抗鲁棒性不是专门优化目标**：P4D 攻击下明显弱于 TRCE，可结合对抗训练增强
 - 原型数 $K$ 需要手动设定（宽概念16、窄概念1），缺乏自动确定机制
 - 阈值 $\tau$ 的选择影响误擦除率和漏擦除率的 trade-off，需要仔细调参

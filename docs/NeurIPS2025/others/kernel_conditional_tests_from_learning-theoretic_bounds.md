@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Kernel Conditional Tests from Learning-Theoretic Bounds
 description: >-
@@ -86,7 +86,7 @@ KRR标准目标 $f_{D,\lambda} = \arg\min_f \sum_n \|y_n - f(x_n)\|^2 + \lambda\
 - 时间均匀保证使得方法天然支持序贯检验和漂移检测
 - bootstrapping方案利用理论识别的参数化结构，兼顾理论启发和实际可用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - bootstrapping方案目前仅有启发式保证，缺乏严格的有限样本覆盖性分析
 - RKHS成员假设(即条件期望属于RKHS)限制了可检测的函数类

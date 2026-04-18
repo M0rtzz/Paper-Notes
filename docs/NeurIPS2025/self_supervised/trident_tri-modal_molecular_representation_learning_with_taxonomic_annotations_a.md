@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRIDENT: Tri-Modal Molecular Representation Learning with Taxonomic Annotations and Structural Relationships
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **功能团级局部对齐**：85 个功能团配高质量文本描述的策划数据集，是可复用的宝贵资源
 - **GPT-4o 辅助数据构建**：用 LLM 合成 + 领域专家审核的方式构建高质量标注，是现实可行的路线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分子毒性等属性不仅取决于分子结构，还与靶点和代谢物相关，当前框架未纳入这些因素
 - 数据集规模偏小（47,269 个三元组），扩展到更大化学空间的扩展性待验证

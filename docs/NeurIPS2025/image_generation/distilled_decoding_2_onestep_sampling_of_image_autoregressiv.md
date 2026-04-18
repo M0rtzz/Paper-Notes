@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilled Decoding 2: One-step Sampling of Image Auto-regressive Models with Conditional Score Distillation
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：DD1将AR模型的每步采样转化为flow matching的ODE求解来构建确定性映射，本质上只用了分数信号来建映射。但这种预定义映射（1）对模型学习困难，（2）限制了灵活性——GAN、VAE等不依赖显式映射的模型反而在下游任务中适用性更广。
 
-**本文要解决什么？** 能否训练一个一步生成器，让其输出分布匹配给定的AR模型，而不依赖任何预定义映射？
+**本文目标** 能否训练一个一步生成器，让其输出分布匹配给定的AR模型，而不依赖任何预定义映射？
 
 **切入角度**：将AR模型重新解读为条件分数模型——给定前面所有token后，AR模型输出的next-token概率向量可以解析地计算codebook embedding空间中的条件score。然后借鉴扩散模型score distillation的思想，匹配生成器和teacher AR模型在每个token位置上的条件分数。
 
-**核心idea一句话**：把AR模型的next-token概率向量当作条件score的来源，通过条件分数蒸馏（CSD）在所有token位置上同时对齐生成器与teacher的条件分布，实现无需预定义映射的一步AR图像生成。
+**核心 idea**：把AR模型的next-token概率向量当作条件score的来源，通过条件分数蒸馏（CSD）在所有token位置上同时对齐生成器与teacher的条件分布，实现无需预定义映射的一步AR图像生成。
 
 ## 方法详解
 
@@ -119,7 +119,7 @@ DD2在所有config下1步FID优于DD1的2步结果。
 - **"消除预定义映射"的核心洞察**：DD1的mapping是hard target（必须精确学到每个noise→data的对应），DD2的CSD是soft target（只需分布匹配），后者显然更容易优化。打个比方：DD1是学填空的唯一答案，DD2是学整个答案的分布
 - **初始化策略的通用价值**：GTS loss（用teacher的解析score代替Monte Carlo估计）收敛更快更稳定，这个技巧可推广到其他score distillation设置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仍有性能差距**：VAR-d20从3.40到5.43仍有2.03的FID退化，对质量要求极高的场景可能不够
 - **仅验证了VQ-based AR模型**：对MAR等continuous-space AR模型的兼容性仅做了理论讨论，未实验验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Role of Visual Modality in Multimodal Mathematical Reasoning: Challenges and Insights
 description: >-
@@ -107,7 +107,7 @@ tags:
 - 与通用 VQA 的对比实验形成强烈反差，说明问题是数学领域特有的
 - 隐含了一个重要洞察：当前多模态数学推理的评估基准本身存在系统性缺陷
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - HC-M3D 数据集规模相对较小（1,851 样本），且聚焦平面几何
 - 论文主要揭示问题但未提出有效解决方案——如何真正增强视觉依赖仍是开放问题

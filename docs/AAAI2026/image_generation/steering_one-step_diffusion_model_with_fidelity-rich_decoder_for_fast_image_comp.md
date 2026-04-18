@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Steering One-Step Diffusion Model with Fidelity-Rich Decoder for Fast Image Compression
 description: >-
@@ -219,7 +219,7 @@ SODEC比PerCo快 **26×**，比DiffEIC快 **33×**！
 4. **三阶段训练**的渐进式设计（先VAE → 再扩散路径 → 最后联合）避免了联合训练初期的不稳定
 5. **20-33×解码加速**使扩散压缩从学术概念迈向实用化的关键一步
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **编码器仍是传统VAE**：16倍下采样+220通道的latent可能限制了极端压缩潜力
 2. **基于SD 2.1**：未在更新的SD3/FLUX架构上验证

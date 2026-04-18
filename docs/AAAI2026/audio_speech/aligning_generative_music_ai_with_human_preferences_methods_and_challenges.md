@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aligning Generative Music AI with Human Preferences: Methods and Challenges
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **推理时对齐的实用价值**：Text2midi-InferAlign 无需重训就能带来 29.4% 的 CLAP 提升，对资源有限的场景非常友好
 - **"评估悖论"**的指出很有启发：评估偏好对齐质量本身需要人类判断，而人类判断正是偏好对齐试图建模的对象
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **综述性质**：无新方法、无新实验、无新数据集，贡献在于梳理和展望而非技术突破
 - **覆盖面偏窄**：重点讨论 MusicRL / DiffRhythm+ / Text2midi-InferAlign 三个系统，对 JAM（DPO）、NotaGen（CLaMP-DPO）、DITTO、SMITIN 等仅简略提及
 - **缺少量化对比**：未提供各方法间的统一基准实验对比（不同模型/数据/评估协议难以直接比较）

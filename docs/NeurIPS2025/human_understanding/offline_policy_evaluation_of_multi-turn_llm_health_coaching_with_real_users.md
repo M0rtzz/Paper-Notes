@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Offline Policy Evaluation of Multi-Turn LLM Health Coaching with Real Users
 description: >-
@@ -117,7 +117,7 @@ AlwaysTool 在平均 $R_{\text{total}}$ 上最高，但置信区间宽。
 - "评估优先、个性化优先"的路线清晰：冻结生成器，仅学习子群感知的决策头，使用类型化奖励（客观+满意度），始终报告每个原型的指标
 - 好奇心奖励的"先探索后个性化"策略简洁有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **样本量极小**：7 名用户、280 个评分轮次，统计结论有限
 - 行为倾向性是事后重建而非记录的，Tool 头标定误差（ECE=0.157）可能引入偏差

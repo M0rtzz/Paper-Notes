@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MARS: A Malignity-Aware Backdoor Defense in Federated Learning
 description: >-
@@ -85,7 +85,7 @@ MARS 包含三个步骤：（1）计算每个神经元的后门能量（BE）；
 - Wasserstein 距离替代欧几里得/余弦距离是关键创新，解决了 FL 中 CBE 元素顺序不一致的问题
 - 提出的防御不需要假设攻击者比例<50%，实用性更强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在计算机视觉任务（MNIST/CIFAR）上验证，未涉及 NLP 等领域
 - Lipschitz 常数的计算对大规模模型可能有效率问题

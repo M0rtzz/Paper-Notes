@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Oracle-Efficient Combinatorial Semi-Bandits
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{R}(T) = \mathbb{E}\left[\sum_{t=1}^{T}(\bar{r}(a^*) - \bar{r}(a_t))\r
 - **双对数级别**：$O(\log\log T)$ 的oracle调用在实际中几乎可以忽略不计（例如 $T=10^6$ 时 $\log\log T \approx 3$），是理论上的重大突破
 - **框架的通用性**：同一思想无缝扩展到协方差自适应和一般奖励函数两种变体，展示了良好的理论统一性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SROQ框架的遗憾比AROQ多一个 $\sqrt{m}$ 因子，说明更低的自适应复杂度需要付出遗憾代价
 - 协方差自适应版本需要 $O(d^2)$ 级别的oracle复杂度，在臂数量 $d$ 较大时可能成为瓶颈

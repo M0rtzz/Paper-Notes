@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synergistic Weak-Strong Collaboration by Aligning Preferences
 description: >-
@@ -128,7 +128,7 @@ CoWest 相对最优单模型的提升：Counterfactuals +6.14 EM，Medicine +2.0
 - 框架对黑盒强模型友好，不需要获取强模型参数，只需要其 API 调用，具有很强的实践意义。
 - 实验发现强模型效果的领域依赖性颇有启发：没有万能的强模型，不同领域需要匹配不同的强模型。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **单轮反馈**：仅进行了一轮偏好对齐迭代，未探索多轮迭代对齐是否能带来持续提升。
 - **模型家族受限**：实验仅使用了 Llama 和 GPT 系列，其他模型架构（如 Mistral、Qwen）的效果未验证。

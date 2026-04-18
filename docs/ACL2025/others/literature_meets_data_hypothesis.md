@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Literature Meets Data: A Synergistic Approach to Hypothesis Generation
 description: >-
@@ -87,7 +87,7 @@ LLM 驱动的假设生成（hypothesis generation）是 AI for Science 的重要
 - **UCB 奖励函数**：借鉴多臂老虎机的探索-利用平衡，用于假设质量评估，巧妙且合理
 - **跨模型迁移性**：生成的假设不绑定特定 LLM，具有可迁移性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **文献规模小且靠人工收集**：每个任务仅 10 篇论文，且手动搜索，未来应接入自动化文献检索（RAG pipeline）
 - **仅限分类任务**：研究问题被形式化为分类，未覆盖数学、代码生成等非自然语言表征的任务
 - **人类实验规模有限**：60 人，无法区分 HypoGeniC 和 HypoRefine 在人类评估中的差异

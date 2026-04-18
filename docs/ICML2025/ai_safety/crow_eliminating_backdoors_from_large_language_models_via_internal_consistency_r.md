@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CROW: Eliminating Backdoors from Large Language Models via Internal Consistency Regularization
 description: >-
@@ -140,7 +140,7 @@ $$L_{\text{total}} = \mathcal{L}_{\text{LM}} + \alpha \cdot L_{\text{cons}}^{\te
 - **理论与实践统一**：Lipschitz 常数分析严格论证了一致性正则化如何抑制扰动传播，不是纯经验方法
 - **防御谱广**：覆盖情感引导、目标拒绝、代码注入三类任务和六种攻击模式，甚至对语义后门（实体触发器）也有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **$\alpha$ 需手动调参**：不同任务（情感引导 vs 拒绝）需要不同 $\alpha$ 值，未来可探索自适应调整策略
 2. **目标拒绝任务防御偏弱**：默认参数下 BadNets 拒绝任务 ASR 仍为 19.63%，需提升 $\alpha$ 才能降至 3% 以下

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnyControl: Create Your Artwork with Versatile Control on Text-to-Image Generation
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：需要同时处理多种异构空间条件并与文本对齐，但简单的拼接/加权无法建模条件间的复杂关系（遮挡、冲突等）
 
-**本文要解决什么？** (a) 支持任意组合的多控制输入；(b) 建模空间条件间的兼容性；(c) 保持文本语义的忠实度
+**本文目标** (a) 支持任意组合的多控制输入；(b) 建模空间条件间的兼容性；(c) 保持文本语义的忠实度
 
 **切入角度**：用 learnable query tokens 通过交叉注意力从多个空间条件中提取兼容信息，再通过自注意力与文本 token 对齐
 
-**核心 idea 一句话**：Multi-Control Encoder 用 query tokens 做信息枢纽——先通过 cross-attention 融合多空间条件（fusion），再通过 self-attention 与文本 token 对齐（alignment），交替堆叠
+**核心 idea**：Multi-Control Encoder 用 query tokens 做信息枢纽——先通过 cross-attention 融合多空间条件（fusion），再通过 self-attention 与文本 token 对齐（alignment），交替堆叠
 
 ## 方法详解
 
@@ -117,7 +117,7 @@ tags:
 - **Fusion + Alignment 交替块**：先融合空间条件，再与文本对齐——两步分开确保两者都不被牺牲
 - **不对齐数据的训练策略**：用合成方式弥合训练（完美对齐）和推理（任意组合）的差距，实用且有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **条件过多时质量下降**：8+ 条件时出现语义混乱——因为 CLIP 文本编码器本身对复杂 prompt 理解有限，且 softmax 精度在 KV 过多时下降
 - **基于 SD1.5**：未在 SDXL/SD3 等新基础模型上验证
 - **CLIP visual encoder 的限制**：用 CLIP 提取控制信号的视觉特征可能丢失细粒度空间信息

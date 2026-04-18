@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：全景图提供了完整的环境信息但等距矩形投影从根本上改变了空间特征的分布模式，使得为透视图设计的方法失效。
 
-**本文要解决什么？** 如何在360°全景室内环境中实现准确的场景级affordance grounding？
+**本文目标** 如何在360°全景室内环境中实现准确的场景级affordance grounding？
 
 **切入角度**：在频域而非空间域处理ERP畸变（频率天然对应不同尺度的结构），同时利用球面自相似性传播种子激活恢复拓扑连续区域。
 
-**核心idea一句话**：双频谱蒸馏做纬度自适应畸变校准 + 球面种子传播做稀疏激活致密化 = 全景affordance grounding。
+**核心 idea**：双频谱蒸馏做纬度自适应畸变校准 + 球面种子传播做稀疏激活致密化 = 全景affordance grounding。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ tags:
 - **球面种子传播**：利用视觉自相似性作为归纳偏置，无需额外标注即可从稀疏激活恢复连续区域
 - **One-shot设定**：仅需一个示例即可推广到新affordance类别，标注效率极高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 360-AGD数据集规模和场景多样性有限，可能不足以覆盖真实机器人应用场景
 - OSDH的亲和矩阵 $\mathcal{S} \in \mathbb{R}^{L \times L}$ 在高分辨率下计算量大
 - 未与3D场景理解方法结合，可利用depth信息进一步提升

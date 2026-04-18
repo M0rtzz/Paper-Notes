@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NegoCollab: A Common Representation Negotiation Approach for Heterogeneous Collaborative Perception
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **多维对齐设计**：超越常见的分布对齐，加入结构和实用层面的约束，形成更完整的对齐机制。
 - **成本-性能平衡**：新 agent 加入时无需重训，只需训练新 Sender/Receiver，O(M) 而非 O(M²) 复杂度。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验基于 LiDAR+Camera 二模态，多于 3 种模态的泛化未验证
 - 论文未讨论压缩公共表示以降低通信带宽的策略

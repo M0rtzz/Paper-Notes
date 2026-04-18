@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Kernelized Learning in Polyhedral Games Beyond Full-Information: From Colonel Blotto to Congestion Games
 description: >-
@@ -154,7 +154,7 @@ tags:
 3. **紧凑表示的重要性**：直接使用博弈本身的几何结构（$nk$ 表示）而非间接的DAG表示，是运行时改进的关键来源
 4. **解决多个公开问题**：增强了理论贡献的影响力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 强盗设定的遗憾界为 $T^{2/3}$，距最优 $\sqrt{T}$ 仍有差距（半强盗设定已达 $\sqrt{T}$）
 2. 运行时对 $\varepsilon$ 的依赖为 $1/\varepsilon^3$（强盗），是否可以改进到 $1/\varepsilon^2$ 是开放问题

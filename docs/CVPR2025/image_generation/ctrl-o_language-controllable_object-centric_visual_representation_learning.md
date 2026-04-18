@@ -1,4 +1,4 @@
-# CTRL-O: Language-Controllable Object-Centric Visual Representation Learning
+﻿# CTRL-O: Language-Controllable Object-Centric Visual Representation Learning
 
 **会议**: CVPR 2025  
 **arXiv**: [2503.21747](https://arxiv.org/abs/2503.21747)  
@@ -15,11 +15,11 @@
 
 **现有痛点**：(1) 无控制性——无法指定关注哪个物体；(2) slot 与语义的绑定（binding）是开放问题，传统方法的绑定率极低（8.1%）；(3) 无法直接用于下游任务如指代表达分割。
 
-**本文要解决什么？** 让物体中心表示可以被语言控制——指定"红色汽车"就让对应 slot 表示该物体。
+**本文目标** 让物体中心表示可以被语言控制——指定"红色汽车"就让对应 slot 表示该物体。
 
 **切入角度**：在 Slot Attention 中引入语言查询条件化（查询初始化+解码器条件化），配合对比损失将 slot 注意力图内的视觉特征与语言对齐。
 
-**核心idea一句话**：语言查询条件化 Slot Attention + 控制对比损失（slot 注意力加权 DINO 特征对齐语言嵌入）。
+**核心 idea**：语言查询条件化 Slot Attention + 控制对比损失（slot 注意力加权 DINO 特征对齐语言嵌入）。
 
 ## 实验关键数据
 

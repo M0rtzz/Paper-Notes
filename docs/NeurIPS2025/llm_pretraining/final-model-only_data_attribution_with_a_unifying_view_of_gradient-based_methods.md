@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Final-Model-Only Data Attribution with a Unifying View of Gradient-Based Methods
 description: >-
@@ -128,7 +128,7 @@ Further training BERT (SST-2) 共约 1000 GPU-hours (V100)；总实验约 3000 G
 4. **实验设计**：100 个随机种子的平均（远超先前工作的规模），揭示了平均操作对金标准质量的重要性
 5. **反直觉发现**：影响函数（二阶）不总是优于简单的 Grad-Dot（一阶）——至少在 FiMO 设定下
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本高**：further training 金标准本身计算昂贵（~1000 GPU-hours/数据集），限制了实验规模
 2. **模型规模受限**：最大模型为 BERT-base，未涉及真正的 LLM（如 GPT-3/LLaMA 级别）

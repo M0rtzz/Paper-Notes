@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Facial Affective Behavior Analysis with Instruction Tuning
 description: >-
@@ -133,7 +133,7 @@ $$p(X_A|X_V, Z_P, X_Q) = \prod_{i=1}^{L} p_\Theta(x_i | X_V, Z_P, X_Q, X_{A,<i})
 - **轻量高效**：面部先验 token 仅增加 1 个 token 输入，却带来显著提升，设计极简
 - **统一评测**：REGE 指标首次将识别能力和文本生成质量纳入同一评测框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅使用面部关键点作为先验，未探索面部识别特征（ArcFace）、面部解析等其他先验
 - 仅处理单张图像，未扩展到视频流的时序情感分析

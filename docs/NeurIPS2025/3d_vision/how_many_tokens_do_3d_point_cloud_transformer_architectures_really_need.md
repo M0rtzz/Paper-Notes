@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Many Tokens Do 3D Point Cloud Transformer Architectures Really Need?
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：人们普遍认为密集的 token 化对 3D Transformer 性能至关重要，但实际上 3D 点云数据在空间上稀疏且细粒度——同一物体表面的相邻点特征高度相似，存在大量冗余。
 
-**本文要解决什么？** (1) 量化 3D 点云 Transformer 中 token 冗余的程度；(2) 设计专门针对 3D 数据的高效 token 合并策略。
+**本文目标** (1) 量化 3D 点云 Transformer 中 token 冗余的程度；(2) 设计专门针对 3D 数据的高效 token 合并策略。
 
 **切入角度**：将 2D 视觉 Transformer 中的 token 合并/剪枝技术引入 3D 点云，并通过实验发现通用方法已经能合并 50% token 不掉点。进而设计了利用 3D 空间局部性和注意力显著性的专用合并策略，实现更激进的压缩（95-99%）。
 
-**核心idea一句话**：3D 点云 Transformer 严重"过度 token 化"，保留 5-10% 最有信息量的 token 就足以维持几乎相同的性能。
+**核心 idea**：3D 点云 Transformer 严重"过度 token 化"，保留 5-10% 最有信息量的 token 就足以维持几乎相同的性能。
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ tags:
 - **全局能量分数的设计**：通过 token 与所有分区质心的相关性衡量信息含量，比局部相似度度量更能反映 3D 场景的全局结构特点。这个思路可推广到视频 Transformer 等其他具有空间冗余的模态。
 - **off-the-shelf 可用性**：无需重训练即可直接应用到任何基于 PTv3 的模型（Sonata、SplatFormer、SpatialLM），实用价值极高。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方法主要验证在 PTv3 及其变体上，对其他 3D Transformer 架构（如 OctFormer、Swin3D）的 token 冗余情况未验证。
 - $\tau = 0.2$ 声称对所有数据集通用，但极端场景（如非常密集的工业点云或极度稀疏的航空 LiDAR）可能需要调整。
 - 合并后的反合并（unmerge）采用简单复制策略恢复原始分辨率，可能在精细边界处丢失局部细节。

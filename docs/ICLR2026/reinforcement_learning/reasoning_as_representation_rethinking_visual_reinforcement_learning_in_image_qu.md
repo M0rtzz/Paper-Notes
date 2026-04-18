@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning as Representation: Rethinking Visual Reinforcement Learning in Image Quality Assessment
 description: >-
@@ -125,7 +125,7 @@ tags:
 
 5. **实际部署价值**：20 倍以上的效率提升使 IQA 模型可以部署在边缘设备上，对实际应用有直接推动。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证于 IQA 任务**：核心洞察（推理=表示转换）是否可以推广到其他推理任务（如数学推理、代码生成）尚不清楚。IQA 可能是一个相对简单的任务，推理的角色在更复杂任务中可能有所不同。
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ResponseRank: Data-Efficient Reward Modeling through Preference Strength Learning
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{BT}} + \lambda \mathcal{L}_{\text{rank}}$$
 - **鲁棒设计**: 噪声越大时相比 Weighted BT 优势越明显
 - **新指标 PDC**: Pearson Distance Correlation 分离了序数和基数学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 分层策略需要足够多的同层样本,小规模数据集可能不适用
 2. 代理信号的选择（响应时间 vs 一致性 vs 其他）缺乏系统比较

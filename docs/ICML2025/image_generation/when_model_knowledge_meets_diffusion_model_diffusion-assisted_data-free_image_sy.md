@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DDIS: When Model Knowledge Meets Diffusion Model — Diffusion-assisted Data-free Image Synthesis
 description: >-
@@ -51,13 +51,13 @@ tags:
 
 #### 1. 域对齐引导（DAG）
 
-- **做什么**：每个采样步引导生成图像的特征统计量与预训练模型 BN 层 running statistics 对齐
+- **功能**：每个采样步引导生成图像的特征统计量与预训练模型 BN 层 running statistics 对齐
 - **核心思路**：BN 层的均值/方差编码域知识（art/photo/cartoon）
 - **设计动机**：在扩散潜空间操作比 DeepInversion 的像素空间正则化更自然
 
 #### 2. 类对齐 Token（CAT）
 
-- **做什么**：为每个类学习伪词嵌入 $S_c$，插入扩散模型文本提示
+- **功能**：为每个类学习伪词嵌入 $S_c$，插入扩散模型文本提示
 - **核心思路**：类标签太笼统，CAT 通过分类器 CE loss 优化来捕捉训练数据中该类的具体特征
 - **额外发现**：还能解决类标签的歧义问题（如 crane = 鹤 / 起重机）
 
@@ -97,7 +97,7 @@ tags:
 - **CAT 的歧义消解**：可学习嵌入意外解决了多义词问题
 - **实用价值**：不需要训练数据即可做 KD 和剪枝，对数据隐私敏感场景价值大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 BN 层——对不含 BN 的架构（Transformer/LayerNorm）需替代方案
 - CAT 每个类单独优化，类别多时成本较高

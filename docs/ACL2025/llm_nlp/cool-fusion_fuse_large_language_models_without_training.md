@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cool-Fusion: Fuse Large Language Models without Training
 description: >-
@@ -132,7 +132,7 @@ $$PPL_u(s) = \exp\left(\frac{1}{|s|}\sum_{s_i \in s} -\log p_u(s_i)\right)$$
 4. **可扩展性**：给定 k 个 GPU，可扩展到 k 个源 LLM 且延迟恒定
 5. **实用价值**：无需任何训练数据或微调，只要有模型推理能力即可使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度**：当前实现速度约为标准 LLM 的六分之一，主要由模型间通信和频繁调用 tokenizer 导致
 2. **实验规模**：受资源限制仅实验了2-3个源模型的融合

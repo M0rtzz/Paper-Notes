@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FreestyleRet: Retrieving Images from Style-Diversified Queries
 description: >-
@@ -131,7 +131,7 @@ FreestyleRet-BLIP在所有4种查询风格上均取得最优R@1，Sketch提升14
 - **即插即用设计**：冻结编码器 + 仅训练prompt tokens的方式使框架可以无缝嫁接到CLIP、BLIP等任意ViT编码器上
 - **多查询协同**：不同风格的查询可以互相增强而非干扰，这是现有多模态模型做不到的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **查询风格仍然有限**：目前仅考虑text、sketch、art、low-res四种，未涵盖3D、视频、语音等更多模态
 - **DSR数据集规模较小**：仅10000张图像，大规模场景下的性能有待验证

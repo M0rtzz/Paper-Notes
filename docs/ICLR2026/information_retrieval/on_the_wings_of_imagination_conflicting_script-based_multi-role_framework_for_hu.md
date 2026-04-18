@@ -57,7 +57,7 @@ $$\mathrm{Extract}(I) \rightarrow (\mathcal{C}, D), \quad \mathrm{Imagine}(I, \m
 
 ### 关键设计1：冲突脚本提取器
 
-- **做什么**：从输入图像 $I$ 中提取以脚本对立为核心的场景描述 $D$（包含位置、人物、表情、动作等）和冲突脚本集合 $\mathcal{C}$。
+- **功能**：从输入图像 $I$ 中提取以脚本对立为核心的场景描述 $D$（包含位置、人物、表情、动作等）和冲突脚本集合 $\mathcal{C}$。
 - **核心思路**：先让 LLM 分析场景生成描述，再基于 GTVH 的脚本对立定义（两个冲突或对比的语义框架之间的关系）设计 prompt 引导模型提取所有相关冲突脚本：
 
 $$D = \mathrm{Extract}(I), \quad \mathcal{C} = \mathrm{Extract}(\Phi_{\mathrm{script}}(I, D))$$
@@ -66,7 +66,7 @@ $$D = \mathrm{Extract}(I), \quad \mathcal{C} = \mathrm{Extract}(\Phi_{\mathrm{sc
 
 ### 关键设计2：层次想象器（Hierarchical Imaginator）
 
-- **做什么**：识别候选幽默目标 $\{t_i\}$，通过深度联想（LLM free-association）和广度检索（笑话数据库）构建想象树 $\mathcal{T}_{\mathrm{im}}$，并用幽默相关性评分进行剪枝。
+- **功能**：识别候选幽默目标 $\{t_i\}$，通过深度联想（LLM free-association）和广度检索（笑话数据库）构建想象树 $\mathcal{T}_{\mathrm{im}}$，并用幽默相关性评分进行剪枝。
 - **核心思路**：
 
   (a) **多视角目标识别**：从局部（场景描述 $D$ 的细粒度实体）和全局（图像 $I$ 的粗粒度实体）两个视角提取候选幽默目标作为想象树根节点。
@@ -92,7 +92,7 @@ $$D = \mathrm{Extract}(I), \quad \mathcal{C} = \mathrm{Extract}(\Phi_{\mathrm{sc
 
 ### 关键设计3：标题生成器
 
-- **做什么**：从想象树中采样创意路径，结合场景描述、脚本对立和叙述策略生成幽默标题。
+- **功能**：从想象树中采样创意路径，结合场景描述、脚本对立和叙述策略生成幽默标题。
 - **核心思路**：随机选择关键冲突脚本 $C \in \mathcal{C}$ 和幽默目标 $t_i$，对想象树 $T_i$ 做 DFS 枚举所有根到叶路径 $\mathcal{P}_i$，采样一条想象路径 $P_i$，构造 prompt：
 
 $$\mathrm{Cap}(I) = \mathrm{Gen}(\Phi(\mathcal{C}, D, P_i, \Omega))$$
@@ -101,7 +101,7 @@ $$\mathrm{Cap}(I) = \mathrm{Gen}(\Phi(\mathcal{C}, D, P_i, \Omega))$$
 
 ### 关键设计4：幽默相关性评分的数学设计
 
-- **做什么**：量化检索到的笑话 token 与骨干实体间的幽默相关性。
+- **功能**：量化检索到的笑话 token 与骨干实体间的幽默相关性。
 - **核心思路**：相关-对立分数利用 WordNet 的结构化语义关系，目标语义相似度 TSS 用 Wu-Palmer 相似度量化：
 
 $$\mathrm{TSS}(s_{e_\tau}, s_\varepsilon) = \max_{s_{e_\tau} \in S_{e_\tau}, s_\varepsilon \in S_\varepsilon} \mathrm{Sim}_{\mathrm{wup}}(s_{e_\tau}, s_\varepsilon)$$

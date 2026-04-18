@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Scalable Spatial Intelligence via 2D-to-3D Data Lifting
 description: >-
@@ -114,7 +114,7 @@ $$\mathbf{P}_i^{\text{cam}} = d_{sc,i} \cdot K^{-1} \begin{bmatrix} u_i \\ v_i \
 - **统一超参数设置**：所有实验使用相同超参数，避免了刷数据集的嫌疑，更真实地反映合成数据的价值
 - **开源数据集贡献大**：COCO-3D和Objects365-v2-3D覆盖300+类别、200万场景，可广泛用于空间智能研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 单视图重建的点云仅捕获部分视角几何，存在遮挡和不完整问题
 - 深度估计在室外大尺度场景（尤其含人类的场景）仍有不足

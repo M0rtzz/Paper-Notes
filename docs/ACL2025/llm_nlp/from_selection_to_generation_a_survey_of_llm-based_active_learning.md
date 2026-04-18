@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Selection to Generation: A Survey of LLM-based Active Learning
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：LLM 的出现从根本上改变了 AL 的能力边界——LLM 不仅能做选择器（selector），还能做生成器（generator）和标注器（annotator），但现有综述仍聚焦于传统 AL 技术，缺乏对 LLM-based AL 的系统回顾。
 
-**本文要解决什么**：填补 LLM-based AL 综述空白，提供统一的分类体系和系统化的文献梳理。
+**本文目标**：填补 LLM-based AL 综述空白，提供统一的分类体系和系统化的文献梳理。
 
 **切入角度**：围绕 AL 循环的两大核心环节——Querying（数据获取）和 Annotation（标注）——构建双轴分类，系统化地将 LLM 在 AL 中的角色映射到各子类。
 
-**核心 idea 一句话**：LLM 将 AL 从"从池中选数据"拓展为"选择+生成+自动标注"的全新范式。
+**核心 idea**：LLM 将 AL 从"从池中选数据"拓展为"选择+生成+自动标注"的全新范式。
 
 ## 方法详解
 
@@ -124,7 +124,7 @@ tags:
 4. **四大 AL 范式的梳理**：Active ICL/SFT/RLHF/KD 四条线路清晰，为后续研究提供了路线图
 5. **开放问题的前瞻性**：多 LLM 协同 AL、多模态 AL、LLM Agent+AL 等方向具有实际研究启发意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏定量对比实验**：作为综述未提供统一 benchmark 上的方法横向对比，读者难以直观判断各方法优劣
 2. **传统 AL for LLM 覆盖不足**：明确声明不深入覆盖"用传统 AL 优化 LLM 训练"的工作，可能遗漏重要文献

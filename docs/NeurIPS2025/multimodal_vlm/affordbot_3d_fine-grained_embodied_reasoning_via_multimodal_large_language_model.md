@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AffordBot: 3D Fine-grained Embodied Reasoning via Multimodal Large Language Models
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：MLLM 原生支持 2D 输入，但 affordance 推理需要 3D 空间理解和物理 grounding
 
-**本文要解决什么？** 给定 3D 场景和语言指令，联合预测 affordance 元素的 mask、运动类型和运动轴方向
+**本文目标** 给定 3D 场景和语言指令，联合预测 affordance 元素的 mask、运动类型和运动轴方向
 
 **切入角度**：3D→2D 投影 + 主动视角选择 + 多步 CoT 推理
 
-**核心idea一句话**：将 3D affordance 候选投影到环视图上，用 CoT 引导 MLLM 先选视角、再定位、再推理运动
+**核心 idea**：将 3D affordance 候选投影到环视图上，用 CoT 引导 MLLM 先选视角、再定位、再推理运动
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ SceneFun3D 数据集上的 affordance grounding + motion estimation
 - **MLLM 可扩展性**：框架不训练 MLLM，直接受益于更强模型（GPT-o1 提升 +10 AP25），很好的工程设计
 - **统一任务定义**：将 affordance grounding 和 motion estimation 统一为三元组预测，更贴近实际机器人操作需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 整体性能偏低（AP25 仅 23.3%），联合度量 +TD 仅 10.8%，距离实用还有很大距离
 - 依赖 Mask3D 的分割质量作为上游，分割失败则整个流水线失败
 - 运动轴方向的离散化损失了连续方向精度

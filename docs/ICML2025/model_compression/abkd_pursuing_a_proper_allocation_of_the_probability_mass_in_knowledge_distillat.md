@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ABKD: Pursuing a Proper Allocation of the Probability Mass in Knowledge Distillation via α-β-Divergence
 description: >-
@@ -126,7 +126,7 @@ ABKD 在 1.5B→0.1B 的蒸馏配置上，ROUGE-L 相比 FKLD/RKLD 提升 0.81~3
 4. **实践指导性强**：论文提供了详细的超参数调优指南，降低使用门槛
 5. **对比 WSD 和 JSD 的缺陷分析**：FKLD+RKLD 加权和（WSD）在极端概率比处不稳定，JSD 在分布远离时梯度消失，而 α-β-divergence 自然避免这些问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **超参数搜索成本**：α 和 β 两个超参数需要额外调优，虽然论文提供了指南但仍增加调参负担
 2. **缺乏自适应机制**：α 和 β 在训练全程固定，缺乏动态调节策略（如随训练阶段自动调整）

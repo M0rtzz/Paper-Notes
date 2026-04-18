@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Router-R1: Teaching LLMs Multi-Round Routing and Aggregation via Reinforcement Learning
 description: >-
@@ -128,7 +128,7 @@ Router-R1 在全部 7 个数据集上超越所有基线，平均精确匹配 0.4
 - **分层奖励设计**：简洁有效地解决了 reward hacking 和训练稳定性问题
 - **成本感知路由的涌现行为**：小模型优先→大模型兜底的策略自然涌现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 最多 4 轮路由限制了对超复杂任务的处理能力
 - 成本奖励的 $\alpha$ 设置需要人工调参，缺乏自适应机制

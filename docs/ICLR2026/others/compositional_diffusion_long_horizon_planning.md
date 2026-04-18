@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compositional Diffusion with Guided Search for Long-Horizon Planning
 description: >-
@@ -103,7 +103,7 @@ $$g(y^{(0)}) = \sum_{i=1}^T \left\| \frac{\partial \epsilon_\theta(y^{(i-1)}, i)
 3. **自适应推理计算**: 可通过增加 $B$ 和 $U$ 应对更难问题，体现了推理时间缩放的潜力
 4. **DDIM反演作为似然代理**: 巧妙地利用去噪轨迹曲率来近似评估样本似然，避免了精确似然计算的高开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预先指定目标状态，无法处理未知目标的开放式任务
 - 规划长度固定，虽可通过多次尝试不同长度缓解

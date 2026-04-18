@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DynaNav: Dynamic Feature and Layer Selection for Efficient Visual Navigation
 description: >-
@@ -125,7 +125,7 @@ NoMaD 精度略高于 DynaNav（约 0.2%），但 FLOPs 是 DynaNav 的约 4 倍
 4. **特征选择与 early exit 协同**：稀疏特征使 early exit 更稳定，跳层频率更高
 5. **自适应复杂度感知**：室内简单场景自动用更少计算，室外复杂场景自动分配更多资源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外优化开销**：贝叶斯优化需要训练后额外步骤，增加了人工成本和流程复杂度
 2. **阈值泛化性**：CARLA 实验中三个场景用统一阈值，未探索针对不同环境的自适应阈值

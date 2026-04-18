@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VidEoMT: Your ViT is Secretly Also a Video Segmentation Model
 description: >-
@@ -116,7 +116,7 @@ $$\mathbf{Q}_t^{\mathcal{F}} = \text{Linear}(\mathbf{Q}_{t-1}^{\mathcal{S}}) + \
 3. **渐进式验证假设**：通过 6 步消融清晰展示每个专用组件的冗余性，实验设计令人信服
 4. **跨任务通用**：VIS、VPS、VSS 三大任务/六个基准均表现优异，尤其在 VSPW VSS 上超越所有已有方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖大规模预训练**：在 IN1K 等小规模预训练下精度明显下降（与 CAVIS 差 2.7 AP），对 VFM 有强依赖
 2. **小模型效果下降**：ViT-S 上差距达 2.7 AP，encoder-only 范式在小模型下优势减弱

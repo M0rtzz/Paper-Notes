@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OAD-Promoter: Enhancing Zero-shot VQA using Large Language Models with Object Attribute Description
 description: >-
@@ -166,7 +166,7 @@ $$[\text{Instruction } I \;/\; \text{Global Caption } C_G \;/\; \text{Object Exa
 4. **即插即用**：框架可与不同LLM（GPT-3、OPT、BLOOM、GPT-Neo、GPT-J、GPT-4等）组合使用
 5. **自增长的记忆库**：MKA模块随推理进行自然积累知识，这是一种优雅的持续学习形式
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 依赖VinVL和BLIP2等预训练模型的质量，若这些模型失败则OEG模块输出受损
 2. MKA模块的偏差检测依赖UpDn和LMH的QA模块，这些模型本身能力有限
 3. 零样本设置下在A-OKVQA和OKVQA上的提升幅度有限（<1%），说明方法在更难的知识推理问题上的天花板

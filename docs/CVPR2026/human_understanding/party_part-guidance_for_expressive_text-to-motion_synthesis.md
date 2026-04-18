@@ -42,19 +42,19 @@ ParTY 采用两阶段训练策略。**第一阶段**训练 Temporal-aware VQ-VAE
 
 ### 关键设计一：Temporal-aware VQ-VAE
 
-- **做什么**：在动作量化阶段增强时序信息保留能力，解决标准 VQ-VAE 在固定窗口压缩时丢失时序流的问题。
+- **功能**：在动作量化阶段增强时序信息保留能力，解决标准 VQ-VAE 在固定窗口压缩时丢失时序流的问题。
 - **核心思路**：引入 Local Temporal Enhancement (LTE) 和 Global Temporal Enhancement (GTE)。LTE 将帧级特征按窗口分组，在组内通过 MLP 计算权重并加权求和得到组级特征；GTE 对组级特征构建图卷积网络（GCN），捕捉全局时序依赖，最终量化为码本。
 - **设计动机**：增大窗口可以减少模型参数和推理时间，但标准 VQ-VAE 会因信息丢失严重而性能大幅下降。Temporal-aware VQ-VAE 在大窗口下仍能保持高质量量化，从而兼顾效率和性能——例如窗口从 4 增到 12 时推理时间缩减 64%，而加入本模块后 FID 仅微升至 0.042（对比 MoMask 原始的 0.126）。
 
 ### 关键设计二：Part-aware Text Grounding (PTG)
 
-- **做什么**：将单一文本 embedding 转化为多个多样化 embedding，并为每个身体部位动态选择最合适的 embedding。
+- **功能**：将单一文本 embedding 转化为多个多样化 embedding，并为每个身体部位动态选择最合适的 embedding。
 - **核心思路**：CLIP 文本 embedding 经 K 个独立 MLP 变换产生 K 个多样化 embedding，再通过部位专属的 Gate 网络自适应加权选择。训练时利用 LLM 为每个部位生成辅助文本描述（如原文"向前走并左手捡东西"→ LLM 生成手臂描述"左臂捡起地上的东西"），用 L1 loss 对齐 PTG 输出与部位描述 embedding。推理时不需要 LLM。
 - **设计动机**：单一文本 embedding 难以区分不同部位的语义需求。通过对比学习（diversity loss）保证各 embedding 语义一致但方向多样，再由 Gate 网络根据部位特性选择相关维度。这比 LGTM 直接用 LLM 提取部位文本更优，因为后者会丢失整句上下文。
 
 ### 关键设计三：Part-Guided Network + Holistic-Part Fusion
 
-- **做什么**：先生成部位动作 token 作为引导信号，然后用于条件化全身动作生成；在生成过程中通过注意力机制持续融合部位与全身信息。
+- **功能**：先生成部位动作 token 作为引导信号，然后用于条件化全身动作生成；在生成过程中通过注意力机制持续融合部位与全身信息。
 - **核心思路**：生成以循环方式进行——每个周期内，部位 Transformer 先自回归生成 T 步 token，各部位 token 相加后经 MLP 融合构成 Part Guidance；整体 Transformer 在同一时间段内利用 Part Guidance 作为额外条件生成全身 token。Holistic-Part Fusion (HPF) 将全身、手臂、腿 token 拼接做 self-attention，再用 cross-attention（全身 token 为 query，各部位 token 为 key/value）融合信息。
 - **设计动机**：直接独立生成各部位后拼合会导致时空不连贯。Part-Guided Network 让部位信息"先行一步"为全身生成提供前瞻引导，而 HPF 在每一步动态捕捉部位间的相互关系（注意力图显示对应描述部位的权重显著更高），从根本上避免了简单拼合的连贯性问题。
 

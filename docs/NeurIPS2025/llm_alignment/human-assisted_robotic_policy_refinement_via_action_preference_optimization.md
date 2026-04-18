@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Human-assisted Robotic Policy Refinement via Action Preference Optimization
 description: >-
@@ -140,7 +140,7 @@ $$L(\pi_\theta, \pi_{ref}) = \mathbb{E}_{x,y \sim D^h}[-v(x,y)]$$
 3. **无需配对偏好数据**：利用 KTO 的思想，只需二元信号（好/坏）而非配对比较，大大降低了数据标注要求
 4. **从失败中学习的能力**：APO 不仅避免失败动作，还能在遭遇失败后主动自我纠正
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验仅基于自回归 VLA 模型（OpenVLA、π0-FAST），未验证在回归式或扩散策略模型上的泛化性
 2. 人类干预仍需实时监控，如何降低人类参与成本是开放问题

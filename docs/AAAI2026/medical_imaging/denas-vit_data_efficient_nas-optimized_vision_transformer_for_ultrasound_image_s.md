@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeNAS-ViT: Data Efficient NAS-Optimized Vision Transformer for Ultrasound Image Segmentation
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：NAS 需要大量数据来搜索最优架构，但超声分割恰好缺少标注数据——两者对数据需求的冲突如何解决？
 
-**本文要解决什么？** 设计高效的token级NAS + 数据高效的半监督学习框架。
+**本文目标** 设计高效的token级NAS + 数据高效的半监督学习框架。
 
 **切入角度**：在 ViT 的注意力计算之前做 NAS——搜索最优的多尺度 token 表示（而非搜索整个模块），同时用 NAS 引导的半监督学习减少对标注数据的依赖。
 
-**核心 idea 一句话**：ViT 内部的 Token 级 NAS 搜索 + NAS 约束驱动的半监督协同训练。
+**核心 idea**：ViT 内部的 Token 级 NAS 搜索 + NAS 约束驱动的半监督协同训练。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ $\mathcal{L} = \mathcal{L}_{sup} + \mathcal{L}_{uns} + \mathcal{L}_{ind} + \math
 - **NAS 和 SSL 的自然结合**——NAS 生成的不同架构自然提供了协同训练所需的多样性，两者互相增强
 - **阶段式优化策略**是实际工程中的重要经验——直接联合优化所有目标往往不稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 - NAS 搜索过程本身计算代价高，论文未详细讨论搜索时间
 - 仅在2D超声上验证，3D体积数据的扩展有待探索
 - 半监督部分的超参数（各损失权重、阶段切换时机）较多

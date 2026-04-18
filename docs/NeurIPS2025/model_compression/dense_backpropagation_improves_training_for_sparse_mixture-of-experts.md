@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dense Backpropagation Improves Training for Sparse Mixture-of-Experts
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：要让 router 获得完整（稠密）梯度就需要激活所有 expert（即变成 dense 模型），但这会破坏 MoE 的稀疏计算优势。稠密梯度和稀疏计算之间存在根本矛盾。
 
-**本文要解决什么**：在保持稀疏前向传播效率的同时，让 router 获得近似稠密梯度更新。
+**本文目标**：在保持稀疏前向传播效率的同时，让 router 获得近似稠密梯度更新。
 
 **切入角度**：straight-through estimator 可以绕过 TopK 的不可微操作提供稠密梯度，但需要所有 expert 的输出。关键洞察：非激活 expert 的输出可以用其历史输出的均值来近似——这个均值已经在正常前向传播中免费计算了。
 
@@ -107,7 +107,7 @@ Improvement Score（相对随机基线的改进百分比）平均提升 5.0%。
 - **数学优雅**：默认向量是缺失 expert 输出的无偏估计，期望梯度误差为零的理论保证很漂亮。
 - **实验方法论值得学习**：(1) 160B tokens 的过训练确保结果不是虚假收敛差异；(2) 用 globally reduced auxiliary loss 作为 baseline，保证对比公平（很多先前工作的改进在此 baseline 下消失）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 只在 2B 总参数级别验证，未在 10B+ 规模下实验
 - EMA 机制假设 expert 输出的分布变化平滑——在训练极早期或学习率剧变时可能不成立
 - 默认向量只是输入无关的常量，更精细的近似（如条件化的默认向量）可能进一步提升效果

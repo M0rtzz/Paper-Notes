@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predicting Turn-Taking and Backchannel in Human-Machine Conversations Using Linguistic, Acoustic, and Visual Signals
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**: 真实人机对话中，说话人的语言、语调和面部表情都包含轮换信号，但如何有效融合三模态并支持任意模态组合输入是未解决的问题。
 
-**本文要解决什么**: 构建大规模三模态面对面对话数据集，设计支持任意模态组合的端到端预测框架。
+**本文目标**: 构建大规模三模态面对面对话数据集，设计支持任意模态组合的端到端预测框架。
 
 **切入角度**: 自动化数据采集 pipeline + 隐私脱敏处理 + 基于低秩分解的灵活多模态融合模块 + 随机模态 Dropout 训练策略。
 
-**核心idea一句话**: 用低秩张量融合结合模态选择机制，实现支持任意文本/音频/视频组合输入的 turn-taking 和 backchannel 预测。
+**核心 idea**: 用低秩张量融合结合模态选择机制，实现支持任意文本/音频/视频组合输入的 turn-taking 和 backchannel 预测。
 
 ## 方法详解
 
@@ -150,7 +150,7 @@ $$\bm{h} = I_T(\cdot) \circ I_A(\cdot) \circ I_V(\cdot), \quad I_k(\bm{x}) = \be
 - **RMDT 训练策略简单有效**: 一次训练支持所有模态组合，模态选择方案基于低秩分解的数学优雅性
 - **Backchannel 预测是亮点**: 0.906 的 F1 说明多模态确实能捕获人类对话中细微的反馈信号
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 当说话人语义未完整但在思考停顿时，模型可能误判为 turn-taking（Fig. 5 的失败案例）
 2. 视觉模态目前仅使用面部信息，未利用手势和身体动作

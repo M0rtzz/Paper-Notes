@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Explaining Decentralized Multi-Agent Reinforcement Learning Policies
 description: >-
@@ -146,7 +146,7 @@ tags:
 3. **既有理论保证又有人类评估**：Theorem 1 保证正确性+完备性，用户研究验证实际效用
 4. **可扩展到 19 个任务、9 个智能体**，实际复杂度可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限网格世界领域**：四个基准均为 gridworld，连续状态/动作空间的适用性未验证
 2. **任务定义需要领域知识**：任务识别依赖于奖励信号和状态转移的手工特征提取

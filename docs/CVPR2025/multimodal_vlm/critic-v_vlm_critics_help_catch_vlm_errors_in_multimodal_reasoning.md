@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Critic-V: VLM Critics Help Catch VLM Errors in Multimodal Reasoning
 description: >-
@@ -123,7 +123,7 @@ Critic-V包含三个核心阶段：
 5. 验证了一个重要假设：VLM可以在被指出错误后有效修正（Tyen et al.的发现在VLM领域的延伸）
 6. LLaVA-v1.5-7B在RealWorldQA上从50.7提升到63.5（+12.8），说明即使是弱模型也能从强Critic中大幅受益
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Critic模型本身基于Qwen2-VL-7B训练，其能力上限受限于基座模型——对于超出其能力范围的错误可能无法识别
 - VEST中的错误插入依赖GPT-4o，存在成本和可复现性的问题
 - 迭代次数的选择缺乏自适应机制——目前固定为2轮，不同难度题目可能需要不同轮次

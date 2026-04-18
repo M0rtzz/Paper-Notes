@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhysMoDPO: Physically-Plausible Humanoid Motion with Preference Optimization
 description: >-
@@ -103,7 +103,7 @@ PhysMoDPO是一个"生成-仿真-评估-微调"的迭代循环：
 - **零样本跨body迁移成功**：在SMPL上训练的PhysMoDPO零样本迁移到G1和H1机器人均有效，证明了物理兼容性的泛化能力
 - **迭代DPO的有效性**：每轮用新模型重新采样构造偏好对，逐步改进，3轮即达饱和
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在平坦地面上验证，未扩展到复杂地形（台阶、斜坡、不平整表面）
 - 依赖固定的DeepMimic追踪策略，其自身偏差会传递到偏好对构造中——理想方案是用多个不同WBC或人类评估来减少评估偏差
 - 过滤了需要物体支撑的运动（如上楼梯），限制了应用范围

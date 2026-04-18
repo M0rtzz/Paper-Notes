@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient and Accurate Prompt Optimization: the Benefit of Memory in Exemplar-Guided Reflection
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：有价值的 feedback 信息被浪费，exemplar 的选择与任务性能脱节。
 
-**本文要解决什么？** 如何高效利用所有历史 feedback？如何选择真正有助于任务性能的 exemplar？
+**本文目标** 如何高效利用所有历史 feedback？如何选择真正有助于任务性能的 exemplar？
 
 **切入角度**：借鉴人类记忆机制（Ebbinghaus 遗忘曲线），对 feedback 和 exemplar 建立带优先级分数的长期记忆存储，通过评估效果动态调整优先级并选择性遗忘。
 
-**核心 idea 一句话**：用记忆机制管理 feedback 和 exemplar，让有价值的信息持续被利用而无价值的被遗忘。
+**核心 idea**：用记忆机制管理 feedback 和 exemplar，让有价值的信息持续被利用而无价值的被遗忘。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ ERM（Exemplar-Guided Reflection with Memory）包含三个核心组件：输入
 - 将人类记忆的"遗忘曲线"概念引入 prompt 优化，用优先级分数动态管理 feedback/exemplar 的生命周期，思路可迁移到其他需要长期知识管理的场景
 - Exemplar-Guided Reflection 的设计很巧妙：先生成 CoT 风格的示例解答，再用这些解答辅助 feedback 生成，形成"教学相长"的闭环
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 未探索人类介入优化过程的场景（当模型持续犯错时，人工提供解答可能更高效）
 - 实验受限于预算，任务类型有限
 - Feedback Memory 和 Exemplar Factory 的超参数（$\beta$, $\theta$, $\tau$）需要调优

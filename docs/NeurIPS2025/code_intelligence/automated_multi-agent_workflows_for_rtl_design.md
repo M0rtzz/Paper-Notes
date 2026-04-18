@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VeriMaAS: Automated Multi-Agent Workflows for RTL Design
 description: >-
@@ -98,7 +98,7 @@ VeriMaAS 的工作流为：给定 RTL 设计任务 → 自适应采样 Agent 算
 - 级联控制器实现了性能-成本的良好权衡，避免了"一刀切"使用最强策略的浪费
 - PPA 感知优化展示了框架的灵活性——可以在不重新训练的情况下切换优化目标
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 本文为 NeurIPS ML for Systems Workshop 论文，实验规模相对有限
 - 控制器的阈值基于百分位数的简单统计确定，更复杂的学习方法（如 RL）可能进一步提升
 - 工作流搜索空间（5 个固定算子的级联序列）相对受限，自由组合可能发现更优策略

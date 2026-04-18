@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient-SAM2: Accelerating SAM2 with Object-Aware Visual Encoding and Memory Retrieval
 description: >-
@@ -94,7 +94,7 @@ SWR 的 shortcut 分支通过简单重建管线训练，选择记忆条件特征
 - SMR 的首次回忆缓存+复用策略巧妙利用了时间一致性，设计极其简洁且几乎无开销
 - SWR 利用解码器的注意力显著性反馈指导编码器的计算分配——跨模块信息复用的良好示范
 
-## 局限性 / 可改进方向
+## 局限与展望
 - SWR 依赖前一帧预测质量估计目标窗口，跟踪失败或目标快速运动时可能级联恶化
 - 稀疏率 $s=0.95$ 和置信度阈值 $\theta_{obj}=5$ 均为手工设定，自适应调整可能带来进一步提升
 - 仅在半监督 VOS 设置下验证，交互式分割和多目标追踪场景的适用性未知

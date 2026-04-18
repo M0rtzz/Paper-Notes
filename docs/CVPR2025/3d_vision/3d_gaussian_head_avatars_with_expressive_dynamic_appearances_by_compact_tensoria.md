@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Gaussian Head Avatars with Expressive Dynamic Appearances by Compact Tensorial Representations
 description: >-
@@ -87,7 +87,7 @@ $$\mathcal{L} = \mathcal{L}_{image} + \mathcal{L}_{geom} + \mathcal{L}_{op}$$
 - **不透明度偏移设计**：仅调整opacity而非位置/旋转/缩放，减少自由度，提升泛化
 - **三平面的非对称维度**：利用面部信息集中在正面的先验做存储优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖FLAME跟踪网格质量，无法处理复杂发型或口腔内部拓扑变化；FLAME本身的表达空间有限（100个PCA基），极端表情可能超出建模范围
 - 未解耦材质和光照，无法做头像重光照，限制了在变化光照场景下的应用
 - 动态纹理仅建模不透明度变化，颜色的动态变化（如脸红、肤色变化）未显式建模，这限制了对细微表情的捕捉能力

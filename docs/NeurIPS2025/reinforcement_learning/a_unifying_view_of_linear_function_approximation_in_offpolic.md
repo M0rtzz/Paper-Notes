@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unifying View of Linear Function Approximation in Off-Policy RL Through Matrix Splitting and Preconditioning
 description: >-
@@ -85,7 +85,7 @@ tags:
 - Target network的理论本质首次被刻画为预条件子从常数到数据自适应的连续变换
 - "学习率形成区间"为实践调参提供理论支撑，encoder-decoder视角提供TD收敛的新直觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅限线性函数逼近——虽然神经网络最后一层通常是线性的，但核心理论无法直接推广到非线性
 - 仅限策略评估（policy evaluation），未涉及控制（policy improvement/optimization）
 - 纯理论工作，缺少实证验证——在实际规模问题上rank invariance等条件是否常见未被经验检验

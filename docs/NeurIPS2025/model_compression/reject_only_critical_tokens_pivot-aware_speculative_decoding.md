@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reject Only Critical Tokens: Pivot-Aware Speculative Decoding
 description: >-
@@ -110,7 +110,7 @@ PAD（Pivot-Aware Speculative Decoding）的工作流程：
 - **自监督数据生成**：通过 Monte Carlo rollout 自动标注 pivot/non-pivot，无需人工标注，且 LLM-as-Judge 保障只能增加 pivot 标签（安全方向的单向翻转）
 - **与现有方法正交**：PAD 改进的是验证阶段，与改进 draft 模型（如 EAGLE、Medusa）和 draft 质量对齐（如 DistSpec）互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Pivot 分类器需要对每个目标任务预先生成 rollout 数据训练，任务切换时需重新训练
 - AIME24 上 σ=0.7 时精度下降约 16%（73→57），说明对困难推理任务，pivot 分类器的精度至关重要

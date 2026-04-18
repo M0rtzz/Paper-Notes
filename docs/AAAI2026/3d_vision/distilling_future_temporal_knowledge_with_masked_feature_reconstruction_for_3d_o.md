@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilling Future Temporal Knowledge with Masked Feature Reconstruction for 3D Object Detection
 description: >-
@@ -174,7 +174,7 @@ $$\mathcal{L}_{KD} = \lambda_1 \mathcal{L}_{pv} + \lambda_2 \mathcal{L}_{bev} + 
 4. **跨架构泛化性**：在 SparseBEV（并行融合）和 StreamPETR（顺序融合）两种不同架构上均有效
 5. **速度预测显著改善**：mAVE 从 0.251 降至 0.234，说明未来帧知识对运动估计特别有帮助
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 camera-only 3D 检测任务上验证，多模态（LiDAR-camera）场景未探索
 2. 教师模型需要访问未来帧进行预训练，可能限制实际部署中的训练流程

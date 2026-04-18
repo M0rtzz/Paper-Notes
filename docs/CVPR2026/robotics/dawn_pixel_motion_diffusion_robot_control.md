@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DAWN: Pixel Motion Diffusion is What We Need for Robot Control
 description: >-
@@ -103,7 +103,7 @@ DAWN 在几乎所有物品类别上成功率最高，且错误抓取率极低。
 - **数据高效**：仅 1000 真实世界 episodes 即可实现强泛化，体现了结构化中间表示的优势
 - **双臂扩展**：在 Galaxea R1-Lite 双臂平台上验证了方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理延迟相对较高（319ms vs Enhanced DP 的 113ms），因为需要两阶段扩散
 - Motion Director 的光流 GT 依赖 RAFT，在无纹理或快速运动场景可能不准确
 - 使用外部数据（DROID）时性能优于无外部数据但未达到 VPP 和 DreamVLA 的最高水平

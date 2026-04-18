@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DisCa: Accelerating Video Diffusion Transformers with Distillation-Compatible Learnable Feature Caching
 description: >-
@@ -97,7 +97,7 @@ DisCa 包含两个核心模块：**Restricted MeanFlow**（稳定蒸馏）+ **Le
 - **显存高效**：仅维护单张量全局缓存，预测器 < 4% 模型参数，在实际高分辨长视频场景下具备部署优势。
 - **11.8× 加速近乎无损**：在 HunyuanVideo 上实现目前最高加速比，且总分仅降 1.4%，大幅超越所有对比方法。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 HunyuanVideo 上验证**：未在其他视频扩散模型（如 CogVideoX、Wan 等）上做实验，泛化性有待验证。
 - **预测器需额外训练**：虽参数量小，但仍需在目标模型上做训练（MSE + GAN），不再是纯 training-free 方案。

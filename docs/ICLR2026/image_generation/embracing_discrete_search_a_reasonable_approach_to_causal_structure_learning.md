@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embracing Discrete Search: A Reasonable Approach to Causal Structure Learning
 description: >-
@@ -125,7 +125,7 @@ $$\text{BIC}(G) = -2 \log L(G | \mathcal{D}) + k \log n$$
 3. **ILS 元启发式的引入**：将运筹学中的经典优化范式引入因果发现，建立了计算/精度的显式联系
 4. **简洁优雅**：整个方法建立在成熟的统计基础上（BIC 得分、Cholesky 分解），没有引入神经网络或复杂优化，回归到"简单可解释"的路线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅适用于线性模型**：FLOP 的 Cholesky 加速依赖线性高斯假设，非线性因果关系场景需要新的得分函数和搜索策略
 2. **因果充分性假设**：假设没有未观测的混杂因子，在实际应用中这一假设常被违反

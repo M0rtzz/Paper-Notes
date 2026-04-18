@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ca2-VDM: Efficient Autoregressive Video Diffusion Model with Causal Generation and Cache Sharing
 description: >-
@@ -165,7 +165,7 @@ $$\widetilde{\mathcal{L}}_{\text{simple}}(\theta) = \mathbb{E}_{\mathbf{z}, \bol
 2. **Distinct timestep embedding 是 cache sharing 的关键**：为条件帧和去噪目标使用不同的 timestep embedding 这一简单改动，使得条件帧的 KV 与 $t$ 解耦，是整个方案可行的基础。
 3. **Cyclic-TPEs 精巧地处理了超长推理的位置编码问题**：避免了 TPE 与 KV-cache 绑定后无法重置的矛盾。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **因果注意力的信息损失**：单向注意力相比双向注意力天然损失了后向信息流，虽然 PE 做了一定补偿，但生成质量是否在更复杂场景下有差距值得进一步研究
 2. **分辨率受限**：实验均在 256×256 分辨率下进行，对高分辨率（如 512+）视频生成的可扩展性尚未验证

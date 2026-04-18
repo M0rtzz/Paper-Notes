@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ICLShield: Exploring and Mitigating In-Context Learning Backdoor Attacks
 description: >-
@@ -158,7 +158,7 @@ ICLShield 是一个**推理阶段的防御方法**，无需额外训练或微调
 3. **实用性强**：纯推理阶段防御，不修改模型参数，适用于任何 LLM（包括 API 服务），可跨模型迁移
 4. **理论与实验高度一致**：理论预测的攻击成功概率分布偏移在实验中得到了直接验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **更复杂的提示工程**：尚未在 Tree-of-Thought、Graph-of-Thought 等复杂 ICL 范式下验证
 2. **更具挑战性的应用领域**：医疗、金融等高风险场景下的效果有待探索

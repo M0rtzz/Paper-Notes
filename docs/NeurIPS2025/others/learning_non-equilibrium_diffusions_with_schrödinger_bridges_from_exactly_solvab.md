@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning non-equilibrium diffusions with Schrödinger bridges: from exactly solvable to simulation-free
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：非平衡系统需要非对称漂移矩阵（非保守力场），但允许一般漂移的方法（如IPFP、Neural SDE）依赖昂贵的数值模拟，且高维精度差。
 
-**本文要解决什么**：在线性参考动力学（mvOU过程）框架下高效精确地求解非平衡系统的SBP。
+**本文目标**：在线性参考动力学（mvOU过程）框架下高效精确地求解非平衡系统的SBP。
 
 **切入角度**：利用mvOU过程的解析可处理性，在物理相关性和计算可行性之间取得平衡。
 
-**核心idea一句话**：用mvOU过程作为参考过程，利用其解析桥公式实现无模拟的score/flow matching训练。
+**核心 idea**：用mvOU过程作为参考过程，利用其解析桥公式实现无模拟的score/flow matching训练。
 
 ## 方法详解
 
@@ -124,7 +124,7 @@ tags:
 - **实用性强**：CPU上分钟级训练，显著优于GPU上的竞争方法
 - **优雅的统一**：布朗SBP和标量OU-SBP都是特殊情形
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 矩阵运算 $O(d^3)$ 复杂度限制了扩展到高维（d>100）
 - 线性参考动力学假设限制了对高度非线性系统的建模能力

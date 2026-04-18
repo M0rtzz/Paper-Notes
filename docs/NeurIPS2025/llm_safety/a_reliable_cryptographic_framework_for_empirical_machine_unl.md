@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Reliable Cryptographic Framework for Empirical Machine Unlearning Evaluation
 description: >-
@@ -87,7 +87,7 @@ $$\text{Adv}(\mathcal{A}, \text{Ul}) = \frac{1}{|\mathcal{S}_\alpha|} \left| \su
 - **统一框架**：同时兼容黑盒/白盒对手、弱/强对手，理论推广性好
 - **与certified removal的桥接**：Theorem 3.5建立了实证指标与理论保证之间的量化联系，是少见的理论-实践桥接工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **弱对手的能力瓶颈**：即使None（不做任何遗忘）的 $\mathcal{Q}$ 仍高达0.587，说明当前SOTA MIA还不够强。如果未来出现更强的MIA，评估指标的区分度会更好
 - **仅限i.i.d.遗忘场景**：均匀划分限制了对非i.i.d.遗忘（如整类遗忘）的适用性，作者也承认推广到非均匀划分会破坏现有理论
 - **实验计算成本高**：虽然SWAP test已简化，但训练多个模型（含DP模型）的总实验成本仍不低（需约6天GPU时间来做标准差消融）

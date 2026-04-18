@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Happens During the Loss Plateau? Understanding Abrupt Learning in Transformers
 description: >-
@@ -159,7 +159,7 @@ $$\text{APM} = \frac{\sum_{(i,j) \in \Omega} |A_{ij}|}{\sum_{(i,j)} |A_{ij}|}$$
 4. **小模型到大模型的桥接**：在 Pythia 和 OLMo 的预训练早期验证了相同现象，极大增强了结论的说服力
 5. **方法论清晰**：APM、重复频率、序列熵等多种量化指标，使抽象的训练动态变得可测量可比较
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论解释不足**：为何梯度训练引入表示坍缩偏差？仅提出"搜索"假说但缺乏严格理论验证
 2. **小模型主导**：主要结论基于 1-2 层 Transformer，多层深层模型中各层如何交互仍不清楚

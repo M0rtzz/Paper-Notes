@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interaction-Merged Motion Planning: Effectively Leveraging Diverse Motion Datasets for Robust Planning
 description: >-
@@ -145,7 +145,7 @@ IMMP 分为两个阶段：
 - **"无需访问源数据"的特性**：合并后不再需要源域数据，极大降低了域适应的隐私和存储成本
 - **验证了多指标检查点收集的价值**：不同指标最优的检查点编码了不同的行为特征，丰富了合并的基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要对每个源域分别训练完整模型，预合并阶段的计算成本随源域数量线性增长
 2. 合并权重的优化仍需目标域的标注数据，无法实现真正的零样本适应

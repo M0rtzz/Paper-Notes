@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OddGridBench: Exposing the Lack of Fine-Grained Visual Discrepancy Sensitivity in Multimodal Large Language Models
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：没有系统化、可控的 benchmark 来量化评估 MLLM 在不同感知维度（颜色、大小、旋转、位置）上的敏感度，也缺乏针对性的训练方法来弥补这一短板。
 
-**本文要解决什么**：(1) 构建可控的细粒度视觉差异感知 benchmark；(2) 揭示 MLLM 在此任务上的系统性失败模式；(3) 提出训练方法提升感知能力。
+**本文目标**：(1) 构建可控的细粒度视觉差异感知 benchmark；(2) 揭示 MLLM 在此任务上的系统性失败模式；(3) 提出训练方法提升感知能力。
 
 **切入角度**：借鉴认知心理学的 Odd-One-Out 范式，构建参数化控制的网格图像，精确量化差异程度。
 
@@ -98,7 +98,7 @@ OddGridBench + OddGrid-GRPO 两部分。Benchmark 部分生成参数化网格图
 - **距离感知奖励**：将空间邻近性编码到 RL 奖励中，比二元奖励提供更丰富的学习信号，这一设计可迁移到其他需要空间定位的 VLM 任务
 - **暴露了 MLLM 的根本短板**：GPT-5 在位置感知上仅 5%，几乎是随机水平，说明当前视觉编码器在底层感知上严重不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Benchmark 仅用合成 SVG 图标，未涉及自然图像中的细粒度差异检测
 - 仅评估了单图场景，实际应用中需要在复杂背景下检测差异
 - OddGrid-GRPO 的效果主要在该 benchmark 上验证，在其他细粒度视觉任务上的迁移性待考察

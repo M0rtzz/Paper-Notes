@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Dense Hand Contact Estimation from Imbalanced Data
 description: >-
@@ -146,7 +146,7 @@ HACO 的 F1 分数是 DECO 的 **2.65 倍**。
 3. **渐进式训练策略**：从全局平衡到局部平衡的过渡设计简洁有效
 4. **Contact Initialization**：可学习的接触初始化嵌入类似残差连接，稳定训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅预测右手接触，未处理左/右手对称问题
 2. 评估时跳过完全无接触的手（Recall/F1 对纯非接触样本未定义），可能高估性能

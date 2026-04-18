@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ground What You See: Hallucination-Resistant MLLMs via Caption Feedback, Diversity-Aware Sampling, and Conflict Regularization
 description: >-
@@ -120,7 +120,7 @@ $$\Delta\log\pi^t(\mathbf{y}_u|\mathbf{x}_o) \propto \eta \cdot \mathcal{A}^t(x_
 3. **Caption Reward 设计巧妙**：通过"仅凭 caption 能否回答问题"来间接评估视觉锚定质量，无需额外标注
 4. **三个模块正交互补**：分别针对推理链入口（caption）、样本选择（方差）、优化过程（NTK 正则）三个层面
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **领域分类有误**：论文主题是 MLLM 幻觉缓解，归类到 object_detection 不太合适，应属于 multimodal_vlm
 2. **计算开销大**：每个样本生成 64 个响应来估计方差，再加上 NTK 相似度计算和 InfoNCE 损失，训练成本显著增加

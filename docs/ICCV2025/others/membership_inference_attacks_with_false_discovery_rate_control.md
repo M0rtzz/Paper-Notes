@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Membership Inference Attacks with False Discovery Rate Control
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **核心矛盾**：如何在既不知道训练数据分布、也无法保证样本间独立性的情况下，提供FDR的理论保证？
 
-**本文要解决什么**：设计一种可以(1)提供FDR理论控制的MIA方法，(2)同时提供边际概率保证（即真正非成员被误判为成员的概率不超过 $\alpha$），(3)且能作为wrapper嵌入到任意现有MIA方法中。
+**本文目标**：设计一种可以(1)提供FDR理论控制的MIA方法，(2)同时提供边际概率保证（即真正非成员被误判为成员的概率不超过 $\alpha$），(3)且能作为wrapper嵌入到任意现有MIA方法中。
 
 **切入角度**：借鉴保形推断（conformal inference）的思想，但解决其不能直接用于FDR控制的问题（因为p-value基于共享校准集而非独立的）。
 

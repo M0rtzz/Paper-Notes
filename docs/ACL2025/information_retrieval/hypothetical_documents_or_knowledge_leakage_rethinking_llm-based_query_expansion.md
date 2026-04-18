@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hypothetical Documents or Knowledge Leakage? Rethinking LLM-based Query Expansion
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: LLM 在海量语料上预训练，其中很可能包含 benchmark 的知识源（如 Wikipedia），那么 LLM 生成的到底是"假设性文档"还是"已记忆知识的复述"？如果是后者，检索任务退化为近乎精确匹配的 trivial task。
 
-**本文要解决什么**: 调查 LLM-based QE 方法的性能提升中有多少可归因于知识泄露（knowledge leakage），而非真正的假设性推理能力。
+**本文目标**: 调查 LLM-based QE 方法的性能提升中有多少可归因于知识泄露（knowledge leakage），而非真正的假设性推理能力。
 
 **切入角度**: 选择事实验证（fact verification）作为测试平台——该任务有明确的 gold evidence 可供比对，且是分类任务，便于清晰评估 QE 对端任务的影响。
 
-**核心 idea 一句话**: 用 NLI 检测 LLM 生成文档中是否"蕴含"了 gold evidence 句子，将样本分为 matched/unmatched 两组对比性能，发现 QE 的效果仅在 matched 组上成立。
+**核心 idea**: 用 NLI 检测 LLM 生成文档中是否"蕴含"了 gold evidence 句子，将样本分为 matched/unmatched 两组对比性能，发现 QE 的效果仅在 matched 组上成立。
 
 ## 方法详解
 
@@ -51,7 +51,7 @@ tags:
 
 ### 关键设计 1：NLI-based Matching 算法
 
-- **做什么**: 判断 LLM 为某个 claim 生成的扩展文档 $d$ 是否包含与 gold evidence 语义等价的句子。
+- **功能**: 判断 LLM 为某个 claim 生成的扩展文档 $d$ 是否包含与 gold evidence 语义等价的句子。
 - **为什么**: 如果 LLM 在扩展文档中"复述"了 gold evidence，那么检索性能的提升可能只是因为查询向量中已经嵌入了答案本身。
 - **怎么做**:
   1. **句子切分**: 用 spaCy 对生成文档 $d$ 分句，去掉与 claim 高度重复的句子（ROUGE-2 > 0.95）；
@@ -122,7 +122,7 @@ QE 在所有三个数据集上均显著优于 baseline（p < 0.001），七种 L
 3. **实验设计严谨**: 7 个 LLM × 3 个 benchmark × 2 种 QE × 8 次重复 × matched/unmatched 分层分析，覆盖全面。
 4. **对社区的警示意义**: 提醒研究者在评估 LLM-based retrieval 方法时需考虑数据污染/知识泄露的影响，推动更公正的 benchmark 设计。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **因果关系未建立**: 仅观察到相关性（LLM 行为与泄露的关联），未证明"训练数据→生成"的因果链。
 2. **NLI 判断质量**: 依赖 GPT-4o-mini 做 NLI 标注，本身可能引入偏差；虽有人工验证但规模有限。

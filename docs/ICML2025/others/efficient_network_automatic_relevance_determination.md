@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Network Automatic Relevance Determination
 description: >-
@@ -110,7 +110,7 @@ $$\alpha_i = \begin{cases} \frac{m s_i^2}{\eta_i}, & \eta_i > 0 \\ \infty, & \et
 - **生物可解释性**：在 TCGA 数据上发现的蛋白质交互网络与已知生物学通路一致
 - 可通过核方法自然扩展到非线性场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模型核心假设是**线性关系**，虽提及核扩展但未深入实验验证
 - Graphical Lasso 中 $\lambda$ 的选择依赖 5 折交叉验证，计算成本未计入总时间对比
 - 未与近年的深度特征选择方法（如门控网络、注意力机制）对比

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PRESCRIBE: Predicting Single-Cell Responses with Bayesian Estimation
 description: >-
@@ -108,7 +108,7 @@ $$\nu_i = \exp(f_\psi(z_i) + \ln N_H), \quad \tilde{\nu}_i^{\text{post}} = \frac
 - 低证据时自动回退到控制状态是安全设计：宁可预测"没有效果"也不输出错误的效果
 - 对生物实验有直接应用价值：实验者可以根据置信度分数决定哪些扰动值得实际验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 使用 PCA 降维可能丢失重要的基因表达信息，更好的降维方法值得探索
 - 目前编码器设计依赖预训练基因嵌入（scGPT），不同嵌入的影响未充分研究

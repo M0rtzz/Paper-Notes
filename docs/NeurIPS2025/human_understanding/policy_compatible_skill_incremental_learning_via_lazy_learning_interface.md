@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Policy Compatible Skill Incremental Learning via Lazy Learning Interface
 description: >-
@@ -112,7 +112,7 @@ $$d_c(x) = \min_{k \leq K_c} \sqrt{(x - \mu_{c,k})^\top \Sigma_{c,k}^{-1} (x - \
 - **实验全面且强有力**：覆盖两种环境(Kitchen/Meta-World)、两种SIL场景(Emergent/Explicit)、多种基线配置，Explicit SIL下BwSC BWT达+42.5%远超所有基线
 - **模块化设计**：SIL-C可作为插件应用于不同基线(BUDS/PTGM)和不同SIL算法(FT/ER/AA)，具有良好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仿真环境局限**：仅在Kitchen和Meta-World中验证，未涉及真实机器人场景，状态表示相对简洁
 - **依赖无监督聚类质量**：技能和子任务空间的分辨率由聚类算法决定，噪声或多样性大的技能分布可能影响原型质量

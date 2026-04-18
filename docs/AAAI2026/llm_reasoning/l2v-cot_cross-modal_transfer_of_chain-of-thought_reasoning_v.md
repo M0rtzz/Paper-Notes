@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention
 description: >-
@@ -71,7 +71,7 @@ L2V-CoT 包含两步：(1) 从 LLM（DeepSeek-R1-Distill-Qwen-32B）提取低通
 - **即插即用且与显式方法互补**：可与 MCTS 等显式推理搜索方法组合，实现隐式推理增强+显式推理搜索的双重提升
 - **LAT 分析方法论贡献**：用 Linear Artificial Tomography 进行跨模态推理表示分析的框架本身可以推广到其他能力迁移研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 注入层和注入强度需要 per-task 调优（Table S.2/S.3 显示不同任务用不同超参），缺少自适应选择机制
 - 只在数学推理 benchmark 上验证，未测试通用 VQA 或更广泛的推理任务（如空间推理、因果推理）
 - CoT 样本来自 STILL-2 数据集（数学/物理/化学/生物），领域偏差可能影响泛化到其他领域（如法律、金融推理）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Handling Imbalanced Pseudolabels for Vision-Language Models with Concept Alignment and Confusion-Aware Calibrated Margin
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_m(y, \mathbf{z}) = -\log \frac{e^{z_y}}{e^{z_y} + \sum_{c \neq y} 
 4. **双适配器隔离噪声**：main adapter 保持高精度不受动态伪标签噪声污染，架构简洁有效
 5. **覆盖范式全面**：UL / SSL / TRZSL 三种学习范式统一框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **LLM 依赖**：概念对齐需要调用 LLM 生成文本描述，增加了推理流程复杂度和成本
 2. **超参数敏感性**：阈值 $t$（mismatch 检测）、$\tau$（置信度过滤）、边距尺度 $m$ 等需调优

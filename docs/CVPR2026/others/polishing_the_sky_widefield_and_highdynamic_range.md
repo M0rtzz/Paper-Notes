@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction
 description: >-
@@ -70,7 +70,7 @@ POLISH++是一个端到端CNN模型（基于WDSR架构），输入低分辨率di
 - **任务相关评估**: 不仅评估PSNR/SSIM等图像质量指标，还评估源探测精度（precision/recall/F1）和形状参数估计误差，更贴近天文实际需求
 - **Fine-tuning快速适配**: 对不同PSF条件的适应不需要从头训练，5倍加速的fine-tuning使得逐指向部署成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Flux估计仍不如CLEAN**: DL方法在绝对flux精度上落后于CLEAN，需要专门的flux校准步骤或后处理策略
 - **仅在image-plane评估**: 使用CASA的deconvolve任务（minor cycle），未在visibility空间做端到端验证
 - **训练数据量有限**: 仅18张全视场图用于训练，虽然patch-wise扩展到28800个样本，但sky model的多样性可能不足

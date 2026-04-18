@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLoE: Expert Consistency Learning for Missing Modality Segmentation
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \alpha \mathcal{L}_{\t
 - 一致性→可靠性→融合权重的转化链条逻辑通畅，门控网络极轻量不增加推理负担。
 - 跨数据集泛化：从 BraTS（4 模态）到 MSD Prostate（2 模态）都有效。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ET 的平均 Dice 仍然只有 65%，说明缺失模态下小目标分割仍是开放问题。
 - 门控网络的输入只有两个标量（$u_m, v_m$），可能信息量有限，可考虑更丰富的特征。

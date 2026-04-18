@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cooperative Pseudo Labeling for Unsupervised Federated Classification
 description: >-
@@ -164,7 +164,7 @@ FedCoPL 平均精度 **72.49%**，比最佳基线高约 **10%**。特别是在 R
 - **隐私增强**：仅上传伪标签分布统计（而非精确类别分布），从 CLIP 预测派生，无法逆推真实数据分布
 - **视觉/文本 prompt 差异的发现**：为联邦 prompt learning 提供了实证依据和设计原则
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设全局标签分布均匀（uniform）——在实际场景中可能不成立
 - 未提供收敛性、隐私和公平性的理论分析（论文中提到作为未来工作）

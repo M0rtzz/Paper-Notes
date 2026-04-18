@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizable Facial Expression Recognition
 description: >-
@@ -56,7 +56,7 @@ CAFE 包含三个核心组件：
 
 1. **Sigmoid Mask 学习（Mask on Fixed Face Features）**
 
-   **做什么**：学习一个概率掩码，从固定的 CLIP 人脸特征中筛选出表情相关的特征通道。
+   **功能**：学习一个概率掩码，从固定的 CLIP 人脸特征中筛选出表情相关的特征通道。
 
    **核心思路**：FER 模型（ResNet-18）提取特征 $\mathbf{f}$，经 reshape 后生成 Mask $\mathbf{M}$，再通过 Sigmoid 函数正则化：
 
@@ -71,7 +71,7 @@ CAFE 包含三个核心组件：
 
 2. **通道分离模块（Channel-Separation）**
 
-   **做什么**：将 Mask 后的 512 维特征按通道均分为 7 组，每组对应一种基本表情，通过 MaxPool 直接生成 logits，绕过 FC 层。
+   **功能**：将 Mask 后的 512 维特征按通道均分为 7 组，每组对应一种基本表情，通过 MaxPool 直接生成 logits，绕过 FC 层。
 
    **核心思路**：将 $\widetilde{\mathbf{F}}$ 按通道分为 $\{\widetilde{\mathbf{F}}_1, ..., \widetilde{\mathbf{F}}_7\}$（各约 73 通道），对每组应用随机通道丢弃后 MaxPool：
 
@@ -83,7 +83,7 @@ CAFE 包含三个核心组件：
 
 3. **通道多样性损失（Channel-Diverse Loss）**
 
-   **做什么**：强制不同表情类别对应的 Mask 尽可能多样化，避免不同表情通道学习到相似的特征模式。
+   **功能**：强制不同表情类别对应的 Mask 尽可能多样化，避免不同表情通道学习到相似的特征模式。
 
    **核心思路**：
 
@@ -147,7 +147,7 @@ CAFE 的跨域均值达到 63.48%，相比最佳基线 EAC（53.70%）提升 **+
 3. **避免 FC 层的巧妙设计**：通道分离后直接 MaxPool 生成 logits，减少了一个重要的过拟合来源
 4. **推理成本低**：训练时的辅助模块可在推理时丢弃，实际部署仅需 CLIP + ResNet-18 + Mask
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑 7 种基本表情，未扩展到细粒度表情或连续情感空间（VA 值预测）
 - CLIP 特征维度（512）与 ResNet-18 输出维度相同时效果最佳，维度不匹配时需要简单的 mean 操作可能限制性能

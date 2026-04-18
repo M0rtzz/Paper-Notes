@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CrossSDF: 3D Reconstruction of Thin Structures From Cross-Sections
 description: >-
@@ -39,7 +39,7 @@ tags:
 
 **切入角度**：仅利用 2D SDF 的零集信息（内/外分类），通过对称差损失引导 3D SDF 学习，释放模型从"必须是 2D SDF"的约束。
 
-**核心 idea 一句话**：对称差损失（释放平面内约束） + 混合编码（哈希+RFF，消除网格伪影） + 自适应采样 = 精确薄结构重建。
+**核心 idea**：对称差损失（释放平面内约束） + 混合编码（哈希+RFF，消除网格伪影） + 自适应采样 = 精确薄结构重建。
 
 ## 方法详解
 

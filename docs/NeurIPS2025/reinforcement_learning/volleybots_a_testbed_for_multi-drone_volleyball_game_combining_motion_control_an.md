@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VolleyBots: A Testbed for Multi-Drone Volleyball Game Combining Motion Control and Strategic Play
 description: >-
@@ -101,7 +101,7 @@ VolleyBots 构建于 NVIDIA Isaac Sim 之上，利用 OmniDrones 仿真器实现
 - **首个将合作-对抗-回合制-3D 机动统一到一个平台的工作**，填补了机器人运动竞技领域的空白，为具身智能研究提供了富有挑战性的标准测试环境。
 - **从 sim-to-real 的零样本部署验证了平台的实际意义**，训练的 Solo Bump 策略直接在真实四旋翼上成功执行颠球，说明仿真器能够较好地逼近真实物理。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 6v6 赛制目前无算法能收敛，需要更先进的分层或通信机制来处理大规模协调
 - 分层策略的高级层仍是手工规则，未来可用 RL/LLM 来自动学习战略决策
 - 当前观测空间为 state-based，未来可引入视觉观测探索更真实的感知挑战

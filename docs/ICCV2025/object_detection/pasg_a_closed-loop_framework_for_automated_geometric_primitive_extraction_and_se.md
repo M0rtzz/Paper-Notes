@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PASG: A Closed-Loop Framework for Automated Geometric Primitive Extraction and Semantic Anchoring in Robotic Manipulation
 description: >-
@@ -132,7 +132,7 @@ PASG 包含四个核心阶段：
 - **语义层次化**：从低层描述（"瓶颈边缘"）到高层意图（"倒水时对齐瓶子的关键位置"），提供了完整的语义链
 - 验证了**自动标注可以媲美甚至超越人工标注**的可能性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在双瓶拾取和放鞋任务上显著落后于人工标注（70% vs 95%，69% vs 83%），说明在需要精确协调的任务上仍有差距
 - 当前 GPT-4o 在复杂空间语义理解上仍面临挑战

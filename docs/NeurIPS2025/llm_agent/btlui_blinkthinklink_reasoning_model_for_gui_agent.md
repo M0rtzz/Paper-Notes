@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BTL-UI: Blink-Think-Link Reasoning Model for GUI Agent
 description: >-
@@ -104,7 +104,7 @@ BTL-UI 使用仅 4K 数据进行 RFT 训练，在 ScreenSpot 系列 grounding be
 -    **自动化 Blink 数据标注**解决了 GUI agent 训练数据瓶颈——不需要为注意力区域做人工标注
 -    **4K 训练数据即可有效**——数据效率高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 -    三阶段串行执行增加推理延迟——Blink 阶段的计算开销是否可以减少？
 -    Blink 数据的自动标注依赖 Qwen2.5-VL-32B——标注模型的能力上限限制了 Blink 数据质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EMDM: Efficient Motion Diffusion Model for Fast and High-Quality Motion Generation
 description: >-
@@ -152,7 +152,7 @@ $$G_s = G(\mathbf{x}_t, \mathbf{z}, \emptyset, t) + s \cdot (G(\mathbf{x}_t, \ma
 3. **条件 GAN + 扩散模型**的融合范式：不是简单套用 DDGAN，而是引入运动特定的条件信号和几何约束，使其适配运动生成任务
 4. **实用性强**：实时生成能力使其可直接用于游戏、VR 等实时应用场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在相对较小的动作数据集上验证，未在大规模数据上测试泛化能力
 2. 10 步采样虽已很快，但能否进一步压缩到 1-2 步而不损失质量值得探索

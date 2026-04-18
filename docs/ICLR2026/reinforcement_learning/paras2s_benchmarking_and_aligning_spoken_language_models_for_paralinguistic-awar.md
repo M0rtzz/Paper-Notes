@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ParaS2S: Benchmarking and Aligning Spoken Language Models for Paralinguistic-Aware Speech-to-Speech Interaction
 description: >-
@@ -152,7 +152,7 @@ ParaS2S 包含两大组件：
 4. **极强的数据效率**：10 小时标注数据 + RL 即可超越所有现有模型，挑战了"需要大量高质量标注"的固有认知
 5. **实用的自动评估管线**：将复杂的语音质量评估分解为 ASR + 风格识别 + LLM 评分的可组合管线，高效且与人类判断一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **评估管线的相关系数未达 0.9**：虽然超过 0.7 且显著，但仍有改进空间，特别是在需要精细风格区分的场景
 2. **依赖多个外部模型**：评估管线依赖 Whisper-v3、AudioReasoner 和 ChatGPT，这些模型本身的偏差会传播到评估结果

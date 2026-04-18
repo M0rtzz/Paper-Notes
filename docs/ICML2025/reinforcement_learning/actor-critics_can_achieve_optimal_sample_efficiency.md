@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Actor-Critics Can Achieve Optimal Sample Efficiency
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：Actor-Critic 的理论分析面临独特挑战——Actor（策略）和 Critic（值函数）的耦合更新使得分析困难。特别是：（1）策略更新频率如何影响样本效率？（2）如何在 off-policy 估计中保证 Critic 的准确性？（3）如何在一般函数类上实现有效的乐观探索？
 
-**本文要解决什么**：解决上述开放问题——设计一个 Actor-Critic 算法，在一般函数逼近 + Bellman Eluder 维度框架下，达到 $O(1/\epsilon^2)$ 的最优样本复杂度。同时解决混合 RL（Hybrid RL）中是否可以去掉乐观性的另一个开放问题。
+**本文目标**：解决上述开放问题——设计一个 Actor-Critic 算法，在一般函数逼近 + Bellman Eluder 维度框架下，达到 $O(1/\epsilon^2)$ 的最优样本复杂度。同时解决混合 RL（Hybrid RL）中是否可以去掉乐观性的另一个开放问题。
 
 **切入角度**：结合三个关键技术——（1）乐观探索（optimism），（2）针对最优 Q 函数的离策略 Critic 估计（off-policy critic estimation），（3）稀疏策略切换（rare-switching policy resets）。
 
@@ -54,7 +54,7 @@ tags:
 
 1. **乐观 Critic 估计（Optimistic Off-Policy Critic）**:
 
-    - **做什么**：Critic 不估计当前策略 $\pi_t$ 的 Q 函数，而是直接估计最优 Q 函数 $Q^*$ 的乐观上界
+    - **功能**：Critic 不估计当前策略 $\pi_t$ 的 Q 函数，而是直接估计最优 Q 函数 $Q^*$ 的乐观上界
     - **核心思路**：使用函数类 $\mathcal{F}$ 构建置信集合 $\mathcal{F}_t$，从中选取乐观的 Q 函数估计。关键是——所有历史数据（包括由不同策略收集的数据）都可以用来更新 Critic，因为它估计的是与策略无关的 $Q^*$。形式上：
   
     $\hat{Q}_t = \arg\max_{f \in \mathcal{F}_t} f(s_t, \cdot)$
@@ -64,13 +64,13 @@ tags:
 
 2. **稀疏策略切换（Rare-Switching Policy Resets）**:
 
-    - **做什么**：Actor 不频繁更新策略，而是仅在"足够多新信息"积累后才进行策略切换
+    - **功能**：Actor 不频繁更新策略，而是仅在"足够多新信息"积累后才进行策略切换
     - **核心思路**：定义一个切换条件（通常基于数据覆盖的变化量），只有满足条件时才从 Critic 生成新策略。策略切换次数在整个训练过程中是 $O(\log T)$ 级别
     - **设计动机**：频繁策略切换带来 off-policy 偏差——如果策略每步都变，那么旧数据对新策略的价值降低。稀疏切换保证了策略在大部分时间内是稳定的，使得 off-policy Critic 估计更加准确
 
 3. **Bellman Eluder 维度框架**:
 
-    - **做什么**：在 Bellman Eluder (BE) 维度 $d$ 的一般函数逼近框架下进行分析
+    - **功能**：在 Bellman Eluder (BE) 维度 $d$ 的一般函数逼近框架下进行分析
     - **核心思路**：BE 维度是衡量函数类复杂度的指标，统一了 tabular MDP、线性 MDP、低秩 MDP 等多种设定。算法的样本复杂度以 $d$ 为核心参数：
   
     $N = O\left(\frac{dH^5 \log|\mathcal{A}|}{\epsilon^2} + \frac{dH^4 \log|\mathcal{F}|}{\epsilon^2}\right)$
@@ -80,7 +80,7 @@ tags:
 
 4. **混合 RL 扩展（Hybrid RL）**:
 
-    - **做什么**：利用离线数据初始化 Critic，获得相比纯在线或纯离线更好的样本效率
+    - **功能**：利用离线数据初始化 Critic，获得相比纯在线或纯离线更好的样本效率
     - **核心思路**：离线数据提供了一个"暖启动"——用 $N_\text{off}$ 条离线轨迹初始化 Critic 的置信集合，然后在线阶段只需更少的采样。特别地，如果离线数据量满足 $N_\text{off} \geq c^*_\text{off} d H^4 / \epsilon^2$（其中 $c^*_\text{off}$ 是单策略可达性系数），则可以完全去掉乐观性（optimism），使用**非乐观**的 Actor-Critic 也能达到最优效率
     - **设计动机**：这解决了 Hybrid RL 中的另一个开放问题——在有离线数据的情况下，是否可以避免乐观探索（乐观探索在实践中通常很难实现）
 
@@ -122,7 +122,7 @@ tags:
 - **技术优雅**：三个关键设计（乐观 Critic、稀疏切换、$Q^*$ 估计）各自解决一个分析瓶颈，组合起来恰好达成最优
 - **理论与实践的桥梁**：虽然是理论论文，但稀疏切换和利用离线数据去除乐观性的思想对实际 Actor-Critic 算法设计有指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 纯理论工作，数值实验仅验证了基本设定，没有在大规模或实际 RL 问题上测试
 2. 关于 $H$ 的依赖（$H^5$）可能不是最紧的，存在进一步优化的空间

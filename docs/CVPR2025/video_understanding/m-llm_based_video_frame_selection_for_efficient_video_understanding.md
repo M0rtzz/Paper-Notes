@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] M-LLM Based Video Frame Selection for Efficient Video Understanding
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **空间+时序伪标签互补**：空间标签捕捉单帧内容相关性，时序标签通过 caption 进行跨帧推理，二者融合效果最佳
 - **激进 token 压缩**：将每帧 token 压缩到 9 个的设计直觉非常好——选帧只需粗略轮廓，不需要细节
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在已经很强的模型（如 Qwen2-VL）上提升有限（+0.6~1.3%），可能因为强模型本身就对输入帧有一定鲁棒性
 - 伪标签生成成本高（需要对每帧 prompt M-LLM），虽然只在训练时使用，但数据标注开销大

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Co-synthesis of Histopathology Nuclei Image-Label Pairs using a Context-Conditioned Joint Diffusion Model
 description: >-
@@ -125,7 +125,7 @@ $$p_\theta^u(u_{t-1}|u_t) = p_\theta^i(i_{t-1}|u_t) \cdot p_\theta^d(d_{t-1}|u_t
 - **一个模型三个输出**：单一联合扩散模型同时生成图像、距离图和语义标签，避免多阶段推理的时间和质量损耗
 - **点条件的灵活性优势**：同一个点布局可以生成多样化的标签和图像，而全像素标签条件只能变化图像风格，这在数据增强场景中意味着更好的数据多样性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据合成时间较长**：扩散模型1000步采样仍然耗时，需要探索加速采样方法
 - **点布局生成**：目前依赖从真实数据提取点布局，未来可开发生成更真实点布局的方法

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STARC-9: A Large-scale Dataset for Multi-Class Tissue Classification for CRC Histopathology
 description: >-
@@ -116,7 +116,7 @@ STARC-9 训练模型在 Stanford 上 Dice 高约 14%，在 TCGA-CRC 上高约 30
 - **数据 > 模型的有力证据**：所有模型在 STARC-9 上一致优于 NCT/HMU，说明数据质量和多样性对模型性能的决定性影响
 - **630K 图块、9 类组织均 70K**：完美类别平衡，消除了类别不平衡对训练的干扰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 来自单一机构（Stanford），人口统计多样性有限（黑人和原住民代表不足）
 - 9 类组织可能不完全覆盖所有 CRC 切除标本中的组织类型

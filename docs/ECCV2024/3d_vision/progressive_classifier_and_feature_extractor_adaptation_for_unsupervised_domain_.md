@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Progressive Classifier and Feature Extractor Adaptation for Unsupervised Domain Adaptation on Point Clouds
 description: >-
@@ -109,7 +109,7 @@ $\mathcal{L} = \alpha\mathcal{L}_{PTFA} + \beta\mathcal{L}_{IDFA}^s + \gamma\mat
 - **从 2D 到 3D 的方法迁移**：TSFA 本质是 ISDA（一个 2D UDA 方法）的点云版本，验证了 2D 域自适应技术在 3D 中的有效性
 - **上界推导使特征增强可微**：将随机特征增强的期望 loss 推导为上界的解析形式，避免了蒙特卡洛采样
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **伪标签依赖**：IDFA 用目标域伪标签，早期训练伪标签不准可能累积误差
 - **超参较多**：$\sigma^s, \sigma^t, \Delta\sigma, \lambda_0, \tau, \alpha, \beta, \gamma$ 等，调参负担较重
 - **仅验证分类任务**：未扩展到 3D 分割、检测等其他 UDA 任务

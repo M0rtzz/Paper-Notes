@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OccWorld: Learning a 3D Occupancy World Model for Autonomous Driving
 description: >-
@@ -31,14 +31,14 @@ OccWorld 提出在 3D 占用空间中学习世界模型，用 VQ-VAE 对 3D occu
 
 **核心矛盾**：自动驾驶需要理解完整 3D 场景的时序演变来做决策，而现有框架在实例级别建模远不能覆盖全部场景要素（如静态结构、可驾驶区域的变化等）。
 
-**本文要解决什么？**  
+**本文目标**  
    - 如何用一个统一模型同时预测周围场景演化和自车运动？  
    - 如何在不使用实例框和 HD Map 标注的前提下完成规划？  
    - 如何高效地将高维 3D occupancy 序列建模为可预测的 token 序列？
 
 **切入角度**：作者观察到 3D occupancy 具有三大优势——表达力强（包含完整 3D 结构和语义）、获取高效（可从稀疏 LiDAR 点生成）、模态通用（适用于视觉和 LiDAR），因此以 occupancy 替代 bounding box 作为世界模型的场景表示。
 
-**核心idea一句话**：在 3D occupancy 空间中训练类 GPT 的时空生成 Transformer，自回归预测未来场景和自车轨迹，无需实例级监督。
+**核心 idea**：在 3D occupancy 空间中训练类 GPT 的时空生成 Transformer，自回归预测未来场景和自车轨迹，无需实例级监督。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ OccWorld 提出在 3D 占用空间中学习世界模型，用 VQ-VAE 对 3D occu
 - **场景 Token 化 + GPT 风格自回归**：将连续的 3D 空间量化为离散 token 后用语言模型范式预测，巧妙地将"场景预测"转化为"序列预测"问题，复用了 Transformer 在序列建模上的强大能力
 - **时空分离的多尺度设计**：spatial mixing + per-position temporal attention + U-Net fusion，既保证计算效率又维持全局一致性，比全时空 attention 高效得多
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 无法预测视野外新出现的车辆（因为输入中没有这些物体的信息），需要结合生成模型或概率预测来处理
 - 自监督 occupancy (OccWorld-S) 质量较差，mIoU 仅 0.26，说明目前的自监督 occ 方法还不够成熟
 - 只在 nuScenes 上验证，场景多样性有限；需要在更大规模数据集上验证 scaling 能力

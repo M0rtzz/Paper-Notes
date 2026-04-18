@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gradual Transition from Bellman Optimality Operator to Bellman Operator in Online Reinforcement Learning
 description: >-
@@ -149,7 +149,7 @@ AQ-L 在所有测试任务上均显著优于对应基线方法，尤其在训练
 - **通用即插即用模块**：方法可轻松嵌入任何基于 Actor-Critic 的算法（TD3, SAC 等），不改变原始框架结构，迁移成本极低
 - **期望分位损失的巧妙复用**：借鉴 IQL 中的 expectile regression 思想，但跳出了离线 RL 的场景限制，在在线 RL 中发掘出新的用途
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **退火调度固定为线性**：当前仅探索了线性退火，余弦退火、指数退火等非线性调度可能进一步提升性能，但未被系统探索
 - **退火终点时间 T 的选择**：需要预先指定退火结束的时间步，缺乏自适应调整机制（如基于过估计程度自动调节 τ）

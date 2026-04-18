@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TR-PTS: Task-Relevant Parameter and Token Selection for Efficient Tuning
 description: >-
@@ -126,7 +126,7 @@ TR-PTS 包含两个协同模块：Task-Relevant Parameter Selection 和 Task-Rel
 - 不引入任何额外参数，训练和推理阶段均无额外开销
 - FIM 比梯度幅值更稳定地反映参数重要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在分类任务上验证，尚未拓展到检测、分割等密集预测任务
 - Token 选择率 $\rho$ 和最小连接数 $C_{\min}$ 为超参，需手动调节

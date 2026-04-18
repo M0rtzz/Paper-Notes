@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Limits of Long-Context Reasoning in Automated Bug Fixing
 description: >-
@@ -95,7 +95,7 @@ Agentic 31% vs 64K 0%——同一模型，差距天壤之别！
 - **失败模式分析有价值**：幻觉 diff 等模式说明模型在长上下文中不只是"找不到信息"，而是"丧失了基本推理能力"
 - 启示：agent 框架的核心价值是"控制每步的上下文在可靠范围内"，而非让模型处理长上下文
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅使用 100 个 SWE-bench Verified 样本，统计效力有限
 - 64K 实验仅测试 GPT-5-nano 和 Qwen3-Coder，未覆盖更多模型
 - 未区分长上下文失败是"信息过载导致混淆"还是"更难的问题天然需要更多上下文"

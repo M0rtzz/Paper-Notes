@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness
 description: >-
@@ -115,7 +115,7 @@ IrisFP包含两个主流程：
 - Cohen's d效应量和自适应阈值为指纹质量评估提供了有统计学依据的定量方法
 - 方法是黑盒验证——仅需查询模型输出即可
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 知识蒸馏（KD）攻击下性能相对较弱（如CIFAR-10上AUC 0.616），因为KD可以根本改变模型的决策边界结构
 - 需要构建参考盗版模型集和独立模型集进行指纹筛选，增加了前期成本

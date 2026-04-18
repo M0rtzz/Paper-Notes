@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Expandable and Differentiable Dual Memories with Orthogonal Regularization for Exemplar-free Continual Learning
 description: >-
@@ -190,7 +190,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}}^{(t)} + \lambda_{\text{me
 3. **无样本也能超越有样本**：在严格的 exemplar-free 设置下超越了使用 buffer=500 的方法（DualNet, LUCIR），颠覆了"回放必要性"的直觉。
 4. **发现了"前向知识增强"现象**：未来任务的学习可以反向提升旧任务性能，这在传统 CL 中几乎未被观察到。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **长任务序列扩展性**：超过 50 个任务时，记忆管理的累积开销可能成为瓶颈。
 2. **极端任务偏移**：当连续任务几乎没有共享结构时，共享记忆可能难以捕获有用的公共特征。

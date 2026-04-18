@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UI-Vision: A Desktop-centric GUI Benchmark for Visual Perception and Interaction
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：构建许可友好（MIT License）的离线静态基准，通过三级任务设计从"能否看到元素"到"能否理解布局"再到"能否执行操作"逐层诊断模型能力。
 
-**核心 idea 一句话**：用密集标注的桌面 GUI 截图构建层次化离线基准，精确定位 GUI 智能体的视觉感知瓶颈。
+**核心 idea**：用密集标注的桌面 GUI 截图构建层次化离线基准，精确定位 GUI 智能体的视觉感知瓶颈。
 
 ## 方法详解
 

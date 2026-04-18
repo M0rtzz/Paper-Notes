@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Automaton Constrained Q-Learning
 description: >-
@@ -92,7 +92,7 @@ ACQL 构建了一个增强乘积 CMDP：
 - 单一目标条件策略处理所有子目标（不像 LOF 需要为每个 edge 训练单独策略）
 - 收敛性有理论保证（三时间尺度随机逼近）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 recurrence class LTL 公式上测试，更一般的 LTL 未覆盖
 - 实验环境中的障碍物仅通过任务规范引入（无物理障碍），可能不够真实

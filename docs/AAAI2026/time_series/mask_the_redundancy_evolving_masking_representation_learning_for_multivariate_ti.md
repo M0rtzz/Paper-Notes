@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mask the Redundancy: Evolving Masking Representation Learning for Multivariate Time-Series Clustering
 description: >-
@@ -80,7 +80,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{contra} + \alpha \mathcal{L}_{intra} + \bet
 - **IVM-MEV 互补设计**：MEV 缓解 crisp masking 的信息损失，IVM 抑制 MEV 放大的冗余，形成良性循环
 - **将聚类目标融入表示学习**：通过动态聚类标签引导对比学习，打通了表示学习与下游聚类目标的连接
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 阈值 $\epsilon$ 为固定超参数，自适应阈值可能进一步提升性能
 - 实验仅基于 UEA 标准数据集，未在大规模工业场景验证
 - 聚类数 $g$ 需要预先指定，未探讨自动确定聚类数的策略

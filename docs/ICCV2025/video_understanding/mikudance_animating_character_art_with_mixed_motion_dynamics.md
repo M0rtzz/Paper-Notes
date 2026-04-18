@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MikuDance: Animating Character Art with Mixed Motion Dynamics
 description: >-
@@ -136,7 +136,7 @@ MikuDance 基于 SD-1.5，包含：
 - **3600 个 MMD 动画作为训练数据**：构建了 120k 片段、1020 万帧的 MMD 数据集
 - **用户研究压倒性胜出**：97% 偏好率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 部分生成动画存在背景扭曲和伪影——图像动画中的 3D 不确定性是本质难题
 2. SMT 假设场景静态，实际场景中背景物体也可能运动

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Long-tailed Dataset Distillation: A Uni-Level Framework with Unbiased Recovery and Relabeling
 description: >-
@@ -62,7 +62,7 @@ Pipeline分为准备阶段和蒸馏阶段：
 ### 关键设计
 
 #### 1. **专家模型去偏（Observer + Teacher）**
-- **做什么**：消除Observer和Teacher模型中的类别不平衡偏差
+- **功能**：消除Observer和Teacher模型中的类别不平衡偏差
 - **混合一致性损失**（增强鲁棒性）：
 $$\mathcal{L}_{robust} = -\sum_{i=1}^{2} \cos(\mathbf{z}_i, \text{sg}(\mathbf{p}_{\bar{i}}))$$
   对两个混合标签增强视图进行对称对齐，$\text{sg}(\cdot)$ 为停止梯度算子，确保单侧对齐
@@ -72,7 +72,7 @@ $$\mathcal{L}_{debias} = \alpha \sum_{k=0}^{C-1} \frac{-(r_k)^{-q} y_k \log p_k}
 - **设计动机**：Observer偏倚→BN统计量偏→合成图像偏；Teacher偏倚→软标签不准→语义指导失效。必须在源头去偏
 
 #### 2. **公平BN统计量校准**
-- **做什么**：消除BN统计量中的样本内偏差(intra-class bias)和类间偏差(inter-class bias)
+- **功能**：消除BN统计量中的样本内偏差(intra-class bias)和类间偏差(inter-class bias)
 - **动态动量校准**：冻结Observer模型参数，在整个训练集上做一次前向传播。对每个BN层、每个类别，使用动态调整的动量更新：
 $$\mu_{l,t}^c = (1 - \alpha_t^c) \cdot \mu_{l,t-1}^c + \alpha_t^c \cdot \hat{\mu}_{l,t}^c, \quad \alpha_t^c = \frac{B_t^c}{N_{t-1}^c + B_t^c}$$
   其中 $B_t^c$ 是当前batch中类c的样本数，$N_{t-1}^c$ 是之前的累积计数
@@ -81,7 +81,7 @@ $$\mu_l(\mathcal{D}; \theta_R) = \frac{1}{C} \sum_{c=0}^{C-1} \mu_{l,T}^c(\mathc
 - **设计动机**：标准BN用固定动量的指数移动平均，最近的batch主导统计量而早期被遗忘。在长尾设置下，尾类每个样本都有高代表性价值，必须平等贡献。动态动量确保每个样本对最终统计量的贡献相等
 
 #### 3. **置信度引导的多轮初始化**
-- **做什么**：为合成数据集提供多样且高质量的初始化
+- **功能**：为合成数据集提供多样且高质量的初始化
 - **核心思路**：对每张真实图像生成多个增强变体（如随机裁剪），使用Teacher模型的负交叉熵评分。采用多轮选择策略：每轮每张图像最多贡献一个未使用的最高置信增强，确保样本级多样性
 - **尾类处理**：当尾类真实样本不足时，插入零初始化的占位符以保持跨类的结构一致性
 - **设计动机**：随机初始化收敛差；直接采样真实图像在尾类不可行（尾类样本太少）。多轮选择+置信度引导兼顾质量和多样性
@@ -152,7 +152,7 @@ $$\mu_l(\mathcal{D}; \theta_R) = \frac{1}{C} \sum_{c=0}^{C-1} \mu_{l,T}^c(\mathc
 4. **IPC=1的极端场景**：在每类仅1张图像时仍能大幅超越基线，证明了去偏策略在信息极度匮乏时的价值
 5. **超越平衡数据集蒸馏**：在IF=256时甚至超过了在完整平衡ImageNet-1K上蒸馏的某些方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前仅在图像分类任务上验证，可扩展到检测、分割等任务
 2. Teacher和Observer用相同去偏策略，可探索差异化的去偏方案

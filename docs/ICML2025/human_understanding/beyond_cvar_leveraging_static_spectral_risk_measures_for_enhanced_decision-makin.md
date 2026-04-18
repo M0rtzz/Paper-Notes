@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond CVaR: Leveraging Static Spectral Risk Measures for Enhanced Decision-Making in Distributional Reinforcement Learning
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**：practitioners 想要可解释的风险目标（如"保护底部 10% 最差结果"），但现有算法只支持最简单的 CVaR。谱风险度量（SRM）——CVaR 的加权组合——提供了更灵活的风险偏好表达，但优化方法缺失。
 
-**本文要解决什么**：在 DRL 框架中优化一般静态谱风险度量。
+**本文目标**：在 DRL 框架中优化一般静态谱风险度量。
 
 **切入角度**：利用 DRL 学到的回报分布，SRM 可以表示为分位数函数的加权积分——分位数模型（如 QR-DQN）直接提供了这些分位数。
 
@@ -130,7 +130,7 @@ Cliff Walking（金融风格风险环境）：
 - DRL 和风险理论的完美交叉——前者提供分布信息，后者提供优化框架
 - 对需要精细风险管理的领域（金融交易、自动驾驶决策）有直接应用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 状态增广使状态空间增大，对复杂环境可能有扩展性挑战
 - 假设风险谱 $\phi$ 已知——如何从数据估计用户的风险偏好未讨论
 - 仅在 tabular/小规模连续环境验证，大规模实验缺失

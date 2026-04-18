@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spectral Perturbation Bounds for Low-Rank Approximation with Applications to Privacy
 description: >-
@@ -90,7 +90,7 @@ tags:
 - 结果适用于实值和复值 Wigner 噪声，比之前仅限复高斯的结果更通用
 - 消除了 $\sqrt{p}$ 因子的改进对高维差分隐私应用有实际意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 特征值间距条件 $4\|E\| \leq \delta_p$ 虽然温和但仍是必要假设
 - Theorem 2.3 不适用于非整函数如 $f(z) = z^c$（非整数 $c$），有奇点问题

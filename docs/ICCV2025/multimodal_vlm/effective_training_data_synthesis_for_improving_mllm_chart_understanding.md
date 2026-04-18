@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Effective Training Data Synthesis for Improving MLLM Chart Understanding
 description: >-
@@ -109,7 +109,7 @@ ECD在4个MLLM上6个测试集上整体一致提升。
 - **通用性强**: 在4种不同架构的MLLM上都有效，且不需要改模型架构
 - **ECDBench构建严谨**: 两阶段人工审核确保测试集质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 10k图像规模相对较小，扩大数据量可能进一步提升（特别是预训练阶段）
 - 对已有强大图表预训练的模型（如Qwen2.5-VL）部分指标提升有限甚至略降

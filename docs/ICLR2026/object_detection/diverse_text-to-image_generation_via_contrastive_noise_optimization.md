@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diverse Text-to-Image Generation via Contrastive Noise Optimization
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}_{\text{CNO}} = -\frac{1}{B}\sum_{i=1}^{B}\log\frac{\exp(\text{sim}
 - **对比学习新视角**：将 InfoNCE 从表示学习迁移到噪声空间优化，是一个巧妙的概念迁移
 - **Tweedie 空间的洞察**：在语义相关的去噪预测空间（而非噪声空间）中衡量距离，是方法有效的关键
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外计算开销**：每次生成需要额外的优化迭代（尽管是 one-shot），对实时应用有延迟影响
 2. **batch 依赖**：方法需要同时优化一批噪声，单张生成场景下无法使用

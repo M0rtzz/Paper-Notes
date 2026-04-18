@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Less is More: Local Intrinsic Dimensions of Contextual Language Models
 description: >-
@@ -143,7 +143,7 @@ $$\text{LID}(v) = \text{TwoNN}(\mathcal{N}_L(v; \mathbb{T}))$$
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

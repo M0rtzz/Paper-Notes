@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EC-Flow: Enabling Versatile Robotic Manipulation from Action-Unlabeled Videos via Equivariant Flow Matching
 description: >-
@@ -121,7 +121,7 @@ EC-Flow 以 16.4% 的优势超越最强基线。特别在 btn-top-press（1.00 v
 - 目标图像预测作为辅助任务来对齐语言-物体-动作的设计很巧妙，避免了直接预测物体光流的困难
 - 整个系统仅需 RGB 视频 + URDF 文件，没有动作标注、没有 3D 点云、没有特殊传感器，部署成本极低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前需要手动设置操作起始位姿，未集成自动抓取位姿生成
 - 夹爪状态（开/关）从物体中心方法借鉴，仍依赖物体分割

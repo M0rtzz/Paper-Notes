@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ask and Remember: A Questions-Only Replay Strategy for Continual Visual Question Answering
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{\text{ACD}} = \mathbb{E}_{x^t,q^m} \mathbb{E}_{k \sim \mathcal{K}
 - **答案集外问题**的诊断和可视化（混淆矩阵）非常直观有说服力
 - 注意力蒸馏在归一化概率分布上操作的设计思路优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对强依赖视觉空间推理的任务（如物体类型识别、空间关系判断），问题重放可能不够
 - 当前评估限于VQAv2和NExT-QA，未验证开放域VQA

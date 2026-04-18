@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Catalyst4D: High-Fidelity 3D-to-4D Scene Editing via Dynamic Propagation
 description: >-
@@ -98,7 +98,7 @@ Catalyst4D框架分为两步：（1）用现有3D编辑器（DGE/DreamCatalyst/S
 - **颜色不确定性驱动的选择性修正**：只修有问题的区域，不引入全局不一致
 - 支持局部编辑（clothing/color）和全局风格迁移，适用于单目和多相机场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 不重新训练变形网络或修改编辑高斯的密度，某些场景下一致性略有下降
 - 依赖底层3D编辑器的质量——首帧编辑不好则传播也无法纠正
 - 仅在DyNeRF、MeetRoom、HyperNeRF数据集上验证

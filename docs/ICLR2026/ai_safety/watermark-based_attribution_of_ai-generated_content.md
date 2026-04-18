@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Watermark-based Detection and Attribution of AI-Generated Content
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **NP-hard问题的实用解法**：将水印选择与最远字符串问题关联，借鉴理论计算机科学的算法
 - **跨模态通用性**：同一框架适用于图像和文本的检测与溯源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 白盒对抗攻击下水印方法仍不鲁棒（TDR/TAR可降为0），这是水印方法本身的固有限制
 - 理论分析假设水印比特独立，实际可能不完全成立

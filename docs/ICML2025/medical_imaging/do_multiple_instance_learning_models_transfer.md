@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do Multiple Instance Learning Models Transfer?
 description: >-
@@ -133,7 +133,7 @@ PC-108 仅用 CHIEF 6.5%、GigaPath 2.3% 的预训练数据，在大多数任务
 4. **注意力热力图可视化**：预训练模型在微调前就已关注肿瘤区域，而随机初始化模型注意力弥散——预训练帮助模型避免虚假相关
 5. **跨 patch encoder 一致有效**：在 ResNet-50、CTransPath、GigaPath ViT、UNIv2、CONCHv1.5 五种编码器上均观察到 PC-108 预训练带来的提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺少 State-Space MIL 模型**：如 Mamba 系列架构未纳入评估
 2. **未评估生存预测任务**：仅覆盖分类/分级，未涉及 Cox 回归等生存分析

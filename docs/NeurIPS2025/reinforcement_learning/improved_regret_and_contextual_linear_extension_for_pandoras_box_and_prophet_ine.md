@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Regret and Contextual Linear Extension for Pandora's Box and Prophet Inequality
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：先前方法以固定量移动概率质量，TV 距离界太松；$\text{Term}_{t,i}$ 被粗糙地用 $U \cdot \text{TV}$ 约束。
 
-**本文要解决什么？** 闭合 non-contextual 的 $n$ 差距；建立 contextual linear 模型获得 $\sqrt{T}$ 型 regret。
+**本文目标** 闭合 non-contextual 的 $n$ 差距；建立 contextual linear 模型获得 $\sqrt{T}$ 型 regret。
 
 **切入角度**：Bernstein 型 DKW 不等式自适应调整概率质量 + 效用函数导数精细分析。
 
-**核心idea一句话**：自适应乐观分布 + 两区域导数分析 = minimax 最优 regret。
+**核心 idea**：自适应乐观分布 + 两区域导数分析 = minimax 最优 regret。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ tags:
 - **Value-optimistic 去偏**处理 contextual 自然优雅
 - 可迁移到需要学全分布的 bandit 问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Contextual Linear 中 regret 对 $n$ 的线性依赖是否可改进？即使所有盒子共享 $\theta$ 也可能不可避免（需为每个盒子学独立噪声分布）
 - Prophet Inequality 的 minimax 最优 regret 仍未确定——$\widetilde{O}(\sqrt{nT})$ 上界 vs $\Omega(\sqrt{T})$ 下界间有 $\sqrt{n}$ gap
 - Jin et al. (2024) 表明 Prophet 的最优样本复杂度 $\widetilde{O}(1/\epsilon^2)$ 与 $n$ 无关，暗示 $\widetilde{O}(\sqrt{T})$ 可能可达

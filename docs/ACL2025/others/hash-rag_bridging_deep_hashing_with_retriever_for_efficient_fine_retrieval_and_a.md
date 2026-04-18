@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HASH-RAG: Bridging Deep Hashing with Retriever for Efficient, Fine Retrieval and Augmented Generation
 description: >-
@@ -130,7 +130,7 @@ HbR 查询时间仅为 DPR 的 ~9%，索引大小仅为 DPR 的 ~7%，且 Recall
 - **Chunk-to-Context 的完整链路**：从命题提取→哈希索引→检索→上下文恢复→提示引导生成，形成了完整的 efficiency-quality 平衡方案
 - **注意力热图分析**：直观展示了提示优化如何引导 LLM 关注检索命题的垂直注意力模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **静态知识库假设**：知识库增量更新需要重新训练哈希编码器，计算开销大
 2. **Top-5 场景弱于 MEVI**：在小 k 检索场景下，哈希方法的近似性导致精度下降

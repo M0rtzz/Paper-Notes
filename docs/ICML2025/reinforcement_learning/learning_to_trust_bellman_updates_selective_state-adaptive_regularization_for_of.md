@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Trust Bellman Updates: Selective State-Adaptive Regularization for Offline RL
 description: >-
@@ -126,7 +126,7 @@ O2O场景下CQL(SA)总分达1278.4，超越所有基线约10%。
 4. **O2O无缝过渡**：冻结系数网络+线性衰减的简单策略即可高效微调，甚至可丢弃离线数据保护隐私
 5. **即插即用**：作为通用模块可同时增强值正则化（CQL）和策略约束（TD3+BC）两类方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外计算开销**：需要训练系数网络 $\beta_\phi$，高方差数据集还需预训练IQL的Q/V网络
 2. **超参数未完全消除**：$n_{start}$、$n_{end}$、$T_{inc}$、选择性阈值 $G_T$ 等仍需调整，虽比单一固定 $\beta$ 更灵活但并非零超参

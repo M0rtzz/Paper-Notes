@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DAMSDet: Dynamic Adaptive Multispectral Detection Transformer
 description: >-
@@ -144,7 +144,7 @@ DAMSDet 包含四个主要组件：
 - **多语义层级融合**：不同语义层级的互补特性也是动态变化的（红外→低级，可见光→高级）
 - **无需额外配对标注**：不像 AR-CNN 需要双模态配对框标注来学习对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 极端未对齐（目标超出 4D 参考点范围）时性能下降
 - 在小目标检测上 Transformer 的框回归精度不如 CNN，mAP 指标有时不及 LRAF-Net

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lego Sketch: A Scalable Memory-augmented Neural Network for Sketching Data Streams
 description: >-
@@ -151,7 +151,7 @@ Section 3.3 展示 Lego Sketch 可作为核心结构替换 CM-Sketch 等，与 f
 4. **Memory Scanning 的自省能力**：让模型在查询时"感知"当前内存中存储的流的统计特性，是一个巧妙的信息利用方式
 5. **代码开源**，可复现性好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练仍需元学习**：虽然部署时跨域/跨预算无需重训练，但初始训练阶段仍需自监督元学习，训练成本不低
 2. **哈希函数质量依赖**：多处使用独立哈希函数，实际应用中哈希函数的独立性和均匀性可能影响性能

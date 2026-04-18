@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaming the Answer Matcher: Examining the Impact of Text Manipulation on Automated Judgment
 description: >-
@@ -135,7 +135,7 @@ Matcher 模型（评判者）：GPT-4.1 mini, Qwen2.5-7B-IT, Qwen3-4B, Gemma-2-2
 - **假设被拒绝反而更有价值**：原假设预期攻击有效，但数据清楚表明攻击无效——这种"负结果"对社区建立信心很重要
 - **缓存确保可复现性**：所有模型调用使用缓存机制确保确定性结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 攻击策略仅为"低成本"非自适应攻击——优化的、动态的对抗攻击可能更有效
 - 仅测试了英语设置，跨语言鲁棒性未知

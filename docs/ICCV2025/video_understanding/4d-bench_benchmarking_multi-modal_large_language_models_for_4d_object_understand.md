@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4D-Bench: Benchmarking Multi-Modal Large Language Models for 4D Object Understanding
 description: >-
@@ -142,7 +142,7 @@ GPT-4o 与人类基线差距近 **28 个百分点**。
 - **数据质量把控严格**：混合标注流程（人工+MLLM+盲测+终审）确保问题确实需要多视角时序推理
 - **实用的评测发现**：计数能力差 → 需要更好的跨视角对应关系建模；动作弱 → 需要更强的时序编码器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前使用多视角视频拼接作为 4D 输入，而非原生 4D 表示（如点云序列、4D Gaussian Splatting）——受限于当前 MLLM 的输入模态
 - 数据集规模相对有限（751 QA + 580 captioning），可能不足以支撑全面的统计结论

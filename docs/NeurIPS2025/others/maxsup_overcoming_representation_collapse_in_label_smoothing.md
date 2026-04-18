@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MaxSup: Overcoming Representation Collapse in Label Smoothing
 description: >-
@@ -106,7 +106,7 @@ MaxSup 在所有 CNN 和 Transformer 架构上均一致超越 LS 和其他变体
 - MaxSup 的修改极其简单（将 $z_{gt}$ 换成 $z_{max}$），无额外超参，计算代价几乎为零，非常适合大规模推广
 - 类内多样性保持与迁移学习的关联分析提供了理解特征正则化方法的新视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作者承认未探索 MaxSup 在**知识蒸馏**场景下的效果（先前研究指出 LS 训练的教师模型可能退化蒸馏效果）
 - 在鲁棒性测试（CIFAR-10-C）中，MaxSup 的 Error 略高于 CE baseline，说明在分布外数据上并非全面占优

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GuardAgent: Safeguard LLM Agents via Knowledge-Enabled Reasoning
 description: >-
@@ -95,7 +95,7 @@ LLM 分析安全规则和目标 Agent 的动作日志，生成结构化的检查
 4. 可扩展性好：新增安全规则只需更新 toolbox 和 memory，无需重新训练。
 5. 对产业界的启示：任何部署 Agent 的场景都需要配套的护栏 Agent。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 代码生成依赖 LLM 能力，复杂规则可能生成错误代码。
 2. Mind2Web-SC 上准确率低于 EICU-AC，Web 场景多样性更难覆盖。

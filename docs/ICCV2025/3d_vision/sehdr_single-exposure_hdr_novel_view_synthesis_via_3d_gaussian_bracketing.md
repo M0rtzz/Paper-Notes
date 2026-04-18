@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SeHDR: Single-Exposure HDR Novel View Synthesis via 3D Gaussian Bracketing
 description: >-
@@ -143,7 +143,7 @@ HDR-NVS 旨在从 LDR 图像重建并渲染 HDR 场景。现有方法（HDR-NeRF
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

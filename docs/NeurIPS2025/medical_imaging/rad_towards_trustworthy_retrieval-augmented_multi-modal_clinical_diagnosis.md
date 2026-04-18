@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAD: Towards Trustworthy Retrieval-Augmented Multi-modal Clinical Diagnosis
 description: >-
@@ -131,7 +131,7 @@ RAD包含三个协同组件：(1) 多源指南检索与精炼；(2) 指南增强
 - 构建了MIMIC-ICD53新数据集（对齐MIMIC-CXR和MIMIC-IV），覆盖3种模态和53种疾病
 - 通过离线检索+LLM精炼获取指南，比在线RAG更稳定，适合判别式任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 指南需要人工验证，扩展到更多疾病时成本较高
 - 仅在判别式任务上验证，未探索生成式任务（如报告生成）

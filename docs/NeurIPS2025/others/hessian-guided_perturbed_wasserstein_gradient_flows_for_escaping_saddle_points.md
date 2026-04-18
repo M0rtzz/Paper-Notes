@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points
 description: >-
@@ -140,7 +140,7 @@ for k = 0, 1, 2, ... do:
 4. **严格坐标理论**：连续时间和离散时间版本均有完整的收敛证明，复杂度为 $\tilde{O}(\Delta_F(1/\varepsilon^2 + 1/\delta^4))$
 5. **严格良性目标的全局收敛**：对于满足严格良性条件的非凸目标（如矩阵分解、三层神经网络），PWGF可在多项式时间内收敛到全局最优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本**：Hessian的计算在实际中代价高昂，作者建议未来使用随机Hessian近似（类似随机梯度）来降低成本
 2. **鞍点检测的实际困难**：当前方法依赖间接检测（观察目标是否下降），在实践中可能需要自适应调整

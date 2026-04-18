@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning
 description: >-
@@ -102,7 +102,7 @@ $$\mathbb{E}\left[(w_\theta(A,X) R)^{1+\epsilon}\right] \leq \nu$$
 4. **可微性**：LSE 关于策略参数可微，避免了截断 IPS 的优化困难
 5. **亚高斯尾部**：LSE 的集中度具有亚高斯型尾部行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **有限策略集假设**：主要定理假设 $|\Pi_\theta| < \infty$，需要 VC 维或 PAC-Bayes 扩展到连续策略空间
 2. **参数 $\lambda$ 选择**：理论最优 $\lambda = -n^{-1/(1+\epsilon)}$ 需要知道 $\epsilon$，实际中需要交叉验证

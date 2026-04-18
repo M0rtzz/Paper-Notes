@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaRank: Adaptive Rank Pruning for Enhanced Model Merging
 description: >-
@@ -95,7 +95,7 @@ $$\arg\min_B \sum_{i=1}^T \sum_{x_i \in \mathcal{D}_i} H_i(f(\theta(B), x_i))$$
 - 在 20 任务大规模场景下优势更加明显，说明任务间干扰随任务数增长加剧
 - 跨视觉/NLP、跨架构（双向/自回归 Transformer）均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要无标签测试数据进行测试时适应，不适用于完全无数据场景
 - SVD 分解本身有 $O(d^2 d')$ 的额外预处理开销

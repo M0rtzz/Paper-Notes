@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Act Like a Pathologist: Tissue-Aware Whole Slide Image Reasoning
 description: >-
@@ -123,7 +123,7 @@ $$L = L_{\text{VQA}} + \lambda_1 L_{\text{group}} + \lambda_2 L_{\text{patch}}$$
 3. **STE解决硬选择**：硬采样比软注意力更符合实际需求（真正减少计算），STE保证可训练
 4. **临床可解释性**：不只是跑分，选出的patch与病理学家认知一致，增加了方法的可信度和实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **组织类型需预定义**：M个组织prompt由领域专家手工设定，跨疾病/跨器官迁移时需重新配置
 2. **CONCH依赖**：分组质量受限于CONCH模型在特定病理领域的编码能力，尾部罕见组织类型可能分组不准

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IVC-Prune: Revealing the Implicit Visual Coordinates in LVLMs for Vision Token Pruning
 description: >-
@@ -151,7 +151,7 @@ IVC-Prune 是完全**训练免**的方法，不需要任何额外训练或微调
 - **洞察力推动设计**：发现早期层敏感性根源后，提出单次选择策略，将剪枝从多层操作简化为单层操作，同时最大化KV cache节省
 - **Value向量去偏**：巧妙利用Value向量不受位置编码影响的特性，解决了注意力分数的位置偏差问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. IVC tokens的比例（$k_c=10\%$）和前景tokens比例（$k_f=40\%$）为固定超参数，可能不适用于所有场景，动态比例调整值得探索
 2. 选择层的确定需要在验证集上搜索，增加了一定的设置成本

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Principled Data Augmentation for Learning to Solve Quadratic Programming Problems
 description: >-
@@ -140,7 +140,7 @@ $$\begin{bmatrix} \mathbf{Q} & \mathbf{A}^\top \\ \mathbf{A} & \mathbf{0} \end{b
 - **OOD泛化**：预训练模型成功迁移到Set Cover、SVM、Portfolio等不同问题族，证明学到的是优化问题的通用结构表示
 - **反面证据有力**：实验清楚展示通用图增强方法(节点删除、边扰动等)在LP/QP任务上的负面效果，强调了领域特定增强的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限LCQP**：框架要求 $\mathbf{Q}$ 正定，不适用于非凸QP、半定规划(SDP)或混合整数规划(MILP)的整数部分
 - **变换多样性有限**：实际可用的解无关变换仅4种（缩放变量/约束、添加变量/约束），移除操作需要解信息

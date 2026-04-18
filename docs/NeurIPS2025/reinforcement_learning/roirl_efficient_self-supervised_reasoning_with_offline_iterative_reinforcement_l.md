@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RoiRL: Efficient, Self-Supervised Reasoning with Offline Iterative Reinforcement Learning
 description: >-
@@ -100,7 +100,7 @@ $$\theta_m = \arg\max_{\theta} \sum_{i=1}^{n} \mathbb{E}_{(c,y) \sim \pi_{m-1}(\
 - 理论上证明了RoiRL与TTRL可瞄准相同最优策略，但实践中更简单的目标反而效果更好
 - 非平稳奖励问题（多数投票随策略变化）在迭代框架下自然解决
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在小规模模型（1.5B-4B）和有限计算预算下验证，需要在更大LLM上进一步评估
 - 多数投票作为伪标签的质量上限受限于模型自身能力，可能导致错误强化

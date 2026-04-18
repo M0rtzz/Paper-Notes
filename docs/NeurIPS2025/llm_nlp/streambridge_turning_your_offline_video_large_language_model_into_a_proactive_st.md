@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StreamBridge: Turning Your Offline Video Large Language Model into a Proactive Streaming Model
 description: >-
@@ -128,7 +128,7 @@ StreamBridge由三个即插即用组件构成：
 - **Stream-IT构建方法**：短片段拼接+GPT-4o生成QA的流水线可扩展性强
 - **通用性**：成功适配三种不同架构的Video-LLM，验证了方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Stream-IT中的多轮QA由GPT-4o生成，可能存在质量不一致和幻觉
 - 1 FPS采样率对于快速变化场景可能不足

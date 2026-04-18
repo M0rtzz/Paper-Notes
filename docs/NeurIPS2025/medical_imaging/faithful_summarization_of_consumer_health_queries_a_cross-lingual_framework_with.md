@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faithful Summarization of Consumer Health Queries: A Cross-Lingual Framework with LLMs
 description: >-
@@ -124,7 +124,7 @@ $$S(V_i) = (1 - d) + d \cdot \sum_{V_j \in \text{In}(V_i)} \frac{w_{ji}}{\sum_{V
 - ⭐⭐⭐ **人工验证**：82% 的人工评估通过率提供了超越自动指标的可信度
 - ⭐⭐ **清晰消融**：每个组件的增量贡献通过消融实验清晰展示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一 LLM**：仅在 LLaMA-2-7B 上验证，未测试更新/更大的模型（如 LLaMA-3、Mistral）
 2. **数据集规模小**：MeQSum 仅 1000 样本，BanglaCHQ-Summ 2350 样本，统计显著性受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NeuroBridge: Bio-Inspired Self-Supervised EEG-to-Image Decoding via Cognitive Priors and Bidirectional Semantic Alignment
 description: >-
@@ -128,7 +128,7 @@ Image Prior贡献最大（+19.5% Top-1），是性能飞跃的关键；EEG Prior
 - **编码器通用性**：框架可插拔不同图像/EEG编码器组合，均带来一致提升
 - **代码开源**：完整代码公开可复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **手工设计增广**：CPA的增广策略（高斯模糊、低分辨率等）是人工选定的，可能不足以完整捕获认知变异性，自适应/可学习增广是未来方向
 - **依赖预训练视觉编码器**：冻结的CLIP编码器可能引入视觉-语言偏差，EEG反映的语义与语言驱动的语义可能存在本质差异

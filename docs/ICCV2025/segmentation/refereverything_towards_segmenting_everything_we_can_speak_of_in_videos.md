@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReferEverything: Towards Segmenting Everything We Can Speak of in Videos
 description: >-
@@ -109,7 +109,7 @@ REM 在域外泛化上大幅领先，尤其在 Ref-VPS 上超越 UNINEXT 达 21.
 - **新基准 Ref-VPS**：首次定义了指代视频过程分割任务，覆盖 39 种动态过程概念（烟雾、火焰、破碎等），填补了 RVS 评估的空白
 - **扩散模型能力的新证据**：证明了视频扩散模型在互联网级预训练中学到的视觉-语言映射是通用的，可直接迁移到分割任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理效率：扩散模型参数量大（1.4B~14B），实际部署成本高
 - 对 "Stuff" 类别的分割精度仍有提升空间（VSPW 上仅 18.5）

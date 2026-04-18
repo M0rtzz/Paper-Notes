@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedDifRC: Unlocking the Potential of Text-to-Image Diffusion Models in Heterogeneous Federated Learning
 description: >-
@@ -113,7 +113,7 @@ $$\mathcal{L} = \mathcal{L}_{TDCL} + \mathcal{L}_{NDCR} + \mathcal{L}_{CE}$$
 - 从理论角度证明了 SD 模型的去噪过程等价于学习数据主成分空间的线性自编码器（Eq. 6），为利用扩散表示提供了理论基础
 - TDCL 和 NDCR 分别解决了对比学习中正/负样本构建和收敛稳定性两个不同层面的问题，设计思路清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要在每个客户端部署预训练 SD 模型进行推理，增加了客户端的计算和存储负担
 - PCA 降维的主成分数量（256/128）需要预定义，可能不是所有数据集的最优选择
 - 文本提示模板固定为 "a photo of a [class]"，对细粒度类别可能不够表达力

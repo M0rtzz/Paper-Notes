@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adapting Vision-Language Models for Evaluating World Models
 description: >-
@@ -113,7 +113,7 @@ UNIVERSE 在 AR 上超越所有模型（含全模型微调），在 CR 上仅次
 - 系统性的适配策略研究（5154 GPU-days）为受限场景下的 VLM 适配提供了实用指导
 - 评估协议设计精巧：二元/多选/开放式三种格式逐级增加难度，系统性地暴露能力差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在游戏模拟环境（Bleeding Edge）上验证，未扩展到真实世界场景
 - 评估协议目前仅覆盖基础语义任务（动作/角色识别），未涉及高层因果推理

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Automated Algorithm Design via Nevanlinna-Pick Interpolation
 description: >-
@@ -113,7 +113,7 @@ $$\mathcal{H}(z, W) = (z\mathcal{K}_0 - \mathcal{K}_1)^{-1}\mathcal{K}_2, \quad 
 3. **构造性证明**：不仅证明了性能下界的存在，还构造性地给出了达到该下界的算法
 4. **频域方法的力量**：展示了鲁棒控制理论中的经典工具在算法设计中的深刻应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前框架限于线性更新的算法，无法处理非线性迭代格式（如近端算子）
 2. 仅考虑强凸目标函数，对一般凸或非凸问题的扩展尚不明确

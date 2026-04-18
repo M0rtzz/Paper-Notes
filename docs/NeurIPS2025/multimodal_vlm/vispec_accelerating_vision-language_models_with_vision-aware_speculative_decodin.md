@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ViSpec: Accelerating Vision-Language Models with Vision-Aware Speculative Decoding
 description: >-
@@ -115,7 +115,7 @@ $$L = \text{CrossEntropy}(p_i, \hat{p}_i)$$
 3. **全局特征注入思路巧妙**：简单但有效地解决了长文本生成中的视觉遗忘问题
 4. **首次在VLM推测解码中突破2×加速壁垒**，建立了该方向的新基准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 绝对加速比仍落后于纯文本推测解码的最优方法
 - 训练数据依赖目标模型生成，合成数据的质量和多样性有限

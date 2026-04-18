@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Concept Bottleneck Models from Mechanistic Explanations
 description: >-
@@ -110,7 +110,7 @@ $$\text{NCC}_\tau = \frac{1}{|\mathbb{D}|C} \sum_i \sum_r \min\left\{\kappa : \s
 4. **概念可学习性大幅提升**：ROC-AUC 从 62% 提升到 90%（CUB），证明模型自身概念确实更易学习
 5. **高效标注策略**：用 SAE 激活预筛候选图像，每概念仅需标注 ~1k 张，避免全数据集标注的计算瓶颈
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **概念学习仍是黑盒**：最终层可解释，但 CBL 本身仍是黑盒，缺乏系统方法验证概念是否按预期学习
 2. **信息泄露未根除**：即使控制 NCC，随机词仍能达到远超随机的精度，泄露问题本质未解决

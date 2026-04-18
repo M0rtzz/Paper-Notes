@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graph4MM: Weaving Multimodal Learning with Structural Information
 description: >-
@@ -122,7 +122,7 @@ $$\mathbf{H}_P \leftarrow \mathbf{H}_P + \boldsymbol{\mathcal{A}} \mathbf{H}_P$$
 3. **小模型打败大模型**：Graph4MM 使用 OPT-125M/LLaMA-1B 等小模型，在引入结构信息后超越了 BLIP2-OPT-2.7B 和 Qwen2-VL-7B 等大模型
 4. **Hop-Aware 作为轻量替代**：提供了计算复杂度从 $O(d^2)$ 降至 $O(d)$ 的替代方案，性能接近甚至部分超越 Hop-Diffused
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：仅在 WikiWeb2M 和 Ele-Fashion 两个数据集上验证，缺少更大规模/更多样化场景的测试
 2. **图构建依赖人工定义**：边的建立依赖预定义规则（如章节层级、共购关系），未探索自动图构建方法

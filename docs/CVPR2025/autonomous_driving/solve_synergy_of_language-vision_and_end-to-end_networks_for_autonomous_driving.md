@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SOLVE: Synergy of Language-Vision and End-to-End Networks for Autonomous Driving
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：共享视觉编码器让两个模型"看到同样的东西"，VLM 的长程轨迹异步存入记忆供 E2E 实时查询，避免 VLM 成为延迟瓶颈。
 
-**核心idea一句话**：共享 SQ-Former + T-CoT 轨迹先验 + 异步时序解耦 = VLM 与 E2E 的深度协同。
+**核心 idea**：共享 SQ-Former + T-CoT 轨迹先验 + 异步时序解耦 = VLM 与 E2E 的深度协同。
 
 ## 方法详解
 
@@ -91,7 +91,7 @@ nuScenes 开环规划 L2 误差↓：
 - **特征级协同 > 语言级串联**——共享编码器让两个模型在特征空间中深度融合，比用文字传递信息更高效
 - **异步设计的实用性**——VLM 不需要实时运行，长程理解存入记忆供 E2E 按需取用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅 nuScenes 开环评估——无闭环验证
 - VLM 推理仍有延迟成本
 - 需要 OmniDrive-nuScenes QA 数据集

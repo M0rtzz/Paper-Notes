@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robustifying Learning-Augmented Caching Efficiently without Compromising 1-Consistency
 description: >-
@@ -129,7 +129,7 @@ Guard 是一个通用鲁棒化框架，可应用于任何 **RB-following**（松
 3. **即插即用**：可直接增强任何RB-following算法而不改变其核心逻辑
 4. **O(1)开销**：在追求鲁棒性的同时不增加渐近复杂度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 鲁棒性界 $2H_{k-1}+2$ 是否可以进一步降低（理论下界的探索）
 2. Guard当前限于RB-following算法，扩展至更广泛的算法类可能有价值

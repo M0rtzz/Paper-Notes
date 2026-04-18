@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Trust Region Reward Optimization and Proximal Inverse Reward Optimization Algorithm
 description: >-
@@ -118,7 +118,7 @@ PIRO 的交替更新：
 - PIRO 的实现非常简洁：在 SAC 基础上只需添加若干奖励梯度步，工程友好
 - 奖励迁移实验展示了显式奖励学习相比隐式方法的优势——奖励不与环境动力学耦合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论保证假设精确策略优化（实际用有限步 SAC 近似），理论和实践之间有 gap
 - On-policy 采样依赖可能限制在样本昂贵任务上的扩展性

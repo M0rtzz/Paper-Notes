@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MonoWAD: Weather-Adaptive Diffusion Model for Robust Monocular 3D Object Detection
 description: >-
@@ -149,7 +149,7 @@ Virtual KITTI多天气结果：
 - **天气码本的自适应机制**：通过WIG Loss确保不同天气输入产生相同的参考特征，使得扩散模型的cross-attention自然实现自适应增强——不需要显式判断天气类型
 - **晴天+雾天双赢**：这是相比去雾方法最大的优势，因为增强力度由天气参考特征自动调节
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理速度慢**：T=15时144ms/image，远慢于MonoDETR的38ms/image，扩散的迭代特性是瓶颈
 - **需要配对训练数据**：训练阶段需晴天-雾天配对图像来计算雾分布，限制了对其他天气的直接扩展

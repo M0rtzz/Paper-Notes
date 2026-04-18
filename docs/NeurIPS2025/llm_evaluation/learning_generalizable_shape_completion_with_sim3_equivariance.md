@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Generalizable Shape Completion with SIM(3) Equivariance
 description: >-
@@ -96,7 +96,7 @@ SIMECO 比 AdaPoinTr+增广提升 10% CD-$\ell_1$ 和 8% F1
 - **三阶段模块的优雅性**：规范化→不变推理→恢复的设计思路通用——原则上可以应用于任何需要等变性的 3D Transformer 架构
 - **"严格协议 > 宽松协议"的惊人结论**：SIMECO 在 I/SIM(3) 协议下都能超过基线在偏向设置下的成绩，有力说明了架构等变性 > 数据增广
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 基于 Vector Neurons 的架构相对浅层，可能限制了对极复杂几何的建模能力
 - VN-DGCNN 的局部特征提取在极稀疏点云上可能不够鲁棒
 - SIM(3) 等变性增加了实现复杂度和一定的计算开销，具体推理时间未报告

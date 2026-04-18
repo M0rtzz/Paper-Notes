@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ElementaryNet: A Non-Strategic Neural Network for Predicting Human Behavior in Normal-Form Games
 description: >-
@@ -120,7 +120,7 @@ $$f_i(G) = \sum_{p=1}^{P} w_p \cdot h_i^p(\Phi^p(G))$$
 2. **可解释性有实质内容**：不是简单地声称"因为架构简单所以可解释"，而是通过数学证明网络无法表达特定行为类别，从而使后续分析具有因果推断性质。
 3. **负面结果也有价值**：证明 GameNet 的 level-0 可模拟策略，解释了为什么添加策略推理层级反而没有收益——这是对先前"反直觉"实验结果的有力解释。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 2 人 normal-form 博弈**：不含序贯交互、随机事件或不完全信息，距离真实场景有显著差距。
 2. **响应函数仍是黑箱**：虽然势函数可解释，但后面接的响应函数 $h_i^p$ 仍然是不可解释的神经网络。

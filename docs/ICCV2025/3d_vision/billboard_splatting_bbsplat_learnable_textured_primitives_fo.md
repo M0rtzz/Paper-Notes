@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BillBoard Splatting (BBSplat): Learnable Textured Primitives for Novel View Synthesis
 description: >-
@@ -157,7 +157,7 @@ tags:
 5. **正则化设计精巧**：基于可见性加权——贡献大的billboard保留纹理自由度，贡献小的推向高斯分布，既防过拟合又促进压缩
 6. **经典CG思想的复兴**：Billboard Cloud（2003）在可微渲染时代焕发新生
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **大型户外场景表现欠佳**：Mip-NeRF-360的户外场景（大量小型单色细节如树叶）纹理化表示不如高斯高效
 2. **训练速度慢**：~40分钟 vs 3DGS的~5分钟（×8），瓶颈在纹理的CUDA双线性采样反向传播

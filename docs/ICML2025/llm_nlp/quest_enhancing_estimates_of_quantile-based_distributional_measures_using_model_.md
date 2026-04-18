@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QuEst: Enhancing Estimates of Quantile-Based Distributional Measures Using Model Predictions
 description: >-
@@ -161,7 +161,7 @@ QuEst 是纯推断框架，不涉及模型训练，其核心"优化"在于：
 4. **QuEst-Opt 的可扩展性**：通过参数化自适应权重函数实现进一步方差缩减，方差目标保持凸性
 5. **对 LLM Eval 的实际价值**：用昂贵大模型标注少量样本 + 便宜小模型大量标注，同时获得可靠的尾部风险估计，在 LLM 安全评估中尤为重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要预测数据与观测数据来自同一输入分布**：协变量漂移场景未被覆盖
 2. **异方差严重时仍依赖 QuEst-Opt**：基础 QuEst 仅用标量 λ，自适应能力有限

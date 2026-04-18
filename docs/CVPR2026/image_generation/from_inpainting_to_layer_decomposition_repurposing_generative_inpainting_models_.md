@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Inpainting to Layer Decomposition: Repurposing Generative Inpainting Models for Image Layer Decomposition
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 3. **核心矛盾**：图层分解在概念上与 inpainting 高度相似（背景层=填充被 mask 的区域，前景层=在 mask 区域外绘），但现有 inpainting 模型缺乏前景提取能力，而专门的图层分解方法又需要从零开始训练。
 
-4. **本文要解决什么？** 能否用已有的强大 inpainting 模型，通过最少的改动和数据，实现高质量的图层分解？
+4. **本文目标** 能否用已有的强大 inpainting 模型，通过最少的改动和数据，实现高质量的图层分解？
 
 5. **切入角度**：将图层分解统一为 inpainting（背景）+ outpainting（前景）的组合任务，利用 inpainting 模型已有的区域填充能力。
 
-6. **核心idea一句话**：图层分解就是双向 inpainting——背景做区域填充，前景做区域外扩，一个 inpainting 模型加轻量适配即可同时搞定。
+6. **核心 idea**：图层分解就是双向 inpainting——背景做区域填充，前景做区域外扩，一个 inpainting 模型加轻量适配即可同时搞定。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ Outpaint-and-Remove 基于预训练的 FLUX.1-Fill-dev（一个基于 DiT 的 in
 - **纯公开数据+轻量适配**：不需要商业数据集，不需要全量微调，仅 10 万合成样本+LoRA 即可达到 SOTA。这种"民主化"的方法设计值得推广
 - **混合前景数据策略**：真实前景有细节但形状不完整，合成前景形状完整但纹理差，两者互补的数据设计思路可迁移到其他域差距问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在复杂场景（杂乱物体、大面积遮挡、手指持握物体）上仍然失败
 - 训练数据是合成构造的，与真实图像的分层结构存在分布差异
 - 前景提取的 alpha matting 精度可能不如专业 matting 方法

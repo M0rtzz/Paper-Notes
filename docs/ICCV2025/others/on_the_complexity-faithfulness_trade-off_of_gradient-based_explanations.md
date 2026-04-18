@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Complexity-Faithfulness Trade-off of Gradient-Based Explanations
 description: >-
@@ -61,7 +61,7 @@ tags:
 
 #### 1. **期望频率（Expected Frequency, EF）**：度量解释复杂度
 
-- **做什么**：通过空间功率谱的加权积分来量化解释中高频成分的占比
+- **功能**：通过空间功率谱的加权积分来量化解释中高频成分的占比
 - **核心思路**：定义期望频率为：
 
 $$\operatorname{EF}(e_f(x)) \coloneq \int \omega \operatorname{S}_{e_f(x)}(\omega) \, d\omega$$
@@ -72,7 +72,7 @@ $$\operatorname{EF}(e_f(x)) \coloneq \int \omega \operatorname{S}_{e_f(x)}(\omeg
 
 #### 2. **网络 TPS 与梯度 TSPS 的形式化联系**
 
-- **做什么**：建立网络功率谱尾部与输入梯度空间功率谱尾部之间的理论关系
+- **功能**：建立网络功率谱尾部与输入梯度空间功率谱尾部之间的理论关系
 - **核心思路**：
 
 **定理 1（非形式化）**：在具有高输入特征相关性的数据域（如图像数据）中，给定训练好的神经网络 $f(x)$，$f(x)$ 的功率谱的尾部行为与 $\nabla f(x)$ 的空间功率谱的尾部行为成正比。
@@ -89,7 +89,7 @@ $$\text{SoftPlus}(x;\beta) = \frac{1}{\beta} \ln(1 + e^{\beta x}) \approx \text{
 
 #### 3. **解释间隙（Explanation Gap）**：量化忠实度
 
-- **做什么**：衡量后处理解释方法在引入代理模型后偏离原始模型的程度
+- **功能**：衡量后处理解释方法在引入代理模型后偏离原始模型的程度
 - **核心思路**：定义解释间隙为原始模型与代理模型梯度差的 $L^2$ 范数：
 
 $$\mathcal{G}(f, \tilde{f}) = \int_{x \in \mathcal{X}} \|\nabla f(x) - \nabla \tilde{f}(x)\|_2^2 \, dx$$
@@ -160,7 +160,7 @@ $$\Delta \operatorname{EF}(e_f) \coloneq |\operatorname{EF}(\nabla f) - \operato
 4. **无超参数度量**：EF 和 ΔEF 不依赖基线选择、移除顺序等外在因素，具有更清晰的直觉
 5. **跨架构验证**：在 CNN、ResNet、ViT 等不同架构上验证了理论预测的一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论依赖核方法**：与核方法的联系在深度网络中可能失效，特别是在深度维度上核视角可能不直觉
 2. **仅关注空间频率**：频谱分析只在空间域进行，可能忽略其他维度的信息

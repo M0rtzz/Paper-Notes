@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Conformal Prediction Adaptive to Unknown Subpopulation Shifts
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：Group-conditional CP 在理论上能解决子群体偏移问题，但它需要精确的 group 成员信息。Theorem 2.1 证明不完美的 domain classifier 会导致覆盖保证严重退化——如果 classifier 准确率为 $\gamma$，覆盖可以低至 $\max(0, \gamma - \alpha)$。
 
-**本文要解决什么**：在 domain 标签未知或不完美的情况下，设计有理论保证的自适应 CP 算法。
+**本文目标**：在 domain 标签未知或不完美的情况下，设计有理论保证的自适应 CP 算法。
 
 **切入角度**：不要求完美 domain classifier，而是利用 multicalibration / multiaccuracy 等更弱的假设来保证覆盖率；甚至完全不需要 domain classifier，仅用嵌入相似度加权。
 
-**核心 idea 一句话**：用不完美的 domain classifier 或嵌入相似度来自适应加权校准数据，在未知子群体偏移下保持 conformal prediction 的覆盖保证。
+**核心 idea**：用不完美的 domain classifier 或嵌入相似度来自适应加权校准数据，在未知子群体偏移下保持 conformal prediction 的覆盖保证。
 
 ## 方法详解
 
@@ -123,7 +123,7 @@ ImageNet 上 100 个测试环境的覆盖率分布（26 domains, ViT, LAC score,
 - **从 Bayes-optimal → multicalibrated → multiaccurate 的假设放松链**：优雅地逐步弱化对 domain classifier 的要求，同时保持覆盖保证。实践者可根据自身 classifier 质量选择合适的算法。
 - **Algorithm 3 的无监督自适应**：不需要任何 domain 信息，仅用嵌入相似度即可实现类似效果——这使得方法可以直接应用于任何预训练模型。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **理论未利用样本独立性**：当前理论未利用不同 domain 样本间的独立性，导致轻微偏移时有些过覆盖。
 - **Algorithm 3 无理论保证**：虽然实验有效但缺乏像 A1/A2 那样的形式化覆盖保证。
 - **Score function 选择无指导**：没有提供关于何种 score function 在何种场景下最优的理论或实证指导。

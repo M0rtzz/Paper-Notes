@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] No-Regret Strategy Solving in Imperfect-Information Games via Pre-Trained Embedding
 description: >-
@@ -92,7 +92,7 @@ HandEbdNet 用手牌强度（胜率分布）作为监督信号训练。策略求
 - **采样+查询机制保持低空间复杂度**：不需要存储完整嵌入矩阵，而是通过神经网络动态生成嵌入坐标，巧妙解决了大规模博弈的存储瓶颈
 - **Info-block 按非机会动作分区**：利用扑克的完美回忆性质，使得共享相同非机会动作序列的 info-block 可以复用同一嵌入矩阵
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 收敛性分析仅证明了单个顾问独立作用时的遗憾递减，多顾问相互耦合时的收敛保证仍是开放问题
 - 实验仅在 Numeral211 Hold'em（简化变体）上验证，未扩展到完整的无限注德州扑克

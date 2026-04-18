@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Self-Repellent Kernels: History-Driven Target Towards Efficient Nonlinear MCMC on General Graphs
 description: >-
@@ -144,7 +144,7 @@ $$\hat{x}_j = \tilde{\mu}_j \cdot |\bar{\mathcal{N}}(i) \cap \mathcal{C}|^{-1} \
 3. **通用即插即用**："Bring Your Own MCMC"——对基础采样器完全黑盒。
 4. **Lyapunov 分析**：用 $V(\mathbf{x}) = \sum_i \mu_i (x_i/\mu_i)^{-\alpha}$ 结合 LaSalle 不变性原理证明全局稳定性，Cauchy-Schwarz 不等式的使用极为简洁。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **指数级状态空间未覆盖**：高维问题（如 Ising 模型）上的应用留作未来工作。
 2. **LRU 缺理论保证**：缓存方案是启发式的，缺乏收敛性理论分析。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transformed Low-rank Adaptation via Tensor Decomposition and Its Applications to Text-to-image Models
 description: >-
@@ -113,7 +113,7 @@ $$y' = (W_0 T + \Delta) x$$
 - TRM 作为全秩稠密矩阵的紧凑参数化方式，在表达能力和参数效率间取得了极好的平衡
 - 初始化策略对高阶张量结构至关重要，零初始化 + μP 框架使训练更稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅在 SD v1.5 和 SDXL 上验证，未在 DiT 架构（如 Flux）上测试
 - 需要手动选择张量化方式（子索引维度划分），超参数选择对结果有影响
 - 变换和残差的秩选择缺乏理论指导

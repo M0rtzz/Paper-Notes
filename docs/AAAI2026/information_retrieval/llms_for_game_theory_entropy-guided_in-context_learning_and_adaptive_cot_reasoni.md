@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLMs for Game Theory: Entropy-Guided In-Context Learning and Adaptive CoT Reasoning
 description: >-
@@ -134,7 +134,7 @@ tags:
 4. 实验设计系统完整：5 种推理策略 × 3 种上下文 = 15 种配置，交叉对比清晰
 5. 统计检验严格（Spearman、Kendall 相关性分析）
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 仅在井字棋（状态空间极小）上验证，更复杂博弈（Connect Four、围棋）的扩展性未知
 2. LLaMA-7B 推理能力有限，更强的模型可能内在就能处理这种推理
 3. token 级熵假设语言不确定性等于决策不确定性，在模糊场景中可能不成立

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recurrent Attention-based Token Selection for Efficient Streaming Video-LLMs
 description: >-
@@ -134,7 +134,7 @@ Token选择方法对比 (NextQA, 保留6% token)：
 - KV-cache零存储：不需要像ReKV那样存储完整KV-cache（节省18.8GB/h）
 - 认知科学启发的设计：注意力→选择性记忆→循环处理，模仿人类视觉信息处理机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅关注被选中内容，可能遗漏细粒度细节
 - FIFO记忆缓冲区基于时间而非语义优先，关键但早期的信息可能被丢弃

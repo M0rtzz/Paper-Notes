@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LawDIS: Language-Window-based Controllable Dichotomous Image Segmentation
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L}_d = \mathcal{L}_{wbce}(\hat{s}, s) + \mathcal{L}_{wiou}(\hat{s}, s
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

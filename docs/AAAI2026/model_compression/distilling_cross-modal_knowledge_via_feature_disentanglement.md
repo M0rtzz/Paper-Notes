@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilling Cross-Modal Knowledge via Feature Disentanglement
 description: >-
@@ -49,25 +49,25 @@ FD-CMKD 框架包含四个核心模块：（1）频域特征解耦，将 teacher
 
 #### 1. 频域特征解耦（Frequency-Decoupled Distillation）
 
-- **做什么**：将原始特征 $\mathbf{X}^m \in \mathbb{R}^D$ 通过 DFT 转换到频域，用二值掩码滤波器分离为低频 $\mathbf{X}_{\text{low}}^m$ 和高频 $\mathbf{X}_{\text{high}}^m$，再通过 IDFT 变换回时空域。
+- **功能**：将原始特征 $\mathbf{X}^m \in \mathbb{R}^D$ 通过 DFT 转换到频域，用二值掩码滤波器分离为低频 $\mathbf{X}_{\text{low}}^m$ 和高频 $\mathbf{X}_{\text{high}}^m$，再通过 IDFT 变换回时空域。
 - **核心思路**：$\mathbf{X}_f^m = \text{DFT}(\mathbf{X}^m)$，低通滤波器 $\mathbf{M}_{\text{low}}$ 保留前一半频率分量，高通滤波器 $\mathbf{M}_{\text{high}}$ 保留后一半，$\mathbf{X}_{\text{low}}^m = \text{IDFT}(\mathbf{X}_f^m \cdot \mathbf{M}_{\text{low}})$。
 - **设计动机**：实验验证低频特征跨模态余弦相似度在 CREMA-D 上为 0.91、AVE 上为 0.85，远高于原始特征（0.84/0.74），而高频接近 0，证明频域自然对应语义-细节层级。
 
 #### 2. 差异化蒸馏损失
 
-- **做什么**：对低频特征用 MSE 实现强一致性，对高频特征用 logMSE 实现弱一致性。
+- **功能**：对低频特征用 MSE 实现强一致性，对高频特征用 logMSE 实现弱一致性。
 - **核心思路**：低频损失 $\mathcal{L}_{\text{low}} = \frac{1}{ND}\|\mathbf{X}_{\text{low}}^a - \mathbf{X}_{\text{low}}^b\|^2$；高频损失 $\mathcal{L}_{\text{high}} = \frac{1}{ND}\|\sigma(\mathbf{X}_{\text{high}}^a) - \sigma(\mathbf{X}_{\text{high}}^b)\|^2$，其中 $\sigma(x) = \text{sign}(x) \cdot \log(1+|x|)$ 对大差值梯度进行压缩。
 - **设计动机**：高频特征含噪声和模态特有信息，MSE 对大误差梯度线性增长会导致过拟合噪声；logMSE 在差值较大时梯度趋于平缓，允许高频信息"松弛对齐"而非强制一致。
 
 #### 3. 尺度一致性对齐（Scale Consistency Loss）
 
-- **做什么**：对特征先做均值减除、再做 L2 归一化，即 $\text{Std}(\mathbf{X}) = \frac{\mathbf{X} - \bar{\mathbf{X}}}{\|\mathbf{X} - \bar{\mathbf{X}}\|_2}$，消除模态间数值范围差异。
+- **功能**：对特征先做均值减除、再做 L2 归一化，即 $\text{Std}(\mathbf{X}) = \frac{\mathbf{X} - \bar{\mathbf{X}}}{\|\mathbf{X} - \bar{\mathbf{X}}\|_2}$，消除模态间数值范围差异。
 - **核心思路**：均值减除可直接通过频域 DC 滤波器实现，与频域解耦无缝集成。蒸馏损失变为 $\mathcal{L}_{\text{low}} = \frac{1}{ND}\|\text{Std}(\mathbf{X}_{\text{low}}^a) - \text{Std}(\mathbf{X}_{\text{low}}^b)\|^2$。
 - **设计动机**：可视化发现音频模态特征均值显著高于视觉模态，直接 MSE 会迫使 student 特征偏移到 teacher 的均值，破坏原有分布。标准化后模型聚焦于内在判别性特征。
 
 #### 4. 共享分类器对齐（Feature Space Alignment）
 
-- **做什么**：设计高频/低频两个共享分类器 $\Phi_h$ 和 $\Phi_l$，将 teacher 和 student 的特征都送入同一分类器，用交叉熵损失对齐决策边界。
+- **功能**：设计高频/低频两个共享分类器 $\Phi_h$ 和 $\Phi_l$，将 teacher 和 student 的特征都送入同一分类器，用交叉熵损失对齐决策边界。
 - **核心思路**：$\mathcal{L}_{\text{align}} = \text{CE}(\Phi_h(\mathbf{X}_{\text{high}}^a), y) + \text{CE}(\Phi_h(\mathbf{X}_{\text{high}}^b), y) + \text{CE}(\Phi_l(\mathbf{X}_{\text{low}}^a), y) + \text{CE}(\Phi_l(\mathbf{X}_{\text{low}}^b), y)$。
 - **设计动机**：仅靠尺度对齐不够，不同模态的分布形状和类别边界仍可能不同。共享分类器强制两个模态的特征在同一决策空间可比较，从语义层面缩小分布差异。
 
@@ -133,7 +133,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \mathcal{L}_{\text{al
 - **t-SNE 可视化说服力强**：传统 Feat KD 导致模态特征过度重叠（丧失模态特有信息），本方法保持两个模态特征清晰分离同时共享语义结构。
 - **尺度标准化与 DC 滤波器的巧妙统一**：均值减除等价于频域 DC 分量去除，将尺度对齐自然嵌入频域解耦流程。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **频率阈值固定为 1/2**：当前使用固定二值掩码，不同数据集/模态对可能需要不同阈值，作者也提到未来可探索自适应可学习阈值。
 2. **仅验证了分类和分割任务**：未在检测、生成、检索等更多下游任务上验证泛化性。

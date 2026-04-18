@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CineSRD: Leveraging Visual, Acoustic, and Linguistic Cues for Open-World Visual Media Speaker Diarization
 description: >-
@@ -131,7 +131,7 @@ CineSRD 仅用双模态（AV）已超过 EC2P 的三模态（AVT）结果。
 3. **层级式策略设计**：先视觉锚点注册→语义转换检测→画外补充，逐步完善说话人标注
 4. **SubtitleSD 基准贡献**：覆盖中英双语+方言，92.5小时视频，平均21.2个说话人/视频
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖活跃说话人检测模型的准确性，当人脸检测失败时退化为纯音频方案
 2. 对旁白、画外音等完全无视觉线索的场景，新说话人补充策略可能遗漏

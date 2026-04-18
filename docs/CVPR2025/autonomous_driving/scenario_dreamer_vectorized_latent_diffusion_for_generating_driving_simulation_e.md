@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scenario Dreamer: Vectorized Latent Diffusion for Generating Driving Simulation Environments
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：低 β VAE + 分解注意力（lane-lane / lane-agent / agent-agent）编码异构场景元素，在潜空间中做扩散生成，单独用分类头预测车道连接性。
 
-**核心idea一句话**：分解VAE编码器 + 潜空间扩散 + 车道连接分类 + CtRL-Sim 行为 = 完整的可控驾驶仿真。
+**核心 idea**：分解VAE编码器 + 潜空间扩散 + 车道连接分类 + CtRL-Sim 行为 = 完整的可控驾驶仿真。
 
 ## 方法详解
 
@@ -74,7 +74,7 @@ VAE: $L_{VAE} = \mathbb{E}[\|x - \text{decode}(z)\|^2] + \beta D_{KL}$。扩散:
 - **完整的"地图→智能体→行为"生成流水线**——三个模块各司其职
 - **向量化的优势明确**——车道连接等拓扑信息只有向量化表示能精确捕捉
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 交通灯逻辑不够真实
 - 只生成中心线地图（无路沿/人行横道）
 - 64m×64m 固定 FOV

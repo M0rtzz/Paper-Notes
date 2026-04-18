@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Out-of-distribution Generalisation is Hard: Evidence from ARC-like Tasks
 description: >-
@@ -116,7 +116,7 @@ tags:
 3. **对ARC的启示**：解释了为什么当前AI系统在ARC任务上表现不佳——缺乏真正的组合推理能力
 4. **理论与实践差距**：归纳偏置虽然必要但不充分，强调了理解模型学到什么的重要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 任务设计相对简单，与真实ARC任务相比复杂度有限
 2. 仅测试了三种标准架构和两种自定义架构

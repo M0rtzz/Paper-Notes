@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatio-Semantic Expert Routing Architecture with Mixture-of-Experts for Referring Image Segmentation
 description: >-
@@ -94,7 +94,7 @@ SERA 由两个互补模块组成，均采用 MoE 机制：
 4. **四种互补专家设计**: 空间/上下文/边界/形状四类专家覆盖 RIS 所需的不同视觉线索
 5. **零样本跨数据集泛化**: 在 RefCOCO 系列间展示了良好的迁移能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 专家数量和类型是手工设计的（2+4），可探索自动化专家架构搜索
 - Top-k 中 k 的选择需要调参，不同数据集可能有不同最优 k
 - 仅在 RefCOCO 系列上验证，缺少更多样化的 RIS 基准（如 PhraseCut）

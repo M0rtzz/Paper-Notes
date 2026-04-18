@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Multimodal Prototype Learning in Vision-Language Models
 description: >-
@@ -115,7 +115,7 @@ ProtoMM 由两个模块组成：
 - **Training-free 设计**：无需反向传播，无需微调任何参数，推理效率高
 - 分布特征构建和原型更新的贡献可分离验证，消融清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 LLM 生成的文本描述质量有依赖，不同 LLM 生成的描述可能影响效果
 - 视觉粒子通过移动平均更新，长期测试流中可能出现概念漂移

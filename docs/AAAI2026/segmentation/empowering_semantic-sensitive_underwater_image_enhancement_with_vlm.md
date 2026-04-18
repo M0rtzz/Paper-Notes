@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empowering Semantic-Sensitive Underwater Image Enhancement with VLM
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{recon} + \lambda_{align} \sum_{l \in L} \ma
 3. **弥合感知-认知鸿沟**：首次系统性地用 VLM 驱动的语义理解来解决水下增强"好看不好用"的问题
 4. **语义锐化函数设计**：通过阈值+幂律变换组合，将平滑的相似度分布转为高对比度引导图
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **推理开销**：需要 LLaVA 生成文本描述 + BLIP 计算对齐，推理时可能显著增加延迟，论文未讨论计算成本
 2. **VLM 依赖**：引导图质量完全取决于 VLM 对退化图像的理解能力，严重退化场景下 VLM 可能描述不准确
 3. **训练数据规模有限**：UIEB 仅 790 张训练图，更大规模数据集的表现未验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Multimodal Continual Instruction Tuning with BranchLoRA
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：MoELoRA中多个expert的矩阵A参数在持续训练中趋于收敛（捕获共性），而矩阵B保持可区分（捕获特性），说明为A维护多份独立副本是浪费参数的。
 
-**本文要解决什么？** 在MCIT场景下，设计一种更高效的LoRA架构，同时解决MoELoRA的参数冗余和灾难性遗忘两个核心问题。
+**本文目标** 在MCIT场景下，设计一种更高效的LoRA架构，同时解决MoELoRA的参数冗余和灾难性遗忘两个核心问题。
 
 **切入角度**：通过实验分析发现MoELoRA的A矩阵收敛现象，据此设计非对称架构——共享A（树干），多路B（树枝），辅以冻结和路由机制防遗忘。
 
-**核心idea一句话**：MoELoRA中A矩阵趋同B矩阵分化→共享A+多路B的非对称BranchLoRA + 灵活冻结机制 + 任务特定路由器 = 更少参数 + 更少遗忘。
+**核心 idea**：MoELoRA中A矩阵趋同B矩阵分化→共享A+多路B的非对称BranchLoRA + 灵活冻结机制 + 任务特定路由器 = 更少参数 + 更少遗忘。
 
 ## 方法详解
 
@@ -134,7 +134,7 @@ BranchLoRA集成到MLLM每层的Feed-Forward模块中，pipeline：
 - **效率与效果双赢**：比MoELoRA少37%参数、快18%训练速度，但ACC高7个点——稀有的帕累托改进
 - **实用的推理方案**：task selector消除了对任务标识的依赖，使方法更贴近真实应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在CoIN benchmark上验证，任务多样性有限（8个多模态数据集）
 - 任务序列顺序是否影响结果未充分探讨

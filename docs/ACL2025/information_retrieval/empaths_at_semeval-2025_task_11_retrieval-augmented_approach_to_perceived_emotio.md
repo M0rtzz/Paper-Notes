@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empaths at SemEval-2025 Task 11: Retrieval-Augmented Approach to Perceived Emotions Prediction
 description: >-
@@ -127,7 +127,7 @@ EmoRAG 由四个组件串联：Database → Retriever → Generators (LLM集合)
 - n-gram vs 嵌入检索器的选择揭示了低资源 vs 高资源语言的不同特征：低资源语言的嵌入质量差，表面特征匹配可能更可靠
 - 多 LLM 集成的互补性强：单个模型在不同语言上各有所长
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖 6 种基本情感 + neutral，未测试更细粒度的情感分类
 - 对高度不均衡的类别分布和显著的分布偏移（如 German、Portuguese）处理不足

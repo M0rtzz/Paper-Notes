@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learnable Sampler Distillation for Discrete Diffusion Models
 description: >-
@@ -130,7 +130,7 @@ Hamming距离阈值消融（SEDD-small，Euler，32步）：
 - 松弛目标的设计利用了Hamming距离作为离散空间的自然度量，概念优雅
 - 训练成本极低（5分钟），且推理零开销，具有很高的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前学习的系数和时间调度是全局的（与具体输入无关），输入条件化的自适应可能进一步提升
 - 松弛目标的Hamming距离阈值需要manual tuning

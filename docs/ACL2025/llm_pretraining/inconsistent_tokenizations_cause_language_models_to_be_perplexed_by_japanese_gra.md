@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inconsistent Tokenizations Cause Language Models to be Perplexed by Japanese Grammar
 description: >-
@@ -146,7 +146,7 @@ Weblab 使用的是**未修改的英语 tokenizer**，导致：
 4. **GPT-4o 也犯同样错误**：即使是最先进的模型也受此问题影响，暗示这不是模型规模问题
 5. **对多语言 LLM 的 tokenizer 设计提出警示**：追求更高效的日语 tokenizer 可能意外引入语法特定的分词不一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅研究一个语法现象**：心理谓词限制虽然代表性强，但日语还有许多其他细微语法规则
 2. **模型规模限制**：仅研究7-10B模型，更大模型是否有同样问题未知

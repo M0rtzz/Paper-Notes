@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Know your Trajectory -- Trustworthy Reinforcement Learning Deployment through Importance-Based Trajectory Analysis
 description: >-
@@ -158,7 +158,7 @@ $$I_\tau = \frac{1}{|\tau|} \sum_{(s,a)\in\tau} \Delta Q(s) \times R(s,a)$$
 - **指标设计的可迁移性**：$I(s,a) = \Delta Q(s) \times R(s,a)$ 的乘法框架允许灵活插入不同的radical term来适应不同任务
 - **实验设计的说服力**：异构轨迹数据集（混合最优/次优行为）是一个很现实的设定，比仅分析最优策略更有实践意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **环境简单**：仅在Acrobot和LunarLander两个简单Gym环境验证，缺乏在高维、连续、复杂任务上的验证
 - **状态离散化带来信息损失**：对连续状态空间的离散化可能引入误差，影响Q表的准确性

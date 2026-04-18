@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SENSEI: Semantic Exploration Guided by Foundation Models to Learn Versatile World Models
 description: >-
@@ -125,7 +125,7 @@ SENSEI 在 KeyRoom-S15 上比 PPO 快约 **两个数量级**。
 4. **跨域验证**：在离散动作地牢游戏、连续动作机器人操作、复杂 RPG 三类截然不同的环境中一致有效
 5. **迭代标注**：Pokémon 实验展示了迭代精化语义奖励的潜力（多轮标注解决分布外问题）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖全观测**：VLM 标注在存在遮挡时效果下降（Robodesk 需要多视角缓解）
 - **初始数据集质量**：语义奖励蒸馏依赖 $\mathcal{D}^{\text{init}}$ 的行为丰富度，若初始探索太差则 VLM 标注缺少信号

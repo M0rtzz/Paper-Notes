@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal
 description: >-
@@ -117,7 +117,7 @@ $$\tilde{\mathbf{x}} = (1 - \mathbf{M}) \odot \mathbf{x}_0 + \mathbf{D}$$
 - **白天+夜间的全面覆盖**使得训练的模型具有更强的全天候工作能力
 - 数据采集方法巧妙利用了光学折射模型和焦距切换来生成配对数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据采集使用固定相机+玻璃板的受控环境，与真实行车场景存在差距
 - 未提供针对数据集特点的新算法，仅做了基准测试

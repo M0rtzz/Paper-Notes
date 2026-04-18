@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Target Refocusing via Attention Redistribution for Open-Vocabulary Semantic Segmentation: An Explainability Perspective
 description: >-
@@ -172,7 +172,7 @@ RF-CLIP推理速度是ProxyCLIP的2倍，mIoU高出5.7%。
 4. **精细的实验控制**：随机token滤波 vs 分心token滤波的对照实验设计精巧，令人信服地证明了分心感知处理的重要性
 5. **注意力资源的"守恒"设计**：重分配保持列归一化，按原始比例分配，兼顾性能提升和防止崩溃
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 阈值和分心维度需按CLIP架构（ViT-B/16 vs ViT-L/14）分别设定，泛化性有限
 2. 谱聚类的特征值分解增加额外计算，虽然整体仍比引入VFM高效

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DefenderBench: A Toolkit for Evaluating Language Agents in Cybersecurity Environments
 description: >-
@@ -134,7 +134,7 @@ DefenderBench 由三大模块组成：
 - **实用洞察**：揭示了推理模型在安全任务上的意外弱点，以及模型规模对安全能力的关键影响
 - **成本友好**：有意控制测试集规模（500 样本），使中小团队也能负担得起评测
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Agent 设计过于简单**：仅使用最小化脚手架的 baseline agent，未探索更复杂的 tool-augmented agent（如集成静态分析工具）
 - **CVEFix 评测指标不理想**：CodeBLEU 不能准确反映小范围代码修改的质量，需要更好的评测指标
 - **任务覆盖可扩展**：未包含社会工程、取证分析、日志分析等重要安全场景

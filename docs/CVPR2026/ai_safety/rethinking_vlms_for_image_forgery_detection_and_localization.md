@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking VLMs for Image Forgery Detection and Localization
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{L}_{st\text{-}2} = \mathcal{L}_{ce}(\hat{y}_{des}, y_{des})$$
 - "解耦+反哺"的设计哲学优雅：先训练专家模型做好检测/定位，再用结果辅助 VLM 做解释，而非让 VLM 同时承担所有任务
 - 方法简洁但效果显著——Stage-1 仅加入 ViT + SAM 冻结解码器，Stage-2 仅修改视觉输入，没有复杂架构设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Stage-2 依赖 Stage-1 定位掩码质量，若定位失败则解释也会受影响（级联误差）
 - 仅在 Vicuna-13B 上验证，未探索更强 LLM（如更大规模模型）是否能进一步提升可解释性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Echo: Towards Advanced Audio Comprehension via Audio-Interleaved Reasoning
 description: >-
@@ -138,7 +138,7 @@ Echo 以 7B 开源模型超越 GPT-4o-Audio (+5.9%) 和 Gemini-2.0-Flash (+2.1%)
 3. 推理格式适配的工程设计简洁有效——仅需在 `<seg>` 标签处暂停插入音频 token
 4. 一致性奖励 $\mathcal{R}_\text{consist}$ 和片段奖励 $\mathcal{R}_\text{seg}$ 的设计巧妙，有效引导模型学会有意义的重听行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前重听实现较简单，可探索慢放、频段隔离等更高级的音频操作
 2. EAQA-SFT 的 CoT 标注自动生成自固定时间元数据，缺乏人工启发式

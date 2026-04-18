@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graph Out-of-Distribution Detection via Test-Time Calibration with Dual Dynamic Dictionaries
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**：预训练 GNN 缺乏对分布边界的建模能力，导致 ID/OOD 分数重叠严重，尤其在边界附近的模糊样本上表现差。
 
-**本文要解决什么**：如何在测试阶段（不修改预训练模型、不引入辅助OOD数据）建模 ID/OOD 分布边界并有效校准 OOD 分数？
+**本文目标**：如何在测试阶段（不修改预训练模型、不引入辅助OOD数据）建模 ID/OOD 分布边界并有效校准 OOD 分数？
 
 **切入角度**：从直觉出发——如果一个样本比 OOD 分布中最偏向 ID 的样本更偏 OOD，那它应被判为 OOD，反之亦然。因此关键在于准确捕获边界处最具辨别力的样本表示。
 
@@ -57,7 +57,7 @@ BaCa（Boundary-aware Calibration）的流程：
 
 **模块一：边界感知的潜在模式建模**
 
-- **做什么**：基于初始判断划分子组 → 估计每组的 graphon → graphon mixup 生成带有辨别性拓扑的合成图
+- **功能**：基于初始判断划分子组 → 估计每组的 graphon → graphon mixup 生成带有辨别性拓扑的合成图
 - **核心思路**：
     - Graphon 是对称可测函数 $W: \Omega^2 \to [0,1]$，描述了节点间边存在的概率，是图序列的极限对象
     - 使用 USVT 估计器将 graphon 近似为阶梯函数 $W \in [0,1]^{N \times N}$
@@ -71,7 +71,7 @@ BaCa（Boundary-aware Calibration）的流程：
 
 **模块二：双动态字典（优先队列）**
 
-- **做什么**：维护固定长度的 ID 字典和 OOD 字典，用优先队列实现，持续收集边界附近最具辨别性的样本特征
+- **功能**：维护固定长度的 ID 字典和 OOD 字典，用优先队列实现，持续收集边界附近最具辨别性的样本特征
 - **核心思路**：
     - OOD 字典 $\mathcal{K}^{ood}_l$：收集 OOD 分数分布的左尾（最接近 ID 边界的 OOD 样本）——队列前端始终是最靠近边界的 OOD 样本
     - ID 字典 $\mathcal{K}^{id}_l$：收集 ID 分数分布的右尾（最接近 OOD 的 ID 样本）
@@ -81,7 +81,7 @@ BaCa（Boundary-aware Calibration）的流程：
 
 **模块三：注意力校准**
 
-- **做什么**：对每个测试样本，通过注意力机制计算其与 ID/OOD 字典中 Top-$\mathbb{K}$ 条目的相似度，输出校准分数
+- **功能**：对每个测试样本，通过注意力机制计算其与 ID/OOD 字典中 Top-$\mathbb{K}$ 条目的相似度，输出校准分数
 - **核心思路**：
     - 查询 $q = f(G)$，键/值来自字典中 Top-$\mathbb{K}$ 最相关条目
     - OOD 字典注意力输出 $S_{out}(G) = \text{ATTN}_{out}(Q,K,V)$
@@ -135,7 +135,7 @@ BaCa 在全部 10 个数据集上超越 GOODAT 和所有其他基线（包括 gr
 - 完全不依赖辅助 OOD 数据和模型微调，实用性强
 - 计算复杂度分析完善：字典操作 $O(d \cdot l)$，队列更新 $O(\log l)$，注意力 $O(2\mathbb{K}d)$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 初始分组质量依赖预训练模型的 $S_{Pre}$——如果初始判断极差（如 ID/OOD 完全混杂），后续校准可能受限
 - Graphon USVT 估计对稀疏图的效果可能不佳

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PULSE: Practical Evaluation Scenarios for Large Multimodal Model Unlearning
 description: >-
@@ -111,7 +111,7 @@ PULSE 在传统"先微调、再遗忘"的评估管线之上，增加了两个新
 - **多模态 vs. 纯文本的分析**：揭示了 LMM 遗忘中一个被忽视的关键问题——遗忘多模态任务≠遗忘纯文本任务中的相同知识
 - **评估设计的实际性**：基于模型实际行为选择遗忘目标（而非依赖预训练数据访问），更贴近实际部署场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅评估了 LLaVA-v1.5-13B 一个模型，其他 LMM（如 LLaVA-NeXT、InternVL 等）的表现可能不同
 - 仅测试了三种较基础的遗忘方法（GA、GA+KLR、NPO），未覆盖更先进的方法

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Convex Markov Games: A New Frontier for Multi-Agent Reinforcement Learning
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}^{\tau}(\pi) = \sum_i \|\Pi_{T\mathcal{U}_i}(\nabla_{\mu_i}^{i\tau}
 4. **实验发现**: 在 IPD 中发现的互惠策略与 tit-for-tat 结构相似但更稳健（exploitability 极低）；在仓库场景中，凸安全惩罚有效降低危险行为频率。
 5. **可微端到端**: 损失函数、投影算子、占用度量映射均可微分，支持自动微分优化。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **中心化 + 需已知动态**: 当前算法假设完全了解转移概率，无法直接应用于 model-free / 去中心化场景。
 2. **投影算子无偏估计困难**: 与 NFG 不同，cMG 的投影算子 $\Pi_{T\mathcal{U}_i}$ 依赖于其他玩家策略，难以构造无偏估计器。

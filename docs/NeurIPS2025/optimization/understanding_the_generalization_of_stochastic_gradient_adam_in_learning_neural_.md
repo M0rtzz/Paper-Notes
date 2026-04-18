@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding the Generalization of Stochastic Gradient Adam in Learning Neural Networks
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **Adam vs AdamW 调参敏感性的理论基础**：$\lambda$ 上界差异有精确数学刻画
 - **对实践的直接指导**：使用 Adam 时要仔细调 $\lambda$（上界更紧），或选用 AdamW 获得更宽的调参空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **简化数据模型**：1-sparse 信号 + $s$-sparse 噪声，与真实图像差距大
 - **两层 CNN 限制**：未扩展到 Transformer 等现代架构
 - **激活函数 $q \geq 3$**：排除了 ReLU ($q = 1$) 和 GELU

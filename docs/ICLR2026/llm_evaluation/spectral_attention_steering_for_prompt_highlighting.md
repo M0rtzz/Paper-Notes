@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spectral Attention Steering for Prompt Highlighting
 description: >-
@@ -152,7 +152,7 @@ SEKA 几乎零开销，PASTA 内存翻倍、延迟翻三倍。
 5. **AdaSEKA 的自适应路由机制**减少了跨任务/跨模型的超参调节需求，4 个专家即插即用
 6. **Lost-in-the-Middle 的 U-shape 反转**是一个有趣的新发现，展示了 attention steering 对位置敏感性的精准控制能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **离线阶段依赖合成数据质量**：对比 prompt triplet 的构建策略会影响学到的投影质量，泛化到新领域需要重新构建
 2. **超参数仍需调节**：虽然 AdaSEKA 减少了部分调参，但 $g^+, g^-, \gamma, \delta_{\min}$ 仍需 grid search，且不同模型/任务的最优值不同

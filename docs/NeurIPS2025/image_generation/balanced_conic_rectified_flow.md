@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Balanced Conic Rectified Flow
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：Reflow 旨在拉直轨迹以支持少步生成，但其依赖的 fake pair 监督本身会引入分布漂移（distribution drift），导致生成质量在 full-step 下反而下降，形成"拉直轨迹"与"保持分布一致性"之间的矛盾。
 
-**本文要解决什么？**：揭示 reflow 引起的分布漂移现象，并设计一种新的 reflow 策略使模型在拉直轨迹的同时保持对真实数据分布的忠实度。
+**本文目标**：揭示 reflow 引起的分布漂移现象，并设计一种新的 reflow 策略使模型在拉直轨迹的同时保持对真实数据分布的忠实度。
 
 **切入角度**：通过真实图像的重建误差（reconstruction error）定量揭示漂移——fake 图像的重建误差远低于 real 图像，说明模型过拟合了 fake 分布而偏离了 real 分布。进而提出用真实图像反演噪声 + Slerp 扰动构建"锥形"监督作为纠偏手段。
 
-**核心 idea 一句话**：用真实图像的反演噪声及其 Slerp 邻域构成锥形监督轨迹，交替训练 real pair 和 fake pair，既纠正分布漂移又保证轨迹平直。
+**核心 idea**：用真实图像的反演噪声及其 Slerp 邻域构成锥形监督轨迹，交替训练 real pair 和 fake pair，既纠正分布漂移又保证轨迹平直。
 
 ## 方法详解
 
@@ -154,7 +154,7 @@ Slerp vs Lerp 的噪声对比：
 - **IVD 指标的提出**：除了曲率外引入 Initial Velocity Delta 评估初始速度准确性，更直接关联 1-step 生成质量
 - **Slerp 噪声调度自适应确定**：$\zeta^{\max}$ 基于 real/fake 重建误差差异自动选择，避免手动调参
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了无条件生成**：未在文本条件生成（如 SD3/Flux）上验证，这些模型通常只用 1-rectified flow，方法的适用性需进一步确认
 2. **ImageNet 上 real pair 数量不足**：60K real pair 对 ImageNet 的类别多样性覆盖有限，增加 real pair 可能进一步提升效果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BEV-SLD: Self-Supervised Scene Landmark Detection for Global Localization with LiDAR Bird's-Eye View Images
 description: >-
@@ -136,7 +136,7 @@ BEV-SLD在全部四个数据集上达到最高success rate，尤其在Wild-Place
 - **自监督训练**：无需标注地标，仅需位姿信息，大幅降低部署门槛
 - **20MB地图表示**：对比点云地图(数GB)，压缩比惊人，非常适合资源受限的机器人平台
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅估计3DoF位姿(x, y, azimuth)**：无法处理多楼层等需要高度信息的场景
 2. **依赖BEV投影质量**：LiDAR遮挡、稀疏区域的BEV密度图质量会影响地标检测

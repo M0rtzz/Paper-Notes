@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pruning as a Cooperative Game: Surrogate-Assisted Layer Contribution Estimation for Large Language Models
 description: >-
@@ -92,7 +92,7 @@ tags:
 - **实用性强**：代理网络训练开销很小，且一旦训练好即可快速评估大量掩码组合
 - **层重要性的动态性**：Table 1清楚展示了静态排名的局限性——最不重要的两层组合并非最优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 代理网络的泛化能力依赖于阶段一采样的多样性和数量
 - 当前仅考虑PPL作为效用函数，未考虑下游任务特定的性能指标

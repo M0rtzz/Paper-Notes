@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Enhanced Immersion and Agency for LLM-based Interactive Drama
 description: >-
@@ -108,7 +108,7 @@ LLM交互式戏剧是一种新型的AI对话应用场景：玩家扮演故事中
 - **人类评估为主**：拒绝使用LLM评估器，坚持由受过人文训练的标注者进行评估，因为文学作品的评价需要准确性和共情。
 - **混合架构的实用性**：根据场景特征动态选择架构，在效率和质量间取得良好平衡。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖GPT-4o**：所有Agent基于同一闭源模型，成本高且不可控。
 2. **效率问题**：Playwriting-guided Generation比vanilla prompting慢10-12倍。

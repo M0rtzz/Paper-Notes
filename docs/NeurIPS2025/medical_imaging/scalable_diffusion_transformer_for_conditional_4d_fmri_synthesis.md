@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Diffusion Transformer for Conditional 4D fMRI Synthesis
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{simple}} = \mathbb{E}_{z_0, \epsilon, t, c} \left[ \| \epsi
 3. **四条设计原则的总结**：(1)足够的模型容量+可扩展骨干，(2)有限数据下适当的归纳偏置，(3)强条件注入捕获任务信号，(4)3D VQ-GAN可作为4D压缩的实用替代
 4. **缩放定律的发现**：生成神经影像可能与视觉/语言模型类似受益于缩放，暗示fMRI生成基础模型的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据仅来自HCP一个数据集，跨站点泛化性未验证
 - 每个范式仅选择一个代表性条件，未覆盖多条件交互

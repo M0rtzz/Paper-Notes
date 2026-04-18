@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MATCH: Multi-faceted Adaptive Topo-Consistency for Semi-Supervised Histopathology Segmentation
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{sup}} + \lambda_{\text{cons}}\
 - 双层一致性（扰动维度+时间维度）互补，覆盖了不同来源的拓扑不确定性
 - 不确定性估计的自然涌现是一个有价值的附带收益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要关注0-D拓扑特征（连通分量），1-D特征（环/空洞）仅在Roads数据集上初步验证
 - 匹配算法依赖持久同调的计算，对于大规模高分辨率切片的计算开销可能较大

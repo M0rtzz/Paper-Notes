@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decomposed Vector-Quantized Variational Autoencoder for Human Grasp Generation
 description: >-
@@ -136,7 +136,7 @@ DVQ-VAE 基于编码器-解码器范式，核心创新在于：
 3. **先姿态后位置的合理设计**：姿态参数多（55维）且更基础，位置参数少（6维）且依赖姿态，序贯生成符合直觉
 4. **提出质量指标 Quality Index**：平衡穿透和位移，避免单一指标的误导性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对几何形状复杂的物体（如不规则造型）可能生成接触不充分的抓取
 - 可考虑使用 SDF (Signed Distance Field) 增强物体表示

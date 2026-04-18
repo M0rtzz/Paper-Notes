@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stylos: Multi-View 3D Stylization with Single-Forward Gaussian Splatting
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L}_{\text{stage2}} = \mathcal{L}_{\text{rec}} + \lambda_{\text{style}
 3. **可扩展性强**：框架天然支持1到数百视角，仅调整批大小即可
 4. **基于VGGT的强几何基础**：利用预训练3D基础模型确保高质量几何
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 超过32视角时质量下降，可能需要更大训练批次覆盖
 - 仅评估了静态场景，动态场景风格化是未来方向

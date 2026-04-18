@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer
 description: >-
@@ -139,7 +139,7 @@ CRNet消融（SRD）：
 - **顺序处理的合理性**：先恢复亮度提供结构参考，再基于亮度的相似性进行颜色匹配，符合直觉
 - **轻量级颜色编码器**：ConvNext-v2 atto仅2M参数但提供了丰富的颜色先验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要阴影掩码作为输入（虽然提出了掩码精炼网络但增加了复杂度）
 - 总参数量23.3M虽不算大但仍高于RASM的5.2M

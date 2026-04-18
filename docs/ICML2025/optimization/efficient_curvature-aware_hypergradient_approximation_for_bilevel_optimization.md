@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Curvature-Aware Hypergradient Approximation for Bilevel Optimization
 description: >-
@@ -122,7 +122,7 @@ $$\min_{0 \leq k \leq K-1} \|\nabla\Phi(x^k)\|^2 \leq O(\kappa^3 / K)$$
 4. **T=1 即有效**：内层仅需 1 步近似 Newton 方向就能超越 10 步 GD，实际部署成本低
 5. **框架通用性**：NBO 可轻松结合 CG、方差缩减（SAGA）、动量（MA）等技术
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **需要初始点在 Newton 局部收敛域内**（BOX 1/BOX 2 条件），实际中可能需要额外预热步骤
 2. **随机设定下改善有限**：NSBO-SGD 仅改善 $\log\kappa$ 倍，不如确定性设定显著
 3. **下层需强凸**：虽然文中讨论了通过聚合函数扩展到凸情形（BAMM+NBO），但理论保证仅限强凸

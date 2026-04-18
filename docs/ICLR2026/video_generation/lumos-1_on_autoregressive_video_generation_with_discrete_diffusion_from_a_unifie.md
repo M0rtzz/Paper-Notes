@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lumos-1: On Autoregressive Video Generation with Discrete Diffusion from a Unified Model Perspective
 description: >-
@@ -117,7 +117,7 @@ Lumos-1 基于标准 Llama 架构，使用 Cosmos 离散 tokenizer（$8 \times 8
 4. **极低训练资源**：48 GPU 训练达到竞争力水平，验证了设计效率
 5. **纯 LLM 架构**：无需外部文本编码器，标准 Llama 架构直接处理多模态 token
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 使用离散 tokenizer（Cosmos），重建质量不及连续 tokenizer，限制了生成细节
 2. 训练数据规模（60M 图 + 10M 视频）远小于商业模型，性能差距部分来自数据

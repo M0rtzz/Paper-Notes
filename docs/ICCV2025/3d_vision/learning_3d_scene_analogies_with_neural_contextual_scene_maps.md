@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning 3D Scene Analogies with Neural Contextual Scene Maps
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L} = \sum_{\mathbf{q},\mathbf{q^+}} -\log \frac{\exp(D_\Phi(\mathbf{q
 - **开放空间推理**：不局限于物体表面，能在空间空白区域建立对应——这对轨迹迁移等应用至关重要
 - **实用性强**：长轨迹迁移结合A*路径规划避免碰撞，物体放置迁移支持AR/VR协同
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅输出单一映射，无法处理多模态/对称情况（如4把椅子围桌子的多种合理映射）
 - 物体位置交换时仿射初始化可能失败（如厕所和浴缸位置互换）

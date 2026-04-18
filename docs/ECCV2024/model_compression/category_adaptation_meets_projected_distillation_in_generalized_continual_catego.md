@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Category Adaptation Meets Projected Distillation in Generalized Continual Category Discovery
 description: >-
@@ -127,7 +127,7 @@ $$\mathcal{L}_{PA} = \sum_{i \in B} \| \mathcal{F}^t(x_i) - \psi^{(t-1) \to t}(\
 4. **广泛适用性**：方法同时适用于 GCCD 和传统 CIL 场景
 5. **设计简洁**：只需存储每个类别一个中心向量，比存储特征或样例高效得多
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **DomainNet 上新类别精度不佳**：GCD+FD 在 DomainNet 上 Novel 准确率（39.7%）远超 CAMP（29.7%），说明在域偏移大的场景下投影蒸馏可能过度放松约束
 2. **类别数估计依赖 elbow method**：这是一个启发式方法，在类别数差异大时可能不准确

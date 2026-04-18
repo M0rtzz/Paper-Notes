@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Behaviour Policy Optimization: Provably Lower Variance Return Estimates for Off-Policy Reinforcement Learning
 description: >-
@@ -110,7 +110,7 @@ BPO 在基础策略梯度算法之上增加三个辅助模块：
 4. **即插即用**：BPO 作为附加模块可以叠加到现有策略梯度算法上，不修改原算法的核心更新逻辑
 5. **连续动作支持**：为连续动作空间设计了替代损失函数并给出理论证明（Theorem 4）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销增大**：需要额外训练两个 Q 网络和一个行为策略网络，增加了计算和超参数调优复杂度
 2. **超参数敏感**：截断参数 $\bar{c}, \bar{\rho}$ 的选择对性能影响较大，不同环境的最优配置不同

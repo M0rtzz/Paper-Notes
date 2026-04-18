@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAM-DAQ: Segment Anything Model with Depth-guided Adaptive Queries for RGB-D Video Salient Object Detection
 description: >-
@@ -163,7 +163,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{pred} + \alpha \cdot \mathcal{L}_{inter}$$
 3. **极高的训练效率**：单卡 RTX-3090 仅需 3 小时，这对实际部署非常友好
 4. **仅用稀疏嵌入优于密集嵌入**的发现有深度：SAM 预训练时的稀疏提示范式决定了微调时也应保持结构一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 RGB-D VSOD 上验证，未扩展到多目标视频分割或其他多模态任务
 - 视频级查询数量固定，无法自适应视频长度或场景复杂度

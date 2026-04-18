@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Hands in 3D Whole-Body Pose Estimation with Conditional Hands Modulator
 description: >-
@@ -145,7 +145,7 @@ Hand4Whole++包含四个组件：
 3. **对"为什么不直接组合"的深入分析**：清晰展示了朴素组合的失败模式和原因
 4. **交叉注意力仅在双手检测时启用**：灵活处理单手/双手场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 手部数据集缺少全身标注，非手关节仅有弱监督，可能与图像不对齐
 2. 依赖两个预训练模型导致运行时间增加（总计~0.1s/帧，其中WiLoR占50%）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CL-LoRA: Continual Low-Rank Adaptation for Rehearsal-Free Class-Incremental Learning
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：设计双适配器架构，前半 Transformer 层用共享 LoRA 学跨任务知识，后半层用任务特定 LoRA 学特有特征。
 
-**核心 idea 一句话**：共享 LoRA（带知识蒸馏+梯度重分配） + 特定 LoRA（带块级权重+正交约束） = 高效持续学习。
+**核心 idea**：共享 LoRA（带知识蒸馏+梯度重分配） + 特定 LoRA（带块级权重+正交约束） = 高效持续学习。
 
 ## 方法详解
 

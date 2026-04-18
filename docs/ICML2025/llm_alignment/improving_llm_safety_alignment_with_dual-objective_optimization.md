@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving LLM Safety Alignment with Dual-Objective Optimization
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L}_{\text{Total}} = \alpha\mathcal{L}_{\text{Align}} + (1-\alpha)\mat
 - **t-SNE可视化**直观展示了W-DOOR实现了"更深层"的对齐——安全/有害表征分离更明显
 - Prefilling ASR可作为整体鲁棒性的可靠代理指标，简化评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多轮攻击防御效果仍有限（所有方法ASR都偏高），可能需要多轮/长上下文训练数据
 - 数据增强中均匀采样前缀长度 $k$ 可能导致过度拒绝（部分良性前缀被错误学习为有害信号）
 - token级权重参数 $\tau$ 虽不敏感但缺乏原则性选择方法

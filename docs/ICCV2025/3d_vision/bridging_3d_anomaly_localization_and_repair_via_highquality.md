@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PASDF: Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation
 description: >-
@@ -86,7 +86,7 @@ O-AUROC比前SOTA提升5%
 - **姿态对齐的重要性**: PAM模块对不同基线方法都有大幅提升(尤其PatchCore +24.6%)，说明姿态归一化是3D异常检测的关键预处理
 - **位置编码对P-AUROC影响巨大**: 去掉位置编码P-AUROC从89.7%降至78.3%，说明空间频率信息对细粒度异常定位至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - PAM在初始姿态差距大时计算昂贵
 - 当前假设单一正常类，未扩展到多类检测
 - 对点云质量(噪声/离群点)敏感

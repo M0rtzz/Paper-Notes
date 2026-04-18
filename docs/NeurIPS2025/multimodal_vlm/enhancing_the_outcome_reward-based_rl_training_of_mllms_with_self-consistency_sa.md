@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Outcome Reward-Based RL Training of MLLMs with Self-Consistency Sampling
 description: >-
@@ -154,7 +154,7 @@ SCS 与多种 RL 算法兼容：RLOO、GRPO、REINFORCE++、REINFORCE++-baseline
 - 理论推导清晰：从树结构建模到一致性奖励的数学推导逻辑严谨
 - 截断-重采样的思路妙在利用了推理轨迹的"因果连贯性" — 正确推理的前缀应能一致地导向正确结论
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了多选题格式，开放式问答场景的效果未知
 - 训练数据规模较小（约 16k 样本），更大规模数据下的表现待验证

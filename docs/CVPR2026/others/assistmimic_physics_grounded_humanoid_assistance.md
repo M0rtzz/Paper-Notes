@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL
 description: >-
@@ -90,7 +90,7 @@ tags:
 
 - 首次实现物理仿真中接触式辅助行为的多智能体模仿学习，填补了从"无接触社交"到"力交换辅助"的重要空白。通过降低被辅助者物理参数来isolate辅助贡献的实验设计非常巧妙。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 手部灵巧性不足是主要失败模式，需要更精细的手部建模
 - 策略依赖特权物理状态信息，缺乏视觉观测

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Answer When Needed, Forget When Not: Language Models Pretend to Forget via In-Context Knowledge Unlearning
 description: >-
@@ -127,7 +127,7 @@ LoRA 的优势在于高效适配模型行为而不过拟合，保留原始知识
 - 遗忘 token 的设计思路可推广到其他条件控制需求——情感控制 token、风格控制 token、安全级别控制 token 等
 - 无幻觉设计（输出 "forgot" 而非错误答案）比 ICUL 的标签翻转方案更安全可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **遗忘 token 可被绕过**：如果攻击者知道遗忘机制，可能直接提问而不附带遗忘 token，此时模型仍会回答——需要外层访问控制配合
 - **"假装遗忘"的安全隐患**：中间层仍保留正确答案，攻击者可通过探针攻击（probing attack）或提取中间层表示来恢复被"遗忘"的知识

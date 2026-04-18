@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tight Bounds On the Distortion of Randomized and Deterministic Distributed Voting
 description: >-
@@ -154,7 +154,7 @@ $$\text{Distortion}(f) = \sup_{\text{instances}} \frac{\text{SC}(f(\text{instanc
 3. **证明技术多样**：上界（构造性）和下界（对抗性）分析相互配合
 4. **统一处理框架**：同一论文系统性处理所有目标和机制类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **确定性 $\text{avg-avg}$ 和 $\text{avg-max}$ 仍有 gap**：[5, 7] 区间未收紧
 2. **随机两阶段的 $\text{avg-avg}$ 近紧但未紧**：$[3-2/n, 3-2/(kn^*)]$ 间隔取决于参数

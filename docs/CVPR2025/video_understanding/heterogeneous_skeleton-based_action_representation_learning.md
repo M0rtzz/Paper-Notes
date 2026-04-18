@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Heterogeneous Skeleton-Based Action Representation Learning
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **自监督 + 异构**：自监督范式天然适合异构数据（无需标签对齐），且习得的表示迁移性强
 - 不同骨架对不同动作有偏好（25-joint→手部动作，17-joint→面部动作），统一模型能取长补短
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅支持最多 2 人的骨架数据，对多人场景适用性有限
 - 仅验证了 25-joint 和 17-joint 两种典型骨架，更多异构类型（如 SMPL、手部骨架）尚未探索

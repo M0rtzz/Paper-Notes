@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Surf2CT: Cascaded 3D Flow Matching Models for Torso 3D CT Synthesis from Skin Surface
 description: >-
@@ -124,7 +124,7 @@ $$\frac{d\mathbf{x}(t)}{dt} = v_\theta^{(1)}(t, \mathbf{x}(t), f_{\text{partial}
 - **临床场景想象空间大**：家庭 3D 扫描 → 虚拟 CT → 健康监测，以及手术规划的无辐射数字孪生
 - **潜在异常检测**：合成 CT 与实际 CT 的偏差可能反映隐藏的病理异常
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据以男性癌症患者为主，性别和病种偏差严重
 - 个体器官体积预测的 R² 较低（特别是肺和肾），说明外部体形对内部器官的约束力有限

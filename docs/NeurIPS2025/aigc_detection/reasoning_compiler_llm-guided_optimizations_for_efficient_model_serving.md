@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning Compiler: LLM-Guided Optimizations for Efficient Model Serving
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：LLM 天然擅长上下文推理——给它当前代码状态、变换历史、性能反馈，让它推理下一步应该做什么变换。
 
-**核心idea一句话**：LLM 提供上下文感知的变换提案 + MCTS 提供结构化搜索 = 高采样效率的编译器优化。
+**核心 idea**：LLM 提供上下文感知的变换提案 + MCTS 提供结构化搜索 = 高采样效率的编译器优化。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ tags:
 - **编译优化的 MDP 建模**：将变换序列建模为 MDP，让 MCTS 的理论保证自动适用
 - **跨硬件泛化**：同一框架在 ARM、x86、Apple Silicon 上均有效，不需要硬件特定调整
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 LLM API 调用，对于大规模部署成本可能较高
 - GPT-4o mini 的代码理解能力有限，更强的 LLM 可能进一步提升
 - rollout 中的随机变换序列可能不够高效

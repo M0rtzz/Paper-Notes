@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MaskGaussian: Adaptive 3D Gaussian Representation from Probabilistic Masks
 description: >-
@@ -100,7 +100,7 @@ MaskGaussian 为每个高斯维护一个存在概率分布（2 个可学习 mask
 - **mask 应用位置的核心洞察**：mask 不应乘在高斯属性上（否则断梯度），而应在光栅化的 blending 过程中应用——这个看似微小的设计差异导致了质的变化
 - **与 Vision Transformer 动态 pruning 的类比**：借鉴 ViT 中 token pruning 让 active 和 inactive token 同时收到梯度的思路，是跨领域知识迁移的好例子
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时间略长于 3DGS（多了 mask 采样和 masked-rasterization 的开销）
 - $\lambda_m$ 的设置对最终剪枝率和质量影响较大，需要针对不同场景/需求调整

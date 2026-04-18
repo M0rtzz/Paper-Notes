@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Barec: A Large and Balanced Corpus for Fine-grained Arabic Readability Assessment
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **多粒度对齐设计**：19 级可无损折叠到 7/5/3 级，一个语料库服务多种研究需求
 - **序数分类的系统实验**：5 种损失函数的全面对比为序数分类任务提供了有价值的参考
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅句子级评估**：忽略了上下文连贯性对可读性的影响，文档级评估需要另外建模
 - **标注成本极高**：92.6K 句标注（含冗余和 IAA），依赖 5 名有 Taha/Arabi21 经验的专家

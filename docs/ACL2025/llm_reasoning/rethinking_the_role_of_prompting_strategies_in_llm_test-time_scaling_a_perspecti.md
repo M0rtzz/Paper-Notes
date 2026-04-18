@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking the Role of Prompting Strategies in LLM Test-Time Scaling: A Perspective of Probability Theory
 description: >-
@@ -32,14 +32,14 @@ tags:
 
 **核心矛盾**：复杂策略（ToT、MAD 等）虽然单次推理更准，但每次推理成本也更高。在相同计算预算下，它们能比简单 CoT 多用几倍的 token？
 
-**本文要解决什么？**
+**本文目标**
    - 哪种 prompting 策略在 test-time scaling 下表现最好？
    - 为什么会出现这种现象？有没有理论解释？
    - 能否高效预测不同策略在不同采样次数下的性能？
 
 **切入角度**：从概率论视角出发，将 majority voting 建模为多项分布的 mode 选择问题，分析"简单题"和"难题"的比例如何决定不同策略的 scaling 曲线。
 
-**核心 idea 一句话**：简单 CoT 在 test-time scaling 中持续胜出，因为它有更多"简单题"（正确答案概率最高）且错误答案的分布更分散。
+**核心 idea**：简单 CoT 在 test-time scaling 中持续胜出，因为它有更多"简单题"（正确答案概率最高）且错误答案的分布更分散。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ tags:
 - **概率论分析优雅而实用**：将 majority voting 建模为多项分布的 mode 问题
 - **$O(1)$ 预测方法**：可在实际部署中快速选择最优策略和采样次数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅考虑 majority voting**：未分析 Best-of-N、Process Reward Model 等方法
 - **答案提取依赖正则**：对开放式生成任务难以直接应用

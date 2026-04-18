@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embedding Safety into RL: A New Take on Trust Region Methods
 description: >-
@@ -155,7 +155,7 @@ $$\bar{H}_C(\theta_k) = G_K(\theta_k) + \beta \phi''(b - V_c(\theta)) \nabla_\th
 3. **与 CPO 的优雅联系**：通过 $\beta$ 参数平滑插值于 CPO（$\beta=0$）和完全保守更新（$\beta \to \infty$）之间，提供了一个连续的安全-性能控制旋钮
 4. **实现极简**：相比 TRPO 仅多一个秩一矩阵修正项，相比 CPO 反而简化了内层优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **散度估计的有限样本特性未分析**：代理散度依赖代价优势和值函数估计的准确性，在样本不足时可能导致约束违反
 2. **仅处理平均代价约束**：CMDP 框架限制约束为轨迹平均代价，无法直接建模逐状态或逐轨迹的安全约束

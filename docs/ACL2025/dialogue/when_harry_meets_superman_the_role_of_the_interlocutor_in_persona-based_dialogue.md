@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Harry Meets Superman: The Role of The Interlocutor in Persona-Based Dialogue Generation
 description: >-
@@ -132,7 +132,7 @@ tags:
 - **对话质量 vs 说话人差异**：清晰说明更重要的是"我在对谁说话"而非"我在说什么话题"，这符合社会语言学的直觉
 - **Non-PRODIGy角色设计**：通过引入全新创建的角色来控制数据污染效应，实验设计严谨
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一模型限制**：仅使用Llama 3.1 8B Instruct，未跨模型系列验证，其他模型可能表现不同
 2. **评估为英语场景**：基于西方电影角色和英语对话，不同文化/语言背景下的角色适应可能存在差异

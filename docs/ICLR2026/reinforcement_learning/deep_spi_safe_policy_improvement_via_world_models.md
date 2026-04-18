@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep SPI: Safe Policy Improvement via World Models
 description: >-
@@ -115,7 +115,7 @@ $$|V^{\bar{\pi}}(s_1) - V^{\bar{\pi}}(s_2)| \leq K_V \cdot \bar{d}(\phi(s_1), \p
 3. **嵌入式辅助损失**: 将模型损失嵌入advantage而非独立优化，防止表示更新推动策略出界——相比DeepMDP的独立辅助损失更原则性
 4. **PPO的理论根基**: 证明PPO的clip机制实质上是邻域约束的松弛版本，为其成功提供了SPI视角的解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 聚合结果中与PPO/ DeepMDP的差异需要仔细看置信区间，在部分单独环境上可能无显著差异
 - Lipschitz约束需额外架构设计（GroupSort网络），增加了实现复杂度

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Advancing Safe Mechanical Ventilation Using Offline RL With Hybrid Actions and Clinically Aligned Rewards
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **从2-3个参数扩展到6个**的实际意义大：以往工作受限于动作空间爆炸只能优化少量参数
 - 整套系统与临床专家（欧美多家医院）密切合作，Delphi共识选参数，部署导向明确
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 离线数据本身包含不安全动作时，约束到数据分布仍可能推荐不安全操作 → 未来需结合通气指南做硬约束
 - 数据来自公开数据库，噪声大、分辨率有限，需要高质量前瞻性数据
 - 奖励函数在cohort级别定义，可能无法捕获特定亚群或个体需求

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Matters in Evaluating Book-Length Stories? A Systematic Study of Long Story Evaluation
 description: >-
@@ -126,7 +126,7 @@ $$-\log P(r_{i \leq m}, R, S' | X_{\text{Instruct, Metadata, Sum, Excerpts}}, a_
 3. **摘要复用的效率策略**：一次高质量摘要可服务于多次评估，且可在写作早期阶段提供预评价——这种面向写作者的"早期反馈"应用场景很有实用价值。
 4. **大规模评测基准**：600本未污染的新书、340K条结构化评论，为长篇故事评估提供了首个大规模基准。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估方式基于评分生成，本质上不一致性较高；成对比较可能更稳定但计算成本更高
 - 当前评估偏重通用评价，未考虑个性化偏好（不同读者对同一本书可能有非常不同的评价）

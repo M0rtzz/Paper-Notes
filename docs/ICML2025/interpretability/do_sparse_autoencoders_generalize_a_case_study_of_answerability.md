@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do Sparse Autoencoders Generalize? A Case Study of Answerability
 description: >-
@@ -157,7 +157,7 @@ $$\mathcal{L} = \|\mathbf{x} - \hat{\mathbf{x}}\|_2^2 + \lambda \|\mathbf{f}\|_1
 - **概念粒度问题**：提出了一个重要的开放问题——"可回答性"在模型内部可能是多个细粒度机制的组合，而非单一可解耦特征
 - **对 AI Safety 的警示**：如果连可回答性这样相对简单的概念都无法稳定泛化，那么用 SAE 来检测欺骗、偏见等更复杂行为的可靠性存疑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估 Gemma 2 一个模型**：结论是否适用于 Llama、GPT 等其他架构未知
 2. **SAE 宽度固定**：仅使用 131k 宽度，未探索更大/更小字典对泛化的影响

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Words or Vision: Do Vision-Language Models Have Blind Faith in Text?
 description: >-
@@ -99,7 +99,7 @@ SFT使LLaVA的Corruption准确率从28.69%提升到71.25%，Macro提升12%。
 - **实用安全警示**：品牌识别任务直接说明了文本偏差的安全威胁——恶意HTML注入可绕过基于VLM的钓鱼检测
 - **低成本缓解方案**：仅1000个SFT样本+LoRA即可大幅改善，具有很高的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估仅限分类/简短答案任务，未涉及长文本生成场景
 - SFT虽有效但会略微降低base性能（LLaVA从79.45→77.48），如何做到零代价缓解尚需研究

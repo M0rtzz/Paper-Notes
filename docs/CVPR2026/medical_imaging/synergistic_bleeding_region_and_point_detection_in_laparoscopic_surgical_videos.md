@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synergistic Bleeding Region and Point Detection in Laparoscopic Surgical Videos
 description: >-
@@ -108,7 +108,7 @@ BlooDet 在 SurgBlood 上超越 13 个对比方法，IoU 提升 12.05%（vs SAM2
 - 双分支双向引导设计优雅——Mask 为 Point 提供空间约束，Point 为 Mask 提供精确 prompt
 - 巧妙利用背景光流（排除出血区域）补偿相机运动偏移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模偏小（95 个片段），泛化性有待验证
 - 仅在胆囊切除术上验证，需扩展到更多手术类型

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniVDiff: Omni Controllable Video Diffusion for Generation and Understanding
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L} = \sum_{m, m \notin Cond} \mathbb{E}_{x_m, t, \epsilon, m} [\|\eps
 - **灵活的任务适应性**：仅需 2K 步微调即可适配新模态/任务（如超分辨率），展现了极强的扩展性
 - **消除外部专家依赖**：端到端流水线减少了多模型部署的复杂性和不一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - dynamic degree 在文本条件生成中略低于 CogVideoX（49.69 vs 53.98），多模态联合训练可能轻微影响运动动态
 - 目前仅支持 4 种模态，扩展到更多模态（光流、法线、语义标签等）需要验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prompt-Based Safety Guidance Is Ineffective for Unlearned Text-to-Image Diffusion Models
 description: >-
@@ -100,7 +100,7 @@ tags:
 - **方法极度简洁**：只是一个嵌入的替换操作，不修改任何已有方法的结构，展现了"以毒攻毒"的巧妙思路
 - **可迁移性发现**：隐式概念嵌入在不同 checkpoint 间的迁移能力暗示遗忘模型中残留的概念表示具有一定程度的共享结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要为每个遗忘模型单独提取概念嵌入，无法做到完全即插即用
 - 需要有害图像数据集作为概念反演的输入，在实际部署中可能受限

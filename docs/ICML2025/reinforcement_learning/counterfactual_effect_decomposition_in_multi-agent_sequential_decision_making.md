@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Counterfactual Effect Decomposition in Multi-Agent Sequential Decision Making
 description: >-
@@ -152,7 +152,7 @@ $$\text{ICC}(S_k \to \Delta Y | \tau) = \text{Unc}^{<S_k} - \text{Unc}^{\leq S_k
 4. **LLM + RL 的实验设计**：Gridworld 中采用 LLM Planner + RL Actor 的架构，展示了框架在现代 AI 系统中的适用性
 5. **稀疏归因的实际价值**：r-SSE-ICC 的稀疏性意味着实践中只需推断少数关键状态的反事实值即可准确估计效应
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算复杂度**：ASE-SV 需要枚举智能体子集（$2^n$ 复杂度），r-SSE-ICC 需要逐状态计算条件方差，当智能体数量多或时间步长大时开销显著
 2. **噪声单调性假设**：虽然实验显示对假设违反具有鲁棒性，但在实际场景中该假设可能不成立，缺乏部分识别版本

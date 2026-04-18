@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Adjustment Sets for Nonparametric Estimation of Weighted Controlled Direct Effect
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：从半参数统计理论出发，推导 WCDE 在观测数据中的影响函数和效率界。
 
-**核心idea一句话**：WCDE 的最优调整集由中介-混杂交互结构唯一决定，且在某些 DAG 中 WCDE 与 CDE 在数值上不同。
+**核心 idea**：WCDE 的最优调整集由中介-混杂交互结构唯一决定，且在某些 DAG 中 WCDE 与 CDE 在数值上不同。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ $$\text{WCDE}(a, a') = \sum_m [E[Y \mid do(A=a, M=m)] - E[Y \mid do(A=a', M=m)]]
 - **ATE 与 WCDE 的本质差异**：最优调整集不同的根源在于中介-混杂路径
 - **公平性应用直接**：WCDE 隔离处理的直接效应，排除中介路径，是公平性评估的关键量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设无未测量混杂（no unmeasured confounding），在实践中可能不满足
 - 连续中介变量时需要核密度估计，高维时效率下降
 - 多中介变量场景的最优调整集可能组合爆炸

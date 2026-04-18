@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Maximum Coverage in Turnstile Streams with Applications to Fingerprinting Measures
 description: >-
@@ -96,7 +96,7 @@ $$\text{草图大小} = \tilde{O}(\gamma^{-2/(p-1)}), \quad \text{近似比} = (
 4. **从理论到应用的完整链条**：最大覆盖 → 子模最大化框架 → 频率矩草图 → 指纹识别，层层递进
 5. **实验速度提升显著**（210×），证明了理论算法的实际可用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 一般指纹识别的空间含 $k^3$ 因子，当 $k$ 较大时开销增大，能否降低对 $k$ 的依赖？
 - 近似比中的 $\varepsilon$ 精度与空间的 trade-off（$1/\varepsilon^3$）较陡，是否存在更优 sketch？

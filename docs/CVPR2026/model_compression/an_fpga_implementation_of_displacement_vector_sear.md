@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An FPGA Implementation of Displacement Vector Search for Intra Pattern Copy in JPEG XS
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：DV 搜索的高计算复杂度与 JPEG XS 低延迟要求之间的矛盾。小波系数按 IPC Group/Unit 分组存储，访问模式高度离散，传统存储方式导致控制复杂度高和带宽利用率低。
 
-**本文要解决什么？** 设计 DV 搜索的 FPGA 实现，使 IPC 能高效部署在硬件上。
+**本文目标** 设计 DV 搜索的 FPGA 实现，使 IPC 能高效部署在硬件上。
 
 **切入角度**：针对 IPC 特有的分组预测流程设计四级流水线和优化存储。
 
-**核心idea一句话**：通过按 IPC Group 对齐的存储组织和四级流水线 DV 比较架构，实现 JPEG XS IPC 的高效硬件部署。
+**核心 idea**：通过按 IPC Group 对齐的存储组织和四级流水线 DV 比较架构，实现 JPEG XS IPC 的高效硬件部署。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **首个 JPEG XS IPC 硬件实现**：填补了 JPEG XS 硬件加速的空白，为 ASIC 部署提供参考
 - **存储组织优化思路通用**：按计算模式而非数据原始布局组织存储的思想可迁移到其他小波/变换域编码工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅实现了 DV 搜索模块，完整 IPC 框架（模式选择、补偿等）尚未在硬件上验证
 - 目标平台 Artix-7 (XC7A35T) 较小，实际 ASIC 部署可能有不同权衡
 - 未与其他图像编码标准（如 HEVC SCC）的硬件实现做性能对比

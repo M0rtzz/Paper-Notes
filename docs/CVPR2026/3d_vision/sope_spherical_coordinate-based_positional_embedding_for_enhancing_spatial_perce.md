@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SoPE: Spherical Coordinate-Based Positional Embedding for Enhancing Spatial Perception of 3D LVLMs
 description: >-
@@ -146,7 +146,7 @@ SoPE 作为连接器级别的位置编码模块，以即插即用的方式替换
 3. **即插即用设计**：SoPE 作为 drop-in replacement 不改变模型架构，不引入可学习参数，实用性强。
 4. **完整的工程验证**：不仅有 benchmark 实验，还在真实机器人系统上进行了端到端部署验证（点云重建 → 场景理解 → 导航规划），展现了实际应用潜力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证 Qwen2.5-0.5B**：实验仅使用 0.5B 级别的 LLM，未验证在更大模型（7B/13B+）上是否同样有效，可扩展性存疑。
 2. **频率分配比例靠经验搜索**：最优比例 24:2:3:3 通过消融实验确定，缺乏理论指导。可否根据数据特性自适应分配？

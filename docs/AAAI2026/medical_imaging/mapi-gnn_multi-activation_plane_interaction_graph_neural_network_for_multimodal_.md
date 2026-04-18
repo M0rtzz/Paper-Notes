@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAPI-GNN: Multi-Activation Plane Interaction Graph Neural Network for Multimodal Medical Diagnosis
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L} = \lambda_{cls}\mathcal{L}_{cls} + \lambda_{rep}\mathcal{L}_{rep} 
 - **轻量可部署**：MFLOPs 级计算量 + 毫秒级推理，对临床实际部署友好
 - **跨任务验证**：在前列腺癌（同质 MRI）和冠心病（异质 CT+临床）两种截然不同的任务上均表现优秀，说明框架泛化性好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设所有模态完整，未处理缺失模态场景，临床中常见
 - 仅验证了两个任务，更广泛的疾病类型和数据模态（PET、病理、基因组）尚待验证

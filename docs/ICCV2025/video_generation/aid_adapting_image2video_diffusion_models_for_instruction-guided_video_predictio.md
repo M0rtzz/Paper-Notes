@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AID: Adapting Image2Video Diffusion Models for Instruction-guided Video Prediction
 description: >-
@@ -124,7 +124,7 @@ FVD改善幅度：SSv2上55.5%，Bridge上**91.2%**，Epic100上80.6%。
 - **极高的效率**：冻结UNet主体，仅训练适配器和条件注入模块，训练参数量和显存大幅减少
 - 双重classifier-free guidance提供帧条件和文本条件的独立控制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MLLM状态预测的质量依赖于LLaVA的能力，复杂场景可能产生不准确的状态描述
 - 仅在256×256分辨率下实验，高分辨率视频预测有待验证

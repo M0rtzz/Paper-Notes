@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Denoising as Path Planning: Training-Free Acceleration of Diffusion Models with DPCache
 description: >-
@@ -101,7 +101,7 @@ DPCache (K=13) 在3.54×加速下 ImageReward **超越全步基线** +0.028！
 - 在FLUX上 **加速后反而超过全步基线** 这一结果说明：跳过某些步不仅不损害质量，反而可能因避免误差累积而提升效果
 - 方法与预测器解耦的设计使其成为通用加速框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 校准阶段需要完整运行一次扩散过程，增加预处理时间
 - PACT构建的内存开销为 $O(T^3)$，当步数 $T$ 很大时可能成为瓶颈

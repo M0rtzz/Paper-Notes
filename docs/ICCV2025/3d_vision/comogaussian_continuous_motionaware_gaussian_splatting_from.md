@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMoGaussian: Continuous Motion-Aware Gaussian Splatting from Motion-Blurred Images
 description: >-
@@ -68,7 +68,7 @@ tags:
 - **旋转轴和旋转角解耦的小改进**说明关注数学本质的重要性
 - 在sharp图上性能与Mip-Splatting持平（27.56 vs 27.71），说明没有引入退化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 不区分moderate和extreme blur，所有图都用相同的N=9采样——自适应N可以提效率
 - 训练时间比其他3DGS方法长（1.33h vs 0.2-0.83h），主要因为每张图要渲N次
 - 只处理相机运动模糊，不处理散焦模糊或滚动快门

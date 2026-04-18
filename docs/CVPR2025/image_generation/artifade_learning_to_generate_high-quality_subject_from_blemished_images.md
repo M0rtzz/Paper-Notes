@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ArtiFade: Learning to Generate High-quality Subject from Blemished Images
 description: >-
@@ -137,7 +137,7 @@ DreamBooth集成结果（ID测试）：
 - **评估体系完善**：设计了包含ID/OOD测试集和R^DINO/R^CLIP相对比率指标的专用benchmark
 - **框架通用性**：同一框架可适配Textual Inversion和DreamBooth，且ArtiFade的微调是一次性的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主题重建保真度与无瑕疵输入相比仍有差距（I^DINO 0.337 vs 0.488）——部分主题信息确实在瑕疵embedding中丢失了
 - 瑕疵embedding的训练（每个子集5k步Textual Inversion）在数据集构建阶段计算成本较高

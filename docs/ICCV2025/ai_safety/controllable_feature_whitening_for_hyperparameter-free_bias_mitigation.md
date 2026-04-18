@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Controllable Feature Whitening for Hyperparameter-Free Bias Mitigation
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **可控性强**：单参数 $\lambda$ 平滑插值demographic parity和equalized odds
 - 证明了"fine-tune最后线性层足以实现公平性"这一重要观察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要偏差标签（bias label），在偏差属性未知的场景中不直接适用
 - 仅消除线性依赖，理论上可能遗留高阶非线性偏差

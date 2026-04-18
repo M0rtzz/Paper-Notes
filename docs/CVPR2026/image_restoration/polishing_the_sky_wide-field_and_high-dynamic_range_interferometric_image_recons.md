@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction
 description: >-
@@ -124,7 +124,7 @@ POLISH 系列采用端到端 CNN（基于 WDSR 架构），直接学习从低分
 4. **坦诚的局限分析**：明确指出 CLEAN 在通量估计上仍更优，DL 方法缺乏显式通量校准机制
 5. **从鲁棒性到适应性**：不仅验证了 PSF 不匹配下的鲁棒性，还展示了快速微调的适应性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 通量估计精度不如 CLEAN，缺乏显式通量校准机制
 2. 仅在图像平面操作（非可见度域），可能损失相位信息

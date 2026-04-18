@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Insight-V: Exploring Long-Chain Visual Reasoning with Multimodal Large Language Models
 description: >-
@@ -94,7 +94,7 @@ Insight-V 由三部分组成：(1) 长链推理数据生成 pipeline（渐进式
 - 在LLaVA-NeXT上+7%的提升证明方法对弱模型更有效，降低了对强backbone的依赖
 - 迭代DPO解决了离线DPO的分布偏移问题，为推理质量的持续提升提供了机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理Agent的推理数据主要由强模型生成，推理风格可能受限于生成器
 - 多Agent系统在推理时需要两次前向传播，推理开销翻倍
 - 目前仅在单图场景验证，多图和视频场景的长链推理有待探索

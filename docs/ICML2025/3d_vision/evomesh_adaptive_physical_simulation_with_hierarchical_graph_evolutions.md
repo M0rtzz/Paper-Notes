@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvoMesh: Adaptive Physical Simulation with Hierarchical Graph Evolutions
 description: >-
@@ -126,7 +126,7 @@ $$z_{i,k}^l = \frac{\exp((\log \pi_{i,k}^l + g_{i,k}^l) / \tau)}{\sum_{k'=0}^{1}
 3. **温度退火策略**：Gumbel-Softmax 的温度退火（从探索到精细化）是训练稳定性的关键，最终训练好的模型在相同输入下能产生一致的图层次结构
 4. **对时变网格场景的天然支持**：由于层次结构是在线自适应构建的，EvoMesh 天然支持网格拓扑随时间变化的场景，这是所有依赖预计算层次的方法无法做到的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在结构规则、变形平滑的系统（如 FlyingFlag、DeformingPlate）上 OOD 泛化不如简单的 MGN，真正的分辨率无关建模仍是开放问题
 2. Gumbel-Softmax 采样引入的随机性虽然在训练后影响很小，但理论上探索更确定性的可微选择方案可能有益

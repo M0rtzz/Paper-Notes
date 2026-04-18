@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：部件理解需要细粒度的组合推理（一个物体由哪些部件组成？两个物体共享哪些部件？），但现有 LMM 和评估集都缺乏覆盖这种推理的能力和设计。
 
-**本文要解决什么**：(1) 构建全面的部件级 LMM 评估基准；(2) 设计解决上述两个架构缺陷的新模型。
+**本文目标**：(1) 构建全面的部件级 LMM 评估基准；(2) 设计解决上述两个架构缺陷的新模型。
 
 **切入角度**：分割型 LMM 的 [SEG] token 是预训练后添加的，必然引起分布偏移；如果用已有的文本 span 来指示分割区域，就能保留预训练表示。
 
-**核心idea一句话**：用 BIO span 标记替代 [SEG] token 避免分布偏移，加 mask 反馈循环让后续预测能利用历史 mask 信息。
+**核心 idea**：用 BIO span 标记替代 [SEG] token 避免分布偏移，加 mask 反馈循环让后续预测能利用历史 mask 信息。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ $\mathcal{L} = \mathcal{L}_{\text{LM}} + \lambda_1 \mathcal{L}_{\text{span}} + \
 - **Span 标记的通用性**：用文本本身的 span 而非特殊 token 来指示分割，是一种更优雅的文本-视觉对齐方式，避免了预训练/微调阶段的 vocabulary 不匹配。可以推广到任何需要将文本与视觉区域关联的任务。
 - **部件间推理任务（Part Comparison/Reasoning）**：Partonomy 不只是识别部件，还要求比较部件（两个物体的共有/差异部件）和推理部件-整体关系。这种组合推理能力是走向细粒度视觉理解的关键。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Plum 微调后在 Partonomy-Core 上仍只有约 41% macro-gIoU，距实用还有很大差距
 - Partonomy-Core 仅 1K 图片，部件标注可能存在不完整性（有些可见部件未被标注）
 - 模型设计依赖 SAM 的 mask decoder，对超细粒度部件（如电路板上的元件）可能分辨率不足

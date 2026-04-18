@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Foundation Model Insights and a Multi-Model Approach for Superior Fine-Grained One-shot Subset Selection
 description: >-
@@ -158,7 +158,7 @@ RAM-APL 在所有数据集的所有采样率下均优于所有基线方法。
 - **实验设计扎实**：单模型研究覆盖 5 个数据集 × 4 种算法 × 3 种 IE × 3 种采样率 = 180 组实验，结论有充分的实验支撑
 - **方法简洁高效**：无需额外训练、无需微调 FM、无需梯度计算，只需特征提取 + 距离计算 + 排名
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了图像分类**：方法能否推广到检测、分割等下游任务有待验证
 2. **仅限细粒度数据集**：在粗粒度和含噪声的数据集上 FM 优势不明显，RAM-APL 也主要面向细粒度场景

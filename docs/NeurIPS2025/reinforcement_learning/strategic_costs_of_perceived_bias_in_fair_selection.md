@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Strategic Costs of Perceived Bias in Fair Selection
 description: >-
@@ -130,7 +130,7 @@ $$\min_{q, v_A, v_B} \text{Disparity}(q, v_A, v_B) \quad \text{s.t.} \quad \text
 - **AI 时代的新视角**: 指出了 AI 职业指导工具可能无意中传播不平等的机制
 - **闭式解的优雅**: 均衡的显式公式使得因果分析和政策设计变得透明
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **静态模型**: 仅捕获了更广泛反馈循环的一个阶段，未建模动态演化
 2. **两群体假设**: 实际社会中存在多个交叉的社会群体

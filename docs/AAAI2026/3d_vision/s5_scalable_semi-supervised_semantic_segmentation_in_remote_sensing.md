@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] S5: Scalable Semi-Supervised Semantic Segmentation in Remote Sensing
 description: >-
@@ -133,7 +133,7 @@ MoE-MDF 在参数量仅为 SDF 的 1/3 时，平均精度提升 0.64 个点。α
 - **实用性强**：RS4P-1M 数据集构建不依赖额外标注（如 SAMRS 依赖 SAM 生成 mask），可扩展性好
 - **参数效率突出**：MoE-MDF 在多数据集场景下参数量仅为传统方法的 1/3~1/4
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预训练仅使用 FixMatch 作为 S4 方法，未探索更新的半监督方法（如 UniMatchV2）带来的增益
 - MoE 设计较简单（仅共享+特定两个分支），未引入路由机制或更复杂的专家选择

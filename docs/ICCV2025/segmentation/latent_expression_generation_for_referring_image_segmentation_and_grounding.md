@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Expression Generation for Referring Image Segmentation and Grounding
 description: >-
@@ -133,7 +133,7 @@ Latent-VG 在 GRES 上仅需为无目标情况添加一个空 token 即可大幅
 - **正间距对比损失**：优雅地解决了潜在表达式坍缩问题，在保持一致性的同时保留多样性
 - **Slot Attention 启发的 VCI**：通过竞争机制使属性 token 自动绑定到不同的视觉概念
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 计算增量较小（约 12M 参数、3 GFLOPs），但多个潜在表达式仍增加了推理时间
 - 仅使用 BEiT3-B 作为骨干，未验证更大模型或其他架构（如 CLIP-L）

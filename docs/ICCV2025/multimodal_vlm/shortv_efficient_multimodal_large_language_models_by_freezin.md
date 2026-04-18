@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ShortV: Efficient Multimodal Large Language Models by Freezing Visual Tokens in Ineffective Layers
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：视觉token和文本token在MLLM中存在模态差距（modality gap），导致它们的层级冗余分布不同。直接套用文本LLM的层级冗余分析方法（perplexity或cosine similarity）对视觉token不适用。
 
-**本文要解决什么**：(1) 提出能准确衡量MLLM各层对视觉/文本token贡献度的指标；(2) 基于此发现冻结哪些层的视觉token可以不影响性能；(3) 实现与token剪枝正交的新效率维度。
+**本文目标**：(1) 提出能准确衡量MLLM各层对视觉/文本token贡献度的指标；(2) 基于此发现冻结哪些层的视觉token可以不影响性能；(3) 实现与token剪枝正交的新效率维度。
 
 **切入角度**：提出Layer Contribution（LC）指标——逐层冻结特定token后测量输出logits的KL散度变化，发现MLLM的初始层和深层对视觉token贡献极小。
 
-**核心idea一句话**：MLLM约60%的层对视觉token的变换是无效的，在这些层中冻结视觉token（跳过Q投影、FFN和attention查询）可以大幅降低计算量而不影响性能。
+**核心 idea**：MLLM约60%的层对视觉token的变换是无效的，在这些层中冻结视觉token（跳过Q投影、FFN和attention查询）可以大幅降低计算量而不影响性能。
 
 ## 方法详解
 
@@ -130,7 +130,7 @@ ShortV+FastV叠加（LLaVA-1.5-7B）:
 - **LC指标设计精巧**：通过直接测量输出logits的KL散度变化，避免了perplexity和cosine similarity的缺陷。特别是对浅层变换的级联效应的考虑，使得LC能准确反映每层的真实重要性。
 - **与token剪枝正交意味着效率可以倍增**：29% FLOPs几乎不掉点，这是单独剪token或单独跳层都无法达到的。两个维度的组合为MLLM加速提供了新空间。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 粒度较粗：整层冻结，未区分attention block和FFN。He et al.发现它们在文本LLM中冗余程度不同。
 - 仅在LLaVA-1.5和LLaVA-NeXT（7B/13B）上验证，未测试更新更大的模型。
 - LC需要少量校准数据（40个样本），虽然成本很低但不是完全零样本。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transferable Backdoor Attacks for Code Models via Sharpness-Aware Adversarial Perturbation
 description: >-
@@ -174,7 +174,7 @@ STAB 在跨数据集迁移性上平均 ASR 达到 80.1%，超过 AFRAIDOOR 12.4%
 3. **实际威胁模型更贴合现实**：不再假设投毒数据与受害者数据分布相同，而是研究跨数据集场景
 4. **静态攻击在防御下的脆弱性**：KillBadCode 能 100% 检测静态触发器，但 STAB 大幅降低检测率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估两种代码模型**（PLBART、CodeT5），未扩展到 CodeLlama 等更大模型
 2. **仅评估 Python 代码**，跨语言迁移性未知

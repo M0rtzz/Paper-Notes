@@ -1,4 +1,4 @@
----
+﻿---
 title: "HOIGen-1M: A Large-Scale Dataset for Human-Object Interaction Video Generation"
 description: "提出HOIGen-1M大规模人物交互视频生成数据集，包含100万+高质量视频，采用MoME策略消除描述幻觉，并提出CoarseHOIScore和FineHOIScore两个评估指标"
 tags: ["视频生成", "人物交互", "数据集", "文本到视频", "CVPR2025"]
@@ -24,7 +24,7 @@ HOIGen-1M 是首个面向人物交互 (HOI) 视频生成的百万级高质量数
 
 **核心矛盾**：T2V 模型在 HOI 场景下的表现远不如一般场景，根本原因是训练数据中缺乏大规模、高质量、描述精确的 HOI 视频。
 
-**本文要解决什么？** 构建一个百万级高质量 HOI 视频数据集，设计精确的视频描述方法，以及提出 HOI 视频生成的评估框架。
+**本文目标** 构建一个百万级高质量 HOI 视频数据集，设计精确的视频描述方法，以及提出 HOI 视频生成的评估框架。
 
 ## 方法详解
 

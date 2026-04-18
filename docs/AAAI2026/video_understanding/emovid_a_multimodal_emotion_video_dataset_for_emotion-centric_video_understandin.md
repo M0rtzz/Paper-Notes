@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EmoVid: A Multimodal Emotion Video Dataset for Emotion-Centric Video Understanding and Generation
 description: >-
@@ -124,7 +124,7 @@ EmoVid 的构建和应用包括三个部分：
 - **实用应用**：LoRA 微调生成的表情贴纸可直接用于社交媒体
 - **评估协议完善**：EA-2cls 和 EA-8cls 指标为情绪感知生成提供了标准化评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设每个片段只传达单一情绪，现实中情绪可能是复杂和复合的
 - 音频模态尚未充分利用，未来可构建统一的视频-音频-文本多模态模型
 - 情绪分布不均衡（如 amusement 和 awe 较少），可能影响模型对少数类的表现

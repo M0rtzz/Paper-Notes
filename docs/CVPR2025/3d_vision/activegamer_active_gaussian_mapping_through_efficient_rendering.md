@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ActiveGAMER: Active GAussian Mapping through Efficient Rendering
 description: >-
@@ -143,7 +143,7 @@ ActiveGAMER 的 pipeline 可概括为一个循环：
 - **几何+光度双重优化**：不像先前方法只关注一方面，同时追求完整几何和高保真渲染
 - **6DoF 自由运动**：不限制为 2D 平面或离散跳转，更接近真实机器人场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **假设已知定位**：真实场景中需要集成 SLAM 定位模块
 - **忽略双面物体**：渲染 silhouette mask 看不到物体背面，导致背面不被探索（figure 9 展示了典型失败案例）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joint Shadow Generation and Relighting via Light-Geometry Interaction Maps
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}_x(\hat{x}_1, x_1) = \frac{1}{M}\sum_{m=1}^M w^{(m)} \cdot |x_1^{(m
 3. **泛化能力突出**：仅在合成数据上训练，在真实图像（含人像）上表现优异，无需任何真实世界数据微调
 4. **计算高效**：LGI 模块几乎零额外计算成本，天然可扩展到多物体和多光源场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于 2.5D 深度的固有局限：无法处理遮挡区域的深度信息缺失，导致歧义阴影（论文 Fig. 3d 所示）
 - 训练数据为纯合成，虽然泛化尚可但可能在极端真实场景下失效

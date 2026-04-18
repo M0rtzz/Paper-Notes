@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiDAR-GS++: Improving LiDAR Gaussian Reconstruction via Diffusion Priors
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L} = \mathcal{L}_d + \mathcal{L}_\rho + \mathcal{L}_r + \mathcal{L}_S
 2. **畸变区域检测巧妙**：利用中间深度与渲染深度的差异作为欠拟合指标，无需额外标注，是一种自监督的质量评估机制。
 3. **同模态条件生成**比跨模态更适合重建任务：避免了语义稀疏性导致的几何不一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 不处理非刚性动态对象（如行人），使用NSG进行实例分解单独重建
 2. 生成模型不考虑时序一致性，可能导致连续帧间的闪烁

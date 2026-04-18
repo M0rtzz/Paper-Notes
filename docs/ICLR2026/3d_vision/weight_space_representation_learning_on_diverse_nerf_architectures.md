@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Weight Space Representation Learning on Diverse NeRF Architectures
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：不同 NeRF 架构的权重结构差异巨大（MLP 权重矩阵 vs 平面特征 vs hash table），如何构建统一的表示空间？
 
-**本文要解决什么？** 设计架构无关的 NeRF 权重处理框架，使同一物体的不同 NeRF 表示被映射到相近的潜在向量。
+**本文目标** 设计架构无关的 NeRF 权重处理框架，使同一物体的不同 NeRF 表示被映射到相近的潜在向量。
 
 **切入角度**：利用 Graph Meta-Network 将任意 NeRF 转为参数图（parameter graph），然后用 GNN 处理。
 
-**核心 idea 一句话**：用 SigLIP 对比损失对齐同一物体不同架构 NeRF 的 embedding，使 GMN 编码器产生架构无关的潜在空间。
+**核心 idea**：用 SigLIP 对比损失对齐同一物体不同架构 NeRF 的 embedding，使 GMN 编码器产生架构无关的潜在空间。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ $\mathcal{L}_{R+C} = \mathcal{L}_R + \lambda \mathcal{L}_C$，$\lambda = 2 \time
 - **对比损失打破架构壁垒的洞察深刻**：渲染损失只学"内容"但会混入"架构"信息，SigLIP 显式约束"同物体不同架构应相近"
 - **对 NeRF 数据格式标准化有推动意义**：如果不同架构的 NeRF 可以统一检索，那么 NeRF 可能成为 3D 数据的通用存储格式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 ShapeNet 合成数据上验证，真实场景的 NeRF 更复杂
 - 三种架构族之间的跨族泛化未充分测试（如 MLP 训练→HASH 测试）
 - hash table 的参数图不保留空间邻接关系

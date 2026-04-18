@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Global Convergence and Rich Feature Learning in $L$-Layer Infinite-Width Neural Networks under $\mu$P Parametrization
 description: >-
@@ -132,7 +132,7 @@ $$\text{Cov}(\hat{Z}^{W_0^l \delta x_s^{l-1}(\xi)}, \hat{Z}^{W_0^l \delta x_t^{l
 4. **双层 filtration 框架**：$\mathcal{F}_t$ 和 $\mathcal{G}_t$ 的设计精巧地分离了前向和反向传播中的新随机性与历史信息
 5. **对参数化方案的系统比较**：Table 1 清晰展示了不同方案在特征学习和特征丰富性上的权衡，$\mu$P 是唯一两者兼得的方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅适用于 MLP**：未涉及 Transformer、CNN 等现代架构，尤其是注意力机制的特征学习分析
 2. **ReLU 不满足条件**：最常用的 ReLU 激活函数不满足假设 4.3（$\phi''$ 不存在），是理论的重要遗漏

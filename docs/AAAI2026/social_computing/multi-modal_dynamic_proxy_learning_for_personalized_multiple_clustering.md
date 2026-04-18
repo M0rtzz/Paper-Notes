@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-modal Dynamic Proxy Learning for Personalized Multiple Clustering
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{L} = \underbrace{\frac{1}{D}\sum_{i=1}^{D}(1-\cos(\mathbf{f}_i, \math
 3. **候选词从"宽"到"精"的演化过程**：初始生成$2^\beta M$个→每R个epoch减半→最终收敛到M个，与真实类别数自然对齐
 4. **自适应权重调度**：避免了手动调参，在不同数据集上表现一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 依赖GPT-4生成初始候选词，候选词质量受LLM能力影响
 2. 用户需要指定聚类数量$M$，实际应用中可能未知
 3. 训练需要1000个epoch，计算成本较高

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Long-Context Modeling with Dynamic Hierarchical Sparse Attention for On-Device LLMs
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **核心矛盾**：高效性要求减少注意力计算，但精度要求保留关键 token 对交互。直接预测 $L \times L$ token 级稀疏掩码本身就是 $O(L^2)$，无法降低复杂度。
 
-**本文要解决什么**：设计一种无需重训的 plug-in 模块，动态预测注意力稀疏模式，同时适用于 prefill 和 decode 阶段。
+**本文目标**：设计一种无需重训的 plug-in 模块，动态预测注意力稀疏模式，同时适用于 prefill 和 decode 阶段。
 
 **切入角度**：分层预测——先在 chunk 级 ($N_c \times N_c$, $N_c \ll L$) 做粗粒度相似度估计，再上采样到 token 级做细粒度选择。
 
@@ -53,19 +53,19 @@ DHSA 作为 plug-in 模块嵌入 Transformer 每一层。输入当前层的 toke
 
 1. **分层稀疏预测 (Hierarchical Sparsity Prediction)**
 
-    - **做什么**：将序列分为 $N_c$ 个不重叠的 chunk，计算 chunk 级相似度矩阵 $\mathbf{S}_c \in \mathbb{R}^{N_c \times N_c}$，上采样为 token 级相似度矩阵 $\mathbf{S}_t \in \mathbb{R}^{L \times L}$，对每个 query token 做 TopK 选择（预算 $N_b$）
+    - **功能**：将序列分为 $N_c$ 个不重叠的 chunk，计算 chunk 级相似度矩阵 $\mathbf{S}_c \in \mathbb{R}^{N_c \times N_c}$，上采样为 token 级相似度矩阵 $\mathbf{S}_t \in \mathbb{R}^{L \times L}$，对每个 query token 做 TopK 选择（预算 $N_b$）
     - **核心思路**：$N_c \ll L$ 使得 chunk 级计算代价极低（$O(N_c^2)$ 替代 $O(L^2)$）；同一 chunk 对内的 token 对共享同一重要性分数
     - **设计动机**：直接预测 $L \times L$ 掩码的代价等价于密集注意力，分层预测将复杂度降为 $O(N_c^2 + L \cdot N_b)$
 
 2. **动态边界检测 (Dynamic Boundary Detection)**
 
-    - **做什么**：用轻量神经网络预测每个 token 位置是否为 chunk 边界。编码器用 MHA 聚合左右窗口的 key 向量，特征融合拼接 $[\mathbf{k}_{\text{left}}, \mathbf{k}_{\text{right}}, |\mathbf{k}_{\text{left}} - \mathbf{k}_{\text{right}}|, \mathbf{k}_{\text{left}} \odot \mathbf{k}_{\text{right}}, \text{sim}(\mathbf{k}_{\text{left}}, \mathbf{k}_{\text{right}})]$，MLP 输出二分类概率
+    - **功能**：用轻量神经网络预测每个 token 位置是否为 chunk 边界。编码器用 MHA 聚合左右窗口的 key 向量，特征融合拼接 $[\mathbf{k}_{\text{left}}, \mathbf{k}_{\text{right}}, |\mathbf{k}_{\text{left}} - \mathbf{k}_{\text{right}}|, \mathbf{k}_{\text{left}} \odot \mathbf{k}_{\text{right}}, \text{sim}(\mathbf{k}_{\text{left}}, \mathbf{k}_{\text{right}})]$，MLP 输出二分类概率
     - **核心思路**：内容变化大的位置应成为 chunk 边界（语义分段），用左右窗口差异来检测
     - **设计动机**：固定大小 chunk 太死板，一刀切无法适应文档内部的语义段落结构变化。自适应分割让每个 chunk 内部语义更一致，chunk 级相似度对 token 级重要性的代理更准确
 
 3. **鲁棒 Chunk 表示 (Robust Chunk Representation)**
 
-    - **做什么**：对 chunk 内 token 嵌入做平均池化，然后乘以 $\sqrt{|\mathbf{C}|}$ 进行长度归一化
+    - **功能**：对 chunk 内 token 嵌入做平均池化，然后乘以 $\sqrt{|\mathbf{C}|}$ 进行长度归一化
     - **核心思路**：$\mathbf{q}_c = \sqrt{|\mathbf{C}|} \cdot \bar{\mathbf{q}}$，$\mathbf{k}_c = \sqrt{|\mathbf{C}|} \cdot \bar{\mathbf{k}}$。chunk 级相似度 $\mathbf{S}_c = \mathbf{Q}_c \mathbf{K}_c^{\top}$
     - **设计动机**：
         - 直接 padding 后平均会被零值稀释表示质量
@@ -73,7 +73,7 @@ DHSA 作为 plug-in 模块嵌入 Transformer 每一层。输入当前层的 toke
 
 4. **Prefill 与 Decode 阶段适配**
 
-    - **做什么**：Prefill 阶段一次性预测全部边界并计算完整 $\mathbf{S}_c$；Decode 阶段增量扩展边界并只计算新增行
+    - **功能**：Prefill 阶段一次性预测全部边界并计算完整 $\mathbf{S}_c$；Decode 阶段增量扩展边界并只计算新增行
     - **核心思路**：Decode 时将之前生成的 token 作为一个额外 chunk，当前 token 单独作为一个 chunk，只需计算最后一行的 chunk 相似度
     - **设计动机**：避免 decode 时重复计算已有 chunk 的相似度
 
@@ -119,7 +119,7 @@ DHSA 作为 plug-in 模块嵌入 Transformer 每一层。输入当前层的 toke
 - **$\sqrt{|\mathbf{C}|}$ 归一化看似简单但很关键**：解决了变长 chunk 的表示偏差问题。粗暴地用均值池化会让长 chunk 的相似度分数与短 chunk 不可比。
 - **Plug-in 设计**：不修改原模型权重、不需要重训，对已部署的端侧模型有极大的实用价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **延迟不是绝对最优**：DHSA eager 模式 1.19s 比 block sparse 1.00s 慢 19%，主要是边界预测和 chunk 表示计算的开销。端侧部署需要进一步优化这部分算子。
 2. **未扩展最大上下文长度**：作者提到 Gemma 系列缺乏可靠的上下文扩展实现，限制了进一步验证。

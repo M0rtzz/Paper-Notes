@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffiT: Diffusion Vision Transformers for Image Generation
 description: >-
@@ -54,7 +54,7 @@ DiffiT提供两种变体：
 
 1. **时间依赖多头自注意力（TMSA）**：
 
-    - **做什么**：将时间嵌入直接融入自注意力的Q/K/V计算中
+    - **功能**：将时间嵌入直接融入自注意力的Q/K/V计算中
     - **核心思路**：对于空间token $\mathbf{x_s}$ 和时间token $\mathbf{x_t}$，计算时间依赖的Q/K/V：
     $\mathbf{q_s} = \mathbf{x_s}\mathbf{W}_{qs} + \mathbf{x_t}\mathbf{W}_{qt}$
     $\mathbf{k_s} = \mathbf{x_s}\mathbf{W}_{ks} + \mathbf{x_t}\mathbf{W}_{kt}$
@@ -64,13 +64,13 @@ DiffiT提供两种变体：
 
 2. **窗口化TMSA（图像空间模型）**：
 
-    - **做什么**：将自注意力限制在不重叠的局部窗口内计算
+    - **功能**：将自注意力限制在不重叠的局部窗口内计算
     - **核心思路**：在不减少局部区域间通信的前提下，通过U-Net瓶颈层实现跨区域信息共享
     - **设计动机**：自注意力的二次复杂度在大特征图时代价昂贵，窗口化大幅降低token序列长度。实验表明窗口大小为4时即可获得大部分性能提升
 
 3. **DiffiT ResBlock（图像空间模型）**：
 
-    - **做什么**：组合卷积层与DiffiT Transformer块的混合残差单元
+    - **功能**：组合卷积层与DiffiT Transformer块的混合残差单元
     - **核心思路**：
     $\mathbf{\hat{x}_s} = \text{Conv}_{3\times 3}(\text{Swish}(\text{GN}(\mathbf{x_s})))$
     $\mathbf{x_s} = \text{DiffiT-Block}(\mathbf{\hat{x}_s}, \mathbf{x_t}) + \mathbf{x_s}$
@@ -78,7 +78,7 @@ DiffiT提供两种变体：
 
 4. **三通道Classifier-Free Guidance（潜空间模型）**：
 
-    - **做什么**：在潜空间模型中使用三通道的CFG以提升生成质量
+    - **功能**：在潜空间模型中使用三通道的CFG以提升生成质量
     - **设计动机**：直接提升条件生成的保真度，在ImageNet-256上使用4.6的guidance scale达到最优1.73 FID
 
 ### 损失函数 / 训练策略
@@ -148,7 +148,7 @@ DiffiT提供两种变体：
 - "去噪过程中注意力应随时间步变化"这一观察虽直觉上自然，但之前的方法（如AdaLN）并未真正在注意力层面实现这一点
 - 图像空间模型中卷积+Transformer的混合设计利用了两者的互补优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Latent DiffiT在ImageNet-512上表现不如StyleGAN-XL（FID 2.67 vs 2.41），虽然GAN多样性可能不足
 - TMSA的window-based变体缺少跨窗口通信机制（依赖U-Net瓶颈），在纯Transformer架构中可能不够

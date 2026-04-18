@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ACT as Human: Multimodal Large Language Model Data Annotation with Critical Thinking
 description: >-
@@ -90,7 +90,7 @@ ACT损失基于active M-estimation改进。核心是用采样概率$\pi_B(\hat{\
 - 跨NLP/CV/VQA三个领域、6个数据集、6种MLLM的系统性探索，实验设计极为充分
 - "标注能力与批评能力正相关"的发现简化了模型选择——用top-1做标注器、top-2做批评者
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在分类任务上验证，文本摘要、开放式QA等生成任务未覆盖
 - 批评者准确率受MLLM能力上限约束，5-15%假阳性率限制极限效果
 - 预算设定基于标注器准确率（"理想预算"），实际预算分配策略未深入讨论

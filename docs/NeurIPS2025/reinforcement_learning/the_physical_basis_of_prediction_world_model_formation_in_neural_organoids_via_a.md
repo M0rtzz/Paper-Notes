@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Physical Basis of Prediction: World Model Formation in Neural Organoids via an LLM-Generated Curriculum
 description: >-
@@ -111,7 +111,7 @@ tags:
 - **LLM 作为科学实验设计器**：这一元学习思路超越了 LLM 在推理中的常规应用，转向自主科学发现
 - **"真实"世界模型**——在活生物组织中物理存在，可通过分子手段直接观测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为 Workshop 论文，缺乏实际实验验证，所有内容均为方案设计和理论分析
 - 神经类器官的重现性和成熟度挑战：不同批次间变异大，需 60-90 天培养期

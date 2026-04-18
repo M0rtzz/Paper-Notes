@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Online Change Detection via Random Fourier Features
 description: >-
@@ -122,7 +122,7 @@ $$\inf_{N: \mathbb{P}_\infty(N<\infty)\leq\alpha} \sup_{\eta, \mathbb{P}, \mathb
 - **算法实现的优雅性**：窗口合并的二进制结构完美匹配 MMD 的可加性，使得 $\log n$ 个检验统计量的维护几乎零开销
 - 阈值的理论公式直接可用，不依赖任何分布知识——真正的"开箱即用"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 核和核参数的选择仍然影响检测功效，虽然理论保证对所有满足 Assumption 1 的核成立
 - 假设数据 i.i.d.，不适用于强混合或函数依赖的时间序列

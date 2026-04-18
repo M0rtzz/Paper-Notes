@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Theoretical Performance Guarantees for Partial Domain Adaptation via Partial Optimal Transport
 description: >-
@@ -30,7 +30,7 @@ tags:
 
 **核心矛盾**：实践中 PDA 方法有效，但理论基础薄弱，不同加权方案的优劣缺乏理论解释。
 
-**本文要解决什么**：提供 PDA 的理论泛化界，从中推导出有原则的权重公式和域对齐度量。
+**本文目标**：提供 PDA 的理论泛化界，从中推导出有原则的权重公式和域对齐度量。
 
 **切入角度**：部分最优传输（Partial OT）——一种只传输部分质量的最优传输变体，天然适合处理标签空间不对称的情况。
 
@@ -106,7 +106,7 @@ $$\mathcal{L} = \sum_i w_i \cdot \text{CE}(h(g(x_i^S)), y_i^S) + \lambda \cdot \
 - 部分 OT 与 PDA 的自然对应：传输部分质量 ↔ 只对齐共有类
 - OT 权重的几何直觉清晰：远离目标域的源样本自动获得低权重
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 部分比例 $s$ 需要预设或估计（通常假设已知目标域的类别数比例）
 - 高维特征空间中部分 OT 的计算效率需要优化
 - 与开放集领域自适应（OSDA）的联系值得探索

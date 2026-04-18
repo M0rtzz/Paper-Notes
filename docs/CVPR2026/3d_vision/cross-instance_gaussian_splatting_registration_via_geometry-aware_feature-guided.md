@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Instance Gaussian Splatting Registration via Geometry-Aware Feature-Guided Alignment
 description: >-
@@ -47,19 +47,19 @@ tags:
 
 1. **Feature-augmented 3DGS**：
 
-    - **做什么**：为每个 Gaussian 增加 3 维几何感知特征 $\mathbf{f} \in \mathbb{R}^3$，通过将 2D 视点引导球面特征 "lift" 到 3D。
+    - **功能**：为每个 Gaussian 增加 3 维几何感知特征 $\mathbf{f} \in \mathbb{R}^3$，通过将 2D 视点引导球面特征 "lift" 到 3D。
     - **核心思路**：训练时联合优化 RGB 损失和特征损失 $\mathcal{L} = \mathcal{L}_{\text{rgb}} + \lambda_f \mathcal{L}_f$，其中 $\mathcal{L}_f = \|F - F^r\|_1$。特征和几何优化解耦：先优化颜色和几何，再固定后优化特征。
     - **设计动机**：选用 Mariotti 等人的几何感知特征而非 DINOv2，因为后者缺乏 3D 几何意识，存在空间歧义（如左右对称部分特征相同），不适合配准任务。
 
 2. **Coarse Alignment：特征引导的绝对定向求解器**：
 
-    - **做什么**：迭代交替进行三步——(a) 对每个源点，在目标中按特征相似性筛选候选集 $\mathcal{Q}_i = \{\mathbf{q}_j \mid \|\mathbf{f}_i - \mathbf{f}_j\| \leq \tau_f\}$，再从中选空间最近点；(b) 闭式求解最优 Sim(3) 变换（Kabsch-Umeyama 求旋转+平移，Horn 求尺度）；(c) 应用变换。
+    - **功能**：迭代交替进行三步——(a) 对每个源点，在目标中按特征相似性筛选候选集 $\mathcal{Q}_i = \{\mathbf{q}_j \mid \|\mathbf{f}_i - \mathbf{f}_j\| \leq \tau_f\}$，再从中选空间最近点；(b) 闭式求解最优 Sim(3) 变换（Kabsch-Umeyama 求旋转+平移，Horn 求尺度）；(c) 应用变换。
     - **核心思路**：$\min_{T^{(k)} \in \mathbf{Sim(3)}} \sum_i \|T^{(k)}(\mathbf{p}_i^{(k)}) - \mathbf{q}_i^{(k)}\|_2^2$
     - **设计动机**：通过特征约束筛选候选对应关系，同时解决了 ICP 的三大问题：初始化敏感、无法处理未知尺度、跨实例失败。仅需 3-6 次迭代即可收敛。
 
 3. **Fine Alignment：多视角特征场一致性**：
 
-    - **做什么**：利用粗配准结果初始化，优化多视角特征渲染一致性损失：
+    - **功能**：利用粗配准结果初始化，优化多视角特征渲染一致性损失：
     $\mathcal{L}_{\text{MV-FC}} = \sum_{k=1}^N \|\text{Rend}_f(T\mathcal{G}_1, C_k^*) - \text{Rend}_f(\mathcal{G}_2, C_k^*)\|_2^2$
     - **核心思路**：从逆辐射场问题（iNeRF）推广而来——将单视角相机位姿估计 SE(3) 推广至多视角场域配准 Sim(3)，并用特征渲染替代颜色渲染以支持跨实例。
     - **设计动机**：多视角约束消除了单视角下尺度-深度歧义；特征渲染使得外观不同的跨实例物体也能对齐，因为几何感知特征在同类别物体间具有一致性。
@@ -109,7 +109,7 @@ tags:
 - **优雅的理论推导**：从 iNeRF 到场域-场域配准的推广过程逻辑严密，从 SE(3) 到 Sim(3)、单视角到多视角、颜色到特征的逐步扩展
 - **实用性强**：粗配准 3 次迭代+精配准 60 次迭代即可完成，效率可接受
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能依赖于几何感知特征的质量，若特征不佳则对齐精度下降
 - 仅在物体级别验证，场景级别（多物体复杂场景）的扩展未探索
 - 精配准中多视角选择策略可进一步自动化（目前使用预定义视角）

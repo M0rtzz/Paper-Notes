@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Distribution-Wise Control in Representation Space for Language Models
 description: >-
@@ -161,7 +161,7 @@ $$\mathcal{L} = -\mathbb{E}_{(X,Y)}[\log P_{\mathcal{M} \circ \mathcal{I}}(Y | f
 - **揭示层间差异性**：早期层概念空间更宽泛、更适合探索性干预，后期层已形成较固定的表示，确定性干预即可。这一发现对理解 Transformer 内部表示组织有启发意义。
 - **参数效率极高**：即使参数量翻倍（0.26M → 0.52M），仍远低于 LoRA（25.2M），但性能差距明显缩小。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理开销增加**：推理时仍需采样噪声，引入额外计算和非确定性。可以考虑训练完成后固化均值做确定性推理。
 2. **仅验证 Llama 系列**：实验限于 Llama-7B/13B 和 Llama-3-8B，未在更大规模模型（70B+）或非 Llama 架构（Mistral, Qwen 等）上验证。

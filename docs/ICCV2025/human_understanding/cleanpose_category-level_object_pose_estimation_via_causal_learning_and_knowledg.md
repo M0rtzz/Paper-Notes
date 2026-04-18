@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CleanPose: Category-Level Object Pose Estimation via Causal Learning and Knowledge Distillation
 description: >-
@@ -51,14 +51,14 @@ CleanPose在AG-Pose基线之上增加两个核心模块：
 ### 关键设计
 
 #### 1. 结构因果模型
-- **做什么**：建立COPE任务中关键变量之间的因果关系图
+- **功能**：建立COPE任务中关键变量之间的因果关系图
 - **核心思路**：定义四个变量：视觉输入 $\mathcal{X}$、输出位姿 $\mathcal{Y}$、中介变量 $\mathcal{M}$（结构信息/关键点）和隐藏混淆变量 $\mathcal{U}$（数据偏差）
     - **前门路径** $\mathcal{X} \rightarrow \mathcal{M} \rightarrow \mathcal{Y}$：人类先识别结构信息（关键点），再通过类比推断位姿
     - **混淆路径** $\mathcal{X} \leftarrow \mathcal{U} \rightarrow \mathcal{Y}$：数据偏差同时影响输入采样和位姿分布
 - **设计动机**：传统方法建模 $P(\mathcal{Y}|\mathcal{X})$，混入了混淆变量的影响；因果推理通过do算子建模 $P(\mathcal{Y}|do(\mathcal{X}))$，切断混淆路径
 
 #### 2. 基于前门调整的因果推理
-- **做什么**：通过对前门路径的两个阶段（$\mathcal{X} \rightarrow \mathcal{M}$ 和 $\mathcal{M} \rightarrow \mathcal{Y}$）施加干预，消除混淆变量的影响
+- **功能**：通过对前门路径的两个阶段（$\mathcal{X} \rightarrow \mathcal{M}$ 和 $\mathcal{M} \rightarrow \mathcal{Y}$）施加干预，消除混淆变量的影响
 - **核心思路**：前门调整公式：
 
 $$P(\mathcal{Y}|do(\mathcal{X})) = \sum_{x'} P(x') \sum_m P(\mathcal{Y}|m, x') P(m|\mathcal{X})$$
@@ -83,7 +83,7 @@ $$\mathcal{F}_f \leftarrow w_a \odot \mathcal{F}_f + (1-w_a) \odot \mathcal{F}_{
 - **设计动机**：仅对输入做调整不足以完全阻断混淆效应（因为存在中介变量），需要在前门路径的两个阶段都施加干预
 
 #### 3. 残差知识蒸馏
-- **做什么**：从3D基础模型ULIP-2中转移无偏的类别语义知识
+- **功能**：从3D基础模型ULIP-2中转移无偏的类别语义知识
 - **核心思路**：ULIP-2在大规模多样数据上预训练，隐式学到了鲁棒的去偏特征表示。使用冻结的ULIP-2 3D编码器（PointBERT）提取教师特征 $\mathcal{F}_P^{ULIP}$，学生模型的点云特征经残差网络变换后与之对齐：
 
 $$\hat{\mathcal{F}}_P^{avg} = \mathcal{F}_P^{avg} + \mu \times K_2(\delta(K_1(\mathcal{F}_P^{avg})))$$
@@ -149,7 +149,7 @@ HouseCat6D数据集：CleanPose在所有指标上超越AG-Pose（IoU50: +2.9%, 5
 - **MoCo式动态队列**：巧妙借用对比学习的技术解决因果推理中跨样本特征采样的技术难题
 - **理论与实践结合**：从人类观察机制出发，经因果图建模，最终落地为具体的注意力机制实现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 因果图中的中介变量 $\mathcal{M}$ 固定为关键点特征，未探索其他可能的结构表示
 - 动态队列大小 $N_q=80$ 和采样数 $N_s=12$ 为经验值，缺乏自适应调整机制

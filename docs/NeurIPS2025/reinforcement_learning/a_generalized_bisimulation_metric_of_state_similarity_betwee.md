@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Generalized Bisimulation Metric of State Similarity between Markov Decision Processes: From Theoretical Propositions to Applications
 description: >-
@@ -89,7 +89,7 @@ GBSM定义在**状态-MDP对**上：$d((s, M_1), (s', M_2))$，简写为$d_{1-2}
 - **向lax BSM和on-policy BSM的兼容性**：框架足够灵活，可适配BSM的现代变体，解决了max-over-actions的已知缺陷
 - **首个闭式样本复杂度**：相比之前的渐近结果，给出了明确的样本数量要求
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **要求共享动作空间**：当前GBSM要求两个MDP有相同的动作空间$A$。虽然作者在rebuttal中展示了可扩展到lax GBSM以支持不同动作空间，但正文未完整展开
 - **不兼容平均奖励设定**：所有界都除以$(1-\gamma)$，当$\gamma \to 1$时发散，无法处理average-reward MDP
 - **实验规模有限**：主要实验在$|S|=20$的随机MDP上进行，大规模/高维场景的可扩展性需进一步验证

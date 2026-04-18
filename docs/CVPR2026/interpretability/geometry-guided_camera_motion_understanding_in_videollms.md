@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Geometry-Guided Camera Motion Understanding in VideoLLMs
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：VideoLLM 的表示空间被优化用于语义对齐而非精确 3D 几何变化，导致相机运动信息在表征中"被挤掉"。
 
-**本文要解决什么**：(a) 构建可靠的相机运动评测基准；(b) 诊断运动线索在 VideoLLM 中哪里丢失；(c) 在不修改 VideoLLM 权重的前提下注入几何相机线索。
+**本文目标**：(a) 构建可靠的相机运动评测基准；(b) 诊断运动线索在 VideoLLM 中哪里丢失；(c) 在不修改 VideoLLM 权重的前提下注入几何相机线索。
 
 **切入角度**：核心假设——可靠的相机运动线索可以从具备 3D 推理能力的几何基础模型（3DFM）中获取，外挂式注入到 VideoLLM 中。用合成数据（UE5 渲染、精确 camera extrinsics）提供确定性标注。
 
-**核心 idea 一句话**：用冻结 3DFM 抽取相机几何线索，轻量分类器预测约束感知的运动原语，通过 structured prompt 注入冻结 VideoLLM，无需任何微调即提升相机运动感知。
+**核心 idea**：用冻结 3DFM 抽取相机几何线索，轻量分类器预测约束感知的运动原语，通过 structured prompt 注入冻结 VideoLLM，无需任何微调即提升相机运动感知。
 
 ## 方法详解
 
@@ -117,7 +117,7 @@ Pipeline 分为四步（见图1）：(1) 输入视频分割为 shot，每个 sho
 - **Constraint-aware multi-label 的建模**：用互斥矩阵 $M$ 在训练和推理两端强制物理约束，简单但有效。这个思路可以迁移到任何具有物理/逻辑互斥约束的多标签分类任务。
 - **Model-agnostic + training-free 的 plug-and-play 设计**：完全不动 VideoLLM 权重，只用 structured prompt 注入，实用性极高。任何新的 VideoLLM 都可以直接使用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **合成到真实的域差距**：CameraMotionDataset 基于 UE5 渲染的合成数据，真实视频中的运动模糊、压缩伪影、非理想相机模型可能导致性能下降。
 - **只关注 extrinsic 运动，忽略 intrinsic 变化（zoom）**：zoom in/out 是电影语法中极常用的技巧，当前方法无法检测。
 - **仅探索一种 3DFM（VGGT）**：未对比 DUSt3R、MASt3R 等其他几何基础模型。

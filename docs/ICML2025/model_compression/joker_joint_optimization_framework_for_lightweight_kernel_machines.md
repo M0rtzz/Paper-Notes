@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joker: Joint Optimization Framework for Lightweight Kernel Machines
 description: >-
@@ -118,7 +118,7 @@ $$\boldsymbol{K}_{\mathcal{B},:}\boldsymbol{\alpha} = \boldsymbol{\psi}(\boldsym
 4. **Proposition 2 处理复合损失**：利用 infimal convolution 的共轭分解性质，自然处理 Huber 等原始形式难优化的损失。
 5. **对偶优化的条件数优势**：对偶 Hessian 线性依赖 $\boldsymbol{K}$，原始 Hessian 二次依赖，对偶收敛更快。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持移不变核**：当前 RFF 实现基于 Bochner 定理，对非移不变核（如多项式核）需额外扩展。
 2. **RFF 的近似误差**：$M$ 较小时近似质量有限，$M$ 较大时内存/时间增加，如何自适应选择 $M$ 值得研究。

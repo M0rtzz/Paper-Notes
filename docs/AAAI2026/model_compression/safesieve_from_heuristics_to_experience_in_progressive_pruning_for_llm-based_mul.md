@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SafeSieve: From Heuristics to Experience in Progressive Pruning for LLM-based Multi-Agent Communication
 description: >-
@@ -56,7 +56,7 @@ SafeSieve是一个渐进式两阶段剪枝框架：
 ### 关键设计
 
 #### 1. **语义启发初始化**
-- **做什么**：在任务执行前，基于智能体角色的语义信息初始化通信边的评分
+- **功能**：在任务执行前，基于智能体角色的语义信息初始化通信边的评分
 - **核心公式**：
 $$S_{ij}^{compat} = \gamma \cdot \frac{\mathbf{e}_i \cdot \mathbf{e}_j}{\|\mathbf{e}_i\| \cdot \|\mathbf{e}_j\|} + (1-\gamma) \cdot \mathcal{Q}(S_{ij}^{expert})$$
   其中 $\mathbf{e}_i, \mathbf{e}_j$ 是预训练角色嵌入，$S_{ij}^{expert}$ 是专家LLM评估的功能互补性分数，$\mathcal{Q}(\cdot)$ 是5级量化函数
@@ -71,7 +71,7 @@ $$E_{ij}(t) = \left(1 - \frac{t}{T}\right) \cdot \alpha_0 \cdot S_{ij}^{compat} 
 - **设计动机**：模拟人类团队的"先规划后调整"范式。初始阶段信息不足时依赖语义启发式，随着经验积累逐渐转向数据驱动
 
 #### 3. **0-Extension聚类剪枝**
-- **做什么**：替代贪心Top-k剪枝，提供全局性的结构化剪枝决策
+- **功能**：替代贪心Top-k剪枝，提供全局性的结构化剪枝决策
 - **动态阈值**（从保守到激进）：
 $$\theta(t) = \theta_0 + (\theta_{max} - \theta_0) \cdot [1 - \exp^{-k \cdot \max(t/T, 0)}]$$
 - **终端选择**（聚类中心）：
@@ -139,7 +139,7 @@ $$\hat{E}_{ij}(t) = \frac{E_{ij}(t) - \mu_t}{\sigma_t + \varepsilon}, \quad \hat
 4. **异构部署的开创性探索**：首次系统性分析跨模型协作，揭示了"木桶效应"——知识密集型任务受限于最弱模型
 5. **从人类团队管理的类比设计**：语义评估 ≈ 面试阶段，历史反馈 ≈ 绩效评估，0-extension剪枝 ≈ 团队重组
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 语义兼容性评分依赖专家LLM的评估质量，引入额外API调用成本
 2. 超参数较多（$\gamma, \alpha_0, \beta_0, \beta_{max}, \theta_0, \theta_{max}, k, r$ 等）

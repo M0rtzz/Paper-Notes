@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] I0T: Embedding Standardization Method Towards Zero Modality Gap
 description: >-
@@ -119,7 +119,7 @@ $$\mathbf{x}_i' = \text{Normalize}(\mathbf{x}_i - \bar{\mathbf{x}}), \quad \math
 - **I0T-Score 的实用价值**：余弦相似度分布从 CLIP-S 的偏态分布变为以 0 为中心的宽分布，正确对正面对更高分、不正确对给负分，无需缩放因子 ω
 - **两阶段解耦设计**：语义增强和模态差距消除分开处理，各自可独立优化，设计优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\text{I0T}_{\text{post}}$ 需要整个测试集的统计量，不支持单样本零样本推理
 - $\text{I0T}_{\text{async}}$ 虽然解决了上述问题，但未能将差距降至接近零（仅中度）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Composing Driving Worlds through Disentangled Control for Adversarial Scenario Generation
 description: >-
@@ -142,7 +142,7 @@ CompoSIA 基于 Wan2.1-T2V-1.3B 初始化的 Flow Matching DiT，为三类控制
 - 下游规划器压力测试将世界模型从"数据合成器"提升为"可控模拟器"，结构编辑使碰撞率飙升 390%，揭示了标准基准无法暴露的隐藏失败模式
 - 分层双分支设计体现了局部快速收敛 vs 全局精确控制的优雅互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 身份编辑泛化受限于训练数据（主要为驾驶场景），对完全 OOD 类别（如动物）效果差，需要更多样化视频数据扩展
 - 身份编辑管线需手动指定参考目标的近似 3D bbox 尺寸（目前通过 Gemini 辅助估计），仍为半自动流程

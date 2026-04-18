@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DynImg: Key Frames with Visual Prompts are Good Representation for Multi-Modal Video Understanding
 description: >-
@@ -118,7 +118,7 @@ DynImg 提出了一种新颖的视频表示方法，将非关键帧作为"时序
 - **4D位置编码设计优雅**：初始化为0的可学习维度确保渐进训练，不破坏预训练权重
 - **效率与效果兼得**：更少token达到更高精度，实际部署价值显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MPEG-4解码增加了数据加载时间（0.06s→0.32s），虽然相对训练时间可接受但仍需优化
 - 仅探索了4个DynImg输入，对长视频场景的扩展性未验证
 - 非关键帧缩小后分辨率受限，极细致的运动细节可能仍会丢失

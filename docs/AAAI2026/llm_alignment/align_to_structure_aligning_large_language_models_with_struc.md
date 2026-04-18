@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Align to Structure: Aligning Large Language Models with Structural Information
 description: >-
@@ -82,7 +82,7 @@ tags:
 - **长度惩罚归一化**：简洁地解决了LLM不遵循目标长度的问题
 - **RST分段扩展**：通过段落级分段和motif聚合，将512 token限制的RST解析器扩展到处理长文本
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在正式essay写作和摘要任务上评估，未涉及创意写作、对话等非正式场景（这些场景的篇章结构更松散且难以形式化）
 - 策略模型仅用1.5B参数的Qwen2，未验证对更大模型的效果（受计算资源限制）
 - RST解析器限制单次输入约512 token，需要分段处理，可能割裂全局连贯模式

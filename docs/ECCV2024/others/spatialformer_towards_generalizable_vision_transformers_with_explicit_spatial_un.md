@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpatialFormer: Towards Generalizable Vision Transformers with Explicit Spatial Understanding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：现有ViT将空间信息与上下文特征"耦合"在同一组token中，通过position embedding隐式编码空间，这使得模型难以专门学习和利用全局空间结构。空间信息被淹没在语义特征中，导致跨任务迁移时空间理解不足。
 
-**本文要解决什么？** (1) 如何在ViT中显式地、解耦地表示全局空间关系？(2) 如何让空间表示既具有通用先验又能自适应特定图像？(3) 如何设计高效架构实现空间与上下文信息的交互，同时保持良好的泛化性？
+**本文目标** (1) 如何在ViT中显式地、解耦地表示全局空间关系？(2) 如何让空间表示既具有通用先验又能自适应特定图像？(3) 如何设计高效架构实现空间与上下文信息的交互，同时保持良好的泛化性？
 
 **切入角度**：作者观察到，如果将空间信息从image token中解耦出来，用一组专门的"空间token"来表示，就可以让模型分别学习"图像里有什么"（上下文）和"在哪里"（空间），两类信息通过交互互相增强。这类似于人类视觉系统中"what"通路和"where"通路的分离。
 
-**核心idea一句话**：引入自适应空间token与image token并行处理，通过双边交叉注意力实现空间-上下文解耦交互，输出的空间token可直接作为下游任务decoder的增强初始查询。
+**核心 idea**：引入自适应空间token与image token并行处理，通过双边交叉注意力实现空间-上下文解耦交互，输出的空间token可直接作为下游任务decoder的增强初始查询。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ SpatialFormer接收图像patch embedding作为image token（上下文token），
 - **空间token可以直接作为下游decoder初始query的设计实现了backbone-decoder的无缝衔接**。这解决了DETR系列方法中object query难以学习的老问题，可能成为detection transformer的一种新标配设计。
 - **双边交叉注意力比拼接self-attention更高效**，在不增加太多计算的前提下实现了有效的双向交互。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前空间token数量是固定的，对于不同分辨率或不同复杂度的场景可能不够灵活
 - 空间token学习到的"空间理解"较为隐式，缺乏可视化和可解释性分析

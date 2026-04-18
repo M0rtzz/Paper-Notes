@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synergy between the Strong and the Weak: Spiking Neural Networks Are Inherently Superior in Temporal Processing
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **置信度评估代替标签依赖**：不需要标签就能判定强弱，可用于无标签场景
 - **低延迟推理能力**：用高时间步训练的模型可以用低时间步推理仍保持不错性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 同时使用 S2W 和 W2S 并未获得显著更好的效果，过度相似降低了 SNN 的多样性
 - 如何平衡子模型间的多样性和相似性是开放问题

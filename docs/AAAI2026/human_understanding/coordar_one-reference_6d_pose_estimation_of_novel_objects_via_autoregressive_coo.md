@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoordAR: One-Reference 6D Pose Estimation of Novel Objects via Autoregressive Coordinate Map Generation
 description: >-
@@ -156,7 +156,7 @@ AR 提升 +16.1/+20.5，ADD(-S) 提升 +41.2/+48.0，提升幅度巨大。
 3. **灵活的速度-精度权衡**：1-64 步推理仅 0.7% 精度差距，1 步即接近实时
 4. **极简位姿恢复**：利用 Umeyama 算法从密集对应关系直接解析位姿，无需迭代优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 GT mask 输入，实际应用需结合分割网络
 2. VQ-VAE tokenizer 需预训练，码本大小和 patch 分辨率的选择影响上限

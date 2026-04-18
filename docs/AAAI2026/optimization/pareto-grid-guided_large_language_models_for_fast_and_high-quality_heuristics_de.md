@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pareto-Grid-Guided Large Language Models for Fast and High-Quality Heuristics Design in Multi-Objective Combinatorial Optimization
 description: >-
@@ -84,7 +84,7 @@ $$\text{SemClust}(P) = \{C_1, C_2, \ldots, C_m\}, \quad \bigcup C_i = P, \quad C
 - 生成的 best heuristic 在 out-of-distribution 规模上仍有良好泛化
 - 实验配置轻量（M1 Mac + 8GB RAM），实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 GPT-4o/4o-mini，LLM 调用成本和延迟可能成为瓶颈
 - 种群规模和迭代次数较小（10 个体、20 代），更大规模搜索空间效果未知
 - 仅考虑两个优化目标（质量+时间），更多目标（如代码复杂度、泛化性）的扩展待探索

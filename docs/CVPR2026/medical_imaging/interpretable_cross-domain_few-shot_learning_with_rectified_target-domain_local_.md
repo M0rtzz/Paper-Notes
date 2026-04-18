@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interpretable Cross-Domain Few-Shot Learning with Rectified Target-Domain Local Alignment
 description: >-
@@ -95,7 +95,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda_1 \mathcal{L}_{\text{cyc\_txt
 - T-I-T 路径的可解释性：即使重建文本不完全匹配，也能揭示模型关注的病理区域和跨类别语义关系
 - 方法作为正则项的设计使其具有出色的即插即用通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 ChestX 数据集上提升有限（+0.48 / +1.03），可能因胸片语义更复杂
 - $\lambda_1$, $\lambda_2$ 需要在目标域上调参，跨数据集的最优超参可能不同

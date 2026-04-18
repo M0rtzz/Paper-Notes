@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAVA-X: Ego-to-Exo Imitation Error Detection via Scene-Adaptive View Alignment and Bidirectional Cross View Fusion
 description: >-
@@ -125,7 +125,7 @@ SAVA-X 采用 **Align–Fuse–Detect** 的统一框架设计：
 - **字典视角嵌入比固定 token 更优**：通过注意力驱动的字典查询可自适应不同场景，固定 learned token 增益有限
 - **消融极其充分**：不仅有模块级消融，还有帧率、Top-K 比例、字典大小、正则项、融合方式等细粒度分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 EgoMe 一个数据集上验证**：泛化到其他跨视角数据集的能力未知
 2. **冻结特征提取器**：端到端微调可能进一步提升但会增加计算成本

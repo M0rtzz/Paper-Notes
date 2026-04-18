@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CHDP: Cooperative Hybrid Diffusion Policies for RL in Parametric Environments
 description: >-
@@ -120,7 +120,7 @@ Critic使用Double Q-learning：$y_t = r_t + \gamma \min_{j=1,2} Q'_{\phi'_j}(s_
 2. 定性实验直观证明扩散策略的多模态优势——发现确定性策略无法到达的反直觉解
 3. 码本用下游Q值而非重建目标引导，使离散表示天然任务对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在PAMDP基准上验证，缺乏更复杂真实场景（机器人操作等）实验
 2. 扩散模型多步采样的推理延迟可能限制实时性要求高的场景

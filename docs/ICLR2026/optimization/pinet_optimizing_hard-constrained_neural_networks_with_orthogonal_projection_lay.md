@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Πnet: Optimizing Hard-Constrained Neural Networks with Orthogonal Projection Layers
 description: >-
@@ -143,7 +143,7 @@ tags:
 4. **JAX + GPU**：提供了高效的GPU-ready开源实现
 5. **通用性强**：支持多种约束类型的组合（多面体+锥+稀疏），通过统一的分解框架处理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限凸约束集**：当前框架要求 $\mathcal{C}(x)$ 为凸集，对非凸约束需要额外处理（如序列凸化）
 2. **分解的选择**：不同的 $\mathcal{A}, \mathcal{K}$ 分解会影响效率，目前没有全自动的最优分解策略

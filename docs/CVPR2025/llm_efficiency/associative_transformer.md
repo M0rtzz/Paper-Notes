@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Associative Transformer
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：Transformer 虽然有强大的表示能力，但缺乏类似人脑"全局工作空间"（Global Workspace Theory）的机制。现有方法要么完全依赖隐式表示，要么引入外部记忆但缺乏有效的检索机制。
 
-**本文要解决什么？** 如何在 Transformer 中引入持久化显式记忆，使 token 能够通过竞争访问共享的记忆池，同时保持计算效率？
+**本文目标** 如何在 Transformer 中引入持久化显式记忆，使 token 能够通过竞争访问共享的记忆池，同时保持计算效率？
 
 **切入角度**：借鉴认知科学中的全局工作空间理论和联想记忆（Hopfield Network），设计 bottleneck 机制让 token 竞争进入共享记忆空间。
 
-**核心idea一句话**：引入 Global Workspace Layer，结合 low-rank 显式记忆、bottleneck attention 和 Hopfield 网络，让 Transformer 具备持久化、竞争性的联想记忆能力。
+**核心 idea**：引入 Global Workspace Layer，结合 low-rank 显式记忆、bottleneck attention 和 Hopfield 网络，让 Transformer 具备持久化、竞争性的联想记忆能力。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ AiT-Medium（45.9M 参数）超过 ViT-Base（85.7M），参数量仅一半。Im
 - **Hopfield 网络的轻量应用**：仅 0.84% 计算开销就带来稳定增益
 - 记忆的 EWMA 更新可迁移到在线学习、持续学习等场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验仅在小规模数据集上验证，缺乏 ImageNet-1K 完整评估和下游密集预测任务
 - 记忆槽数 M 和 bottleneck 容量 k 需手动调整
 - 未探索与 LoRA 等高效微调方法的结合

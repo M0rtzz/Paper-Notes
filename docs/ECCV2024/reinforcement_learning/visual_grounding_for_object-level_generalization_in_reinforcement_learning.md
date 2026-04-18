@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Visual Grounding for Object-Level Generalization in Reinforcement Learning
 description: >-
@@ -91,7 +91,7 @@ Focal reward 是唯一能掌握全部四个困难技能的方法。
 3. **两条迁移路径互补**：reward 路径解决技能学习效率，representation 路径解决泛化能力
 4. **实验对比全面**：单任务/多任务/泛化实验层层递进，同时与模仿学习方法（VPT 系列）做了参考对比
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅适用于物体为中心的任务**：对于 "dig a hole"、"build a house" 等非物体中心任务，难以定义明确的目标物体用于 grounding
 2. **不考虑动作泛化**：只支持目标物体级别的泛化，无法泛化到训练中未见的行为模式
 3. **依赖 LLM 提取目标**：需要 GPT-4 从指令中提取目标物体名，增加了系统依赖

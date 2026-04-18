@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Blending Complementary Memory Systems in Hybrid Quadratic-Linear Transformers
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：不是在两类 Transformer 中二选一，而是设计混合架构让两个记忆系统各司其职——关键问题是信息何时、如何分配到两个系统
 
-**核心idea一句话**：用 DeltaNet 的 FW-memory 和 softmax 的 KV-memory 构建互补记忆系统，通过同步输入策略实现两者优势的最大化整合
+**核心 idea**：用 DeltaNet 的 FW-memory 和 softmax 的 KV-memory 构建互补记忆系统，通过同步输入策略实现两者优势的最大化整合
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ HQLT 在每个时间步接收输入 $\mathbf{x}_t$，同时维护两类记忆：
 - **生物学类比有深度**：不是浅层类比，而是从互补学习系统理论出发构造了真正功能互补的双系统架构
 - **工程兼容好**：所有模型兼容 flash-attention 和 flash-linear-attention 的高效实现，实际可部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **训练规模有限**：仅 15B tokens，远小于当前 LLM 标准（数百B~数T）；更大规模训练下混合优势是否保持未知
 - **下游任务边际改进**：在常规 NLP benchmark 上提升仅 0.1-0.9%，虽一致但不够显著
 - **DeltaNet 变体未探索**：仅用基础 DeltaNet，未测试 Gated Delta Rule 或 Delta Product Rule 等更强变体

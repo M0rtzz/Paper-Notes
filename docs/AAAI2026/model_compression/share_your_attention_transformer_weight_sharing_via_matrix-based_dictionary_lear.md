@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Share Your Attention: Transformer Weight Sharing via Matrix-Based Dictionary Learning
 description: >-
@@ -123,7 +123,7 @@ $$\hat{\mathbf{W}}_l = \sum_{s=1}^{S} c_{ls} \mathbf{D}_s$$
 - **预训练适配设计精巧**：Matrix PCA + KL 散度分组 + 自适应秩分配的组合，在无微调条件下显著优于 SVD-LLM
 - **实用设计原则**：优先压缩 Q/K/V 投影，保留 O 投影的参数独立性——这为后续 Transformer 压缩工作提供了重要的经验指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅压缩注意力模块，FFN 模块（占参数量另一半）未涉及，可探索联合压缩
 - 更大模型（>8B）上的 Matrix PCA 适配需要更细致的分组策略

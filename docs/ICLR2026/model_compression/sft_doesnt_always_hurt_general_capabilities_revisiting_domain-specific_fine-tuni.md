@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SFT Doesn't Always Hurt General Capabilities: Revisiting Domain-Specific Fine-Tuning in LLMs
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **TALR设计优雅**：闭式解、无额外超参搜索（τ自适应）、stop-gradient保证稳定，实现简洁。
 - **实用指南清晰**：(1) 优先使用小学习率；(2) 需更强平衡时采用TALR。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **未完全消除退化**：包括TALR在内的所有方法均无法在大学习率下完全避免通用能力退化。
 - **数据集有限**：仅在MedCalc和ESCI两个数据集上验证，未涵盖更多领域。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GIIM: Graph-based Learning of Inter- and Intra-view Dependencies for Multi-view Medical Image Diagnosis
 description: >-
@@ -86,7 +86,7 @@ tags:
 - 四种缺失视图策略的对比分析揭示了"简单方法在缺失场景可能更鲁棒"的反直觉现象
 - 跨模态（CT、乳腺X线、MRI）的广泛验证证明框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 消融研究仅为定性描述，缺少各组件（如各类边）的定量消融
 - 未与 Transformer-based 多视图方法（如 Phase Attention）直接定量对比

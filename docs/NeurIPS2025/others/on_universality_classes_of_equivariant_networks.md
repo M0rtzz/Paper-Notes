@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Universality Classes of Equivariant Networks
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{U}_\sigma(C^1, I) \subsetneq \mathcal{U}_\sigma(\mathbb{R}^n, \mathbb
 - Proposition 16 的证明策略（对不同 $n$ 值使用不同定理）展示了问题的微妙性
 - 正规子群条件的出现揭示了群结构（不仅是群大小）对网络表达能力的深层影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析浅层网络（深度 ≤ 2），深层等变网络的通用性分析仍然开放
 - 未涉及深度如何与分离交互（如 IGN 中深度增加可提升分离能力的情况）

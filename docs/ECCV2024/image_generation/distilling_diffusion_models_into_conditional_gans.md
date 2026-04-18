@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilling Diffusion Models into Conditional GANs
 description: >-
@@ -51,7 +51,7 @@ $$\mathcal{L}_G = \mathcal{L}_{\text{E-LatentLPIPS}} + \lambda_{\text{GAN}} \mat
 
 #### 1. E-LatentLPIPS（核心贡献）
 
-**做什么**：在潜空间直接计算感知距离，替代传统 LPIPS 需要解码到像素空间的低效操作。
+**功能**：在潜空间直接计算感知距离，替代传统 LPIPS 需要解码到像素空间的低效操作。
 
 **核心思路**：
 - 首先训练 LatentLPIPS：在 SD 潜空间上训练 VGG 网络做 ImageNet 分类，去掉最大池化层（因潜空间已8×下采样），修改输入为4通道，然后用 BAPPS 数据集线性校准中间特征
@@ -66,7 +66,7 @@ $$d_{\text{E-LatentLPIPS}}(\mathbf{x}_0, \mathbf{x}_1) = \mathbb{E}_{\mathcal{T}
 
 #### 2. 条件扩散判别器
 
-**做什么**：以噪声 $\mathbf{z}$、文本 $\mathbf{c}$ 和图像 $\mathbf{x}$ 为条件的 GAN 判别器，用于提升生成质量。
+**功能**：以噪声 $\mathbf{z}$、文本 $\mathbf{c}$ 和图像 $\mathbf{x}$ 为条件的 GAN 判别器，用于提升生成质量。
 
 **核心思路**：复用预训练扩散模型 UNet 权重初始化判别器，进行以下改进：
 - **噪声条件**：在输入端添加零初始化卷积层处理 $\mathbf{z}$，与判别器输入相加
@@ -146,7 +146,7 @@ $$d_{\text{E-LatentLPIPS}}(\mathbf{x}_0, \mathbf{x}_1) = \mathbb{E}_{\mathcal{T}
 - **集成增强的必要性**：在像素空间是锦上添花，在潜空间是生死攸关——没有增强的 LatentLPIPS 根本无法收敛
 - **预训练权重的多重利用**：教师扩散模型的权重同时用于初始化生成器和判别器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 虽然单步推理极快（0.09秒/图），但**训练成本高昂**：需要预生成数百万 ODE 对 + 64块 A100 训练
 - 多步教师模型在人类偏好评估中仍然被偏好，说明单步蒸馏的上限还有提升空间

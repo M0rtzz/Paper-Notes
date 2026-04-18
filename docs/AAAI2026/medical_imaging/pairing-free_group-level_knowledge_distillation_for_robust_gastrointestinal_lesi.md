@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pairing-free Group-level Knowledge Distillation for Robust Gastrointestinal Lesion Classification in White-Light Endoscopy
 description: >-
@@ -39,11 +39,11 @@ tags:
 
 **核心矛盾**：NBI知识对WLI分类有帮助，但现有蒸馏方法要求配对数据→大量非配对数据被浪费→模型无法充分学习→WLI分类性能受限。
 
-**本文要解决什么？** 利用丰富的非配对NBI和WLI数据实现有效的跨模态知识蒸馏，提升WLI-only的病变分类性能。
+**本文目标** 利用丰富的非配对NBI和WLI数据实现有效的跨模态知识蒸馏，提升WLI-only的病变分类性能。
 
 **切入角度**：不再对齐单个图像，而是将同类病变图像组织成"组"进行组级蒸馏——组内多张图像提供更完整的疾病表征，缓解个体样本的偏差和噪声。
 
-**核心 idea 一句话**：组级蒸馏 = 原型级全局语义对齐（GKD-Pro）+ 密集级局部空间对齐（GKD-Den），无需图像级配对。
+**核心 idea**：组级蒸馏 = 原型级全局语义对齐（GKD-Pro）+ 密集级局部空间对齐（GKD-Den），无需图像级配对。
 
 ## 方法详解
 

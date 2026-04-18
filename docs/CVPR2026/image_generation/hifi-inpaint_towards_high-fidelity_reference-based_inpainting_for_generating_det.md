@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiFi-Inpaint: Towards High-Fidelity Reference-Based Inpainting for Generating Detail-Preserving Human-Product Images
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{Overall}} = \mathcal{L}_{\text{MSE}} + \mathcal{L}_{\text{D
 - **自合成数据管线实用**：利用 FLUX.1-Dev 的一致性生成能力 + 多重自动过滤，低成本构建大规模高质量数据
 - **SSIM-HF 新指标**：对生成图施加高通滤波后再计算 SSIM，能更精准评估细节保持能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对人-产品场景，对更通用的参考图修复（如场景替换、多物体组合）的泛化性未验证
 - HP-Image-40K 基于 FLUX.1-Dev 合成，可能存在生成偏差，与真实数据的差距未充分分析

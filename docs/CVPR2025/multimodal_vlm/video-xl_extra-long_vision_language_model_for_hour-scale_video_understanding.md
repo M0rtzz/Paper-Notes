@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Video-XL: Extra-Long Vision Language Model for Hour-Scale Video Understanding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：长视频需要高压缩比（16× 甚至更高），但预压缩方法在高比率下丢失太多关键信息。
 
-**本文要解决什么？** 利用 LLM 内部的注意力机制做语义感知的 KV 压缩，而非在 LLM 外部做盲目的 token 压缩。
+**本文目标** 利用 LLM 内部的注意力机制做语义感知的 KV 压缩，而非在 LLM 外部做盲目的 token 压缩。
 
 **切入角度**：在视频间插入可学习的 Visual Summarization Token（VST），让 LLM 的注意力机制自然地将视觉信息压缩到 VST 的 KV 中，然后卸载原始视觉 token 的 KV，仅保留 VST KV。
 
-**核心idea一句话**：将视觉 token 压缩从 LLM 外部移到 LLM 内部——用 VST 的 KV 缓存替代原始视觉 KV，利用 LLM 自身的注意力做语义感知压缩。
+**核心 idea**：将视觉 token 压缩从 LLM 外部移到 LLM 内部——用 VST 的 KV 缓存替代原始视觉 KV，利用 LLM 自身的注意力做语义感知压缩。
 
 ## 方法详解
 
@@ -95,7 +95,7 @@ tags:
 - **课程学习是高压缩比的关键**：直接 16× 训练 vs 渐进训练差 4.2 个点
 - **VST 思路可推广**到任何需要长序列压缩的 LLM 应用（如长文档、多图理解）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VST 的 KV 缓存仍需占用内存，极长视频（10+ 小时）可能仍然受限
 - 动态压缩的 CLIP 深度分数计算有额外开销
 - 仅在 7B 模型上验证，更大模型的效果未知

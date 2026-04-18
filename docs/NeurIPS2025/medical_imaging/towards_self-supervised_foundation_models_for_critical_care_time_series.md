@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Self-Supervised Foundation Models for Critical Care Time Series
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}^{\text{Fine}} = -\frac{1}{N_1} \sum_{i=1}^{N_1} [y_i \log(\hat{y}_
 - 巧妙地利用掩码损失处理不规则采样和稀疏数据，避免了对缺失值填充的依赖
 - 在资源受限的临床场景中潜力巨大：标注数据少时预训练优势尤为突出
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用了三个美国ICU数据集，数据多样性有限
 - 模型参数量仅约1M，与NLP/CV领域的基础模型相比规模极小

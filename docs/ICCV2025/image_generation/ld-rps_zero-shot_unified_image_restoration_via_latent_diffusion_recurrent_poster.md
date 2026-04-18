@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LD-RPS: Zero-Shot Unified Image Restoration via Latent Diffusion Recurrent Posterior Sampling
 description: >-
@@ -148,7 +148,7 @@ LD-RPS 是**纯推理方法**，不需要预训练。但推理过程中涉及在
 3. **循环精炼思路简单有效**：借鉴 bootstrap 思想，将单次采样不稳定性转化为多次迭代的稳定性
 4. **真正的统一零样本**：同时满足 task-blind + dataset-free + unsupervised 三个条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度慢**：循环采样 + F-PAM 在线训练使得单张图片处理时间较长
 2. **颜色偏差问题**：在某些场景下仍有色偏，需要质量 loss Q 来约束

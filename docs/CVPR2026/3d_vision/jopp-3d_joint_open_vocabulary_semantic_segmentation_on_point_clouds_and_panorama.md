@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JOPP-3D: Joint Open Vocabulary Semantic Segmentation on Point Clouds and Panoramas
 description: >-
@@ -99,7 +99,7 @@ $$\mathbf{e}_j^{3D} = \frac{1}{K}\sum_{k=1}^{K} \frac{\text{CLIP}(\mathbf{S}_{j,
 - **弱监督超越全监督**: 在 S3DIS 上开放词汇弱监督方法超过所有封闭词汇全监督方法，展示了 VLM 的惊人零样本能力
 - **模块化设计**: 3D实例提取器可灵活替换（Mask3D→SAM3D），适应不同监督条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 严重依赖3D实例提案质量——Mask3D 仍需预训练数据，SAM3D 无监督时性能下降较多
 - 最近邻匹配的3D→全景语义回映在深度估计不准确时可能产生噪声标签

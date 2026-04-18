@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Intrinsic Motivation Shapes Learned Representations in Decision Transformers: A Cognitive Interpretability Analysis
 description: >-
@@ -105,7 +105,7 @@ Medium-Replay数据集：
 - 揭示了一个有趣的生物对应：EDT-SIL和EDT-TIL的互补机制类似于生物神经系统中不同处理阶段维持不同稳态机制的层级组织原则
 - 内在动机作为"表示先验"的观点为设计更好的辅助损失函数提供了新的方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - HNS提升幅度较小（百分之几的量级），统计显著性有待进一步验证
 - 分析框架仅关注嵌入空间的几何属性，未使用显式的可解释性方法（如SHAP、Attention可视化）

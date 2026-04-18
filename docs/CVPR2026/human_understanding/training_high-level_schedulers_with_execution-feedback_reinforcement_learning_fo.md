@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training High-Level Schedulers with Execution-Feedback Reinforcement Learning for Long-Horizon GUI Automation
 description: >-
@@ -113,7 +113,7 @@ CES 作为即插即用模块在不同规模 Executor 上均显著提升：
 4. **即插即用泛化性**：7B Coordinator + 4B State Tracker 的轻量组合即可让不同 Executor 大幅受益，甚至 7B+4B 组合可达到 32B 单模型的效果
 5. **实证验证充分**：时序判断预实验、三个长时序benchmark、多规模Executor泛化、详细消融和失败案例分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Executor 仍是瓶颈**：失败案例分析显示性能瓶颈已转移至 Executor 的感知限制（Perception Error 和 Generalization Failure），CES 无法解决这部分问题
 2. **分阶段训练非联合优化**：Coordinator 和 State Tracker 分开训练，未探索联合训练或协同进化的可能性（论文 Future Work 中提及）

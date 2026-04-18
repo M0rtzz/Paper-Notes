@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis
 description: >-
@@ -145,7 +145,7 @@ Oasis在三种骨干上均带来显著提升：Vicuna +3.1%、Qwen2.5 +1.8%、Ll
 3. **领域可控性**：图像来源直接决定生成数据的领域，无需修改流水线即可生产特定领域数据
 4. **可扩展性强**：数据规模与图像数量线性增长，300K→500K仍有4%的显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖Qwen2.5-VL-72B这样的强MLLM作为数据生成器，小模型生成的数据质量未验证
 - 质量控制中的评分标准需要人工设计，不同领域可能需要调整

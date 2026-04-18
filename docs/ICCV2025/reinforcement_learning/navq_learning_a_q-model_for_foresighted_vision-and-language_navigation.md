@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NavQ: Learning a Q-Model for Foresighted Vision-and-Language Navigation
 description: >-
@@ -121,7 +121,7 @@ NavQ 相比 DUET baseline 全面提升：SR +6.24, SPL +5.16, RGSPL +4.09。RGSP
 - **最短路径 rollout 策略**保证了每个未来节点仅分配给一个候选动作，使 Q-feature 具有区分性——这是关键的设计洞察。
 - **A* 思想在 VLN 中的落地**：GE 对应 g(n)（已走代价），FE 对应 h(n)（预估剩余代价），通过进度监督实现功能分离。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前基于离散导航图，尚未扩展到连续环境。
 - Q-model 的预测仍与 GT Q-feature（上界）有显著差距（SPL 38.89 vs 47.04），提升 Q-model 表达能力是主要改进方向。

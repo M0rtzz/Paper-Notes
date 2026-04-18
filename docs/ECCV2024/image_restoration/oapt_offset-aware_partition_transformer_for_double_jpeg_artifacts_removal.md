@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}_{rec} = \sqrt{\|\hat{I} - I\|^2 + \epsilon^2}, \quad \epsilon = 10
 3. **即插即用的模式聚类**：作为零开销插件可以增强其他 Transformer 方法，实用性强
 4. **单一模型覆盖所有 QF 和偏移**：不需要分别训练，一个模型处理 QF 5-95 和偏移 0-7 的所有组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅处理两次 JPEG 压缩，多次压缩场景未涉及
 - 偏移预测器使用 Round 操作不可微，预训练+冻结的两阶段策略可能不是最优

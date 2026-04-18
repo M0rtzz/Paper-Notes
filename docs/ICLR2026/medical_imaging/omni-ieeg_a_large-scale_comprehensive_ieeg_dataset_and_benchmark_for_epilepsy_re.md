@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Omni-iEEG: A Large-Scale, Comprehensive iEEG Dataset and Benchmark for Epilepsy Research
 description: >-
@@ -122,7 +122,7 @@ $$RR = \sum_{c \in \text{resected}} s_c \Big/ \sum_{c \in \text{all}} s_c$$
 - **TimeConv-CNN 架构设计**：先用 1D 时间卷积压缩 60000 时间点的时频表示，再用 CNN 捕获联合时频特征，高效处理千赫兹级长段 iEEG
 - **临床驱动的评估哲学**：强调单一 AUC 不够，需同时关注 Recall（避免遗漏病理组织）、Specificity（避免过度切除）和手术结局预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - spkHFO 标注仍存在主观性，尽管标注者间一致性很高（$\kappa > 0.9$）
 - 数据集虽涵盖 8 个中心但仍以北美为主，人口统计学多样性不足

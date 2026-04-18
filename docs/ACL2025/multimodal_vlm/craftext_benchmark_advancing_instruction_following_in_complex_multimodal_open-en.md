@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CrafText Benchmark: Advancing Instruction Following in Complex Multimodal Open-Ended World
 description: >-
@@ -110,7 +110,7 @@ CrafText 基于 Craftax（一个类 Minecraft 的开放世界 RL 环境）构建
 - **JAX 实现**：支持大规模并行训练，解决了 RL 训练效率的实际瓶颈
 - **规划增强的价值**：PPO-T+ 的 GPT-4 规划步骤虽简单但有效，暗示未来方向应更多利用 LLM 进行任务分解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集全部使用 AI 生成的指令，缺乏人类编写的指令，可能无法完全捕捉人类语言的细微差别
 - 缺乏真实世界的交互元素，如指令协商、澄清和动态对话

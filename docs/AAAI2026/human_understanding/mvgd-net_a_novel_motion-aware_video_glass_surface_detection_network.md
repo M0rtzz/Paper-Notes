@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MVGD-Net: A Novel Motion-aware Video Glass Surface Detection Network
 description: >-
@@ -156,7 +156,7 @@ $$\mathcal{L} = \alpha \mathcal{L}_P + \mathcal{L}_M$$
 - **数据集贡献**：构建的 MVGD-D 在场景多样性、玻璃位置分布和颜色对比度方面均优于现有 VGSD-D，是有价值的社区资源
 - **NAFNet 简单门控的成功应用**：通道拆分 + 逐元素乘法优雅解决了时空特征不平衡问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅输入三帧**：无法捕捉长期时序依赖，导致检测帧间不一致（如第 4 帧漏检此前一直检测到的区域）
 2. **推理速度较慢**：190.9ms/帧，与 GhostingNet（32.9ms）和 VGSDNet（72.4ms）相比较慢

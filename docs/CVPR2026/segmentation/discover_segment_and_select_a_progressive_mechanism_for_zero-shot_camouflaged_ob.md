@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DSS: Discover, Segment, and Select for Zero-shot Camouflaged Object Segmentation
 description: >-
@@ -90,7 +90,7 @@ $$s_i = \text{corr}(m_i, \text{sim}_i) + (1 - \text{BC}(m_i))$$
 - 三阶段渐进式设计层次清晰，每个阶段的目标明确且可独立评估
 - Zero-shot + training-free的设置使方法具有极强的泛化能力和部署灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖SAM和MLLM两个大模型，推理开销不小(尤其SMS阶段的多次MLLM调用)
 - Leiden聚类和PC精炼假设前景/背景在特征空间可分，对于极度伪装(几乎零特征差异)的场景可能失效
 - MLLM成对比较的Top-K设置和迭代次数影响效率和质量的trade-off，需调参

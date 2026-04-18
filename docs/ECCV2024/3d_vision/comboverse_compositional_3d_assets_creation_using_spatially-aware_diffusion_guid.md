@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ComboVerse: Compositional 3D Assets Creation Using Spatially-Aware Diffusion Guidance
 description: >-
@@ -137,7 +137,7 @@ ComboVerse分为两个阶段：
 3. **SSDS的简洁有效**：仅通过注意力权重的简单缩放即可显著改善空间布局引导，实现代价极低但效果显著
 4. **只优化空间参数不优化几何纹理**：大幅加速了优化过程，同时避免了SDS带来的几何/纹理退化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 适用于2-5个物体的场景，更复杂的场景仍面临挑战
 2. 组合阶段不优化几何和纹理，最终质量受限于backbone单图3D模型的能力

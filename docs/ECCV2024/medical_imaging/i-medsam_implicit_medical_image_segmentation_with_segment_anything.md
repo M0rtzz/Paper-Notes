@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] I-MedSAM: Implicit Medical Image Segmentation with Segment Anything
 description: >-
@@ -58,7 +58,7 @@ I-MedSAM 包含两大部分：
 
 #### 1. 频率适配器 (Frequency Adapter, FA)
 
-**做什么**：从频域提取高频信息增强 SAM 特征，改善分割边界质量。
+**功能**：从频域提取高频信息增强 SAM 特征，改善分割边界质量。
 
 **核心思路**：通过快速傅里叶变换（FFT）将特征转换到频域，提取振幅谱（amplitude spectrum）：
 
@@ -70,7 +70,7 @@ $$\mathcal{F}_{u,v} = \sum_{h=1}^{H}\sum_{w=1}^{W} f_{h,w} \cdot e^{-j2\pi(\frac
 
 #### 2. 粗到细隐式神经表示 (Coarse-to-Fine INR)
 
-**做什么**：将编码器特征和坐标映射为连续分割输出。
+**功能**：将编码器特征和坐标映射为连续分割输出。
 
 **核心思路**：受 NeRF 启发，不使用单阶段 INR，而是两阶段解码：
 
@@ -90,7 +90,7 @@ $$Z^p = Concat(\gamma(p), Interp(Enc_I(X)), Enc_I(P))$$
 
 #### 3. 不确定性引导采样 (Uncertainty Guided Sampling, UGS)
 
-**做什么**：自适应选择需要精细化的像素点，送入精细 INR 解码。
+**功能**：自适应选择需要精细化的像素点，送入精细 INR 解码。
 
 **核心思路**：使用 MC-Dropout 进行 $T$ 次随机前向传播，计算每个像素的预测不确定性（方差）：
 
@@ -196,7 +196,7 @@ $$L_{seg}(o_i, \hat{o}_i) = 0.5 \cdot L_{ce}(o_i, \hat{o}_i) + 0.5 \cdot L_{dc}(
 2. **不确定性驱动的计算分配**：UGS 策略让模型把更多计算资源集中在"真正困难的像素"上，体现了自适应计算的思想
 3. **极致的参数效率**：1.6M 可训练参数超越 126.6M 的 nnUNet，效率比达到 79:1
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前仅验证 2D 医学图像，3D 体积分割（如 CT/MRI 体积数据）的扩展是自然方向
 2. 依赖于粗边界框提示作为输入，自动化程度有限

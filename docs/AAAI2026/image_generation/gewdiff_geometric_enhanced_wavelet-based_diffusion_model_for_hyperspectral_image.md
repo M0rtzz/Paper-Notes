@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GEWDiff: Geometric Enhanced Wavelet-based Diffusion Model for Hyperspectral Image Super-resolution
 description: >-
@@ -152,7 +152,7 @@ $$\mathcal{L} = \lambda(t) \cdot (\lambda_1 \mathcal{L}_{pixel} + \lambda_2 \mat
 - **边缘感知噪声调度**：通过在训练时对边缘区域施加更少噪声，让模型天然更擅长重建边缘，这一思路可推广到其他需要保持结构的生成任务
 - **基于NDVI的mask条件**是针对遥感场景的智巧设计：利用植被指数区分建筑和自然区域，无需额外标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据仅覆盖15个城市，地物多样性可能不足
 - 模型体量较大（4.55GB），测试时间28.7秒，实际部署有挑战

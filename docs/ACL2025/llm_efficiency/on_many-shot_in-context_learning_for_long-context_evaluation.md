@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Many-Shot In-Context Learning for Long-Context Evaluation
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：LongICLBench 等已有 many-shot ICL 基准主要用分类任务，但不清楚这些任务到底在测什么能力。
 
-**本文要解决什么？** (1) 哪些任务从更多示例中获益？(2) 各任务在多大程度上依赖相似样本检索 vs 全样本学习？
+**本文目标** (1) 哪些任务从更多示例中获益？(2) 各任务在多大程度上依赖相似样本检索 vs 全样本学习？
 
 **切入角度**：提出 Sample Learning Ratio (SLR) 指标，量化 ICL 任务对检索 vs 理解的依赖程度。
 
-**核心idea一句话**：many-shot ICL 分类任务实质是检索相似示例，真正的全局理解需要 ASL 任务来评测。
+**核心 idea**：many-shot ICL 分类任务实质是检索相似示例，真正的全局理解需要 ASL 任务来评测。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - 将检索 vs 理解的二分法引入 ICL 评测，框架设计优雅
 - 发现 many-shot ICL 分类≈检索这一 insight 对社区很有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - SLR 基于 BM25 的相似度可能遗漏语义层面的相似性
 - 仅测试了公开模型，缺少最新 GPT-4o/Claude-3.5 在 ASL 上的表现
 - 未探讨示例排序对 SSL vs ASL 的影响

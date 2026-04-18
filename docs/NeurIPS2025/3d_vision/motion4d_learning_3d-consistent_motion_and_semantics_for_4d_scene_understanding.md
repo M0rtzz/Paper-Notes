@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Motion4D: Learning 3D-Consistent Motion and Semantics for 4D Scene Understanding
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \lambda_{\text{rgb}} L_{\text{rgb}} + \lambda_{\text{sem}} L_{\t
 - 提出了DyCheck-VOS基准，填补了动态场景中VOS评估的空白
 - 该方法是第一个在动态场景中同时显著超越2D基础模型和3D方法的工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖底层3D重建质量：严重遮挡、低纹理区域或不准确深度估计会影响性能
 - 需要已知的相机位姿作为输入

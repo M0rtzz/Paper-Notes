@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can RLHF be More Efficient with Imperfect Reward Models? A Policy Coverage Perspective
 description: >-
@@ -156,7 +156,7 @@ True reward：sfairXC/FsfairX-LLaMA3-RM-v0.1（蒸馏自 Llama3-8B）
 4. **标准在线 RLHF 的附带改进**：即使 $W=0$（无 source），纯靠 self-transfer 也能实现 $O(\sqrt{T})$ regret——消除对 $\mathcal{C}(\Pi)$ 的依赖，严格改进现有结果（Corollary 4.5）
 5. **模块化设计**：TPO 的迁移模块可与任意 policy optimization 方法组合，极大增加实用性
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **实验规模有限**：仅在 T5-small (80M) 上验证，未在更大 LLM 上测试
 2. **Reward model 数量少**：仅 4 个 source rewards，未验证 $W$ 很大时的选择效率

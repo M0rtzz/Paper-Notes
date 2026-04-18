@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Language-Centric Omnimodal Representation Learning
 description: >-
@@ -101,7 +101,7 @@ LCO-Emb 的核心思路非常简洁：取出 MLLM 的语言解码器（LLM），
 - **LoRA 的新视角**：LoRA 的核心价值不是参数效率，而是对预训练知识和跨模态对齐的最小扰动
 - **极致的数据效率**：仅 27.6 万文本对即可超过使用 800 万多模态数据的 GME
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 表示能力受限于底层 MLLM 的生成能力——如果基座模型在某些模态上生成能力弱，对比微调也无法弥补
 - 纯文本变体在聚类和零样本分类上仍落后于 CLIP-style 编码器模型

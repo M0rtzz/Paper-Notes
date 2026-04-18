@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LC-Opt: Benchmarking Reinforcement Learning and Agentic AI for End-to-End Liquid Cooling Optimization in Data Centers
 description: >-
@@ -155,7 +155,7 @@ RL 奖励函数设计为多目标优化：
 4. **开放环境**：将详细的液冷模型向 ML 社区开放，降低研究门槛
 5. **多学科交叉**：融合 RL、多智能体系统、LLM 和热力学工程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Sim-to-Real 差距**：数字孪生虽然高保真，但与真实系统仍有差距，需要领域适应
 2. **计算开销**：Modelica 模型的仿真速度可能限制 RL 训练效率

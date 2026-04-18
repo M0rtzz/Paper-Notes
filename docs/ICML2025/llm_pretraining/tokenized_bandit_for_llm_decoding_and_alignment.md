@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tokenized Bandit for LLM Decoding and Alignment
 description: >-
@@ -156,7 +156,7 @@ $$|u(x_t, \mathbf{y}:\tau) - u(x_t, \mathbf{z}:\tau)| \leq |u(x_t, \mathbf{y}) -
 4. **Level-k 遗憾 + 虚拟扩展**：巧妙的递归分析技巧避开了序列空间的指数爆炸
 5. **实用价值**：EOFUL 可在推理时在线学习用户偏好，无需微调 LLM，适合个性化对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **EOFUL 依赖线性可实现假设和 Assumption 3.6**：实际 LLM 的效用函数可能是非线性的，线性近似能力有限
 2. **GreedyETC 遗憾阶为 $T^{2/3}$**：不如 TLB 的 $\sqrt{T}$，能否在 TMAB 下也达到 $\sqrt{T}$ 是开放问题

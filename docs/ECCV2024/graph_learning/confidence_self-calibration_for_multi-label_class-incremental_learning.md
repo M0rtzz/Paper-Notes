@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Confidence Self-Calibration for Multi-Label Class-Incremental Learning
 description: >-
@@ -124,7 +124,7 @@ G → S (Softmax) 组合最优(mAP 72.8%)，优于固定统计 CM 的 Z → Z (6
 - **实验结果压倒性**：无 buffer 的 CSC 甚至超越有 20/class buffer 的 SOTA
 - **鲁棒性强**：在不同场景(步长大小)间性能波动极小
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 MS-COCO (80类) 和 VOC (20类) 上验证，未测试更大规模数据集（如 Open Images）
 - 骨干网络基于 CNN (TResNetM)，未探索 Vision Transformer 架构下 CI-GCN 的适配

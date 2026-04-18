@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continuous Degradation Modeling via Latent Flow Matching for Real-World Super-Resolution
 description: >-
@@ -149,7 +149,7 @@ DegFlow 合成的训练集让 HAT 达到 30.86 dB，**超越了使用真实 ×3 
 - **残差潜空间设计**：通过 HR 跳接使潜码只编码退化信息，大幅简化了 FM 模型的学习任务。
 - **LPIPS Taylor 近似**：为无 GT 的中间尺度提供感知监督的巧妙方案。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练依赖真实配对数据集（RealSR），如果目标域相机与训练域差异大可能泛化不佳。
 2. RAE 的空间压缩因子 r 需要权衡计算成本和细节保留。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RLVR-World: Training World Models with Reinforcement Learning
 description: >-
@@ -112,7 +112,7 @@ RLVR-World 将不同模态的世界模型统一到自回归序列建模框架下
 - 用 iVideoGPT 的压缩 tokenizer 解决视频序列长度爆炸问题，使 GRPO 在视频模态上可行
 - Real2Sim 策略评估实验展示了实际应用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RLVR 训练通常几百步就收敛，性能天花板受限于基础模型能力
 - test-time scaling 存在上限：N 增大时 base model 可以追上 RLVR

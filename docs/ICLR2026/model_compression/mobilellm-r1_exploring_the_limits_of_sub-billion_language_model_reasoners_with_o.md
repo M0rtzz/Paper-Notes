@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MobileLLM-R1: Exploring the Limits of Sub-Billion Language Model Reasoners with Open Training Recipes
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 数据-模型协同进化的收敛行为优美：影响力分布逐步压缩到零，说明数据信息已被充分利用
 - 完全开源训练配方和数据源，高度可复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LOO分析需要为每个数据源单独训练模型，成本较高
 - 影响力分数计算依赖AutoMixer的Hessian近似，可能引入误差
 - 小于360M的模型推理能力仍然很弱，存在规模下限

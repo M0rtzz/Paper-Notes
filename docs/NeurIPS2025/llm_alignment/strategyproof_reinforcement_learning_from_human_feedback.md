@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Strategyproof Reinforcement Learning from Human Feedback
 description: >-
@@ -125,7 +125,7 @@ $$\text{SubOpt}(\hat{\pi}) \leq const \cdot \left(\sqrt{\frac{d\log(k/\delta)}{k
 4. **优雅的降级**：当样本量和标注者数量增加时，算法自然收敛到最优政策
 5. **实际意义**：随着 LLM 被更多使用，标注者的策略性操纵是真实威胁，本文为此提供了理论基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **线性奖励函数假设**：实际偏好可能高度非线性，推广到非线性奖励是重要方向
 2. **Bradley-Terry 模型假设**：更一般的偏好模型（如 Plackett-Luce）下的分析

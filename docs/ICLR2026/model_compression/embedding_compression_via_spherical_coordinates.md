@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embedding Compression via Spherical Coordinates
 description: >-
@@ -99,7 +99,7 @@ tags:
 - 完全无需训练、无 codebook，适用于任何产出单位向量的嵌入模型
 - 球坐标直接相似度计算开辟了流式检索的可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅适用于 float32 嵌入，BF16（8-bit 尾数）或 INT8 需要不同的策略
 - 压缩率 1.5× 虽然超越无损方法，但与有损量化（4-32×）仍有数量级差距

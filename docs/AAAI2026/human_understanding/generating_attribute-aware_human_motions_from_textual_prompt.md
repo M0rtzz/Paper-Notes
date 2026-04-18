@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generating Attribute-Aware Human Motions from Textual Prompt
 description: >-
@@ -168,7 +168,7 @@ AttrMoGen 将 FID 从 MoMask 的 0.245 大幅降低到 0.089（-63.7%），MM-Di
 - **HumanAttr 数据集**是重要的社区贡献（640 受试者，年龄跨度 5-88）
 - 与风格化运动生成（style-based）的本质区别：风格是主观意图（骄傲/沮丧），属性是客观生物力学特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 属性标签离散化（4 个年龄组/2 个性别），丢失了连续属性信息
 - HumanAttr 中年龄分布不均匀（年轻成人占多数），极端年龄组（5-18, 60-88）的数据较少

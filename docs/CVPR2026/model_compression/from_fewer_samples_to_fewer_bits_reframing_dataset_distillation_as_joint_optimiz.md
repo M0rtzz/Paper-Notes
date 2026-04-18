@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Fewer Samples to Fewer Bits: Reframing Dataset Distillation as Joint Optimization of Precision and Compactness
 description: >-
@@ -103,7 +103,7 @@ QuADD 在 10.6× 压缩比下精度仅比全精度基线低约 1%，大幅优于
 - **实用价值高**：在边缘计算和分布式学习场景下，10× 以上的存储压缩且精度损失极小
 - **实现轻量**：自适应量化仅引入一个可学习参数 $\alpha$，不增加训练开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验主要在 CIFAR 和小规模数据集上验证，缺乏 ImageNet 等大规模数据集的结果
 - APoT 非均匀量化的 bit-width 分解方式 $n = b/k$ 要求 $b$ 为 $k$ 的整数倍，灵活性受限

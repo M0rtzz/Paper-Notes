@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Emulator Superiority: When Machine Learning for PDEs Surpasses its Training Data
 description: >-
@@ -137,7 +137,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{u \sim \mathcal{D}} \left[ \| f_\theta(u) - 
 - **对评估范式的深远影响**：如果模拟器可以超越训练求解器，那么用训练求解器评估就是错误的。这意味着社区需要引入独立的高精度参考解作为评估 ground truth。
 - **实验设计的简洁与完备**：从解析的两参数模型到五种主流深度架构，从三种线性 PDE 到非线性 Burgers 方程，论证层层递进。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论仅覆盖线性 PDE**：Fourier 分析框架依赖线性叠加原理，对非线性 PDE 只能给出实验验证而非严格证明
 2. **一维问题为主**：实验主要在 1D 空间进行，2D/3D 复杂几何下的 superiority 行为尚需研究

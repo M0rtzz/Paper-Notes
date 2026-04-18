@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Query-Guided Spatial-Temporal-Frequency Interaction for Music Audio-Visual Question Answering
 description: >-
@@ -47,25 +47,25 @@ QSTar 由三个核心模块组成：(1) Query-Guided Multimodal Correlation（QG
 
 **1. Query-Guided Multimodal Correlation (QGMC)**
 
-- **做什么**：在流程早期就用问题语义引导音频和视觉特征的精炼，而非等到最后才融入
+- **功能**：在流程早期就用问题语义引导音频和视觉特征的精炼，而非等到最后才融入
 - **核心思路**：分三步——Self-enhancing（各模态自注意力增强内部关系）→ Capturing（词级文本特征作为 Query，通过交叉注意力从视觉/音频中捕获共享语义 $F_{qv}, F_{qa}$）→ Propagating（聚合的 query-guided 语义上下文 $F_{qg}$ 通过交叉注意力反向传播回视觉和音频流）
 - **设计动机**：问题通常只关注一两个乐器，早期引入问题信息能使模型聚焦于语义相关的音频-视觉特征，避免冗余表示
 
 **2. Spatial-Temporal Interaction (STI)**
 
-- **做什么**：利用 patch 级视觉特征和音频特征进行空间-时序交互
+- **功能**：利用 patch 级视觉特征和音频特征进行空间-时序交互
 - **核心思路**：空间交互——patch 级视觉特征通过交叉注意力与 query-guided 音频特征对齐，定位发声区域；时序交互——视觉和音频 query-guided 特征通过点积 + softmax 计算时序注意力，捕获全局时序依赖
 - **设计动机**：视频既有空间维度（哪里在发声）又有时序维度（何时在发声），需要分别建模并融合
 
 **3. Temporal-Frequency Interaction (TFI)**
 
-- **做什么**：利用 Audio Spectrogram Transformer (AST) 提取频率感知特征，通过频率注意力机制增强音频表示
+- **功能**：利用 Audio Spectrogram Transformer (AST) 提取频率感知特征，通过频率注意力机制增强音频表示
 - **核心思路**：(1) AST 提取时频表示 $F_{ast} \in \mathbb{R}^{T \times F \times D}$；(2) 将 AST 特征在时间维度聚合得到频率表示；(3) 结合问题嵌入计算频率注意力权重 $a_f$，突出与问题相关的频带；(4) 加权后的 AST 特征与 query-guided 音频特征通过卷积融合
 - **设计动机**：相似视觉外观的乐器（如长笛和单簧管）在频域上有截然不同的泛音和谐波分布，频域分析能提供视觉和时域特征无法捕获的辨别线索
 
 **4. Query Context Reasoning (QCR)**
 
-- **做什么**：通过 prompt 机制注入任务相关的语言上下文用于最终推理
+- **功能**：通过 prompt 机制注入任务相关的语言上下文用于最终推理
 - **核心思路**：编码乐器相关属性关键词（类型、表演时长、位置、时序、响度）为 prompt 嵌入 $F_{prompt}$，与句子级问题嵌入拼接后通过自注意力产生 query context $F_{qc}$，再用交叉注意力引导视觉和音频特征的最终精炼
 - **设计动机**：不同问题类型关注不同方面，prompt 提供聚焦的任务约束，帮助模型精确推理
 
@@ -117,7 +117,7 @@ QSTar 在总体准确率上超越前 SOTA QA-TIGER 1.36%，在 Audio QA 上超 2
 - **频率注意力机制**巧妙地利用问题文本过滤频谱，使模型能聚焦于与问题相关的频带
 - 长笛演奏的案例分析非常直观：视觉上几乎看不到动作变化，但频谱中高频段的减弱清晰标志着停止演奏
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖预训练特征提取器**：CLIP、VGGish、AST 均为冻结预训练模型，端到端微调可能进一步提升
 2. **仅在音乐场景验证**：MUSIC-AVQA 限于音乐场景，对更一般的 AVQA 场景（对话、自然声音）的泛化有待验证

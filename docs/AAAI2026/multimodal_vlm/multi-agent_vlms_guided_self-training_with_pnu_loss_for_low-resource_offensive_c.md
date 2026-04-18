@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Agent VLMs Guided Self-Training with PNU Loss for Low-Resource Offensive Content Detection
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}_{\text{pnu}} = \begin{cases} (1-\gamma) \cdot (\mathcal{L}_{\text{
 3. **轻量级部署**：最终推理只需CLIP-Large（428M参数），VLM仅用于训练阶段的伪标签生成，兼顾了性能和效率
 4. **伪标签分析揭示了ground truth标注错误**：说明多方共识可能比人工标注更可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 依赖Qwen72B进行伪标签验证，训练阶段仍需大模型推理资源
 2. 每轮固定选择Top-k=500，未自适应调整选择数量
 3. γ需要针对每个数据集手动调优，缺乏自动选择机制

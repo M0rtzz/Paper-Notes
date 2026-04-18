@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prof. Robot: Differentiable Robot Rendering without Static and Self-Collisions
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：将碰撞检测可微化——用签名距离函数（SDF）表示障碍物和机器人各连杆，碰撞约束 $\max(0, d_{safe} - \text{SDF}(p))$ 自然可微，可以与渲染损失联合优化。
 
-**核心idea一句话**：3DGS 可微渲染 + SDF 碰撞约束 + 自碰撞检测 = 物理可行的可微机器人规划。
+**核心 idea**：3DGS 可微渲染 + SDF 碰撞约束 + 自碰撞检测 = 物理可行的可微机器人规划。
 
 ## 方法详解
 
@@ -68,7 +68,7 @@ $\mathcal{L} = \mathcal{L}_{render} + \lambda_1 \mathcal{L}_{static} + \lambda_2
 - **首次将碰撞安全引入可微渲染**——填补了视觉优化和物理可行性之间的空白
 - **SDF 约束的可微性**——让碰撞检测无缝融入基于梯度的优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 胶囊体近似连杆几何可能不够精确
 - SDF 环境需要预先构建
 - 仅在静态/慢速场景验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConGeo: Robust Cross-View Geo-Localization Across Ground View Variations
 description: >-
@@ -110,7 +110,7 @@ ConGeo 在 Random Zooming (68.7% vs 基线 48.2%)、Gaussian Noise (45.8% vs DA 
 4. **对比学习 > 数据增强**：系统性证明了对比目标优于简单数据增强，尤其在未见变换上泛化能力远超 DA
 5. **训练高效**：仅需单张 RTX 4090，60 个 epoch 即可完成训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **北对齐性能小幅下降**：ConGeo 在北对齐设定下 R@1 从 98.7% 降至 98.3%，这是打破空间捷径的代价，但在实际应用中朝向通常未知
 2. **训练 FoV 选择敏感**：训练时固定 $\alpha = 180°$，虽然在不同 FoV 上均表现良好，但未探索自适应 FoV 采样策略

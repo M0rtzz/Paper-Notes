@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Flow Matching-Based Autonomous Driving Planning with Advanced Interactive Behavior Modeling
 description: >-
@@ -130,7 +130,7 @@ Val14 上 **90.43** 是首个纯学习方法突破 90 分。
 - **细粒度轨迹 token 化 + 重叠一致性 loss** 解决了单 token vs 逐步 token 的两难——既避免了过度压缩又防止了误差累积。
 - **Scale-adaptive attention** 引入空间距离先验到 attention score——直觉上正确（远处车影响小），实现上简洁（只需一个可学习标量 + 距离矩阵偏移）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 nuPlan 的处理好的感知输入（矢量化），未端到端处理原始传感器数据。
 - CFG scale $\omega$ 需要手动调节，缺乏自适应机制。
 - 未建模行人/骑行者意图的不确定性——Jaywalk 场景虽然大幅提升但绝对分数仍不高（43.57）。

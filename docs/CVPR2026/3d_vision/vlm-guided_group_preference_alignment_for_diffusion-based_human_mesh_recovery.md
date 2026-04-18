@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VLM-Guided Group Preference Alignment for Diffusion-based Human Mesh Recovery
 description: >-
@@ -176,7 +176,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{m} \sim \mathcal{G}_{\text{HMR}}, t,
 3. **无需3D真值的野外微调**：仅靠评判代理的相对偏好信号即可在InstaVariety等野外数据上有效微调，突破了HMR依赖高质量3D标注的瓶颈
 4. **UCB探索策略**：规则检索借鉴多臂老虎机的UCB策略，自动平衡已验证规则的利用与新规则的探索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **VLM推理成本**：使用Qwen3-VL-32B作为评判代理，构建偏好数据集时推理成本较高，限制了大规模应用
 2. **评判代理的探索阶段依赖GT**：规则学习和验证仍需合成/实验室数据的3D真值，评判能力可能受探索数据分布影响

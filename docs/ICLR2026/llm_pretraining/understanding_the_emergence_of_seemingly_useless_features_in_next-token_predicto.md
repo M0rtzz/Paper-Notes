@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding the Emergence of Seemingly Useless Features in Next-Token Predictors
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：NTP 目标只提供关于"下一个 token"的监督信号，但模型学到了关于"全局状态"和"未来 token"的特征。梯度信号是如何"穿越"只优化即时预测的目标函数，驱动这些跨位置特征的学习的？
 
-**本文要解决什么？** 从梯度信号的信息流视角解释 NTP-useless 特征的涌现机制。具体地：(a) 梯度信号通过什么路径到达参数？(b) 哪些路径负责学习"无用"特征？(c) 能否量化每种机制的贡献？
+**本文目标** 从梯度信号的信息流视角解释 NTP-useless 特征的涌现机制。具体地：(a) 梯度信号通过什么路径到达参数？(b) 哪些路径负责学习"无用"特征？(c) 能否量化每种机制的贡献？
 
 **切入角度**：利用因果遮蔽 Transformer 的计算图结构，将梯度信号分解为三种独立路径，发展干预（消融机制观察影响）和归因（量化每种机制的影响力）两种分析方法。
 
-**核心idea一句话**：NTP-useless 特征通过 pre-caching（未来位置的损失信号通过注意力回传）和 circuit sharing（参数共享导致跨位置特征迁移）两种机制从 NTP 目标中涌现。
+**核心 idea**：NTP-useless 特征通过 pre-caching（未来位置的损失信号通过注意力回传）和 circuit sharing（参数共享导致跨位置特征迁移）两种机制从 NTP 目标中涌现。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ Conditioned Majority 需要类似 induction head 的两层注意力构造，myop
 - **三分解的普适性**：direct/pre-cached/shared 分解基于因果遮蔽 Transformer 的计算图结构，适用于所有 autoregressive model。以此为骨架可以分析任何特征的成因
 - **OthelloGPT 世界模型脆弱性的因果解释**：之前只知道"世界模型脆弱"，现在知道"因为 NTP-useless 的棋盘格子只有 pre-cached 和 shared 信号，缺乏 direct 信号"。这是第一个给出统计上显著的因果归因
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **归因方法计算成本高**：需要完整重训一次模型并在每步计算三个梯度成分，对大模型不可行
 - **$Q(w)$ 指标只是近似**：只在训练后模型的局部区域有效，不代表整个训练轨迹的积分影响
 - **Toy 任务与真实 LLM 的差距**：主要实验在小型模型上完成，大模型分析仅限于 $Q(w)$ 这一间接指标

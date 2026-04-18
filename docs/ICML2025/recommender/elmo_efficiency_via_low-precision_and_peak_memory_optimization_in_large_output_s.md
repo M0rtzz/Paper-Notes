@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ELMO: Efficiency via Low-precision and Peak Memory Optimization in Large Output Spaces
 description: >-
@@ -159,7 +159,7 @@ ELMO 将梯度计算与 SGD 更新融合进单个 Triton 内核，全程在 SRAM
 - **8.6M 标签新数据集**：LF-Paper2Keywords-8.6M 是目前最大的公开 XMC 基准，有助于推动领域发展
 - **6x 显存降低且精度不损**：6.6 GiB vs 39.7 GiB，意味着从 A100-80G 降级到消费级 GPU 即可训练百万标签模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了 BERT-base 编码器**：更大的编码器（如 BERT-large、DeBERTa-v3）下的表现未知
 2. **FP8 训练依赖 Hopper/Ada/Blackwell GPU**：E4M3 硬件加速仅限较新的 GPU 架构

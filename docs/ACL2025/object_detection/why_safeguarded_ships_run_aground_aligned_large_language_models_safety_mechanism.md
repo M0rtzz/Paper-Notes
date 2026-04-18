@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Why Safeguarded Ships Run Aground? Aligned Large Language Models' Safety Mechanisms Tend to Be Anchored in The Template Region
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**: LLM在用户输入和模型输出之间插入固定template（如`<|start_header_id|>assistant<|end_header_id|>`），template区域位于输出前的关键位置，可能被安全机制当作"捷径"（shortcut）。
 
-**本文要解决什么**: 验证安全机制是否锚定在template区域，分析这种锚定如何导致越狱漏洞，并探索将安全机制从template区域"解耦"的防御方法。
+**本文目标**: 验证安全机制是否锚定在template区域，分析这种锚定如何导致越狱漏洞，并探索将安全机制从template区域"解耦"的防御方法。
 
 **切入角度**: 从mechanistic interpretability出发，通过attention分析和activation patching进行因果验证。
 
-**核心idea一句话**: LLM的安全决策过度依赖template区域聚合的信息，攻击者通过干扰该区域即可绕过安全防线。
+**核心 idea**: LLM的安全决策过度依赖template区域聚合的信息，攻击者通过干扰该区域即可绕过安全防线。
 
 ## 方法详解
 
@@ -83,7 +83,7 @@ tags:
 - **TempPatch的启示**: 仅干预template区域（不修改instruction）就能破坏安全性，这比传统越狱攻击更本质地揭示了漏洞来源
 - **Llama-3的反直觉发现**: Llama-3对传统攻击很鲁棒（AIM ASR=0%），但TempPatch仍能达到95%，说明其"强安全性"可能更多是shortcut-based的
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 防御方法是推理时的activation steering，未修改模型本身，不能从根本消除学到的安全捷径
 - 仅在白盒模型上可行，黑盒模型无法进行TempPatch攻击
 - 未验证TASA在所有安全对齐LLM上的普遍性，某些训练策略可能已无意中缓解了TASA

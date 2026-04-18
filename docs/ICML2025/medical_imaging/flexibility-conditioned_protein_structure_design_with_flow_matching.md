@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Flexibility-conditioned Protein Structure Design with Flow Matching
 description: >-
@@ -168,7 +168,7 @@ BackFlip 在 ATLAS 测试集上达到 0.80 的 Pearson 相关系数，接近 MD 
 5. **极低的参数量**：BackFlip 仅 0.68M 参数却达到接近 MD 的预测精度，展现了几何先验的强大归纳偏置
 6. **实际速度提升**：相比 MD 模拟（~10000 秒），BackFlip 仅需 0.6 秒，使大规模筛选成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **柔性标注依赖 BackFlip 而非真实 MD**：FliPS 训练数据的柔性标签来自 BackFlip 预测而非 MD 模拟，引入了预测器误差的传播
 2. **蛋白质长度限制**：训练数据主要覆盖 60-512 残基，更大蛋白质的泛化性未验证

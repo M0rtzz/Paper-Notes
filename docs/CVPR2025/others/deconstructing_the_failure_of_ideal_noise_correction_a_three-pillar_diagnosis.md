@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deconstructing the Failure of Ideal Noise Correction: A Three-Pillar Diagnosis
 description: >-
@@ -126,7 +126,7 @@ tags:
 5. **"梯度软化是幻觉"是深刻洞察**：FC的中间态表面上在纠正，但最终不可避免地被吸引到病理硬顶点
 6. **信息缩放实验是巧妙验证**：通过增加每样本信息量（多标签），直接验证Theorem 4.4的预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **诊断优于处方**：FEC/JEC虽有效但较简单，未充分利用三支柱分析设计更优方法
 2. **FEC在低噪声和大类数场景下有时不如CE**（CIFAR-100 20%：60.5 < 62.0）

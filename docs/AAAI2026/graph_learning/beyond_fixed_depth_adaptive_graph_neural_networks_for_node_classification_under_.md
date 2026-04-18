@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Fixed Depth: Adaptive Graph Neural Networks for Node Classification Under Varying Homophily
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \mathcal{L}_{\text{re
 4. **快速变体实用性强**：AD-GNN_fast 以极低的额外开销实现接近完整版的性能
 5. **副产品：缓解过平滑**：自适应深度机制天然地阻止了冗余聚合层对信号的过度平滑
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **理论假设较强**：CSBM 结构 + 高斯特征 + 二分类 + 层间独立假设，与真实图存在差距
 2. **快速变体的度同配性假设**：AD-GNN_fast 依赖度同配性（高度连高度），在度与标签无关的图上可能失效
 3. **超参数 $\lambda$**：需针对同配/异配图分别调整（同配图 $\lambda=0$ 最优，异配低度图需 $\lambda > 0$），未来可考虑数据驱动学习

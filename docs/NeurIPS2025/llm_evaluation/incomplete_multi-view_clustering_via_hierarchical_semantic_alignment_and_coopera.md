@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Incomplete Multi-view Clustering via Hierarchical Semantic Alignment and Cooperative Completion
 description: >-
@@ -106,7 +106,7 @@ HSACC包含三个模块：
 - **消除误差传播**：联合优化补全和聚类，补全过程利用判别性特征引导
 - 在5个数据集上全面超越9个SOTA方法，统计显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅实验了两视图场景，多视图（>2）的泛化性需进一步验证
 - MLP用于跨视图推断的非线性映射可能不足以处理复杂关系

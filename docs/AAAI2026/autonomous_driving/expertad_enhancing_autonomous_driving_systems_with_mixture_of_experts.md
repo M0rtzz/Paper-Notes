@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ExpertAD: Enhancing Autonomous Driving Systems with Mixture of Experts
 description: >-
@@ -143,7 +143,7 @@ $$\mathcal{L}_{switch} = N \cdot \sum_{i=1}^N f_i \cdot \mathcal{P}_i$$
 - 三类专家配备不同稀疏注意力机制，体现了对各任务特性的深入理解：环境→局部块、车辆状态→滑动窗口、导航→全局 TopK
 - 即插即用的设计使其可直接增强 UniAD、VAD、VADv2 等多种基线，通用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 专家数量（8个）和Top-K 值需要手动设定，可探索自适应专家选择
 - 参数量增加（UniAD 89M→125M），尽管 GFLOPs 和延迟下降，但部署时内存开销增加

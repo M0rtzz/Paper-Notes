@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Flexible Perception with Visual Memory
 description: >-
@@ -148,7 +148,7 @@ JFT memory 在 IN-R、IN-Sketch 上大幅超越 linear probe；Gemini re-ranking
 
 支持通过删除低质量/冗余样本进行 memory 压缩，以及追溯每个预测的数据来源（data attribution），实现可解释分类。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **表示与知识未完全解耦**：如果编码器本身在需要遗忘的数据上训练过，则"删除 memory"并不能完全消除影响
 2. **仅验证分类任务**：检测、分割、生成等其他视觉任务的 Visual Memory 方案未探索

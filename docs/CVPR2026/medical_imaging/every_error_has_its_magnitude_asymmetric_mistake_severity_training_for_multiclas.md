@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Every Error has Its Magnitude: Asymmetric Mistake Severity Training for Multiclass Multiple Instance Learning
 description: >-
@@ -117,7 +117,7 @@ PAMS 在所有指标上取得最优，AsCC 和 AsMC 提升最为显著。In-hous
 - **指标创新**：AsCC/AsMC 弥补了现有对称指标无法区分误分类方向的缺陷，适用于所有安全关键分类任务
 - **广泛通用性**：方法在 BRACS、In-house 医学数据及 CIFAR-10 自然图像上均有效，与多种 MIL 架构兼容
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 层次结构需人工预定义，依赖领域专家知识，不同疾病可能需要不同的层次设计
 - MSCE 中的 $\alpha$ 和 $P$ 超参数选择需要调优，论文将敏感性分析放在补充材料中

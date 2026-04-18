@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distributionally Robust Classification for Multi-Source Unsupervised Domain Adaptation
 description: >-
@@ -136,7 +136,7 @@ $$\sup_{\beta} \mathbb{E}_{\hat{P}_X^{\text{tg}}} \left[ \sup_{\|z' - z(X)\|_2 \
 3. **即插即用**：可与CDAN、STAR等现有UDA方法无缝结合，作为后处理鲁棒化模块
 4. **单源到多源的统一**：通过子采样巧妙将单源问题转化为多源框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验仅覆盖视觉基准（数字识别、spurious correlation），未验证NLP或时序数据
 2. 需要小量标签目标验证数据进行超参数选择（虽然LODO-CV可替代）

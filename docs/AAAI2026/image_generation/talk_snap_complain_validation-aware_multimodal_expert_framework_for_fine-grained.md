@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Talk, Snap, Complain: Validation-Aware Multimodal Expert Framework for Fine-Grained Customer Grievances
 description: >-
@@ -121,7 +121,7 @@ Validation MoE带来 **+8.2%** Aspect准确率提升（73.74%→81.94%）。
 - **可学习语义对齐分数**：动态SAS优于静态cosine相似度，自适应调节跨模态权重
 - **新数据集CIViL**：2,004段标注对话+4,478张图片，填补多模态对话投诉理解的数据空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据规模有限**：仅2,004段Apple Support对话，领域覆盖单一
 - **类别不均衡严重**：Software类占82.9%（1,662/2,004），Price仅23例，影响泛化

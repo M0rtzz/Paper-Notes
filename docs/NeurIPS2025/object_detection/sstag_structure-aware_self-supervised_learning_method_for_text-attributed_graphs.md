@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SSTAG: Structure-Aware Self-Supervised Learning Method for Text-Attributed Graphs
 description: >-
@@ -105,7 +105,7 @@ SSTAG 包含三个核心模块：（1）统一图任务 (UGT) 模块——基于
 - **双重蒸馏设计**巧妙：教师模型获取完整的 LM+GNN 能力，学生模型通过 PPR 注入结构信息，推理时仅需 LM+MLP，大幅降低部署成本
 - **内存库机制**新颖，为跨域图学习提供了不变知识锚定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预训练仅在 ogbn-Paper100M（引文网络）上进行，对非引文结构（如社交网络、分子图）的泛化有待验证
 - 学生模型通过 PPR 得分隐式注入结构，丢失了部分精确拓扑信息

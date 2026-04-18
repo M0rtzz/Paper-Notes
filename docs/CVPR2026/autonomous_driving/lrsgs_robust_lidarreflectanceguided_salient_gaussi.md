@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LR-SGS: Robust LiDAR-Reflectance-Guided Salient Gaussian Splatting for Self-Driving Scene Reconstruction
 description: >-
@@ -76,7 +76,7 @@ tags:
 - **显著变换策略**：允许Non-Salient和Salient状态双向转换，使得即使LiDAR未覆盖的区域也能通过SfM点升级产生Salient Gaussian
 - **RGB-反射率Joint Loss**：通过梯度方向和幅值对齐实现跨模态一致性，比简单的像素级约束更精确地锐化了材质边界
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在Waymo数据集上验证，未涉及nuScenes等其他自动驾驶数据集
 - 反射率校准依赖法线估计（需邻域点），在点云稀疏区域可能不准确
 - 场景编辑（替换/删除物体）功能仅展示了定性结果，缺乏定量评估

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NOTAM-Evolve: A Knowledge-Guided Self-Evolving Optimization Framework with LLMs for NOTAM Interpretation
 description: >-
@@ -182,7 +182,7 @@ NOTAM-Evolve 相比基础模型提升 **30.4%**（0.458 → 0.762），AVG接近
 4. **航空安全的实际价值**：7B模型可本地部署，解决了航空领域对闭源API的安全和成本顾虑
 5. **数据集贡献**：10,000条专家标注、高一致性（α=0.96）的NOTAM数据集本身对社区有独立价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本随迭代增长**：尽管有三种机制抑制，迭代优化的偏好对数仍近似 $O(t^2)$ 增长
 2. **NOTAM标注的固有困难**：即使专家标注也难以保证完美准确，可能限制性能上限

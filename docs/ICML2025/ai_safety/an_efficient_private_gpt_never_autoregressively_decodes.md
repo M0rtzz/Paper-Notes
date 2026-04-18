@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Efficient Private GPT Never Autoregressively Decodes
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：安全解码的延迟对输入长度不敏感——forward 1 个 token 和 forward 8 个 token 延迟几乎相同（仅 1.2×），但标准方法每步只处理 1 个 token。
 
-**本文要解决什么**：如何利用这一特性，在保证同等隐私的前提下加速安全 GPT 解码？
+**本文目标**：如何利用这一特性，在保证同等隐私的前提下加速安全 GPT 解码？
 
 **切入角度**：借鉴投机解码（Speculative Decoding），用公开模型生成多个草稿 token，一次性安全前向验证，多个token被接受即可减少总解码步数。
 
@@ -101,7 +101,7 @@ POST 分为在线阶段和离线阶段：
 - 方法无需修改私有模型，即插即用，与现有安全推理框架兼容
 - 随着公开模型能力不断提升（如开源 LLM 快速进步），POST 的加速效果会自然增长
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 客户端仍需部署一个公开模型，对端侧资源有一定要求
 - 知识蒸馏需要一次离线训练过程
 - 当前仅在 encoder-decoder（T5）和 decoder-only（Vicuna/LLaMA）架构上验证

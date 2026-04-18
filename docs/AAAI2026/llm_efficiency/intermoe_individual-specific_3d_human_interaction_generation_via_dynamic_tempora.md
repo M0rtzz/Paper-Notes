@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InterMoE: Individual-Specific 3D Human Interaction Generation via Dynamic Temporal-Selective MoE
 description: >-
@@ -102,7 +102,7 @@ FID 降低：InterHuman -9%（从 5.149 降至 4.677），InterX -22%（从 0.46
 - Dynamic Temporal Selection 通过可学习偏置实现的"弹性容量"机制很实用——不同于固定 Top-K 的刚性选择，偏置的自适应更新让系统在训练过程中自动发现最优容量分配。这个设计也可以推广到视频生成等其他有时间非均匀重要性的任务
 - Batch-level 路由策略值得关注——让路由器能感知整个 batch 中不同噪声水平的样本差异，这是扩散模型 MoE 的一个关键设计考量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在双人交互上验证，能否扩展到多人（3+）交互场景未知——多人交互的组合复杂度会急剧增加
 - Synergistic Router 的融合权重 $\alpha=0.5$ 是固定的，可以学习自适应权重，让模型根据任务自动调整语义和运动学信号的相对重要性
 - 评价指标（FID、R-Precision）可能无法完全反映个体特征保持的质量——需要设计更针对性的身份一致性指标（如计算同一角色在序列中的动作风格一致性）

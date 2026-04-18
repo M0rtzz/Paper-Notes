@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAQ-SAM: Semantically-Aligned Quantization for Segment Anything Model
 description: >-
@@ -160,7 +160,7 @@ $$T_i^k = \text{Neck}\left(\left(\prod_{i=0}^k \text{Stage}^k\right)(E_i)\right)
 3. **将提示语义纳入量化重建**打破了"局部重建"的惯例：SAM 的提示跟随特性要求量化过程也要尊重这一特性
 4. **层跳跃策略**的附带发现有趣：各阶段输出的"不成熟"token 能产生不同粒度的合理分割，暗示编码器各阶段有明确的语义分工
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对 PTQ 场景（后训练量化），未探索量化感知训练（QAT）
 - PCC 的网格搜索裁剪边界仍需一次校准过程

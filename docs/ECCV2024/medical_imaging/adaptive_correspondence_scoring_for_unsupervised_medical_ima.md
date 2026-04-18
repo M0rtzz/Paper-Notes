@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Correspondence Scoring for Unsupervised Medical Image Registration
 description: >-
@@ -77,7 +77,7 @@ tags:
 - **stop-gradient 的双向使用**：位移估计器和评分估计器之间互相 detach，避免梯度纠缠，设计干净
 - **在 Diffusemorph 上的提升最大**（+4.71 DSC），说明对噪声梯度更敏感的模型从 AdaCS 获益更多
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 超参数 $\alpha$、$\beta$ 仍需对每个架构和数据集进行网格搜索，虽然不敏感但增加了调参工作
 - 在心肌特别薄的病例上存在失败案例，因为这些区域需要极其精确的位移预测
 - 实验仅聚焦于心脏数据集（ACDC、CAMUS、3D Echo），缺少其他解剖区域（腹部、肺部）和 3D 公开大规模数据集的验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When and Where to Reset Matters for Long-Term Test-Time Adaptation
 description: >-
@@ -32,11 +32,11 @@ ASR提出自适应选择性重置方案，通过预测集中度 $\mathcal{C}_t$ 
 
 **核心矛盾**：重置太频繁→适应不充分；重置太稀→崩溃不可逆。全量重置→知识丢失；不重置→错误累积。
 
-**本文要解决什么**：(1) When: 如何动态判断何时有崩溃风险？(2) Where: 如何选择重置哪些层以最小化知识损失？(3) 如何恢复被重置但仍然重要的知识？
+**本文目标**：(1) When: 如何动态判断何时有崩溃风险？(2) Where: 如何选择重置哪些层以最小化知识损失？(3) 如何恢复被重置但仍然重要的知识？
 
 **切入角度**：利用预测集中度（prediction concentration）作为崩溃风险的proxy，利用深度网络的层次结构（靠近output的层先被label noise corruption）决定重置范围。
 
-**核心idea一句话**：用预测集中度偏离长期基线来触发重置，按崩溃严重度从output层向input层渐进重置，用Fisher信息加权正则化恢复被重置的关键知识。
+**核心 idea**：用预测集中度偏离长期基线来触发重置，按崩溃严重度从output层向input层渐进重置，用Fisher信息加权正则化恢复被重置的关键知识。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ CCC-Hard上比SOTA提升 **44.12%**。
 - **CMA+EMA混合累积**：巧妙解决了"接近重置时参数更适应当前域但更可能被corruption"的bootstrapping困境
 - **即插即用**：ASR可作为add-on加到任何现有TTA方法上，不需要修改基础适应算法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 超参数（$r_0, \lambda_r, \alpha_0, \lambda_0, \mu_0$）需要在holdout数据上确定，虽然使用的数据量很少（5%单split）
 - 当前假设batch内样本来自相同域，mixed-domain batch场景有待研究
 - Fisher信息估计在连续在线学习中的准确性可能随时间退化

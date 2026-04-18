@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TowerMind: A Tower Defence Game Learning Environment and Benchmark for LLM as Agents
 description: >-
@@ -150,7 +150,7 @@ TowerMind 的地图定义在以 (0,0) 为中心、边长为 6 的正方形区域
 4. **"正确但无效"的洞察**：LLM 的有效动作率与得分之间的差距，类似于问答任务中"技术正确但实际无用"的问题
 5. **关卡编辑器的可扩展性**：使研究者可以创建自定义关卡，支持多样化研究需求和降低数据污染风险
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **塔防 vs 完整 RTS 的代表性**：塔防仅是 RTS 的子类，缺少对抗性（PvP）评估
 2. **零样本评估的局限**：未探索 few-shot 或 fine-tuned LLM 在 TowerMind 上的表现

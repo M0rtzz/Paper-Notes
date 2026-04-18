@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Different from the Past? Spatio-Temporal Time Series Forecasting with Self-Supervised Deviation Learning
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L} = \mathcal{L}_{MAE} + \lambda_{Con} \cdot \mathcal{L}_{Con} + \lam
 3. **全自监督设计**：不需要额外标签，历史平均值天然提供锚点，具有很强的通用性
 4. **即插即用**：SSDL 可视为一种通用的隐空间正则化技术，理论上可应用于其他时空模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 历史锚点以周为周期简单平均，对于非周期性或突变模式的建模能力有限
 2. 原型数量 $M$ 固定，无法自适应不同数据集的复杂度

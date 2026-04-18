@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RULEBREAKERS: Challenging LLMs at the Crossroads between Formal Logic and Human-like Reasoning
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：形式逻辑规则假设连接词（if、or、and）具有固定语义，但自然语言中连接词的解释高度依赖句子的语义内容。现有 LLM 推理评估都假设只要逻辑形式正确结论就正确，忽视了语义内容应当影响推理判断的情形。
 
-**本文要解决什么？** (1) 构建严格受控的 rulebreaker 评估基准；(2) 评估 LLM 能否像人类一样区分 rulebreaker 和 non-rulebreaker；(3) 分析失败的潜在原因。
+**本文目标** (1) 构建严格受控的 rulebreaker 评估基准；(2) 评估 LLM 能否像人类一样区分 rulebreaker 和 non-rulebreaker；(3) 分析失败的潜在原因。
 
 **切入角度**：从认知科学实验范式出发，设计最小差异的 rulebreaker/non-rulebreaker 对，控制逻辑形式相同但语义内容不同，隔离评估语义感知能力。
 
-**核心 idea 一句话**：用认知科学启发的 rulebreaker 数据集检验 LLM 是否能在推理中整合常识知识而非机械套用逻辑规则。
+**核心 idea**：用认知科学启发的 rulebreaker 数据集检验 LLM 是否能在推理中整合常识知识而非机械套用逻辑规则。
 
 ## 方法详解
 

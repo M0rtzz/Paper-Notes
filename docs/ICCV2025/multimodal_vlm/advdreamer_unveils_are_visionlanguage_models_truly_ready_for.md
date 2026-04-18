@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdvDreamer Unveils: Are Vision-Language Models Truly Ready for Real-World 3D Variations?
 description: >-
@@ -79,7 +79,7 @@ VLM在2D对抗扰动、风格变化等方面的鲁棒性已被研究，但真实
 - **自然度约束很关键**: 没有NRM，优化会找到不自然的"捷径"，无法证明性能下降来自3D变化本身
 - **物理可复现**: 数字对抗样本可以在真实世界中复现，证明威胁是real的
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 物理实验中digital vs physical存在攻击力差距
 - 未探索防御方法（如何提升VLM的3D鲁棒性）
 - LRM重建质量限制了某些复杂物体的3D操作精度

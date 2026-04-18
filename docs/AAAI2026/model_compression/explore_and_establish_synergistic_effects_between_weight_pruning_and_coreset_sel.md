@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Explore and Establish Synergistic Effects between Weight Pruning and Coreset Selection
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda \sum_{(\mathbf{
 - **通用框架设计**：SWaST可搭配任意在线剪枝算法和核心集选择方法，具有良好的灵活性
 - **显著的实验增益**：最高17.83%精度提升，同时实现10%–90%的FLOPs削减
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅覆盖非结构化剪枝**：当前仅使用RigL等非结构化方法，未验证结构化剪枝（如通道/滤波器剪枝）的协同效应
 - **核心集选择方法有限**：主要使用GradMatch、Moderate和EL2N三种方法，未覆盖更新型的方法

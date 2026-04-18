@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interpretable and Steerable Concept Bottleneck Sparse Autoencoders
 description: >-
@@ -112,7 +112,7 @@ CB-SAE的四步pipeline：
 - 循环重建的可控性损失是巧妙的任务无关设计，使得同一CB-SAE可用于文本生成和图像生成两个不同下游任务
 - 概念集选择策略（仅添加SAE中缺失的概念）避免了冗余
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖CLIP-Dissect进行概念分配，CLIP-Dissect本身可能不准确
 - CB神经元的可控性仍低于保留的SAE神经元，需要更好的或针对特定任务的可控性损失

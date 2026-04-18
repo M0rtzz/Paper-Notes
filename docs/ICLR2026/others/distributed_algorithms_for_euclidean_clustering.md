@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distributed Algorithms for Euclidean Clustering
 description: >-
@@ -89,7 +89,7 @@ tags:
 - **Coordinate-wise Sensitivity Sampling** 是新技术，可能对分布式回归和低秩近似等问题也有价值。
 - 结果可推广到任意连通通信拓扑，不限于 coordinator 或 blackboard。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **纯理论工作**：没有实验验证实际通信量和运行时间的改善，尤其是 polylog 因子在实际中可能不小。
 - **通信轮次**：Blackboard 模型中虽然通信比特数最优，但轮次为 $O(\log n \log k)$，在延迟敏感的场景中可能不理想。

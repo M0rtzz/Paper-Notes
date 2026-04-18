@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InFlux: A Benchmark for Self-Calibration of Dynamic Intrinsics of Video Cameras
 description: >-
@@ -132,7 +132,7 @@ $$\mathbf{K}(l, d) = \text{Interpolate}\big(\{(\text{LFL}_i, \text{FD}_i, \mathb
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

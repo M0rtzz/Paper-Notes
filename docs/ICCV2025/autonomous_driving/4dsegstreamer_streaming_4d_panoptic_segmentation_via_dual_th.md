@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4DSegStreamer: Streaming 4D Panoptic Segmentation via Dual Threads
 description: >-
@@ -91,7 +91,7 @@ tags:
 - **高FPS鲁棒性**：随FPS增加，4DSegStreamer性能下降比其他方法慢得多（Fig.1）
 - **跨场景泛化**：室外(SemanticKITTI/nuScenes)和室内(HOI4D)都有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 逆向流迭代在角速度>1的极端情况下不保证收敛（2.6%场景）
 - 位姿估计不准时性能下降（已知位姿 vs 未知位姿有差距）
 - 流预测依赖FastNSF/ZeroFlow的质量

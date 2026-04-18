@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Succeed or Learn Slowly: Sample Efficient Off-Policy Reinforcement Learning for Mobile App Control
 description: >-
@@ -110,7 +110,7 @@ tags:
 2. **设计简洁有效**：仅需修改PPO的裁剪方式（双侧约束+正样本不裁剪），实现了显著的性能提升
 3. **实用性强**：8B模型单次前向推理即可完成任务，0.9秒延迟远优于多步提示工程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 不对称约束可能导致提前收敛到局部最优
 - 强依赖SFT初始策略的质量

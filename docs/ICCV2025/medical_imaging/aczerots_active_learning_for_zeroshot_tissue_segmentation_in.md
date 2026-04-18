@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AcZeroTS: Active Learning for Zero-shot Tissue Segmentation in Pathology Images
 description: >-
@@ -116,7 +116,7 @@ AcZeroTS框架由两个核心组件构成：
 4. **跨领域验证**：不仅在病理数据集上验证，还在自然图像（Pascal VOC 2012）上证明了通用性
 5. **实用价值高**：显著降低了病理图像分割的标注成本，对临床落地有直接意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **VLM backbone的选择**：论文可能仅使用了特定的VLM，未来可探索不同病理专用VLM（如CONCH、UNI、Virchow等）的效果
 2. **unseen类的定义依赖先验**：零样本设置中unseen类需要预先知道类别名，可扩展到open-vocabulary设置

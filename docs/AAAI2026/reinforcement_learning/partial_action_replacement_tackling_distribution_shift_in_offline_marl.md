@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Partial Action Replacement: Tackling Distribution Shift in Offline MARL
 description: >-
@@ -144,7 +144,7 @@ ICQL-QS vs CFCQL 验证了核心权衡：
 - **推广到相关行为策略**（Theorem 2）：实际数据很少完全独立，引入最大过剩相关度 $\kappa$ 作为可加惩罚项，理论仍成立
 - **算法设计的简洁性**：SPaCQL 本质上就是"多个 Bellman 算子的不确定性加权凸组合"——概念清晰、实现简单、理论保证强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论分析假设有限状态-动作空间和 i.i.d. 转移，实际中使用神经网络和轨迹数据时可能不成立
 2. Theorem 1 假设 Q 函数是 $2/(1-\gamma)$-Lipschitz 的，对神经网络需要谱归一化等额外技术保证

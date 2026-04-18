@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Human Behavior Atlas: Benchmarking Unified Psychological and Social Behavior Understanding
 description: >-
@@ -137,7 +137,7 @@ SFT 和 BAM 在 10 项中 8 项超越通用多模态 LLM。
 3. **RL 在行为理解中的潜力**: OmniSapiens-7B RL 展示了强化学习在需要推理的社会理解任务中的独特优势，暗示未来混合训练策略的方向
 4. **数据来源多样性**: 数据集源自北美、欧洲和亚洲的多个地区，具有一定的文化多样性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **样本量不均衡**: 各任务数据量差异悬殊（CMU-MOSEI 31K vs DAIC-WOZ 189），可能影响多任务训练的平衡
 2. **评估依赖 LLM Judge**: SOC/INT/NVC 使用 GPT-5-nano 评判，其一致性和偏差未充分分析

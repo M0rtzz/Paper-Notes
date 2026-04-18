@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Speeding Up the Learning of 3D Gaussians with Much Shorter Gaussian Lists
 description: >-
@@ -162,7 +162,7 @@ $$\mathcal{L}_{\text{base}} = (1-\lambda)\mathcal{L}_1 + \lambda \mathcal{L}_{\t
 - **无需数据先验**：不依赖预训练模型或几何基础模型，纯训练策略层面的改进
 - **与现有方法正交**：可与 LiteGS、DashGaussian 等 CUDA 优化和分辨率调度方法叠加使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **质量有一定损失**：PSNR 下降约 0.3-0.5dB，在对质量要求极高的场景中可能不可接受
 - **参数敏感性**：$\zeta$ 和 $\gamma$ 的选择需要在速度和质量间权衡，不同场景可能需要不同配置

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Data Heterogeneity and Forgotten Labels in Split Federated Learning
 description: >-
@@ -77,7 +77,7 @@ Hydra 效果：
 - Hydra 设计巧妙，利用 SFL 的天然分割结构，client 端零开销
 - 对 CL 理论在 SFL 中的适用性做了详细验证和对比
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Client 分组依赖训练前共享标签分布，可能在隐私敏感场景受限
 - Head 数量 $G$ 需预设，自适应分组策略有待探索
 - 仅考虑分类任务，生成/回归任务的遗忘模式可能不同

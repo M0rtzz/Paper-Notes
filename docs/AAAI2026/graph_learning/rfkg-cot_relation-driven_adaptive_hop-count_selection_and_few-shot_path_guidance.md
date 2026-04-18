@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RFKG-CoT: Relation-Driven Adaptive Hop-count Selection and Few-Shot Path Guidance for Knowledge-Aware QA
 description: >-
@@ -31,7 +31,7 @@ sync**关键词**: 知识图谱问答, Chain-of-Thought, 关系感知, 自适应
 
 **切入角度**：用关系激活掩码捕捉KG的关系语义来动态选择跳数；用Few-Shot的"Think"模板教LLM如何从路径中提取答案。
 
-**核心idea一句话**：关系掩码让跳数选择感知KG结构 + Few-Shot路径引导教LLM如何使用路径。
+**核心 idea**：关系掩码让跳数选择感知KG结构 + Few-Shot路径引导教LLM如何使用路径。
 
 ## 方法详解
 
@@ -86,7 +86,7 @@ sync**关键词**: 知识图谱问答, Chain-of-Thought, 关系感知, 自适应
 - **关系激活掩码**是一个优雅的设计——用二值掩码编码KG的拓扑信息来指导跳数决策，比问题分类器更灵活
 - **逆向scaling发现**：小模型受益更大，说明KG路径引导在弥补参数知识不足时最有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 未在最新推理模型（如o1、DeepSeek-R1）上测试
 - 关系掩码的学习依赖训练数据覆盖的关系类型
 - Few-Shot示例的选择策略可进一步优化

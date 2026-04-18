@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BadVideo: Stealthy Backdoor Attack against Text-to-Video Generation
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = \mathbb{E}_{\mathbf{z}_0, c, \epsilon, t}\left[\|\epsilon - \eps
 - 攻击成本极低（仅6.33美元）但破坏力强，凸显了T2V安全审查的紧迫性
 - 证实了现有内容审核系统在时序维度上的根本性盲区
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 投毒比例20%相对较高（CL攻击通常<1%），在真实场景中较难实现
 - 三种策略的"恶意性"定义较为主观，不同文化背景下判断可能不同
 - 目标视频生成pipeline依赖T2I模型和LLM，攻击复杂度较高

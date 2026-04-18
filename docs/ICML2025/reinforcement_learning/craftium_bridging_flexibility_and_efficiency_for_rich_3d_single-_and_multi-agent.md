@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Craftium: An Extensible Framework for Creating Reinforcement Learning Environments
 description: >-
@@ -96,7 +96,7 @@ Craftium 基于开源 Minetest 游戏引擎构建了一个灵活高效的 3D RL 
 - **最小修改原则**：对 Minetest 的改动尽量少，保持与上游的兼容性
 - **生态复用**：Minetest 社区的 mod 和游戏可直接集成为 RL 环境
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅支持单智能体，未实现多智能体接口 (Petting Zoo API)
 - 5 个预定义环境较少，缺乏标准化基准测试
 - 论文缺少 RL 训练的性能实验数据 (如学习曲线)

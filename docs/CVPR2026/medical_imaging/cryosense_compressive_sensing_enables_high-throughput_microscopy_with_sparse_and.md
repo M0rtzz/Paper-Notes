@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] cryoSENSE: Compressive Sensing Enables High-throughput Microscopy with Sparse and Generative Priors on the Protein Cryo-EM Image Manifold
 description: >-
@@ -53,14 +53,14 @@ cryoSENSE 解决逆问题：从 $\mathbf{y} = \mathcal{A}(\mathbf{x}^*) + \bolds
 
 2. **稀疏先验重建（Proximal Gradient Descent）**：
 
-    - **做什么**：求解凸优化问题 $\hat{\mathbf{x}} = \arg\min_{\mathbf{x}} \|\mathcal{A}(\mathbf{x}) - \mathbf{y}\|_2^2 + \lambda \Psi(\mathbf{x})$
+    - **功能**：求解凸优化问题 $\hat{\mathbf{x}} = \arg\min_{\mathbf{x}} \|\mathcal{A}(\mathbf{x}) - \mathbf{y}\|_2^2 + \lambda \Psi(\mathbf{x})$
     - 三种正则化：DCT 基稀疏性、小波（WT）基稀疏性、总变差（TV）
     - 交替梯度步+近端算子（软阈值）直到收敛
     - **设计动机**：稀疏先验是通用的、不需要训练数据的方法，适合中等压缩率和 Fourier 域采样。
 
 3. **生成先验重建（DDPM 后验采样）**：
 
-    - **做什么**：在 EMPIAR 数据上训练 DDPM 学习 cryo-EM 图像流形，通过 Tweedie 公式+修改的逆扩散引导采样：
+    - **功能**：在 EMPIAR 数据上训练 DDPM 学习 cryo-EM 图像流形，通过 Tweedie 公式+修改的逆扩散引导采样：
     $\nabla_{\mathbf{x}_t} \log p(\mathbf{y}|\mathbf{x}_t) \simeq -\frac{1}{\sigma^2} \nabla_{\mathbf{x}_t} \|\mathcal{A}(\hat{\mathbf{x}}_0) - \mathbf{y}\|_2^2$
     - 使用 Nesterov 加速梯度提高采样效率
     - **设计动机**：生成先验利用数据驱动的流形结构，比稀疏先验的假设更弱，在更高压缩率和像素域采样下表现更好。
@@ -121,7 +121,7 @@ cryoSENSE 解决逆问题：从 $\mathbf{y} = \mathcal{A}(\mathbf{x}^*) + \bolds
 - **生物学下游验证**：不仅关注 2D 重建质量，还验证了 3D 重建、构象分析、原子模型构建等核心生物学任务
 - **可实现性**：Fourier 域 masking 可通过现有相位板技术实现，像素域 binning 已是探测器标配功能
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前是计算验证而非实际硬件实验
 - DDPM 训练需要已有 cryo-EM 数据集，不适合全新类型的蛋白质
 - 极高压缩率 (>2.5×) 下所有方法都退化

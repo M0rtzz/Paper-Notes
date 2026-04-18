@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OpenKD: Opening Prompt Diversity for Zero- and Few-shot Keypoint Detection
 description: >-
@@ -159,7 +159,7 @@ OpenKD 基于 episodic training，每个 episode 包含 support set（视觉/文
 - **Stop gradient 策略**：发现文本表征质量优于视觉后，单向对齐 VKP → TKP，避免"强带弱"变成"弱拖强"，这个洞察可迁移到其他多模态对齐场景
 - **辅助文本 + FTC 选择**策略：通过视觉-文本相似度过滤低质量候选，平衡了召回率和精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **CUB 和 NABird 上提升有限**：鸟类关键点的辅助文本推理更难，LLM 对细粒度身体部位的推理质量下降
 - **依赖 LLM API**：文本插值和解析都需要 LLM（GPT-3.5），增加了成本和延迟

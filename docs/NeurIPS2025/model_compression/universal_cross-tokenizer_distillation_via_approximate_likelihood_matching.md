@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Universal Cross-Tokenizer Distillation via Approximate Likelihood Matching
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L}^{ALM}_{S,T}(\mathbf{x}) = \sum_{i,j,k,l \in A_c(\mathbf{x})} f(p_T
 - **分词器迁移即自蒸馏**：将分词器迁移重新定义为跨分词器自蒸馏的视角非常优雅
 - **模型集成新可能**：通过迁移到统一分词器实现不同模型族的 token 级集成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 二值化 f-散度是对真实散度的粗略近似，可能损失信息
 - 字节级迁移仍与原始模型有较大差距，需要额外技术（如 hourglass 架构、多字节预测）

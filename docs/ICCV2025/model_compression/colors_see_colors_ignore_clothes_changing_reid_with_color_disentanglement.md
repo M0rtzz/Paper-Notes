@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Colors See Colors Ignore: Clothes Changing ReID with Color Disentanglement
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{DE} = \left| \frac{f_{CO}}{\|f_{CO}\|_2} \cdot \frac{f_{ReID}}{\|
 - 方法极其轻量，仅需额外一个可学习token和微小的计算开销
 - 不依赖任何外部标注或模型，大幅降低了部署门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 颜色解耦的效果可能受极端光照条件影响
 - S2A自注意力中空间token仍然间接连接Color和ReID，无法完全消除泄漏

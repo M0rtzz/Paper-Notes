@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ChatBench: From Static Benchmarks to Human-AI Evaluation
 description: >-
@@ -167,7 +167,7 @@ AI-alone 在问题级别也无法很好预测 user-AI 表现。
 - 用户模拟器的微调方法简洁有效：将同一对话拆解为多个 SFT 样本，设计了 two-step 架构
 - 实验设计严谨：预注册分析、激励机制、质量控制、两种实验条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试 MMLU 5 个子集，泛化到其他基准/任务类型待验证
 - 用户来自 Prolific 平台，可能不代表所有用户群体

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Eligibility of LLMs for Counterfactual Reasoning: A Decompositional Study
 description: >-
@@ -130,7 +130,7 @@ tags:
 3. **诊断性发现**：明确指出因果图构建不是瓶颈（>0.9 F1），真正的瓶颈在隐式变量推理，特别是反事实 M' 和 Y'
 4. **可操作的改进策略**：工具增强和 elicitation 策略分别针对显式/隐式变量的弱点，且发现了 ToT 过度推理的限制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预处理阶段的因果变量标注和 DAG 构建依赖人工/半自动方式，扩展性有限
 - 隔离式评估（每阶段提供 ground-truth）无法反映真实端到端场景中的误差累积

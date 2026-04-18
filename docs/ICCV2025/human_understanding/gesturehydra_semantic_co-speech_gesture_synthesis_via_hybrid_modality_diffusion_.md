@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GestureHYDRA: Semantic Co-speech Gesture Synthesis via Hybrid Modality Diffusion Transformer and Cascaded-Synchronized Retrieval-Augmented Generation
 description: >-
@@ -149,7 +149,7 @@ $$\mathcal{L} = \lambda_t \mathcal{L}_t + \lambda_{vec} \mathcal{L}_{vec} + \lam
 - 级联 RAG 策略的核心洞察：注入关键帧而非整段手势，让生成的节奏依赖实际音频而非检索的手势
 - 动态+静态风格注入的设计平衡了泛化能力和个性化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 语义手势仓库需要人工标注关键帧，扩展到新身份有成本
 - 仅支持中文直播场景，跨语言和跨场景的泛化性待验证

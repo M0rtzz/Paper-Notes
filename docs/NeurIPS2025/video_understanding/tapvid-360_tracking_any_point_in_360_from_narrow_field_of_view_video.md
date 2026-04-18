@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TAPVid-360: Tracking Any Point in 360 from Narrow Field of View Video
 description: >-
@@ -104,7 +104,7 @@ tags:
 - 模型修改极其简洁——仅修改了CoTracker3的最后一层并微调，就实现了巨大性能提升，说明方向表示比坐标表示更适合全景跟踪
 - 将"物体永恒性"（object permanence）作为硬约束融入任务定义中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集使用固定视野角度，未能测试模型对不同FOV或变焦的适应能力
 - 基线模型使用固定的位置编码，无法处理动态变化的视野

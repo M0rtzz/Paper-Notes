@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GCAL: Adapting Graph Models to Evolving Domain Shifts
 description: >-
@@ -151,7 +151,7 @@ $$\min_{\hat{G}_t, \Phi} \mathcal{L}_{MGL} + \lambda_1 \mathcal{L}_{Reg} + \lamb
 4. **高度压缩的经验池**：记忆图仅需原图 1%~9% 的节点，存储和计算开销极小
 5. **端到端可微生成**：节点通过 VAE 重参数化、边通过 Gumbel-Sigmoid 重参数化，整个记忆图生成流程完全可微
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务类型限制**：当前仅验证了节点分类任务，未涉及链接预测、图分类等其他图任务
 2. **类别数不变假设**：假设源域和所有目标域共享相同的类别集合，不适用于开放世界或类增量场景

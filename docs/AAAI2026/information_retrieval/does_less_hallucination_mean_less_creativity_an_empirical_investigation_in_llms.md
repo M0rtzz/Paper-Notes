@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Does Less Hallucination Mean Less Creativity? An Empirical Investigation in LLMs
 description: >-
@@ -153,7 +153,7 @@ $$\text{Difference from Base}(\%) = \frac{M_{\text{method}} - M_{\text{baseline}
 4. **反转DoLa实验**巧妙地证明了发散性与收敛性创造力可以解耦，具有实际应用价值
 5. **对AI4Science的实际指导意义明确**：选择CoVe而非DoLa来维持创造力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 编程和故事生成仅是科学假设生成的代理任务，未来需要开发专门的科学创造力评估框架
 2. 未对CoVe为何增强创造力进行消融研究，具体机制不明

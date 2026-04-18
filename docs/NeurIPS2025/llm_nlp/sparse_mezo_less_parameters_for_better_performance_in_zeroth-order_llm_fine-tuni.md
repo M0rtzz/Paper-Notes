@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparse MeZO: Less Parameters for Better Performance in Zeroth-Order LLM Fine-Tuning
 description: >-
@@ -132,7 +132,7 @@ S-MeZO 在 RTE 上 **+9.0%**，BoolQ 上 **+5.0%**，平均 **+3.7%**。
 4. **一致性好**：在 LLaMA、Mistral、OPT 三个模型家族上都有稳定改进
 5. **简单而有效**：核心思想就是"只扰动小权重"，实现简洁但效果显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **与一阶方法仍有差距**：虽然显著缩小但 S-MeZO（80.3）vs FT（82.9）仍有 2.6% 差距
 2. **阈值选择**：稀疏率需要手动设定，不同任务可能需要不同设置

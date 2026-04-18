@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lessons Learned: A Multi-Agent Framework for Code LLMs to Learn and Improve
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：如何利用多个小 LLM 的互补优势进行代码优化，同时保持可解释和成本高效。
 
-**本文要解决什么？** 设计一个多智能体学习框架，允许 agents 从彼此的成功和失败中学习。
+**本文目标** 设计一个多智能体学习框架，允许 agents 从彼此的成功和失败中学习。
 
 **切入角度**：学生互助学习的比喻——从教科书学习 + 从同学学习。
 
-**核心idea一句话**：三阶段迭代——lesson 生成（solicitation）、lesson 存储（banking）、lesson 选择（selection），让 agent 间共享可解释的优化经验。
+**核心 idea**：三阶段迭代——lesson 生成（solicitation）、lesson 存储（banking）、lesson 选择（selection），让 agent 间共享可解释的优化经验。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ LessonL 框架的核心循环：初始解生成 → Lesson 提取 → Lesson 存
 - **从失败中学习**：负 lesson（错误和减速案例）防止了重复错误，这在 MapCoder/MoA 中无法实现
 - **细粒度互补性发现**：框架自动发现各模型的强项，无需预知
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Lesson 提取和迭代增加延迟，对实时应用不利
 - 仅在函数级代码上验证，难以扩展到 repo 级 SWE 任务
 - 多轮后 lesson 边际收益显著下降

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Taming Knowledge Conflicts in Language Models
 description: >-
@@ -158,7 +158,7 @@ JuICE 是**推理时干预方法**（test-time intervention），不涉及微调
 - **理论与实验高度统一**：用双任务两层 Transformer 理论框架完美解释了叠加形成、知识冲突和 JuICE 有效性三个核心问题
 - **实用价值高**：对 RAG 系统可灵活选择"信上下文"或"信自己"，4 样本即可部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销翻倍**：双次推理意味着推理成本约为原来的 2 倍，对延迟敏感的场景可能受限
 2. **仅针对 base model 测试**：未验证在 instruction-tuned 或 chat 模型上的效果

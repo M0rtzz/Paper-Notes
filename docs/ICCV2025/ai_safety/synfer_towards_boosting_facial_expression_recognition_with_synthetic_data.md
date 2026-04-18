@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SynFER: Towards Boosting Facial Expression Recognition with Synthetic Data
 description: >-
@@ -138,7 +138,7 @@ tags:
 - **四种学习范式验证**：SSL、监督、零样本、少样本全面验证，说服力强
 - **解决了 FER 数据规模瓶颈**：为 FER 基础模型的训练提供了可扩展的数据来源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据在监督学习上的提升幅度有限（<2%），分布对齐仍是瓶颈
 - 仅覆盖基本表情类别（7 类），复合表情和微表情需要更精细的控制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L}_{\text{registration}} = \sum \widetilde{w_p} \odot \|\hat{I}-I\|_1
 4. **冻结策略**：跟踪和回环时冻结方差参数，避免梯度冲突，设计合理
 5. **鲁棒性提升明显**：在真实数据集（ScanNet/ScanNet++/TUM-RGBD）上比基线稳定得多
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持 RGB-D 输入**：未扩展到纯 RGB（单目/双目）场景，限制应用范围
 2. **计算开销增加**：Mapping 从 LoopSplat 的 1.2s/帧增至 1.9s/帧（+58%），对实时性敏感的应用可能不友好

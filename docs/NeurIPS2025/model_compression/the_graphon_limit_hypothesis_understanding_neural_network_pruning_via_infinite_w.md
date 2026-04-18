@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Graphon Limit Hypothesis: Understanding Neural Network Pruning via Infinite Width Analysis
 description: >-
@@ -93,7 +93,7 @@ $$\Theta(x, x') = \sum_{l=1}^{L} \int_0^1 \left( \dot{\Sigma}^{(l)} \int_{[0,1]^
 - **直觉与数学的良好结合**：graphon可视化（Fig 1）非常直观——一张图就能看出Random是均匀灰色、Synflow是块状黑白分明、SNIP是渐变，比任何数字指标都更能传达结构差异。
 - **为剪枝算法设计指明方向**：从理论上表明"保持Graphon NTK良好谱性质"应是剪枝方法的设计目标，与NTK-SAP等工作的经验发现一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Graphon极限假说未形式化证明**：核心假说仅有经验支持（有限宽度实验），缺乏切距离收敛的严格数学证明——这是最大的理论缺口。
 - **仅分析PaI方法**：框架限于初始化时剪枝（静态掩码），未覆盖动态稀疏训练（DST）和训练后剪枝，部分限制了实用价值。

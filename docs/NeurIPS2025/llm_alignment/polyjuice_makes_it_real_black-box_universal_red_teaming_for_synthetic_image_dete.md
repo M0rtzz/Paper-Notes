@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PolyJuice Makes It Real: Black-Box, Universal Red Teaming for Synthetic Image Detectors
 description: >-
@@ -153,7 +153,7 @@ PolyJuice 引导几乎不影响图像质量，FID 甚至略有改善。
 4. **攻防两用**：PolyJuice 不仅是攻击工具，其采集的攻击样本还可反过来提升 SID 性能（最高 30%）
 5. **分辨率可转移性**大幅降低了计算成本，避免了高分辨率数据集的生成和处理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖充足的 TP/FN 样本来发现引导方向，对非常强的 SID（FN 样本极少）可能需要更多生成量
 2. 引导强度 $\lambda_t$ 需要手动调节，可能因不同 T2I-SID 组合而异

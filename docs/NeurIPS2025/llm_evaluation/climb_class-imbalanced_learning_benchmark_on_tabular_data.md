@@ -39,22 +39,22 @@ tags:
 构建一个包含数据集、算法、评估协议三位一体的综合基准平台，配套高质量 Python 开源库（统一 scikit-learn 风格 API、95% 测试覆盖率、详细文档），支持公平、可复现、可扩展的 CIL 方法评估。
 
 ### 关键设计一：73 个真实不平衡表格数据集
-- **做什么**：从 OpenML 精心筛选 73 个自然类别不平衡数据集，覆盖多领域、不平衡比率从 2.1 到 577.9
+- **功能**：从 OpenML 精心筛选 73 个自然类别不平衡数据集，覆盖多领域、不平衡比率从 2.1 到 577.9
 - **核心思路**：设定七项严格筛选标准——真实数据且自然不平衡、有学习难度（排除 AUPRC > 0.95 的简单集）、IR > 2、无缺失值、满足 i.i.d. 假设、非确定性函数、有文档记录
 - **设计动机**：排除人工构造和简单数据集，确保评测能真实反映实际应用中的挑战；按 IR 分为 low/medium/high/extreme 四档便于分层分析
 
 ### 关键设计二：29 种 CIL 算法的统一实现
-- **做什么**：实现涵盖六大范式的 29 种代表性算法——欠采样（RUS/CC/IHT/NearMiss）、清洗（Tomek Links/ENN/RENN/AllKNN/OSS/NCR）、过采样（ROS/SMOTE/BorderlineSMOTE/SVMSMOTE/ADASYN）、欠采样集成（SPE/BC/BRF/EE/RUSBoost/UnderBagging）、过采样集成（OverBoost/SMOTEBoost/OverBagging/SMOTEBagging）、代价敏感集成（CS/AdaCost/AdaUBoost/AsymBoost）
+- **功能**：实现涵盖六大范式的 29 种代表性算法——欠采样（RUS/CC/IHT/NearMiss）、清洗（Tomek Links/ENN/RENN/AllKNN/OSS/NCR）、过采样（ROS/SMOTE/BorderlineSMOTE/SVMSMOTE/ADASYN）、欠采样集成（SPE/BC/BRF/EE/RUSBoost/UnderBagging）、过采样集成（OverBoost/SMOTEBoost/OverBagging/SMOTEBagging）、代价敏感集成（CS/AdaCost/AdaUBoost/AsymBoost）
 - **核心思路**：统一 API 设计 + 层次化模块抽象，通过继承和多态支持便捷扩展
 - **设计动机**：消除不同实现之间的不公平比较，提供首个跨越全部主流 CIL 范式的统一对比
 
 ### 关键设计三：严格的评估协议
-- **做什么**：标准化预处理（数值特征标准化、类别特征编码）、5 折分层划分、Optuna 超参搜索（每个算法-数据集对 100 次试验）、三种评价指标（AUPRC/macro-F1/BAC）
+- **功能**：标准化预处理（数值特征标准化、类别特征编码）、5 折分层划分、Optuna 超参搜索（每个算法-数据集对 100 次试验）、三种评价指标（AUPRC/macro-F1/BAC）
 - **核心思路**：决策树作为统一基分类器、集成大小统一为 100，确保不同方法间的公平对比
 - **设计动机**：避免单次随机划分带来的偶然性；多指标评价揭示不同侧面（AUPRC 重视精确率、BAC 重视召回率平衡），防止单一指标带来的误导性结论
 
 ### 关键设计四：鲁棒性控制实验
-- **做什么**：分别引入标签噪声（minority 类翻转 10%/20%/30%）、缺失值（均值填补 10%/20%/30%）、额外不平衡（进一步移除 minority 样本使 IR 翻倍/3倍/5倍）
+- **功能**：分别引入标签噪声（minority 类翻转 10%/20%/30%）、缺失值（均值填补 10%/20%/30%）、额外不平衡（进一步移除 minority 样本使 IR 翻倍/3倍/5倍）
 - **核心思路**：逐一引入单一干扰因素，分离各因素对 CIL 性能的影响
 - **设计动机**：实际数据往往同时伴随噪声和缺失值，需要了解这些因素相对于不平衡本身的影响程度
 

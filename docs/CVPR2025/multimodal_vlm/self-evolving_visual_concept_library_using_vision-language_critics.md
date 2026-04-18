@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Evolving Visual Concept Library using Vision-Language Critics
 description: >-
@@ -111,7 +111,7 @@ Escher 采用**交替最大化策略**（Alternating Maximization），在两个
 - **CUB +19.91% 的提升幅度**在细粒度分类领域非常惊人，说明概念选择是一个被严重低估的瓶颈
 - **历史感知的 prompt 设计**巧妙地利用了 LLM 的上下文学习能力来避免概念重复
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 少样本设置下效果不稳定，可能需要结合少样本学习技术来改善校准
 - 每次迭代需要调用 LLM + VLM 推理，60 次迭代的计算成本较高

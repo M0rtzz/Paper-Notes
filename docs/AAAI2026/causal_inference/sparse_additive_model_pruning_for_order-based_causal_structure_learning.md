@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparse Additive Model Pruning for Order-Based Causal Structure Learning
 description: >-
@@ -108,7 +108,7 @@ SARTRE 在所有维度上均快于 DAS，且 SHD 和 SID 更优。
 4. **即插即用**：可与任意拓扑序估计算法（SCORE、CAM、CaPS 等）组合
 5. **高维友好**：在 $d=512$ 的实验中仍表现出色，优于 DAS
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **超参数选择**：正则化参数 $\lambda$ 和区间数量 $l_j$ 需预先设定，缺乏自适应调参方法
 - **理论保证不足**：仅证明了表示能力，未给出修剪正确性的理论保证

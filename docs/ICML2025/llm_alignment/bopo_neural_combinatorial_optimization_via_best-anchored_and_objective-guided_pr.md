@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BOPO: Neural Combinatorial Optimization via Best-anchored and Objective-guided Preference Optimization
 description: >-
@@ -178,7 +178,7 @@ DMU 上差异更显著：DPO 14.1% → SimPO 13.6% → BOPO 12.9%。SimPO 在 OO
 5. **架构无关性**：同一训练范式可无缝集成不同 NCO 模型，设计通用性强
 6. **Hybrid rollout 的隐含 curriculum**：训练初期贪心解占优提供强梯度，后期采样解追上后提供多样性
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **仍需大量 rollout**：$B=256$ 的采样成本与 SLIM 相当，并非零成本
 2. **仅验证构建式方法**：未与改进式方法（如 L2S）在同一模型上对比 BOPO 训练的效果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Q-Palette: Fractional-Bit Quantizers Toward Optimal Bit Allocation for Efficient LLM Deployment
 description: >-
@@ -123,7 +123,7 @@ LLaMA-2-13B (PPL, WikiText-2):
 - **工程完备**: 不仅有理论,还有完整的 CUDA kernel 实现
 - **灵活组合**: Q-Palette 允许不同层使用不同量化策略,最大化整体效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. TCQ 量化器的编解码复杂度较高,实际推理加速有限
 2. 当前仅支持权重量化,未扩展到 KV cache 量化

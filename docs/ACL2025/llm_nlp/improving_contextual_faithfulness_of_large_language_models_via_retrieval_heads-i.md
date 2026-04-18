@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Contextual Faithfulness of Large Language Models via Retrieval Heads-Induced Optimization
 description: >-
@@ -102,7 +102,7 @@ Rhio-7B相比SFT-7B提升12.84%忠实度，Rhio-13B超越GPT-4o达1.74%。
 3. **控制令牌的对偶使用**：[POS]/[NEG]在训练时用于区分学习，在推理时用于对比解码，一个设计服务两个目的，非常优雅。
 4. **小模型超越大模型**：7B模型不仅大幅超越同级别基线，甚至超越GPT-4o，说明针对性的训练策略可以弥补模型容量的不足。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 检索头的检测算法来自已有工作，检索头集合本身可能不完美
 - 仅在Llama-2系列上验证，缺乏对更新模型（如Llama-3、Qwen-2.5）的评估

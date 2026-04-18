@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fast and Robust: Task Sampling with Posterior and Diversity Synergies for Adaptive Decision-Makers in Randomized Environments
 description: >-
@@ -111,7 +111,7 @@ $$\boldsymbol{z}_t \sim q_{\boldsymbol{\phi}}(\boldsymbol{z}_t | H_t), \quad \ha
 5. **意外收益**：在部分场景中不仅提高鲁棒性，还加速训练（Pusher 2.4×）
 6. **OOD 泛化**：配合多样性正则在分布外任务上退化最小
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖风险预测模型质量**：假设适应风险函数的平滑性和标识符信息的可用性，在某些受限场景可能不成立
 2. **多样性正则化的组合优化是 NP-hard**：虽然有近似算法，但理论保证和实际质量之间的差距未深入讨论

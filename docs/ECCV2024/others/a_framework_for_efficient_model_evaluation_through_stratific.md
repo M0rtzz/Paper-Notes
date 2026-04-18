@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation
 description: >-
@@ -69,7 +69,7 @@ tags:
 - **DF估计器当SRS已完成时仍可用**：如果你已经用SRS标注了数据，还可以事后利用DF估计器来提升精度，无需重新抽样
 - **全面的实验覆盖**：在LAION CLIP-Benchmark的26+分类任务上系统比较，还覆盖了MSE/交叉熵指标、线性探测、不同backbone、OOD场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限一次性（one-shot）抽样**：不处理顺序/迭代式标注场景。作者承认这是出于实际考虑（标注通常外包一次性完成），但sequential sampling理论上更高效
 - **分层数固定为10**：更多层可能更好，但 $k$-means 和 Neyman分配在层数很多时可能不稳定
 - **仅验证了分类任务**：未涉及检测、分割等结构化预测任务，其中"模型正确性"的定义和代理变量构建更复杂

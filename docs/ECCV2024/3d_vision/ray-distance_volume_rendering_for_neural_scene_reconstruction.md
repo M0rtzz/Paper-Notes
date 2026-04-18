@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ray-Distance Volume Rendering for Neural Scene Reconstruction
 description: >-
@@ -145,7 +145,7 @@ ScanNet 上 MLP 表示的消融（F-score ↑）：
 - **自监督可见性**: 不依赖多视图几何或额外标注，利用网络自身的 SRDF/SDF 预测生成伪标签
 - **通用性强**: 可以应用于 VolSDF 或 NeuS 基础的重建方法，使用 Grid 或 MLP 表示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SRDF MLP 引入了额外的网络参数和计算开销
 - 对于单物体场景，SRDF 和 SDF 差异不大，增益有限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces
 description: >-
@@ -117,7 +117,7 @@ DMS 因训练 discount model 比 CMA-MAE 慢 2-3 倍（LP 基准），但在 QDD
 4. **实验全面**：涵盖 9 个基准 + 3 个 QDDM 域，20/5 trials 统计检验严格（Welch ANOVA + Games-Howell）
 5. **消融实验完整**：验证了 $\alpha$ 和 $n_{empty}$ 的关键作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Discount 模型噪声**：在需要精细目标优化的域（如 TA (MNIST)）中，模型误差作为噪声干扰 improvement 排名，DMS 无法超越 CMA-MAE 的精确直方图
 2. **LSI (Hiker) coverage 极低**：仅 3.77%，说明在极高维复杂 QDDM 域中探索仍远未充分

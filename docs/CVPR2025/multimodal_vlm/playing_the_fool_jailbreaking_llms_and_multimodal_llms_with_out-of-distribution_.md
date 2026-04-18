@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Playing the Fool: Jailbreaking LLMs and Multimodal LLMs with Out-of-Distribution Strategy
 description: >-
@@ -93,7 +93,7 @@ JOOD 是推理时攻击，不涉及训练。攻击参数包括：辅助样本数
 - **OOD 视角的安全分析**：首次系统性地从分布外泛化角度审视安全对齐的脆弱性，揭示了 RLHF 的根本局限
 - **不确定性分析**：通过实验证明 OOD 化输入确实显著提高了模型判断恶意性的不确定性（Figure 1）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 该工作揭示漏洞而非提供修复方案，需要后续研究如何增强安全对齐在 OOD 输入上的泛化
 - 目前仅测试了简单的变换技术，更高级的生成式变换（如扩散模型生成）可能更具威胁

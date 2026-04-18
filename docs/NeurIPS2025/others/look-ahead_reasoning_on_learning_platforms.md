@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Look-Ahead Reasoning on Learning Platforms
 description: >-
@@ -87,7 +87,7 @@ tags:
 - **对齐度量的引入**非常优雅：$\langle \nabla u, \nabla \ell \rangle_{H^{-1}}$ 不仅是个理论工具，还提供了实际可衡量的量——平台设计者可以据此评估集体行动的风险
 - **连接多个社区**：将 strategic classification、performative prediction 和 algorithmic collective action 统一到一个框架中
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设学习者做精确风险最小化，实际中学习者可能使用 SGD/近似优化
 - 假设损失函数强凸+光滑，深度学习场景不满足
 - 用户效用函数需要已知/可参数化，实际平台中用户效用很难精确建模

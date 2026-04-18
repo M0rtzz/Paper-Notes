@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JavisDiT: Joint Audio-Video Diffusion Transformer with Hierarchical Spatio-Temporal Prior Synchronization
 description: >-
@@ -106,7 +106,7 @@ JavisDiT 在传统基准（FVD、KVD、FAD 指标）上也显著优于 MM-Diffus
 4. **JavisScore 的鲁棒性**：分窗口计算 ImageBind 同步分数并选取最不同步的 40% 帧，比 AV-Align 更可靠
 5. **模块化设计**：冻结单模态 SA 块，仅训练跨模态模块，参数高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 视频生成分辨率较低（240P/24fps），与最新视频模型有差距
 2. 依赖 OpenSora 预训练权重，独立训练的可行性未验证

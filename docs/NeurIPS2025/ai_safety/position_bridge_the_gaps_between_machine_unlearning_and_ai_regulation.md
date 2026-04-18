@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: Bridge the Gaps between Machine Unlearning and AI Regulation
 description: >-
@@ -117,7 +117,7 @@ tags:
 - 强调"可审计性"这一被 MU 社区普遍忽视的核心需求——如果无法向监管者证明遗忘有效，技术优势无从发挥
 - 指出 MU 的"洋葱效应"和"史翠珊效应"两个反直觉风险
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为立场论文（position paper），不包含新的算法或实验
 - 主要分析 AIA，但对其他法规（如美国州级 AI 法案、加拿大 AIDA）的适用性仅简略提及

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Theoretical Study on Bridging Internal Probability and Self-Consistency for LLM Reasoning
 description: >-
@@ -99,7 +99,7 @@ RPC是一个后处理（post-hoc）方法，不需要修改LLM架构或训练过
 - **自动化剪枝**：用Weibull混合分布自动建模概率分布，无需手工设置阈值，实用性强
 - **50%采样成本削减**：在保持同等性能的前提下大幅减少LLM推理次数，直接节省计算成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **理论假设较强**：假设LLM采样服从伯努利分布，且采样路径互不相同，在实际中未必严格成立
 - **后处理方法天花板有限**：作为post-hoc方法不修改模型训练，性能提升受限于采样路径质量
 - **仅分析了两种典型方法**：理论框架有潜力分析更多方法（如MCTS、reward model scoring等），但本文未展开

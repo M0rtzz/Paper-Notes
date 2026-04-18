@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VORTA: Efficient Video Diffusion via Routing Sparse Attention
 description: >-
@@ -144,7 +144,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{CFM}} + \lambda_{\text{distill}} \cdot \text{
 4. **调度器泛化**：无需重新分析即可适配不同的ODE求解器和步数设置
 5. **模型骨干泛化**：在MMDiT（HunyuanVideo）和DiT（Wan 2.1）上均验证有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要针对注意力机制加速，对短序列（图像或低分辨率视频）的加速空间有限
 - 仅支持双向生成范式，自回归视频生成需要较大适配

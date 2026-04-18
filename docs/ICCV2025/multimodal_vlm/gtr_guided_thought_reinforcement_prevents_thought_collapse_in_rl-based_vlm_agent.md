@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GTR: Guided Thought Reinforcement Prevents Thought Collapse in RL-Based VLM Agent
 description: >-
@@ -141,7 +141,7 @@ GTR 相比 SOTA 方法（RL4VLM）成功率提升 **7 倍**，且超越了作为
 3. **思维与行动的解耦训练**：SFT 管思维、PPO 管行动，避免了两种监督信号的冲突
 4. **GTR 超越纠正器自身**：证明了 RL + 过程指导的组合效果优于纯模仿
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未探索 o1 式长 CoT 策略用于动作序列推理
 - 受资源限制仅在 7B 模型上验证，更大模型可能有更大提升

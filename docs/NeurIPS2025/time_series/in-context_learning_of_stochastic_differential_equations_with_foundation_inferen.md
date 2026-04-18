@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In-Context Learning of Stochastic Differential Equations with Foundation Inference Models
 description: >-
@@ -184,7 +184,7 @@ FIM-SDE在各噪声水平下表现均不低于最优基线。
 5. **实用的微调机制**：在零样本已经不错的基础上，微调提供了额外的确定性提升
 6. **之前版本标题变更**：v1标题为"Foundation Inference Models for SDEs: A Transformer-based Approach for Zero-shot Function Estimation"，反映了研究重点的演变
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **维度限制**：目前仅适用于低维SDE，高维SDE（如偏微分方程）需要新方法
 2. **预训练SDE分布的先验**：预训练数据的SDE分布可能与真实目标系统的分布不匹配

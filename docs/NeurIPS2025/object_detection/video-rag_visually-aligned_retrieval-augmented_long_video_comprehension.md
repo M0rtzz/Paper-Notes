@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension
 description: >-
@@ -124,7 +124,7 @@ Video-RAG包含三个阶段：
 - 查询解耦设计避免了为每个问题都生成所有类型辅助文本的浪费
 - 单轮检索的设计远比多轮Agent高效，同时保持了竞争性的性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 视觉工具的性能上限决定了辅助文本的质量上限——OCR、ASR、目标检测本身的错误会传播到最终结果
 - 未探索自适应帧选择策略——目前使用均匀采样，可能遗漏关键帧

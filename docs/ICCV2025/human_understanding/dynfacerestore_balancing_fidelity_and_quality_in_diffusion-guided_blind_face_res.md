@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DynFaceRestore: Balancing Fidelity and Quality in Diffusion-Guided Blind Face Restoration
 description: >-
@@ -119,7 +119,7 @@ $$x_{t-1} = x'_{t-1} - A_t \times \nabla_{x_t} \| \acute{y} - k_t \otimes x^0_t 
 - **动态 vs 静态的全面体现**：三个组件（DBLM、DSST、DGSA）分别从退化映射、时间步选择、引导强度三个维度实现了"动态"调整，系统性地解决了现有方法的"一刀切"问题。
 - **区域自适应引导**：DGSA 的设计抓住了保真度和质量在空间上分布不均匀这一关键特点，是对 DPS 引导的有效改进。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时间较长（91.82s），远高于 CodeFormer（0.06s），限制了实时应用
 - WebPhoto 数据集上 FID 表现不如部分方法

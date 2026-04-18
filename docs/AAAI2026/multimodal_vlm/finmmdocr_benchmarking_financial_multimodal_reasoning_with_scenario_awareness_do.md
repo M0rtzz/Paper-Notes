@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FinMMDocR: Benchmarking Financial Multimodal Reasoning with Scenario Awareness, Document Understanding, and Multi-Step Computation
 description: >-
@@ -132,7 +132,7 @@ FinMMDocR 由1200道中英双语（各600题）数值推理问题组成，每题
 - **RAG深度分析**：系统比较了6种检索模型和5种Agentic RAG，结论"复杂Agent不如简单RAG"极有实践价值
 - **最佳模型配置的发现**：o4-mini-high是唯一图像输入性能超过文本（OCR+LLM）的模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据规模1200题在benchmark中偏小
 - 中文数据来源于"授权渠道"的研究报告，可复现性存疑
 - 0.2%误差容限虽严格但可能对某些题目过于苛刻（如涉及大量中间计算的场景）

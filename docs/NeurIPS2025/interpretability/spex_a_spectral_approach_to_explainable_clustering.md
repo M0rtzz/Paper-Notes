@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpEx: A Spectral Approach to Explainable Clustering
 description: >-
@@ -110,7 +110,7 @@ $$\Psi_G(S_{j,\tau}(X)) \leq \sqrt{\frac{\mathbb{E}_{adj}\|x-y\|_2^2}{\mathbb{E}
 4. **无参考模式**：SpEx-kNN可跳过参考聚类直接从数据产出可解释聚类
 5. **高效实现**：SpEx-Clique仅需O(1)时间更新切割分数
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑单坐标(axis-aligned)切割——更复杂但可能更强大的斜切割未探索
 - SpEx-kNN在高维数据上表现不如SpEx-Clique
 - 尚未分析可解释性代价的理论界

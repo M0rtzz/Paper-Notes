@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harder Is Better: Boosting Mathematical Reasoning via Difficulty-Aware GRPO and Multi-Aspect Question Reformulation
 description: >-
@@ -119,7 +119,7 @@ DQW温度敏感性：$T=1.0$ → 39.03, $T=2.0$ → **39.79**, $T=5.0$ → 39.53
 - MQR的"保留答案"约束是关键设计：既增加难度又免去答案重生成，大幅降低数据增强成本
 - DGPO+MQR的协同效应（42.17 > 39.79 + 41.04 - 37.61），而非简单加和
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MQR依赖大推理模型（o3）作为改写器，增加数据增强成本
 - 仅在数学推理领域验证，未测试代码生成/逻辑推理等其他推理任务

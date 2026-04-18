@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HyperLoRA: Parameter-Efficient Adaptive Generation for Portrait Synthesis
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：HyperNetwork 思路——训练一个网络从输入人脸图像预测 LoRA 的所有权重。但 LoRA 参数量大（~11.6M），直接预测不现实。利用 LoRA 的线性可插值特性，将参数投影到 128 维基底空间，只需预测 128 个系数。
 
-**核心idea一句话**：低维 LoRA 基底空间 + HyperNetwork 预测系数 + ID/Base 解耦 = 零样本 LoRA 肖像生成。
+**核心 idea**：低维 LoRA 基底空间 + HyperNetwork 预测系数 + ID/Base 解耦 = 零样本 LoRA 肖像生成。
 
 ## 方法详解
 
@@ -90,7 +90,7 @@ tags:
 - **ID/Base 解耦思路新颖**——参数级别的信息分离远比 token 级别的分离更本质
 - **Slider LoRA 能力**——两张图（原始+编辑后）生成的 LoRA 差值竟可用作属性编辑滑块，暗示 LoRA 空间具有 StyleGAN $\mathcal{W}+$ 空间类似的属性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 受限于 GPU 显存，当前 LoRA rank 仅为 8（正常 LoRA 训练常用更大 rank）
 - 数据集仅 440 万（InstantID 用 6000 万），更大数据集可进一步提升保真度

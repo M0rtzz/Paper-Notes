@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos
 description: >-
@@ -64,19 +64,19 @@ tags:
 ### 关键设计
 
 #### PWG (Persistent World Graph)
-- **做什么**：为不可见物体保留其最近一次可见时的视觉特征
+- **功能**：为不可见物体保留其最近一次可见时的视觉特征
 - **核心思路**：Last-Known-State (LKS) 记忆缓冲区——零阶特征保持。可见时用当前特征，不可见时回退到最近可见帧的特征，从未见过则用零向量
 - **设计动机**：直接实现"物体恒存"原则。额外记录 staleness $\Delta_n^{(t)} = |t - \tau^*|$ 用于融合，让模型感知特征的"新鲜度"
 - **特点**：记忆不可微分，无法端到端学习时序上下文，但凭借 3D 几何先验已非常强
 
 #### MWAE (Masked World Auto-Encoder)
-- **做什么**：将不可见物体推理重构为掩码补全问题
+- **功能**：将不可见物体推理重构为掩码补全问题
 - **核心思路**：遮挡和相机运动天然提供"掩码"，模型需要从可见物体推断不可见物体的表示。训练时额外随机掩码一部分可见物体以增强学习
 - **设计动机**：将 MAE 范式从 patch 域迁移到物体/关系域。使用非对称 cross-attention（query 包含所有 token，key/value 仅限可见 token），防止不可见 token 之间互相关注
 - **损失**：$\mathcal{L}_{\text{MWAE}} = \mathcal{L}_{\text{SG}} + \lambda_{\text{recon}} \cdot \lambda_{\text{dom}} \cdot \mathcal{L}_{\text{recon}} + \mathcal{L}_{\text{sim}}$，含场景图损失、特征重建 MSE 损失、被掩码可见物体的关系重预测损失
 
 #### 4DST (4D Scene Transformer)
-- **做什么**：用可微分的时序 Transformer 替代 PWG 的静态缓冲区
+- **功能**：用可微分的时序 Transformer 替代 PWG 的静态缓冲区
 - **核心思路**：为每个物体沿时间维度构建 token 序列（融合视觉/结构/相机/运动/自运动特征），通过双向 Transformer 进行全视频自注意力
 - **设计动机**：PWG 的 LKS 不可微，无法端到端学习时序上下文；4DST 将分解的时空注意力范式从 2D 可见物体扩展到完整 4D，加入正弦位置编码和可学习的 visibility embedding
 
@@ -133,7 +133,7 @@ tags:
 4. **实验设计周全**：PredCls/SGDet × With/No Constraint × R@K/mR@K 全矩阵评估 + VLM baseline + 两种推理管线
 5. **认知科学启发**：将物体恒存原则引入技术方案设计，PWG 的 staleness 感知和 MWAE 的天然掩码都很自然
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **多阶段管线不够端到端**：3D 重建（π³）→ 几何标注（GDINO+SAM2）→ 特征提取（DINO）→ 关系预测，误差逐级传播
 2. **VLM 伪标注质量**：不可见物体的关系标注依赖 VLM 生成 + 人工修正，伪标注的噪声用 $\lambda_{\text{vlm}}$ 权重缓解但未根本解决

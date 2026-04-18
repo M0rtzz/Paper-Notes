@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lattice Boltzmann Model for Learning Real-World Pixel Dynamicity
 description: >-
@@ -148,7 +148,7 @@ LBM 在 BFT 上 OWTA 达 50.3、在 OVT-B 上 TETA 达 41.2，均为无额外训
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

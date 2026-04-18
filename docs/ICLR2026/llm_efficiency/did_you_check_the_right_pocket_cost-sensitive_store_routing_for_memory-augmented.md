@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Did You Check the Right Pocket? Cost-Sensitive Store Routing for Memory-Augmented Agents
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **两阶段评估设计**：先用合成标签验证路由质量，再用真实 LLM 验证下游性能，有效分离了路由决策与模型能力的影响
 - **Coverage-Accuracy Gap 的分解分析**：区分路由错误（12%）和抽取错误（18%），指明了改进方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 标签来自查询分类规则而非人工标注，可能不完全反映真实场景的存储需求
 - 启发式路由器与 Oracle 差距 16 点（70% vs 86%），需要端到端学习的路由策略（如 RL 优化 $\lambda$-tradeoff）
 - 仅测试了 GPT-3.5 和 GPT-4o-mini 两个模型家族，上下文处理策略不同的模型可能响应不同

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Convex Clustering Redefined: Robust Learning with the Median of Means Estimator
 description: >-
@@ -132,7 +132,7 @@ $$g_i = \frac{1}{b}(u_i - x_i) \mathbb{1}(i \in B_{l_t}) + \gamma \sum_j w_{ij}(
 - **无需预设 k**：通过连通分量自动确定聚类数，优于需要 Gapstat 辅助的 k-means 系列
 - **实验设计的公平性**：给 k-means 系列方法也用 Gapstat 估计 k，而非直接给真实 k 值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目标函数非凸（因为 MoM 和 min 操作），只能保证局部最优；虽然用 ADAM 缓解，但理论全局最优性丧失
 - 超参数较多（γ, μ, η₁, ϕ, k, N），调优可能需要网格搜索

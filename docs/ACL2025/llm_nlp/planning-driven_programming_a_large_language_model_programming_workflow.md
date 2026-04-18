@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Planning-Driven Programming: A Large Language Model Programming Workflow
 description: >-
@@ -129,7 +129,7 @@ LPW 是纯推理时方法，不需要额外训练：
 - **模型无关性**：在 GPT-3.5、Llama-3、Phi-3、GPT-4o 四种不同模型上均有效，证明了工作流设计的通用性
 - **计划验证对可见测试的高效利用**：MBPP-ET-3 实验表明 LPW 在利用额外测试信息方面效率最高（+4.4% vs LDB +2.0%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Token 消耗大**：计划和验证生成需要大量 token，对于简单问题可能过度engineered
 2. **计划翻译瓶颈**：代码的准确率仍低于计划验证的准确率，说明从自然语言方案到代码实现的翻译仍有提升空间

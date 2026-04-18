@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TOFA: Training-Free One-Shot Federated Adaptation for Vision-Language Models
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：如何在零训练、仅一轮通信的严格约束下，充分利用VLM的多模态信息，同时处理数据异质性
 
-**本文要解决什么？** 设计一个training-free + one-shot的FL框架，实现VLM的高质量适配
+**本文目标** 设计一个training-free + one-shot的FL框架，实现VLM的高质量适配
 
 **切入角度**：分别从视觉和文本两条pipeline提取互补信息——视觉侧用贝叶斯方法提取个性化prototype，文本侧用LLM增强+全局对齐得到鲁棒文本表示
 
-**核心idea一句话**：用层次贝叶斯做个性化视觉分布推断 + LLM文本增强全局对齐 + confidence-based模态融合，在FL中实现无训练一轮VLM适配
+**核心 idea**：用层次贝叶斯做个性化视觉分布推断 + LLM文本增强全局对齐 + confidence-based模态融合，在FL中实现无训练一轮VLM适配
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ CIFAR-10/100 (100 clients, Dir(0.3)):
 - **Text增强的全局对齐**：不是简单averaging各client的text评分，而是用类KL散度选出跨异质环境都robust的text prompts，比直接用LLM输出质量高很多
 - **Sample-wise fusion有理论支撑**：Theorem 1将模态融合的generalization error bound与mixing coefficient联系起来，不是拍脑袋设计的confidence weighting
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **假设高斯分布**：CLIP特征是否真的服从类高斯分布？复杂场景下（如细粒度分类）可能需要更灵活的分布假设
 - **LLM一致性要求**：需要各client使用相同版本LLM生成text augmentation，这在实际FL场景中可能难以保证
 - **仅适用于分类任务**：GDA-based视觉pipeline限制了方法只能做分类，无法扩展到detection/segmentation等任务

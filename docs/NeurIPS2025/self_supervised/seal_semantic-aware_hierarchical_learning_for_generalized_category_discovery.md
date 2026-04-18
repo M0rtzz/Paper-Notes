@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SEAL: Semantic-Aware Hierarchical Learning for Generalized Category Discovery
 description: >-
@@ -118,7 +118,7 @@ SEAL 基于 SimGCD 基线，引入三个关键组件：
 - **软对比学习的语义引导**符合直觉——同科不同属的物种不应被推得和完全无关的物种一样远
 - 与生物学分类实践的类比既增强了动机也暗示了更广泛的适用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要获取各数据集的语义层级标签，这在某些领域可能不易获得
 - 假设已知总类别数 $K$（虽然可以用现有方法估计）

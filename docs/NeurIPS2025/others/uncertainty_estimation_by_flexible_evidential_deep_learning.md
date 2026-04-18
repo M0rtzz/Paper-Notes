@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty Estimation by Flexible Evidential Deep Learning
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L} = \mathbb{E}_{\boldsymbol{\pi} \sim \text{FD}} [\|\mathbf{y} - \bo
 - 多模态可视化令人信服：对模糊输入（如数字 9/7），F-EDL 产生双峰分布，EDL 则塌缩为单峰过度自信预测
 - 额外参数开销极小（VGG-16 仅增 1.8%），推理几乎无额外成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅限于分类任务，扩展到回归是自然方向
 - 偶然性与认知不确定性的解耦尚不完全

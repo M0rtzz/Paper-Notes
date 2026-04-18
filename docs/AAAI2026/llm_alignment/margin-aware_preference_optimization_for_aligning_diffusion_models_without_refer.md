@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Margin-aware Preference Optimization for Aligning Diffusion Models without Reference
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：reference mismatch 越大，DPO 等方法的性能退化越严重。但实际应用中经常需要将模型适配到与预训练分布差异很大的偏好（如从写实到动漫风格），这正是 reference mismatch 最严重的场景。
 
-**本文要解决什么？** 设计无需参考模型的偏好对齐方法，彻底消除 reference mismatch 对 T2I 扩散模型对齐的负面影响。
+**本文目标** 设计无需参考模型的偏好对齐方法，彻底消除 reference mismatch 对 T2I 扩散模型对齐的负面影响。
 
 **切入角度**：直接在 Bradley-Terry 偏好模型下最大化偏好和非偏好输出之间的似然 margin，同时最大化偏好输出的似然，不锚定任何参考模型。
 
@@ -47,19 +47,19 @@ MaPO 基于 Bradley-Terry 模型，直接优化偏好图像和非偏好图像的
 
 1. **无参考偏好优化（Reference-free Preference Optimization）**:
 
-    - **做什么**：在 Bradley-Terry 模型下直接优化 margin，不依赖参考模型。
+    - **功能**：在 Bradley-Terry 模型下直接优化 margin，不依赖参考模型。
     - **核心思路**：标准 DPO 的损失函数形如 $\mathcal{L}_\text{DPO} = -\log \sigma(\beta [\log \frac{\pi_\theta(y_w|x)}{\pi_\text{ref}(y_w|x)} - \log \frac{\pi_\theta(y_l|x)}{\pi_\text{ref}(y_l|x)}])$，需要参考模型 $\pi_\text{ref}$。MaPO 去掉参考模型，直接优化 $\log \pi_\theta(y_w|x) - \log \pi_\theta(y_l|x)$（似然 margin），同时加上 $\log \pi_\theta(y_w|x)$ 项防止两侧似然同时下降。
     - **设计动机**：参考模型在 reference mismatch 场景下成为"锚定障碍"——它限制模型向偏好分布移动的自由度。移除参考模型相当于释放了这个约束，让模型可以自由地向偏好分布适配。
 
 2. **构造 Reference Mismatch 场景的数据集**:
 
-    - **做什么**：创建 Pick-Style 和 Pick-Safety 两个数据集，分别模拟 reference-chosen mismatch 和 reference-rejected mismatch。
+    - **功能**：创建 Pick-Style 和 Pick-Safety 两个数据集，分别模拟 reference-chosen mismatch 和 reference-rejected mismatch。
     - **核心思路**：Pick-Style 通过在 prompt 前加"Disney style animated image"或"Pixel art style image"作为偏好图像 prompt，加"Realistic 8k image"作为非偏好 prompt，模拟风格偏好偏移（参考模型远离偏好风格）。Pick-Safety 则用"Sexual, nudity"前缀生成非偏好图像，模拟安全偏好（参考模型远离非偏好内容）。
     - **设计动机**：现有偏好数据集不能直接控制 reference mismatch 程度，需要专门构造数据来验证 MaPO 在不同 mismatch 程度下的优势。
 
 3. **统一多任务 T2I 对齐**:
 
-    - **做什么**：将 5 个不同的 T2I 任务（安全生成、风格适配、文化表示、个性化、通用偏好）统一为成对偏好优化。
+    - **功能**：将 5 个不同的 T2I 任务（安全生成、风格适配、文化表示、个性化、通用偏好）统一为成对偏好优化。
     - **设计动机**：传统方法需要为不同任务设计不同的对齐策略（如 DreamBooth 用于个性化），MaPO 的无参考框架足够灵活，可以适配所有场景。
 
 ### 损失函数 / 训练策略
@@ -94,7 +94,7 @@ MaPO 基于 Bradley-Terry 模型，直接优化偏好图像和非偏好图像的
 - **方法极简但有效**：MaPO 的核心改动就是去掉参考模型并加 margin loss，实现简单但效果好。在 Imgsys 上排第7名（DPO 第20名）非常有说服力。
 - **统一多任务框架**：一个方法覆盖安全、风格、个性化等多个任务，避免了为每个任务调不同方法的麻烦。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 无参考模型可能在某些场景下缺乏正则化，导致模式坍塌风险
 - 仅在 SDXL 上验证，对其他扩散架构（如 DiT-based）的适用性未知
 - Pick-Style 和 Pick-Safety 是合成数据集，真实用户偏好可能更复杂

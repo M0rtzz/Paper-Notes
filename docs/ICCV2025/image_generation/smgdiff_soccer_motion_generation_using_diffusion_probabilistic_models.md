@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SMGDiff: Soccer Motion Generation using Diffusion Probabilistic Models
 description: >-
@@ -189,7 +189,7 @@ SMGDiff 在几乎所有指标上都显著优于基线方法，尤其是技能准
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

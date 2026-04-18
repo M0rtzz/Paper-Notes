@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-View Completion Models are Zero-shot Correspondence Estimators
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 类比清晰：CVC中的源→目标warp与光流/立体匹配中的源→目标对齐完全对应
 - 为CVC预训练模型的使用方式提供了新范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 交叉注意力图分辨率受ViT patch size限制（通常16×16），细粒度匹配仍需额外学习头
 - 零样本推理需要正向和交换两次前向传播

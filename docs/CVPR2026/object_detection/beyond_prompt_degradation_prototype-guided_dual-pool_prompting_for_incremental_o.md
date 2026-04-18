@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Prompt Degradation: Prototype-Guided Dual-Pool Prompting for Incremental Object Detection
 description: >-
@@ -135,7 +135,7 @@ PPG 使旧知识保持率 mAP@P 提升 +13.9%，同时新类适应 mAP@C 提升 
 2. **原型空间替代置信度阈值**：在嵌入空间中用类原型做相似度匹配，避免了固定阈值在类别间分布不一致时的失效
 3. **端到端框架**：相比 PseDet 需要额外推理+聚类步骤，PDP 是完全端到端的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在 70+10 两步设置下略逊于 PseDet（42.9 vs 44.7 AP），大步增量场景仍有提升空间
 2. 原型仅在每个任务最后一个 epoch 更新，早期训练阶段原型可能不够准确

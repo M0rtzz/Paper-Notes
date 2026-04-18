@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CityGaussian: Real-Time High-Quality Large-Scale Scene Rendering with Gaussians
 description: >-
@@ -133,7 +133,7 @@ tags:
 3. **Block-wise LoD**：以 block 而非逐点为单位选择细节等级，避免了逐点距离计算的开销，实现了跨尺度一致的实时渲染
 4. **MAD 去 floater**：用中位绝对偏差估计 block 包围盒，有效排除 floater 对视锥体裁剪的干扰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **静态场景假设**：无法处理动态物体（行人、车辆），限制了实际城市场景的适用性
 2. **混合视角训练退化**：论文承认同时使用航拍和街景视角训练反而降低性能，该问题尚未解决

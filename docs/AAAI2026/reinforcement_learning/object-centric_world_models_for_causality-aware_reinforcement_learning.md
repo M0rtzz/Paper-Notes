@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Object-Centric World Models for Causality-Aware Reinforcement Learning
 description: >-
@@ -140,7 +140,7 @@ STICA 由三个组件构成：
 - **位置编码设计**：动力学模型中仅用时间位置编码（不用物体索引），保证对 slot 顺序的等变性——这对 Slot Attention 的随机提取顺序至关重要
 - **首个无需额外监督的物体中心 MBRL**：不需要随机探索、标注数据或预训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 因果注意力中的因果图 $G$ 结构是预定义的（3类：目标、因果物体、非因果物体），灵活性有限
 2. 固定的 slot 数量 $n$ 可能不适应物体数量变化的场景

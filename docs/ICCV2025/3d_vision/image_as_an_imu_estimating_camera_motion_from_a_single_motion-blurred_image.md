@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Image as an IMU: Estimating Camera Motion from a Single Motion-Blurred Image
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **数据合成pipeline**：展示了如何从标准视觉数据集（ScanNet++v2）生成带GT的模糊训练数据，方法论值得借鉴
 - **优雅的方向消歧**：利用视频时序和光度一致性的简单启发式方法解决180°歧义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设场景是刚体的，不处理rolling shutter和曝光内非均匀运动（虽然实验显示对此有一定鲁棒性）
 - 训练数据限于室内场景，室外场景的推广能力未验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EcoCast: A Spatio-Temporal Model for Continual Biodiversity and Climate Risk Forecasting
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：借鉴气象学中操作性短期预报的范式——基于观测历史直接预测近期，用Transformer对环境时间序列建模。ERA5气候数据在观测后5天内即可获取初步版本，使月度预报更新成为可能。
 
-**核心idea一句话**：用Transformer对12个月的多源环境特征序列建模，预测下月物种出现概率，避免对未来气候情景的依赖。
+**核心 idea**：用Transformer对12个月的多源环境特征序列建模，预测下月物种出现概率，避免对未来气候情景的依赖。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ F1提升+34百分点，PR-AUC提升+43百分点。
 - **Transformer对生态时间序列的天然适配**：鸟类物候学中的季节性、迁徙模式和环境滞后效应恰好是自注意力机制擅长捕捉的长程依赖。
 - **非洲视角的独特价值**：大多数生态AI工作聚焦欧美数据集，本文专注非洲这一生物多样性热点但数据匮乏区域。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **实验规模有限**：仅5种鸟类的pilot study，统计显著性不足
 - **基线过弱**：只与Random Forest对比，缺少ConvLSTM、EarthFormer等时空深度学习基线

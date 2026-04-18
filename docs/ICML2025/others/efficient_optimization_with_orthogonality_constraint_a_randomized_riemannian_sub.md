@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Optimization with Orthogonality Constraint: a Randomized Riemannian Submanifold Method
 description: >-
@@ -106,7 +106,7 @@ $$U_k(Y) = P_k^\top \begin{bmatrix} Y & 0 \\ 0 & I_{n-r} \end{bmatrix} P_k, \qua
 4. **可扩展性**：方法自然推广到 Grassmann、Flag 等商流形，无需修改算法
 5. **实际有效**：PyTorch 实现，GPU 友好，代码开源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **总复杂度匹配仅在 $p = \Theta(n)$ 时**：当 $p \ll n$ 时，retraction 本身不是瓶颈，RSDM 的优势减弱
 2. **高概率界中置换采样的 $\binom{n}{r}$ 因子**：理论上很可能是松的，但目前无法改进

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Storage-Efficient Visual Document Retrieval: An Empirical Study on Reducing Patch-Level Embeddings
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **VDR vs 生成的关键差异洞察**：在生成任务中关注延迟和 FLOPs，所以要在早期层做 token 减少；但在 VDR 中关注存储，所以可以在最后阶段做合并
 - **实用性强**：Light-ColPali/ColQwen2 可直接作为存储高效 VDR 的基线方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 微调仍需 72 A100-GPU 小时的计算开销
 - 仅在 ColPali/ColQwen2 两个检索器上验证，通用性需验证

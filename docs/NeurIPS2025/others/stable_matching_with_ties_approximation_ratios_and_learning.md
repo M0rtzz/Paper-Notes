@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stable Matching with Ties: Approximation Ratios and Learning
 description: >-
@@ -84,7 +84,7 @@ Bandit设定下每轮观察1-sub-Gaussian奖励$X_i(t)$，均值$\mathbf{U}(w_i,
 - 有向森林的构造和归纳证明是$O(\log N)$上界的关键，利用稳定性约束限制了冲突树的深度
 - Theorem 8的trade-off下界具有独立于匹配问题的bandit理论意义，表明这不是计算限制而是统计本质
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑单边并列(工人侧)，工作侧也有并列偏好的双边情形更困难
 - Algorithm 1中每个工人在$m$个匹配中只被分配一个工作（概率$1/m$），大部分时间闲置

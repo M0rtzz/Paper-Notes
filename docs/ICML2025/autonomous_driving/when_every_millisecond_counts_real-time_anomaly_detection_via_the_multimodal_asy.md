@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Every Millisecond Counts: Real-Time Anomaly Detection via the Multimodal Asynchronous Hybrid Network
 description: >-
@@ -137,7 +137,7 @@ tags:
 - **mResponse 指标贡献**：提出跨多阈值的平均检测延迟指标 mResponse，比单阈值评估更全面地衡量实时性能
 - **实用导向**：明确将响应时间纳入评价体系，强调"检测到但来不及反应"等于没检测到
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **事件数据为模拟生成**：使用 v2e 将 RGB 视频转为事件流，与真实事件相机存在域差距。未来可用 DSEC 等真实事件驾驶数据集验证
 2. **目标检测依赖 RGB 帧**：YOLOX 检测框仍需等待 RGB 帧，事件流仅用于特征增强，未完全发挥事件相机的低延迟优势。可探索纯事件检测降低整体延迟

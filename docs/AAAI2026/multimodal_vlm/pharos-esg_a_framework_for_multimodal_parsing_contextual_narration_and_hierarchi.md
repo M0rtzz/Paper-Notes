@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pharos-ESG: A Framework for Multimodal Parsing, Contextual Narration, and Hierarchical Labeling of ESG Reports
 description: >-
@@ -51,7 +51,7 @@ Pharos-ESG包含四个核心模块：(a) 基于版面流的阅读顺序建模；
 
 1. **阅读顺序建模（Reading Order Modeling）**
 
-    - **做什么**：从ESG报告中提取多模态元素后，将全局序列排序转化为成对后继分类问题
+    - **功能**：从ESG报告中提取多模态元素后，将全局序列排序转化为成对后继分类问题
     - **Block内容编码**：每页表示为内容块集合 $\mathcal{D}_p = \{(w_i, b_i, c_i, p)\}$，包含内容、边界框、块类型、页码
     - **多模态特征构建**：对每对有序Block $(i,j)$，构建特征向量 $\varphi_{ij}$，整合语义（LayoutLMv3编码）、空间（中心偏移、IoU、距离）和类别信号
     - **关系预测**：关系感知Transformer（RAT）通过交叉注意力预测Block $j$ 是否直接跟随Block $i$，计算后继概率 $s_{ij} = \sigma(\mathbf{W} \cdot \text{Transformer}(\varphi_{ij}) + \mathbf{b})$
@@ -138,7 +138,7 @@ Pharos-ESG包含四个核心模块：(a) 基于版面流的阅读顺序建模；
 4. **Aurora-ESG数据集贡献**：24K+报告、800万+内容块、覆盖中美港三个市场，填补了领域数据空白
 5. **完整的金融标注体系**：ESGN→GRI→情感三级标签，直接服务于金融分析需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **评估主要聚焦中文ESG报告**：虽然测试了跨市场泛化，但50份中文报告的训练集较小
 2. **计算资源需求**：完整pipeline涉及多个模型（LayoutLMv3、Qwen2.5-VL等），部署成本较高

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DND: Boosting Large Language Models with Dynamic Nested Depth
 description: >-
@@ -115,7 +115,7 @@ Qwen3-30B-A3B MoE模型，17个benchmark：
 - **兼容dense和MoE**: 在1.7B dense和30B MoE上均验证有效，且后者成本更低（MoE层已有稀疏激活）
 - **可视化分析有说服力**: token选择的层次化模式（浅层→实体，深层→逻辑）为adaptive computation提供了经验证据
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在后训练(SFT)阶段验证，预训练和持续预训练阶段的影响未探索
 - 仅在自回归LLM上测试，扩散式LLM等其他架构的适用性未知
 - 层间选择比例不同（中间层和边界层更高），但论文未利用这一发现进行层自适应比例设计

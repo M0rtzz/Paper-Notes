@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VERA: Variational Inference Framework for Jailbreaking Large Language Models
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 训练后的攻击者可通过简单前向传播生成新攻击，摊销了计算成本
 - VERA 不依赖已知漏洞模板，具有"未来适应性"——不会因漏洞修补而失效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 查询目标 LLM 的次数较多（每步 B 次），在 API 计费场景下成本较高
 - 使用 Vicuna-7b 作为攻击者可能限制了对某些防御更强的模型的攻击效果
 - 早停机制虽防止退化但可能过早终止对更多攻击模式的探索

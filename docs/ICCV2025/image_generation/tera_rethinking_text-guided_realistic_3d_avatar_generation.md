@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TeRA: Rethinking Text-guided Realistic 3D Avatar Generation
 description: >-
@@ -142,7 +142,7 @@ $$L_{dist} = \sum_{i=1}^{N} (\|I_{pred} - I_{gt}\|^2 + \lambda_{vgg}L_{vgg}) + \
 4. **VLM标注流程**：Qwen2.5-VL + Qwen2.5的协作标注方案，为大规模3D数据集文本标注提供可复用方案
 5. **12秒生成**：在单3090上实现商用级速度
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **静态模型**：训练数据为静态3D人体，无法建模运动引起的衣物褶皱等动态细节
 2. **宽松服装受限**：依赖SMPL-X表示，裙子等宽松服装建模质量有限

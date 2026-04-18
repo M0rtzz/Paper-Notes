@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion Curriculum: Synthetic-to-Real Data Curriculum via Image-Guided Diffusion
 description: >-
@@ -128,7 +128,7 @@ OOD 和 ID 分别提升 2.7% 和 2.1%。
 - 两种课程策略（非自适应 vs 自适应）的设计反映了对不同任务本质差异的深刻理解
 - 实验设计系统全面，覆盖 ImageNet-LT、CIFAR100-LT、iNaturalist2018、iWildCam 四个数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据质量受扩散模型能力和 CLIP 对齐能力制约
 - 文本提示仅基于类别名称，未利用图像描述信息

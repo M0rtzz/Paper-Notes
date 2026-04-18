@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamDissector: Learning Disentangled Text-to-3D Generation from 2D Diffusion Priors
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：多物体text-to-3D需要物体间的交互关系，但编辑又需要物体的独立表示，两者难以兼得。
 
-**本文要解决什么？** 将已生成的多物体交互NeRF自动解耦为独立的物体网格，保持交互关系和外观。
+**本文目标** 将已生成的多物体交互NeRF自动解耦为独立的物体网格，保持交互关系和外观。
 
 **切入角度**：不直接生成独立物体，而是先生成完整交互场景再"拆解"——通过学习空间中每个点的类别概率分布来分解密度场。
 
-**核心idea一句话**：用概率分布分解NeRF密度场实现解耦，并通过个性化扩散模型解决概念差距问题。
+**核心 idea**：用概率分布分解NeRF密度场实现解耦，并通过个性化扩散模型解决概念差距问题。
 
 ## 方法详解
 
@@ -52,7 +52,7 @@ tags:
 
 #### 1. Neural Category Field (NeCF)
 
-- **做什么**：为3D空间中每个点学习一个类别概率分布，将原始NeRF的密度场分解为多个子NeRF。
+- **功能**：为3D空间中每个点学习一个类别概率分布，将原始NeRF的密度场分解为多个子NeRF。
 - **核心思路**：
     - 将密度分解为概率加权形式：$\sigma = \sum_{k=1}^{K} \frac{\sigma_k}{\sigma} \sigma$，其中 $\frac{\sigma_k}{\sigma}$ 构成概率单纯形
     - 用MLP+softmax建模类别概率：$\mathbf{p}_i^k = \frac{\exp(f_k/T)}{\sum_k^K \exp(f_k/T)}$，温度 $T=0.05$ 使输出近似one-hot
@@ -64,7 +64,7 @@ tags:
 
 #### 2. Category Score Distillation Sampling (CSDS) + Deep Concept Mining (DCM)
 
-- **做什么**：用多个类别特定的SDS损失训练NeCF，并通过DCM解决扩散模型中的"概念差距"问题。
+- **功能**：用多个类别特定的SDS损失训练NeCF，并通过DCM解决扩散模型中的"概念差距"问题。
 - **核心思路**：
     - 朴素做法：对每个类别 $k$，用类别文本 $y_k$ 做SDS：$\nabla_\theta L_{SDS}(\phi,\theta)_k = \mathbb{E}_{t,\epsilon}[w(t)(\epsilon_\phi(x_t; y_k, t) - \epsilon) \frac{\partial x}{\partial \theta}]$
     - **概念差距问题**：文本"a chimpanzee looking through a telescope"生成的是手持望远镜，但"a telescope"会生成三脚架望远镜——两者在扩散模型潜空间中占据不同区域
@@ -76,7 +76,7 @@ tags:
 
 #### 3. 精细化阶段
 
-- **做什么**：将解耦后的子NeRF转换为DMTet，修复伪影并提升几何纹理质量。
+- **功能**：将解耦后的子NeRF转换为DMTet，修复伪影并提升几何纹理质量。
 - **核心思路**：
     - 使用等值面提取将子NeRF转为DMTet
     - 用DCM微调的扩散模型指导DMTet精细化（5000步）
@@ -124,7 +124,7 @@ tags:
 - **概念差距的发现与解决**：深入分析了扩散模型中完整prompt与部分prompt的潜空间不一致性，DCM的掩码微调策略简洁有效
 - **丰富的应用场景**：支持物体级纹理编辑、物体替换、几何编辑，实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DCM需要Grounded-SAM提供初始掩码，对分割质量有依赖
 - 物体替换时拓扑变化大仍有挑战（SDS难以大幅改变DMTet拓扑）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhysicsNeRF: Physics-Guided 3D Reconstruction from Sparse Views
 description: >-
@@ -96,7 +96,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{rgb}} + \alpha(t)\sum_i \lambd
 - 崩溃-恢复动态的发现揭示了物理约束在优化景观中的作用机制
 - 对 world model 构建的启示：有限观察下的物理一致性表示仍是开放问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 泛化差距仍有 5.7-6.2 dB，当前固定形式的物理约束难以完全解决欠定性
 - 仅在 NeRF synthetic 数据集上实验，缺乏真实场景验证

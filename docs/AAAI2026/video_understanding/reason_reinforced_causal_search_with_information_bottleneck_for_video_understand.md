@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReaSon: Reinforced Causal Search with Information Bottleneck for Video Understanding
 description: >-
@@ -148,7 +148,7 @@ $$\nabla_\theta \mathcal{L} = \frac{1}{G} \sum_{i=1}^G \hat{A}_i \cdot \nabla_\t
 4. **计算效率高**：训练和推理仅需单张 3090（8帧），且策略网络非常轻量（3层 LSTM + MLP），不增加 VLM 推理成本。
 5. **强泛化性**：训练在 NExT-QA 上完成，直接在 EgoSchema 和 Video-MME 上泛化表现优异。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **长视频场景仍有瓶颈**：在 Video-MME 长视频上增益有限（32帧时 Long 类别低于 T*），因为候选帧池大小固定（M=64）可能无法覆盖超长视频的关键信息。
 2. **候选帧池依赖视觉元素检测**：使用 YOLO-World 检测视觉元素可能遗漏抽象或非物体线索。

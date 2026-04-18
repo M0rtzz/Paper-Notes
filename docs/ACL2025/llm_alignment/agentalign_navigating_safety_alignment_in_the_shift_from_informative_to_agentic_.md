@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AgentAlign: Navigating Safety Alignment in the Shift from Informative to Agentic LLMs
 description: >-
@@ -125,7 +125,7 @@ AgentAlign 由四个环环相扣的模块组成：
 - 安全对齐数据的配比至关重要，过多安全数据会严重损害效用
 - 人评 93% majority-pass rate 验证了低成本自动合成方案的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模拟环境与真实API的差异可能影响迁移效果
 - 未考虑动态多轮交互场景（用户中途改变需求）
 - LLM 生成的数据仍有约7%的缺陷（人评）

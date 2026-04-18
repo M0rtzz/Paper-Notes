@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Information Theoretic Evaluation Metric for Strong Unlearning
 description: >-
@@ -84,7 +84,7 @@ tags:
 - **IDI 与 t-SNE 和头部重训精度高度一致**，提供了多角度的交叉验证
 - **COLA 方法简洁有效**：利用对比学习的"灾难性遗忘"特性，反过来用于遗忘目的，思路巧妙
 
-## 局限性 / 可改进方向
+## 局限与展望
 - IDI 计算仍需多次训练 critic 网络，ResNet-50/CIFAR-100 上约 40-50 分钟，对大规模模型可能仍较慢
 - IDI 依赖 Retrain 作为参考模型（虽然论文提出了无 Retrain 的变体，但此时 IDI 的绝对值解释会改变）
 - 实验限于图像分类任务，未验证在生成模型（如扩散模型）、NLP 模型上的适用性

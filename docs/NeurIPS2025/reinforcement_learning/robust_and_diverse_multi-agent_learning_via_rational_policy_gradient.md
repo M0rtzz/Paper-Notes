@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust and Diverse Multi-Agent Learning via Rational Policy Gradient
 description: >-
@@ -135,7 +135,7 @@ AD-RPG 在所有环境中都避免了自毁并保持高鲁棒性。
 - **零和设定的严格泛化**：在零和博弈中 RPO 自动退化为标准对抗训练，保证了方法的通用性
 - **一个框架统一五种算法**：AP-RPG、AT-RPG、PAIRED-RPG、PAIRED-A-RPG、AD-RPG 均为 RPG 的实例化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 高阶梯度计算引入额外开销（AD-RPG 比 AD 慢约 6 倍），需要较大 batch size 来稳定估计
 - 尚无形式化的收敛性保证——不确定 RPG 在何种条件下一定能找到 RPO 的解

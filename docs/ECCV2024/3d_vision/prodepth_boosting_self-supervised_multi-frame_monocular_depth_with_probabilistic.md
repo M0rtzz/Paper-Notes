@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProDepth: Boosting Self-Supervised Multi-Frame Monocular Depth with Probabilistic Fusion
 description: >-
@@ -136,7 +136,7 @@ Cityscapes 上的组件消融（Abs Rel ↓）：
 - **概率连续性**: 不确定性是连续的 $[0,1]$，比二值掩码更精细
 - **端到端统一**: 不确定性推理、代价体修正、损失调整三者紧密耦合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 不确定性推理依赖单帧深度质量，若单帧深度本身不准则不确定性可能有偏
 - PCVM 在深度候选离散化较稀疏时可能丢失精度

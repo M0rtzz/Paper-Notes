@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Õ(√T) Constraint Violation for Online Convex Optimization with Adversarial Constraints
 description: >-
@@ -110,7 +110,7 @@ tags:
 3. **自适应小损失界的新技术**：该技术超越了标准的在线学习工具，可能在其他在线优化问题中有广泛应用
 4. **$\beta$ 的实际指导意义**：为工程师在部署在线学习系统时提供了明确的安全-性能调节旋钮
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **下界缺失**：尚不清楚所提出的 $\tilde{O}(\sqrt{dT} + T^\beta)$ 遗憾和 $\tilde{O}(dT^{1-\beta})$ CCV 是否为 Pareto 最优
 2. **对抗假设的现实性**：完全对抗的约束设定可能过于保守，实际约束可能具有某种统计规律性

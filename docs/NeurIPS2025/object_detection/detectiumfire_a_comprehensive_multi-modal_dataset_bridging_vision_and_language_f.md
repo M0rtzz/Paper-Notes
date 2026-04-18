@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DetectiumFire: A Comprehensive Multi-modal Dataset Bridging Vision and Language for Fire Understanding
 description: >-
@@ -32,11 +32,11 @@ DetectiumFire 构建了最大的多模态火灾理解数据集——14.5K 真实
 
 **核心矛盾**：火灾场景需要上下文推理（小蜡烛 vs 蔓延火焰），但现有数据集不支持这种理解——只有检测不够，需要场景语义+严重性评估。
 
-**本文要解决什么？** 构建大规模、低重复、多模态的火灾理解数据集，支持检测+描述+严重性评估。
+**本文目标** 构建大规模、低重复、多模态的火灾理解数据集，支持检测+描述+严重性评估。
 
 **切入角度**：结合真实采集 + SFT/RLHF 微调的 Stable Diffusion 合成 + GPT-4o 标注语义描述 + 4 级严重性分类体系。
 
-**核心 idea 一句话**：低重复真实图像 + SFT/RLHF 微调 SD 合成 + GPT-4o 语义标注 + 4 级严重性分类 = 多模态火灾理解基准。
+**核心 idea**：低重复真实图像 + SFT/RLHF 微调 SD 合成 + GPT-4o 语义标注 + 4 级严重性分类 = 多模态火灾理解基准。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ DetectiumFire 构建了最大的多模态火灾理解数据集——14.5K 真实
 - **低重复率**（0.03 vs 0.15）说明数据去重对基准质量至关重要
 - **跨域不对称性**（DetectiumFire→D-Fire 40.32 vs D-Fire→DetectiumFire 24.88）证明 DetectiumFire 的多样性和困难度更高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 合成数据提升有限（+0.78 mAP），可能需要更先进的生成策略（如 ControlNet 条件生成）
 - 语言偏差（主要英文+中文搜索）——可能遗漏非英文标注的火灾场景
 - 缺乏人类存在、火灾进展（时序）等更丰富的场景标注

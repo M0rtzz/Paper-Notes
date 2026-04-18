@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] You Can Trust Your Clustering Model: A Parameter-free Self-Boosting Plug-in for Deep Clustering
 description: >-
@@ -138,7 +138,7 @@ $$L_{ins} = \|g(f_o(\mathcal{T}^1(x)) + \sigma\varepsilon) - f_t(\mathcal{T}^2(x
 - **通用性强**：适用于表征式和聚类头式两大类深度聚类方法，甚至对 CLIP-based 方法也有效
 - **零额外成本**：仅在 mini-batch 内做 k-NN 搜索，避免了全局 k-NN 的开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设簇数已知**：实际场景中簇数通常未知，需要额外的簇数估计机制
 2. **类别不平衡鲁棒性不足**：虽然引入了平衡权重，但高度不平衡或非均匀分布的数据可能仍有挑战

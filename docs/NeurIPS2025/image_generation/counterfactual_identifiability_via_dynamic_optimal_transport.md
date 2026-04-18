@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Counterfactual Identifiability via Dynamic Optimal Transport
 description: >-
@@ -114,7 +114,7 @@ $$\min_{\theta} \int_0^1 \mathbb{E}_{X_1 \sim p_{\text{data}}} \left[\|v_t(X_t; 
 - **Markovian Batch-OT coupling 的修正**是一个重要的细节贡献——指出了标准做法的隐含缺陷
 - **rank preservation 的多维推广**：单调性保证了反事实不会产生 rank inversion，对公平性应用至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **正则性假设较强**：要求密度严格正、有界、定义域有界凸——排除了很多实际分布
 - **OT 计算在高维的可扩展性**：Batch-OT 在高维需要大 batch size，计算成本高

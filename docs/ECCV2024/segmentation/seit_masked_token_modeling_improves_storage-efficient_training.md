@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SeiT++: Masked Token Modeling Improves Storage-Efficient Training
 description: >-
@@ -156,7 +156,7 @@ $$\mathcal{C}(Z_{T_1}, Z_{T_2}) = \sigma(Z_{T_2})\frac{Z_{T_1} - \mu(Z_{T_1})}{\
 3. **自监督 + token 的首次结合**：证明 MLM 类自监督方法可以从离线 token 直接学习，无需原始像素图像
 4. **极致的存储效率**：仅用 1GB 数据即可训练出 70%+ 准确率的 ViT 模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未在 ImageNet-21k 等大规模数据集上实验（受资源限制）
 2. TokenAdapt 的转换/逆变换模块需要额外训练，增加了流水线复杂度

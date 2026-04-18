@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiveCC: Learning Video LLM with Streaming Speech Transcription at Scale
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：将 YouTube CC 字幕视为 ASR 转录，与视频帧沿时间轴交织形成流式序列。用这种数据格式大规模预训练，再用高质量 WhisperX 转录数据进行 SFT。
 
-**核心idea一句话**：ASR 词-视频帧时间交织 = 流式视频理解能力的大规模无监督学习。
+**核心 idea**：ASR 词-视频帧时间交织 = 流式视频理解能力的大规模无监督学习。
 
 ## 方法详解
 
@@ -88,7 +88,7 @@ tags:
 - **YouTube CC 作为免费训练数据**——利用已有的海量字幕数据，无需额外标注
 - **小模型打大模型**——正确的训练范式比堆参数更有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - YouTube CC 质量低（需要大量预处理）
 - 流式模式降低了指令遵循能力，需要基于 logits 的评估
 - SFT 依赖 GPT-4o 生成提示，成本和偏置

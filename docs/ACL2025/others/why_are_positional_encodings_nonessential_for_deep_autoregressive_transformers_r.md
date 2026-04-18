@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Why Are Positional Encodings Nonessential for Deep Autoregressive Transformers? Revisiting a Petroglyph
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **元科学反思极具价值**：通过具体引用错误案例（Flamingo、Code Llama 等高影响力论文的错误归因），揭示了快速增长的研究社区中知识传播的结构性问题
 - **标题"Petroglyph"（岩刻）的双关**：既暗示 pre-LLM 时代的成果被当作"史前遗迹"忽视，也暗指 Figure 1 这样的图示常在旧笔记和白板讨论中出现却从未正式发表
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 本文是理论综述/澄清性论文，未提供新的实验验证
 - 仅聚焦 PE 的（非）必要性问题，未讨论何种 PE 设计在实践中最优
 - 未探讨 PE 对非语言任务（如代码生成、数学推理）的影响

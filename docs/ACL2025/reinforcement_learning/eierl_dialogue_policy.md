@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Efficient Task-Oriented Dialogue Policy: Evolutionary Reinforcement Learning Injected by Elite Individuals
 description: >-
@@ -136,7 +136,7 @@ Epoch=500 时的平均奖励（Reward）：
 - **EII 的自适应阈值设计简洁优雅**：仅用一个动态更新的适应度阈值即可实现"早期频繁注入引导方向、后期稀疏注入避免干预"的效果，无需额外超参数
 - **在 LLM 时代再次证明轻量 RL 在决策任务中的价值**：GPT-4 的语言能力无法弥补其在序列决策中的不足，表明对话策略优化仍需专门的 RL 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在用户模拟器上评估**：所有实验基于模拟对话环境（Microsoft Dialogue Challenge、ConvLab），未与真实用户交互验证
 - **计算成本增加**：EA 种群中多个个体需要与环境交互，虽然通过 1/M 采样控制 buffer 成本，但总交互次数增加

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spectral Bellman Method: Unifying Representation and Exploration in RL
 description: >-
@@ -133,7 +133,7 @@ $\tilde{\theta}(\theta)$ 实现为残差网络：$\tilde{\theta}(\theta) = \thet
 3. **避免了硬优化问题**：直接最小化 IBE 需要 min-max-min 优化；SBM 将其转化为类幂迭代的交替优化，简单且收敛快
 4. **SBM Loss vs MSE 的对比分析**精辟：通过展开 MSE 并与 SBM 逐项对比，清楚地展示了移动平均协方差相比单样本估计的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **参数分布 $\nu(\theta)$ 的敏感性**：需要仔细调参 $\sigma_{rep}$，不同环境可能需要不同的配置
 2. **仅验证 Atari**：未在连续控制任务（MuJoCo 等）上验证，适用范围有待确认

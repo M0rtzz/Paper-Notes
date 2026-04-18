@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs
 description: >-
@@ -135,7 +135,7 @@ X-Former采用两阶段训练：
 - **数据效率惊人**：14M数据超越129M数据训练的BLIP-2，说明更好的视觉表征比更多数据更重要
 - **即插即用**：X-Former可以替代Q-Former应用于其他MLLM框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在OPT上验证，未覆盖更强的LLM（如LLaMA、Vicuna等）
 - 推理时间增加约30%（890ms vs 680ms），因引入额外MAE编码器
 - MCI任务在VCR上略低于BLIP-2，全局理解略有牺牲

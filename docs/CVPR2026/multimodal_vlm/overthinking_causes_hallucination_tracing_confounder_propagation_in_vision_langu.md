@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Overthinking Causes Hallucination: Tracing Confounder Propagation in Vision Language Models
 description: >-
@@ -111,7 +111,7 @@ OOD泛化（AMBER + LLaVA-1.5）：**Ours GB 86.11 AUC / 71.58 F1** vs MetaToken
 - **S-OT极简但极强**：一个标量（唯一token数×平均熵）就能提升所有检测基线，工程实用性极高
 - **H1→H2→H3假设驱动的分析范式**：方法论上值得学习——先证明现有方法失败、再发现新机制、最后量化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅检测未缓解**：尚未利用overthinking信号进行实时干预（如检测到high S-OT时做early exit或重置中间表示），从诊断到治疗的延伸是自然方向
 - **标注依赖GPT-4o**：token级幻觉标签由GPT-4o生成，受其能力和偏差影响

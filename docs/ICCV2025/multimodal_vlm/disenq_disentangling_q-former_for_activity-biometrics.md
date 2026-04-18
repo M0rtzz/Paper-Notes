@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DisenQ: Disentangling Q-Former for Activity-Biometrics
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{ID} + \lambda_2 \mathcal{L}_{Tri} + \lamb
 - **跨场景泛化强**：在活动生物特征和传统行人重识别基准上都取得 SOTA/竞争力表现
 - **生物特征描述的 running average 更新**：优雅地处理了同一身份在不同视频中描述不一致的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 VLM 生成的文本质量，虽然消融显示对 VLM 选择不敏感，但在更极端场景（遮挡严重、低分辨率）下质量可能下降
 - ViT-G/14 作为视觉编码器参数量大（1.8B），在资源受限场景不实用

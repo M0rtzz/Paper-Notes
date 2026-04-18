@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SCORE: Scene Context Matters in Open-Vocabulary Remote Sensing Instance Segmentation
 description: >-
@@ -125,7 +125,7 @@ SCORE 由三个分支构成：(1) 上下文分支（蓝）——使用遥感 CLI
 - 双模态增强策略（视觉侧 RAI + 文本侧 GCA）比单侧增强效果好
 - 利用领域特定 CLIP 注入先验知识的范式可推广到其他专业领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FAST 数据集上提升有限（+1.02%），37 个细粒度类别的分割仍是挑战
 - 训练仅在单卡 L40S 上进行，大规模训练可能进一步提升

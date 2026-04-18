@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Connecting the Dots: Training-Free Visual Grounding via Agentic Reasoning
 description: >-
@@ -126,7 +126,7 @@ GroundingAgent 是一个两阶段 pipeline：**候选生成（Candidate Generati
 - **可解释性强**：每个推理步骤都可视化，接受/拒绝每个候选都有明确理由，这在 agent 系统中很有价值
 - **真正的 zero-shot**：不像 REG 等方法用合成标注隐式训练，GroundingAgent 完全不碰任何 grounding 标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **性能与有监督方法仍有较大差距**：65.1% vs 有监督 SOTA 84-90%，在实际应用中可能不够用
 - **推理效率低**：每张图需要 MLLM 做全局描述 + N 个区域描述 + LLM 多步推理，延迟和成本较高（论文未报告推理时间，这是一个回避的问题）
 - **MLLM Caption 幻觉问题未根本解决**：self-consistency 只是 patch，论文也承认这是核心瓶颈

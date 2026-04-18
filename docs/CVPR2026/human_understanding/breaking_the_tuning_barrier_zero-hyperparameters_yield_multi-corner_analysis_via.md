@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **四模块协同设计**：特征选择降维 → 全局 surrogate 跨角共享 → 主动学习聚焦边界 → TabPFN 零调参推断，形成完整闭环
 - **实用价值极高**：零调参 + 毫秒推断 + 10× 仿真降低 = 工程师可以直接部署，无需 ML 专业知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 - TabPFN 原始设计针对表格数据，输入维度和样本量有上限（~1000 features, ~10000 samples），更大规模电路可能需要扩展
 - 特征选择步骤仍是基于启发式的重要性评分，端到端可学习的特征选择可能更优
 - Cross-Corner 编码使用简单拼接 $[x_S; c]$，更复杂的条件机制（如 FiLM）可能带来进一步提升

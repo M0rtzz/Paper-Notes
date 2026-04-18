@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MindPower: Enabling Theory-of-Mind Reasoning in VLM-based Embodied Agents
 description: >-
@@ -110,7 +110,7 @@ $$R_{\text{Mind}} = \alpha_1 R_{\text{atomic}} + \alpha_2 R_{\text{local}} + \al
 3. **Mind-Reward 奖励设计精巧**：将推理质量分解为原子-局部-全局三个粒度，比黑盒 LLM 评分更可控、可复现
 4. **任务设计有洞察力**：错误信念纠正和隐式目标推断都是真实人机协作中的核心场景，且覆盖轮椅用户/儿童等特殊人群
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模有限**：590 个样本偏少，且仅覆盖两个模拟器（VirtualHome + ThreeDWorld），泛化到真实物理环境存疑
 2. **动作空间受限**：原子动作为高层操作（如 `pick(apple)`），未涉及底层运动控制（关节角度、力控），与真实机器人部署仍有鸿沟

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLOT: Closed Loop Optimal Transport for Unsupervised Action Segmentation
 description: >-
@@ -99,7 +99,7 @@ OT采用非平衡公式，融合KOT和GW两个子问题：$\min_\mathbf{T} \alph
 - 使用Sliced Wasserstein距离替代余弦距离来构建OT代价矩阵，利用了SW距离在保持分布几何结构上的优势。
 - 并行解码器的设计避免了自回归解码器的误差累积问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预先指定动作类别数 $K$，在实际应用中可能难以确定。
 - 与ASOT一样，计算OT本身有一定开销，扩展到超长视频可能受限。

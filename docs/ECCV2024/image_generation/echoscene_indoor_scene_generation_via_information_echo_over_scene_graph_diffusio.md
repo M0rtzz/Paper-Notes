@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EchoScene: Indoor Scene Generation via Information Echo over Scene Graph Diffusion
 description: >-
@@ -156,7 +156,7 @@ EchoScene 的形状回声显著改善了物体间一致性问题。例如：
 3. **回声 = 去噪过程的社交网络**：每一步去噪都能"看到"其他物体的当前状态，如同一群人在合作布置房间时不断交流
 4. **兼容下游纹理生成**：生成的场景几何质量足够高，可以直接使用 SceneTex 等现成方法添加纹理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 形状生成基于 VQ-VAE 潜空间，分辨率受限，复杂物体细节可能不足
 2. 信息交换单元基于 Triplet-GCN，在非常大的场景图上可能效率较低

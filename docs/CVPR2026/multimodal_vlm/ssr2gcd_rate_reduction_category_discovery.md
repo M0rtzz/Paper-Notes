@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SSR2-GCD: Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery
 description: >-
@@ -70,7 +70,7 @@ tags:
 - 通过edge ratio $R_e$和effective rank两个度量，清晰量化了不同损失函数对表示结构的影响
 - RTA策略简洁有效：将检索到的多个候选分别编码再加权聚合，巧妙规避了CLIP的token长度限制
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 增加候选数量会增加计算和内存开销（Table B.11显示额外11%内存）
 - 图像和文本模态被同等对待，未探索模态重要性的自适应加权
 - 假设类别数量$K$已知或可准确估计，实际应用中类别数估计本身是难题

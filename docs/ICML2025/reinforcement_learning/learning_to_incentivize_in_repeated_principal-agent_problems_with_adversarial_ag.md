@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Incentivize in Repeated Principal-Agent Problems with Adversarial Agent Arrivals
 description: >-
@@ -96,7 +96,7 @@ $$\mathbb{E}[U(\pi^*, j)] - \mathbb{E}[U(\hat\pi, j)] \leq (2L+1)\epsilon$$
 4. **紧的界**：在 greedy（已知）和 smooth 两种主要设定下均给出匹配的上下界，理论完备性强
 5. **实用性桥梁**：smooth 模型可通过 Gumbel/Gaussian 噪声自然衍生自 greedy 模型，为理论到实践提供了平滑过渡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **纯理论工作**：没有任何实验或模拟验证，实际场景中的效果未知
 2. **agent 无策略性**：假设 agent 是 myopic 的，不考虑重复博弈中 agent 可能的策略性行为（如虚报偏好）

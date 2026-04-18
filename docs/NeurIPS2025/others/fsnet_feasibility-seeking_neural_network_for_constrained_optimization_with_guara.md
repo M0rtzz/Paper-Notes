@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FSNet: Feasibility-Seeking Neural Network for Constrained Optimization with Guarantees
 description: >-
@@ -123,7 +123,7 @@ $F = f(\hat{y}_\theta; x) + \frac{\rho}{2}\|y_\theta - \hat{y}_\theta\|_2^2$
 4. **非凸意外优势**：NN 隐式正则可优于局部求解器
 5. **统一框架**：单一 $\phi$ 处理所有约束
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论依赖 PL 条件和光滑假设
 2. 极大规模可扩展性待验证

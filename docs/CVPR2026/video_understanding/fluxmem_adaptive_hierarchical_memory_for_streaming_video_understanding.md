@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FluxMem: Adaptive Hierarchical Memory for Streaming Video Understanding
 description: >-
@@ -124,7 +124,7 @@ FluxMem 在在线任务上超越所有 training-based 方法（StreamingBench 76
 - 层级记忆设计优雅地映射了视频信息的时间衰减特性
 - TAS 的双向布局 + SDC 的 union-find 合并，每帧仅增加 4.1ms 额外开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 层级记忆的容量划分（短期 8, 中期 64）是手动设置的，不同任务/视频可能有不同最优配置
 - Otsu 假设分数分布为双峰分布，对于单调或多峰分布可能不是最优分割
 - 仅基于 Qwen2.5-VL-7B 验证，对其他 MLLM（LLaVA、InternVL）的适配性未测试

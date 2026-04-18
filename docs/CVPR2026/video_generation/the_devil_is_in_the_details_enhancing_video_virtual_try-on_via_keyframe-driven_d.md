@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Devil is in the Details: Enhancing Video Virtual Try-On via Keyframe-Driven Details Injection
 description: >-
@@ -129,7 +129,7 @@ tags:
 - **大规模高清数据集 ViT-HD**：15,070 样本 810×1080，覆盖上/下/全身，显著优于现有公开数据集
 - **全面实验**：覆盖 3 个视频数据集 + 2 个图像数据集 + 用户研究 + 充分消融
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 关键帧采样依赖 QWen 等大语言模型推理，增加部署复杂性和延迟
 - 背景优化仅选择单帧最高完整度关键帧，对复杂动态背景（如运动摄像机）可能不够

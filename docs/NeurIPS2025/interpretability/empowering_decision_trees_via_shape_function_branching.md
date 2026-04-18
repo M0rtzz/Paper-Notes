@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empowering Decision Trees via Shape Function Branching
 description: >-
@@ -130,7 +130,7 @@ $$\delta_{(d_1, d_2)} = \min(\mathcal{L}(\mathbf{D}_{d_1}), \mathcal{L}(\mathbf{
 - ⭐ 二元候选对筛选启发式大幅降低计算开销，复杂度从 $O(D^2 \cdot NC\log N)$ 降至 $O(P \cdot NC\log N)$
 - 在浅深度下的性能优势特别显著，直接提升了实际部署中的可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为树模型，主要面向表格数据，对图像/文本等非结构化数据适用性有限
 - 形状函数的理解比简单阈值分裂需要更多认知负担

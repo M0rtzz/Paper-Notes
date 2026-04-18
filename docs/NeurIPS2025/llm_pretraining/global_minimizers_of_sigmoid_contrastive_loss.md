@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Global Minimizers of Sigmoid Contrastive Loss
 description: >-
@@ -137,7 +137,7 @@ $$\mathcal{L}^{RB-Sig}(\theta, \phi; t, b_{rel}) = \sum_{i} \log(1+\exp(-t\langl
 5. 理论与球面码的联系为表示维度选择提供了定量指导
 6. 用"同步（synchronization）"取代"对齐（alignment）"更准确描述多模态表示学习目标
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **合成数据实验为主**：在真实大规模数据（如 LAION、WebLI）上的 relative bias 参数化效果待验证
 2. **未涉及训练动态分析**：理论刻画了最终配置，但 Adam 等优化器如何收敛到特定 Constellation 尚不清楚
 3. **球面码容量界的差距**：上下界在某些区间尚未完全吻合

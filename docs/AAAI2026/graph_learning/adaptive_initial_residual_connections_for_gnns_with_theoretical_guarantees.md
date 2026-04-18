@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Initial Residual Connections for GNNs with Theoretical Guarantees
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：灵感来自 Friedkin-Johnsen 意见动力学——每个人对外部信息的接受程度不同。
 
-**核心 idea 一句话**：节点级个性化残差强度 + Dirichlet 能量正下界理论保证 + PageRank 启发式零额外参数方案。
+**核心 idea**：节点级个性化残差强度 + Dirichlet 能量正下界理论保证 + PageRank 启发式零额外参数方案。
 
 ## 方法详解
 
@@ -47,7 +47,7 @@ tags:
 ### 关键设计
 
 1. **自适应残差强度参数化**
-    - **做什么**：为每个节点生成个性化残差权重
+    - **功能**：为每个节点生成个性化残差权重
     - **核心思路**：$\Lambda = \text{diag}(\sigma(H^{(0)} W_{\text{att}}))$，sigmoid 确保输出在 (0,1)
     - **设计动机**：权重基于初始特征可泛化到未见节点；跨层共享降低参数量
 
@@ -58,7 +58,7 @@ tags:
     - **意义**：首次对非线性 IRC 给出过平滑缓解的理论保证
 
 3. **PageRank 启发式变体**
-    - **做什么**：用 PageRank 替代学习残差强度
+    - **功能**：用 PageRank 替代学习残差强度
     - **思路**：top-k% 节点设为 $\lambda_{\max}$，其余设为 $\lambda_{\min}$
     - **动机**：节点中心性与最优残差强度正相关
     - **优势**：无需学习额外参数，性能可比甚至更优
@@ -104,7 +104,7 @@ tags:
 3. **意见动力学类比**：GNN 消息传递 ↔ 社会网络意见传播
 4. **Rank preservation（Theorem 1）**：简化情况下嵌入矩阵秩完全保持
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. PageRank 阈值和 $\lambda$ 仍需调参
 2. Theorem 2 依赖跨域正对齐假设（Property 2）

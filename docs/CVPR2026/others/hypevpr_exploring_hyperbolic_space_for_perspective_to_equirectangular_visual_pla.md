@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition
 description: >-
@@ -90,7 +90,7 @@ HypeVPR 包含两路网络：(1) 查询网络 $\mathcal{F}_q$ 从透视图生成
 - Einstein 中点聚合保证了层次聚合时尊重双曲几何，避免了简单求平均带来的几何失真
 - 可调层次化检索是一个实用功能：部署在边缘设备上时可牺牲少量精度换取大幅加速
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 底层窗口数量随级数指数增长（$2^{L-1}$），L 较大时内存和计算开销仍然较大
 - 实验只在两个数据集上进行（Pitts250K-P2E 和 YQ360），泛化性验证不够充分
 - 层次化检索中各层权重 $w_\ell$ 的选择似乎是手动设定的，可考虑学习或自适应

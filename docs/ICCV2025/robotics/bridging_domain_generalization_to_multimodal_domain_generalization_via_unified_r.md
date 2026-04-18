@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging Domain Generalization to Multimodal Domain Generalization via Unified Representations
 description: >-
@@ -107,7 +107,7 @@ UR-JiGen额外加入 $L_{jig}$（权重设为1）。
 - **方法论贡献大于技术贡献**：提出的是一个通用范式——先构建统一表示，再在上面应用任意DG方法——具有很好的扩展性
 - UR-JiGen的跨模态拼图设计很巧妙：从不同模态随机选片组合，既融合了多模态信息又保持了自监督任务的难度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在视频+音频+光流三模态上验证，缺少图像+文本等更常见的多模态组合实验
 - 统一表示的质量高度依赖对比学习的效果，在模态差异极大时可能效果下降

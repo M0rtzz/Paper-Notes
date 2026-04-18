@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Heterogeneous Adversarial Play in Interactive Environments
 description: >-
@@ -126,7 +126,7 @@ HAP 在 CRAFT Hard 任务上比 DreamerV3 高 15%。
 - **跨模态验证**：RL→监督学习→人类学习，三重验证对抗课程原则的普适性
 - **自动发现教学策略**：HAP 自主发现了与人类教育学一致的策略（脚手架搭建、适应性难度调节）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在开放世界环境（Crafter）中优势收窄——需探索额外的自主探索机制
 2. 所有算法在极难任务上与人类差距仍大（HAP 最优也只达人类 65%~78%）

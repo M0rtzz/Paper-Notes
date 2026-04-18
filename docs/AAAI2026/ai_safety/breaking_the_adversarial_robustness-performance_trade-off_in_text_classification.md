@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Breaking the Adversarial Robustness-Performance Trade-off in Text Classification via Manifold Purification
 description: >-
@@ -120,7 +120,7 @@ MC²F 包含两个核心模块：(1) SR-CNF 进行对抗样本检测；(2) Geode
 - **MoE 学习分层黎曼几何**：用 Mixture-of-Experts 自适应捕捉嵌入空间的非均匀几何结构，比固定度量更灵活
 - **拓扑正则化的重要性**：通过 persistent homology 约束流变换保持拓扑不变性——这在对抗鲁棒性中的作用被首次明确验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时需要额外的密度估计和可能的测地线优化步骤，计算开销未详细报告——在实时应用中可能成为瓶颈
 - 仅在 BERT-base 上验证，未测试更大模型（RoBERTa-large、LLM 等）的泛化性

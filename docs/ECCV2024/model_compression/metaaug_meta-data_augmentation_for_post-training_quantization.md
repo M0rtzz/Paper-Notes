@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MetaAug: Meta-Data Augmentation for Post-Training Quantization
 description: >-
@@ -62,7 +62,7 @@ MetaAug 的核心是一个**双层优化**框架：
 
 1. **元学习双层优化**：
 
-    - **做什么**：联合优化变换网络 $T$ 和量化模型 $\theta_Q$
+    - **功能**：联合优化变换网络 $T$ 和量化模型 $\theta_Q$
     - **核心思路**：
     $T^* = \arg\min_T \frac{1}{N}\sum_{i=1}^N \mathcal{L}_{\text{val}}(\hat{\theta}_Q, x_i^v)$
     $\text{s.t. } \hat{\theta}_Q = \arg\min_{\theta_Q} \frac{1}{N}\sum_{i=1}^N \mathcal{L}_Q(\theta_Q, T(x_i))$
@@ -71,13 +71,13 @@ MetaAug 的核心是一个**双层优化**框架：
 
 2. **变换网络 $T$（基于 UNet）**：
 
-    - **做什么**：将原始校准图像变换为保留语义但外观不同的增强图像
+    - **功能**：将原始校准图像变换为保留语义但外观不同的增强图像
     - **核心思路**：使用 UNet 作为图像到图像的变换网络，利用其编码-解码结构和跳跃连接来保留输入的精细特征信息
     - **设计动机**：UNet 的残差连接天然有助于保留原始图像信息，同时编码器-解码器结构给予了足够的变换灵活性
 
 3. **分布保持损失（Distribution Preservation Loss）**：
 
-    - **做什么**：确保变换后的数据在特征空间中与原始数据保持相同的分布结构
+    - **功能**：确保变换后的数据在特征空间中与原始数据保持相同的分布结构
     - **核心思路**：基于概率知识迁移（PKT），估计特征空间中任意两点的条件概率密度，使变换图像与原始图像共享相同的概率分布：
     $\mathcal{L}_{DP}(T, S) = \frac{1}{N}\sum_{i=1}^N \text{KL}[\mathcal{P}_i \| \mathcal{P}_i^{(g)}]$
       其中 $\mathcal{P}_{i|j} = \frac{K(f_{\theta_{FP}}(x_i), f_{\theta_{FP}}(x_j))}{\sum_{k \neq j} K(f_{\theta_{FP}}(x_k), f_{\theta_{FP}}(x_j))}$，$K$ 为余弦相似度核
@@ -159,7 +159,7 @@ MetaAug 不仅测试准确率最高，训练-测试差距最小（23.42 vs PD-Qu
 3. **与传统增强互补**：MetaAug 可以与 Mixup、Cutmix 等组合使用获得更大提升，说明学到的变换与随机增强本质不同
 4. **实际过拟合量化**：通过训练集-测试集准确率差距定量展示过拟合程度，为 PTQ 过拟合研究提供了清晰的评估基准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 变换网络仅进行光度变换，未引入几何变换（作者建议整合 Spatial Transformer）
 - UNet 作为变换网络引入了额外的训练开销（500 次迭代/块）

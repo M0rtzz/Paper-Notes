@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EI: Early Intervention for Multimodal Imaging based Disease Recognition
 description: >-
@@ -118,7 +118,7 @@ EI 提出在单模态嵌入（UIE）**之前**就注入跨模态语义引导（[
 - **MoR 的 bypass 设计**：一个极简的改进——把路由器输出维度从 3 扩到 4，就能让模型自适应决定是否需要 LoRA 适配。这个 trick 适用于任何 MoE-LoRA 框架
 - **Adapter 做桥梁**：辅助 VFM 和主 VFM 是不同的（前者冻结参数少，后者需要精细适配），用两层 MLP 做 [INT] 的兼容性转换，避免了特征空间不对齐的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **辅助 VFM 额外开销**：每个参考模态需要一个辅助 VFM 前向传播，M 个模态需要 2M 个 VFM（M 个辅助 + M 个主），计算量约为单模态的 2 倍
 - **仅验证了 M=2,3 的场景**：当模态数量更多（如 5 种以上医学影像）时，[INT] 序列长度线性增长，self-attention 的复杂度可能成为瓶颈

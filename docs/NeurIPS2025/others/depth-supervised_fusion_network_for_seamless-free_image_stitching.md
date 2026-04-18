@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Depth-Supervised Fusion Network for Seamless-Free Image Stitching
 description: >-
@@ -155,7 +155,7 @@ DSFN 是最快的方法——尽管引入了深度估计和推理过程。
 - **RBA 重参数化**在训练时保持多分支多样性、推理时合并为单分支——效率与性能兼顾
 - 运行速度最快（67ms）说明整体架构设计紧凑高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 深度监督依赖 Depth Anything 的质量——若单目深度估计在特定场景不可靠则可能传播误差
 - 仅在 UDIS-D 和 IVSD 两个数据集上验证，缺少大规模真实全景数据集（如 Google Street View）
 - 未处理动态物体（移动行人/车辆）的遮挡问题

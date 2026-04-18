@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Diffusion Schrödinger Bridge in Astrophysical Observational Inversions
 description: >-
@@ -142,7 +142,7 @@ M2（Observable Enhancement）对 OOD 泛化至关重要——没有它 σ 从 2
 4. **真实观测验证**：在 Taurus B213 上的预测与独立观测约束一致，证明实际应用可行性
 5. **跨学科贡献**：为 ML 社区展示扩散模型在科学发现中的潜力，超越传统视觉合成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未显式建模 GMC 演化的完整前向物理方程，依赖数据驱动映射
 - 可考虑集成多个中间物理状态，或直接编码物理定律进入生成过程

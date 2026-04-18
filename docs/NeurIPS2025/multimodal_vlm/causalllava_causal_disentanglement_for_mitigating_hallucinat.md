@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Causal-LLaVA: Causal Disentanglement for Mitigating Hallucination in Multimodal Large Language Models
 description: >-
@@ -78,7 +78,7 @@ MLLM 的物体幻觉（描述不存在的物体）主要源于训练数据中的
 - 混淆因子字典是简洁优雅的设计——用 80 类物体的平均表示就足够
 - 可视化分析极为充分（6 组 PCA 图覆盖原始/解纠缠 × 视觉/文本 × 多物体）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需 8×H20 GPU，计算资源要求较高
 - 混淆因子估计可能受噪声或数据集分布影响
 - 基于 LLaVA（较早的 MLLM），未在更新模型（如 InternVL、Qwen-VL）上验证

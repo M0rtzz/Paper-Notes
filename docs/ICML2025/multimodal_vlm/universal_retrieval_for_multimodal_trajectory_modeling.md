@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Universal Retrieval for Multimodal Trajectory Modeling
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **Token Selection + GradCache**：训练 trick 有效平衡了高分辨率多截图处理与 GPU 内存限制
 - **实用价值高**：框架可直接支持 in-context learning、世界模型、轨迹回放等下游 agent 应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 GUI 环境验证，embodied/机器人场景的轨迹检索待探索
 - 依赖预训练 VLM 的视觉理解能力，对 GUI 之外的视觉观察可能需要适配

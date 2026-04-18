@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distributional Consistency Loss: Beyond Pointwise Data Terms in Inverse Problems
 description: >-
@@ -124,7 +124,7 @@ DIP-DC在所有噪声水平下均超越**最优早停的**DIP-MSE，且高噪声
 - **理论优雅**：PIT + logit变换 + Wasserstein距离，每一步有清晰动机
 - **实用性强**：无需修改网络结构或优化流程，真正的drop-in replacement
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设独立测量和已知噪声分布，小数据或噪声未知场景不适用
 - 对离散噪声（如Poisson）需要随机化PIT

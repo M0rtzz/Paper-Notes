@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConMo: Controllable Motion Disentanglement and Recomposition for Zero-Shot Motion Transfer
 description: >-
@@ -91,7 +91,7 @@ ConMo是零样本方法，无需训练。在推理时，通过Motion Guidance函
 - **零样本**：无需任何训练，即插即用
 - **Mask排除策略**：用集合差运算处理轨迹重叠的多主体，简单而有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖SAM2的mask质量，复杂遮挡场景中mask不准确会影响运动解耦
 - 软引导的 $w_c$ 需要手动调整，缺乏自适应机制
 - 评估数据集较小（26视频，56编辑对），大规模评估缺乏

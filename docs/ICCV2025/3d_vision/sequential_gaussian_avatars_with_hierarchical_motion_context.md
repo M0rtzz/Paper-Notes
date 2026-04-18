@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sequential Gaussian Avatars with Hierarchical Motion Context
 description: >-
@@ -141,7 +141,7 @@ I3D-Human数据集（Novel View，4个场景平均）：
 - **多尺度时间采样**：类似于卷积中的多尺度感受野概念，在时间维度捕获不同频率的运动信息
 - **性能-速度权衡优秀**：在渲染质量超越Dyco（NeRF）的同时保持60倍速度优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 高斯表示可能在渲染中引入轻微模糊，NeRF的光线积分相比更锐利
 - 局部速度线索来自粗糙的SMPL模型而非密集表面追踪，可能限制精细服装形变的精度

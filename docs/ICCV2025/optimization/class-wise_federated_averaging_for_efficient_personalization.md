@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Class-Wise Federated Averaging for Efficient Personalization
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{R}_i = \|\boldsymbol{p}_i - \tilde{\boldsymbol{p}}_i\|_2$$
 3. **隐私保护设计**：WDR 使得服务器可从模型权重推断类别分布（$\tilde{p}_{i,j}$），无需客户端直接发送敏感的 $n_{i,j}$；
 4. **理论-实践闭环**：从神经网络路径理论出发，到权重-类别分布关联的经验观察，再到 WDR 的实践设计，逻辑链完整。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 服务端需存储 $K$ 个全局模型（虽可仅对输出层应用以缓解）；
 - $\lambda$ 在不同数据集上需手动调整（从 10 到 2000），缺乏自适应策略；

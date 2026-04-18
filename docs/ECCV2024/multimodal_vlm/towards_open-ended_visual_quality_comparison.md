@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Open-ended Visual Quality Comparison
 description: >-
@@ -99,7 +99,7 @@ Co-Instruct在Q-Bench^PAIR-A1上：
 - **学生超越教师**现象：Co-Instruct同时从LLM合并（高准确率）和GPT-4V（多样性）学习，整合后超越任一单独来源
 - Visual token压缩策略使多图输入变得可行，解决了LLaVA等模型context窗口不够的实际问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MICBench仅评估MCQ形式，未涵盖开放式回答的评估
 - 依赖GPT-4V作为教师，数据质量受限于GPT-4V的视觉感知能力

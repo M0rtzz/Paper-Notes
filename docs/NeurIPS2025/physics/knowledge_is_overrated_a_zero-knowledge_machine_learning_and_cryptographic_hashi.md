@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Knowledge is Overrated: A Zero-Knowledge ML and Cryptographic Hashing-Based Framework for Verifiable, Low Latency Inference at the LHC
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：需要大模型的高精度，但在线推理只允许纳秒级延迟——两者看似不可兼得。
 
-**本文要解决什么？** 设计一个框架，让任意大小的基线模型产生的触发决策能在纳秒级完成，同时决策具有密码学级别的可验证性。
+**本文目标** 设计一个框架，让任意大小的基线模型产生的触发决策能在纳秒级完成，同时决策具有密码学级别的可验证性。
 
 **切入角度**：将推理分为离线build阶段（不受延迟约束）和在线lookup阶段（极低延迟），用密码学哈希将早层激活映射到预计算的决策表。
 
-**核心idea一句话**：用Rabin指纹将模型早层激活压缩为固定长度哈希，查询预构建的Verifiable Decision Map实现O(ns)推理，zkML证明保证决策完整性。
+**核心 idea**：用Rabin指纹将模型早层激活压缩为固定长度哈希，查询预构建的Verifiable Decision Map实现O(ns)推理，zkML证明保证决策完整性。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **异常检测是免费的**：VDM未命中天然构成异常信号，对新物理发现和探测器监控都有价值。这种"by-product anomaly detection"设计思路很巧妙
 - **可验证性内建**：zkML证明使每个触发决策都可追溯审计，这对科学实验的可重现性至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **VDM存储瓶颈**：单FPGA仅存6.3M条目，真实场景需分布式查找方案（作者承认这是开放问题）
 - **假设较强**：早层激活的预测充分性（Assumption 3）未经严格验证；多项式插值的injective假设需要详细检验
 - **build阶段成本高**：对每个训练事件都需运行完整模型+zkML证明，大规模数据集时build成本巨大

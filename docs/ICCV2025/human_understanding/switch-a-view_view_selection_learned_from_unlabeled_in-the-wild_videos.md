@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos
 description: >-
@@ -117,7 +117,7 @@ Switch-a-view 分为两个阶段：
 - **多模态设计完整**：视觉帧+文本叙述+视角历史+时间编码，每种信号都有明确的贡献
 - 标注者实验证明了"最佳视角"确实存在一致性标准，任务定义是合理的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅考虑 ego/exo 二分类，实际场景中可能有多个 exo 相机需要进一步选择
 - 伪标签依赖预训练的 ego-exo 分类器，其质量直接影响下游性能

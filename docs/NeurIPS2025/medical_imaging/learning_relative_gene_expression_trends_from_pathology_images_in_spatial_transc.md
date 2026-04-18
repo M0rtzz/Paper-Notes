@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Relative Gene Expression Trends from Pathology Images in Spatial Transcriptomics
 description: >-
@@ -113,7 +113,7 @@ $$L_{\text{STRank}}^{\text{List}} = -\sum_{g}^{N^g} \sum_{i}^{N^k} e_g^i \log p_
 - **与传统 Ranking Loss 的统一**：证明了当分数差足够大时 STRank 退化为传统排序损失，建立了优雅的理论联系
 - **下游分析友好**：相对表达关系正是差异表达分析等常用下游任务所需的信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 真实数据上改进幅度有限（平均 SCC 从 0.326 提升到 0.345）
 - 只评估了 50 个高变基因，实际应用中基因数可能更多

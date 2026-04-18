@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Comprehensive Argument Analysis in Education: Dataset, Tasks, and Method
 description: >-
@@ -107,7 +107,7 @@ tags:
 - 标注一致性合理（关系标注 IAA κ=0.68），226 篇文章 4837 条关系的规模在教育类 NLP 中算中等偏上
 - 探索了写作质量与论证成分检测/关系预测的双向影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据规模相对较小（仅 226 篇文章），可能限制模型的泛化能力
 - 仅覆盖中文高中议论文，跨语言和跨领域的适用性未验证

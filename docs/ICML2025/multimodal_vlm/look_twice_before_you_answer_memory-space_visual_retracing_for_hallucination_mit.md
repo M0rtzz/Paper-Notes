@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Look Twice Before You Answer: Memory-Space Visual Retracing for Hallucination Mitigation in Multimodal Large Language Models
 description: >-
@@ -77,7 +77,7 @@ $$\underline{\Delta}(\mathbf{z}_v | \mathbf{x}) = \sum_{i=1}^{N_v} \phi(\langle 
 - **同时提升幻觉抑制和通用能力**：是唯一一个在两个维度上同时正向的方法（Table 2）
 - **模态不平衡分析**：系统验证了幻觉根源在于视觉信息在深层被遗忘
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\alpha$ 需要手动调整或启发式设定，缺乏自适应选择机制
 - 仅在 image-text 场景验证，video/audio 多模态场景待探索
 - 动态 VR 需要额外计算不确定性，虽然开销小但增加了方法复杂度

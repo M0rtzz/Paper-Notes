@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion Transformers for Imputation: Statistical Efficiency and Uncertainty Quantification
 description: >-
@@ -130,7 +130,7 @@ $$\tilde{O}\left(\frac{\sqrt{Hd^2\kappa^5}}{\sqrt{n}}\right)$$
 3. **算法展开构造证明**：创新性地用算法展开技术构造Transformer逼近条件得分函数
 4. **置信区间构造自然**：利用生成模型的采样能力直接构建置信区间，方法简洁有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论分析局限于高斯过程数据，对重尾分布（如金融数据）的适用性待研究
 2. 最优混合掩码比例是实例相关的，目前没有自适应选择方法

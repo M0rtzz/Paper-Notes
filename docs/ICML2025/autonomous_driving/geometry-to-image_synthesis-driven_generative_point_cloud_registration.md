@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Geometry-to-Image Synthesis-Driven Generative Point Cloud Registration
 description: >-
@@ -105,7 +105,7 @@ tags:
 - 首次利用预训练 ControlNet 的零样本配对图像生成能力
 - 首次实现 LiDAR 点云到全景图像的生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时间增加显著：需运行完整的扩散去噪过程（多步迭代），实时性受限
 - 耦合去噪将潜在空间高度翻倍，GPU 显存开销增加

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StableGuard: Towards Unified Copyright Protection and Tamper Localization in Latent Diffusion Models
 description: >-
@@ -123,7 +123,7 @@ PSNR提升2.3dB以上，Bit Acc达到99.97%，全面碾压所有基线。
 - **频域专家设计巧妙**：FFT域的Transformer捕获篡改边界的高频异常，与空间域专家形成互补
 - **现实应用价值高**：直接集成到SD生成流程中，无需额外处理步骤，对生成质量影响极小（FID仅19.5）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前基于SD 2.1验证，未测试在SDXL、SD3等更新架构上的适配性
 - 水印适配器增加的参数量和推理开销未详细讨论

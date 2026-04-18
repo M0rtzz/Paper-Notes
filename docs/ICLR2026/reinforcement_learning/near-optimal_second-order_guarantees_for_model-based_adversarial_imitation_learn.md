@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Near-Optimal Second-Order Guarantees for Model-Based Adversarial Imitation Learning
 description: >-
@@ -150,7 +150,7 @@ MB-AIL 的核心假设是：策略空间 $\Pi$ 可以分解为奖励类 $\mathca
 4. **困难实例构造的巧妙性**：通过两种情形（策略难学 vs 模型难学）的组合，区分了专家演示和在线交互各自负责估计的量
 5. **实际算法的简洁性**：实际实现仅需要标准组件（世界模型集成 + SAC + GAN判别器）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **专家演示复杂度的对数差距**：上界为 $\tilde{O}(\sigma^2 \log\mathcal{N_R}/\epsilon^2)$，下界为 $\Omega(\sigma^2/\epsilon^2)$，存在 $\log|\mathcal{R}|$ 的差距。作者猜测此差距可能是本质性的
 2. **时间齐次假设**：理论分析假设转移核和奖励不随时间变化，限制了对更一般MDP的适用性

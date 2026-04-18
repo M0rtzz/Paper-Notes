@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Temporal Action Localization with Memory-Augmented Transformer
 description: >-
@@ -96,7 +96,7 @@ MATR 在 THUMOS14 上超越前 SOTA OAT-OSN 4.9 个点，在 MUSES 上超越 0.7
 - 2D 时序位置编码（段位置+帧位置）巧妙解决了流式视频时长不确定的位置编码问题
 - 端到端训练且所有损失系数均为 1，简洁不需调参
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当记忆队列中存在多个动作实例时，可能出现起始点匹配错误
 - 存储片段时仅考虑是否与动作相关，未利用已存储记忆中的上下文关系
 - 在 MUSES 这种多镜头切换的数据集上性能提升有限，可能需要更强的跨镜头建模能力

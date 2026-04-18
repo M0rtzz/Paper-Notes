@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-regularization: Adaptive Model Complexity through Validation Gradients
 description: >-
@@ -120,7 +120,7 @@ $$f_{\text{val}}(x) = \frac{1}{K} \sum_{k=1}^K f(x, \epsilon_k)$$
 4. **计算高效**：相比 PBT 的 $O(PT)$ 前向传播，仅需 $O(T(1+K/r))$，约 10% 额外开销；验证集可小至训练集的 1%
 5. **理论保证**：证明了线性收敛（定理 4.1）、与交叉验证等价（定理 4.5）、统计误差仅依赖正则化参数维度 $k$（定理 4.4）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验规模有限**：主要在 CIFAR-10/SVHN + VGG/WideResNet 上验证，缺少 ImageNet 等大规模实验和 Transformer 架构实验
 2. **验证集依赖**：需要额外划分验证集用于正则化优化，在小数据场景下可能影响训练数据量（虽然论文说 1% 即可）

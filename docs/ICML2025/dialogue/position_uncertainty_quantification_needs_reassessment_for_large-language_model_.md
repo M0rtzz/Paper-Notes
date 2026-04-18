@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: Uncertainty Quantification Needs Reassessment for Large-language Model Agents
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：不纠缠于哪个 aleatoric/epistemic 定义是"正确的"，而是直接论证这种二分法对 LLM agent 不适用，转而提出更贴合交互场景的不确定性分类和处理方式。
 
-**核心 idea 一句话**：LLM agent 的不确定性不应被压缩为 aleatoric/epistemic 两个标量，而应围绕"欠规范检测—交互式消减—富文本表达"三阶段来处理。
+**核心 idea**：LLM agent 的不确定性不应被压缩为 aleatoric/epistemic 两个标量，而应围绕"欠规范检测—交互式消减—富文本表达"三阶段来处理。
 
 ## 方法详解
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?
 description: >-
@@ -128,7 +128,7 @@ $$h^{(\ell)}(x_t) = f^{(\ell)}(x_t, c) + b^{(\ell)}(x_t)$$
 3. **类似大脑的层级组织**：ViT 中层关注局部物体、深层关注语义类别的模式，与大脑腹侧通路的视网膜拓扑组织相呼应
 4. **对 Slot Attention 的重新思考**：解决绑定问题可能不需要外部模块，而是可以通过定制训练目标或最小架构修改来加强 ViT 内在的绑定机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 探针将 patch 嵌入分解为"特征"和"绑定"部分的假设过于简化，需要进一步经验验证
 2. 未建立目标绑定与下游任务性能之间的因果关系

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining
 description: >-
@@ -162,7 +162,7 @@ tags:
 4. **数据集质量指标InSI-SIM**：设计了in-sample image similarity指标量化评估交错数据集中图像关联程度，Textbook的0.686远超OBELICS的0.345
 5. **知识迁移到SFT阶段**：预训练获得的知识可以迁移到下游SFT阶段，在MathVista上的提升是OBELICS的2倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仍有噪声**：尽管多级过滤，仍可能包含冗余关键帧和低质量文本
 2. **仅支持理解任务**：训练时不计算图像token的loss，无法用于图像生成任务（可扩展到omni-modal模型）

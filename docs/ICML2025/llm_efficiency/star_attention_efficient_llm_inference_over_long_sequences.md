@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Star Attention: Efficient LLM Inference over Long Sequences
 description: >-
@@ -88,7 +88,7 @@ tags:
 4. 通信开销极低（每主机仅1向量+1标量/token）。
 5. 与FlashAttention可叠加使用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 精度在极强位置依赖任务上可能有2-3%损失。
 2. 锚块大小的选择影响性能，需要调优。

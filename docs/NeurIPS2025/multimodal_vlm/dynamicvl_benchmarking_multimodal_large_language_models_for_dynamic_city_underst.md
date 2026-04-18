@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DynamicVL: Benchmarking MLLMs for Dynamic City Understanding
 description: >-
@@ -126,7 +126,7 @@ DVL-Suite 包含两部分：
 - 模型缩放的非单调现象揭示了一个深刻洞见：通用能力和领域精确分析能力的提升需要不同策略
 - 半自动标注（专家 + GPT-4.1）在质量和效率间取得了良好平衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - NAIP 影像包含近红外波段信息，但当前 MLLM 无法有效利用这些光谱数据
 - DVLChat 尚未利用像素级分割数据来增强跨任务的数值量化能力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VQ-VLA: Improving Vision-Language-Action Models via Scaling Vector-Quantized Action Tokenizers
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：VLA 模型需要高精度、高效率的动作表示，但简单的 bin 离散化在精度和序列压缩上都有天花板；同时训练整个 VLA 模型的成本过高，需要一条低成本的性能提升路径。
 
-**本文要解决什么**：设计一个可缩放的通用动作 tokenizer，(a) 提高动作表示精度和长时域鲁棒性，(b) 通过动作 chunking 加速推理，(c) 利用合成数据低成本地扩大训练规模。
+**本文目标**：设计一个可缩放的通用动作 tokenizer，(a) 提高动作表示精度和长时域鲁棒性，(b) 通过动作 chunking 加速推理，(c) 利用合成数据低成本地扩大训练规模。
 
 **切入角度**：作者观察到一个关键现象——**动作轨迹在仿真与真实之间的 domain gap 极小**（不像图像或物理属性），因此可以大量使用合成轨迹来训练 tokenizer 而不损失真实世界性能。
 
-**核心 idea 一句话**：用卷积残差 VQ-VAE 做动作 tokenizer，通过渐进式策略在 100 倍规模的混合数据（真实+合成）上训练，实现 VLA 的精度、速度和长时域能力同步提升。
+**核心 idea**：用卷积残差 VQ-VAE 做动作 tokenizer，通过渐进式策略在 100 倍规模的混合数据（真实+合成）上训练，实现 VLA 的精度、速度和长时域能力同步提升。
 
 ## 方法详解
 
@@ -132,7 +132,7 @@ VQ_{M+R} 比 baseline 提升 7.45%。数据不足时（VQ_M）性能大幅下降
 - **VQ-based action chunking 优于自回归 chunking**：这揭示了 LLM 的自回归生成在低维连续信号（动作）上容易产生 shortcut learning，而 VQ 的显式压缩-解压缩能更好保留序列内的变化性
 - **tokenizer 训练成本极低**：仅需单卡 A100 训练一周，却能为下游 VLA 带来一致性的性能/速度提升。这种"小组件大收益"的思路可以迁移到其他模态的 tokenizer 设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在 OpenVLA 上验证**：架构通用性声称强但只替换了一种 VLA 的 tokenizer，需要在更多 VLA（如 RT-2、Octo）上验证
 - **动作空间限定为 7-DoF SE(3)**：未涉及灵巧手等更高维动作空间
 - **缺少与其他动作 tokenizer 的直接对比**：如 cosine transform 方法（FAST）

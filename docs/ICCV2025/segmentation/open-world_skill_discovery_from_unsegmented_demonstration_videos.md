@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Open-World Skill Discovery from Unsegmented Demonstration Videos
 description: >-
@@ -135,7 +135,7 @@ $$\min_\theta \sum_{t \in [1...T]} -\log \pi_{unconditional}(a_t | o_{1:t})$$
 - **通用性强**：SBD 仅需一个预训练的无条件策略，无需额外标注、奖励信号或预定义技能集
 - **即插即用**：可直接替换现有方法的分割步骤（GROOT、STEVE-1、OmniJARVIS），均获提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GAP 超参数需要手动调优，对不同环境/数据集可能需要不同值
 - 对于动作变化不明显的技能转换（如 Minecraft crafting）效果有限，依赖外部信息

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multimodal Transformers are Hierarchical Modal-wise Heterogeneous Graphs
 description: >-
@@ -110,7 +110,7 @@ GsiT 相比 MulT：参数量减少 67.7%，Acc-2 提升 4+%，Acc-7 提升 11.2%
 - **信息混乱理论**：从 softmax 概率分布角度解释了为什么掩码设计需要遵循特定约束，提供了清晰的理论指导
 - **工程落地友好**：Decomposition Triton 核确保运行时无额外计算开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **任务范围有限**：仅在多模态情感分析上验证，未扩展到视频问答、多模态检索等更广泛的多模态任务
 - **模态缺失未考虑**：未讨论当某个模态缺失时模型的鲁棒性

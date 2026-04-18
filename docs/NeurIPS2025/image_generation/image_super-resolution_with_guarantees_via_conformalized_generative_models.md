@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Image Super-Resolution with Guarantees via Conformalized Generative Models
 description: >-
@@ -126,7 +126,7 @@ $$\text{Fidelity Error} \le \alpha \cdot \frac{n_{\text{new}} + n_{\text{leaked}
 5. **超越超分辨率**：附录展示了直接迁移到图像着色任务的成功案例，暗示框架的广泛适用性
 6. **对 Kutiel et al. 的反例**：附录 B 严格证明了 Kutiel et al. 的方法实际上不满足其声称的统计保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可交换性假设**：核心定理依赖校准数据与测试数据的 i.i.d.（或可交换）假设，显著的分布偏移可能使保证失效
 2. **计算开销**：需要多次调用生成模型来估计 $\sigma$（像素方差），增加推理时间

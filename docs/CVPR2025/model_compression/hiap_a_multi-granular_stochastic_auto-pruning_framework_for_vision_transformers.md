@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers
 description: >-
@@ -31,11 +31,11 @@ HiAP 提出了一种多粒度自动剪枝框架，通过在宏观（attention he
 
 **核心矛盾**：现代硬件的真正瓶颈往往是 HBM 访问而非纯计算——即使微观剪枝减少了 FLOPs，保留所有 layer 结构仍然要加载每一层的权重矩阵和 attention map，导致实际加速有限。
 
-**本文要解决什么？** 如何在单阶段训练中让模型自主发现跨粒度的最优剪枝策略，同时满足硬件资源约束？
+**本文目标** 如何在单阶段训练中让模型自主发现跨粒度的最优剪枝策略，同时满足硬件资源约束？
 
 **切入角度**：将剪枝形式化为预算感知的学习问题，用 Gumbel-Sigmoid 连续松弛取代离散决策，通过温度退火自然收敛到二值门控。
 
-**核心idea一句话**：宏观+微观双层 Gumbel-Sigmoid 门控 + 可微 MACs 代价 + 结构可行性约束 = 单阶段自动剪枝。
+**核心 idea**：宏观+微观双层 Gumbel-Sigmoid 门控 + 可微 MACs 代价 + 结构可行性约束 = 单阶段自动剪枝。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{task}} + \lambda_{\text{macro}
 - **无后处理的单阶段训练**：温度退火使门控自然从 soft 过渡到 hard，无需二次 fine-tuning 或手动阈值设定
 - **可迁移思路**：Gumbel-Sigmoid 门控 + 可微代价建模的框架可以推广到 LLM 剪枝（attention heads + FFN experts in MoE）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 精度与 SOTA 方法有差距：在 3.1G FLOPs 下 79.10% vs GOHSP 79.98%，说明简化流程带来了性能代价
 - 优化目标是期望 MACs 而非校准延迟/能耗，实际加速因硬件/kernel 而异
 - 仅在 DeiT-Small 验证，缺少更大模型（如 DeiT-Base、Swin）和下游任务的实验

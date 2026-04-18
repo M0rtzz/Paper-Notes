@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraSS: Scalable Data Attribution with Gradient Sparsification and Sparse Projection
 description: >-
@@ -122,7 +122,7 @@ $$S^* = \arg\max_{S \in \mathbb{R}^p} \mathbb{E}_{z_{\text{test}}} \left[\text{c
 - **亚线性理论保证**：$O(k')$ 复杂度独立于模型参数量 $p$，理论上可无限扩展
 - **FactGraSS 巧妙避开双重瓶颈**：既不物化完整梯度（$O(p)$），又避免小问题尺寸下 SJLT 低效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. SJLT 的 CUDA kernel 是方法成功的关键，对非 GPU 硬件的适用性未知
 2. Selective Mask 需要一次性优化开销（解 Eq.1），大模型上的可扩展性有待验证

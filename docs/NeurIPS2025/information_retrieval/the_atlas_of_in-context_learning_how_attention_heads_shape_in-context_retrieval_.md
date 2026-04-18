@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Atlas of In-Context Learning: How Attention Heads Shape In-Context Retrieval Augmentation
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：LLM 在 in-context QA 中同时依赖两种知识来源（上下文 vs 参数），但它们如何在 attention 层面竞争和协作是黑箱的。
 
-**本文要解决什么**：建立 LLM in-context retrieval 的"注意力头地图"——哪些头负责什么功能，以及如何用这些发现来控制和诊断模型行为。
+**本文目标**：建立 LLM in-context retrieval 的"注意力头地图"——哪些头负责什么功能，以及如何用这些发现来控制和诊断模型行为。
 
 **切入角度**：用 AttnLRP（attention-aware Layer-wise Relevance Propagation）做因果归因，比仅看注意力权重更准确地衡量每个头对输出的贡献。
 
-**核心idea一句话**：三类头各司其职——Task heads 解析"问什么"，Retrieval heads 执行"从哪抄"，Parametric heads 提供"记住什么"，可通过 Function Vector 注入和探针验证。
+**核心 idea**：三类头各司其职——Task heads 解析"问什么"，Retrieval heads 执行"从哪抄"，Parametric heads 提供"记住什么"，可通过 Function Vector 注入和探针验证。
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ Function Vector 零样本注入（Biography 数据集）：
 - **Function Vector 的控制能力**：通过注入/移除 FV 可以精确控制模型行为——这为模型编辑和安全性提供了新工具。
 - **AttnLRP vs Attention Weights**：仅看注意力权重会误判——AttnLRP 提供的因果归因更准确。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AttnLRP 的计算成本较高，限制了在大模型/大数据集上的应用
 - 三类头的划分基于 QA 任务，在生成/推理等其他任务上的适用性需验证
 - 100 个头的阈值是启发式的，不同模型可能需要不同设置

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Characterizing the Expressivity of Fixed-Precision Transformer Language Models
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：实际部署的 Transformer 使用固定精度（16/32 位）和软注意力，但理论结果要么假设更强的模型（任意精度），要么用更简单的注意力（硬注意力），无法直接指导对实际模型能力的理解。
 
-**本文要解决什么？** 给出固定精度+软注意力+严格掩码+无位置编码的 Transformer 的精确表达力刻画。
+**本文目标** 给出固定精度+软注意力+严格掩码+无位置编码的 Transformer 的精确表达力刻画。
 
 **切入角度**：双向归约——证明这类 Transformer 可以被翻译为 PFO²[<]（两变量过去一阶逻辑），同时 LTL[P] 的每个公式都能被 Transformer 模拟。
 
-**核心idea一句话**：固定精度软注意力 NoPE Transformer 的表达力恰好是 LTL[P]——只能看过去、只能做有限次计数的逻辑。
+**核心 idea**：固定精度软注意力 NoPE Transformer 的表达力恰好是 LTL[P]——只能看过去、只能做有限次计数的逻辑。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ $$\text{Fixed-precision Soft-Attn NoPE Transformer} = \text{PFO}^2[<] = \text{LT
 - **多个数学框架的统一**极为优雅：逻辑（LTL[P]）= 自动机（PODFA）= 代数（$\mathcal{R}$-trivial）= 语言学（左确定多项式）= 计算模型（固定精度 Transformer）
 - **实际启示**：NoPE Transformer 的能力远弱于通常认为的——甚至不能可靠地做括号匹配。这解释了为什么位置编码对 Transformer 如此重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限 NoPE（无位置编码）**：实际 Transformer 使用 RoPE/APE/ALiBi 等位置编码，加入位置编码后的精确刻画是重要开放问题
 - **固定精度 = 理想化**：实际训练中梯度和激活的数值行为比理论假设复杂
 - **仅考虑语言识别/生成**：未涉及 Transformer 在推理、算术等非语言任务上的表达力

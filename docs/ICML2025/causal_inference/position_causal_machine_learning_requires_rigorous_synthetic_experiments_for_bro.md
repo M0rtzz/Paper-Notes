@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: Causal Machine Learning Requires Rigorous Synthetic Experiments for Broader Adoption
 description: >-
@@ -138,7 +138,7 @@ tags:
 4. **CausalNF 的双面实验**巧妙展示了"假设违反不总是灾难性的"和"但有时是致命的"——强调了系统性鲁棒性测试的重要性
 5. 将因果推断的可识别性理论与 ML 实验设计的实践问题**桥接**起来
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Position Paper 的固有局限**：提出原则但未提供完整的自动化工具或标准化框架实现这些原则
 2. **实验覆盖窄**：仅以 RealCause 和 CausalNF 为例，其他主流方法（如 DoWhy、EconML）未涉及

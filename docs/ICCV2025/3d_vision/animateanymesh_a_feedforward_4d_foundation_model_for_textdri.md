@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnimateAnyMesh: A Feed-Forward 4D Foundation Model for Text-Driven Universal Mesh Animation
 description: >-
@@ -109,7 +109,7 @@ AnimateAnyMesh由三部分组成：
 - **4M+规模数据集**：从多源4D资产中系统构建，是目前最大的动态Mesh数据集
 - **灵活的token数量**：训练时固定512 token，推理时可动态调整以适应不同复杂度的Mesh
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **数据集多样性不足**：虽然有4M+序列，但唯一Mesh身份不到100k，对特殊类别泛化有限
 - **文本标注质量**：用Qwen-2.5-VL对渲染视频生成caption，但VLM对无背景的3D渲染效果不佳，运动描述粒度粗
 - **序列长度受限**：当前仅支持16/32帧生成，无法产生长时间动画

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bi-Level Decision-Focused Causal Learning for Large-Scale Marketing Optimization
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：Decision-Focused Learning (DFL) 可以缩小预测-决策差距，但因反事实问题只能在稀缺的 RCT 数据上计算决策损失，反而加剧了偏差-方差困境。
 
-**本文要解决什么？** 同时解决 TSM 和现有 DFL 的两个挑战——预测-决策对齐 + 偏差-方差平衡。
+**本文目标** 同时解决 TSM 和现有 DFL 的两个挑战——预测-决策对齐 + 偏差-方差平衡。
 
 **切入角度**：利用 RCT 数据的无偏性来指导 OBS 数据上的学习方向——将决策损失和预测损失分别分配到双层优化的上层和下层。
 
-**核心 idea 一句话**：双层优化中，上层用 RCT 数据上的无偏决策损失训练 Bridge Network，下层用 OBS 数据上的（被 Bridge 纠正的）预测损失训练 Target Network，实现数据互补和目标对齐。
+**核心 idea**：双层优化中，上层用 RCT 数据上的无偏决策损失训练 Bridge Network，下层用 OBS 数据上的（被 Bridge 纠正的）预测损失训练 Target Network，实现数据互补和目标对齐。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ Target Network $\mathcal{F}_\theta$ 在大量 OBS 数据上训练预测损失（
 - **Bridge Network 的门控机制**有效实现了"用 RCT 的无偏信号修正 OBS 学习方向"，是一个可迁移到其他因果推断场景的设计模式。
 - **大规模工业部署验证**：在美团这样的大规模平台上的在线 A/B 测试提供了强有力的实际验证。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **假设 RCT 数据可获得**：很多场景中 RCT 数据获取成本极高或不可行。
 - **MCKP 的 NP-hard 性质**：虽然 Lagrangian 松弛提供了近似解，但在极端场景下近似质量可能下降。
 - **处理维度有限**：当前只考虑了有限的离散处理选项，未扩展到连续处理空间。

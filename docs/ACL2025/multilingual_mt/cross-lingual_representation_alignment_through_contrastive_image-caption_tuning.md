@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Lingual Representation Alignment Through Contrastive Image-Caption Tuning
 description: >-
@@ -103,7 +103,7 @@ $$L(E_i, E_c) = \text{CrossEntropy}(S, I)$$
 - **图像作为语义桥梁**: 这一假设在实验中得到验证——不同语言对相同图像的描述使文本表示在共享视觉空间中自然对齐。虽不及直接的文本-文本对齐，但作为低资源语言的 bootstrapping 手段非常实用。
 - **t-SNE 可视化直观**: 从 XLM-R 原始的明显语言聚类，到多语言图像对齐后翻译句对靠近，视觉化结果清晰展示了对齐效果。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多语言图像-文本对齐虽然可用，但与平行语料方法仍有差距（55.7 vs 62.2 双文检索准确率）
 - 翻译由 Google Translate 生成，引入了翻译质量的偏差（尤其是 Quechua 的翻译质量可能较差）

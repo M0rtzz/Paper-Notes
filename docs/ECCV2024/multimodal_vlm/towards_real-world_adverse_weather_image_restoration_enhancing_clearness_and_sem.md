@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Real-World Adverse Weather Image Restoration: Enhancing Clearness and Semantics with Vision-Language Models
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L} = \mathcal{L}_{sup} + w_1 \mathcal{L}_{ps} + w_2 \mathcal{L}_{wpl}
 - 多VLM专家投票机制缓解了单一VLM的偏见问题
 - 负-正描述转换的思路（保持场景语义、改变天气状态）设计巧妙
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 使用大型VLM进行在线评估的计算开销仍然较高
 - 真实数据收集规模有限（每种天气约2000-2400张），可能影响方法的泛化性
 - 骨干网络MSBDN相对较老，换用更强backbone可能获得更大提升

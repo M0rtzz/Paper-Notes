@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RHO: Robust Holistic OSM-Based Metric Cross-View Geo-Localization
 description: >-
@@ -131,7 +131,7 @@ RHO在匹配训测条件下几乎不退化，PR@1m甚至略有提升。
 3. **首个OSM-MCVGL鲁棒性基准**：CV-RHO填补了该领域的数据空白，对推动鲁棒定位研究有重要意义
 4. **Sim2Real可行性**：利用FLUX.1 Kontext生成的退化图像训练后，模型在真实退化场景中的零样本测试也表现良好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 运动模糊条件下性能下降最大，提示需要针对性的数据增强或特征抗模糊设计
 - SUM将全景分为3个120°视图是固定设计，可探索自适应分割策略

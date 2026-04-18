@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Backdoor Mitigation by Distance-Driven Detoxification
 description: >-
@@ -131,7 +131,7 @@ D3平均ASR仅0.46%，远优于SAU的1.04%和FT-SAM的3.91%。
 - 三个实际挑战（过拟合、缩放漏洞、约束复杂性）的识别和应对设计考虑全面
 - 抗自适应攻击的实验尤为关键——当攻击者使用SAM使后门更robust时，FT-SAM彻底失败但D3仍然有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - D3使模型远离初始权重可能轻微损害干净准确率（平均ACC略低于FT-SAM）
 - 仅对线性层权重测量距离，其他层的后门信息可能未被充分处理

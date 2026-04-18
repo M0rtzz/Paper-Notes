@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Verbalized Algorithms: Zero-shot Classical Algorithmic Reasoning for Correctness and Runtime Guarantees
 description: >-
@@ -107,7 +107,7 @@ VA分为三类：
 - **理论保证可继承**：如果LLM作为oracle是准确的，则经典算法的所有理论保证自然成立；即使oracle有噪声，也可以通过Robust VA来控制错误上界
 - **与推理引擎深度集成**：VA的查询模式特别适合prefix caching优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LLM作为oracle的准确性是核心假设，当任务语义模糊或小模型能力不足时，VA也会退化
 - 排序实验中的绝对Kendall-Tau分数仍然不算高（最优0.60），说明LLM的比较能力还有提升空间
 - 子模最大化中预选阶段仍依赖嵌入模型，不是纯VA方案

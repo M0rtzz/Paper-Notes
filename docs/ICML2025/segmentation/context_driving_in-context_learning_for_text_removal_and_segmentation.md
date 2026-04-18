@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConText: Driving In-context Learning for Text Removal and Segmentation
 description: >-
@@ -162,7 +162,7 @@ $$\tilde{\mathbf{F}}_2 = [\phi(\tilde{\mathbf{F}}_{O_i}, \tilde{\mathbf{F}}_j), 
 3. **轻量但关键的设计**：CAA仅增加2% FLOPs，SP在推理时零开销，但组合起来带来了质的提升
 4. **首个OCR领域的V-ICL框架**：开辟了V-ICL在细粒度文本识别任务上的新方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分割标签依赖**：对于缺乏人工标注removal标签的数据集，需依赖ViTEraser生成伪标签，引入噪声
 2. **合成-真实域差距**：在SCUT-Syn合成数据集上表现不如部分specialist，暴露了域迁移问题

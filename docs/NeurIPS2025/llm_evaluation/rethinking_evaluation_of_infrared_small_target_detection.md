@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Evaluation of Infrared Small Target Detection
 description: >-
@@ -128,7 +128,7 @@ $$\text{hIoU} = \text{IoU}_{tgt}^{loc} \times \text{IoU}_{pix}^{seg}$$
 - 7种错误类型的分类法为方法改进提供了可操作的诊断方向
 - 开源的标准化评估工具包有利于社区统一benchmark
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅评估了14种方法**：更多方法（特别是最新2025年方法）的覆盖可以进一步验证框架的普适性
 - **OPDC的重叠阈值（IoU>0.5）和距离阈值（3像素）仍然是硬编码的**：可能需要根据实际应用自适应调整

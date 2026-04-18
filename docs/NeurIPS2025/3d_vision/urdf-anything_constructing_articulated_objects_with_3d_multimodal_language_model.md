@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] URDF-Anything: Constructing Articulated Objects with 3D Multimodal Language Model
 description: >-
@@ -99,7 +99,7 @@ URDF-Anything由三个阶段构成：（1）输入表示——从单视角或多
 - 对比2D图像MLLM和3D点云MLLM的实验设计非常有说服力——即使微调过的Qwen2.5-VL-7B在轴误差上也远不如3D方法，证明了显式3D几何的不可替代性
 - 训练效率出色：单卡A800仅需2.5小时，LoRA rank=8的轻量化微调策略使得方法易于复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 无法生成某些URDF属性（如质量、惯性矩），受训练数据和基座模型限制
 - pipeline不是完全端到端：仍依赖外部点云到mesh的转换模块生成link几何
 - 数值参数精度受限于token化生成方式，连续值被离散化为有限精度的token序列

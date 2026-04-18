@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiveHPS++: Robust and Coherent Motion Capture in Dynamic Free Environment
 description: >-
@@ -150,7 +150,7 @@ SMPL solver 损失：$\mathcal{L}_{smpl} = \lambda_6 \mathcal{L}_{mse}(\mathbf{J
 3. **归一化策略的深层洞察**：揭示了逐帧/序列归一化的精度-连贯性权衡，轨迹嵌入是解决这一矛盾的优雅方案
 4. **NoiseMotion 数据集**：利用 SURREAL+ShapeNet 大规模模拟真实人-物交互噪声，弥补了现有合成数据的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对单人场景，多人同时动作捕捉尚未解决
 - 依赖上游感知算法提供（含噪的）人体点云分割结果，端到端方案可能更鲁棒

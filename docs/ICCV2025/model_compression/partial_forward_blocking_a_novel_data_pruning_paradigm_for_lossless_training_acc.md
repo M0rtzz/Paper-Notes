@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Partial Forward Blocking: A Novel Data Pruning Paradigm for Lossless Training Acceleration
 description: >-
@@ -139,7 +139,7 @@ PFB 将训练网络分为**浅层子网络** $Net^{sh}$ 和**深层子网络** $
 - **ADE 模块设计巧妙**: 通过聚类中心+EMA更新+加权KDE，以极低开销实现对训练分布的自适应追踪
 - **正增益现象**: 适度剪枝反而提升性能，暗示全数据中的冗余样本可能干扰学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 浅层网络的选取（stage-1 vs stage-2）对不同架构可能有不同最优点
 - 概率密度方法在极高维特征空间中可能面临"维度灾难"，需要降维

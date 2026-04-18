@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A New Strategy for Verifying Reach-Avoid Specifications in Neural Feedback Systems
 description: >-
@@ -114,7 +114,7 @@ tags:
 - $F/B$ 分割参数化提供了灵活的精度-效率权衡，具有工程实用性
 - 理论框架清晰：前向/后向reach-avoid属性的四条性质定义严谨
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前缺少实验验证，所有算法的实际性能（精度、效率、可扩展性）仍待确认
 - 仅支持ReLU前馈网络，不适用于RNN/Transformer等更复杂的控制器架构

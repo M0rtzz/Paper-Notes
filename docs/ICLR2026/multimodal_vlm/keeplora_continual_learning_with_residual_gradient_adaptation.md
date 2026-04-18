@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KeepLoRA: Continual Learning with Residual Gradient Adaptation
 description: >-
@@ -149,7 +149,7 @@ KeepLoRA在保持原始架构且不使用额外数据的前提下取得最佳Tra
 - **零推理开销**：LoRA训练后可合并到原权重，不增加任何推理参数或计算
 - **无需外部数据**：不依赖参考数据集或生成模型，在实际部署中更可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 随着任务序列增长，残差子空间会逐渐缩小，长序列场景下可塑性可能退化
 2. 能量阈值 $\epsilon_w$ 和 $\epsilon_f$ 需要手动设定，自适应确定策略值得研究

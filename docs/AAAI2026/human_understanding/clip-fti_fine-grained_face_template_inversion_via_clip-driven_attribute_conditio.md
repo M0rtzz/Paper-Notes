@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLIP-FTI: Fine-Grained Face Template Inversion via CLIP-Driven Attribute Conditioning
 description: >-
@@ -122,7 +122,7 @@ $$\tilde{s} = \text{MHA}(Q = t', K = [s'_1, \ldots, s'_R], V = [s'_1, \ldots, s'
 3. **单次前向推理**：不同于需要数百次迭代的搜索方法，高效且实用
 4. **安全启示**：从攻击角度揭示人脸模板泄露的严重隐私风险
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. TAA 预测质量受限于 CLIP 属性提示的覆盖范围，更细粒度提示可能进一步提升
 2. 依赖 StyleGAN3 生成能力上限，极端姿态或遮挡场景可能受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Making LLMs Better Many-to-Many Speech-to-Text Translators with Curriculum Learning
 description: >-
@@ -154,7 +154,7 @@ LLM-SRT 在大 batch 下推理速度约为 Qwen2-Audio 的 **3倍**，且不会 
 - **Q-Former 压缩的实际价值**：固定 80 query 不仅提升推理速度 3x，还解决了 Qwen2-Audio batch>4 即 OOM 的问题
 - **首个 32B 规模的多对多 S2TT MLLM**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **英语翻译方向较弱**：FLEURS 每语言仅 ~10h，英语数据不足导致 Eng→X 不如 SeamlessM4T-V2
 2. **语音编码器冻结**：未探索解冻 Whisper 的潜在收益

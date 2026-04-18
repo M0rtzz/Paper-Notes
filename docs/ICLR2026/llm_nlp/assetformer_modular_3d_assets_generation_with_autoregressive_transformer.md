@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer
 description: >-
@@ -149,7 +149,7 @@ $$
 5. **实用导向**：生成结果可直接导入游戏引擎，对 UGC 平台和游戏开发有真实应用价值
 6. **数据构建流程可复制**：GPT-4o 标注 + PCG 扩充的数据管线具有推广价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Primitive 库固定**：当前方法依赖预定义的 primitive 集合，无法生成全新类型的基本组件，限制了生成多样性
 2. **纹理和材质**：论文主要关注几何结构的生成，未涉及纹理、材质、光照等视觉属性

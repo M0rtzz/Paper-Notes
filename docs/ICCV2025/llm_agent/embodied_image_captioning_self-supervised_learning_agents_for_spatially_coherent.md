@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embodied Image Captioning: Self-supervised Learning Agents for Spatially Coherent Image Descriptions
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **频率+上下文学习的伪标注思路巧妙**：利用"多数投票+噪声过滤"的直觉，用LLM实现了鲁棒的跨视角标注一致化
 - **learned探索策略CLA**：基于caption一致度驱动导航的想法新颖，把主动感知和语义理解结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估6类室内物体，类别多样性有限
 - 3D体素投影会引入遮挡和投影噪声，影响物体实例聚类质量
 - CLA训练基于CoCa的disagreement，换captioner需重训策略

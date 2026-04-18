@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exact and Linear Convergence for Federated Learning under Arbitrary Client Participation is Attainable
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：在任意（未知）客户端参与概率下，能否用**常数学习率**实现精确收敛到全局最优解？
 
-**本文要解决什么？** 设计一个在任意客户端参与下仍能精确收敛（线性速率）的 FL 算法，且不需要有界异质性假设或学习参与概率。
+**本文目标** 设计一个在任意客户端参与下仍能精确收敛（线性速率）的 FL 算法，且不需要有界异质性假设或学习参与概率。
 
 **切入角度**：将 FL 的三个核心操作（客户端参与、本地更新、模型聚合）统一表示为随机矩阵乘法，从去中心化优化视角重新设计 FL 算法。
 
-**核心 idea 一句话**：用行随机矩阵建模 pull 操作、列随机矩阵建模 push 操作，通过 push-pull 对偶策略同时消除客户端漂移和参与偏差。
+**核心 idea**：用行随机矩阵建模 pull 操作、列随机矩阵建模 push 操作，通过 push-pull 对偶策略同时消除客户端漂移和参与偏差。
 
 ## 方法详解
 
@@ -119,7 +119,7 @@ $$\boldsymbol{x}_{k+1} = R_k(\boldsymbol{x}_k - \eta D_k \boldsymbol{y}_k), \qua
 - **Push-Pull 的优雅性**：行随机矩阵保证一致性、列随机矩阵保证跟踪性，两种矩阵的对偶配合恰好消除了 FedAvg 的两大偏差源。且只需服务器维护一个额外变量 $y_r$
 - **Tracking Property 的关键作用**：$\mathbf{1}^\top \boldsymbol{y}_k = \mathbf{1}^\top \nabla\boldsymbol{f}(\boldsymbol{x}_k)$ 这一不变量确保了即使参与客户端集合在变化，全局梯度信息始终被精确追踪
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 通信开销每轮为 $2d$（模型 $x$ + 对偶 $y$），比 vanilla FedAvg 的 $d$ 多一倍
 - 理论分析假设确定性梯度（SG-FOCUS 有实验但理论尚不完整）
 - 非凸的线性收敛速率需要 PL 条件——一般非凸问题下 FOCUS 的具体复杂度未给出

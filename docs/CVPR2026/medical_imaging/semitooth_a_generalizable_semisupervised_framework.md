@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{SWC} = \mathbb{E}_{r \in \mathcal{R}_\tau} \left[ \mathbb{E}_{i \
 - **SWC 约束巧妙**：区域级门控 + 体素级加权的双层筛选策略，比简单的置信度阈值更适合 3D CBCT 的空间结构特点
 - **Wasserstein 距离划分子集**：利用分布距离度量来桥接有标注源和无标注源是一个实用且有效的策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模较小**：仅 98 个有标注 + 438 个无标注样本，更大规模数据验证有待补充
 2. **源数量有限**：只有三个源，更多源场景下的可扩展性未验证

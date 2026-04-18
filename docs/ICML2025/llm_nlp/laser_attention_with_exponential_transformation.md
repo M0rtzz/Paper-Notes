@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LASER: Attention with Exponential Transformation
 description: >-
@@ -118,7 +118,7 @@ $$\text{LASER}(X) = \log\!\Big(\text{softmax}(QK^\top) \cdot \exp(V)\Big)$$
 4. **LASER ≈ 可微 max 注意力**：建立了与 max 操作的理论联系，为理解其行为提供直觉
 5. **实验覆盖全面**：从 234M 到 7.7B，覆盖 decoder-only / encoder-only / ViT / Conformer，说服力强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论分析基于极限情况**：$\exp(v_1) \gg \exp(v_2)$ 条件下 Jacobian 改善最显著，一般情况下的改善程度缺乏更紧的界
 2. **改进幅度较小**：大部分实验中提升在 1-2% 范围，虽然一致但不够显著

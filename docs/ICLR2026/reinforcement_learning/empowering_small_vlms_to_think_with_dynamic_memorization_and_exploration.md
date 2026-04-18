@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empowering Small VLMs to Think with Dynamic Memorization and Exploration
 description: >-
@@ -124,7 +124,7 @@ DyME 训练的 SVLM 性能超过 7B 参数的 MoVA（54.2）。
 - 证明了"能力弱的模型需要更智能的训练范式"这一直觉
 - 使用低质量（Undesigned）CoT 数据 + DyME 也能获得显著提升，降低了数据门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 视觉监督依赖视觉事实 I_c 的可提取性，对涉及抽象语义（如 meme 讽刺）或非结构化感知的场景可能失效
 - 仅在 ≤7B 模型上验证，更大规模模型是否需要 DyME 待研究
 - 当前依赖外部 LLM（Qwen2.5-14B）做视觉精炼，完全闭环的自主改善更理想

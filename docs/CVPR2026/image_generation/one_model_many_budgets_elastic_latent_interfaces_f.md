@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers
 description: >-
@@ -85,7 +85,7 @@ ELIT在DiT的transformer block栈中插入一个"潜在接口"——一组可学
 - **Read注意力的可视化**直观展示了重要性排序：前面的latent关注全局结构，后面的关注细节纹理
 - **通用兼容性**强：在DiT/U-ViT/HDiT/MM-DiT四种架构和图像/视频两种任务上都有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 大规模从头训练的效果尚未验证（Qwen-Image实验是蒸馏微调而非从头训练）
 - CCFG比CFG更容易导致图像过饱和，需要使用较低的guidance scale
 - 未探索跨采样步的预算调度（不同噪声水平可能需要不同token数），作者自己也提到这是future work

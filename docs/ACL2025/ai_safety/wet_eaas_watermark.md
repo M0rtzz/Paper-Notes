@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WET: Overcoming Paraphrasing Vulnerabilities in Embeddings-as-a-Service with Linear Transformation Watermark
 description: >-
@@ -93,7 +93,7 @@ GPT-3.5 改写攻击，Enron 数据集：
 - **理论保证是最大优势**：Theorem 1 从线性代数角度证明了线性变换对平均操作的鲁棒性，不是拍脑袋设计的。这使得 WET 不仅在实验上有效，理论上也是可靠的
 - **不依赖触发词的根本性改进**：将水印从"条件注入"变为"全局变换"，从根本上消除了选择性攻击的可能性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 下游任务的 utility 损失（~3-4%）在某些高精度应用中可能不可接受
 - 仅在 BERT 作为替代模型的场景下测试，不同架构的替代模型（如 Transformer 变体）可能表现不同
 - 变换矩阵 $\mathbf{T}$ 的安全性完全依赖保密性——如果泄露则水印可被移除

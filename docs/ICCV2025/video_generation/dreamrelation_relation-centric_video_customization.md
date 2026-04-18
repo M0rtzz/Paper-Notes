@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamRelation: Relation-Centric Video Customization
 description: >-
@@ -161,7 +161,7 @@ LoRA 位置消融：
 3. **帧差分 = 关系动态**：用逐帧差分捕获时序变化、空间平均滤除外观，设计简洁优雅
 4. **域迁移效果惊艳**：人类关系（握手、拥抱）可迁移到猫狗等动物上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Relation Accuracy 指标依赖 VLM（Qwen-VL-Max），受其能力限制
 2. 训练数据仅 26 种人类交互关系，更多关系类型有待扩展

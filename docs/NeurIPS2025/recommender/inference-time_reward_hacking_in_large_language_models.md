@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inference-Time Reward Hacking in Large Language Models
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**: BoN 等方法天然受"赢家诅咒"（winner's curse）影响——当候选数 N 增大时，被选中的回复倾向于代理奖励高估了真实质量的那个，导致过度优化。
 
-**本文要解决什么？**: 刻画推理时 reward hacking 的不可避免性，并提供实用的缓解机制。
+**本文目标**: 刻画推理时 reward hacking 的不可避免性，并提供实用的缓解机制。
 
 **切入角度**: 从信息论和拍卖理论中的赢家诅咒切入，将推理时对齐的参数调优问题转化为一维寻根问题。
 
-**核心idea一句话**: 通过 Poisson 随机化采样数近似最优带温分布，再用 HedgeTune 找到 hacking 阈值，实现对代理奖励的最优"对冲"。
+**核心 idea**: 通过 Poisson 随机化采样数近似最优带温分布，再用 HedgeTune 找到 hacking 阈值，实现对代理奖励的最优"对冲"。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ Pipeline：
 - Theorem 1 的通用性很强——适用于任何满足 TP2 的推理时方法，不限于 BoN
 - HedgeTune 实用性好：无需访问 LLM 内部参数，只需黑盒评分数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 - HedgeTune 需要访问真实奖励（或强 judge），在无法验证的开放式任务中适用性受限
 - 理论分析依赖均匀代理奖励假设（虽然通过 CDF 变换损失小，但离散情况需要附录额外处理）
 - 未讨论多轮对话或序列决策场景中的 reward hacking

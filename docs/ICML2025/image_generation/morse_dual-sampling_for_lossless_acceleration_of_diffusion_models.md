@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Morse: Dual-Sampling for Lossless Acceleration of Diffusion Models
 description: >-
@@ -134,7 +134,7 @@ Morse 可叠加在 Consistency Distillation 之上，进一步加速已经加速
 - **权重共享**确保 Dot 继承 Dash 的生成知识，同时大幅降低训练代价；
 - **LoRA 微调**比全量微调更高效且效果相当。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要额外训练 Dot**：虽然训练代价是 Dash 的 ~0.1%，但对每个新 DM 仍需单独训练一个 Dot，通用性受限；
 2. **加速上界受 $N$ 约束**：Dot 的加速倍数 $N$ 取决于分辨率下采样幅度，过高会损失精度；

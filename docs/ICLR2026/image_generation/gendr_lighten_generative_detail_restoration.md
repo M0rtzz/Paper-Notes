@@ -42,7 +42,7 @@ tags:
 
 ### 关键设计一：SD2.1-VAE16——定制16通道潜在空间基础模型
 
-- **做什么**：基于SD2.1 UNet和开源16通道VAE，构建适合SR任务的0.9B基础扩散模型。
+- **功能**：基于SD2.1 UNet和开源16通道VAE，构建适合SR任务的0.9B基础扩散模型。
 - **核心思路**：通过表示对齐（REPA）策略进行全参数训练，在UNet第一个下采样块后插入MLP投影头，将UNet中间特征 $\mathbf{h}_t = f_\theta(\mathbf{z}_t)$ 与预训练DINOv2编码器的表示 $\mathbf{h}_\mathcal{E} = \mathcal{E}(\mathbf{x}_h)$ 对齐：
 
 $$\mathcal{L}^{(\text{repa})} = -\mathbb{E}_{\mathbf{x}_h, t}\left[\frac{1}{N}\sum_{n=1}^{N}\text{sim}\left(\mathbf{h}_\mathcal{E}[n], h(\mathbf{h}_t[n])\right)\right]$$
@@ -51,7 +51,7 @@ $$\mathcal{L}^{(\text{repa})} = -\mathbb{E}_{\mathbf{x}_h, t}\left[\frac{1}{N}\s
 
 ### 关键设计二：CiD——一致性分数恒等蒸馏
 
-- **做什么**：将多步扩散蒸馏为单步，同时融入SR任务特定先验以保证训练稳定性和输出一致性。
+- **功能**：将多步扩散蒸馏为单步，同时融入SR任务特定先验以保证训练稳定性和输出一致性。
 - **核心思路**：在SiD的基础上做两个关键改进：(1) 用HR目标图像 $\mathbf{z}_h$ 训练"真实"score网络 $\phi$，使其输出分布与高保真图像流形对齐；(2) 用 $\mathbf{z}_h$ 替换生成结果 $\mathbf{z}_g$ 作为恒等变换，缓解生成质量波动带来的不稳定。最终CiD损失：
 
 $$\mathcal{L}_\theta^{(\text{cid})} = \mathcal{L}_\theta^{(3)} - \xi \mathcal{L}_\theta^{(1)}$$
@@ -62,7 +62,7 @@ $$\mathcal{L}_\theta^{(\text{cid})} = \mathcal{L}_\theta^{(3)} - \xi \mathcal{L}
 
 ### 关键设计三：CiDA——融合对抗学习与表示对齐
 
-- **做什么**：在CiD基础上引入对抗学习和表示对齐，进一步增强感知质量并加速训练。
+- **功能**：在CiD基础上引入对抗学习和表示对齐，进一步增强感知质量并加速训练。
 - **核心思路**：利用预训练UNet $\phi$ 作为特征提取器加判别头 $h$ 进行对抗训练，同时加入REPA正则化：
 
 $$\mathcal{L}_\theta^{(\text{cida})} = \lambda_1 \mathcal{L}_\theta^{(\text{cid})} + \lambda_2 \mathcal{L}_\theta^{(\text{adv})} + \lambda_3 \mathcal{L}_\theta^{(\text{repa})}$$
@@ -73,7 +73,7 @@ $$\mathcal{L}_\theta^{(\text{cida})} = \lambda_1 \mathcal{L}_\theta^{(\text{cid}
 
 ### 关键设计四：极简推理Pipeline
 
-- **做什么**：构建仅含VAE+UNet的极简推理管线。
+- **功能**：构建仅含VAE+UNet的极简推理管线。
 - **核心思路**：移除scheduler（固定 $\bar{\alpha}_t = \bar{\beta}_t = 0.5$），移除text encoder/tokenizer，用预计算的固定prompt嵌入替代。77ms per 512²像素（A100）。
 - **设计动机**：单步推理不需要scheduler调度多步；固定prompt嵌入在SR任务中提供通用质量描述且不影响IQA性能（MUSIQ仅差0.17但节省约30%参数和15ms时间）。
 

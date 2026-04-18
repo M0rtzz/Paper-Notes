@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recurrent Memory for Online Interdomain Gaussian Processes
 description: >-
@@ -115,7 +115,7 @@ OHSGPR 比 OSGPR 快 **300-450倍**，因为不需要优化诱导点位置。
 - 有限基重建（$f = \sum_{m=1}^M u_m^{(t)} g_m^{(t)}(x)$）作为副产品提供了可解释的函数近似
 - 与 SVGP 中其他近似推断框架（EP、Laplace）兼容，只改变核矩阵计算方式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RFF 近似 $\mathbf{K}_{\mathbf{uu}}^{(t)}$ 可能在长时间序列上累积误差
 - 多维输入需要排序，排序策略对性能影响大，OHSVGP-k 在某些场景下不优于 OSVGP

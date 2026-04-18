@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Visual Hierarchies in Hyperbolic Space for Image Retrieval
 description: >-
@@ -137,7 +137,7 @@ tags:
 - 域外泛化实验令人信服，说明学到的层次表征具有通用性
 - 可视化展示了嵌入空间的优美结构：harbor → boat parts 的层次清晰可见
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 层次定义依赖 bounding box 标注，未标注数据无法使用
 - 80% 面积重叠阈值为手动设定，不同数据集可能需要调整

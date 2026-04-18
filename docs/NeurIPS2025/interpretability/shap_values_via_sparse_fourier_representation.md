@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SHAP Values via Sparse Fourier Representation
 description: >-
@@ -111,7 +111,7 @@ FourierShap 比 KernelShap 快 10-10000×，且在 3/4 数据集上比 FastShap 
 - 摊销化设计使其特别适合需要解释大量样本的工业场景
 - 在黑盒设置下超越了需要模型白盒访问的 DeepLift，令人印象深刻
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设输入为二值特征——连续特征需先离散化为分位数，可能丢失信息
 - 稀疏 WHT 的第一阶段计算本身也有开销，当模型不够稀疏时近似质量下降

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Creating Blank Canvas Against AI-Enabled Image Forgery
 description: >-
@@ -144,7 +144,7 @@ $$\delta^* = \arg\max_{\|\delta\|_\infty \leq \epsilon} \mathcal{L}_{\text{attac
 3. **频域理解深刻**：准确诊断了 SAM 在高频区域的鲁棒性问题，并提出针对性的频率感知优化
 4. **实用性强**：图像拥有者可在发布前一键保护，任何人都可用标准 SAM 验证篡改
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **白盒假设**：当前方法需要访问 SAM 的完整模型权重，对其他视觉基础模型的迁移性未验证
 2. **扰动可见性**：$16/255$ 的扰动上界在某些场景下可能影响图像质量

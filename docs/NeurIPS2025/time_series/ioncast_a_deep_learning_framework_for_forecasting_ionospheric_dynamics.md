@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IonCast: A Deep Learning Framework for Forecasting Ionospheric Dynamics
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 需要在全球尺度上整合异构多源数据（太阳风、地磁指数、轨道力学等），同时进行准确的短期到长期预测，但传统方法和简单 ML 模型能力有限。
 
-**本文要解决什么**: 构建能处理异构多源数据、在全球尺度运行、可靠进行 nowcasting 和 forecasting 的高级 ML 框架。
+**本文目标**: 构建能处理异构多源数据、在全球尺度运行、可靠进行 nowcasting 和 forecasting 的高级 ML 框架。
 
 **切入角度**: 从天气预报领域的 GraphCast 架构出发，将其适配到电离层动力学预测任务。
 
-**核心 idea 一句话**: 用 GraphCast 启发的球面图网络编码全球 TEC 地图和多源物理驱动数据，自回归地预测电离层演化。
+**核心 idea**: 用 GraphCast 启发的球面图网络编码全球 TEC 地图和多源物理驱动数据，自回归地预测电离层演化。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ IonCast GNN 在 6 小时预测内全面优于 IRI 和 LSTM。
 - Forcing vs non-forcing 特征的区分设计非常巧妙：已知未来值的特征不参与损失优化
 - 残差预测策略在地球物理建模中的有效性得到再次验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 长预测时间（>6h）GNN 的 RMSE 超过 IRI，显示自回归误差累积仍是挑战
 - Workshop paper 篇幅有限，消融不够全面，缺少对不同地磁活动水平的分层表现详细分析

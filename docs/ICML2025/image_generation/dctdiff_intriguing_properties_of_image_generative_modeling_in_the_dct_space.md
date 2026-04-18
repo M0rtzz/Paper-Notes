@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DCTdiff: Intriguing Properties of Image Generative Modeling in the DCT Space
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_\text{EBFR}(\theta) = \mathbb{E}_t \lambda(t) \mathbb{E}_{\bar{\ma
 3. **DCT 上采样定理**：证明了低分辨率 DCT 系数与高分辨率系数之间的近似关系 $\bar{D}(k,l) \approx \frac{1}{2}\cos(\frac{k\pi}{4B})\cos(\frac{l\pi}{4B}) D(k,l)$，DCT 上采样（FID 9.79）优于双三次插值（FID 12.53）。
 4. **即插即用**：DCTdiff 不改变 Transformer 架构，可直接在 UViT/DiT 上使用，且在多种采样器（DDIM、DPM-Solver、DDPM）下均有效。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 尚未在 text-to-image 等条件生成任务上验证，目前仅限无条件/类条件生成。
 - 在低分辨率 CelebA 64 上优势不明显，甚至在 DPM-Solver 下略逊于 UViT。
 - DCT block size $B$ 需要根据分辨率手动选择，缺乏自适应机制。

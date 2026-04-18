@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Automated Structured Radiology Report Generation
 description: >-
@@ -133,7 +133,7 @@ SRR-BERT使用CXR-BERT作为预训练骨干，在StructUtterances数据集上进
 - **临床验证充分**：5位执业放射科医生参与审阅，增强了结果的临床可信度
 - **55标签覆盖全面**：从14标签到55标签的扩展大幅提升了疾病分类的细粒度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 结构化重写依赖GPT-4，可能引入LLM特有的幻觉或信息丢失
 - 标签空间存在部分模糊区域（如"Air space opacity"类别的F1仅0.62）

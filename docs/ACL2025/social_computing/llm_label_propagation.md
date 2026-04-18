@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synergizing LLMs with Global Label Propagation for Multimodal Fake News Detection
 description: >-
@@ -159,7 +159,7 @@ $$y_i' = \tilde{y}_i \cdot m_i, \quad m_i \in \{0, 1\}$$
 4. **跨模态图构建的多相似度融合**：5 种相似度度量确保捕捉丰富的跨模态关系
 5. **实验验证了一个重要直觉**：LLM 的价值不在于单点预测的准确性，而在于通过传播机制放大其整体判断能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **LLM 只使用文本信息**：当前 GPT-4o prompt 只包含清理后的推文文本，未利用图片信息（可改用 GPT-4V 多模态分析）
 2. **图构建阈值 $\theta = 0.95$ 较高**：可能遗漏一些有价值的弱关联

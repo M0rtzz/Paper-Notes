@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PanFoMa: A Lightweight Foundation Model and Benchmark for Pan-Cancer Pathology Image Analysis
 description: >-
@@ -168,7 +168,7 @@ PanFoMa 在自建泛癌基准上以 94.74% 准确率大幅领先所有基线。
 - **动态排序机制**是连接 Transformer（无序集合建模）和 Mamba（有序序列建模）的桥梁，是本文最精妙的设计。
 - **大规模基准数据集**：PanFoMaBench 覆盖 33 种癌症亚型、350 万+ 细胞，是目前最全面的泛癌单细胞基准之一。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **标题的误导性**：论文标题提到"Pathology Image Analysis"，但实际处理的是单细胞转录组数据而非病理图像，存在一定程度的不匹配。
 2. **预训练细节缺失**：论文主要关注架构设计和基准构建，对预训练目标函数的描述不够详细。

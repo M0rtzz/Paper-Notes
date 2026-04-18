@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PVChat: Personalized Video Chat with One-Shot Learning
 description: >-
@@ -123,7 +123,7 @@ PVChat 基于 Mistral-7B-Instruct-v0.3，包含视觉编码器、ReMoH 增强的
 - 3 小时即可在单张 L20 GPU 上完成训练，效率极高
 - 66 个个体场景、304 原始视频、2304 扩展视频、30000+ QA 对的数据集将公开
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个新主体需要单独进行 one-shot 学习（约 3 小时微调），无法实现 zero-shot 个性化
 - 当前每个视频仅采样 8 帧，长视频理解可能不足

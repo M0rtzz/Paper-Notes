@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video
 description: >-
@@ -77,7 +77,7 @@ tags:
 - 前馈外观重建只需单张图像，避免了GART等方法需要多帧优化的瓶颈
 - 后优化作为可选后处理步骤的两阶段设计（先对齐关键点再对齐mask）值得借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VAREN模型本身不能很好地表示尾巴和鬃毛的物理形态，限制了这些区域的重建质量
 - 不能处理动态光照变化
 - EquineGS仅用单帧输入，对严重遮挡/截断的输入帧会失败——未来可融合多关键帧

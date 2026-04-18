@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlashMotion: Few-Step Controllable Video Generation with Trajectory Guidance
 description: >-
@@ -102,7 +102,7 @@ FlashMotion 采用三阶段训练流程：
 - 方法设计与具体的 adapter 架构解耦，具有良好的通用性
 - 引入 FlashBench 填补了轨迹可控视频生成评测的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 本地缓存仅含摘要，无法获取具体的实验数据和细节
 - 三阶段训练流程相对复杂，实际部署成本需评估
 - 少步推理的具体步数和加速比未在摘要中明确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiDAR-Event Stereo Fusion with Hallucinations
 description: >-
@@ -66,7 +66,7 @@ tags:
 
 #### 1. 虚拟堆叠幻觉（Virtual Stack Hallucination, VSH）
 
-**做什么**：在已构建的事件堆叠表示上直接注入虚拟模式，增强匹配区分度。
+**功能**：在已构建的事件堆叠表示上直接注入虚拟模式，增强匹配区分度。
 
 **核心思路**：给定左右事件堆叠 $\mathcal{S}_L, \mathcal{S}_R$（尺寸 $W \times H \times C$）和LiDAR深度测量集合 $Z$，对每个深度点 $z(x,y)$：
 
@@ -86,7 +86,7 @@ $$\mathcal{A}(x,y,x',c) \sim \mathcal{U}(\mathcal{S}^-, \mathcal{S}^+)$$
 
 #### 2. 回溯时间幻觉（Back-in-Time Hallucination, BTH）
 
-**做什么**：直接在原始事件流中插入虚构事件，无需访问堆叠表示。
+**功能**：直接在原始事件流中插入虚构事件，无需访问堆叠表示。
 
 **核心思路**：在从 $t_d$ 时刻向前采样的事件历史 $\mathcal{E}_L, \mathcal{E}_R$ 中，对每个深度点 $d(\hat{x},\hat{y})$，注入一对虚构事件：
 
@@ -180,7 +180,7 @@ $$\hat{e}^L = (\hat{x}, \hat{y}, \hat{p}, \hat{t}), \quad \hat{e}^R = (\hat{x}',
 3. **黑盒兼容性**：BTH甚至不需要访问堆叠表示，具有极强通用性
 4. **异步传感器的优雅处理**：利用事件历史的时间范围，将过时LiDAR数据也能无缝整合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. VSH需要访问堆叠表示（灰盒限制），BTH的遮挡处理不如VSH完善
 2. 实验中LiDAR稀疏点的对齐依赖额外的里程计和ICP配准

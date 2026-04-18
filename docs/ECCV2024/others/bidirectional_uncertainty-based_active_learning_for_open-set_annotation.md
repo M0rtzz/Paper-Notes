@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation
 description: >-
@@ -117,7 +117,7 @@ $$x^* = \arg\max_x \; p_{K+1}^{aux}(x) \cdot unc_n + r \cdot [1 - p_{K+1}^{aux}(
 3. **通用性强**：BUAL 是一个框架，可以将任意基于不确定性的 AL 方法扩展到开放集场景
 4. **自适应机制**：全局（$r$）和局部（$p_{K+1}^{aux}$）平衡因子使方法在不同开放度下均稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：需要训练三个分类器（$f_p, f_n, f_{aux}$），RLNL 阶段还需要多次采集预测取平均
 2. **子集采样**：$D_{sub}$ 的随机采样可能引入偏差，尤其在类别极度不平衡时

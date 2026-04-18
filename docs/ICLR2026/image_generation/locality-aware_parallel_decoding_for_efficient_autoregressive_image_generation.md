@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation
 description: >-
@@ -90,7 +90,7 @@ $$PTA_s = \frac{1}{N}\sum_{i=1}^N \frac{\sum_j \text{Attention}(T_i,T_j) \cdot \
 - 局部性分析提供了并行化策略设计的经验基础——PTA 分析可迁移到其他视觉自回归模型
 - 与 VAR 相比保持了平坦token表示，兼容 CLIP/DINO 等视觉骨干
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅在 ImageNet 类条件生成上验证，未扩展到文本引导生成
 - 位置查询token引入的额外参数和注意力计算的开销
 - 生成顺序调度的超参（$\tau$、$\rho$、组大小调度）需要调优

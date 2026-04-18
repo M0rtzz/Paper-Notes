@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GenHancer: Imperfect Generative Models are Secretly Strong Vision-Centric Enhancers
 description: >-
@@ -60,7 +60,7 @@ CLIP 等判别模型在高层语义理解上表现优异，但在细粒度视觉
 
 #### 1. **条件视觉 Token 选择——仅用 [CLS]**
 
-- **做什么**：限制条件输入仅为 CLIP 的全局 class token，丢弃所有局部 patch token
+- **功能**：限制条件输入仅为 CLIP 的全局 class token，丢弃所有局部 patch token
 - **核心思路**：基于互信息框架，自监督重建等价于最大化 $I(V;G)$。但如果条件中包含局部 token，这些 token 直接对应图像局部区域，导致重建任务过于简单（信息泄漏），$I(V;G_1)$ 变小，ViT 无法从去噪器学到有用信息。
   $$\max_V I(V;G_1) - \lambda I(V;G_2) \Rightarrow \max_V I(V;G_1) + \lambda d(V;V_0)$$
   实验证明即使只加入 10% 的局部 token，增强性能也会急剧下降。
@@ -68,7 +68,7 @@ CLIP 等判别模型在高层语义理解上表现优异，但在细粒度视觉
 
 #### 2. **两阶段训练策略**
 
-- **做什么**：将训练分为两个阶段，先消除无关信息再学习有用知识
+- **功能**：将训练分为两个阶段，先消除无关信息再学习有用知识
 - **核心思路**：
     - **Stage-1**：冻结 CLIP ViT $\mathbf{v}_\theta$，训练投影器 $\mathbf{h}_\omega$ 和去噪器 $\mathbf{g}_\phi$。去噪器获得基本生成能力，投影器学习桥接特征空间差距，减少 $I(V;G_2)$。
     - **Stage-2**：用 LoRA（rank=16）微调 CLIP ViT，放大 $I(V;G_1)$，增强细粒度表征。实验证明只要 Stage-1 训练充分，Stage-2 中是否继续训练去噪器和投影器影响可忽略。
@@ -77,7 +77,7 @@ CLIP 等判别模型在高层语义理解上表现优异，但在细粒度视觉
 
 #### 3. **轻量去噪器与生成范式**
 
-- **做什么**：证明轻量级随机初始化的去噪器即可实现优异的增强效果，适用于连续和离散两种生成范式
+- **功能**：证明轻量级随机初始化的去噪器即可实现优异的增强效果，适用于连续和离散两种生成范式
 - **核心思路**：
     - **连续去噪器（Rectified Flow）**：采用 FLUX 风格 DiT 架构但仅用 2 个 MM-DiT + 4 个 Single-DiT blocks（约 FLUX 原版 1/10 参数），通过 adaptive layernorm 注入 [CLS] 条件。损失为流匹配回归：
     $$\mathcal{L}_c = \mathbb{E}_{t,\mathbf{x}} \|(\widetilde{\mathbf{x}_1} - \widetilde{\mathbf{x}_0}) - \mathbf{g}_\phi(\widetilde{\mathbf{x}_t}, t, \mathbf{h}_\omega \circ \mathbf{v}_\theta(\mathbf{x}))\|_2^2$$
@@ -143,7 +143,7 @@ CLIP 等判别模型在高层语义理解上表现优异，但在细粒度视觉
 4. **连续/离散统一**：三个 Key Points 同时适用于 Rectified Flow 和 Perceiver，验证了原理的普适性
 5. **即插即用 MLLM 增强**：增强后的 CLIP 可直接替换 LLaVA 中的视觉编码器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估了 CLIP 系列模型**：是否适用于 DINOv2、EVA-CLIP 等其他视觉编码器未知
 2. **CC3M 训练集较小**：使用更大规模数据（如 DataComp）是否能进一步提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large Language Models are Demonstration Pre-Selectors for Themselves
 description: >-
@@ -143,7 +143,7 @@ $$\min_{\mathcal{D}_{\text{FEEDER}} \subseteq \mathcal{D}_{\text{TRAIN}}} |\math
 - **LLM-aware 设计**：预选过程考虑特定 LLM 的能力边界，不同模型产生不同的 FEEDER 子集，体现了以模型为中心的数据选择思想
 - **双场景适用**：FEEDER 同时服务于 ICL 和微调，通过双层优化实现无缝衔接
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **充分性传递性假设**：树形算法依赖充分性的传递性假设，实际中可能不完全成立，可能导致次优子集
 2. **预选阶段本身有计算成本**：虽然复杂度为 $O(\log N)$，但每次充分性检查都需要 LLM 推理，对于大规模数据集仍有开销

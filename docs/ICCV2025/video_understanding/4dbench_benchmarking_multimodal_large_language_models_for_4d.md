@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4D-Bench: Benchmarking Multi-modal Large Language Models for 4D Object Understanding
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **揭示性能层级**：清晰揭示MLLM能力的梯度——Appearance > Spatial > Temporal ≈ Action >> Counting，为改进方向提供了明确指导
 - **开源模型vs闭源模型差距定位**：外观理解差距小，但动作/时序理解差距大，为开源社区指明重点突破方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **4D表征局限**：将4D物体表示为多视角视频虽然使评估成为可能，但丢失了点云、4DGS等原生3D/4D表征的几何信息，无法评估MLLM对原生4D表征的理解能力
 - **数据规模有限**：QA仅751对，Captioning仅580个物体，规模相对较小，可能不够代表4D物体的多样性
 - **单物体场景**：4D-Bench仅评估单个4D物体的理解，未涉及多物体交互、4D场景级理解

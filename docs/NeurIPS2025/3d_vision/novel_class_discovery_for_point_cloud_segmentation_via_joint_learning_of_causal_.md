@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Novel Class Discovery for Point Cloud Segmentation via Joint Learning of Causal Representation and Reasoning
 description: >-
@@ -138,7 +138,7 @@ $$\mathbf{n}_j^{(t+1)} = \sigma\left(\sum_{i=1}^M \frac{w_{ij}}{\sqrt{d_i d_j}} 
 - 对抗去混杂的方法不需要显式定义混杂因子是什么，比后门调整更实用
 - 在困难类别上的表现尤其突出，说明因果推理对处理歧义性高的类别有独特优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 新类不进行因果去混杂处理（因为无标签），可能导致新类原型仍含噪声
 - 混杂因子$U$的具体形式未明确定义，对抗训练只是间接近似$Z \perp U$

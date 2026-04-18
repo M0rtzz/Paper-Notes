@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Breaking Scale Anchoring: Frequency Representation Learning for Accurate High-Resolution Inference from Low-Resolution Training
 description: >-
@@ -94,7 +94,7 @@ Step 1 和 3 是已有技术的标准实践；Step 2 对齐 Nyquist 频率是唯
 - **诚实讨论局限**：作者自述失效模式并建议引入 Kolmogorov 频谱约束
 - **跨领域验证**：流体模拟 + 天气预报两个完全不同的物理领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 不保证严格收敛阶——深度学习模型终究不等于数值求解器
 - 高 Reynolds 数湍流/间断问题中频谱关系不光滑，FRL 外推能力退化

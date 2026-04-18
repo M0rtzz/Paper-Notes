@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FastVLM: Efficient Vision Encoding for Vision Language Models
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：高分辨率对 VLM 性能至关重要（尤其 OCR、文档理解），但 ViT 架构天然无法高效处理高分辨率输入——分辨率提升带来的性能收益被延迟增长抵消。
 
-**本文要解决什么？** 设计一个从架构层面就高效的视觉编码器，在高分辨率下产生极少的 token，从根本上解决分辨率-延迟-精度三角矛盾。
+**本文目标** 设计一个从架构层面就高效的视觉编码器，在高分辨率下产生极少的 token，从根本上解决分辨率-延迟-精度三角矛盾。
 
 **切入角度**：混合卷积-Transformer 架构天然具有层级下采样能力，每个阶段都可以降低空间分辨率。通过增加一个额外的第 5 阶段实现 32× 下采样（而非常规的 16×），让自注意力在极低分辨率的特征图上运算。
 
-**核心idea一句话**：用 5 阶段混合卷积-Transformer（FastViTHD）替换 ViT 作为 VLM 视觉编码器，通过架构级 token 减少实现比 token pruning 更优的精度-效率权衡。
+**核心 idea**：用 5 阶段混合卷积-Transformer（FastViTHD）替换 ViT 作为 VLM 视觉编码器，通过架构级 token 减少实现比 token pruning 更优的精度-效率权衡。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **静态分辨率优于 AnyRes 的发现具有实践意义**：表明目前流行的 AnyRes/tile 策略并非最优选择，简单的 resize 在有高效编码器时反而更好。这挑战了"高分辨率必须切片处理"的主流范式
 - **85× TTFT 加速**（vs LLaVA-OneVision）在移动端 VLM 部署上非常有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - FastViTHD 的 CLIP 预训练仍然使用传统的对比学习范式，没有探索更新的预训练方法（如 SigLIP、EVA-CLIP）
 - 32× 下采样不可避免地丢失极细粒度信息，在需要像素级理解的任务（如 grounding、细粒度 OCR）上可能存在天花板
 - 未与 InternVL、Qwen-VL 等使用动态分辨率的最新 SOTA 在完全相同设置下对比

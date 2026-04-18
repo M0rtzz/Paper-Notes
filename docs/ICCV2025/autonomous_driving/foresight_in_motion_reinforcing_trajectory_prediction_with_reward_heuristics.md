@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Foresight in Motion: Reinforcing Trajectory Prediction with Reward Heuristics
 description: >-
@@ -154,7 +154,7 @@ $$\mathcal{L} = \mathcal{L}_{IRL} + \alpha \mathcal{L}_{OGM} + \beta \mathcal{L}
 - **Bi-Mamba 在轨迹解码中的应用**：利用双向状态空间模型捕获轨迹的时空序列依赖
 - **Brier score 的显著优势**：在预测置信度（而非仅距离误差）上的大幅提升，对下游规划模块更有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MaxEnt IRL 的内循环迭代增加了计算开销
 - 网格分辨率 $d$ 的选择影响推理精度，过粗会丢失信息

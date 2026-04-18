@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Solving a Nonlinear Blind Inverse Problem for Tagged MRI with Physics and Deep Generative Priors
 description: >-
@@ -107,7 +107,7 @@ InvTag 将 Tagged MRI 分析建模为一个**非线性盲逆问题**。给定低
 - **零样本泛化**：完全无需任何 Tagged/Cine 训练数据，仅依赖 T1w 扩散先验
 - CDDP 策略在非凸优化中展现出良好的稳定性和收敛鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **运行时间长**：单帧需 1.2 小时（单张 A40 GPU），重复扩散采样和 PINN 优化是瓶颈
 - 仅假设正弦标签，不支持网格标签和高阶标签

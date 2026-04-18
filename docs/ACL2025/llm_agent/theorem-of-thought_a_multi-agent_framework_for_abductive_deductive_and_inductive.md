@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Theorem-of-Thought: A Multi-Agent Framework for Abductive, Deductive, and Inductive Reasoning in Language Models
 description: >-
@@ -112,7 +112,7 @@ ToTh 包含四个阶段：（1）三个独立智能体分别以溯因/演绎/归
 3. **效率优势**：3 次解码 + 轻量级后处理 vs. Self-Consistency 的 20 次解码
 4. **可解释性**：推理图提供了完整可追踪的推理路径，每步有量化置信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **固定推理模式**：可探索输入驱动的动态智能体路由
 2. **传播噪声放大**：长推理链中早期错误影响不成比例，需引入置信度平滑

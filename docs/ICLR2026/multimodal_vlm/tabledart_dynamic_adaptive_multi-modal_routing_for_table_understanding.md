@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TableDART: Dynamic Adaptive Multi-Modal Routing for Table Understanding
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：既然不同 query-table 对的最优处理策略不同，就应该让系统自动学会"什么时候用文本、什么时候用图像、什么时候需要融合"。用一个极轻量的路由网络做实例级决策，完全复用已有的单模态专家。
 
-**核心idea一句话**：用 2.59M 参数的 MLP 门控网络替代昂贵的 MLLM 微调，为每个 query-table 对动态选择 Text-only / Image-only / Fusion 路径。
+**核心 idea**：用 2.59M 参数的 MLP 门控网络替代昂贵的 MLLM 微调，为每个 query-table 对动态选择 Text-only / Image-only / Fusion 路径。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ TableDART 平均准确率 74.86%，超越最强多模态基线 HIPPO-8B **+4.02%
 - **路由策略的泛化性**：在 seen/unseen 数据集上性能几乎一致（74.95% vs 74.37%），而 HIPPO 从 72.41% 跌到 63.00%，说明门控网络学到的是通用的路由策略而非过拟合
 - **训练信号的精妙设计**：用"三路独立预计算正确性"作为监督信号，允许多路径同时正确，配合 KL 散度软标签训练，比硬标签分类更合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖外部 Gemini 作为 Fusion Agent**：Fusion 路径需要调用闭源 API，增加成本和隐私担忧，可探索用开源 LLM 替代
 - **训练数据需预计算三路结果**：为每条训练样本运行三次推理的成本不低，限制了训练集扩展

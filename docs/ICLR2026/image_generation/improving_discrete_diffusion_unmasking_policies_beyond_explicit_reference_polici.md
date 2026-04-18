@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Discrete Diffusion Unmasking Policies Beyond Explicit Reference Policies (UPO)
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L}_{\mathrm{UPO}} = \frac{1}{G}\sum_g \left(\frac{1}{L}\sum_n \min\le
 - Pass@N 实验直观展示了启发式策略的次优性，为学习策略提供了强动机
 - KL 正则化的信任域设计既保证了训练稳定性又允许超越参考策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 GSM8K/Math500 等数学推理任务上增益相对有限，可能因为长文本中的顺序信号不如 Sudoku 明显
 - 策略模型需要复用 MDM 的中间特征，对 MDM 架构有一定耦合

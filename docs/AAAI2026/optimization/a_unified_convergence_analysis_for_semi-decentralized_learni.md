@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified Convergence Analysis for Semi-Decentralized Learning: Sampled-to-Sampled vs. Sampled-to-All Communication
 description: >-
@@ -77,7 +77,7 @@ tags:
 - 统一框架不仅覆盖凸/非凸、静态/动态拓扑，还给出了可直接指导实践的配置建议
 - 实验中发现S2A的**学习曲线出现周期性精度下降**(每次D2S聚合后)，这在高组间异质性下尤为明显，是S2A在后期被S2S反超的原因
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 只考虑了FedAvg/FedAvgM作为服务器优化器，更高级的方法(如SCAFFOLD、ProxSkip)的交互未探讨
 - 分析假设均匀随机采样且无替换，实际中可能有基于重要性的非均匀采样
 - 网络模型假设组件内连通，未考虑更复杂的部分连通场景

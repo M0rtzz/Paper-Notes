@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Debiasing Diffusion Priors via 3D Attention for Consistent Gaussian Splatting
 description: >-
@@ -143,7 +143,7 @@ HAM 针对 UNet 不同层对视角偏好的异质性进行精细调制：
 4. **CLIPsim 评估陷阱的发现**：指出 Janus 问题反而导致高 CLIPsim 分数，提出视角分布分析作为更可靠的评估方式
 5. HAM 的**语义级控制能力**实现了精细化 3D 编辑（如区分"apricot"的颜色义和植物义）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 Stable Diffusion v2.1/v1.4 上验证，是否适用于 SDXL、FLUX 等更新模型尚不明确
 2. 三阶段训练流程增加了超参数调优的复杂度

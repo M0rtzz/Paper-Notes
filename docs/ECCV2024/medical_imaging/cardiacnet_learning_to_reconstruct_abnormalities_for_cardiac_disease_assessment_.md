@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CardiacNet: Learning to Reconstruct Abnormalities for Cardiac Disease Assessment from Echocardiogram Videos
 description: >-
@@ -119,7 +119,7 @@ CDD 包含两个判别器确保重建结果的时空一致性：
 3. **自建基准数据集**：提供 PAH 和 ASD 两个新基准，填补超声心动图视频疾病评估数据集的空白
 4. **跨任务泛化**：在分类（PAH、ASD）和回归（EF）三种不同任务上均达到 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理效率**：推理时间 4.523s，虽远快于扩散模型方法但仍有优化空间
 2. **数据规模有限**：自建数据集仅 496+231 条视频，来自 4 家医院，泛化性有待验证

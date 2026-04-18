@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GazeInterpreter: Parsing Eye Gaze to Generate Eye-Body-Coordinated Narrations
 description: >-
@@ -159,7 +159,7 @@ GazeInterpreter 不需要传统意义上的模型训练，而是利用预训练 
 - **无需训练的纯推理框架**：基于 LLM 的 few-shot + 多阶段推理，无需昂贵的专用模型训练
 - 在运动生成、动作预测、行为摘要三个任务上一致性地展示了优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 Nymeria 单一数据集上验证**：目前是唯一同时包含眼动和运动标注的公开数据集，泛化性受限
 - **推理成本较高**：三阶段 LLM 推理 + 自我纠正循环需要多次 LLM 调用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Trustworthy Federated Learning with Untrusted Participants
 description: >-
@@ -130,7 +130,7 @@ CafCor-SecLDP 在 f=5 时接近 CDP 性能，远超 LDP。
 4. **勾结分级分析**：Theorem 4.1 中 q 参数允许精细控制 0 到 f 个恶意者勾结的场景
 5. **回退优雅**：当共享随机性不可用时，设置 σ_cor=0 自然回退到 LDP，保持 SOTA 性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **通信代价**：种子交换需要 O(n²) 次两两通信，虽然仅需一次且数据量小，但对大规模系统仍可能是瓶颈
 2. **SecLDP 最优性未知**：文中提出"SecLDP 下的最优效用是什么？CafCor 是否达到了？"作为开放问题

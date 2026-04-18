@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration
 description: >-
@@ -108,7 +108,7 @@ tags:
 - 颅骨掩码的射线投射推导设计简洁实用，解决了 SynthStrip 缺少颅骨掩码的兼容性问题
 - 在两个大规模纵向队列（ADNI 1006人, PPMI 310人）上验证，统计检验严谨（Steiger's Z, Bonferroni 校正）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PPMI 队列上改善未达统计显著性，可能与 PD 萎缩程度较轻、样本量较小有关
 - 仍依赖 SIENA 的 FLIRT 线性配准，可考虑引入 DL 配准（如 SynthMorph）

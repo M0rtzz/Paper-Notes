@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning
 description: >-
@@ -116,7 +116,7 @@ Twilight 采用"选择-剪枝"（Select-then-Prune）两阶段架构：(1) **Tok
 - **"增强器而非替代品"**的定位非常聪明——不与现有方法竞争，而是在它们之上叠加自适应性。这使得 Twilight 可以跟随该领域的所有未来进展
 - 理论误差界 $(1-p) \cdot \|\mathbf{V}\|_F$ 简洁且与 Token 数量无关——为注意力近似提供了一个通用的精度-效率权衡旋钮
 
-## 局限性 / 可改进方向
+## 局限与展望
 - top-p 需要（近似的）注意力权重而非仅排序——比 top-k 对权重估计精度要求更高
 - 额外的 INT4 K 缓存增加 1/8 内存开销（某些内存受限场景可能不可接受）
 - 二分搜索实现中 $\epsilon$ 参数需要选择——太大可能导致实际选择不满足 p 约束

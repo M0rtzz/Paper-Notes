@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Temporal Contextualization for Video Action Recognition
 description: >-
@@ -65,7 +65,7 @@ TC-CLIP 在 CLIP 基础上添加两个模块：
 
 #### 1. Temporal Contextualization (TC) — 时序上下文化
 
-**做什么**：将全视频的关键时序信息压缩为少量 context tokens，作为自注意力的额外 key-value 对注入每层编码过程。
+**功能**：将全视频的关键时序信息压缩为少量 context tokens，作为自注意力的额外 key-value 对注入每层编码过程。
 
 **核心思路**：三步流程——
 
@@ -100,7 +100,7 @@ $$\text{Attention}_{\text{TC}}(\mathbf{z}_t, \mathbf{s}) = \text{Softmax}\left(\
 
 #### 2. Video-conditional Prompting (VP) — 视频条件提示
 
-**做什么**：将视觉编码器产生的 context tokens 信息注入文本端的 prompt 向量，生成实例级别的文本提示。
+**功能**：将视觉编码器产生的 context tokens 信息注入文本端的 prompt 向量，生成实例级别的文本提示。
 
 **核心思路**：通过交叉注意力将视频信息融入可学习的 prompt 向量：
 
@@ -195,7 +195,7 @@ $$\mathcal{L} = -\sum_i \log \frac{\exp(\text{sim}(\mathbf{v}_i, \mathbf{c}_i)/\
 4. **偏置矩阵 B 区分局部/全局信息**：简单但有效的设计，让模型逐层逐头学习如何平衡帧内和视频级信息
 5. **可视化分析有说服力**：context token 跨帧追踪飞盘、注意力图对比清楚展示了时序理解能力差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理吞吐量下降**：相比 ViFi-CLIP (38) 降到 24，轻量版 (34) 有所缓解但仍有开销
 2. **仅在 ViT-B/16 上验证**：更大模型（ViT-L）上的表现未知

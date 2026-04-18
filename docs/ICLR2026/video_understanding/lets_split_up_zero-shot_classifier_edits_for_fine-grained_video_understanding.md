@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Let's Split Up: Zero-Shot Classifier Edits for Fine-Grained Video Understanding
 description: >-
@@ -127,7 +127,7 @@ VLMs泛化性极低，本文方法在SSv2上泛化性提升近20个百分点。
 3. **极简但有效**：仅编辑分类头、无需backbone更新、零样本即可运行
 4. **反直觉发现**：全数据微调反而不如one-shot，隔离微调+零样本初始化是最佳策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖文本标签来识别修饰符，难以处理纯视觉差异（如速度快慢）
 - 零样本泛化性仍有提升空间（46% vs. 理想的86%+）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Prediction-Powered AutoEval with Reliability and Efficiency Guarantees
 description: >-
@@ -86,7 +86,7 @@ R-AutoEval+基于testing-by-betting框架进行模型评估。给定目标风险
 - 偏好泄露的发现很有趣：同家族评判器虽"准确度高"，但偏差修正更困难，反而不如异家族评判器有效
 - e-value的可选停止性使框架天然适合在线/流式评估场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要未标注真实数据来生成合成评估结果
 - 候选因子集{ρ_s}预先固定且离散化，未实现连续优化
 - 效率保证仅在δ充分小（即高可靠性要求）时成立

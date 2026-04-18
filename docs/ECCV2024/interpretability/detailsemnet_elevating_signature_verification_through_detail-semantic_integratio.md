@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DetailSemNet: Elevating Signature Verification through Detail-Semantic Integration
 description: >-
@@ -136,7 +136,7 @@ $$Loss_{DM} = y \cdot \max(0, dis - m)^2 + (1-y) \cdot \max(0, n - dis)^2$$
 - 局部结构匹配显著提升可解释性：可视化匹配流展示了模型如何对齐patch，便于人类理解决策依据
 - 跨语言泛化能力验证了方法学到的是底层笔画结构特征而非特定语言模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - EMD求解（即使用Sinkhorn加速）在token数量很大时仍有计算开销
 - 前景掩码使用简单阈值二值化，在复杂背景下可能需要更精细的分割方法

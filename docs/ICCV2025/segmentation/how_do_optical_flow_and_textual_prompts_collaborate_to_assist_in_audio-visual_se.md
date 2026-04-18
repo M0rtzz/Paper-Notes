@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Do Optical Flow and Textual Prompts Collaborate to Assist in Audio-Visual Semantic Segmentation?
 description: >-
@@ -122,7 +122,7 @@ SSP 相比基线 AAVS：S4 +2.2%/+1.9%，MS3 +5.0%/+7.0%，AVSS +1.6%/+1.3%。
 - **三值掩码设计巧妙**：用 0/0.5/1 编码确定性程度，比简单二值掩码更信息丰富
 - **VTA 模块的两次 BERT 调用**：第一次融合跨模态，第二次精炼文本表示，逐步增强对齐质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 光流提取依赖 Perceiver IO，增加了计算开销
 - 文本提示依赖外部 MLLM（MiniCPM-o-2.6），推理时需要额外模型

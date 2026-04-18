@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Controllability Trap: A Governance Framework for Military AI Agents
 description: >-
@@ -125,7 +125,7 @@ $$\text{CQS}(t) = \min(n_1(t), n_2(t), n_3(t), n_4(t), n_5(t), n_6(t))$$
 3. **深度防御架构**：治理机制不信任agent内部安全属性，而是独立外部验证，对应安全关键系统不依赖单层保护的原则
 4. **CIR对可纠正性的操作化**：将AI安全文献中的corrigibility概念从设计属性转化为部署时的运行时可测指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **指标校准**：六项指标需要使用AgentBench、ToolEmu等框架进行经验校准，目前缺乏真实数据验证
 2. **操作员认知负荷**：累积治理需求可能超出人类因素承受能力，需要层级化治理架构

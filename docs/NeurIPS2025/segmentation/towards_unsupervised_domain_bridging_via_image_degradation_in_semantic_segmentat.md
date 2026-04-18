@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Unsupervised Domain Bridging via Image Degradation in Semantic Segmentation
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L} = \mathcal{L}^S + \mathcal{L}^T + \lambda_D \mathcal{L}^D + \lambd
 - **通用性极强**：兼容 CNN 和 Transformer 架构，兼容多种 UDA 基线方法，支持多种退化操作
 - 域桥接视角相比传统的对抗训练和风格迁移提供了新思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 退化级别 $T=100$ 和噪声调度的选择基于经验，理论上最优退化策略尚不明确
 - 扩散编码器 $g'$ 与骨干编码器 $g$ 结构相同，参数量翻倍（虽然推理时移除）

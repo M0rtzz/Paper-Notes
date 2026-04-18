@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Erasing More Than Intended? How Concept Erasure Degrades the Generation of Non-Target Concepts
 description: >-
@@ -123,7 +123,7 @@ Gecko VQA评估结果（6246对文本-图像评估）：
 - Sensitivity指标的引入是关键创新，将评估从"擦得干不干净"扩展到"有没有误伤"
 - Retain set的两难困境（缓解过度擦除 vs. 概念泄露）揭示了当前方法的根本性张力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在Stable Diffusion v1.4上测试，未覆盖SD3、Flux.1等新架构
 - 概念选择仍依赖人工策展，自动化概念空间搜索可提升可扩展性

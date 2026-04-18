@@ -48,7 +48,7 @@ tags:
 
 ### 关键设计1: Visual Planning范式——纯视觉自回归规划
 
-- **做什么**：将规划过程定义为图像序列生成，每一步预测下一个视觉状态，无需任何文本参与。
+- **功能**：将规划过程定义为图像序列生成，每一步预测下一个视觉状态，无需任何文本参与。
 - **核心思路**：给定初始状态图像 $v_0$，模型自回归生成规划轨迹 $\hat{\mathcal{T}} = (\hat{v}_1, \ldots, \hat{v}_n)$，每步条件依赖所有历史状态：
 
 $$\hat{v}_i \sim \pi_\theta(v_i \mid v_0, \hat{v}_1, \ldots, \hat{v}_{i-1})$$
@@ -57,7 +57,7 @@ $$\hat{v}_i \sim \pi_\theta(v_i \mid v_0, \hat{v}_1, \ldots, \hat{v}_{i-1})$$
 
 ### 关键设计2: 两阶段RL框架VPRL
 
-- **做什么**：提出VPRL两阶段训练框架——Stage 1用随机轨迹初始化策略模型获得探索能力，Stage 2用GRPO+进度奖励优化规划策略。
+- **功能**：提出VPRL两阶段训练框架——Stage 1用随机轨迹初始化策略模型获得探索能力，Stage 2用GRPO+进度奖励优化规划策略。
 - **核心思路**：
 
   **Stage 1 (Policy Initialization)**：在环境中执行随机游走收集轨迹，训练模型生成有效的状态转换并保持探索随机性。训练时随机采样合法的下一状态作为监督目标，防止过拟合：
@@ -72,7 +72,7 @@ $$\mathcal{J}_{\text{VPRL}}(\theta) = \mathbb{E}\left[ \frac{1}{G}\sum_{k=1}^{G}
 
 ### 关键设计3: 进度奖励函数（Progress Reward）
 
-- **做什么**：设计组合奖励函数，同时评估生成视觉状态的合法性（是否违反环境约束）和目标进度（是否更接近目标）。
+- **功能**：设计组合奖励函数，同时评估生成视觉状态的合法性（是否违反环境约束）和目标进度（是否更接近目标）。
 - **核心思路**：引入dynamics interpreter $\mathcal{D}$ 解析状态转换的动作类型，progress estimator $P$ 量化到目标的剩余距离。将候选状态分为三类并赋予不同奖励：
 
 $$r(v_i, \hat{v}_{i+1}^{(k)}) = \alpha_{\text{opt}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{A}_{\text{opt}}] + \alpha_{\text{nopt}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{A}_{\text{nopt}}] + \alpha_{\text{inv}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{E}_{\text{inv}}]$$

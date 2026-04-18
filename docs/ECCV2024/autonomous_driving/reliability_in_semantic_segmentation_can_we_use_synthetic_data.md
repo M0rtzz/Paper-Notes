@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reliability in Semantic Segmentation: Can We Use Synthetic Data?
 description: >-
@@ -119,7 +119,7 @@ OOD 物体检测改进实验（在 SMIYC RoadAnomaly21 上）：
 - **对数据质量要求不同**：评估需要高质量合成数据（精选集更优），但训练 OOD 检测时不需要——甚至有瑕疵的合成数据也有效。
 - 该合成数据已被纳入官方 BRAVO benchmark。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SD1.5 在 Fog 和 India 域上相关性相对较低（0.77 和 0.71），更强的生成模型（如 SDXL）可显著改善但计算更昂贵。
 - 温度缩放校准并非总能保证 ECE 改善，即使使用真实数据也可能如此。

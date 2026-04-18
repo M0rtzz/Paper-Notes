@@ -1,4 +1,4 @@
-# DNF: Unconditional 4D Generation with Dictionary-based Neural Fields
+﻿# DNF: Unconditional 4D Generation with Dictionary-based Neural Fields
 
 **会议**: CVPR 2025  
 **arXiv**: [2412.05161](https://arxiv.org/abs/2412.05161)  
@@ -19,7 +19,7 @@
 
 **切入角度**：用 SVD 分解 MLP 权重，共享奇异向量（字典）跨实例共用，仅需生成每个实例的奇异值（系数向量），大幅降低生成空间维度。
 
-**核心idea一句话**：SVD 分解 MLP 权重为共享字典+实例系数，压缩字典后在系数空间做扩散生成。
+**核心 idea**：SVD 分解 MLP 权重为共享字典+实例系数，压缩字典后在系数空间做扩散生成。
 
 ## 实验关键数据（DeformingThings4D）
 

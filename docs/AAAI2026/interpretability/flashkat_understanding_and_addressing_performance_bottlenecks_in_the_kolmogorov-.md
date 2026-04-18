@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlashKAT: Understanding and Addressing Performance Bottlenecks in the Kolmogorov-Arnold Transformer
 description: >-
@@ -180,7 +180,7 @@ Warp 状态分析对比：
 4. **梯度精度提升是额外收益**：块内 reduction sum 比大量 atomic add 具有更好的数值稳定性
 5. **对整个 learnable rational activation 社区的贡献**：FlashKAT 的优化直接适用于 PAU 及其变体
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仍比 ViT 慢约 25%**：FlashKAT-B 1801 img/s vs ViT-B 2457 img/s，差距主要来自 GR-KAN 前向传播的额外计算
 2. **仅优化了反向传播**：前向传播虽然快很多，但如能进一步用类似策略优化也可获益

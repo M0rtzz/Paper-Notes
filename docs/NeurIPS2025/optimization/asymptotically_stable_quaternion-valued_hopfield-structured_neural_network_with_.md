@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Asymptotically Stable Quaternionic Hopfield Structured Neural Network with Supervised Projection-based Manifold Learning
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **周期投影的简洁性**：利用四元数左乘流形 $\mathcal{L}$ 的线性结构，投影有闭式解，实现成本低。这个"训练中周期性投影到结构化子空间"的策略有潜力推广到其他代数约束网络
 - **GHR 微积分框架**：为非交换代数上的梯度下降提供了系统化工具，不仅限于四元数，可推广到八元数等超复数
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验规模极小：仅 4 个四元数神经元，未展示扩展到更大网络时的可行性和性能
 - 机器人应用仅为初步仿真（PyBullet 原型），缺乏与现有工业基线（RRT、PRM 等）的定量对比
 - 目标状态随机生成，未在真实任务（如特定抓取姿态序列）上验证

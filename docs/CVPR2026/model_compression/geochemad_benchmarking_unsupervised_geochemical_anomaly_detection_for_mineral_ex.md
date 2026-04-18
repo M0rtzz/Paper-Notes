@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoChemAD: Benchmarking Unsupervised Geochemical Anomaly Detection for Mineral Exploration
 description: >-
@@ -100,7 +100,7 @@ tags:
 - **目标元素感知**：通过target-element token设计，使异常检测与目标矿化元素关联
 - 两阶段设计解耦空间上下文和元素依赖，预训练策略自然且有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据仅来自**西澳单一地理区域**，其他大陆/地质背景(如热带风化环境、冰川地貌)的泛化性未验证
 - 正样本（矿化位点）数量有限（7-32个），评估的统计稳健性受限，AUC可能波动较大

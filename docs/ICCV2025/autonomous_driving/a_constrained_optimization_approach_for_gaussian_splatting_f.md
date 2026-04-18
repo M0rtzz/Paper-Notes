@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Constrained Optimization Approach for Gaussian Splatting from Coarsely-posed Images and Noisy Lidar Point Clouds
 description: >-
@@ -172,7 +172,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pixel}} + 0.2 \cdot \mathcal{L
 5. **曝光补偿模块**：在YCbCr空间仅修改亮度通道的低频分量，用tinycudann实现，设计简洁高效
 6. **深度计算方式**：用射线交点精确求解而非不稳定的alpha-blending
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅处理静态场景，依赖YOLOv8检测并排除行人区域
 2. 对数障碍的边界（±2%等）为经验设定，不同场景可能需调整

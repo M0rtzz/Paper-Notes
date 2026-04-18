@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L} = \mathcal{L}_{idv} + \mathcal{L}_R + \mathcal{L}_{aux} + \lambda_
 2. **双路径架构的设计动机清晰**：实验验证了"全局上下文对社交活动有帮助"和"个体信息对两者都重要"的直觉，DPATr 通过双路径优雅地实现了这种双向信息流
 3. **全景位置嵌入的必要性**：解决了裁剪个体区域后丢失全局位置信息的问题，这是 PAR 任务特有的挑战
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 使用冻结的 Inception-v3 backbone，如换用更强的预训练模型（如 ViT）可能进一步提升
 2. 群组数量估计仍有提升空间（使用 GT 群组数后性能显著提升），可考虑更精确的群组数量预测方法

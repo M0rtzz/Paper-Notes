@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DAMap: Distance-aware MapNet for High Quality HD Map Construction
 description: >-
@@ -135,7 +135,7 @@ tags:
 - **HLS的cascade洞察**：利用decoder级联的性质——早期用FL收敛、后期用DAFL细化——体现了对训练动态的深入理解
 - 所有组件即插即用，可与任何DETR式HD map方法组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DAFL中$\lambda$超参数需要调节定位损失到概率的敏感度
 - TMDA引入额外参数（40M→52M），可能在资源受限场景下需权衡

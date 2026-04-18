@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforcing the Weakest Links: Modernizing SIENA with Targeted Deep Learning Integration
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：端到端 DL 方法(如 DeepBVC、EAM)可直接预测 PBVC 但牺牲了 SIENA 的可解释性和临床信任度；完全保留 SIENA 则受限于经典图像处理步骤的脆弱性。
 
-**本文要解决什么？** 在保留 SIENA 已验证、可解释的核心框架前提下，通过定向替换最薄弱的图像处理步骤来提升鲁棒性和临床敏感度。
+**本文目标** 在保留 SIENA 已验证、可解释的核心框架前提下，通过定向替换最薄弱的图像处理步骤来提升鲁棒性和临床敏感度。
 
 **切入角度**：不替换整个管线，而是像修桥一样"加固最薄弱的环节"——识别出颅骨剥离和组织分割这两个瓶颈，用域随机化训练的 DL 方案(SynthStrip/SynthSeg)定点替换。
 
-**核心idea一句话**：用 SynthStrip 替换 BET2、用 SynthSeg 替换 FAST，以最小改动获得 SIENA 的最大鲁棒性提升。
+**核心 idea**：用 SynthStrip 替换 BET2、用 SynthSeg 替换 FAST，以最小改动获得 SIENA 的最大鲁棒性提升。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ ADNI 队列(AD, N=1006) PBVC 与临床退化的 Pearson 相关系数：
 - 三维度评估(临床相关性+扫描对称性+计算效率)全面而互补
 - SynthStrip/SynthSeg 通过域随机化训练的强泛化性证明了合成数据训练在医学影像中的巨大潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 缺乏脑萎缩的体内 ground truth，只能用代理指标(临床量表相关性)评估管线质量
 - SynthSeg 解剖标签到三类组织的映射规则可能不是最优，未系统对比不同映射方案

@@ -1,4 +1,4 @@
----
+﻿---
 title: "Dual-Interrelated Diffusion Model for Few-Shot Anomaly Image Generation"
 conference: "CVPR 2025"
 arxiv: "2408.13509"
@@ -95,7 +95,7 @@ $$\mathcal{L} = \mathbb{E}_{\mathcal{E}(I),\epsilon,t}\left[\|\epsilon - \epsilo
 3. **BCM 解决小样本过拟合**：将背景信息作为显式先验注入，有效缓解小样本训练下的各种退化现象
 4. **端到端实用**：直接为下游异常检测/定位/分类提供训练数据，AUROC 99.1% 达到 SOTA
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **推理效率**：双分支同时去噪的计算成本约为单分支的 2 倍
 2. **依赖 U2-Net 分割**：BCM 和掩码获取都依赖预训练分割模型的质量

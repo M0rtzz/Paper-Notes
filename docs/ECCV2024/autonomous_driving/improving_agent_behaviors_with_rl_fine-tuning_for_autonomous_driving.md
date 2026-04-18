@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Agent Behaviors with RL Fine-tuning for Autonomous Driving
 description: >-
@@ -98,7 +98,7 @@ tags:
 - 方法简洁有效，两阶段训练策略易于实现
 - 对分布偏移问题提供了直接的解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RL微调需要大量的环境交互，计算成本较高
 - 奖励函数的设计需要领域知识，不同场景可能需要不同的奖励权重

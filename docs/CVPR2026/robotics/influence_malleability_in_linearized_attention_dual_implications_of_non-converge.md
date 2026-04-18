@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Influence Malleability in Linearized Attention: Dual Implications of Non-Convergent NTK Dynamics
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **对抗训练消融实验设计巧妙**: 通过对比标准训练与对抗训练下两种架构的可塑性变化，清晰区分了"架构固有"vs"训练诱导"两种敏感性机制
 - **多层推广**: 理论自然推广到多层线性化注意力（$k$ 层 → $\kappa(\mathbf{G})^{2k+1}$ 放大），且提出截断注意力作为可能的正则化方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **线性化简化**: 仅分析 $f^{\text{att}}=\mathbf{X}\mathbf{X}^T\mathbf{X}$，未扩展到完整 softmax 注意力，softmax 的行归一化可能进一步放大效应
 - **数据集和模型规模小**: 实验仅在 MNIST/CIFAR-10 + 两层网络（$m \leq 4096$）上验证，未在大规模 Transformer（如 ViT）上实证

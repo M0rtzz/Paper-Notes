@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mesh-Pro: Asynchronous Advantage-guided Ranking Preference Optimization for Artist-style Quadrilateral Mesh Generation
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}_{\text{ARPO}} = -\sum_{i=1}^{N} A_i \cdot \log P_i(\sigma | \theta
 - **几何破损率极低**：2.1% 的 broken ratio 远低于竞品，说明 ray-based reward 和 ARPO 在几何质量优化上的有效性
 - **混合 tokenization**：diagonal-aware 设计是一个巧妙的工程贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **模型规模要求高**：1.1B 参数 + 64 GPU 的配置门槛较高，小规模场景下的适用性有待探索
 2. **Reward 设计的可扩展性**：Ray-based reward 主要评估几何完整性，对更高级的审美属性（如流线方向、边环质量）的建模仍有提升空间
 3. **仅限封闭 mesh**：射线奇偶性检测假设 mesh 是封闭流形，对开放 mesh（如平面、布料）不完全适用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Direction Perception via Atomic Dot-Product Operators for Rotation-Invariant Point Clouds Learning
 description: >-
@@ -84,7 +84,7 @@ DiPVNet 包含三个核心组件：(1) L2DP 算子提取局部方向特征 → (
 - DASFT 与广义调和分析的理论连接严谨，不仅仅是工程设计
 - 在噪声和大角度旋转下均保持一致性能（z/z = z/SO(3) = SO(3)/SO(3)）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 基于 VN-DGCNN baseline，模型容量有限，未在大规模预训练点云模型上验证
 - 分类和分割任务的数据集规模偏小（ModelNet40 仅 12k 样本）
 - 缺少 outdoor 大场景（如 S3DIS、ScanNet 完整场景分割）的实验

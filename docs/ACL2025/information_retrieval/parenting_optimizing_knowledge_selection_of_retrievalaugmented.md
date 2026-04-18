@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parenting: Optimizing Knowledge Selection of Retrieval-Augmented Language Models with Parameter Decoupling and Tailored Tuning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: 过度强调遵循上下文会让模型关注噪声信息，而过度抵抗噪声又会使模型忽略关键证据。两种监督信号存在天然矛盾，统一训练会导致相互干扰。
 
-**本文要解决什么**: 如何在 RAG 中建立有效的内外部知识控制机制，同时提升 adherence 和 robustness。
+**本文目标**: 如何在 RAG 中建立有效的内外部知识控制机制，同时提升 adherence 和 robustness。
 
 **切入角度**: 类比人脑功能分区（镜像神经元系统→模仿学习，海马体→记忆检索），在 LLM 参数空间中定位与不同能力相关的子空间。
 
-**核心idea一句话**: 解耦参数空间中与 adherence 和 robustness 相关的子空间，分别施加定制化训练信号，避免矛盾监督信号的相互污染。
+**核心 idea**: 解耦参数空间中与 adherence 和 robustness 相关的子空间，分别施加定制化训练信号，避免矛盾监督信号的相互污染。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ Parenting 在 LLaMA2-7B 上相比最强 baseline，adherence 提升 15+%，robus
 - 类比人脑功能分区的想法巧妙，将抽象的知识控制问题转化为具体的参数子空间优化
 - 可视化分析揭示了 LLM 中知识存储和处理的层级分布规律
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 SQuAD2.0 构建探测数据集，可能受数据集偏差影响
 - 参数挖掘阶段需额外计算开销（前向+反向传播信号采集）

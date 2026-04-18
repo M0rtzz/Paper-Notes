@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Identifying and Analyzing Performance-Critical Tokens in Large Language Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：人类在学习analogy时关注"内容words"（如名词/形容词），但LLM是否也如此？
 
-**本文要解决什么？** 系统性地识别ICL prompt中哪些token的表示直接影响性能（性能关键token），并分析其特征
+**本文目标** 系统性地识别ICL prompt中哪些token的表示直接影响性能（性能关键token），并分析其特征
 
 **切入角度**：将ICL prompt的token分为三类（content/stopword/template），通过消融各类token的表示来测量对性能的影响
 
-**核心idea一句话**：LLM并不直接依赖内容token的表示，而是依赖模板和停用词token——后者聚合了前者的信息
+**核心 idea**：LLM并不直接依赖内容token的表示，而是依赖模板和停用词token——后者聚合了前者的信息
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 - **信息聚合假说**很优雅：content → template的信息流解释了两种消融结果的"矛盾"——content重要但不直接参与，它通过聚合到template表示间接影响
 - **对prompt engineering的实际意义**：模板的设计（而非内容的措辞）可能对ICL性能影响更大
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 主要在分类任务上验证，生成任务的结果在附录中但不够深入
 - 消融方法假设可以clean地分离token类型，但实际中有些token同时兼具多种角色
 - 未研究instruction-tuned模型是否有不同的依赖模式

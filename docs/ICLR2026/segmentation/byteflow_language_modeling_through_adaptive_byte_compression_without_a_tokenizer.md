@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ByteFlow: Language Modeling through Adaptive Byte Compression without a Tokenizer
 description: >-
@@ -118,7 +118,7 @@ tags:
 - **计算效率**：通过分层设计将大部分 FLOPs 分配给处理压缩表示的 Global Transformer，字节级处理保持轻量
 - **流形保持**：作者分析发现编码率目标独有地保持了数据表示的几何结构（latent manifold），避免了其他分块方法的碎片化问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在学术规模（≤1.3B, 500B tokens）验证，与工业级 BPE LLM 的差距在大规模下能否缩窄仍未知
 - 只在 FineWeb-Edu 上预训练，多语言/代码/结构化数据等场景的表现待验证
 - 编码率计算涉及 log det 运算（$O(T^3)$ 或近似），实际训练开销和近似误差未详细量化

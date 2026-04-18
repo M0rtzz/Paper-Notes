@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cell-Type Prototype-Informed Neural Network for Gene Expression Estimation from Pathology Images
 description: >-
@@ -94,7 +94,7 @@ CPNN 的核心假设：slide/patch 级基因表达 = 各细胞类型原型表达
 - 模型自带可解释性：权重可直接解读为"这个 patch 主要由哪种细胞类型驱动"，对病理分析有实际意义。
 - 即插即用设计使其可与已有 ST 方法结合，实际应用灵活。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖有标注的单细胞数据集，对无公开 scRNA-seq 的组织类型不适用。
 - 原型是对各细胞类型的平均表达，无法捕捉同一类型内的表达变异。

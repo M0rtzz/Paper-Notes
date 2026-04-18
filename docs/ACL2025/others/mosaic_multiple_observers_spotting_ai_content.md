@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MOSAIC: Multiple Observers Spotting AI Content
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：如何在不依赖特定 detector 选择的情况下，鲁棒地检测多种生成器的输出？
 
-**本文要解决什么**：设计一个有理论基础的多 LLM 集成检测方法，自动为各 LLM 分配最优权重。
+**本文目标**：设计一个有理论基础的多 LLM 集成检测方法，自动为各 LLM 分配最优权重。
 
 **切入角度**：将检测问题与通用压缩（universal compression）联系——最优的多模型混合就是能最好"压缩"（即最低困惑度描述）人类文本的混合分布。用 Blahut-Arimoto 算法求解这个信息论优化问题。
 
@@ -102,7 +102,7 @@ tags:
 - **从 Binoculars 到 MOSAIC 的自然推广**：清晰展示了单模型→双模型→多模型的理论统一视角
 - **Blahut-Arimoto 的 NLP 新应用**：BA 算法在通信领域经典，在 NLP 中的应用新颖
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **计算成本高**：需要对所有 detector 计算每个 token 的 logits + BA 迭代
 - **需要 open-weight 模型**：需要访问模型的 logit 分布，不适用于纯 API 模型
 - **共享 tokenizer 假设**：当前要求所有 detector 共享 tokenizer，限制了跨族模型集成

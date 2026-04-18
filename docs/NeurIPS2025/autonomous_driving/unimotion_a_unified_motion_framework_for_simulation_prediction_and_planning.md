@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniMotion: A Unified Motion Framework for Simulation, Prediction and Planning
 description: >-
@@ -118,7 +118,7 @@ UniMotion 以 decoder-only Transformer 为骨干，包含：
 - Pred2Gen 微调策略直接解决了规划推理中预测token与训练token的分布不匹配问题
 - 在仿真、预测、规划三个排行榜上同时达到或接近 SOTA，验证了统一框架的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 因子化注意力和相对位置编码依赖detailed positional信息，限制了利用更多 LLM 相关技术的可能
 - 未探索跨数据集学习（如同时在 Waymo 和 nuPlan 上训练）

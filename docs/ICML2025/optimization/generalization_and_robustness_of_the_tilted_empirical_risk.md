@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalization and Robustness of the Tilted Empirical Risk
 description: >-
@@ -122,7 +122,7 @@ $$\gamma_{\text{data}} = \arg\min_{\gamma < 0}\left[|\gamma|^\epsilon \kappa_u^{
 4. **倾斜 Gibbs 后验**是新概念：KL 正则化 TERM 的最优解，γ→0 退化为标准 Gibbs 后验，提供更快的 $O(n^{-\epsilon})$ 收敛速率
 5. **数据驱动倾斜选择**实用性强：基于理论上界优化即可获得接近最优的 γ
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅分析负倾斜 γ<0**：正倾斜（处理类不平衡/公平性）的泛化分析未涉及
 2. **实验设置简单**：仅在逻辑回归/线性回归上验证，缺少深度学习等复杂场景的实验

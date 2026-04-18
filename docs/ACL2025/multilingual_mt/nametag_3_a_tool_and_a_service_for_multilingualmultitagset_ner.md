@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NameTag 3: A Tool and a Service for Multilingual/Multitagset NER
 description: >-
@@ -115,7 +115,7 @@ NameTag 3 基于预训练语言模型（XLM-R Large 355M 或 RobeCzech Base 126M
 - 作为工具论文，提供了命令行、Web 应用和 REST API 三种使用方式，覆盖各类部署场景
 - 跨语言迁移到未见语言的效果证明了多语言联合训练的巨大价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练数据以拉丁字母为主，非拉丁字母语言覆盖不足（仅中文、阿拉伯语、乌克兰语）
 - 模型使用 CC BY-NC-SA 4.0 许可证，限制了商业使用
 - 作为监督微调模型，高度依赖高质量人工标注数据的可用性

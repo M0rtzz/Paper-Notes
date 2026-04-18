@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Geometry-Guided Camera Motion Understanding in VideoLLMs
 description: >-
@@ -71,7 +71,7 @@ tags:
 - 约束感知标签体系设计巧妙: 互斥矩阵 + 基数正则从损失函数层面保证预测的物理合理性
 - 结构化提示注入无需训练权重即可改变模型的推理行为模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集为合成数据 (UE5 渲染)，真实视频上的泛化性有待验证
 - 仅覆盖外参运动 (pan/tilt/dolly)，zoom 等内参变化未处理
 - 仅探索了 VGGT 一个 3DFM backbone，未对比其他几何模型

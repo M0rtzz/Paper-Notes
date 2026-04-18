@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adversarial Data Augmentation for Single Domain Generalization via Lyapunov Exponents
 description: >-
@@ -116,7 +116,7 @@ $$\min_\theta \max_\omega \mathbb{E}_{(x,y)\sim\mathcal{D}_S} [\ell(\theta; \tau
 - 方法简洁优雅：仅需在标准 SGD 基础上增加一个 LE 反馈机制调节学习率
 - t-SNE 可视化直观展示了 LEAwareSGD 比其他方法探索了更广泛的参数空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LE 的计算依赖 Hessian 矩阵，在大规模模型上可能存在近似误差
 - 当前仅在分类任务上验证，检测/分割等任务有待探索
@@ -239,7 +239,7 @@ $$\min_\theta \max_\omega \mathbb{E}_{(x,y) \sim \mathcal{D}_S} [\ell(\theta; \t
 - LEAwareSGD 是一个通用优化器，可无缝融入任何对抗数据增强流程
 - 低数据场景下（10%）的巨大优势（+9.47%）表明混沌边缘训练特别有助于从有限数据中提取可泛化特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LE 的计算需要维护扰动副本并前向传播两次，引入额外计算开销
 - 当前框架使用表格搜索确定最优 $\beta$ 和 $\gamma$，自适应调参策略有待探索

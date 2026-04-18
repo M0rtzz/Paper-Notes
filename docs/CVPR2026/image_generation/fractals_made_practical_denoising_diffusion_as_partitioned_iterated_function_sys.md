@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fractals made Practical: Denoising Diffusion as Partitioned Iterated Function Systems
 description: >-
@@ -62,7 +62,7 @@ tags:
 
 #### 设计一：双重收缩条件 (EC) 和 (PC)
 
-**做什么**：为DDIM单步算子 $\Phi_t(x) = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} x + b_t \hat\varepsilon_\theta(x,t)$ 建立两种收缩性条件。
+**功能**：为DDIM单步算子 $\Phi_t(x) = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} x + b_t \hat\varepsilon_\theta(x,t)$ 建立两种收缩性条件。
 
 **核心思路**：Jacobian $J_x\Phi_t = \frac{\sqrt{\bar\alpha_{t-1}}}{\sqrt{\bar\alpha_t}} I + b_t J_x\hat\varepsilon_\theta$ 包含膨胀项（尺度 $>1$ 的恒等缩放）和收缩项（$b_t < 0$ 的score修正），收缩性取决于score Jacobian的代数性质。
 
@@ -73,7 +73,7 @@ tags:
 
 #### 设计二：方向性抑制场与分层释放
 
-**做什么**：引入方向性抑制场 $S_{k,t}(x) = |b_t| \langle v_k^{(1)}, [\nabla_x \Delta_t(x)]_{kk} v_k^{(1)} \rangle$，量化训练score网络对每个patch的非高斯修正。
+**功能**：引入方向性抑制场 $S_{k,t}(x) = |b_t| \langle v_k^{(1)}, [\nabla_x \Delta_t(x)]_{kk} v_k^{(1)} \rangle$，量化训练score网络对每个patch的非高斯修正。
 
 **核心思路**：高斯基线下，对角块谱范数 $f_t(\lambda_k)$ 在所有CIFAR-10 patch上都 $>1$（膨胀），但训练后网络学习到抑制场 $S_{k,t} > 0$，将有效Rayleigh商压到1以下。关键定理（Stratified Crossover, Thm 22）证明：在Margin Monotonicity条件(MM)下，低方差patch先释放抑制、高方差patch后释放，产生严格的方差顺序化释放。
 
@@ -81,7 +81,7 @@ tags:
 
 #### 设计三：吸引子的Kaplan-Yorke维度公式
 
-**做什么**：推导PIFS吸引子的分形维度，建立离散Moran方程 $\prod_t f_t(\lambda^{**}) = 1$ 求解全局膨胀阈值 $\lambda^{**}$。
+**功能**：推导PIFS吸引子的分形维度，建立离散Moran方程 $\prod_t f_t(\lambda^{**}) = 1$ 求解全局膨胀阈值 $\lambda^{**}$。
 
 **核心思路**：在高斯数据 + 块对角协方差假设下，Lyapunov谱完全由每步对角膨胀函数 $f_t(\lambda)$ 确定。对角方向 $\lambda_k > \lambda^{**}$ 的为膨胀方向，KY维度公式为：
 
@@ -159,7 +159,7 @@ Crossover发生在 $t \in [160, 200]$，约40步窗口。Regime I全面违反(PC
 3. **解释四种经验设计的统一理论**：cosine offset提升最弱环节 $L_1^*$（4倍），Min-SNR实现KY维度增长均衡化，分辨率shift保持Moran比值不变，AYS将步骤集中在 $L_t^*$ 最小处
 4. **自注意力的几何角色**：query token = range block，key/value token = domain block，$A_{kj}$ = 软域-范围配对；hard attention极限精确恢复经典PIFS结构，交叉耦合 $\delta_t^{\mathrm{cross}}$ 由注意力权重界定
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **高斯patch假设**：核心分析依赖块对角高斯协方差假设，非高斯情况（如纹理丰富的数据）需更精细的抑制场建模
 2. **PIFS正则化器未实验验证**：提出了 $\mathcal{L}_{\mathrm{PIFS}}$ 正则项但未进行端到端训练实验，实际训练效果待验证

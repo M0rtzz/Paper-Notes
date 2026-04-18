@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DICE: Staleness-Centric Optimizations for Parallel Diffusion MoE Inference
 description: >-
@@ -123,7 +123,7 @@ DICE 是一个推理优化框架，不涉及训练。核心是在推理时合理
 3. **交织并行的优雅**：仅通过通信调度变化就减半陈旧性，不增加任何计算或通信开销
 4. **实用性强**：所有优化对模型透明、无需重训练、代码开源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 DiT-MoE 上验证，未覆盖其他 MoE 扩散架构（如 Switch-DiT）
 - 条件通信的 stride 参数（通信频率）需要手动设置

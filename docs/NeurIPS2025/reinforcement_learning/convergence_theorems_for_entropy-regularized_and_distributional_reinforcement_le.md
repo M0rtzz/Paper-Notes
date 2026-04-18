@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Convergence Theorems for Entropy-Regularized and Distributional Reinforcement Learning
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：ERL为每个 $\tau > 0$ 给出唯一策略，但该策略对RL是次优的；当 $\tau \to 0$ 试图恢复RL最优性时，我们重新陷入最优策略不确定的困境。
 
-**本文要解决什么**：(1) 提供一种在 $\tau \to 0$ 极限下保证策略收敛的方案；(2) 刻画收敛到的极限策略的性质；(3) 建立分布式RL中首个收敛的最优回报分布估计算法。
+**本文目标**：(1) 提供一种在 $\tau \to 0$ 极限下保证策略收敛的方案；(2) 刻画收敛到的极限策略的性质；(3) 建立分布式RL中首个收敛的最优回报分布估计算法。
 
 **切入角度**：借鉴国际象棋"弃子战术"的思路——短期牺牲 $\tau$-ERL的最优性，换取长期的收敛保证。
 
-**核心 idea 一句话**：用一个比评估温度 $\sigma$ 更大的行为温度 $\tau$（要求 $\sigma/\tau \to 0$）构造 Boltzmann-Gibbs 策略，保证收敛到"最优性过滤参考策略"。
+**核心 idea**：用一个比评估温度 $\sigma$ 更大的行为温度 $\tau$（要求 $\sigma/\tau \to 0$）构造 Boltzmann-Gibbs 策略，保证收敛到"最优性过滤参考策略"。
 
 ## 方法详解
 
@@ -52,7 +52,7 @@ tags:
 
 ### 关键设计 1：Bellman 参考最优算子
 
-- **做什么**：定义一个新的Bellman算子，其不动点捕获了ERL在 $\tau \to 0$ 时实际能达到的最优值。
+- **功能**：定义一个新的Bellman算子，其不动点捕获了ERL在 $\tau \to 0$ 时实际能达到的最优值。
 - **核心思路**：
 $$(\mathcal{B}_{\text{ref}}^\star q)(x,a) := r(x,a) + \gamma \int \text{ess}\sup_{\pi_x^{\text{ref}}} q(x', \cdot)\, dP_{x,a}(x')$$
   用 $\text{ess}\sup$（本质上确界）替代 $\sup$，只在参考策略支撑集上取最大值。
@@ -61,7 +61,7 @@ $$(\mathcal{B}_{\text{ref}}^\star q)(x,a) := r(x,a) + \gamma \int \text{ess}\sup
 
 ### 关键设计 2：温度解耦策略（Definition 3.4）
 
-- **做什么**：构造一种在 $\tau \to 0$ 时具有收敛保证的策略。
+- **功能**：构造一种在 $\tau \to 0$ 时具有收敛保证的策略。
 - **核心思路**：给定温度 $\tau > 0$，选择 $\sigma = \sigma(\tau)$（如 $\sigma = \tau^2$），令 $\pi^{\tau,\sigma} := \mathcal{G}_\tau q_\sigma^\star$。要求 $\sigma/\tau \to 0$ 当 $\tau \to 0$。
 - **关键不等式**：
 $$\lim_{\tau \to 0} \sup_x \|(\mathcal{G}_\tau q_\sigma^\star)_x - (\mathcal{G}_\tau q_{\text{ref}}^\star)_x\|_{\text{TV}} \lesssim -\lim_{\tau \to 0} \frac{\sigma}{\tau} \log p_{\text{ref}}$$
@@ -70,7 +70,7 @@ $$\lim_{\tau \to 0} \sup_x \|(\mathcal{G}_\tau q_\sigma^\star)_x - (\mathcal{G}_
 
 ### 关键设计 3：最优性过滤参考策略（Definition 3.5）
 
-- **做什么**：刻画温度解耦策略收敛到的极限策略。
+- **功能**：刻画温度解耦策略收敛到的极限策略。
 - **核心思路**：
 $$\pi_x^{\text{ref},\star} \propto \pi_x^{\text{ref}} \odot \chi_{\mathsf{N}^\star_{\text{ref}}(x)}, \quad \mathsf{N}^\star_{\text{ref}}(x) := \{a : q^\star(x,a) = \text{ess}\sup_{\pi_x^{\text{ref}}} q^\star(x,\cdot)\}$$
   即参考策略限制在最优动作集合上的归一化版本。
@@ -120,7 +120,7 @@ $$(\mathcal{T}_\tau^\pi \bar{\zeta})_{x,a} := (\mathtt{b}_{r(x,a),\gamma} \circ 
 4. **首个收敛的最优回报分布估计**：Theorem 4.2是DRL中的里程碑结果——此前分布式Bellman最优算子的迭代不收敛
 5. **BG策略的TV距离界**（Theorem 3.3）：独立有价值的技术工具
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **定性收敛**：策略收敛是TV/弱收敛意义下的，缺乏具体的有限温度近似误差界——不知道具体需要多小的 $\tau$
 2. **Assumption 3.2 的可验证性**：连续动作空间中，确保参考策略在最优动作邻域有下界质量并非trivial

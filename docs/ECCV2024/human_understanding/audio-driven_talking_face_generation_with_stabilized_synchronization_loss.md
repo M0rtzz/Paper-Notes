@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Audio-Driven Talking Face Generation with Stabilized Synchronization Loss
 description: >-
@@ -115,7 +115,7 @@ $$L_{ss} = -\log\left(1 - \frac{|x - y| + \epsilon}{|x - y| + |y - d| + \epsilon
 - **消融实验充分**：逐步验证每个组件的贡献，包括不同后处理方法、不同 sync loss 变体、silent face 生成策略等
 - 无后处理版本在多数指标上已大幅超越 SOTA，说明核心方法的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 输入分辨率仅 96×96，依赖 VQFR 后处理提升分辨率，后处理引入额外伪影且降低部分指标
 - Silent-lip generator 需要单独预训练，增加了模型复杂度和训练成本

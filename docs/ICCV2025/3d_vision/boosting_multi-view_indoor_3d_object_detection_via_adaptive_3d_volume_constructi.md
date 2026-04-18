@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SGCDet: Boosting Multi-View Indoor 3D Object Detection via Adaptive 3D Volume Construction
 description: >-
@@ -160,7 +160,7 @@ SGCDet-L 甚至超越了使用更高分辨率和真实几何监督的 CN-RMA。
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

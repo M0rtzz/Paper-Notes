@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Certified Unlearning Approach without Access to Source Data
 description: >-
@@ -170,7 +170,7 @@ $$\|\boldsymbol{w}_r^* - \hat{\boldsymbol{w}}_r\|_2 \leq \Delta = \frac{2\gamma 
 3. **完整的实践方案**：从理论保证到 KL 散度的无源估计（能量模型 + SGLD + Donsker-Varadhan），提供了一套从理论到实践的完整路径
 4. **MNIST-USPS 跨域实验**：展示了真正跨数据集（不同来源）作为代理数据集的可行性，具有很强的现实意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **强凸性假设**：损失函数需要 $\alpha$-强凸等严格假设，限制了对深度非凸模型的直接适用性（混合线性网络虽能部分缓解，但仍是近似）
 2. **KL 估计的理论 gap**：启发式 KL 估计虽然实验中表现良好，但理论上可能导致比精确值更弱的隐私保证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dual-Band Thermal Videography: Separating Time-Varying Reflection and Emission Near Ambient Conditions
 description: >-
@@ -153,7 +153,7 @@ $$\arg\min \; \gamma_1 \mathcal{L}_{smooth} + \gamma_2 \mathcal{L}_{Huber} + \ga
 4. **展示了热成像的丰富信息**：在人眼和可见光相机完全无法感知的维度上揭示了场景信息
 5. **噪声显式建模**：光谱滤波后 SNR 降低，显式建模每像素每帧噪声提高了鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设背景与物体温度变化不相关**：如房间整体均匀升温时该假设不成立
 2. **低成本微测辐射热计+滤波器的灵敏度限制**：低发射率物体的微小温差难以检测

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reliable Algorithm Selection for Machine Learning-Guided Design
 description: >-
@@ -143,7 +143,7 @@ p 值：$P = 1 - \Phi\left(\frac{\hat{\theta}-\tau}{\sigma}\right)$
 4. **面向实际需求**：用户定义的成功准则灵活实用（均值、超越率等），贴近生物设计实践
 5. **理论+实践结合**：有限样本保证（Theorem 3.1）+ 实际RNA/蛋白质设计验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Bonferroni校正在菜单很大时过于保守，可考虑层次化或相关性感知的多重检验校正
 - 密度比估计的质量直接影响保证的可靠性，高维序列空间中的估计仍具挑战

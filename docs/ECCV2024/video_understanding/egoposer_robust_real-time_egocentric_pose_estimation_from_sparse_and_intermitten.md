@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoPoser: Robust Real-Time Egocentric Pose Estimation from Sparse and Intermittent Observations Everywhere
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L}_{\text{total}} = \lambda_{\text{ori}} \mathcal{L}_{\text{ori}} + \
 - **工程价值高**：600+ fps 的推理速度远超同类方法，已在 Quest 2 真机上验证，具有很强的实际部署价值
 - **全面性**：同时解决了大场景泛化、手部遮挡、体型适配三个实际问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设用户在同一楼层移动（编码了垂直全局位置），跨楼层需重置原点
 - 骨干网络采用简单 Transformer，更精细的模型设计（如关节级建模）可能进一步提升

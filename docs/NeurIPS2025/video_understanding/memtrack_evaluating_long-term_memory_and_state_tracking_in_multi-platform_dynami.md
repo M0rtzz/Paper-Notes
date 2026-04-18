@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MEMTRACK: Evaluating Long-Term Memory and State Tracking in Multi-Platform Dynamic Agent Environments
 description: >-
@@ -142,7 +142,7 @@ MEMTRACK 是评估框架而非训练方法，重点在于指标设计：
 - **多维指标设计**：Correctness + Efficiency + Redundancy 三维评估比单纯 QA 准确率更全面
 - **揭示真实差距**：60% 的天花板数字为记忆增强智能体的研究指明了方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **规模有限**：数据集规模相对较小，部分场景由智能体合成，可能存在分布偏差
 2. **平台覆盖不全**：仅模拟了 Slack/Linear/Git，实际企业还有 Notion、Confluence、Jira 等

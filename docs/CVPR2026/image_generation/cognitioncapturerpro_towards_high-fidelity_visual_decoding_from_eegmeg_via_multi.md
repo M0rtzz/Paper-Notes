@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CognitionCapturerPro: Towards High-Fidelity Visual Decoding from EEG/MEG via Multi-modal Information and Asymmetric Alignment
 description: >-
@@ -111,7 +111,7 @@ tags:
 - STH-Align 用简单 MLP 替代扩散先验，在小数据量下避免过拟合且推理高效
 - 多模态扩展策略（图像→文本/深度/边缘）为 EEG 解码提供了丰富的互补监督信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练数据量有限（THINGS-EEG 仅 ~16K 图像），限制了更复杂模型的潜力
 2. MEG 数据上的 Top-1 略低于 ATS，表明方法在不同脑信号模态间的泛化仍需提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StreamSplat: Towards Online Dynamic 3D Reconstruction from Uncalibrated Video Streams
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L}_{\text{dynamic}} = \mathbb{E}_t[\mathcal{L}_{\text{recon}} + \lamb
 3. **自适应不透明度融合**：通过时间依赖的不透明度实现软匹配，巧妙避免了传统方法的硬分配和迭代融合
 4. **正则空间设计**：采用正交正则空间绕过逐场景相机标定，相机运动被吸收到高斯动力学中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 关键帧重建质量略低于MonST3R（点云表示），但后者不支持在线处理
 - 输入分辨率限制在512×288，高分辨率场景可能损失细节

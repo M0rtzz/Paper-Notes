@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ELogitNorm: Enhancing OOD Detection with Extended Logit Normalization
 description: >-
@@ -89,7 +89,7 @@ ResNet-18 on CIFAR-10/100 100 epochs, SGD momentum=0.9, lr=0.1, weight decay 5e-
 - **训练方法+post-hoc方法的正交性**: ELogitNorm作为训练时方法，能一致提升所有post-hoc方法(MSP/GEN/ReAct/SCALE/KNN)——这种正交组合性是实际部署的关键优势
 - **诊断feature collapse**: 奇异值谱分析+2D特征可视化是分析表示质量的有效工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Near-OOD改善有限(IDK数据集)，是所有训练时方法的共性问题
 - 仅在ResNet-18/50上验证，未测试ViT等现代架构
 - D(z)的计算涉及到所有c个类的决策边界→c=1000(ImageNet)时虽高效实现但原理上随c增长

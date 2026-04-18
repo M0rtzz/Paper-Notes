@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safety Certificate against Latent Variables with Partially Unidentifiable Dynamics
 description: >-
@@ -135,7 +135,7 @@ $$\arg\min_{u} J(U^n, u) \quad \text{s.t.} \quad S(X_t, u, t) \ge 0$$
 3. **持续可行性证明**：Theorem 3.4 保证安全约束"永远不会把自己逼入死角"，这是许多安全 RL 方法缺乏的关键性质
 4. **框架通用性**：虽然示例使用了前门调整 (Shi et al. 2024)，但该框架可兼容其他因果 RL 技术（工具变量、后门调整等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅有简化数值实验**：只在低维离散驾驶场景验证，缺乏连续高维环境、真实机器人等实验，说服力有限
 2. **离散空间假设**：Algorithm 2 中 Q 函数的估计和前门调整公式基于离散状态/动作空间，向连续空间扩展需要额外函数逼近

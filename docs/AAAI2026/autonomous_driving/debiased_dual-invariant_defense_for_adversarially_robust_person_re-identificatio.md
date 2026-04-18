@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Debiased Dual-Invariant Defense for Adversarially Robust Person Re-Identification
 description: >-
@@ -152,7 +152,7 @@ $$\min_E \max_D \mathcal{L}(E,D) = \mathbb{E}_x[\log D(E(x))] + \mathbb{E}_{x^{\
 2. **FNES设计巧妙**：线性缩放打破度量PGD的固定迭代方向 + 最远负类标签软化同时解决多样性和过拟合问题
 3. **双不变特征学习**：对抗不变（clean↔adversarial）+ 泛化不变（seen↔unseen ID）相互补充
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. clean accuracy在防御后有所下降（78.49→68.50），鲁棒性-准确性权衡仍存在
 2. 扩散模型生成质量影响最终效果，但论文未深入讨论生成样本的质量控制

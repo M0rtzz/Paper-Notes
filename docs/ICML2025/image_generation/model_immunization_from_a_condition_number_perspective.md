@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model Immunization from a Condition Number Perspective
 description: >-
@@ -132,7 +132,7 @@ $$\min_{\omega,\theta} \mathcal{R}_{\text{ill}}(H_H(\theta)) + \mathcal{R}_{\tex
 4. **直观的可行性条件**：免疫强度取决于 $K_P$ 和 $K_H$ 奇异向量的"角度差异"
 5. **RIR指标的设计**：提供了统一评估免疫质量的单一指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **线性模型假设**：理论分析限于线性特征提取器和线性探测，与实际深度网络有差距
 2. **单调性保证的实际有效性**：三项梯度联合更新时，单调性保证不能线性组合

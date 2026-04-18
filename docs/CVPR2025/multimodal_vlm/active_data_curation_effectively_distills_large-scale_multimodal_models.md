@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Active Data Curation Effectively Distills Large-Scale Multimodal Models
 description: >-
@@ -125,7 +125,7 @@ tags:
 - **StableEval 评估协议**：系统化地选择可靠 benchmark 组合，值得其他工作借鉴
 - **scaling 分析系统**：从参考模型大小、训练数据、学生规模、蒸馏目标多个维度全面消融
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ACID 需要在超级批次上前向传播参考模型，增加了训练时计算开销（虽然推理时完全无额外成本）
 - filtering ratio、参考模型选择等超参需调优

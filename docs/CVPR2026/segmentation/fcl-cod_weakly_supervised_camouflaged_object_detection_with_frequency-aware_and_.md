@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning
 description: >-
@@ -143,7 +143,7 @@ GCL 子消融：标准 CL 提升 +0.005，加入梯度感知再提升 +0.001。
 3. **弱监督超越全监督**的结果非常强劲，说明 SAM 的强先验 + 正确的适配方式可以弥补标注信息的不足
 4. **两阶段设计的工程合理性**：阶段一用大 SAM 生成高质量伪标签，阶段二用轻量级模型推理，兼顾精度和效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时 bbox 提示来源于 GT mask，实际应用中 bbox 的获取方式需进一步讨论
 - 推理时需两阶段（伪标签生成 + 轻量检测器），整体流程略复杂

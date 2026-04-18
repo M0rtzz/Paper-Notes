@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AccDiffusion: An Accurate Method for Higher-Resolution Image Generation
 description: >-
@@ -79,7 +79,7 @@ AccDiffusion是完全**免训练**的plug-and-play方法，无需任何微调或
 - **形态学操作去噪**: 巧妙利用数学形态学的开操作消除attention map中的小连通域噪声，是一个可复用的trick
 - **窗口交互的双射设计**: 通过时间和位置相关的双射函数在膨胀采样间引入交互，既保持了理论可逆性又改善了全局一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **推理延迟未改善**: 继承了DemoFusion的渐进式上采样和重叠patch去噪策略，推理时间随分辨率快速增长（4K需25min）
 - **依赖预训练模型质量**: 高分辨率图像的保真度受限于底层diffusion模型的能力
 - **极端高分辨率退化**: 超过6K（36×）时出现细节退化，说明cross-attention map引导的精度有上限

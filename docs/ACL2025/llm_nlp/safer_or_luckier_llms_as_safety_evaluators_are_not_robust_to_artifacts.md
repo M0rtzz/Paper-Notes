@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safer or Luckier? LLMs as Safety Evaluators Are Not Robust to Artifacts
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **3种安全领域特有artifact（Apology/Authority/Halo）的提出**：基于安全数据中的统计模式精心设计，揭示LLM依赖统计相关性而非安全概念。
 - **Jury方法的初步成功**：基于artifact-aware选择的Strong jury（Command R Plus + Claude 3 Sonnet + Llama3 70B）在鲁棒性和人类一致性上均优于任何单一模型。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **冗长改写引入自增强偏置**：使用Command R改写冗长版本，可能导致Command R系列裁判的冗长偏置结果不可靠。
 2. **未包含专用安全裁判模型**：仅评估通用LLM作为裁判，未测试如LlamaGuard等专用安全分类器。

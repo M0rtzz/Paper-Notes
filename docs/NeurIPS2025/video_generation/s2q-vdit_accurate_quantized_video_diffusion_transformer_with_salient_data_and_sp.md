@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] S²Q-VDiT: Accurate Quantized Video Diffusion Transformer with Salient Data and Sparse Token Distillation
 description: >-
@@ -105,7 +105,7 @@ W4A4 极低比特量化结果（CogVideoX-2B）：
 - STD 利用注意力图的现有信息（零额外计算）指导 token 重要性，实用且高效
 - 首次系统性地探索了 V-DMs 的 W4A4 量化设置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 注意力稀疏模式假设可能不适用于所有 V-DM 架构
 - SDS 需要预先计算所有候选样本的显著度分数，增加了前期开销

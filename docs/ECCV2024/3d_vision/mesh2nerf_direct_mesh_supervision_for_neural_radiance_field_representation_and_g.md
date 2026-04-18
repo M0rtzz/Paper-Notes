@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mesh2NeRF: Direct Mesh Supervision for Neural Radiance Field Representation and Generation
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 明明拥有精确的3D mesh数据，却要绕道2D渲染再重建回3D，既浪费了mesh的精确几何信息，又引入了不必要的误差
 
-**本文要解决什么**: 跳过多视角渲染环节，直接从textured mesh解析地导出辐射场的密度和颜色值，作为NeRF的逐点3D监督
+**本文目标**: 跳过多视角渲染环节，直接从textured mesh解析地导出辐射场的密度和颜色值，作为NeRF的逐点3D监督
 
 **切入角度**: 从体渲染的数学推导出发，用top-hat函数逼近Dirac delta的密度分布，将mesh表面编码为occupancy-based的alpha值
 
-**核心idea一句话**: 用解析解把mesh变成radiance field，实现逐采样点的直接3D监督
+**核心 idea**: 用解析解把mesh变成radiance field，实现逐采样点的直接3D监督
 
 ## 方法详解
 
@@ -135,7 +135,7 @@ ShapeNet Chairs 在2-view条件下提升最显著：PSNR从19.65→22.22 (+2.57d
 - **即插即用**: 可以替换任何使用渲染损失的NeRF方法中的损失函数，兼容NeRF/TensoRF/Instant NGP等多种编码
 - **3D逐点监督 vs 2D像素监督**: 实验充分证明逐点监督的优越性，尤其在遮挡和视角稀疏时
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 颜色建模使用Phong模型，将光照bake进外观，不支持光照解耦
 2. 采样策略依赖渲染图像的射线方案，没有充分利用已知mesh几何做更高效的采样

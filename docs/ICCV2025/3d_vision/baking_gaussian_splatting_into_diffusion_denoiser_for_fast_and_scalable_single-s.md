@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L} = (\mathcal{L}_{de} + \mathcal{L}_{nv}) \cdot \mathbf{1}_{iter>ite
 - 混合训练的视角约束设计实用，两个角度限制分别控制位置和朝向，保证训练稳定
 - RPPC的设计直觉清晰：参考点比力矩向量更直接地编码了射线在3D空间中的位置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练资源需求巨大（32-64×A100），限制了学术团队的复现
 - 场景级数据仅约90K样本且视角变化小，更大规模和多样化的数据可能进一步提升

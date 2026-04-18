@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DISTIL: Data-Free Inversion of Suspicious Trojan Inputs via Latent Diffusion
 description: >-
@@ -142,7 +142,7 @@ DISTIL 在 BackdoorBench 上平均精度 **88.5%**，比最佳基线高约 **7.1
 - **跨任务通用性**：同一框架无缝扩展至分类和目标检测，展现了良好的通用性
 - **可解释性**：生成的触发器人眼可辨、直观可解释（不同于对抗噪声）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Fast DISTIL 的源类选择假设距离最远=最具诊断力，对于 all-to-all 攻击可能不成立
 - 依赖预训练扩散模型的质量——虽然实验表明对骨干不敏感，但极端场景需要验证

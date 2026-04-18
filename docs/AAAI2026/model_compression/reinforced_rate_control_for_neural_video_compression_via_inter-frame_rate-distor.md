@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforced Rate Control for Neural Video Compression via Inter-Frame Rate-Distortion Awareness
 description: >-
@@ -143,7 +143,7 @@ $$r_t = -\mathbf{w}_t^\top \mathbf{f}_t, \quad \mathbf{f}_t = \begin{pmatrix} D_
 - **强泛化能力**：在360°视频等未见内容上仍保持3.9%的低比特率偏差，显著优于Zhang et al.的7.6%
 - **跨编解码器一致性**：在DVC、DCVC、DCVC-DC、DCVC-RT四种架构上均取得一致的性能提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **未考虑网络传输条件**：当前仅优化编码端的率-失真性能，未整合丢包、拥塞等网络传输因素
 - **分辨率缩放的信息损失**：下采样因子$m_t < 1.0$时通过双三次上采样恢复分辨率，可能引入模糊等伪影

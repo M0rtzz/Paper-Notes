@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Human-Centric Open-Future Task Discovery: Formulation, Benchmark, and Scalable Tree-Based Search
 description: >-
@@ -171,7 +171,7 @@ $$y \in Q_I^{hc} \iff y \in Q \land \mathcal{L}(A'_z, z) < \mathcal{L}(A_z, z)$$
 - **多智能体分解的优雅**：每个智能体对应搜索树操作的一个阶段（初始化/扩展/剪枝/后处理），自然解耦
 - **与 test-time compute scaling 的连接**：搜索树天然支持"更多思考 = 更好结果"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 框架依赖 LLaVA-Next-Video 和 Qwen-LM——受限于这些模型的视频理解和推理能力
 - 搜索树的最大高度和分支因子仍需手动设定

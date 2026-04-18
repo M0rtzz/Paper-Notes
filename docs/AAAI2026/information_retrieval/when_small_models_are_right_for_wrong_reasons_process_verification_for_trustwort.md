@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Small Models Are Right for Wrong Reasons: Process Verification for Trustworthy Agents
 description: >-
@@ -154,7 +154,7 @@ $$FL(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
 - **机制解释的深度**：不仅报告"什么有效"，更解释了"为什么有效"——RAG 成功是因为提供外部事实锚点，元认知失败是因为缺乏内部真实参照
 - **实用交付物**：蒸馏验证器（0.86 F1, 5-10ms）可以直接作为 agent 的"信任警报"部署，实时标记高风险推理链
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 使用了 **oracle RAG**（直接提供真实上下文），这是 RAG 效果的上界；真实场景中带噪声的检索器效果可能大打折扣
 - 元认知在 7-9B 参数下失效的结论**不一定适用于 70B+ 模型**——存在一个未知的"容量阈值"

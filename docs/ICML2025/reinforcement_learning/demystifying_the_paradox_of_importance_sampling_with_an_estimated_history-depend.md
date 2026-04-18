@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Demystifying the Paradox of Importance Sampling with an Estimated History-Dependent Behavior Policy in Off-Policy Evaluation
 description: >-
@@ -104,7 +104,7 @@ $$h^* = \arg\min_h \left[2n\hat{\text{Var}}(h) - h\log(n)\right]$$
 - **MIS 的反直觉结论**：历史依赖对 MIS 有害，这是因为 marginalization 本身已消除了轨迹级方差，再引入历史反而破坏了这一优势
 - **实用指导**：BIC 准则为实际应用中的历史长度选择提供了原则性方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析假设有限状态/动作空间和有限时间跨度，对连续/无限时间跨度的推广尚不完整
 - 非参数估计的结论仅证明了渐近优越性，未给出有限样本的显式偏差界
 - 历史长度选择准则（BIC）虽有实验验证，但缺乏理论最优性保证

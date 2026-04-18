@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GoRA: Gradient-Driven Adaptive Low Rank Adaptation
 description: >-
@@ -157,7 +157,7 @@ GoRA ($r^{\text{ref}}=128$) 在 GSM8k 和 HumanEval 上**超越全参数微调**
 - **超参数自动调节**：提出自适应梯度累积停止和自适应 $\gamma$ 搜索策略，接近手动调参效果
 - **秩分布模式**：$W_v$ 获得最多秩、$W_q$ 最少，与 LoRA 原始论文的观察一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 梯度预计算需要额外的前向传播开销（$N$ 个 batch），对超大模型不可忽略
 2. $\gamma$ 的最优值因任务而异（GSM8k 偏好 8e-2，HumanEval 偏好 5e-2）
@@ -190,7 +190,7 @@ GoRA ($r^{\text{ref}}=128$) 在 GSM8k 和 HumanEval 上**超越全参数微调**
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

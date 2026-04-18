@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ComoRAG: A Cognitive-Inspired Memory-Organized RAG for Stateful Long Narrative Reasoning
 description: >-
@@ -101,7 +101,7 @@ ComoRAG 框架由三个核心组件构成：
 - **强模块化**：核心认知循环可作为即插即用模块应用于已有 RAG 方法（如 RAPTOR、HippoRAGv2），且兼容不同 LLM 骨干
 - **针对性优势**：在需要全局上下文理解的 Narrative 类查询上，F1 相对提升达 19%，精准解决了现有方法的瓶颈
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多轮迭代带来额外的 LLM 推理开销（最多 5 轮，每轮涉及多个 Agent 调用），实际延迟和成本未充分讨论
 - 实验主要聚焦叙事文本，在其他长文本类型（科学论文、法律文件等）上的泛化性未验证

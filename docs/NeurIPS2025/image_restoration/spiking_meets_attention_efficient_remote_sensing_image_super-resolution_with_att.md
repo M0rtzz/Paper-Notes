@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spiking Meets Attention: Efficient Remote Sensing Image Super-Resolution with Attention Spiking Neural Networks
 description: >-
@@ -36,14 +36,14 @@ tags:
 
 **核心矛盾**：SNN 的二值脉冲信号不可避免地造成逐像素信息损失（spiking degradation），且膜电位动态学不够优化，限制了 SNN 在 SR 中的表征能力。
 
-**本文要解决什么？**
+**本文目标**
    - 将 SNN 引入遥感 SR 任务，利用其能效优势
    - 通过注意力机制优化膜电位，提升 SNN 的表征能力
    - 在保持低 FLOPs 的同时达到/超越 ANN 方法的性能
 
 **切入角度**：一个关键观察——即使在严重退化的遥感图像中，LIF 神经元仍保持剧烈的膜电位波动（active learning state），暗示 SNN 对高频信息有天然的敏感性（Figure 1a）。
 
-**核心 idea 一句话**：用注意力机制调节 SNN 的膜电位（temporal-channel + deformable spatial），使脉冲神经网络首次在遥感 SR 中达到 SOTA 且更高效。
+**核心 idea**：用注意力机制调节 SNN 的膜电位（temporal-channel + deformable spatial），使脉冲神经网络首次在遥感 SR 中达到 SOTA 且更高效。
 
 ## 方法详解
 
@@ -124,7 +124,7 @@ tags:
 - **patch 级非局部注意力**：将 exhaustive 的逐像素非局部注意力简化为 patch 级相似度计算 + 可变形卷积校正，大幅降低计算量同时保持自相似性建模能力。可推广到其他需要非局部先验的任务。
 - **CNN-SNN 混合架构**：不是纯 SNN，而是用 CNN 分支补偿 SNN 的信息损失，设计务实有效。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **时间步设置**：T=1 时 FLOPs 最低但性能非最优；T=4 时性能 SOTA 但 FLOPs 按时间步线性增长，论文对不同 T 的权衡分析不足。
 - **仅遥感数据集**：未在自然图像 SR 基准（如 DIV2K、Urban100）上验证，泛化性未知。

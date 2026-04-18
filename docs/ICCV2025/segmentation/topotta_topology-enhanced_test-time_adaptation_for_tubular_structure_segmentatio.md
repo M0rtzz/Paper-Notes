@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TopoTTA: Topology-Enhanced Test-Time Adaptation for Tubular Structure Segmentation
 description: >-
@@ -112,7 +112,7 @@ TopoMDC类型消融：正交(𝒞₁₋₄) + 对角(𝒞₅₋₈) 组合效果
 - 两阶段解耦设计合理：Stage 1专注拓扑结构适应，Stage 2专注拓扑连续性精炼
 - 路由参数每样本重置为零，保证对每个样本独立适应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅适用于CNN基础的模型，对Transformer架构的支持尚未验证
 - 每张图像需要6次迭代适应，对实时性要求高的场景可能不够高效
 - TopoMDCs仅替换3×3卷积层，其他卷积核尺寸未考虑

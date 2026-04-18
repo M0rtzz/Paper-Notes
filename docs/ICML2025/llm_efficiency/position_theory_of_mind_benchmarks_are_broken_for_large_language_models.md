@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: Theory of Mind Benchmarks are Broken for Large Language Models
 description: >-
@@ -190,7 +190,7 @@ Social Prompting 虽常有帮助，但并未根治“预测-行动断裂”。
 4. 对部署实践有直接意义：若模型要获得行动权限，必须看 Functional ToM，而非只看问答分数。
 5. 与 predict-then-optimize 文献形成清晰呼应：预测误差与决策误差不是等价目标。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 任务仍以矩阵博弈为主，生态复杂度有限，外推到真实协作系统需进一步验证。
 2. 主要实验对象是开源模型；闭源前沿模型的同类评估仍不足。

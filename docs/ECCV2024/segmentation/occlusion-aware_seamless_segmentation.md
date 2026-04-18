@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Occlusion-Aware Seamless Segmentation
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**: 视场遮挡（FoV occlusion）、场景内物体遮挡（in-field occlusion）和跨域差距（domain gap）三者交织，现有方法只能分别解决其中一个，无法实现"无缝"（seamless）的全面理解。
 
-**本文要解决什么?** 统一解决三大"遮罩"问题：(1) 解锁窄视场 $\rightarrow$ 全景 360°；(2) 解锁物体遮挡 $\rightarrow$ amodal 完整分割；(3) 解锁域差距 $\rightarrow$ 从针孔到全景的 UDA。
+**本文目标** 统一解决三大"遮罩"问题：(1) 解锁窄视场 $\rightarrow$ 全景 360°；(2) 解锁物体遮挡 $\rightarrow$ amodal 完整分割；(3) 解锁域差距 $\rightarrow$ 从针孔到全景的 UDA。
 
 **切入角度**: 定义全新任务 OASS，构建专用数据集 BlendPASS，设计统一框架 UnmaskFormer 一次性解决畸变处理、遮挡推理和域适应。
 
-**核心idea一句话**: 通过 Unmasking Attention 处理畸变与遮挡、Amodal-oriented Mix 增强跨域适应和遮挡重建能力，在一个 transformer 框架中无缝完成五类分割任务。
+**核心 idea**: 通过 Unmasking Attention 处理畸变与遮挡、Amodal-oriented Mix 增强跨域适应和遮挡重建能力，在一个 transformer 框架中无缝完成五类分割任务。
 
 ## 方法详解
 
@@ -54,19 +54,19 @@ UnmaskFormer 由三大部分组成：
 
 1. **Unmasking Attention (UA)**:
 
-    - **做什么**: 在 self-attention 之后引入增强池化层，生成遮挡感知特征
+    - **功能**: 在 self-attention 之后引入增强池化层，生成遮挡感知特征
     - **核心思路**: 特征 $\boldsymbol{X'}$ 经过 self-attention 后，用全局平均池化 $\boldsymbol{q} = GAP(\boldsymbol{X'})$ 得到池化查询，再通过交叉注意力得到 $\boldsymbol{q'} \in \mathbb{R}^{1 \times 1 \times C}$，应用 sigmoid 函数 $\phi(\boldsymbol{q'})$ 生成遮挡感知掩码，与原特征做逐元素乘法得到遮挡感知特征 $\boldsymbol{X''} = \phi(\boldsymbol{q'}) \odot \boldsymbol{X'}$
     - **设计动机**: 全局池化捕获全图上下文，sigmoid 掩码有选择地增强/抑制特征通道，使网络学会关注被遮挡区域的信息
 
 2. **交错 DPE 排列 (Interleaved DPE)**:
 
-    - **做什么**: 将 Deformable Patch Embedding 从仅用于初始阶段改为交错放置在 Stage 2 和 Stage 4
+    - **功能**: 将 Deformable Patch Embedding 从仅用于初始阶段改为交错放置在 Stage 2 和 Stage 4
     - **核心思路**: DPE 通过可学习的自适应偏移 $\boldsymbol{\Delta}^{DPE}(i,j)$ 捕获局部几何变化，在深层阶段使用 DPE 比浅层效果更好
     - **设计动机**: 全景图像在不同层级都存在畸变，仅在初始阶段处理不够。实验证明在深层阶段 (Stage 2, 4) 使用 DPE 比浅层 (Stage 1, 3) 效果更佳
 
 3. **Amodal-oriented Mix (AoMix)**:
 
-    - **做什么**: 跨域数据增强策略，利用 amodal 标注生成遮挡训练样本并融合源域-目标域图像
+    - **功能**: 跨域数据增强策略，利用 amodal 标注生成遮挡训练样本并融合源域-目标域图像
     - **核心思路**:
         - 随机采样 amodal 实例掩码 $\{M_r^{(i)}\}_{i=1}^z$，经随机缩放 $RS(\cdot)$ 和随机填充 $RP(\cdot)$ 生成新掩码 $M_r = H(\sum_i RP(RS(M_r^{(i)})))$
         - 用 $M_r$ 遮盖源图像 Thing 区域：$\hat{x}_s = (1 - M_r \cap M_s) \odot x_s$
@@ -75,7 +75,7 @@ UnmaskFormer 由三大部分组成：
 
 4. **OAFusion (Occlusion-Aware Fusion)**:
 
-    - **做什么**: 融合三分支输出产生五类分割结果
+    - **功能**: 融合三分支输出产生五类分割结果
     - **核心思路**: 语义直接输出；实例/amodal 实例的类别由语义分支多数投票决定；关键改进是在 amodal 场景下只考虑不与其他物体重叠的区域进行投票
     - **设计动机**: 传统融合在大面积遮挡时会误分类（例如行人被车大面积遮挡→误判为车），OAFusion 忽略重叠区域避免此问题
 
@@ -144,7 +144,7 @@ UnmaskFormer 由三大部分组成：
 - **OAFusion 的实用价值**: 解决了 amodal 场景下语义投票的根本缺陷——被大面积遮挡的物体不再被误分为遮挡物类别
 - 一个模型同时输出五种分割结果（语义/实例/amodal 实例/全景/amodal 全景），设计统一且高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 测试集仅 100 张图像，规模较小，评估结果可能存在波动
 - 全景图标注成本极高（210分钟/张/人），数据集扩展困难

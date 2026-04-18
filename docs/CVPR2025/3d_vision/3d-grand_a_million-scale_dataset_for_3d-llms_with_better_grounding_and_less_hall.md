@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-GRAND: A Million-Scale Dataset for 3D-LLMs with Better Grounding and Less Hallucination
 description: >-
@@ -88,7 +88,7 @@ tags:
 - **首个3D-LLM幻觉基准**：3D-POPE系统性地揭示了现有3D-LLM的严重幻觉问题
 - **合成到真实迁移**：仅在合成数据上训练，零样本超越在真实数据上训练的模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模型输入是结构化场景图（类别+坐标）而非原始点云特征，视觉表示能力有限
 - 合成场景（3D-FRONT/Structured3D）的多样性不如真实扫描，可能限制泛化
 - 推理时依赖Mask3D的检测质量，检测不到的物体无法接地

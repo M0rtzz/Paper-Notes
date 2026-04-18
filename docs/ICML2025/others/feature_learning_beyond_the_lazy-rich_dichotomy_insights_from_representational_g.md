@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Feature Learning beyond the Lazy-Rich Dichotomy: Insights from Representational Geometry
 description: >-
@@ -125,7 +125,7 @@ VGG-11 在 CIFAR-10 上训练，尽管训练 / 测试精度快速饱和，流形
 4. **可操作的度量**：GLUE 族度量提供了**可解释的诊断工具**——发现容量下降后，可以具体归因到半径、维度还是对齐的变化
 5. **Spotlight 论文**，说明审稿人对其原创性和影响力的认可
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论仅限两层 + 一步梯度**：Theorem 3.1 只在一步梯度更新后成立，多步训练的渐近行为尚未证明（Gaussian equivalence 可能不保持）
 2. **实验规模**：仅使用 VGG-11/ResNet-18 和 CIFAR-10/100，未验证在更大模型(如 transformer)、更复杂任务（NLP、大规模视觉）上的适用性

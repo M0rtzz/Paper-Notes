@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Laplacian Multi-scale Flow Matching for Generative Modeling
 description: >-
@@ -86,7 +86,7 @@ $$\mathcal{L}_{mv} = \sum_{k=2}^{s} w_k \mathbb{E}_{t,q,p_t} \|\mathbf{v}_t^{(k)
 - 因果注意力强制了自然的信息流：从结构到细节的层次化生成
 - 时间加权复杂度分析证明了渐进式多尺度设计的注意力成本理论上低于 DiT
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅在 CelebA-HQ 和 ImageNet 上验证，缺少文本引导生成的评估
 - 拉普拉斯分解在 latent space 中的适用性可能不如像素空间直观
 - 关键时间点 $T_1, T_2$ 需手动设定

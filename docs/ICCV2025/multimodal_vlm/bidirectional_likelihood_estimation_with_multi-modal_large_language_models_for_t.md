@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bidirectional Likelihood Estimation with Multi-Modal Large Language Models for Text-Video Retrieval
 description: >-
@@ -107,7 +107,7 @@ DiDeMo上zero-shot BLiM-（无CPN）即达69.8 T2V R@1，已超越全部fine-tun
 - CPN的设计优雅简洁——仅通过attention mask即可无训练地估计先验，然后归一化
 - 文本到视频特征生成的训练目标设计新颖：用对比学习代替真正的视频解码，在LLM输出空间中进行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖两阶段检索（InternVideo2初检），端到端效率仍有提升空间
 - 文本到视频生成的对比损失需要batch内所有视频作为负样本，可能受batch size影响

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Binary Classifier Optimization for Large Language Model Alignment
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：最容易收集的反馈形式（二元信号）与现有对齐方法所需的数据格式（成对偏好）不匹配。
 
-**本文要解决什么？** 如何利用仅有的二元反馈（thumbs-up/down）有效地对齐 LLM？其与 DPO 的理论联系是什么？
+**本文目标** 如何利用仅有的二元反馈（thumbs-up/down）有效地对齐 LLM？其与 DPO 的理论联系是什么？
 
 **切入角度**：将对齐视为二元分类问题——{prompt, 好回答}→1，{prompt, 差回答}→0，分类器的 logit 就是隐式奖励。
 
-**核心 idea 一句话**：训练二元分类器的 BCE 损失是 DPO 损失的严格上界，最小化前者即隐式最小化后者。
+**核心 idea**：训练二元分类器的 BCE 损失是 DPO 损失的严格上界，最小化前者即隐式最小化后者。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ tags:
 - Reward shift 的思路来自误差项最小化，不是 heuristic 而是有理论最优解
 - 实际应用价值高：ChatGPT 等产品已在收集 thumbs-up/down 数据，BCO 可直接使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论假设 chosen/rejected 数据分布独立，实际中可能存在相关性
 - 未与 RLHF（PPO）直接对比
 - Reward shift 的 EMA 超参数需要调优

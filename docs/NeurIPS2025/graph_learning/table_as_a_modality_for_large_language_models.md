@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Table as a Modality for Large Language Models
 description: >-
@@ -122,7 +122,7 @@ Frozen LLM 设置下 TaMo 平均提升 **42.65%**；在 StructQA 和 WikiSQL 上
 - StructQA 基准本身就是重要贡献——揭示了当前 LLM 表格理解的根本缺陷
 - 作为"即插即用"模块，不需要修改 LLM 架构，通用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预结构化的表格输入，嵌入在非结构化文本中的表格需要额外预处理
 - 目前仅支持单轮静态表格理解，动态多步推理和多轮对话待探索

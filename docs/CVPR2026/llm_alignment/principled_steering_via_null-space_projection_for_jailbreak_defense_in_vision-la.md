@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Principled Steering via Null-space Projection for Jailbreak Defense in Vision-Language Models
 description: >-
@@ -128,7 +128,7 @@ $$\tilde{\Delta}^* = \arg\min_{\tilde{\Delta}} \left( \|\tilde{\Delta}\mathbf{P}
 3. **选择性机制**：完美解决了传统激活转向的过度拒绝问题——良性输入的激活完全不受影响
 4. **跨模型泛化**：在三种不同架构的VLM上均表现一致，说明零空间约束的普适性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖于线性假设——假设良性和恶意激活分布可以通过线性子空间分离，对高度非线性的攻击可能失效
 2. 零空间维度 r 的选择需要预定义，不同模型/层可能需要不同设置

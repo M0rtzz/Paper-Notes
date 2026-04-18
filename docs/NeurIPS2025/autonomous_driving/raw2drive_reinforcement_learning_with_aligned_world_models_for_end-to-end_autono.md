@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAW2Drive: Reinforcement Learning with Aligned World Models for End-to-End Autonomous Driving
 description: >-
@@ -130,7 +130,7 @@ Bench2Drive 闭环评测：
 - 消除采样随机性累积误差的技巧简单但关键——仅从原始传感器流采样一次，避免两流分叉
 - 训练成本仅 64 H800 GPU days，在工程化方面具有实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与特权信息方法 Think2Drive (DS 91.85) 仍有较大差距，说明原始传感器世界模型的表达能力仍受限
 - 仅使用 CARLA 仿真器评估，未在真实世界数据上验证

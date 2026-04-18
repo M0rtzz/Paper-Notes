@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhysVLM-AVR: Active Visual Reasoning for Multimodal Large Language Models in Physical Environments
 description: >-
@@ -102,7 +102,7 @@ $$a_t = \arg\max_{a_t \in A} \mathbb{E}_{o_{t+1} \sim E(h_t, a_t)} [I(Y; y_{t+1}
 - **CoT设计精巧**：AVR-Core的三步CoT（不确定性评估→信息增益预测→策略决策）精准模拟人类主动信息搜寻的认知过程，是小模型超越GPT-4o的关键
 - **实验设计严谨**：CLEVR-AVR仿真数据与训练数据无重叠，三个互补评估指标全面衡量主动推理各环节能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 最终答案准确率（39.7%）仍远低于GPT-4o（45.7%），多步信息整合能力有待提升
 - AVR-Core仅2k样本且限于桌面场景，向复杂开放场景的扩展性未验证
 - 当前评估限于仿真环境，真实物理世界的主动推理部署存在sim-to-real gap

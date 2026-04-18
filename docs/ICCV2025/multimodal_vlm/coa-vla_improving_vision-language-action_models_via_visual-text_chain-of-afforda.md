@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance
 description: >-
@@ -117,7 +117,7 @@ CoA-VLA 基于 DiffusionVLA（Qwen2-VL + 扩散策略头）构建。核心思路
 - 视觉-文本双模态注入机制优雅地融合了像素级空间信息和语义推理，FiLM 条件层设计高效
 - 动态可供性选择基于本体感知进行自适应裁剪，在保持性能的同时减少推理开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 GPT-4o + Grounding DINO + SAM + CoTracker 等多个外部工具生成训练数据，管线复杂且成本较高
 - 可供性链的四类类型是人工设计的，可能不能覆盖所有操作场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Double Descent Meets Out-of-Distribution Detection: Theoretical Insights and Empirical Analysis
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：过参数化对 ID 泛化的益处是否能转移到 OOD 检测？如果 double descent 在 OOD 检测中也存在，那么模型选择策略需要根本性的重新思考。
 
-**本文要解决什么**：(a) 验证 OOD 检测是否展现 double descent；(b) 提供理论解释；(c) 当过参数化不再最优时，如何选择合适的模型复杂度。
+**本文目标**：(a) 验证 OOD 检测是否展现 double descent；(b) 提供理论解释；(c) 当过参数化不再最优时，如何选择合适的模型复杂度。
 
 **切入角度**：定义 expected OOD risk 作为度量指标，在高斯协变量模型下用随机矩阵理论推导其与模型复杂度 p/n 的关系。
 
-**核心idea一句话**：OOD 检测也存在 double descent，过参数化不总是最优，Neural Collapse 的 NC1 指标可预测哪个复杂度区间更适合 OOD 检测。
+**核心 idea**：OOD 检测也存在 double descent，过参数化不总是最优，Neural Collapse 的 NC1 指标可预测哪个复杂度区间更适合 OOD 检测。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **OOD risk 的理论推导**：将经典 double descent 理论从回归推广到分类+OOD，虽在高斯模型下推导但与 DNN 实验一致
 - **NC1 作为模型选择准则**：不需在所有宽度上训练模型，只需比较欠/过参数化区间的 NC1 值即可判断最佳区间
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析限于高斯协变量模型加线性分类器，严格的 DNN 理论仍缺失
 - 仅关注 width 方向的 double descent，depth 和 epoch-wise 未涉及
 - NC1 判据基于有限架构验证，普适性需进一步确认

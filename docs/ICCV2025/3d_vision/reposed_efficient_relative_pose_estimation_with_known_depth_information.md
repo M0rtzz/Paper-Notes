@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RePoseD: Efficient Relative Pose Estimation with Known Depth Information
 description: >-
@@ -112,7 +112,7 @@ tags:
 3. **挑战已有结论**：通过测试Madpose未覆盖的zero-shift求解器，证明"建模偏移总是有益"的结论并不成立
 4. **全面的实验覆盖**：5种MDE × 3种匹配器 × 3种数据集 × 2种RANSAC框架，给出了实际使用建议
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设深度的尺度在图像内一致，但实际上某些MDE在图像不同区域可能存在不同的尺度
 - Hybrid RANSAC显著增加了计算成本（10-30x），需要更高效的实现

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cooperative Sheaf Neural Networks
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：SNNs 的 sheaf Laplacian 结构使得 PROPAGATE 蕴含 LISTEN，无法实现四种协作行为(STANDARD/LISTEN/PROPAGATE/ISOLATE)的完全解耦。
 
-**本文要解决什么？** 让 SNN 中的节点能独立决定是否传播和/或接收信息，实现真正的协作行为，以更好地缓解 oversquashing。
+**本文目标** 让 SNN 中的节点能独立决定是否传播和/或接收信息，实现真正的协作行为，以更好地缓解 oversquashing。
 
 **切入角度**：将无向边拆分为一对有向边，在有向图上定义 cellular sheaf 及其 in/out-degree sheaf Laplacian。
 
-**核心idea一句话**：通过有向图上的 sheaf Laplacian 分离源映射 $\mathbf{S}_i$ 和目标映射 $\mathbf{T}_i$，使每个节点可独立控制信息流入和流出方向。
+**核心 idea**：通过有向图上的 sheaf Laplacian 分离源映射 $\mathbf{S}_i$ 和目标映射 $\mathbf{T}_i$，使每个节点可独立控制信息流入和流出方向。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ CSNN 将输入无向图转为有向图（每条无向边拆为一对有向边）
 - Flat vector bundle 设计使参数量从 $O(m)$ 降到 $O(n)$，在理论优势之外还保证了计算效率
 - 理论证明 CSNN 每层感受野为 $2t$-hop 而非传统 $t$-hop，为缓解 oversquashing 提供新思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 协作行为的选择通过连续参数隐式决定，未显式建模离散动作
 - 在 amazon-ratings 等部分数据集上未取得最优，flat vector bundle 的简化可能牺牲了灵活性

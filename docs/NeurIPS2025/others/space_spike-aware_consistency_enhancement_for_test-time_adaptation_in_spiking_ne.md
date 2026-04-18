@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPACE: SPike-Aware Consistency Enhancement for Test-Time Adaptation in Spiking Neural Networks
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L}(\theta_E;\mathbf{x}) = \sum_{1 \leq j < i \leq M}(1 - \bar{\mathca
 4. **计算高效**：单步SGD+脉冲计数聚合避免逐时间步匹配
 5. **理论动机**：信息瓶颈视角（抑制增强特异性变异）+ 流形去噪视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对极端腐蚀(如Contrast)效果有限——脉冲率可能崩溃
 - AugMix增强质量影响适应效果
 - 仅在分类任务上评估，未扩展到检测/分割

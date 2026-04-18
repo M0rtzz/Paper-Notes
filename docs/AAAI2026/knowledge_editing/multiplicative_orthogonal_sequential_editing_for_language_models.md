@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multiplicative Orthogonal Sequential Editing for Language Models (MOSE)
 description: >-
@@ -96,7 +96,7 @@ MOSE 将知识编辑从"加法更新"转变为"乘法更新"：不是 $W' = W_0 
 - **正交 Procrustes 问题的优雅解**：把知识编辑转化为经典数学问题（正交 Procrustes），有解析解无需迭代优化，计算高效
 - **对长序列编辑的实际意义**：LLM 在部署中需要持续更新知识，MOSE 使得连续上千次编辑而不退化成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FFN 层的多项式展开是近似的，高阶余项引入的噪声在极大量编辑后是否会累积？
 - 正交 Procrustes 的 SVD 求解对大矩阵有计算开销，能否加速？

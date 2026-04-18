@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CausalCLIP: Causally-Informed Feature Disentanglement and Filtering for Generalizable Detection of Generated Images
 description: >-
@@ -159,7 +159,7 @@ CausalCLIP 平均 AP 较 VIB-Net 提升 2.32%，ACC 提升 4.62%。在未见的 
 - **Gumbel-Softmax + HSIC 的组合**：前者保证可微稀疏选择，后者保证因果/非因果子空间统计独立，理论扎实。
 - **轻量级**：在冻结 CLIP 上仅训练下游模块，计算开销与 UnivFD 相当但性能大幅提升。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 CLIP-ViT-L/14 的固定特征，对 CLIP 预训练数据中缺少的伪影类型可能敏感。
 2. 二分类设定（真/假），未提供生成器溯源能力。

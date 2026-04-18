@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning-guided Kansa Collocation for Forward and Inverse PDE Problems
 description: >-
@@ -48,31 +48,31 @@ tags:
 
 1. **耦合多变量PDE扩展（Extension 1）**
 
-    - **做什么**：将单一未知场 $u$ 扩展为多维 $\mathbf{u} = [u_1, u_2, \ldots, u_{N_D}]$
+    - **功能**：将单一未知场 $u$ 扩展为多维 $\mathbf{u} = [u_1, u_2, \ldots, u_{N_D}]$
     - **核心思路**：每个维度 $u_d$ 有独立的RBF展开和系数 $\alpha_k^{(d)}$，通过线性耦合算子 $\mathcal{G}$ 将各维度联立，形成水平堆叠的块矩阵系统
     - **设计动机**：许多物理方程（如Navier-Stokes、Maxwell等）本质上是耦合PDE系统，需要同时求解多个物理量
 
 2. **非线性算子处理（Extension 2）**
 
-    - **做什么**：处理非线性微分算子（如Burgers方程的 $u \frac{\partial u}{\partial x}$ 项）
+    - **功能**：处理非线性微分算子（如Burgers方程的 $u \frac{\partial u}{\partial x}$ 项）
     - **核心思路**：引入微分矩阵 $\mathbf{D}_x = \mathbf{K}_x \cdot \mathbf{K}^{-1}$，将非线性算子分解为已知场的微分操作组合；提供5种求解策略：前向Euler(显式)、IMEX(半隐式)、后向Euler(隐式Newton-Raphson)、Crank-Nicolson(二阶)、全非线性直接优化
     - **设计动机**：非线性情况下无法直接分离出线性系统，需要通过时间离散化或迭代优化来绕过
 
 3. **自调参机制**
 
-    - **做什么**：自动优化RBF核的形状参数 $\epsilon$
+    - **功能**：自动优化RBF核的形状参数 $\epsilon$
     - **核心思路**：对线性PDE，联合最小化算子矩阵条件数和解场变分；对非线性PDE，提出直接最小化PDE残差 + 解场变分 + 训练L2损失的组合目标
     - **设计动机**：$\epsilon$ 的选择极大影响精度和稳定性（trade-off between accuracy and conditioning），手动调参不现实
 
 4. **反问题求解**
 
-    - **做什么**：从解的观测 $u^{\text{obs}}$ 反推未知PDE参数 $\boldsymbol{\pi}$
+    - **功能**：从解的观测 $u^{\text{obs}}$ 反推未知PDE参数 $\boldsymbol{\pi}$
     - **核心思路**：$\boldsymbol{\pi}^* = \arg\min_{\boldsymbol{\pi}} \mathcal{L}(u^{\text{obs}}, u^{\text{pred}}(\boldsymbol{\pi}))$，使用SciPy的最小二乘和求根算法
     - **设计动机**：反问题在科学计算中至关重要（如参数估计、材料属性推断），将Kansa框架的适用范围扩展到inverse setting
 
 5. **与其他求解器的系统对比**
 
-    - **做什么**：在benchmark PDE上对比Kansa、PINN、FNO
+    - **功能**：在benchmark PDE上对比Kansa、PINN、FNO
     - **核心思路**：统一评估指标（L2误差、效率、内存、收敛速度），公平调配训练数据量
     - **设计动机**：为不同PDE类型提供求解器选择指南
 
@@ -133,7 +133,7 @@ Burgers方程（非线性）对比：
 4. **无网格优势**：Kansa方法无需网格生成，对复杂几何域和高维问题天然友好
 5. **反问题的自然集成**：RBF表示使得参数化反演问题变为标准优化问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **条件数问题**：RBF矩阵在高配置点密度时条件数急剧恶化，限制了可扩展性
 2. **高维扩展**：实验局限于1D和简单2D问题，3D和更高维的实验缺乏

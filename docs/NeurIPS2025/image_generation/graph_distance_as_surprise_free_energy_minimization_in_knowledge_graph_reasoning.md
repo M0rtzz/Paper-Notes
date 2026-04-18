@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graph Distance as Surprise: Free Energy Minimization in Knowledge Graph Reasoning
 description: >-
@@ -92,7 +92,7 @@ tags:
 - 数学形式简洁：从 surprise 定义到 free energy 组合公式逻辑自洽，对树结构可退化为已有结论
 - 三个理论支撑（proper generalization、least-action、computational grounding）相互呼应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅为 work-in-progress：缺乏在 FB15k-237、YAGO 等标准 KG 数据集上的定量评估
 - Worked example 过于简单（5 个实体），无法验证在大规模 KG（百万节点）上的可扩展性
 - "图距离越近越合理"本身是相当直觉的观点，FEP 包装增加了理论装饰但实质贡献有限

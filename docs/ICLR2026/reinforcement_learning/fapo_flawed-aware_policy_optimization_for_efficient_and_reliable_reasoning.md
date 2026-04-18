@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FAPO: Flawed-Aware Policy Optimization for Efficient and Reliable Reasoning
 description: >-
@@ -96,7 +96,7 @@ $\lambda = 1$ 的选择来自 majority-guided 策略，使转移点恰好在 $\r
 3. **紧凑高效的 GenRM**：4B 参数模型超越 32B 教师模型，且与 RL 训练异步解耦，仅增加不到 20% 训练时间
 4. **全面的验证**：不仅报告最终性能，还展示全过程中间 checkpoint 的表现，充分说明训练稳定性
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. GenRM 引入额外推理开销，虽然目前控制在 20% 以内，但在更大规模系统中可能成为瓶颈
 2. FlawedPositiveBench 基于 ProcessBench 构建，评价覆盖面有限
 3. 实验主要在数学推理和通用 QA 上验证，对代码生成等更复杂的可验证任务尚未充分探索

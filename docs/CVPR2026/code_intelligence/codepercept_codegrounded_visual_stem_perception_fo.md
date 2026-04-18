@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CodePercept: Code-Grounded Visual STEM Perception for MLLMs
 description: >-
@@ -139,7 +139,7 @@ CodePercept 管线包含三个核心部分：
 - **执行追踪器的巧妙利用**：将代码执行日志作为 LLM 分析代码的"外部说明书"，解决了 LLM 难以分析复杂递归/嵌套逻辑的问题
 - **STEM2Code-Eval 基准**：首个通过代码生成直接评估 STEM 视觉感知的基准——只有完全理解图像才能通过代码忠实重现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RL 阶段依赖 GPT-4o 作为评估器，成本高且可能引入偏差
 - ICC-1M 数据仅使用 matplotlib 生成，限制了视觉多样性（如手绘图、照片级 STEM 图像）

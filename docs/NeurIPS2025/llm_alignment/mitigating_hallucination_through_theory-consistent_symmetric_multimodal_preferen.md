@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Hallucination Through Theory-Consistent Symmetric Multimodal Preference Optimization
 description: >-
@@ -138,7 +138,7 @@ LLaVA-1.5-7B 上的组件消融：
 3. **量化偏好边际**：超越传统的序偏好（$y_w \succ y_l$），引入偏好差距大小的一致性约束
 4. **实用的数据构建管道**：避免了昂贵的 GPT-4V API 调用，使用开源模型 + DeepSeek-V3 的组合方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **细粒度视觉理解有限**：在 Object-HalBench 上的表现不佳，说明数据构建管道需要增强对细节描述的关注
 2. **额外计算开销**：需要为对比图像构建对应的最优回复，增加了数据准备成本

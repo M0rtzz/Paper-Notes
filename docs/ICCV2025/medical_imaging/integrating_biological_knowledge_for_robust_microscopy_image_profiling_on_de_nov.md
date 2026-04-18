@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Integrating Biological Knowledge for Robust Microscopy Image Profiling on De Novo Cell Lines
 description: >-
@@ -123,7 +123,7 @@ scFM维度消融（WSL预训练，U2OS评测）：
 - **理论保证**（Proposition 3.1）为方法提供了数学基础——图正则化隐式减小类内距离
 - 利用RNA-seq数据为未见细胞系提供特征表示，巧妙绕过了"测试时没有图像"的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 绝对性能仍然很低：U2OS上最好也只有4.79% Top-1准确率（1138类分类），说明de novo细胞系泛化仍然极具挑战
 - 预训练集仅有3个细胞系，限制了细胞系特异性表征的多样性，更大规模数据可能带来更好效果

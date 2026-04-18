@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Skills from Unlabeled Prior Data for Efficient Online Exploration
 description: >-
@@ -139,7 +139,7 @@ $$r_{\mathrm{UCB}}(s, z) = r_\zeta(s, z) + \alpha \|g_\phi(s, z) - \bar{g}(s, z)
 3. **去掉 KL 约束**：用 tanh + 熵正则替代 SPiRL 的 KL 惩罚，更简单且性能更好——是工程层面的重要简化
 4. **实验规模大且系统**：42 个任务、8 个领域、多种基线、敏感性分析、数据质量分析，极为充分
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **技能冻结问题**：预训练技能在在线阶段保持固定，当技能学得不好或需要适应在线分布变化时会受限。允许低层技能在线微调是自然的改进方向
 2. **依赖 RND**：UCB 估计基于 RND，在高维观测空间中可能不够可靠。虽然在 visual-antmaze 上不需要 ICVF 就能工作，但更复杂的视觉域可能需要更稳健的探索信号

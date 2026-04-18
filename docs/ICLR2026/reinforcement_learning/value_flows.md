@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Value Flows
 description: >-
@@ -121,7 +121,7 @@ Value Flows 的分布估计精度比 C51 好 4.5×，比 CODAC 好 3×。
 - **方差作为副产品**：传统分布式 RL 的方差估计需要额外手段（如 ensemble、二阶矩网络），Value Flows 通过 flow derivative ODE 自然获得——是流匹配框架的独特优势
 - **一次前向传播得 Q 值**（Proposition 3）是关键实用特性——意味着推理时不比标准 Q 网络更慢，ODE 求解只在需要完整分布时使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 无法区分认知不确定性（epistemic，来自数据不足）和随机不确定性（aleatoric，来自环境随机性）——置信度权重只反映 aleatoric
 - ODE 求解增加训练和分布采样时的计算开销（但 Q 估计不需要）
 - 仅在连续控制上测试（OGBench + D4RL），无 Atari 等离散动作空间基准

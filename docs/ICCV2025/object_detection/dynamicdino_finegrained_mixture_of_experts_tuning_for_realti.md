@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection
 description: >-
@@ -77,7 +77,7 @@ Dynamic-DINO基于复现的Grounding DINO 1.5 Edge（EfficientViT-L1 + BERT-base
 - **"以小博大"的数据效率**：1.56M开源数据 vs 20M私有数据，MoE带来的模式分工使有限数据更高效
 - **专家协作模式的分析**很有洞察：浅层探索、深层专精的层级结构与人类认知的层级处理一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前MoE实现是顺序循环各专家，未做并行优化，导致额外10%延迟
 - 仅在GDINO 1.5 Edge上验证，未测试更大的GDINO 1.5 Pro或其他检测架构
 - 受限于8卡3090，数据规模和计算探索不够充分

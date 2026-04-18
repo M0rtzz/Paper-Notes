@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Curvature Enhanced Data Augmentation for Regression
 description: >-
@@ -121,7 +121,7 @@ $$z_\eta = f(\eta) = B_u \cdot [\eta, g(\eta)] + z$$
 3. **领域无关性**：CEMS 不依赖特定数据域（图像、时序、表格均适用），这是比 mixup 类方法更强的通用性
 4. **全可微设计**：SVD 和最小二乘均可微，可无缝集成到端到端训练流程中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **大内在维度 $d$ 的扩展性**：线性系统可能欠定，需要 $\mathcal{O}(d^2)$ 个邻居，对大 $d$ 数据集不实用（可通过 ridge regression 缓解）
 2. **SVD 内存需求**：当 $d$ 较大时可能需要完整 SVD，内存为 $\mathcal{O}(bD^2)$

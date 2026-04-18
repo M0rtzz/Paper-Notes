@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Focus: Causal Attention Distillation via Gradient-Guided Token Pruning
 description: >-
@@ -151,7 +151,7 @@ $$\mathcal{L} = \lambda \mathcal{L}_{kd} + (1-\lambda) \mathcal{L}_{cd}$$
 3. **可解释性**：通过注意力热图可视化，清楚展示了LeaF如何引导模型关注关键信息
 4. **跨域有效性**：在数学推理和代码生成两个不同领域都展示了一致的改进
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖高能力教师模型**：混淆token检测需要教师-学生梯度对比，无法自我改进
 2. **长文本泛化不足**：目前仅在数学和代码任务上验证，长文本理解等领域尚待探索

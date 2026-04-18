@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] anyECG-chat: A Generalist ECG-MLLM for Flexible ECG Input and Multi-Task Understanding
 description: >-
@@ -92,7 +92,7 @@ anyECG-chat = ECG编码器(ViT-base, 对比预训练) + MLP连接器 + LLaMA-3-8
 - **零样本单导联能力**: 虽然只在2导联上训练，但在某些单导联场景下仍有不错的零样本定位性能
 - **课程学习防幻觉**: 渐进式训练策略有效避免了模型在ECG感知能力不足时过早依赖语言推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **波形定位精度有限**: 在MIT-BIH Arrhythmia上IoU不如专用U-Net，且不同数据集表现差异大
 - **多ECG QA的评估依赖LLM**: 用QwQ-32B评分，虽有人工验证但仍非金标准
 - **仅限心电图模态**: 未整合其他医学信号（如心电超声、血压波形）或影像

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shallow Flow Matching for Coarse-to-Fine Text-to-Speech Synthesis
 description: >-
@@ -93,7 +93,7 @@ $$\mathcal{L}_{\text{SFM}} = \mathcal{L}_{\text{coarse}} + \mathcal{L}_t + \math
 - 自适应确定中间状态位置（而非手动设定），比浅层扩散更灵活
 - 推理时 SFM strength $\alpha$ 提供了质量-速度的灵活权衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SFM head 的投影假设 $\hat{\boldsymbol{X}}_h \approx t_h \boldsymbol{X}_1$ 可能在某些情况下不准确
 - 目前仅在 TTS 上验证，未探索其他 FM 应用（图像、视频生成）

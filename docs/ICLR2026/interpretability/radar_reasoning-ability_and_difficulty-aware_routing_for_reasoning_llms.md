@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RADAR: Reasoning-Ability and Difficulty-Aware Routing for Reasoning LLMs
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{2PL} = -\frac{1}{nk} \sum_{i=1}^n \sum_{j=1}^k [y_{ij} \log p_{ij
 - **即插即用设计**：无需微调 RLM，黑盒使用，新模型快速接入
 - **强 OOD 泛化**：在长文本多文档 QA 上的泛化能力尤为突出
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 成本预测使用简单启发式（平均 token 数 × 单价），未考虑查询特异的成本差异
 - 在 AIME 等高难度 OOD 基准上泛化能力稍弱，倾向于分配能力偏低的配置

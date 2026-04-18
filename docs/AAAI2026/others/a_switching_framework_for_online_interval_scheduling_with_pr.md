@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Switching Framework for Online Interval Scheduling with Predictions
 description: >-
@@ -91,7 +91,7 @@ tags:
 - **冲突图分析方法**：将 Opt 和 Alg 的选择建模为冲突图的连通分量来分析，这一技巧可迁移到其他在线优化问题
 - **紧性证明构造性对手**：通过精心设计的对抗实例证明框架在两值实例上的最优性，展示了 consistency-robustness 的根本 tradeoff
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **两值实例已紧，一般情况有 gap**：上下界在两值（short/long）实例上匹配，但一般实例的 gap 尚未封闭
 - **仅考虑区间长度作为权重**：没有扩展到任意权重的区间调度，而实际中权重可能与长度无关
 - **预测误差的粒度**：当前二值预测模型比较粗糙，更精细的预测信息（如置信度）可能带来更好的保证

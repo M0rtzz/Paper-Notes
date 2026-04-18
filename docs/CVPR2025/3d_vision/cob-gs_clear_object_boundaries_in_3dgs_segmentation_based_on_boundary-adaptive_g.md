@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COB-GS: Clear Object Boundaries in 3DGS Segmentation Based on Boundary-Adaptive Gaussian Splitting
 description: >-
@@ -114,7 +114,7 @@ tags:
 - 多物体分割分解为顺序单物体处理的策略简单有效，解决了特征方法的粒度固定问题
 - 两阶段 SAM2 掩码生成解决了长序列物体连续性问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 3DGS 重建中的浮动伪影会在分割后被放大
 - 顺序单物体优化策略在物体数量多时效率较低

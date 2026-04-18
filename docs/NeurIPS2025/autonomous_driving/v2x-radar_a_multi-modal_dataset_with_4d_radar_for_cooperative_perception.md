@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception
 description: >-
@@ -119,7 +119,7 @@ V2X-Radar 数据集包含三个子集：
 - 严格的时间同步（<20ms）和空间标定流程保证了数据质量
 - 三个子数据集设计支撑多种研究方向，增强了数据集的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据规模相对有限（20K 帧），与 nuScenes (40K) 或 Waymo (200K+) 仍有差距
 - 仅包含一辆车和一个路侧单元的 V2I 场景，未涵盖 V2V 或多路侧协同

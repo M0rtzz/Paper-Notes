@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DynaGuide: Steering Diffusion Policies with Active Dynamic Guidance
 description: >-
@@ -135,7 +135,7 @@ $$\hat{\epsilon}(\mathbf{a}^k, o_t) = \epsilon(\mathbf{a}^k, o_t) - s\sqrt{1-\ba
 - **Classifier Guidance 从图像生成迁移到机器人**：证明扩散模型的引导理论在动作空间同样有效，为机器人策略的推理时定制开辟新路径
 - **负目标引导的实用价值**：真实部署中"不要做什么"和"要做什么"同样重要，DynaGuide 天然支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要额外训练动力学模型，增加了系统复杂度
 - 引导条件目前仅支持视觉观测图像，不支持语言或运动学演示等更丰富的模态

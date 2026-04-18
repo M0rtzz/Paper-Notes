@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAST: A Retrieval Augmented Spatio-Temporal Framework for Traffic Prediction
 description: >-
@@ -75,7 +75,7 @@ RAST 包含 5 个核心组件：Decoupled Encoder → Query Generator → Retrie
 - **通用接口**：可作为已有预训练 STGNN 的增强模块，无需修改核心检索机制
 - **大规模验证**：在 SD/GBA 等大规模数据集上依然保持优势，验证了可扩展性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - PEMS03 上表现未达最优，说明在小规模/特定拓扑网络上优势不明显
 - 仅验证交通预测场景，未扩展到气象、能源等其他时空预测任务
 - Retrieval Store 的最优更新频率和容量需要手动调参

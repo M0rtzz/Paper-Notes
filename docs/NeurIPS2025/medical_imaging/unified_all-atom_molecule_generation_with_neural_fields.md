@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unified All-Atom Molecule Generation with Neural Fields
 description: >-
@@ -115,7 +115,7 @@ $$\hat{z}_\theta(y|z^{tar}, \sigma, c) = \frac{1}{\sigma^2+1}y + \frac{\sigma}{\
 - **湿实验闭环**：在 CDR 设计上完成了从生成到实验验证的完整闭环，45% 的结合率具有实际转化价值
 - **新基准贡献**：引入 ~190K 合成大环肽/蛋白复合物数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 小分子指标上仍略弱于 VoxBind/MolCraft 等专用模型
 - 依赖准确的分子界面 3D 结构，而此类结构在实际药物发现中获取成本高

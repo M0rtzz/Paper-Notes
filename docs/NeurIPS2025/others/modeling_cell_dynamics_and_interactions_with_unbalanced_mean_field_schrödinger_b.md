@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modeling Cell Dynamics and Interactions with Unbalanced Mean Field Schrödinger Bridge
 description: >-
@@ -113,7 +113,7 @@ $$\frac{\partial \rho}{\partial t} = -\nabla_\mathbf{x} \cdot \left[\left(\mathb
 - **从数据学习交互**：不需要预先指定交互势的形式，由神经网络直接从快照数据中学习
 - RBM 的引入使方法能扩展到大规模数据（49K+ 细胞）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前优化的是能量项上界而非原始 UMFSB 目标
 - 交互项的 RBF 展开限制了表达能力，可考虑稀疏表示方法

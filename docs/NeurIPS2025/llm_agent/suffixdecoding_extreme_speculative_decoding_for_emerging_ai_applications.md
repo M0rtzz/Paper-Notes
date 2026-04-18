@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SuffixDecoding: Extreme Speculative Decoding for Emerging AI Applications
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：不需训练 draft 模型，用后缀树精确匹配历史序列，自适应决定推测长度。
 
-**核心idea一句话**：后缀树缓存 prompt 和前序输出中的长 token 序列，无训练、极端推测。
+**核心 idea**：后缀树缓存 prompt 和前序输出中的长 token 序列，无训练、极端推测。
 
 ## 方法详解
 
@@ -87,7 +87,7 @@ SuffixDecoding 由两个核心组件组成：(1) 后缀树索引——缓存 pro
 - **无训练的优势**：避免 draft 模型训练开销，即插即用
 - **5.3 倍加速的实际意义**：等效 5 倍 GPU 吞吐量提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Agent 特定性：对多样化推理收益有限（2.1x）
 - 大规模部署时缓存内存压力
 - 未讨论与 KV cache 压缩、量化等的组合效应

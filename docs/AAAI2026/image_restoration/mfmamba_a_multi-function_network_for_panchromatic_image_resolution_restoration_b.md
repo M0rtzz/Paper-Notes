@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MFmamba: A Multi-function Network for Panchromatic Image Resolution Restoration Based on State-Space Model
 description: >-
@@ -130,7 +130,7 @@ MFmamba在着色任务上PSNR达35.569 dB，较RSI高出**+2.4 dB**；SAM从0.06
 - **优势显著**：联合任务上PSNR领先次优方法5+ dB，且在三个独立任务上均取得最优或接近最优结果
 - **代码开源**：提供完整代码和实验复现支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **训练效率偏低**：batch size仅为1，训练32 epochs，80GB GPU需求较高，对资源受限场景不友好
 - **数据集规模有限**：5个遥感数据集均为中小规模，缺乏大规模高分辨率卫星数据验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] coDrawAgents: A Multi-Agent Dialogue Framework for Compositional Image Generation
 description: >-
@@ -106,7 +106,7 @@ coDrawAgents 由四个专门化智能体组成闭环对话系统：
 - VCoT 的三步推理（状态分析→上下文规划→物理约束）为 MLLM 布局规划提供了结构化且可解释的推理框架
 - 即插即用设计使框架能自然受益于未来更强的 T2I/L2I 模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 多智能体调用引入额外计算开销，推理时间高于单次生成方法
 2. Painter 性能受底层 T2I/L2I 模型限制（如属性渲染偏差会传播）

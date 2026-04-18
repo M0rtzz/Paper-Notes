@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Generation to Attribution: Music AI Agent Architectures for the Post-Streaming Era
 description: >-
@@ -106,7 +106,7 @@ tags:
 3. **实时结算机制**：Attribution Layer 的实时结算设计具有前瞻性，可能与区块链/智能合约等技术结合
 4. **产业导向**：直接面向音乐产业的实际痛点，具有较强的应用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **workshop paper 局限**：作为 workshop 论文，缺乏具体的实现细节和实验验证
 2. **技术细节缺失**：Block 的定义粒度、BlockDB 的检索效率、Attribution Layer 的具体协议等均未详细说明
@@ -196,7 +196,7 @@ tags:
 3. **实时归因**：归因事件在创作过程中实时触发，而非事后分析，这种设计对于大规模部署至关重要
 4. **Block 粒度设计**：细粒度的音乐分解方式为精确归因提供了语义基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏实验验证**：作为 workshop paper，论文仅提出架构愿景，缺少系统实现和量化评估
 2. **Block 定义不明确**：如何定义合理的 Block 粒度、如何处理 Block 之间的语义重叠等技术细节未深入讨论

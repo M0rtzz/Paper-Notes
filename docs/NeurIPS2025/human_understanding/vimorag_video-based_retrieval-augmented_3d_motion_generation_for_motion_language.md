@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models
 description: >-
@@ -127,7 +127,7 @@ VimoRAG 是一个两步流水线：(1) 给定运动描述文本，通过 Gemini-
 - McDPO是实用的鲁棒性增强策略，让生成模型面对噪声检索结果时能自我纠正
 - 检索库可无限扩展，性能随之持续提升——这在实际应用中意义重大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于LLM的框架推理延迟较高（较运动专家模型慢）
 - 2D视频先验到3D运动的模态跨越仍存在信息损失

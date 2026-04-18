@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semantic Watermarking Reinvented: Enhancing Robustness and Generation Quality with Fourier Integrity
 description: >-
@@ -125,7 +125,7 @@ HSTR 相比 Tree-Ring 平均提升 31.6 个百分点；HSQR 与 RingID 精度相
 - **无额外计算开销**：所有改进都在嵌入阶段完成，不增加推理时间。
 - QR 码水印方案兼具高容量（支持 identification）和强鲁棒性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前中心感知嵌入使用固定的 44×44 区域，可探索自适应区域选择。
 - HSQR 的 QR 码容量受频域面积限制，更大信息量需要更精细的编码方案。

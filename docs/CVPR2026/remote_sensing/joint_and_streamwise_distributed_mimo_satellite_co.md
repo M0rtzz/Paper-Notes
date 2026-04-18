@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joint and Streamwise Distributed MIMO Satellite Communications with Multi-Antenna Ground Users
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **特征模态分解的流分配**：通过 SVD 的右奇异向量分析每颗卫星对特征模态的贡献，将连续优化问题离散化为匹配问题，用经典匈牙利算法高效求解
 - **通用功率约束处理**：统一了多种实际约束类型，避免了逐一推导的繁琐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 信道模型假设 LoS 主导的瑞斯衰落，对于城市环境多路径丰富时适用性待验证
 - 仅考虑下行链路，上行链路的联合接收设计未涉及

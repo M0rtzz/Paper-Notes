@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VarSplat: Uncertainty-aware 3D Gaussian Splatting for Robust RGB-D SLAM
 description: >-
@@ -31,11 +31,11 @@ VarSplat 在 3DGS-SLAM 框架中为每个 Gaussian splat 学习外观方差 $\si
 
 **核心矛盾**：几何侧的不确定性（深度方差、概率滤波器）已有研究，但外观不确定性——直接反映 3DGS 渲染不稳定性的量——从未在在线密集 SLAM 中被当作一等公民对待。
 
-**本文要解决什么？** 如何在 3DGS-SLAM 中显式量化外观不确定性，并利用它改善位姿估计（tracking + loop + registration）的鲁棒性？
+**本文目标** 如何在 3DGS-SLAM 中显式量化外观不确定性，并利用它改善位姿估计（tracking + loop + registration）的鲁棒性？
 
 **切入角度**：为每个 splat 增加一个可学习的外观方差参数 $\sigma_i^2$，通过全方差定律（law of total variance）在 alpha compositing 中传播，得到逐像素不确定性图。
 
-**核心idea一句话**：学习 per-splat 外观方差并通过 alpha compositing 传播为 per-pixel 不确定性，作为 tracking/loop/registration 的置信度权重。
+**核心 idea**：学习 per-splat 外观方差并通过 alpha compositing 传播为 per-pixel 不确定性，作为 tracking/loop/registration 的置信度权重。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{map}} = \lambda_{\text{color}} \cdot \mathcal{L}_{\text{col
 - **Tracking 冻结、Mapping 训练的分离策略**：方差在 mapping 阶段与其他参数一起学习，但在 tracking 和 registration 阶段冻结，避免两个目标互相干扰
 - **不确定性可视化直觉正确**：高不确定性自然集中在深度不连续、遮挡边界、反射/透明表面等直觉上不可靠的区域，说明方差学习有效反映了测量不确定性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方差渲染增加了约 60% 的 Mapping 时间（1.9s vs 1.2s per frame），在资源受限场景下可能是瓶颈
 - 仅建模外观方差，未考虑几何（位置/尺度）不确定性——两者联合建模可能提供更完整的置信度
 - 全局精化阶段移除了不确定性权重，可能在该阶段仍有改进空间

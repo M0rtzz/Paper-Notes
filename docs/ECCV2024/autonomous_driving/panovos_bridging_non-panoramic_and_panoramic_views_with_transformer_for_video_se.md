@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PanoVOS: Bridging Non-panoramic and Panoramic Views with Transformer for Video Segmentation
 description: >-
@@ -142,7 +142,7 @@ tags:
 - **PSC-Attention 设计巧妙**：通过简单的边界区域交换 + 窗口注意力就能建模全景连续性，避免了全图拼接的计算爆炸，思路简洁有效
 - 15 个模型的全面基准评估为后续全景视频理解研究提供了有价值的参照
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **畸变未处理**：PSCFormer 没有针对全景投影的严重畸变做特殊设计（如 deformable convolution），对极度变形物体仍会失败
 - **方法通用性有限**：PSC-Attention 专为全景视频设计，对普通视频可能引入不必要的计算

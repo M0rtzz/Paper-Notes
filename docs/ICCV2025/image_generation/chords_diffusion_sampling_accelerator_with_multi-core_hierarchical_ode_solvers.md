@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CHORDS: Diffusion Sampling Accelerator with Multi-Core Hierarchical ODE Solvers
 description: >-
@@ -158,7 +158,7 @@ Chords 是**训练无关**的方法，不涉及任何训练过程。它直接用
 3. **与其他加速方法正交**：可与模型并行（DiT 中的注意力分割）、蒸馏等方法叠加使用
 4. **框架的统一性**：将多个已有方法纳入同一框架，指明改进方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 核间通信依赖同步点（synchronize barrier），在异构计算环境中可能产生等待开销
 2. 理论推导基于简化的奖励函数（f_θ(x,t)=x），与实际神经网络行为有差距

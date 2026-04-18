@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Open Vocabulary 3D Scene Understanding via Geometry Guided Self-Distillation
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L}_{sd} = -\log \frac{\exp(\mathbf{f}^{\text{3D}} \cdot \mathbf{f}^{\
 - **无需额外标注数据**: 整个训练流程不依赖任何2D或3D的 ground truth 标注
 - 跨域泛化能力强，ScanNet 训练的模型可零样本迁移到 Matterport3D
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 尾部类别（小尺寸、少样本）性能仍不理想，Tail 类 mIoU 仅 16.0%
 - 超点构建依赖 VCCS 算法，对极度稀疏或无序点云可能不够鲁棒

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Activation Matters: Test-time Activated Negative Labels for OOD Detection with Vision-Language Models
 description: >-
@@ -108,7 +108,7 @@ tags:
 - **免训练+测试高效**极具实用性：仅维护FIFO队列，无需反向传播
 - **初始化用噪声图像**作为OOD代理是有趣的直觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖高置信样本初始化队列，如果初期检测不准会导致错误累积
 - FIFO队列长度L是超参数，极端情况下可能不足
 - 当ID和OOD分布非常接近（如near-OOD）时，高置信正负样本可能不存在

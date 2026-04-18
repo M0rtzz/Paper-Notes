@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Is Meta-Learning Out? Rethinking Unsupervised Few-Shot Classification with Limited Entropy
 description: >-
@@ -137,7 +137,7 @@ MINO 平均精度比次优方法 PsCo 高 2.85%，且接近有监督 MAML 上界
 - **无监督友好**：元学习对标签噪声的鲁棒性使其天然适合以伪标签为监督的无监督任务
 - **SVCCA 诊断工具**：用表示稳定性分析噪声影响路径，既有理论意义也有实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析依赖均匀稳定性假设（$\beta \sim o(1/\sqrt{m})$），对深层网络可能不够紧
 - DBSCAN 的 eps 和 min_samples 虽不敏感但仍是超参，无自适应调整机制

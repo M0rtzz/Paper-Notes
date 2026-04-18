@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uni-DPO: A Unified Paradigm for Dynamic Preference Optimization of LLMs
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**：如何同时考虑数据内在质量和模型当前学习状态来动态调权？
 
-**核心idea一句话**：质量权重区分好坏数据 + 性能权重聚焦难样本 + 校准NLL防止好回答概率下降
+**核心 idea**：质量权重区分好坏数据 + 性能权重聚焦难样本 + 校准NLL防止好回答概率下降
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ $$\mathcal{L}_{\text{Uni-DPO}} = -\mathbb{E}[w_{\text{qual}}(y_w, y_l) \cdot w_{
 - **校准focal loss的改进设计**：固定阈值替代参考模型依赖+长度归一化，解决了朴素focal DPO的训练不稳定问题
 - **迁移到数学推理**：证明该框架不限于对话/指令遵循，数学任务同样获益
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖外部评分**：质量权重需要奖励模型或GPT-4评分，增加了数据准备成本
 - **超参数较多**：$\eta, \gamma, \tau_{\text{ref}}, \lambda, \tau_{\text{good}}$ 需要调优
 - **改进思路**：可以用self-reward替代外部评分；可结合NSPO的零空间约束增加安全维度

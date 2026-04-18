@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AutoVLA: A Vision-Language-Action Model for End-to-End Autonomous Driving with Adaptive Reasoning and Reinforcement Fine-Tuning
 description: >-
@@ -33,11 +33,11 @@ AutoVLA 将物理动作 token 直接集成到预训练 VLM（Qwen2.5-VL-3B）中
 
 **核心矛盾**：如何在单一自回归模型中同时实现高质量的语义推理和物理可行的轨迹规划，且根据场景复杂度自适应调节推理深度。
 
-**本文要解决什么？** (1) 将物理约束的轨迹规划直接嵌入 LM 的 token 空间；(2) 让模型在快思维（~1s）和慢思维（~10s）之间自动切换；(3) 在训练后阶段用 RL 进一步对齐规划性能。
+**本文目标** (1) 将物理约束的轨迹规划直接嵌入 LM 的 token 空间；(2) 让模型在快思维（~1s）和慢思维（~10s）之间自动切换；(3) 在训练后阶段用 RL 进一步对齐规划性能。
 
 **切入角度**：从 Waymo 真实驾驶数据中用 K-disk 聚类构建 2048 个物理动作 token 的码本，每个 token 对应 0.5 秒的合理车辆运动 $(\Delta x, \Delta y, \Delta\theta)$，将规划转化为 next-token prediction。
 
-**核心idea一句话**：在 VLM 中加入基于 K-disk 聚类的物理动作码本实现可行轨迹的 token 级生成，并用 GRPO + CoT 长度惩罚实现自适应快/慢推理切换。
+**核心 idea**：在 VLM 中加入基于 K-disk 聚类的物理动作码本实现可行轨迹的 token 级生成，并用 GRPO + CoT 长度惩罚实现自适应快/慢推理切换。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ SFT 阶段：$\mathcal{L}^{SFT} = w_i \cdot (\mathcal{L}_{LM} + \lambda_a \mathc
 - **GRPO + CoT 惩罚 = "该想则想"**：这种自适应推理思路非常实用——直行不需 CoT，遇施工区确实需要。10x 的运行时间差距让固定推理策略不可接受
 - **72B→3B 的知识蒸馏流水线**：用 Qwen2.5-VL-72B 自动生成推理标注、3B 学习的方案可复用，人工验证准确率 88.8% 证明了可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理速度仍远低于实时（快模式 ~1Hz，慢模式 ~0.1Hz），作者提到量化和模型压缩是优先方向
 - 仅用前方三个摄像头，未覆盖后方和侧后方，限制了全面感知（如倒车、变道检查盲区）

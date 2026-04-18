@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning
 description: >-
@@ -94,7 +94,7 @@ tags:
 - Adaptive-Thinking展示了模型自主学习何时思考的潜力，且最终策略恰好匹配最优方案
 - 参数变化分析揭示了不同思维策略对模型权重分布的差异化影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Adaptive-Thinking目前只能在任务级别收敛到统一策略，尚未实现问题级别的自适应
 - 实验主要在2B-7B模型上进行，更大规模模型的行为有待验证

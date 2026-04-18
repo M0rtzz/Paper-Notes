@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modified K-means Algorithm with Local Optimality Guarantees
 description: >-
@@ -114,7 +114,7 @@ $$\Delta_1(g,a,b) = w_g\big(D(x_g, c_b^*) - D(x_g, c_a^*)\big) - \big((s_a - w_g
 4. **广泛适用性**：适用于所有Bregman散度（平方欧氏、KL、Itakura-Saito、Mahalanobis等），不限于欧氏距离
 5. **与K-means++互补**：可叠加使用，进一步降低聚类损失
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. D-LO在高维大规模数据上额外迭代次数可能较多（News20需要870次迭代 vs K-means的35次），虽然Min-D-LO缓解了这一问题
 2. 仅考虑单点重新分配（相邻顶点），未考虑多点同时交换的更强局部最优定义

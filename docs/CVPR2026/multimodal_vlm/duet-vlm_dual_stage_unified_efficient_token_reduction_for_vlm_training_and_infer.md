@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DUET-VLM: Dual Stage Unified Efficient Token Reduction for VLM Training and Inference
 description: >-
@@ -29,7 +29,7 @@ tags:
 1. **领域现状**：VLM（如 LLaVA、InternVL）依赖大量视觉 tokens 将图像信息传递给 LLM，但视觉 tokens 存在严重冗余——大量 tokens 对应背景或重复纹理区域，并非语义核心。
 2. **现有痛点**：现有 token 压缩方法是**单侧**的——要么只在视觉编码器侧压缩（VisionZip、HiRED），要么只在 LLM 侧压缩（FastV、PyramidDrop），无法同时利用两侧信息进行最优压缩。
 3. **核心矛盾**：Vision-only 方法缺乏文本引导信号，不知道哪些视觉 tokens 对当前问题真正重要；Language-only 方法只能在 LLM 内部做后处理，已经浪费了前几层的计算资源。
-4. **本文要解决什么**：如何设计一个统一的双阶段框架，在视觉编码器内和 LLM 内分别进行互补的 token 压缩，同时适用于训练和推理？
+4. **本文目标**：如何设计一个统一的双阶段框架，在视觉编码器内和 LLM 内分别进行互补的 token 压缩，同时适用于训练和推理？
 5. **切入角度**：第一阶段利用视觉 tokens 之间的 self-attention（V2V）做粗粒度压缩；第二阶段利用文本对视觉的 cross-attention（T2V）做细粒度裁剪。
 6. **核心 idea**：V2V 阶段通过 attention-guided local cluster aggregation（固定宽度 $w$ 的局部聚类而非全局平均）保留空间上下文信息；T2V 阶段通过层级 pruning 逐步 drop 低相关性视觉 tokens。
 
@@ -104,7 +104,7 @@ DUET-VLM 包含两个阶段：(1) V2V（Vision-to-Vision）阶段在视觉编码
 - **统一训练与推理**：大多数 token 压缩方法只看推理效率，DUET-VLM 在训练阶段即可生效，这在大规模 VLM 训练中有实际价值
 - **视频压缩后反超 baseline**：53.1% 压缩率下精度反升，说明冗余 tokens 不仅浪费资源还引入噪声
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 LLaVA-1.5-7B 和 Video-LLaVA-7B 上验证，缺少更大规模模型（如 13B/34B）的实验
 - V2V 阶段的 $k_1, k_2, w$ 为固定超参数，不同图像/任务可能需要自适应调整
 - 未与最新的 InternVL2、Qwen-VL 等架构验证兼容性

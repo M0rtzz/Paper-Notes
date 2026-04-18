@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Multi-Objective and Meta Reinforcement Learning via Gradient Estimation
 description: >-
@@ -218,7 +218,7 @@ $k=3$ 时性能已接近最优，报告以此为准。
 4. **非空泛的泛化界**：Theorem 1给出的Hessian-based PAC-Bayes界与实际泛化误差量级一致
 5. **通用框架**：适用于多任务RL和元RL两种setting，下游可接入任意多任务优化器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **一阶近似的适用边界**：当参数距离超过5%时误差增至10%，限制了过大适应步长场景的应用
 2. **需要共享状态/动作空间**：所有任务必须共享相同的 $\mathcal{S}$ 和 $\mathcal{A}$，不适用于异构任务

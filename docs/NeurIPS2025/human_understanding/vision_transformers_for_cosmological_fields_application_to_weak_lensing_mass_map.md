@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vision Transformers for Cosmological Fields: Application to Weak Lensing Mass Maps
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 预训练策略揭示了 Transformer 对训练数据量的依赖：预训练可有效弥补数据不足
 - Transformer 的注意力权重可解释性是未来值得探索的方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅变化 $\Omega_m$ 和 $\sigma_8$ 两个参数，未考虑系统效应（如光度红移不确定性）
 - 数据集规模小（13680 张），限制了 Transformer 的潜力发挥
 - 未尝试 ViT/Swin 的掩码自编码预训练等更高级的方案

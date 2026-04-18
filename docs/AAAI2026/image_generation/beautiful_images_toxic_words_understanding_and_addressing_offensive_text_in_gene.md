@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beautiful Images, Toxic Words: Understanding and Addressing Offensive Text in Generated Images
 description: >-
@@ -95,7 +95,7 @@ $$\mathcal{L} = \|w(t) \cdot (f_\theta(I_{\text{NSFW}}(t), t, \phi(x_{\text{NSFW
 4. **完整的基准生态**：ToxicBench 涵盖数据集、评估指标（NGramLD）和流水线，为后续研究提供标准化工具
 5. **强泛化性**：对训练中未见的 NSFW 词和拼写变体均有效，且可扩展到 VAR 模型（Infinity）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - NSFW 文字抑制并非完全彻底，部分样本仍可被人眼识别（如 "giant cocks" 等高度敏感词）
 - 良性文字质量有一定损失（CLIP-Score 在 SD3 上从 91.42 降至 85.10），仍有优化空间
 - 方法依赖于对文字生成层的先验知识，新架构需要重新定位这些层

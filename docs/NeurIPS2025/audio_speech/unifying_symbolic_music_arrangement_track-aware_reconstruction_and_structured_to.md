@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unifying Symbolic Music Arrangement: Track-Aware Reconstruction and Structured Tokenization
 description: >-
@@ -129,7 +129,7 @@ tags:
 - 从预训练大模型到微调的范式在符号音乐领域取得了与NLP类似的成功
 - 80M参数的小模型就能超越任务特定SOTA，说明方法设计比模型规模更重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模型规模仅80M，扩大规模可能带来显著提升
 - 预训练数据量(405K MIDI)相对有限，更大数据集可能更有效
 - 未处理速度(velocity)信息，限制了演奏表现力的建模

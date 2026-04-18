@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PROFIT: A Specialized Optimizer for Deep Fine Tuning
 description: >-
@@ -112,7 +112,7 @@ PROFIT（PROximal FIne Tuning）是一个优化器包装器，接受两个标准
 - **理论简洁有力**: 基于 Hessian 正定性的正确性证明直观且有说服力。
 - 提出"PROFIT 可作为模型维护的标准操作"——即使在相同数据上继续训练也能带来提升。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **近端假设限制**: 要求预训练和微调数据分布相似，非近端场景需要额外的 warmup 步骤。
 - **内存开销**: 存储 $\theta_{\text{ref}}$ 增加约 25% 显存，大模型全参数微调时可能成为瓶颈。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Extreme Value Policy Optimization for Safe Reinforcement Learning
 description: >-
@@ -129,7 +129,7 @@ $$A'_R = \frac{\pi(a|s)}{\pi_0(a|s)} A_R, \quad C' = \frac{\pi(a|s)}{\pi_0(a|s)}
 4. **样本效率**: 即使极端样本稀缺（10-20个），EVO 仍然有效
 5. **双重极端利用**: 同时建模奖励和代价两侧的极端值，兼顾性能与安全
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **GPD 适用性**: 当极端值与正常值差异较小时，GPD 拟合质量下降（需要阈值 $t$ 足够大），论文建议用非线性变换放大差异但未实验验证
 2. **IID 假设**: EVT 要求样本独立同分布，但 RL 中相邻时间步的样本天然有相关性

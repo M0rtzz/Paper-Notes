@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gradient Descent as Loss Landscape Navigation: a Normative Framework for Deriving Learning Rules
 description: >-
@@ -98,7 +98,7 @@ $$J(\{\boldsymbol{\theta}_t\}) = \mathbb{E}\left\{\int_0^\infty \left(\frac{1}{2
 - Adam 中的平方根不是 bug 而是 feature——它是弹道（长期规划）假设的最优结果
 - 自然梯度与二阶方法的本质区别得到澄清
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 框架中的"最优"未考虑内存需求、计算效率等实际约束
 - 最优规则可能需要昂贵的矩阵运算（如 Hessian），实际可用性受限

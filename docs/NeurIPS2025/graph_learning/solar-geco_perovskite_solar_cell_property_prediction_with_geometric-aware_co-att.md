@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Solar-GECO: Perovskite Solar Cell Property Prediction with Geometric-Aware Co-Attention
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L} = \frac{1}{2B} \sum_{i=1}^{B} \left(\log(\sigma_i^2) + \frac{(y_i 
 2. **不确定性量化**：Gaussian NLL损失同时预测均值和方差，PICP校准精确，对实验筛选有实际指导价值
 3. **跨尺度建模**：从原子级（晶体结构）到器件级（层间交互）的端到端建模
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 晶体结构依赖Materials Project，限制了钙钛矿配方多样性（465→34种）
 - 未纳入制造工艺参数（退火温度、沉积方法等），而这些对效率有重要影响

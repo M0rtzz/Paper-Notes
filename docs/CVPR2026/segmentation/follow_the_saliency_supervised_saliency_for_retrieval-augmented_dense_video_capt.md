@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Follow the Saliency: Supervised Saliency for Retrieval-augmented Dense Video Captioning
 description: >-
@@ -106,7 +106,7 @@ STaRC 在 YouCook2 和 ViTT 上大多数指标达到 SOTA。
 3. **最优传输 + 显著性偏置**：在 OT 框架中通过帧边际约束和代价矩阵偏置双重注入显著性，理论基础扎实
 4. **训练-推理特征不对称**：训练用原始特征保证文本对齐精度，推理用精炼特征提供更丰富上下文，设计巧妙
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 Vid2Seq 的 1.8M 预训练，未与非预训练方法做公平对比（虽然分组展示了）
 - ViTT 上 F1 定位指标(44.34)低于 Sali4Vid(46.58)和 HiCM2(45.98)，说明在短标签数据上分割未必更优

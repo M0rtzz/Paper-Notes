@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Relational Graph Transformer
 description: >-
@@ -143,7 +143,7 @@ $$h_{\text{output}}(v_i) = \text{FFN}([h_{\text{local}}(v_i) \| h_{\text{global}
 - **工程友好**：直接替换 RDL pipeline 中的 GNN 组件，保持所有其他基础设施不变
 - **全局质心机制**：EMA K-Means 动态更新质心，不需要额外的预处理步骤
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未覆盖推荐任务（RelBench 30 个任务中的 9 个被排除），推荐需要 pair-wise 学习等特殊处理
 2. 时间编码仅用简单线性变换，可接入更先进的时序编码（如周期函数、可学习时间核）

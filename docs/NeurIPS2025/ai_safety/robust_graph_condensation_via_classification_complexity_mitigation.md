@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust Graph Condensation via Classification Complexity Mitigation
 description: >-
@@ -113,7 +113,7 @@ $$\mathcal{L} = \mathcal{L}_{GC} + \alpha\mathcal{L}_{dim} + \beta\mathcal{L}_{c
 - **两个定理的关系构建巧妙**: Theorem 1说明GC天然降低复杂度，Theorem 2说明攻击逆转这一过程，由此确定了防御的目标
 - **即插即用设计**: 作为正则化模块可与大多数GC方法兼容，不限于GCond
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 高斯曲率计算的复杂度为 $\mathcal{O}(n'(d')^6)$，虽然 $n'$ 小且用PCA降维，但在大规模图上可能仍有开销
 - 仅使用GCond作为骨干的实验，与轨迹匹配方法（SFGC/GEOM）的结合效果未知

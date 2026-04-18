@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OCR Hinders RAG: Evaluating the Cascading Impact of OCR on Retrieval-Augmented Generation
 description: >-
@@ -138,7 +138,7 @@ OHRBench 由三部分组成：
 - **扰动数据的生成方法论**（迭代交叉验证确保逼真度）可以推广到其他数据增强场景
 - **表格格式影响的发现**直接指导实际部署：BGE-M3 更理解 Markdown，LLM 更擅长 HTML/LaTeX 的合并单元格
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖中英文两种语言，未包含阿拉伯语、日语等 OCR 更具挑战的语言
 - 扰动方法基于图像层面，未考虑 PDF 原生文本提取（非 OCR 路径）的噪声

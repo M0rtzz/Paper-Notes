@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：用零填充实验证实——给 DiT 额外 token（零值 patch），它不会利用多余计算改善图像质量。注意力图显示零值 token 只关注其他零值 token，说明 DiT 无法重分配计算。
 
-**本文要解决什么？** 让 DiT 能灵活分配计算：把更多计算给困难区域，推理时按需调节总计算量。
+**本文目标** 让 DiT 能灵活分配计算：把更多计算给困难区域，推理时按需调节总计算量。
 
 **切入角度**：引入一个 latent domain 作为计算的"中间层"——Read 层从空间 token 选择性拉取信息到 latent，核心 Transformer 块在 latent 上操作，Write 层再写回空间。
 
-**核心 idea 一句话**：用可变长度的 latent interface 解耦图像分辨率与计算量，同时实现非均匀计算分配和弹性推理预算。
+**核心 idea**：用可变长度的 latent interface 解耦图像分辨率与计算量，同时实现非均匀计算分配和弹性推理预算。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 - **"Drop-in"设计哲学**：ELIT 只加了两层 cross-attention，保持 RF 目标和 DiT 结构不变。这种最小化改动的设计理念使得方法真正可用——可以直接应用到 DiT/U-ViT/HDiT/MMDiT。
 - **尾部丢弃 → 重要性排序**：训练时的随机丢弃让模型自动学会前面 latent 重要、后面次要。这和 NLP 的 token 重要性排序有相通之处。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Read/Write 层引入额外开销**：虽然是轻量 cross-attention，但在极短序列（低分辨率）时开销比例不可忽视
 - **未测试文本到图像**：所有实验基于 ImageNet 条件生成，未在 T2I 大规模模型上验证

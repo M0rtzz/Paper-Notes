@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Emergence of Superposition: Unveiling the Training Dynamics of Chain of Continuous Thought
 description: >-
@@ -47,25 +47,25 @@ tags:
 
 **1. Index-matching logit 的定义与分析**
 
-- **做什么**：定义 index-matching logit μ 来量化模型的局部搜索能力强度
+- **功能**：定义 index-matching logit μ 来量化模型的局部搜索能力强度
 - **核心思路**：μ 控制注意力机制中"当前已探索节点"对"边的源节点"的匹配强度。通过分析梯度流 $\dot{\mu}(t) = \frac{\alpha}{n\sqrt{K}}(d_{p_{c+1}} - F(\mu(t)))$ 证明 μ 在 Coconut 损失下收敛到有限值
 - **设计动机**：μ 太小则模型缺乏局部搜索能力（随机猜测），μ 太大则模型过度自信、仅依赖局部特征（如节点入度）丢弃正确路径
 
 **2. 有界 logit 导致叠加态涌现（Theorem 1）**
 
-- **做什么**：证明 Coconut 损失下的 attention logit 有界，而 Coconut-BFS 损失下的 logit 至少以对数速率发散
+- **功能**：证明 Coconut 损失下的 attention logit 有界，而 Coconut-BFS 损失下的 logit 至少以对数速率发散
 - **核心思路**：在 Coconut 训练中，只要目标节点入度 $d_\star < d_{max}$，μ(t) → μ* < ∞；而在 Coconut-BFS 中 μ(t) → ∞
 - **设计动机**：有界 logit 产生平滑的概率分布，使模型在不确定时对多条路径赋予相近权重（叠加态）；无界 logit 产生接近 one-hot 的分布，过度承诺于单条路径
 
 **3. 一步前沿扩展（Theorem 2）**
 
-- **做什么**：证明当 μ > 0 时，连续思维实现从 $\mathcal{N}_c$ 到 $\mathcal{N}_{c+1}$ 的一步扩展
+- **功能**：证明当 μ > 0 时，连续思维实现从 $\mathcal{N}_c$ 到 $\mathcal{N}_{c+1}$ 的一步扩展
 - **核心思路**：下一步思维的 token 投影 $\mathbf{U}^\top [t_{c+1}]$ 仅在一步扩展集 $\mathcal{N}_{c+1}$ 上有正质量，系数 $\beta_v$ 由 carryover（已在集合中的节点）和 one-hop expansion（新扩展的节点）两项组成
 - **设计动机**：验证训练得到的有界正 μ 确实能实现 BFS 风格的并行搜索
 
 **4. 预测阶段分析（Theorem 3）**
 
-- **做什么**：证明模型能利用生成的叠加态连续思维正确预测可达节点
+- **功能**：证明模型能利用生成的叠加态连续思维正确预测可达节点
 - **核心思路**：只有可达候选节点 c★ 同时具有正的 residual carryover 和 candidate lift，梯度流使 $(\mu_A(t), \mu_R(t))$ 的比值收敛到确保 c★ 获得最大 logit 的方向
 - **设计动机**：完成完整的端到端理论链——训练自然产生叠加态，叠加态支持正确预测
 
@@ -110,7 +110,7 @@ tags:
 - **exploration-exploitation 的新视角**：将注意力 logit 的有界性与推理中的探索-利用权衡直接联系，为理解 LLM 内部推理机制提供了新工具
 - **理论与实验高度一致**：logit 增长后饱和的实验曲线完美验证了理论预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 分析限于两层 Transformer + 线性注意力的简化设置，与实际深层 softmax 注意力的 Transformer 有差距
 2. 仅考虑有向图可达性问题，对更一般推理任务的推广需要额外工作

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Black Box to Biomarker: Sparse Autoencoders for Interpreting Speech Models of Parkinson's Disease
 description: >-
@@ -118,7 +118,7 @@ Quebec Parkinson Network (QPN)：208 名患者 + 52 名对照，Cookie Theft 图
 3. ⭐⭐⭐ **负面发现的启示**：raw 声学特征中提取的频谱通量本身不构成强预测基础（基线差），但 Whisper 通过其注意力机制对低能量区域的精准定位增强了这些特征的判别力
 4. ⭐⭐ **严谨的统计检验**：每个 speaker 仅取一个样本避免相关性膨胀，Bonferroni 校正 2112 次检验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集有限**：208+52 名受试者的单一数据集（QPN），泛化到其他语言/文化/数据集未验证
 2. **单一任务**：仅使用 Cookie Theft 图片描述任务，其他语音任务（如持续元音、朗读）的效果未知

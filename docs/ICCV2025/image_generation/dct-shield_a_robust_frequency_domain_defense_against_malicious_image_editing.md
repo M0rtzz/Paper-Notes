@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DCT-Shield: A Robust Frequency Domain Defense against Malicious Image Editing
 description: >-
@@ -134,7 +134,7 @@ DCT-Shield 对其他净化手段也表现出更强鲁棒性：AdvClean（LPIPS ~
 - **$Q_{alg}$ 提供可调鲁棒性范围**：用户可通过调整算法质量因子来控制鲁棒性-不可感知性权衡，这是像素空间方法无法实现的
 - **参数量减半**：利用JPEG的色度下采样特性，优化参数量从 $3HW$ 减至 $\sim 1.5HW$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要1000次PGD迭代优化每张图，计算开销仍然较大（虽然仅需VAE前向/反向传播）
 - 仅在512×512分辨率上验证，高分辨率图像需要更多DCT块和更长优化时间

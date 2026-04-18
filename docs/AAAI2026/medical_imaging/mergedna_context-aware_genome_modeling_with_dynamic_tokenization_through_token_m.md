@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging
 description: >-
@@ -67,7 +67,7 @@ MergeDNA 采用层次化 autoencoder 架构，包含四个模块：
 3. **参数高效**：380M 参数超越 1.3B 的 GENERator，压缩比到 $L \approx N/2$ 后还能保持性能
 4. **跨模态迁移**：在 RNA 和 protein 下游任务上也表现出良好的泛化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 预训练序列长度仅 4096，对于真实基因组级别（数百万 bases）仍显不足
 - Token merging 的 local window 固定为 16，可能限制了对更长 motif 的发现
 - 缺少与 Evo2 等超大规模模型的直接对比

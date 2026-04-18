@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safety is Not Only About Refusal: Reasoning-Enhanced Fine-tuning for Interpretable LLM Safety
 description: >-
@@ -131,7 +131,7 @@ $$\max_\theta \sum_{(p,r) \in \mathcal{D}_{rationale}} \log P_\theta(r | p)$$
 - **推理是安全的基础机制**：论文的核心论点——推理不仅是 LLM 的核心能力，也是安全对齐的基础机制——在实验中得到有力支持。
 - **实用的两分法**：writing style 攻击可通过推理泛化防御，persuasion 攻击需要显式对抗数据——这为安全数据集构建提供了清晰指导。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **主要应对单轮攻击**：多轮逐步升级的攻击（如 Crescendo）可能需要额外策略。
 2. **合规率仍低于 base model**：虽然加入良性推理有帮助，但完全恢复有用性需要更多数据精选研究。

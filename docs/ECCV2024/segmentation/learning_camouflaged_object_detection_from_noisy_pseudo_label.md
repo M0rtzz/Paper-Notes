@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Camouflaged Object Detection from Noisy Pseudo Label
 description: >-
@@ -115,7 +115,7 @@ WSSCOD 是一个两阶段方法：
 - 框标注在伪装场景有独特优势：可直接遮蔽复杂背景，降低伪装程度
 - 证实了 $\mathcal{L}_{NC}$ 的通用性：可直接替换现有方法的损失函数获得提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 框标注精度对最终结果有一定影响（类似多模态偏差问题）
 - 双分支融合仅用简单的 channel concatenation，更好的融合策略可进一步提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Multimodal LLMs to Generalist Embodied Agents: Methods and Lessons
 description: >-
@@ -32,11 +32,11 @@ GEA 将预训练的多模态 LLM（LLaVA-OneVision）通过学习式多具身动
 
 **核心矛盾**：跨域数据的动作空间和环境差异如此之大，简单混合会互相干扰；但分开训练又丧失了跨域迁移的收益。
 
-**本文要解决什么？** 如何设计统一的动作表示 + 训练策略，让一个 MLLM 成为跨越数字和物理世界的通用具身智能体？
+**本文目标** 如何设计统一的动作表示 + 训练策略，让一个 MLLM 成为跨越数字和物理世界的通用具身智能体？
 
 **切入角度**：用 Residual VQ-VAE 学习跨具身的连续动作分词器，把不同机器人的动作都编码成 LLM 词表中的 token；离散动作直接用自然语言表示。这样所有域的动作预测都归结为 next-token prediction。再加上在线 RL 解决 SFT 的 covariate shift 问题。
 
-**核心idea一句话**：用学习式动作分词器统一异构动作空间 + SFT 跨域微调 + 在线 PPO 强化学习，把 MLLM 变成通用具身智能体。
+**核心 idea**：用学习式动作分词器统一异构动作空间 + SFT 跨域微调 + 在线 PPO 强化学习，把 MLLM 变成通用具身智能体。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ Stage 1：标准自回归 cross-entropy loss on actions，学习率 1e-5，AdamW
 - **在线 RL 对具身智能体不可或缺**：这篇论文用严格实验证明了 SFT-only 的天花板，以及 Success SFT、Offline RL 的无效性。这个结论对所有想用 MLLM 做 agent 的工作都有指导意义
 - **跨域正迁移的实证证据**：不是手动设计的辅助任务，而是简单混合不同域数据就能带来提升，这暗示了不同具身任务之间共享底层能力（空间推理、物体关系理解等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 只用 3 帧历史观测作为上下文，在部分可观测任务（导航）上表现受限，需要更长的上下文或显式记忆
 - RL 只在 3 个域上做了（Habitat Pick、LangR、Procgen），其他域如 Maniskill 和 AndroidControl 表现还不够好，扩展 RL 到更多环境可能进一步提升
 - 无法零样本控制全新具身——仍需该具身类型的数据训练动作分词器

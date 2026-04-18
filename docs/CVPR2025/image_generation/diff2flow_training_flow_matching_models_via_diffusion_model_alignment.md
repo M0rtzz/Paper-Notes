@@ -1,4 +1,4 @@
-# Diff2Flow: Training Flow Matching Models via Diffusion Model Alignment
+﻿# Diff2Flow: Training Flow Matching Models via Diffusion Model Alignment
 
 **会议**: CVPR 2025  
 **arXiv**: [2506.02221](https://arxiv.org/abs/2506.02221)  
@@ -19,7 +19,7 @@
 
 **切入角度**：建立扩散和 FM 之间的精确数学映射——时间步重缩放、插值对齐、速度推导——使两者轨迹对齐后直接微调。
 
-**核心idea一句话**：可逆时间步映射 $f_t$ + 插值缩放 $1/(\alpha_t + \sigma_t)$ + v-参数化速度推导，实现扩散→FM 的无缝转换，支持 LoRA 微调和 reflow 两步生成。
+**核心 idea**：可逆时间步映射 $f_t$ + 插值缩放 $1/(\alpha_t + \sigma_t)$ + v-参数化速度推导，实现扩散→FM 的无缝转换，支持 LoRA 微调和 reflow 两步生成。
 
 ## 实验关键数据
 

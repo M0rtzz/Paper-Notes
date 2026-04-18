@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Ground Truth: Enhanced Supervision for Image Restoration
 description: >-
@@ -101,7 +101,7 @@ tags:
 - ORNet的模型无关特性极具实用价值：一次训练，适配所有修复模型
 - OOD鲁棒性表明ORNet学到的不仅是特定退化的修复
 
-## 局限性 / 可改进方向
+## 局限与展望
 - PSNR/SSIM等保真度指标可能略有下降（感知-失真trade-off）
 - 依赖预训练超分辨率模型的质量
 - 增强GT的"正确性"如何严格定义仍是开放问题

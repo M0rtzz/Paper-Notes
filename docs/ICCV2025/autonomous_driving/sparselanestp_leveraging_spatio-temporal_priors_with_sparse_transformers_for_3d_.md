@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SparseLaneSTP: Leveraging Spatio-Temporal Priors with Sparse Transformers for 3D Lane Detection
 description: >-
@@ -129,7 +129,7 @@ SparseLaneSTP 的输入为单帧 RGB 图像 $\mathbf{I} \in \mathbb{R}^{H \times
 - 时序信息对遮挡/低可见度场景的恢复效果显著（定性结果 Fig. 6 中非时序模型丢失检测而时序模型保持稳定）
 - 额外贡献了高质量 3D 车道线数据集（250m 范围，含遮挡标注），基于自标注管线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用单目前视摄像头，未探索多摄像头环视场景
 - 自标注数据集依赖 2D 检测器和视觉里程计的质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Region Representation Learning from Urban Imagery with Noisy Long-Caption Supervision
 description: >-
@@ -105,7 +105,7 @@ BJ 数据集上平均 R²/RMSE/MAE 提升分别为 18.23%/7.84%/8.32%。
 3. **多模型共识替代人工标注**：无需 ground-truth 描述即可评估描述质量，实用性强
 4. **跨城市迁移能力强**：表明框架学到的是通用城市语义而非城市特定特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **卫星影像在细粒度任务上表现有限**：NY 数据集上 UrbanLN+SI 在犯罪和 POI 预测上不如街景影像方案，卫星影像分辨率和视角是固有瓶颈
 2. **描述生成管线复杂度高**：需要 5 个 MLLM + SAM + Factual parser + OWLv2，虽归为数据预处理但部署成本不低
 3. **仅验证了 ViT-B/16 骨干**：未探索更大 ViT 或不同视觉编码器的效果

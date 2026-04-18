@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hide and Find: A Distributed Adversarial Attack on Federated Graph Learning
 description: >-
@@ -102,7 +102,7 @@ $$L_{\text{stage2}} = L_{\text{attack}} + \lambda_{\text{homo}} L_{\text{homo}}$
 4. **多客户端扰动聚合**：不同恶意客户端产生的互补扰动聚合后效果远超单一扰动
 5. **实验全面扎实**：6 个跨领域大规模数据集、3 种防御算法、详尽的消融和超参分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **威胁模型假设较强**：攻击者需在联邦训练全程参与，实际场景中恶意客户端可能被动态踢出
 2. **仅针对图分类任务**：未验证在节点分类、链接预测等其他图任务上的表现
 3. **防御方法有限**：仅测试了 3 种防御算法，未包含更新的防御方法如 FLTrust、FLAME 等

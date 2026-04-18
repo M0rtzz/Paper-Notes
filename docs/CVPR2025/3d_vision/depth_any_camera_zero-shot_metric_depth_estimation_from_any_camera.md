@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Depth Any Camera: Zero-Shot Metric Depth Estimation from Any Camera
 description: >-
@@ -104,7 +104,7 @@ DAC 以等距矩形投影 (ERP) 作为统一图像表示，训练时将各种相
 - **欧几里得距离 vs Z-buffer**: 在球面投影下使用欧几里得距离的必要性是重要的工程洞察
 - **与 Metric3D 的互补**: DAC 不替换 Metric3D 的管线，而是提供更优的统一表示空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 室外场景提升有限，受限于训练数据 pitch 分布窄
 - 未尝试与更强的 backbone (DINOv2 ViT-G) 结合

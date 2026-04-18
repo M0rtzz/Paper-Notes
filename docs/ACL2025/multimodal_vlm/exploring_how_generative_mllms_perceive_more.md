@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring How Generative MLLMs Perceive More Than CLIP with the Same Vision Encoder
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 相同的视觉编码器和权重，CLIP提取不到的信息，生成式MLLM却能提取，说明信息提取策略更为关键。
 
-**本文要解决什么**: 找出生成式MLLM优于CLIP的核心设计选择，为改进CLIP类模型提供方向。
+**本文目标**: 找出生成式MLLM优于CLIP的核心设计选择，为改进CLIP类模型提供方向。
 
 **切入角度**: 在What'sUp、Winoground等挑战性基准上进行对照实验，逐一剖析训练数据、token使用、位置编码、语言模型、训练目标等因素。
 
-**核心idea一句话**: 生成式MLLM的优势来自架构设计（patch tokens + RoPE + prompt加权），而非更好的训练数据或更强的文本编码器。
+**核心 idea**: 生成式MLLM的优势来自架构设计（patch tokens + RoPE + prompt加权），而非更好的训练数据或更强的文本编码器。
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ tags:
 - 精心设计的对照实验，逐一排除因素，方法论值得学习
 - 细粒度推理不是生成模型独有的能力，对比模型也可以通过架构改进获得
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要聚焦于What'sUp空间推理，其他视觉推理任务的泛化性待验证
 - 对照实验中freeze了视觉编码器，未充分探索解冻后的效果

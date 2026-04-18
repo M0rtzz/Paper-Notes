@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring Neural Granger Causality with xLSTMs: Unveiling Temporal Dependencies in Complex Data
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{\text{pred}}(\mathbf{S}; \phi_v, \theta_v) + \lambda \log\left(\s
 4. **高效**：单 GPU 训练不超过 1.5 小时，时间和空间复杂度相对变量数近似线性增长
 5. **真实数据上的可解释性**：在动作捕捉和天气数据上提取的因果关系具有直观物理意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏收敛性理论保证**：虽有模型类充分性分析，但无法对算法收敛性给出严格数学证明
 2. **变量规模有限**：实验最多数十个变量，未验证在高维度（数百/数千变量）场景的可扩展性

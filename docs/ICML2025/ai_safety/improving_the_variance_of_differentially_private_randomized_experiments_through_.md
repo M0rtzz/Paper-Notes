@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving the Variance of Differentially Private Randomized Experiments through Clustering
 description: >-
@@ -137,7 +137,7 @@ tags:
 4. **用户级数据输出**：不同于聚合方法，Cluster-DP 输出用户级差分隐私数据，支持广告商做任意后续分析（post-processing 保证隐私）
 5. **簇内同质性的量化定义**（Definition 3.4）简洁且有实际可解释性：超总体意义下就是 Var(y(a)) - Var(E[y(a)|c])
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **离散结果空间要求**：响应空间 𝒴 需为有限集，连续结果需要先分箱。分箱粒度的选择增加了超参数调节负担
 2. **聚类质量的事先获取**：需要预先确定好的聚类结构。虽然 Remark 2.1 讨论了 DP 聚类的可能性，但会消耗额外隐私预算

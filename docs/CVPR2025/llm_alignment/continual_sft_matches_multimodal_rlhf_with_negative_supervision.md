@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continual SFT Matches Multimodal RLHF with Negative Supervision
 description: >-
@@ -120,7 +120,7 @@ SOTA 对比（混合 15k 数据，与 SeVa、SIMA 等方法在其各自最优设
 - **"把 RLHF 的隐式信号显式化"的范式很有启发**：不去优化 pairwise loss，而是先用外部工具（LLM + 错误码表）把信息提取出来再做 SFT，这种思路可以推广到其他 RLHF 场景（如代码生成、数学推理）。
 - **视觉错误码表设计巧妙**：通过预定义的细粒度错误类型来引导 LLM 的注意力，避免生成笼统的纠正数据。Wordcloud 可视化很好地说明了有无 VEC 的区别。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖 GPT-4 进行数据构造**：nSFT 的数据构造依赖强大的 LLM（GPT-4），增加了 API 成本，且构造质量受限于 LLM 的能力。可以探索用开源 LLM 或自模型迭代构造。
 - **仅验证了多模态场景**：作者自己指出，尚不清楚 nSFT 是否适用于 NLP 领域的 RLHF（如减毒、风格迁移），因为错误类型和构造方式可能完全不同。
 - **Vision Error Codebook 需要人工设计**：当前码表覆盖的是视觉理解常见错误，迁移到其他任务需要重新设计。

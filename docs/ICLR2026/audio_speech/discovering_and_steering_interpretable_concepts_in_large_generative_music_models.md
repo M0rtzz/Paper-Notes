@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Discovering and Steering Interpretable Concepts in Large Generative Music Models
 description: >-
@@ -114,7 +114,7 @@ $$\mathbf{x}' = \mathbf{x} + \alpha \cdot \beta \cdot \mathbf{W}_{d,j}$$
 - **完整评估体系**：结合多模态 LLM、预训练分类器、CLAP 对齐和人工验证的多层次评估流水线
 - **可控生成验证**：steering 实验从因果层面证明发现的特征确实对应模型内部的**可操作方向**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Steering 成功率仅 15%–35%，多数特征虽可解释但不一定可操控
 - 仅在 MusicGen 上验证，未测试 diffusion-based 音乐生成模型或其他架构

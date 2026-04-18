@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Information-Computation Tradeoffs for Noiseless Linear Regression with Oblivious Contamination
 description: >-
@@ -136,7 +136,7 @@ $$\tilde{\Omega}\left(\frac{d^{1/2}}{\alpha^2}\right)$$
 3. **问题的基础性**：Oblivious污染是半参数统计中的经典模型，结果对更广泛的鲁棒估计问题有指导意义
 4. **清晰的开放问题**：明确指出 $d$ 依赖的差距为后续工作提供方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **$d$ 依赖的差距**：下界 $d^{1/2}/\alpha^2$ vs 上界 $d/\alpha^2$，中间有 $\sqrt{d}$ 的差距待关闭
 2. **SQ模型的局限性**：SQ下界不排除非SQ类型算法（如基于SOS hierarchy）打破下界的可能

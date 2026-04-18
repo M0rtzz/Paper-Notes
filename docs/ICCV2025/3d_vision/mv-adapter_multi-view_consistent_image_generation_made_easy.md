@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MV-Adapter: Multi-view Consistent Image Generation Made Easy
 description: >-
@@ -136,7 +136,7 @@ $$f^{self} = \text{SelfAttn}(f^{in}) + \text{MultiViewAttn}(f^{in}) + \text{Imag
 3. **零初始化策略**：新层输出投影零初始化，确保训练开始时不破坏原始特征空间
 4. **解耦学习范式**：提供了一种通用框架，可扩展到建模物理知识、时序知识等新类型知识
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **固定视角数量**：当前每种应用需单独训练不同视角数的adapter
 2. **3D一致性仍有提升空间**：依赖后处理获取最终3D模型

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Lost-in-Retrieval Problems in RAG Multi-Hop QA
 description: >-
@@ -149,7 +149,7 @@ ChainRAG 为**无训练方法（train-free）**，所有组件使用现成模型
 3. **重写 > 构建 KG**：相比 GraphRAG/HippoRAG 需要 LLM 抽取实体关系构建知识图谱的高成本方案，子问题重写是一种更轻量的替代
 4. **效率优势**：比 LongRAG 平均减少 17.3% LLM 调用次数，比 HippoRAG 少数倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **迭代过程仍有额外开销**：虽然比 HippoRAG 高效得多，但相比 NaiveRAG 和 Iter-RetGen 仍需更多 LLM 调用
 2. **领域适应性未验证**：三个数据集均为通用领域（维基百科），高度专业化场景（法律、医学）的效果未知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Flow Fields in Attention for Controllable Person Image Generation
 description: >-
@@ -125,7 +125,7 @@ Paired FID 从 3.99 降至 **2.06** (−48.4%)，提升极为显著。
 4. **统一框架**: 一个 baseline 同时处理虚拟试衣和姿态迁移两个任务，架构简洁
 5. **DressCode 上极大提升** (Paired FID 2.06)：说明在复杂衣物品类上 Leffa 的细节保持优势更突出
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 基于 SD1.5 构建，迁移到 **SDXL/SD3** 等更强基座可能进一步提升效果
 2. 当参考图和目标图之间存在**严重遮挡**或**大角度变化**时，flow field 假设（单一对应关系）可能不成立

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Clipping Improves Adam-Norm and AdaGrad-Norm when the Noise Is Heavy-Tailed
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**：Adam 和 Clip-SGD 看似相似，但 Adam 是否真的不需要额外裁剪？
 
-**本文要解决什么**：严格回答"AdaGrad/Adam 在重尾噪声下是否需要梯度裁剪"。
+**本文目标**：严格回答"AdaGrad/Adam 在重尾噪声下是否需要梯度裁剪"。
 
 **切入角度**：构造反例证明 AdaGrad/Adam 在重尾噪声下的高概率收敛确实很差（负面结果），然后证明加入裁剪后收敛显著改善（正面结果）。
 
@@ -124,7 +124,7 @@ tags:
 - 延迟步长的扩展使理论对分布式 LLM 训练有实际指导价值
 - 对优化器设计者和 LLM 训练工程师都有直接影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 负面结果基于特定构造的问题实例——在"典型"DL问题上 Adam 的实际表现可能不那么差
 - 裁剪阈值的理论最优选择需要知道 $\alpha$——实践中 $\alpha$ 未知
 - 仅分析了 Adam-Norm（一维步长），完整的 coordinate-wise Adam 待分析

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Constant Stepsize Local GD for Logistic Regression: Acceleration by Instability
 description: >-
@@ -88,7 +88,7 @@ $$F(\mathbf{w}_R) \leq \widetilde{\mathcal{O}}\left(\frac{M}{\gamma^5 R^2}\right
 - **问题特定分析的价值**：用窄而精确的分析（逻辑回归）揭示通用分析遗漏的现象，为理论与实践对齐提供了范例
 - **优雅的分解技术**：$\beta$ 系数将 Local GD 轨迹与 GD 轨迹联系起来，上下界分析巧妙（下界 $1/K$ 虽简单但紧致到对数因子）
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **Local GD 效果不如 GD**：当前保证 $M/(\gamma^5 R^2)$ 比单机 GD 的 $1/(\gamma^4 R^2)$ 差，未能证明 $K > 1$ 的收益
 2. **$\eta$ 和 $K$ 仅以乘积 $\eta K$ 出现**：理论不能区分不同 $(η, K)$ 组合（只要 $\eta K$ 相同），与实验中观察到的 $K$ 独立效益矛盾
 3. **$\gamma$ 依赖性次优**：源于控制偏差项 $\|\mathbf{b}_r\|$ 时需要额外的 $\gamma$ 因子（Lemma B.2），改进需要 Local GD 隐式偏差的分析

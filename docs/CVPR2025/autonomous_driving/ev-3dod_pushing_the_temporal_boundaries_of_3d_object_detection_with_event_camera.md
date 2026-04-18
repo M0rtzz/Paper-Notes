@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EV-3DOD: Pushing the Temporal Boundaries of 3D Object Detection with Event Cameras
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：利用已有的LiDAR 3D特征作为锚点，将2D事件投影到3D空间中与LiDAR体素对齐，通过隐式运动场估计帧间物体的3D运动。
 
-**核心idea一句话**：事件→3D投影→与LiDAR体素融合→运动场估计 = 帧间100FPS连续3D检测。
+**核心 idea**：事件→3D投影→与LiDAR体素融合→运动场估计 = 帧间100FPS连续3D检测。
 
 ## 方法详解
 
@@ -88,7 +88,7 @@ $\mathcal{L} = \mathcal{L}_{RPN} + \lambda_1 \mathcal{L}_{reg} + \lambda_2 \math
 - **填补了3D检测的时间空白**——将检测频率从10Hz提升到100Hz，对高速自动驾驶有直接安全价值
 - **事件相机与LiDAR首次在3D空间融合**——两种异构传感器的优势互补（LiDAR提供几何结构，事件相机提供时间密度）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要精确的事件相机与LiDAR标定，对标定误差敏感
 - 低运动场景事件数据稀疏，检测质量下降
 - 真实事件相机数据集（DSEC-3DOD）规模较小

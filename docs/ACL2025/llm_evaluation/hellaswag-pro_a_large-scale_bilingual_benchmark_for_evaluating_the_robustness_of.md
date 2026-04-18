@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HellaSwag-Pro: A Large-Scale Bilingual Benchmark for Evaluating the Robustness of LLMs in Commonsense Reasoning
 description: >-
@@ -122,7 +122,7 @@ tags:
 - 否定变换 9.01% 的准确率是一个极具冲击力的发现——远低于随机猜测的 25%，说明模型不仅无法处理否定，反而被否定系统性地误导
 - 双语评估揭示了语言训练充分度对鲁棒性的直接影响，为多语言模型的训练策略提供数据支撑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 变体生成主要依赖 Qwen-Max，可能引入该模型的偏差（尽管有人工验证）
 - 仅覆盖中英双语，扩展到更多语言（尤其是低资源语言）的价值更大

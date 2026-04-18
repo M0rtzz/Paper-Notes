@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EPO: Diverse and Realistic Protein Ensemble Generation via Energy Preference Optimization
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：想要多样且物理真实的构象集合，但(a)MD太慢、(b)生成模型不遵循热力学、(c)pairwise优化损害多样性。
 
-**本文要解决什么？** 仅用能量信号（无需MD轨迹）对齐生成器产生物理真实且多样的蛋白质构象集合。
+**本文目标** 仅用能量信号（无需MD轨迹）对齐生成器产生物理真实且多样的蛋白质构象集合。
 
 **切入角度**：(1) ODE→SDE转换增加随机性逃离局部最小值；(2) listwise替代pairwise保留ensemble多样性；(3) Jensen不等式推导可计算的上界。
 
-**核心idea一句话**：listwise能量排序偏好优化+SDE随机性=多样且物理真实的构象集合，无需MD模拟。
+**核心 idea**：listwise能量排序偏好优化+SDE随机性=多样且物理真实的构象集合，无需MD模拟。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ Listwise LiPO损失+LoRA在线迭代更新。能量通过力场计算（无需MD
 - **Listwise的多样性保持**在所有需要ensemble多样性的场景都适用——不仅是蛋白质，也适用于分子生成、材料设计等。
 - **ODE→SDE的简单转换**带来了质的飞跃——在能量景观中增加随机性就能探索到稀有但重要的构象。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在小蛋白质上验证（Tetrapeptides/Fast-Folding），大蛋白质的适用性未知
 - 能量函数的准确性是上限——如果力场不准则对齐目标也不准
 - LoRA在线更新的稳定性在长时间训练中可能退化

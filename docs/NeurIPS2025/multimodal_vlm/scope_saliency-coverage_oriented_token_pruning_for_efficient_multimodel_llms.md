@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SCOPE: Saliency-Coverage Oriented Token Pruning for Efficient Multimodal LLMs
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **子模函数最大化的贪心策略**天然适合 Token 选择问题，这个连接虽然自然但之前没人做过，是本文核心贡献
 - 方法的时间复杂度是 $O(NK)$，对于 $N=576, K=64$ 只需约 36K 次相似度比较，几乎不影响推理速度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前 SCOPE 在 MLLM 的某一层做一次剪枝，渐进式多层剪枝可能更好（如 PyramidDrop 的思路）
 - 覆盖率基于余弦相似度来衡量语义接近性，但余弦相似度在高维空间不一定能精确反映语义关系
 - 未考虑文本 Token 与视觉 Token 的交互，可以结合问题内容做自适应剪枝

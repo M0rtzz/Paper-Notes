@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Curve-Aware Gaussian Splatting for 3D Parametric Curve Reconstruction
 description: >-
@@ -139,7 +139,7 @@ ABC-NEF 数据集（82 个 ABC 模型，DexiNed 边缘检测器）:
 - **自适应拓扑**: 训练中从大量初始曲线逐步精炼到少量精确曲线，与传统 3DGS 的 "从少到多" 相反
 - **参数极致紧凑**: 每条曲线仅需 4 个控制点 + 2 个标量，远少于独立高斯的参数量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 2D 边缘检测器的质量（不同检测器影响 ~15% 的 F5）
 - 随机初始化可能需要更多迭代才能收敛到最优拓扑

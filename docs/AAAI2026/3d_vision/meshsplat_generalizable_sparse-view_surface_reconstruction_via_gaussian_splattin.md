@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MeshSplat: Generalizable Sparse-View Surface Reconstruction via Gaussian Splatting
 description: >-
@@ -172,7 +172,7 @@ Scannet数据集消融：
 3. **不确定性引导采样**：在法线损失中基于 $\kappa$ 采样，让网络聚焦于不确定区域学习，提高训练效率
 4. **自监督几何学习**：整个框架不需要3D ground truth，仅通过NVS监督学习几何
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 弱纹理区域可能预测不连续的深度图（虽然RGB渲染可靠）
 - 无法重建输入视图未观察到的区域

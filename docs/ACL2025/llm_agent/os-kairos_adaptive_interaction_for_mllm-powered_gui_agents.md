@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OS-Kairos: Adaptive Interaction for MLLM-Powered GUI Agents
 description: >-
@@ -51,7 +51,7 @@ OS-Kairos 的 pipeline 分三步：
 
 ### 关键设计 1：协作探测框架 (Collaborative Probing Framework)
 
-- **做什么**：自动为探测 Agent（OS-Atlas-Pro-7B）在每个交互步骤标注 1-5 分的置信度分数，同时生成高质量 GUI 轨迹数据
+- **功能**：自动为探测 Agent（OS-Atlas-Pro-7B）在每个交互步骤标注 1-5 分的置信度分数，同时生成高质量 GUI 轨迹数据
 - **核心思路**：Agent-Critic 协作范式。Agent（OS-Atlas-Pro-7B）负责预测动作，Critic（GPT-4o + 布局解析模型）负责评分和监督：
     - Agent 预测当前步动作 $a_t^p$
     - Critic 根据截图、计划表、历史轨迹综合评估，输出 1-5 分的 $\text{score}_t$
@@ -63,7 +63,7 @@ OS-Kairos 的 pipeline 分三步：
 
 ### 关键设计 2：置信度驱动交互 (Confidence-driven Interaction)
 
-- **做什么**：将置信度评分能力集成进 GUI Agent，使其在每步同时输出动作和置信度，并根据置信度自适应决定是否请求人类干预
+- **功能**：将置信度评分能力集成进 GUI Agent，使其在每步同时输出动作和置信度，并根据置信度自适应决定是否请求人类干预
 - **核心思路**：
     - **训练**：将动作预测和置信度分数拼接为一个序列，用标准 next-token prediction 训练：$\mathcal{L} = \sum_{i=1}^{N} \mathcal{P}_\theta((a_t || \text{score}_t)^i | P_p(s_t, \tau_i, h_{t-1}, (a_t || \text{score}_t)^{<i}))$
     - **推理**：引入阈值 $\gamma$，当 $\text{score}_t < \gamma$ 时触发人类干预，否则自主执行
@@ -141,7 +141,7 @@ OS-Kairos 的 pipeline 分三步：
 - **阈值提供了连续的人机控制谱**：从全自主到全交互可以平滑调节，不同应用场景可根据安全需求灵活配置
 - **三类过度执行场景的分类**：模糊指令 / 意外中断 / 环境劫持，为 GUI Agent 安全性研究提供了清晰的问题框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Critic 模型依赖 GPT-4o**：置信度标注质量高度依赖 Critic 能力，换用 Qwen-VL-MAX 后 HSR 从 86.87% 降到 57.63%。未来可探索自监督或 RL 方式获取置信度信号
 2. **场景覆盖有限**：仅覆盖三类典型复杂场景（12 个 APP、12 个主题），真实世界的长尾场景远多于此

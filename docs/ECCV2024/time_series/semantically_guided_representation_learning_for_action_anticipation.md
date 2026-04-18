@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semantically Guided Representation Learning For Action Anticipation
 description: >-
@@ -124,7 +124,7 @@ $$\mathcal{L}_{tot} = \lambda_1 \mathcal{L}_{Sem} + \lambda_2 \mathcal{L}_{Cls} 
 4. **仅 RGB 即超越多模态**：在 EGTEA Gaze+ 上使用单 RGB 模态即超过使用三模态的 HRO
 5. **计算效率**：可使用少量原型子集近似完整原型，大幅降低计算量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏内建多模态机制**：当前多模态结果依赖后期融合（late fusion），没有在架构层面集成多模态信息
 2. **语义关系未考虑时序**：当前建模的是动作共现关系，未显式考虑动作的先后顺序。考虑顺序可缩小未来预测的不确定性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRAM: Generative Recommendation via Semantic-aware Multi-granular Late Fusion
 description: >-
@@ -111,7 +111,7 @@ GRAM 基于 T5 encoder-decoder 架构，包含两个核心组件协同工作：*
 - **两个创新正交互补**——语义翻译解决"编码什么信息"，迟融合解决"怎么高效利用"，缺一不可
 - **对尾部物品的巨大改善**（R@5 +42.6%）揭示了生成式推荐在长尾场景的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 层次聚类依赖文本嵌入质量，对嵌入模型的选择敏感
 - 仅在 T5-small 上验证，更大规模 LLM 上的效果未知

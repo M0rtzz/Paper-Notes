@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Generalization Result for Convergence in Learning-to-Optimize
 description: >-
@@ -163,7 +163,7 @@ $$\rho[\mathbb{P}_{(P,\xi)|H}\{\mathsf{A}_{\mathrm{conv}}\}] \geq 1 - \Phi_{\lam
 4. **可测性证明的技术深度**：证明 $\mathsf{A}_{\mathrm{conv}}$ 的可测性是高度非平凡的，需要利用 Polish 空间的结构性质
 5. **理论与实验的一致性**：实验完美验证了理论预测的不等式链 $1 - \Phi^{-1}(\ldots) \leq \mathbb{P}\{\mathsf{A}\} \leq \mathbb{P}\{\mathsf{A}_{\mathrm{conv}}\}$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **有限迭代的近似**：实践中无法验证无限步迭代的条件，只能在 $t_{\mathrm{train}}$ 步内检验，这是对理论结果的近似
 2. **不适用于随机优化**：充分下降条件要求每步损失严格下降，这在 mini-batch SGD 等随机场景中不成立

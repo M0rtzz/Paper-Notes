@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joint Self-Supervised Video Alignment and Action Segmentation
 description: >-
@@ -138,7 +138,7 @@ $$\mathcal{L}_{joint} = w_{align}\mathcal{L}_{xy} + w_{seg}(\mathcal{L}_{xa} + \
 - 多任务学习的不对称互惠发现令人启发：细粒度任务（对齐）可以提升粗粒度任务（分割），反之则不然
 - 虚拟帧的简单设计有效处理了实际视频中的背景/冗余帧
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 动作类别数 K 需要预先设定为 GT 值，限制了完全无监督的应用
 - 多任务中 $w_{align}$ 和 $w_{seg}$ 仅用简单等权，更高级的多任务权重学习策略可进一步提升

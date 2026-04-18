@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Format Matters: The Robustness of Multimodal LLMs in Reviewing Evidence from Tables and Charts
 description: >-
@@ -131,7 +131,7 @@ tags:
 - **LLaVA-v1.6-34B的异常模式**：大模型反而在图表理解上表现最差（33.4%），且组合输入也无法提升，暗示某些架构设计可能不利于视觉推理
 - **实际应用启示**：在构建自动化审稿系统时，应优先将图表转换为结构化表格再进行推理，而非直接处理图像
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据规模较小：SciTabAlign+仅162条声明匹配图表，ChartMimic+仅152条
 - 仅关注柱状图和折线图，未涵盖热力图、散点图、箱线图等更多图表类型
 - 未探索多图表/子图场景

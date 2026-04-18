@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DANCE: Density-Agnostic and Class-Aware Network for Point Cloud Completion
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{total} = \lambda \cdot \text{CD}(P^{pred}, P^{GT}) + (1-\lambda) 
 4. **射线采样策略**：NeRF 思想巧妙迁移至点云补全，提供结构化的候选点分布。
 5. **推理时密度可控**：调整 $R$ 即可灵活改变输出分辨率，实用性强。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **固定视点配置**：当前使用固定的六面体视点和均匀网格，对高度不对称或复杂结构物体可能不是最优采样策略。
 2. **候选点数量开销**：$M = V \cdot R^2$ 在 $R$ 较大时会产生大量候选点，计算开销增加。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 图像子采样几乎不影响LM收敛质量，说明3DGS优化具有良好的局部性质
 - 仅5次LM迭代 vs 10K ADAM迭代即可达到相同质量，更新效率提升1000倍以上
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 内存开销大：缓存需要约53GB GPU显存，而基线仅需6-11GB，限制了在消费级GPU上的使用
 - 目前不支持在densification阶段使用LM优化器，需要先用ADAM完成densification
 - SSIM梯度计算做了简化近似（忽略邻域像素的贡献），可能影响收敛精度

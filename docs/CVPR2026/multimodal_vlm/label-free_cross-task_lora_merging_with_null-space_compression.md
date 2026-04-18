@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Label-Free Cross-Task LoRA Merging with Null-Space Compression
 description: >-
@@ -116,7 +116,7 @@ tags:
 - Gram逆缓存技巧很实用：将计算瓶颈从 $O(d^2)$ 降为 $O(r^2)$（r<<d）
 - 无标签+无输出的特性使其成为最"轻量"的梯度引导合并方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仍需少量无标签数据进行优化，不是完全数据无关的
 - 异构视觉任务上归一化性能仍只有92%，距离单任务微调有显著差距

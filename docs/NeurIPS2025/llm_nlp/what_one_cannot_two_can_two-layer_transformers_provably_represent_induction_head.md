@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What One Cannot, Two Can: Two-Layer Transformers Provably Represent Induction Heads on Any-Order Markov Chains
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：注意到 MLP（含 ReLU + LayerNorm）可以从注意力输出中反向提取缺失的信息——让 MLP 承担第二个注意力头的角色
 
-**核心idea一句话**：用 MLP 的非线性（ReLU 过滤 + LayerNorm 归一化）从第一层注意力输出中分离关键 token 嵌入，替代三层构造中的第二个注意力操作
+**核心 idea**：用 MLP 的非线性（ReLU 过滤 + LayerNorm 归一化）从第一层注意力输出中分离关键 token 嵌入，替代三层构造中的第二个注意力操作
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **深度-宽度权衡的精确刻画**：2层2头 vs 3层1头 vs 2层1头，形成完整的帕累托前沿
 - **$3^i$ 进制编码技巧**：用指数加权让 one-hot 编码的混合体可唯一解码，这个技巧可迁移到其他需要在固定维度中编码变长序列信息的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 梯度下降分析仅覆盖一阶情况，高阶情况的学习动态仍未解决
 - 构造是存在性证明（constructive），但实际训练出的网络权重不一定采用这种构造
 - 仅验证了马尔可夫序列，真实自然语言的分布复杂得多

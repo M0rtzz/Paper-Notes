@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HyGen: Efficient LLM Serving via Elastic Online-Offline Request Co-location
 description: >-
@@ -105,7 +105,7 @@ HyGen采用双队列架构，将延迟敏感的在线请求与吞吐导向的离
 - **SLO感知分析器弥合了单batch与统计SLO之间的gap**：这是一个被很多系统工作忽略的关键细节——P99 TBT SLO约束的不是每个batch的延迟，而是所有请求的TBT分布的第99百分位。分析器通过profiling建立了这层映射，使得batch级延迟预测可以直接服务于统计级SLO保证
 - **前缀共享与SLO调度的统一框架**：将cache优化和延迟管理在同一调度流程中协同解决，避免了分别优化可能的冲突
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 线性回归预测器在模型架构差异大或use case差异大时可能需要重新profiling，跨模型架构的自适应能力有限
 - 主要验证了decoder-only模型（Llama/Qwen/Yi/Mistral），encoder-decoder架构（如T5）或MoE模型（如Mixtral）的适用性未探索
 - PSM的公平性扩展（防止饥饿的utility ratio机制）虽有理论分析但缺乏大规模长时间运行的实验验证

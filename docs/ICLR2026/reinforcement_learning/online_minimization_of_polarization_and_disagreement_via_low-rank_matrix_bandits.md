@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Minimization of Polarization and Disagreement via Low-Rank Matrix Bandits
 description: >-
@@ -113,7 +113,7 @@ Diverse arm regime下 $\kappa$ 合理（≈0.4-0.5），Local regime因arm近共
 - 从 $|V|^2$ 到 $O(|V|)$ 的维度降低同时改善统计效率和计算效率
 - 仅需标量反馈（全局极化+分歧值），无需观测个体观点，隐私友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RSC参数 $\kappa$ 在Local arm regime下极小，理论界可能过于悲观
 - 仅考虑标量均衡反馈，更丰富的信号（如社区级极化）可改善性能

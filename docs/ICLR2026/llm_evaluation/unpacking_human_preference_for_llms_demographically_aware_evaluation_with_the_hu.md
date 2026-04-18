@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unpacking Human Preference for LLMs: Demographically Aware Evaluation with the HUMAINE Framework
 description: >-
@@ -129,7 +129,7 @@ HUMAINE 基于心理测量学原理，包含四个层次：
 3. **活动排行榜设计**：作为"living benchmark"定期更新，解决了静态排行榜快速过时的问题
 4. **LLM Judge 的恰当使用**：将 LLM 评判严格限制在事后解释性分析中，不用于生成竞争排名，避免了 LLM-as-Judge 的偏差干扰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **地理局限**：仅覆盖美国和英国，文化背景对偏好的影响可能更大
 2. **人口维度不完整**：缺少性别、教育水平、社会经济地位等维度

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] See, Symbolize, Act: Grounding VLMs with Spatial Representations for Better Gameplay
 description: >-
@@ -139,7 +139,7 @@ VLM越来越多地被用于构建通用AI智能体，不仅要理解视觉场景
 - **噪声消融**首次量化了"坐标误差→决策退化"的传播关系
 - 实验扩展到VizDoom和AI2-THOR证明了发现的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **环境有限**：尽管扩展到3个环境，但仍是游戏场景，与真实世界机器人控制有差距
 - **API成本**：每帧调用VLM API，延迟和费用使实时游戏不可行

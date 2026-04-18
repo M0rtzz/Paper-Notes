@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Masked Angle-Aware Autoencoder for Remote Sensing Images
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L}_{rec} = \mathcal{L}_{MSE}(b^m, \hat{b}^m) + \mathcal{L}_{OT}(r, \h
 - **计算代价小**：相比 MAE，仅增加约 0.2 小时/epoch 的训练时间，额外参数极少
 - 仅用简单的 ViT-B backbone 即超越了使用更复杂架构（ViTAE+RVSA）的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 角度感知对**人造目标**（车辆、建筑等）更有价值，对大面积自然地物（林地、水域）收益有限
 - 未考虑**尺度因素**——遥感图像的多尺度特性与角度同样重要，两者的联合建模值得探索

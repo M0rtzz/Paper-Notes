@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ensemble++: Scalable Exploration via Ensemble
 description: >-
@@ -81,7 +81,7 @@ Ensemble++ 维护一个共享矩阵因子 $\mathbf{A}_t \in \mathbb{R}^{d \times
 - **统一性**：同一算法无需修改即可处理紧致/有限动作集 × 不变/时变上下文四种组合
 - **Sequential JL 引理**：提出适应性数据收集下的序列 Johnson-Lindenstrauss 变体，解决了标准 JL 要求独立投影的限制
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 神经扩展缺乏严格的理论保证，仅有线性情况的理论分析
 - 计算复杂度 $O(d^3\log T)$ 相比精确 TS 的 $O(d^3)$ 有额外 $\log T$ 因子
 - 未在真正大规模 LLM agent 场景中验证，仅用了 GPT-2 level

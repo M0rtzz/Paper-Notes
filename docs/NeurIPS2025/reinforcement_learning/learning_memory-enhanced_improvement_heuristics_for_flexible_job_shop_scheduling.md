@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Memory-Enhanced Improvement Heuristics for Flexible Job Shop Scheduling
 description: >-
@@ -135,7 +135,7 @@ tags:
 - **动作空间压缩**：利用 FJSP 约束将空间从 $O(|\mathcal{O}|^2|\mathcal{M}|)$ 降到 $O(|\mathcal{O}|^2)$，加速收敛
 - **并行贪心策略兼顾效率和质量**：单次迭代探索 $P$ 个候选解，极大减少所需迭代次数，运行时间仅为规则方法的 1/3~1/5
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **并行规模 $P$ 为超参数**：最优 $P$ 取决于实例特征，未来可设计自适应调整机制
 2. **Nopt2 邻域的局部性**：仅在关键路径上做单工序移除-重插入，无法实现大范围重构，对初始解质量仍有一定依赖

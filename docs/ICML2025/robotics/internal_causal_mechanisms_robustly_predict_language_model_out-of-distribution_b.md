@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Internal Causal Mechanisms Robustly Predict Language Model Out-of-Distribution Behaviors
 description: >-
@@ -45,7 +45,7 @@ tags:
 
 #### 1. 反事实模拟（Counterfactual Simulation）
 
-**做什么**：检查模型是否在新输入上正确计算了关键因果变量。
+**功能**：检查模型是否在新输入上正确计算了关键因果变量。
 
 **核心思路**：给定高层因果模型 $\mathcal{H}: \mathcal{X} \to \mathcal{V} \to \mathcal{Y}$，通过对背景变量边缘化估计 $P(Y|V)$：
 
@@ -59,7 +59,7 @@ $$f(\mathcal{M}, x_{\text{test}}) = \frac{1}{kn}\sum_{i=1}^k \sum_{t=1}^n -y_{\t
 
 #### 2. 值探测（Value Probing）
 
-**做什么**：在因果变量的表示子空间中学习决策边界来预测正确性。
+**功能**：在因果变量的表示子空间中学习决策边界来预测正确性。
 
 **核心思路**：训练线性分类器 $\tau$ 区分因果变量 $\mathcal{V}$ 的不同取值，用最高类别概率预测正确性：
 
@@ -120,7 +120,7 @@ $$r_{\text{inv},i} = (I - Q^\top Q)r_{\text{base},i} + Q^\top Q \cdot r_{\text{s
 - 揭示了一个关键洞察：在海量内部特征中，只有因果相关的极少数特征能在OOD下保持预测力
 - 实验覆盖从符号任务到知识检索到指令跟随的广谱任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预先识别的因果机制（高层模型由人工设计），限制了通用性
 - 反事实模拟需 $k$ 次前向传播，计算开销约为标准推理的5-20倍

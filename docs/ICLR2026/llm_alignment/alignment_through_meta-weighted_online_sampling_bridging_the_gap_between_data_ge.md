@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Alignment through Meta-Weighted Online Sampling: Bridging the Gap between Data Generation and Preference Optimization
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：offline数据高效多样但分布不对齐，online数据分布对齐但缺多样性和质量——需要根据模型当前状态动态平衡两者。
 
-**本文要解决什么**：设计一个将数据生成与偏好优化紧密耦合的自适应框架——让模型自己决定"哪些样本需要在线重新采样"以及"offline/online各占多少权重"。
+**本文目标**：设计一个将数据生成与偏好优化紧密耦合的自适应框架——让模型自己决定"哪些样本需要在线重新采样"以及"offline/online各占多少权重"。
 
 **切入角度**：用元学习器将每个样本的DPO偏好得分映射为权重，低权重触发在线重采样，高权重保留offline数据——weight既控制采样又控制训练。
 
-**核心idea一句话**：一个meta-learner同时担任"对齐差距估计器"和"样本权重指派器"，将在线采样和偏好优化紧密耦合。
+**核心 idea**：一个meta-learner同时担任"对齐差距估计器"和"样本权重指派器"，将在线采样和偏好优化紧密耦合。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ MetaAPO在所有三个benchmark上一致超越offline、online和hybrid基线。
 - **42%标注成本节省**——在性能提升的同时还减少了成本，这是工程上非常有吸引力的结果
 - 理论泛化界（Theorem 1）为"简单meta-learner+充足buffer"的设计提供了理论支撑
 
-## 局限性 / 可改进方向
+## 局限与展望
 - meta-learner输入仅为标量DPO偏好得分，信息量有限——加入更丰富的特征（如prompt难度、response长度/多样性）可能进一步提升
 - 在线采样仍需reward model标注，reward model本身的质量/bias未被讨论
 - 单epoch训练，更长训练可能暴露meta-learner漂移问题

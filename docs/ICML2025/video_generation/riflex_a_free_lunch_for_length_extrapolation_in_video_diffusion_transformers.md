@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RIFLEx: A Free Lunch for Length Extrapolation in Video Diffusion Transformers
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：逐一隔离RoPE中的各频率分量，通过置零+微调实验分析其对视频生成的影响。
 
-**核心idea一句话**：降低"固有频率"使其在外推长度内保持不超过一个完整周期，即可消除重复。
+**核心 idea**：降低"固有频率"使其在外推长度内保持不超过一个完整周期，即可消除重复。
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ RIFLEx分三步：(1) 分析RoPE各频率分量 $\theta_j$ 的周期 $N_j = 2\pi
 - 为现有方法（PE/PI/NTK/YaRN/TASR）的失败提供了统一的原理性解释
 - 时间外推 + 空间外推 + 联合外推的统一框架，展示了该insight的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 固有频率的识别需要预先生成视频观察重复帧位置，缺少自动化方法
 - 3×外推仍需微调，更大倍数外推（4×+）的效果未知
 - 仅在CogVideoX-5B和HunyuanVideo两个模型上验证

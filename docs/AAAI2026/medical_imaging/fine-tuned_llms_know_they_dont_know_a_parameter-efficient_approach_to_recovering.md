@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fine-Tuned LLMs Know They Don't Know: A Parameter-Efficient Approach to Recovering Honesty
 description: >-
@@ -174,7 +174,7 @@ $$W_{j,i}^{HCNR} = \begin{cases} W_{j,i}^{orig} + [\sum_{k \in A_j^{task}} c_{j,
 4. **$R_{IW}$ 与 $R_{CW}$ 的不对称行为**：$R_{IW}$ 快速饱和（层内神经元选择不太敏感），$R_{CW}$ 有明确最优值 0.3-0.4（说明跨层选择更关键）
 5. **Pareto 前沿超越**：在任务-诚实性权衡图上，HCNR 的 Pareto 前沿严格优于所有 baseline
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **恢复到预训练状态的假设**：假设预训练状态的诚实性最优，但对齐后的状态可能更好
 2. **Fisher/Hessian 计算的近似**：使用对角 Fisher 近似和有限数据计算 Hessian，精度受数据量影响

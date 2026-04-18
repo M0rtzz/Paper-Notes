@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Omni-MMSI: Toward Identity-Attributed Social Interaction Understanding
 description: >-
@@ -152,7 +152,7 @@ Omni-MMSI-R 在身份归因上超越 Omni-LLM 约 23.7%（Ego4D）和 18.9%（Yo
 - **工具 + LLM 推理**的组合比纯端到端 LLM 更可靠——特定任务的轻量工具（Whisper/YOLO/SpeechBrain/OSNet）在身份归因上远超通用 LLM
 - CoT 粒度实验的发现（3-step 反而差）很有实践意义：推理链设计需要匹配模型能力和训练数据量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 参考对需要手动构建（每个参与者的上半身图像 + 语音片段），自动化参考获取是重要方向
 2. 总体准确率仍然较低（Ego4D 43%、YouTube 47%），距离实际部署还有距离

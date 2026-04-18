@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can3Tok: Canonical 3D Tokenization and Latent Modeling of Scene-Level 3D Gaussians
 description: >-
@@ -82,7 +82,7 @@ tags:
 - **潜在空间结构分析**: t-SNE可视化显示同一场景不同旋转在潜在空间形成闭环，证明模型学到了空间结构而非简单记忆
 - **与Stable Diffusion兼容**: 潜在空间大小64×64×4完全匹配，可直接接入现有扩散架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 2.5%失败率来自训练数据中低质量3DGS重建(运动模糊/视角不均)
 - 仅限3DGS表示
 - 语义过滤可能丢弃重要场景内容

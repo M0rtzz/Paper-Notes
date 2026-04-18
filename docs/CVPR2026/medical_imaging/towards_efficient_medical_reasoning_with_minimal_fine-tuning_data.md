@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Efficient Medical Reasoning with Minimal Fine-Tuning Data
 description: >-
@@ -104,7 +104,7 @@ DIQ 将每个训练样本投射到二维空间：(1) **难度分数** — 模型
 - 连接了数据选择与临床推理质量——DIQ 不仅提升 benchmark 分数，也提升推理对齐度
 - 象限化选择策略直观且可解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 影响力分数在训练前一次性计算，未考虑训练过程中分数的动态变化
 - 仅在 ≤32B 模型上验证，未在 70B+ 模型上测试

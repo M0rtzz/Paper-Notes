@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMo: Controllable Motion Generation Through Language Guided Pose Code Editing
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L}_{\text{rec}} = \mathcal{L}_1(X, X_{\text{rec}}) + 0.5 \cdot \mathc
 3. **直接编辑源动作**：与基于文本重新生成的方法不同，CoMo 直接修改源动作编码，更好地保持未编辑部分的一致性
 4. **生成与编辑统一框架**：同一套 pose code 表示同时支持文本驱动生成和交互式编辑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **局部运动学描述为主**：当前 pose code 侧重局部关节状态，缺少速度、风格、轨迹、动作重复等全局描述符
 2. **物理可行性无约束**：LLM 编辑 pose code 时不保证生成物理上合理的动作序列，可能产生不自然的结果

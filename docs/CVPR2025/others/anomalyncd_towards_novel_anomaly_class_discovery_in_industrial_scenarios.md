@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnomalyNCD: Towards Novel Anomaly Class Discovery in Industrial Scenarios
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：设计 MEBin 将异常从检测结果中隔离 → 裁剪为异常中心子图 → 掩码引导注意力强制 [CLS] token 关注异常区域。
 
-**核心 idea 一句话**：异常中心裁剪 + 掩码引导 ViT 注意力 = 让分类网络"看到"弱语义异常。
+**核心 idea**：异常中心裁剪 + 掩码引导 ViT 注意力 = 让分类网络"看到"弱语义异常。
 
 ## 方法详解
 
@@ -133,7 +133,7 @@ $$\mathcal{L} = \lambda(\mathcal{L}_{rep}^l + \mathcal{L}_{cls}^l) + (1-\lambda)
 - 掩码注意力设计优雅，仅修改 CLS token 的注意力即可
 - 支持复合异常（同一图像含多种异常类型）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能受前置 AD 方法质量影响（EfficientAD 异常概率跨度大导致效果差）
 - MEBin 计算基于 CPU（OpenCV 连通域分析），占推理 80%+ 时间
 - 需要已知新类别数 $\mathcal{C}_u$ 作为先验

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ego4o: Egocentric Human Motion Capture and Understanding from Multi-Modal Input
 description: >-
@@ -102,7 +102,7 @@ $$Q^* = \arg\min_Q \lambda_a L_a(J, A) + \lambda_r L_r(J, R)$$
 - **随机掩码训练**策略简单但极其有效，使单一模型适配所有可能的输入组合
 - 将运动码本作为LLM的新"语言"是一个优雅的跨模态桥接方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要完整运动序列作为输入，引入了延迟，不适用于实时在线应用
 - 测试时优化虽然提升了精度，但引入了额外的推理时间成本

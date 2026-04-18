@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AHAN: Asymmetric Hierarchical Attention Network for Identical Twin Face Verification
 description: >-
@@ -104,7 +104,7 @@ General Verification 场景：AHAN 达到 99.1% Acc / 99.8% AUC / 97.2% TAR@1%FA
 - TA-PWCA 训练时使用双胞胎作为最难干扰样本但推理时移除，零额外推理开销
 - 消融实验充分，逐个模块和组合的贡献都有清晰量化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 ND_TWIN 单一数据集上评估，缺乏跨数据集泛化验证
 - 严重姿态变化 (>45 度)、大面积遮挡 (>40%)、大时间跨度 (>5年) 下性能下降
 - 依赖人脸关键点检测（MediaPipe），极端条件下可能失败；未来可探索无关键点方案

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OPEN: Object-wise Position Embedding for Multi-view 3D Object Detection
 description: >-
@@ -140,7 +140,7 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{PDE} + \lambda_2 \mathcal{L}_{ODE} + \lam
 - **即插即用**：OPE 可方便地替换现有 DETR 系检测器中的位置编码模块
 - 在不增加复杂推理流程的前提下，通过更好的深度表示显著提升了远距离检测能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ODE 的目标深度监督依赖 3D GT 框投影，仍需精确的 3D 标注
 - 目前 ODE 逐像素预测目标深度，对无物体区域的预测是冗余的，可考虑稀疏化

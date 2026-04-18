@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] You Only Learn One Query: Learning Unified Human Query for Single-Stage Multi-Person Multi-Task Human-Centric Perception
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 不同 HCP 任务需要不同粒度的特征——检测需要全局语义、属性需要全局+局部语义、分割需要细粒度语义、姿态需要细粒度定位，如何用统一表示兼顾多粒度需求。
 
-**本文要解决什么?** 设计单阶段单模型框架同时处理所有代表性 HCP 任务，并构建对应的统一评估基准。
+**本文目标** 设计单阶段单模型框架同时处理所有代表性 HCP 任务，并构建对应的统一评估基准。
 
 **切入角度**: 借鉴 DETR 系列的 query 学习思想，将每个人体实例编码为一个统一的 Human Query，该 query 同时承载多粒度信息供各任务使用。
 
-**核心idea一句话**: 学习一个 all-in-one 的 Human Query 表示，编码每个人体实例的全局/局部外观特征和粗糙/精细定位特征，通过共享 Transformer 解码器和轻量级任务专用头完成多任务统一推理。
+**核心 idea**: 学习一个 all-in-one 的 Human Query 表示，编码每个人体实例的全局/局部外观特征和粗糙/精细定位特征，通过共享 Transformer 解码器和轻量级任务专用头完成多任务统一推理。
 
 ## 方法详解
 
@@ -58,19 +58,19 @@ HQNet 由四个关键组件构成：
 
 1. **Human Query（统一人体查询表示）**:
 
-    - **做什么**: 将 DETR 中的 object query 扩展为承载多粒度人体信息的统一表示
+    - **功能**: 将 DETR 中的 object query 扩展为承载多粒度人体信息的统一表示
     - **核心思路**: query 由 positional query（4D anchor box 编码中心坐标和宽高）和 content query 组成。Content query 即 Human Query，通过共享解码器的多层 deformable attention 与图像特征交互，编码实例级的全局/局部外观特征和粗糙/精细定位特征
     - **设计动机**: 不同 HCP 任务关注不同粒度的特征，一个足够丰富的统一表示可以同时服务于所有任务，同时利用任务间的协同效应
 
 2. **HumanQuery-Instance Matching (HQ-Ins Matching)**:
 
-    - **做什么**: 在训练时综合多个任务的损失进行 query-GT 匹配
+    - **功能**: 在训练时综合多个任务的损失进行 query-GT 匹配
     - **核心思路**: 匹配代价为 $\lambda_{cls}L_{cls} + \lambda_{det}L_{det} + \lambda_{seg}L_{seg} + \lambda_{pose}L_{pose}$，综合考虑分类、检测、分割和姿态损失
     - **设计动机**: 传统 DETR 仅用检测损失匹配，可能出现一个人的姿态被匹配到另一个人的情况。HQ-Ins Matching 通过多任务联合约束确保每个 query 对所有任务都一致地映射到同一个 GT 实例
 
 3. **Gender-aided human Model Selection (GaMS)**:
 
-    - **做什么**: 利用性别预测结果选择对应的 SMPL 人体模型（男性/女性/中性）进行 3D Mesh 恢复
+    - **功能**: 利用性别预测结果选择对应的 SMPL 人体模型（男性/女性/中性）进行 3D Mesh 恢复
     - **核心思路**: 训练和推理时根据性别标签/预测选择不同版本的 SMPL 模型
     - **设计动机**: 以往工作因缺乏性别标注只能用中性模型，COCO-UniHuman 提供了性别标注，可利用任务间协同提升 3D 重建精度
 
@@ -164,7 +164,7 @@ HQNet 由四个关键组件构成：
 - **零样本 MOT 能力**: Human Query 未经 MOT 训练却能作为 Re-ID 特征实现竞争性跟踪性能，说明学到的表示具有深层次的实例判别能力
 - **实用性**: 单阶段推理效率不随人数增长，适合实际部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集的性别分布不均衡（男:女 ≈ 65:35），可能引入偏差
 - 年龄分布偏向 25-35 岁，对儿童和老年人的估计能力可能不足

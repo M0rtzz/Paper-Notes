@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReferSplat: Referring Segmentation in 3D Gaussian Splatting
 description: >-
@@ -90,7 +90,7 @@ ReferSplat 含三个核心组件：(1) 3D Gaussian Referring Fields；(2) 位置
 - 文本位置从 Gaussian 间接推断的双向设计巧妙
 - 置信度加权 IoU 伪标签策略简单有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Ref-LERF 规模较小（4 场景、295 条描述），泛化性待验证
 - 伪标签上限约 50% mIoU，制约最终性能
 - 复杂自然语言表达（否定、条件等）尚未测试

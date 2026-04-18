@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WaterMod: Modular Token-Rank Partitioning for Probability-Balanced LLM Watermarking
 description: >-
@@ -170,7 +170,7 @@ WaterMod 是**推理时水印**，无需额外训练。关键配置：
 - **多比特扩展自然**：从 $k=2$ 到 $k>2$ 不需要任何架构改变，只改一个超参
 - **符合 Kerckhoffs 原则**：安全性依赖密钥 $K$，不依赖算法保密
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **C4 上检测率不是最高**：AUROC 87.09 低于 SynthID-Text 的 94.36，在高熵自然语言场景中仍有改进空间
 2. **仅在 Qwen-2.5-1.5B 上评估**：虽声称方法与模型无关，但未在更大模型（7B, 70B）上验证

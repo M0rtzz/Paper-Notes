@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KINDLE: Knowledge-Guided Distillation for Prior-Free Gene Regulatory Network Inference
 description: >-
@@ -123,7 +123,7 @@ $$\hat{\mathbf{A}} = \frac{1}{H}\sum_{g=1}^{H}\mathbf{A}^{(g)}$$
 4. **强生物学验证**：不仅在基准指标上领先，还在 TF 功能识别和基因敲除效应预测上得到生物学印证
 5. **实用价值高**：推断时完全不需要额外组学数据，大幅降低使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据类型受限**：依赖时序基因表达数据，无法直接应用于单一时间点的静态 scRNA-seq 数据
 2. **偏差传播风险**：学生模型可能继承教师模型训练阶段因不完整/噪声先验引入的系统性偏差

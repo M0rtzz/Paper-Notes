@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Hybrid SE(3)-Equivariant Visuomotor Flow Policy via Spherical Harmonics
 description: >-
@@ -151,7 +151,7 @@ E3Flow（图2）的流程：
 4. **端到端等变证明**：从输入到输出的完整等变链条有严格数学保证
 5. **实际部署潜力**：0.51s推理时间 + 100演示数据效率 → 适合真实机器人场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - EquiformerV2的单次前传虽比ET-SEED快，但仍是推理瓶颈所在
 - 仅验证了SE(3)等变，对更一般的对称群（如尺度变换SIM(3)）未探索

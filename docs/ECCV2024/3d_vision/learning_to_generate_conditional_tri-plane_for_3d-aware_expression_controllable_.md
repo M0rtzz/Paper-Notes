@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Generate Conditional Tri-Plane for 3D-Aware Expression Controllable Portrait Animation
 description: >-
@@ -123,7 +123,7 @@ EAdaLN vs 交叉注意力：EAdaLN在CSIM（0.811 vs 0.678）和AED（0.082 vs 0
 - **正交基设计**: 将3DMM的正交结构思想引入学习的表情空间，通过QR分解保证基的正交性，实现可解释的表情方向控制
 - **EAdaLN的设计哲学**: 表情作为全局语义信号通过归一化层注入，比交叉注意力更适合这种"调制"而非"选择"的需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖3DMM提取表情参数，对遮挡或极端角度可能提取不准确
 - 超分辨率依赖卷积上采样，可能引入模糊，未探索扩散模型等更强的超分方案

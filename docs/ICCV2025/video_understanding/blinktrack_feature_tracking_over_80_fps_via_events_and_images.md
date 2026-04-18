@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BlinkTrack: Feature Tracking over 80 FPS via Events and Images
 description: >-
@@ -122,7 +122,7 @@ BlinkTrack 包含三个核心组件：
 - 两个模块通过卡尔曼滤波低耦合连接，支持模块化替换和异步推理
 - 自建数据集填补了事件相机特征跟踪在遮挡标注方面的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 网络容量和感受野可能限制当前性能上限
 - MultiTrack 训练数据未建模运动模糊，在 EDS 上图像模块+卡尔曼略有性能损失

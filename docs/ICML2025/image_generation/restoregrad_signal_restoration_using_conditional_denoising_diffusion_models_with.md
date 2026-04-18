@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RestoreGrad: Signal Restoration Using Conditional Denoising Diffusion Models with Jointly Learned Prior
 description: >-
@@ -137,7 +137,7 @@ Posterior Net 对稳定训练和提升性能至关重要。
 4. **训练与推理双重加速**：5-10× 训练加速 + 2-2.5× 推理步数减少，实用价值突出
 5. **Posterior Net 的巧妙设计**：训练时利用 ground truth 信息指导先验学习，推理时丢弃 Posterior Net，无额外推理成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **先验形式受限**：目前假设零均值高斯，仅学习协方差；对于均值非零或非高斯分布场景可能不够灵活
 2. **仅验证在信号恢复任务**：未探索条件生成（如 text-to-image、text-to-speech）等更广泛的应用

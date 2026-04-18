@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lost in Time? A Meta-Learning Framework for Time-Shift-Tolerant Physiological Signal Transformation
 description: >-
@@ -123,7 +123,7 @@ ShiftSyncNet 达到 AAMI 标准（MAE < 5 mmHg），相比未校正的 Inception
 - 不是简单丢弃错位样本，而是"纠正后复用"，最大化数据利用率，这在实际场景中信号对齐标注稀缺时特别有价值
 - 元学习框架的通用性强，SyncNet 的设计不依赖特定的 TransNet 架构，理论上可扩展到其他存在时间对齐问题的序列到序列任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 时间偏移通过人工注入模拟，真实场景中偏移可能更加复杂（非均匀、时变偏移）
 - 需要少量对齐的元数据集作为指导信号，这在某些实际场景中可能难以获取

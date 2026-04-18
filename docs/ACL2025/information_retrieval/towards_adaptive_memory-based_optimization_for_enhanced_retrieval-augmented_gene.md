@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Adaptive Memory-Based Optimization for Enhanced Retrieval-Augmented Generation
 description: >-
@@ -111,7 +111,7 @@ Amber 是一个自适应记忆更新的迭代式 RAG 框架，由三个核心组
 - 两级过滤（chunk → sentence）在保留信息的同时有效降噪，思路简洁有效
 - AIC 基于当前记忆动态生成新查询的设计，解决了固定查询在多跳推理中信息不足的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多 Agent 对话的计算开销较大，每轮迭代需要多次 LLM 调用
 - 迭代次数的控制依赖 AIC 的自适应判断，可能存在过早停止或过度迭代的风险

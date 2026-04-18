@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks
 description: >-
@@ -227,7 +227,7 @@ $$\mathbf{x}_i^{\text{node}} = [\mathbf{h}_i^{\text{node}}; \mathbf{p}_i]$$
 4. **效率与性能兼顾**: 17× 加速的同时性能大幅领先，得益于 time-then-graph 架构只需做一次 GNN
 5. **临床可解释性**: 动态图可视化直接对应癫痫不同阶段的脑区连接变化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **早期预测仍有差距**: 在预测任务上虽然领先 GNN 模型，但 LaBraM 等大规模预训练模型在某些指标上仍有优势(受益于大规模预训练和更多参数)
 2. **任务泛化性**: 仅在癫痫任务上验证，尚未推广到其他 EEG 任务(如情感识别、运动想象、睡眠分期等)

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Universal Spectral Tokenization via Self-Supervised Panchromatic Representation Learning
 description: >-
@@ -105,7 +105,7 @@ tags:
 - 预训练表征无需红移信息即可工作，打破了"先估红移再分析"的循环依赖
 - 架构设计的领域无关性使其成为科学基础模型的潜在构建模块
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前未进行掩码自编码或对比学习等更高级的预训练目标实验
 - 下游任务使用简单的均值池化，损失了序列内部的波长依赖信息
 - 未展示跨巡天迁移学习的能力（如用一个巡天训练，另一个巡天测试）

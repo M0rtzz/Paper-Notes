@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Simple and Critical Iterative Denoising: A Recasting of Discrete Diffusion in Graph Generation
 description: >-
@@ -133,7 +133,7 @@ $$C^*({\hat{z}_{1|t}}) = \frac{\alpha_t \cdot p_{\text{data}}(\hat{z}_{1|t})}{\a
 4. **Critic 的 GAN 式动机**：最优 Critic 的形式类似 GAN 的判别器（比较 $p_{\text{data}}$ 与 $p_{\text{pred}}$），但用于指导重加噪而非对抗训练
 5. **噪声分布的实证洞察**：边缘分布（marginal）一致优于 mask 分布用于图生成，mask 扩散的复合误差问题尤其严重
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在图/分子任务上验证**：未在文本、蛋白质等其他离散结构上进行实验，通用性有待验证
 2. **Critic 在通用图上收益有限**：Planar/SBM 上 CID 相比 SID 提升不大，假设是因为通用图的数据分布偏差更分散

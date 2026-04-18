@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting
 description: >-
@@ -125,7 +125,7 @@ tags:
 - **逆投影的工程细节**：层次聚类处理前景/背景分离、WPCA 确定旋转、Frobenius 范数校准缩放的三步流程，为 2D→3D 反投影提供了完整的技术方案
 - **参数效率**：仅用二阶 SH 即可超越 SOTA，每原语节省 21 个参数，有利于低端硬件部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在 NeRF Synthetic 等简单合成场景上表现略逊于 DBS，因材质和光照变化有限难以发挥 opacity lobe 叠加优势
 - 训练数据使用 sRGB 色彩空间（非线性），过曝像素会导致漫反射/高光分离出现伪影
 - 增强高斯的比例固定为 10%，缺乏对场景复杂度的自适应调整机制

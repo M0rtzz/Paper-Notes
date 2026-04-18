@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Intra-view and Inter-view Correlation Guided Multi-view Novel Class Discovery
 description: >-
@@ -128,7 +128,7 @@ IICMVNCD 是一个端到端的一阶段方法，包含三个核心组件：
 - **闭式解的交替优化**使方法高效且收敛有保证，这在 NCD 领域少见
 - 视图权重学习机制将已知类的视图关系"迁移"到新类，利用了 NCD 中有标注数据的独特优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 矩阵分解假设线性特征空间，对于复杂非线性特征分布可能不够表达
 - 需要预知新类数量 $k_u$，这在实际应用中可能不切实际

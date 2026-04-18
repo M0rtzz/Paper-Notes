@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniSync: Towards Universal Lip Synchronization via Diffusion Transformers
 description: >-
@@ -119,7 +119,7 @@ OmniSync的pipeline很直观：给定一段源视频 $V_{cd}$ 和目标音频 $A
 - **AIGC-LipSync Benchmark**：首个针对AI生成视频唇形同步的评估基准（615个视频，含真人/风格化/非人类角色），填补了领域空白
 - **工程扎实**：64×A100训练80小时，支持无限时长推理，user study有39人评估、Cronbach's α=0.98
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **LSE-C指标未最优**：在HDTF上LatentSync的LSE-C(8.05)略高于OmniSync(7.31)，因为LatentSync使用了SyncNet-based loss约束。未来可以考虑结合SyncNet损失进一步提升唇形精度
 - **训练和推理成本较高**：64×A100训练、推理需50步去噪，实时性和可及性受限

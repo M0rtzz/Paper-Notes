@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Foveate: Enhancing Diversity and Difficulty of Synthesized Instructions from Unsupervised Text via Multi-Level Foveation
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{D}_{\text{gen}} = \mathcal{F}(\mathcal{D}) = \bigcup_{d_i \in \mathca
 3. **反向合成的创新**：先有答案再生成问题的思路，有效避免了 LLM 忽略细粒度信息的问题
 4. **实用价值高**：方法无需人工标注，可直接应用于任何无监督文本语料
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖教师 LLM（GPT-4o mini / DeepSeek-V3）进行指令合成，合成质量受限于教师能力
 2. 注视元素的过滤使用简单的嵌入相似度，可能遗漏语义相关但表述差异大的信息

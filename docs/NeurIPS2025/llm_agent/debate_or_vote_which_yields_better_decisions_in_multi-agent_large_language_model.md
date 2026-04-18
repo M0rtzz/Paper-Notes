@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：如果大部分性能提升来自简单集成（majority voting），那 MAD 中额外的辩论、通信、架构设计等复杂性就不值得。
 
-**本文要解决什么？** 严格分离 MAD 中"集成"和"辩论"的贡献，从理论上解释为什么辩论本身不能系统性提升性能。
+**本文目标** 严格分离 MAD 中"集成"和"辩论"的贡献，从理论上解释为什么辩论本身不能系统性提升性能。
 
 **切入角度**：将 MAD 形式化为贝叶斯信念更新过程，用 Dirichlet-Compound-Multinomial (DCM) 模型刻画 agent 行为，证明辩论构成 martingale。
 
-**核心idea一句话**：辩论在期望意义上不改善正确率（martingale），大部分性能来自多数投票的集成效应。
+**核心 idea**：辩论在期望意义上不改善正确率（martingale），大部分性能来自多数投票的集成效应。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **"简单即强大"的反直觉结论**：在多 agent LLM 系统中，简单的投票策略就能获得大部分收益，复杂的辩论架构可能是过度工程
 - **理论指导设计**：从 martingale 理论出发，提出"偏向正确信号"的改进方向，从理论分析直接产出可操作的设计原则
 
-## 局限性 / 可改进方向
+## 局限与展望
 - DCM 模型对 LLM 行为的近似可能不完美——真实 LLM 的信念更新不完全符合贝叶斯共轭
 - 实验主要用 7B/8B 模型，更大模型的辩论动态可能不同（但 32B 实验显示结论一致）
 - MAD-oracle 需要 ground truth，实用变体（confidence-based）的效果有限

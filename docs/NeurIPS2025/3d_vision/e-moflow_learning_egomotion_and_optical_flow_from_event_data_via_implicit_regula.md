@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E-MoFlow: Learning Egomotion and Optical Flow from Event Data via Implicit Regularization
 description: >-
@@ -133,7 +133,7 @@ $$\min_{\theta, \beta} \mathbb{E}_{t_{\text{ref}}} [L_{\text{flow}}(\mathcal{E}_
 3. **完全无监督**：不需要任何标注、深度或灰度图像监督
 4. 光流+自运动联合估计在事件相机领域具有重要意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 逐序列优化（test-time optimization），推理效率较低
 - dt=4 大运动场景下性能不如 MultiCM-V2，大位移仍是挑战

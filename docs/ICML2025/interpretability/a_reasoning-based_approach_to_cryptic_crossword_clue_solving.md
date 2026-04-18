@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Reasoning-Based Approach to Cryptic Crossword Clue Solving
 description: >-
@@ -201,7 +201,7 @@ AssertionError: action_type('goes crazy', Action.ANAGRAM):
 
 6. **Base模型 > Instruct模型**：答案生成需要"出人意料"的猜测，instruction tuning反而抑制了这种能力，这对任务特性与模型选择有启发意义
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **候选答案覆盖率瓶颈**：系统准确率受限于候选答案阶段——如果top-20中不包含正确答案（约55%的情况），后续验证无从做起。提升候选生成质量是最直接的改进方向
 

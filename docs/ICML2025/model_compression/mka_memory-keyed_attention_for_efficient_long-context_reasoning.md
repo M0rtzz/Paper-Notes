@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MKA: Memory-Keyed Attention for Efficient Long-Context Reasoning
 description: >-
@@ -153,7 +153,7 @@ FastMKA KV cache 比 MHA 减少 66.8%，且因融合 KV 张量的连续内存访
 - LongBench (128K)：FastMKA 平均 54.5 vs MLA 55.0，差距仅 0.5 分
 - RULER Passkey (128K)：FastMKA 73.4% vs MLA 74.8%，差距 1.4%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **PPL 略有损失**：FastMKA 用效率换精度，PPL 始终略高于 MLA（约 1-2%）。对精度要求极高的场景（如代码生成），这种 trade-off 可能不可接受。
 2. **实验规模有限**：仅在 WikiText-2 上 fine-tune 1 epoch，未在大规模预训练中验证。7B/14B 的结论能否推广到 70B+ 模型存疑。

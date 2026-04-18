@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E2EGS: Event-to-Edge Gaussian Splatting for Pose-Free 3D Reconstruction
 description: >-
@@ -126,7 +126,7 @@ Edge ratio $r_\text{edge}$ 消融：$r_\text{edge} = 0.0$ → ATE 5.68cm；$r_\t
 - **Inverse depth sampling** 的几何直觉值得借鉴：远处点对旋转更敏感→在远处多采样→提升旋转估计的可观测性。这个 insight 可迁移到其他需要深度初始化的 SLAM 系统
 - **边缘加权损失**本质上是一种注意力机制：让优化聚焦于信息量最丰富的像素，而非被噪声像素的梯度淹没
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 边缘提取策略偏保守（prioritize reliability over completeness），在弱几何结构区域（如大面积无纹理墙面）可能提取不到足够边缘
 - 事件相机在无纹理平面区域天然产生稀疏响应，限制了这些区域的高斯质量（作者承认）

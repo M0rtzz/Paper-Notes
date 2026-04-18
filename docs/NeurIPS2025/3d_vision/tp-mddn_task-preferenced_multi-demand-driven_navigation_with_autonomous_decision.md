@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TP-MDDN: Task-Preferenced Multi-Demand-Driven Navigation with Autonomous Decision-Making
 description: >-
@@ -116,7 +116,7 @@ tags:
 - **效率与性能平衡**：双节奏设计避免了每步调用LLM的巨大开销，同时保持了强推理能力
 - **MASMap的轻量级设计**：3D点云检测后只保留2D中心坐标，大幅减少存储开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 双节奏动作生成框架存在非自愿模式切换问题，慢节奏和快节奏之间的过渡不总是平滑
 - 过度依赖预训练大语言模型可能导致指令误判进而影响导航决策

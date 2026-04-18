@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ByteEdit: Boost, Comply and Accelerate Generative Image Editing
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L}_{\text{reward}}(\phi) = -\mathbb{E}\sum_{\theta \in \{\alpha, \bet
 3. **一石二鸟的 $R_\gamma$**：一致性奖励模型既提供反馈信号又充当 GAN 判别器
 4. **无蒸馏加速**：仅靠渐进训练 + 奖励模型监督实现极少步推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未公开代码和模型，可复现性受限
 2. 评估主要基于主观用户研究和 CLIP/BLIP 分数，缺乏更多客观基准

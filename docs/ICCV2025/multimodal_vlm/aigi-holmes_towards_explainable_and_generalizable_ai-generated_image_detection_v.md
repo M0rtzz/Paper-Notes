@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AIGI-Holmes: Towards Explainable and Generalizable AI-Generated Image Detection via Multimodal Large Language Models
 description: >-
@@ -181,7 +181,7 @@ AIGI-Holmes 在所有生成器上均达到 98%+ 的准确率，Mean Acc. 比 AID
 3. **推理阶段的创新**：Collaborative Decoding 不增加训练成本，仅在推理时引入视觉专家判断，是一种低成本且高效的泛化增强策略
 4. **Multi-Expert Jury 数据标注方法**：用多个 MLLM 交叉标注取代昂贵的 GPT-4o/人工标注，降低成本的同时保证质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理开销**：协同解码需要同时运行 MLLM 和视觉专家，增加了推理时间
 2. **基座模型依赖**：基于 LLaVA-1.6-mistral-7B，换用更强的 MLLM 基座可能进一步提升

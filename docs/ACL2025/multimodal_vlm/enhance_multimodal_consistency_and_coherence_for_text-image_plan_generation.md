@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhance Multimodal Consistency and Coherence for Text-Image Plan Generation
 description: >-
@@ -153,7 +153,7 @@ Goal: [描述]
 3. **问题定义清晰**：首次系统化地研究多模态计划生成中的连贯性和一致性问题
 4. **实用价值高**：框架即插即用，可适配不同 LLM 和图像生成模型，具有良好的可扩展性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **InstructPix2Pix 的局限**：在涉及大幅场景变换的步骤中仍会产生视觉不连贯
 2. **间接视觉评估**：通过图像→文本→PPL 的方式评估视觉连贯性是间接的，可能遗漏图像空间的细微差异

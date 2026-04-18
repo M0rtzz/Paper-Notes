@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MARS: Multi-Agent Adaptive Reasoning with Socratic Guidance for Automated Prompt Optimization
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：受苏格拉底教学法启发——通过提问（而非直接告知）引导学生自主发现答案。将 prompt 优化过程建模为 POMDP，用多 Agent 协作模拟梯度式的迭代精炼。
 
-**核心 idea 一句话**：五智能体 POMDP 框架——Planner 规划路径 + Teacher-Critic-Student 苏格拉底对话做伪梯度精炼 + Target 评估反馈。
+**核心 idea**：五智能体 POMDP 框架——Planner 规划路径 + Teacher-Critic-Student 苏格拉底对话做伪梯度精炼 + Target 评估反馈。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ tags:
 - **仅需 1 个训练样本**是极其亮眼的结果——说明 APO 的本质是"理解任务规范"而非"拟合训练数据"，Planner 的任务理解能力是核心
 - **附录提供了所有 17 个任务的最终优化 prompt**，直接可复用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 五个 Agent 的推理开销较大（每轮需要 5 次 LLM 调用），对计算预算敏感
 - 依赖 DeepSeek-V2.5 / GPT-4o 作为 Agent backbone，小模型可能无法胜任 Teacher/Planner 角色
 - POMDP 的隐状态转移 $\mathcal{T}$ 实际上无法精确建模（是 LLM 隐式实现的），理论分析的假设（Lipschitz 连续、有界方差）在实际中可能不严格成立

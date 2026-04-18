@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs
 description: >-
@@ -139,7 +139,7 @@ Top-$k$ 假设数量：$k=3$ 最优（CIDEr 57.04），$k=10$ 时下降至 53.66
 - 扩散模型不是为了生成高质量图像，而是作为推理引导——潜空间的去噪损失迫使模型收敛到视觉上合理的结果
 - 轻量级适配器设计（V/T/F-Adapter）使得在 Stable Diffusion 上做视频推理成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与人类表现差距仍然巨大（CIDEr 57.04 vs 147.79），说明溯因推理依然是 AI 的重大挑战
 - Imaginer 基于 SD-v1-4（256×256 分辨率），升级到更强的生成模型可能进一步提升

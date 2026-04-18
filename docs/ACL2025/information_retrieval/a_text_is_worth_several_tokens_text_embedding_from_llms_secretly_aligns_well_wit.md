@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Text is Worth Several Tokens: Text Embedding from LLMs Secretly Aligns Well with The Key Tokens
 description: >-
@@ -126,7 +126,7 @@ $$v_j = \mathbb{E}_{s_i \in D}\left[(\hat{\mathbf{h}}_i - \mathbf{h}_i)^\top \ma
 3. **Instruction-Following 的直觉解释**：不同 instruction 引导 LLM 将嵌入对齐到不同的关键 token，首次给出了可视化的理解
 4. 稀疏检索方法虽然简单，但展示了找到的规律的实际价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 稀疏检索方法目前仅保留 ~80% 性能，可能通过学习最优 K 和 M 进一步提升
 2. 分析基于 Wikipedia 数据，其他领域（代码、数学）的对齐行为待验证

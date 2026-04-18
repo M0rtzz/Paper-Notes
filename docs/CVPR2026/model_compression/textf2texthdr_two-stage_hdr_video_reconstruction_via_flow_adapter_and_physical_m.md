@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] F²HDR: Two-Stage HDR Video Reconstruction via Flow Adapter and Physical Motion Modeling
 description: >-
@@ -148,7 +148,7 @@ tags:
 - 第二阶段的优化可以反向传播到第一阶段的光流，形成相互促进
 - 曝光归一化技巧（对齐到相邻帧曝光后喂入预训练光流）简单有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方法基于三帧输入（$t-1, t, t+1$），更长的时序窗口可能进一步提升稳定性
 - Flow Adapter 是浅层 CNN，可能在极端大位移时容量不足
 - 训练数据来自 Vimeo-90K 模拟曝光，domain gap 可能影响真实场景泛化

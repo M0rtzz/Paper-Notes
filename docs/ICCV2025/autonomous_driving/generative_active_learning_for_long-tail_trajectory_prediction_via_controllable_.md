@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generative Active Learning for Long-tail Trajectory Prediction via Controllable Diffusion Model
 description: >-
@@ -136,7 +136,7 @@ FPR5 从 0.42 降至 0.22（减半！），同时 minFDE6 也从 0.654 提升至
 - **不影响推理时间**：所有额外计算在离线训练阶段，推理时完全等同于原始 backbone
 - 随机时间窗偏移技巧简单有效，将生成的未来轨迹部分用作历史输入，一举两得
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练扩散模型 (LCSim) 的质量——如果生成器本身对罕见行为的建模不好，效果会受限
 - 阈值 $\tau$ 和 $\lambda$ 值需要经验调参

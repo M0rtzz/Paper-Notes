@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UAQFact: Evaluating Factual Knowledge Utilization of LLMs on Unanswerable Questions
 description: >-
@@ -139,7 +139,7 @@ $$\text{KRR} = \left(1 + e^{-R_\Delta \cdot \text{KPR}^{-1}}\right)^{-1}$$
 - **双语设计**：英文+中文全覆盖，揭示跨语言性能差异，为多语言LLM评估提供新视角
 - **高质量数据**：基于Wikidata严格采样+GPT-3.5模板生成+人工校验（99.2%通过率），保证问题质量可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **词法匹配评估**：拒答率通过关键词匹配计算（识别拒绝、道歉、弃权关键词），虽人工评估Cohen's Kappa达94.90，但仍与人工判断存在差距
 - **知识来源单一**：仅基于Wikidata，受限于其覆盖范围和结构化特性，未涵盖需要常识推理或领域专业知识的UAQ

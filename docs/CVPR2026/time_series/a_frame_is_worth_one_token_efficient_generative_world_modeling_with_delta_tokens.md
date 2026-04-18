@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Frame is Worth One Token: Efficient Generative World Modeling with Delta Tokens
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **delta先验优雅**：连续帧差的低维结构与"无变化即保留"完美匹配世界模型需求
 - **mean恢复到判别式水平**是重要验证：多样性没有以牺牲合理性为代价
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当场景变化剧烈（场景切换），delta token 可能不够用（虽可退化为绝对编码）
 - 自回归rollout中误差可能累积
 - 当前仅在15M参数级别验证，扩展到更大模型的效果待探索

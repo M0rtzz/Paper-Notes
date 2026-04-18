@@ -43,25 +43,25 @@ CoGS 的核心思想是：不直接求解高度非线性的全局优化问题，
 
 ### 关键设计一：权重空间的半环结构
 
-- **做什么**：在二层网络权重空间 $\mathcal{Z} = \bigcup_{q \geq 0} \mathcal{Z}_q$（$q$ 为隐藏节点数）上定义加法（沿隐藏维拼接）和乘法（Khatri-Rao 积），证明 $\langle \mathcal{Z}, +, * \rangle$ 构成交换半环
+- **功能**：在二层网络权重空间 $\mathcal{Z} = \bigcup_{q \geq 0} \mathcal{Z}_q$（$q$ 为隐藏节点数）上定义加法（沿隐藏维拼接）和乘法（Khatri-Rao 积），证明 $\langle \mathcal{Z}, +, * \rangle$ 构成交换半环
 - **核心思路**：加法对应拼接不同宽度的网络，乘法对应隐藏节点的外积扩展。加法满足交换律（通过排列等价），乘法满足结合律和分配律
 - **设计动机**：半环结构使得可以像处理多项式一样在权重空间中构造解——用低阶"生成元"经由环运算组合出高阶全局解
 
 ### 关键设计二：Sum Potential 与环同态
 
-- **做什么**：将 $L_2$ 损失解析分解为 $\ell = d^{-1} \sum_{k \neq 0} \ell_k$，其中每个 $\ell_k$ 由 Sum Potential（SP）$r_{k_1 k_2 k}(\mathbf{z})$ 和 $r_{p k_1 k_2 k}(\mathbf{z})$ 构成，并证明所有 SP 都是环同态映射
+- **功能**：将 $L_2$ 损失解析分解为 $\ell = d^{-1} \sum_{k \neq 0} \ell_k$，其中每个 $\ell_k$ 由 Sum Potential（SP）$r_{k_1 k_2 k}(\mathbf{z})$ 和 $r_{p k_1 k_2 k}(\mathbf{z})$ 构成，并证明所有 SP 都是环同态映射
 - **核心思路**：SP 定义为 $r(\mathbf{z}) := \sum_j \prod_{p,k \in \text{idx}(r)} z_{pkj}$，是对隐藏节点求和的单项式。环同态性质意味着 $r(\mathbf{z}_1 + \mathbf{z}_2) = r(\mathbf{z}_1) + r(\mathbf{z}_2)$，$r(\mathbf{z}_1 * \mathbf{z}_2) = r(\mathbf{z}_1) \cdot r(\mathbf{z}_2)$
 - **设计动机**：环同态保证了局部解的 0/1-set 可以通过加法取交集、乘法取并集来组合。使得 0-set 逐步扩大直到覆盖所有约束，从而得到全局解
 
 ### 关键设计三：多项式构造与全局解组合
 
-- **做什么**：选取对称性较好的 order-1 生成元 $\mathbf{u}$（如 $\mathbf{u}_{\text{syn}}, \mathbf{u}_\nu$），构造多项式 $\boldsymbol{\rho}(\mathbf{u}) = \prod_{s}(\mathbf{u} + \hat{\mathbf{s}})$ 作为局部解，再组合得到 order-4（$2 \times 2$）和 order-6（$2 \times 3$）的 Fourier 全局解
+- **功能**：选取对称性较好的 order-1 生成元 $\mathbf{u}$（如 $\mathbf{u}_{\text{syn}}, \mathbf{u}_\nu$），构造多项式 $\boldsymbol{\rho}(\mathbf{u}) = \prod_{s}(\mathbf{u} + \hat{\mathbf{s}})$ 作为局部解，再组合得到 order-4（$2 \times 2$）和 order-6（$2 \times 3$）的 Fourier 全局解
 - **核心思路**：order-6 解 $\mathbf{z}_{F6}$ 将每个频率的 3-阶和 2-阶局部解做环乘取并集覆盖所有 SP 约束；混合 order-4/6 解 $\mathbf{z}_{F4/6}$ 进一步降低总阶数到 $2d$，利用不同频率间的 SP 对消实现全局最优
 - **设计动机**：梯度下降天然偏好低阶解（Theorem 5），因此需要尽量构造低阶全局解来解释实验观测
 
 ### 关键设计四：训练动态分析
 
-- **做什么**：证明高阶和低阶全局解在零损失流形上拓扑连通（Theorem 5），说明权重衰减下梯度下降偏好低阶解；证明无穷宽度下 SP 动态解耦（Theorem 6），解释过参数化的益处
+- **功能**：证明高阶和低阶全局解在零损失流形上拓扑连通（Theorem 5），说明权重衰减下梯度下降偏好低阶解；证明无穷宽度下 SP 动态解耦（Theorem 6），解释过参数化的益处
 - **核心思路**：若 $\mathbf{z} = \mathbf{y} * \mathbf{z}'$ 且两者都是全局解，则存在连接两者的零损失路径，权重衰减的正则化将动态推向低阶端
 - **设计动机**：回答"为什么梯度下降不收敛到 $d^2$ 阶的完美记忆解而是 4/6 阶的 Fourier 解"这一关键问题
 

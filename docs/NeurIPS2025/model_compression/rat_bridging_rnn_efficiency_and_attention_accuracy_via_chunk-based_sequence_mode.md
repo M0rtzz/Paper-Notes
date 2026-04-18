@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAT: Bridging RNN Efficiency and Attention Accuracy via Chunk-based Sequence Modeling
 description: >-
@@ -115,7 +115,7 @@ $$y_{c,l} = f([q_{c,l}\tilde{K}_{:,-1}^\top; q_{c,l}\tilde{k}_{c,l}^\top])[\tild
 3. **无自定义内核**：纯 PyTorch 实现（associative scan + flex attention），降低了工程门槛，且兼容张量并行和上下文并行。
 4. **KV 缓存减少**：RAT 仅需存储 Chunk 级 KV（比全注意力少 16 倍），显著减少 OOM 风险。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Chunk 边界处可能存在信息不连续——当一个语义单元跨越两个 Chunk 时，RNN 只能部分捕捉。
 - 仅使用最简单的线性 RNN（EMA 门控），未探索更强的 RNN 变体（如非线性 RNN、2D 递归）。

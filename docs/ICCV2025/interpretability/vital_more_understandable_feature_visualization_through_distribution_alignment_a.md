@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VITAL: More Understandable Feature Visualization through Distribution Alignment and Relevant Information Flow
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L}_{\text{VITAL}}(x^*, \mathcal{X}_{ref}) = \mathcal{L}_{\text{SM}}(x
 - 方法对架构完全不可知，能无缝扩展到CNN和ViT
 - 小电路可视化（Small Circuits）展示了VITAL在机械可解释性中的应用潜力——为电路分析中的"where"补充了"what"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 生成图像仍达不到照片级真实感，更像"莫奈风格的画作"
 - 对复杂空间排列的可视化仍有困难

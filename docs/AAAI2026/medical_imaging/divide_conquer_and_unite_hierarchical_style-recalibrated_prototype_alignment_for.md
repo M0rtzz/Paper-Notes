@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Divide, Conquer and Unite: Hierarchical Style-Recalibrated Prototype Alignment for Federated Medical Segmentation
 description: >-
@@ -105,7 +105,7 @@ FedBCS基于标准的联邦学习pipeline（FedAvg框架），客户端使用共
 - 提供了理论收敛保证（Theorem 1和2），在联邦学习论文中增加可信度
 - 通信效率的优势值得关注：多层原型融合后仍只上传2个原型/类，比FedPLVM少50-90倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在UNet上验证，对更复杂架构（ViT-based）的适用性未知
 - 二分类分割任务（前景/背景），多器官多类别场景的扩展性待验证

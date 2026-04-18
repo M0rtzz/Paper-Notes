@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HyperIMTS: Hypergraph Neural Network for Irregular Multivariate Time Series Forecasting
 description: >-
@@ -123,7 +123,7 @@ HyperIMTS 的 pipeline：（1）将 IMTS 样本转化为超图表示，观测值
 - 构建了统一基准：27 个 baseline、5 个数据集的公平对比，并开源了 PyOmniTS 流水线，为 IMTS 研究提供了标准化工具
 - 不需要填充，数据处理效率高：MIMIC-IV 数据集上原始观测 304.8 个 vs 填充后 92,000 个，差距极大
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **不支持多模态数据**：医疗 IMTS 数据集中可能包含文本笔记或图像，当前模型无法利用
 - **注意力计算资源消耗**：虽然比 padding 方法高效，但 self-attention 的 $O(M^2)$ 复杂度在观测点非常密集时仍可能成为瓶颈
 - USHCN 数据集上结果方差较大（0.0078），稳定性可进一步改善

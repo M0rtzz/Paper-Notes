@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback
 description: >-
@@ -149,7 +149,7 @@ $$w_{t,i} = \frac{\pi_\theta(z_t^i|x\oplus y, z_{<t})}{\pi_\theta(z_t^i|x, z_{<t
 - **简洁性涌现**：InTRO并未显式优化推理长度，但correction factor自然抑制了冗余token，使推理更简洁
 - **OOD泛化的解释**：token级信息差异最小化强化了因果链接，使得逻辑驱动的泛化成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - estimated posterior $\pi_\theta(\cdot|x\oplus y)$ 与真实后验有偏差（实验测得KL约2.3），在弱模型上效果受限
 - correction factor的裁剪范围 $[0, 200]$ 是经验值，缺乏理论指导

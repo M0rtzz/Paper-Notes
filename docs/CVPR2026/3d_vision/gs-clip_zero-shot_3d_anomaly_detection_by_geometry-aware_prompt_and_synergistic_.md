@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GS-CLIP: Zero-shot 3D Anomaly Detection by Geometry-Aware Prompt and Synergistic View Representation Learning
 description: >-
@@ -123,7 +123,7 @@ tags:
 - **两阶段解耦**：先优化文本端让提示学会描述几何异常，再优化视觉端对齐，避免联合训练的不稳定性
 - **即插即用的多模态扩展**：框架天然支持加入RGB等额外模态
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PointNet++作为3D特征提取器可能限制对复杂几何的表达能力，可探索更强的3D backbone（如Point Transformer v3）
 - 当前9视角的多视图投影策略较为固定，可探索自适应视角选择

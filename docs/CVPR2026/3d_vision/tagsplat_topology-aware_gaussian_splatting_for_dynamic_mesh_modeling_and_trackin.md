@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TagSplat: Topology-Aware Gaussian Splatting for Dynamic Mesh Modeling and Tracking
 description: >-
@@ -176,7 +176,7 @@ $$\mathcal{L}_{rot} = \sum_{i=1}^k \sum_{j=1}^m \omega_{i,j} \|\boldsymbol{q}_{j
 4. **端到端框架**：从多视角视频到拓扑一致网格序列 + 3D跟踪，无需复杂预处理管线
 5. 同时使用高斯泼溅渲染和可微网格光栅化（Nvdiffrast）双路监督，提升几何精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **无法处理拓扑剧变**：如衣服撕裂、物体分裂等场景，当前框架假设拓扑关系稳定
 2. **依赖首帧高质量网格重建**：使用NeuS2初始化，若首帧重建质量差则影响后续所有帧

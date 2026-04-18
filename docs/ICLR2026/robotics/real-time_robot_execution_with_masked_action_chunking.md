@@ -48,7 +48,7 @@ REMAC构建于流匹配（flow matching）策略之上。给定预训练策略 $
 
 ### 关键设计1：前缀掩码（Prefix Masking）
 
-- **做什么**：对动作块施加延迟条件掩码，仅在可执行的后半部分施加监督，忽略已被前一块占据的前缀部分。
+- **功能**：对动作块施加延迟条件掩码，仅在可执行的后半部分施加监督，忽略已被前一块占据的前缀部分。
 - **核心思路**：定义掩码 $\mathbf{m}_d = \{m_d^\tau\}_{\tau=0}^{P-1} = \mathbf{1}[\tau \geq d]$，其中 $d \sim \mathcal{U}\{0, \dots, P-1\}$ 随机采样。掩码损失为：
 
 $$\mathcal{L}_\mathrm{m} = \sum_d \frac{\sum_{\tau=0}^{P-1} m_d^\tau \|\hat{\mathbf{u}}_\tau - \mathbf{u}_\tau\|_2^2}{\max(1, \sum_{\tau=0}^{P-1} m_d^\tau)}$$
@@ -57,7 +57,7 @@ $$\mathcal{L}_\mathrm{m} = \sum_d \frac{\sum_{\tau=0}^{P-1} m_d^\tau \|\hat{\mat
 
 ### 关键设计2：自条件课程调度（Self-conditioned Curriculum）
 
-- **做什么**：在训练输入中逐步混入预训练策略的自身预测，模拟测试时条件，减少曝光偏差（exposure bias）。
+- **功能**：在训练输入中逐步混入预训练策略的自身预测，模拟测试时条件，减少曝光偏差（exposure bias）。
 - **核心思路**：用预训练策略预测的 $\tilde{\mathbf{A}}_t$ 与真实动作 $\mathbf{A}_t$ 做随机混合：
 
 $$\hat{\mathbf{A}}_t = \gamma \mathbf{A}_t + \text{sg}((1-\gamma)\tilde{\mathbf{A}}_t), \quad \gamma \sim \mathrm{Bernoulli}(\sigma), \sigma \in [0,1]$$
@@ -68,7 +68,7 @@ $$\hat{\mathbf{A}}_t = \gamma \mathbf{A}_t + \text{sg}((1-\gamma)\tilde{\mathbf{
 
 ### 关键设计3：残差对齐（Residual Alignment）
 
-- **做什么**：在标准监督之外，额外引入 $\Delta$-matching 项，显式对齐模型学到的修正量与预训练策略到真实目标之间的残差。
+- **功能**：在标准监督之外，额外引入 $\Delta$-matching 项，显式对齐模型学到的修正量与预训练策略到真实目标之间的残差。
 - **核心思路**：令 $\tilde{\mathbf{u}}$ 为预训练策略的流估计（LoRA关闭），$\hat{\mathbf{u}}$ 为目标策略估计（LoRA开启），残差对齐损失为：
 
 $$\mathcal{L}_\Delta = \sum_d \frac{\sum_{\tau=0}^{P-1} \|m_d^\tau(\mathbf{u}_\tau - \tilde{\mathbf{u}}_\tau) - m_d^\tau(\hat{\mathbf{u}}_\tau - \tilde{\mathbf{u}}_\tau)\|_2^2}{\max(1, \sum_{\tau=0}^{P-1} m_d^\tau)}$$
@@ -79,7 +79,7 @@ $$\mathcal{L}_\Delta = \sum_d \frac{\sum_{\tau=0}^{P-1} \|m_d^\tau(\mathbf{u}_\t
 
 ### 关键设计4：前缀保持采样（Prefix-preserved Sampling）
 
-- **做什么**：调整推理时的采样管线，用已执行动作初始化新块前缀，在每步积分中保持前缀不变。
+- **功能**：调整推理时的采样管线，用已执行动作初始化新块前缀，在每步积分中保持前缀不变。
 - **核心思路**：初始动作状态 $\mathbf{A}_t^0$ 不再从高斯先验采样，而是前 $P-h$ 维填入上一块的末尾动作，其余零初始化。积分过程中前缀保持不变：
 
 $$\mathbf{A}_t^{\tau+\frac{1}{n}} = \mathbf{m} \odot \left(\mathbf{A}_t^\tau + \frac{1}{n}\hat{\mathbf{v}}_\pi(\mathbf{A}_t^\tau, \mathbf{o}_t, \tau)\right) + (1-\mathbf{m}) \odot \mathbf{A}_t^\mathrm{p}$$

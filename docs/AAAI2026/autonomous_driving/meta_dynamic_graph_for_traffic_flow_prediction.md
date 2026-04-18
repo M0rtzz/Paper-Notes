@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meta Dynamic Graph for Traffic Flow Prediction
 description: >-
@@ -131,7 +131,7 @@ $$\tilde{\boldsymbol{A}_t} = \text{asym}(\boldsymbol{\phi}_t \odot \boldsymbol{A
 - **SCE→TCE的顺序选择有理论支撑**：先融合全局历史信息再平滑差异，消融实验验证了该顺序的合理性
 - **长期预测优势明显**：per time step分析显示MetaDG在远期预测步上相比基线的优势更加显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算开销非最低**：相比ST-SSDL（234K参数、19s推理），MetaDG参数量（666K）和推理时间（23s）更高，三个独立STCE分支贡献了额外开销
 - **仅在交通流数据上验证**：未在其他时空预测任务（如空气质量、人流量、能源消耗等）上验证泛化能力

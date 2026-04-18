@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging Kolmogorov Complexity and Deep Learning: Asymptotically Optimal Description Length Objectives for Transformers
 description: >-
@@ -97,7 +97,7 @@ $$L(\theta, x) = \underbrace{-\log p(\theta)}_{\text{模型复杂度}} + \underb
 - **MDL 原则的现代化复兴**: 在深度学习时代重新审视 MDL 这一经典原则，用现代工具（变分推断 + Transformer 通用性）给出了新的理论理解
 - **理论意义大于实践意义**: 当前的价值更多在于提供理论框架和指引研究方向，而非直接可用的算法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **优化 Gap 是核心限制**: 理论证明了最优解的存在，但找到这些解的计算问题未解决。这不仅是本文的局限，也是整个 MDL-深度学习交叉领域的核心开放问题
 - **实验规模有限**: 仅在简单的算法任务上验证，离真实的 NLP/CV 任务还有很大距离。理论的渐近保证在有限模型规模下能否体现出优势是未知的

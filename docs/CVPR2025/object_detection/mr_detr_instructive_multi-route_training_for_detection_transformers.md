@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mr. DETR++: Instructive Multi-Route Training for Detection Transformers with Mixture-of-Experts
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**: one-to-one 和 one-to-many 两个训练目标通过同一解码器时会产生冲突——同一个预测框可能在 one-to-many 中是正样本但在 one-to-one 中是负样本。
 
-**本文要解决什么**: 在多任务框架下系统理解解码器各组件（self-attention, cross-attention, FFN）的角色，找到最优的组件共享/独立策略。
+**本文目标**: 在多任务框架下系统理解解码器各组件（self-attention, cross-attention, FFN）的角色，找到最优的组件共享/独立策略。
 
 **切入角度**: 将 one-to-one + one-to-many 的辅助训练视为多任务学习，穷举验证不同组件独立/共享的组合效果。
 

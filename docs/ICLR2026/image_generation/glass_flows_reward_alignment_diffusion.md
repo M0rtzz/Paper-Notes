@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GLASS Flows: Efficient Inference for Reward Alignment of Flow and Diffusion Models
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：FKS/SMC 等方法理论上需要 SDE 提供的随机分支来有效探索后验分布，但 SDE 的计算和质量代价使其在实际 SOTA 模型上不可行。Best-of-N ODE 足够高效但不利用中间步骤的奖励信号。
 
-**本文要解决什么？** 消除效率与随机性之间的权衡——让 ODE 采样也能产生丰富的随机转移，使 FKS 真正有效。
+**本文目标** 消除效率与随机性之间的权衡——让 ODE 采样也能产生丰富的随机转移，使 FKS 真正有效。
 
 **切入角度**：观察到高斯转移核 $p_{t'|t}$ 可以通过充分统计量和时间重参数化，转化为用预训练去噪器驱动的内部条件流匹配 ODE。
 
-**核心idea一句话**：将随机转移重铸为"内部流匹配"ODE，通过充分统计量复用预训练模型，实现"ODE 速度 + SDE 多样性"。
+**核心 idea**：将随机转移重铸为"内部流匹配"ODE，通过充分统计量复用预训练模型，实现"ODE 速度 + SDE 多样性"。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **drop-in replacement 的实用性**：不改变模型、不重训、只改采样器——任何使用 SDE 转移的现有方法都可受益
 - **与 RL fine-tuning 互补**：GLASS 可加速 DDPO/Flow-GRPO 等 RL 训练中的 SDE 采样，也可应用于已 fine-tune 模型的推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖高斯转移核假设，对非高斯架构的适用性未验证
 - $\rho$ 目前为常数，理论上可做时间依赖的自适应 $\rho(t, t')$
 - 仅在 FLUX 和 SiT-XL 上验证，其他架构（SD3、Stable Cascade）未测试

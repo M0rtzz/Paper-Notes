@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiomedSQL: Text-to-SQL for Scientific Reasoning on Biomedical Knowledge Bases
 description: >-
@@ -118,7 +118,7 @@ tags:
 - 揭示了当前 LLM 在操作化领域特定科学惯例方面的重大不足
 - 使用 BigQuery 模拟真实生产环境，增加了实际部署的相关性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Gold SQL 并非唯一正确答案，可能存在多个语义等价的 SQL 表达
 - 未评估 DIN-SQL、DAIL-SQL 等通用 Text-to-SQL 系统（与 BigQuery 方言不兼容）
 - 依赖 BigQuery 云特定方言，限制了与其他基准的直接可比性

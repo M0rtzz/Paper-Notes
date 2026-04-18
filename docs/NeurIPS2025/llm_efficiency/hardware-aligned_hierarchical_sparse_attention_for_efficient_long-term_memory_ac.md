@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hardware-aligned Hierarchical Sparse Attention for Efficient Long-term Memory Access
 description: >-
@@ -100,7 +100,7 @@ tags:
 - Stick-breaking 权重替代位置编码，天然适合长度外推
 - 消融实验充分：chunk encoder 的重要性、memory reset 的效果、softmax vs stick-breaking 的对比
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 370M 规模实验为主，2.7B 实验仅展示部分结果，更大规模（7B/13B）验证不足
 - RULER 上更难的检索任务（MQ-N、VT）在超 256K 时性能显著下降，极长上下文精准 chunk 选择仍是开放问题
 - 双向 Transformer encoder 额外引入 5.4% 参数，chunk 编码增加预填充时间

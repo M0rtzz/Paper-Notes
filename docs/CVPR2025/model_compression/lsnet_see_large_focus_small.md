@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LSNet: See Large, Focus Small
 description: >-
@@ -43,19 +43,19 @@ tags:
 ### 关键设计
 
 **1. 大核感知（Large-Kernel Perception, LKP）**
-- **做什么**: 用大核深度卷积高效捕获大范围上下文关系，生成位置自适应的聚合权重。
+- **功能**: 用大核深度卷积高效捕获大范围上下文关系，生成位置自适应的聚合权重。
 - **核心结构**: PW(降维到 C/2) → DW_{K_L×K_L}（大核深度卷积，默认 K_L=7）→ PW(生成权重 W ∈ R^{H×W×D})
   $$w_i = \mathcal{P}_{ls}(x_i, \mathcal{N}_{K_L}(x_i)) = \text{PW}(\text{DW}_{K_L \times K_L}(\text{PW}(\mathcal{N}_{K_L}(x_i))))$$
 - **设计动机**: 大核 DW 卷积计算量为 O(HWCK²/2)，随核大小线性增长而非二次增长（对比 self-attention O(H²W²)），可低成本扩大感受野。
 
 **2. 小核聚合（Small-Kernel Aggregation, SKA）**
-- **做什么**: 利用 LKP 生成的自适应权重，在小邻域内进行动态卷积聚合精细特征。
+- **功能**: 利用 LKP 生成的自适应权重，在小邻域内进行动态卷积聚合精细特征。
 - **核心机制**: 将 LKP 生成的权重 $w_i$ reshape 为 $w_i^* \in R^{G \times K_S \times K_S}$（默认 K_S=3, G=C/8），对每组通道共享动态核进行卷积：
   $$y_{ic} = w_{ig}^* \circledast \mathcal{N}_{K_S}(x_{ic})$$
 - **设计动机**: 小核限制了聚合范围，保证计算效率；动态核由大感受野信息生成，因此小核也具有全局上下文感知能力。
 
 **3. LS Block 设计**
-- **做什么**: 以 LS 卷积为核心的完整 block 设计。
+- **功能**: 以 LS 卷积为核心的完整 block 设计。
 - **核心结构**: LS Conv → Skip Connection → 额外 DW Conv + SE 层（引入局部归纳偏置）→ FFN（通道混合）。
 - **设计动机**: SE 和额外 DW 在极轻量预算下提供了少量但关键的局部结构信息增强。
 
@@ -117,7 +117,7 @@ LSNet-T 在 0.3G FLOPs 即达 74.9%，超越同 FLOPs 所有模型；LSNet-B 80.
 3. **线性复杂度 + 动态性**: 同时获得了大核的线性复杂度和动态卷积的内容自适应性。
 4. **通用性**: 分类/检测/分割三任务全面 SOTA，不是单点突破。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 参数量相对偏高（LSNet-T 11.4M vs EfficientViT-M3 6.9M），虽然 FLOPs 低但内存占用可能是瓶颈。
 2. 仅在 ImageNet-1K 验证，未涉及更高分辨率（如 ImageNet-22K 预训练）。

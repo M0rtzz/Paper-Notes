@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AgentODRL: A Large Language Model-based Multi-agent System for ODRL Generation
 description: >-
@@ -90,7 +90,7 @@ LoRA微调参数：r=16, alpha=32，使用2380个合成样本，单张NVIDIA 409
 - 策略对弱模型的提升效果尤其显著（GPT-4.1-nano语义分数提升76.46%），说明框架设计具有普适性
 - 构建了领域内首个770用例的基准数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Orchestrator的自动路由表现低于手动选择最优路径的理论上限（80.22 vs 88.07），分类准确性有改进空间
 - 仅在GPT-4.1系列上验证，未测试开源LLM（如LLaMA、Mistral），普适性存疑
 - 数据集由70个种子用例通过LLM增广到770个，多样性可能受限

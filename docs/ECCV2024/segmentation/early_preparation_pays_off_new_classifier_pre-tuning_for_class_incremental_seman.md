@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Early Preparation Pays Off: New Classifier Pre-tuning for Class Incremental Semantic Segmentation
 description: >-
@@ -157,7 +157,7 @@ NeST在每个增量步骤的正式训练前增加预调优阶段：
 - **预调优阶段冻结backbone**确保了不在初始化阶段就破坏旧知识，同时让新分类器适应数据
 - **通用即插即用**：可直接应用于 MiB/PLOP/RCIL 等现有方法，无需修改原方法的训练流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 引入了额外预调优阶段的计算开销（虽然很小但非零）
 - 当旧类别数量很多时，重要性矩阵的规模会线性增长
 - 仅在语义分割任务上验证，可扩展到实例分割、全景分割等增量学习场景

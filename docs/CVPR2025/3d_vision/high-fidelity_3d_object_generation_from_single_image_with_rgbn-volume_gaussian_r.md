@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] High-fidelity 3D Object Generation from Single Image with RGBN-Volume Gaussian Reconstruction Model
 description: >-
@@ -111,7 +111,7 @@ GSO 数据集新视角合成：
 2. **法线信息的价值**：RGB 和法线是互补的——RGB 提供语义/纹理、法线提供几何。消融显示法线引导的交叉注意力比 RGB 引导更重要，说明在 3D 重建中几何先验更稀缺
 3. **2DGS 替代 3DGS 的理由**：深度计算的精确性是关键区别——2DGS 的射线-盘交点深度使 depth loss 和法线一致性损失有意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 强依赖 Wonder3D 多视角扩散模型的生成质量，当生成的多视角图像不一致性更大时性能退化
 - 体素分辨率（32³）限制了几何细节的表达，更大场景需要八叉树等稀疏数据结构

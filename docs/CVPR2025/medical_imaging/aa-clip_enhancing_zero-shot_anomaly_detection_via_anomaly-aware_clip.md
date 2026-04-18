@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AA-CLIP: Enhancing Zero-Shot Anomaly Detection via Anomaly-Aware CLIP
 description: >-
@@ -121,7 +121,7 @@ AA-CLIP 采用两阶段训练流程，CLIP 原始参数始终冻结：
 - **数据效率极高**：2-shot 即可超越先前 full-shot 方法，对数据稀缺的医学场景意义重大
 - **跨域泛化**：在 VisA 上训练，直接迁移到 MVTec-AD、脑 MRI、肝 CT、视网膜 OCT 等完全不同的数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - full-shot 训练出现过拟合迹象，说明 CLIP 适配存在饱和点，需研究更好的正则化策略
 - 只验证了工业和医学两个领域，对自然图像、遥感等领域的泛化性未知

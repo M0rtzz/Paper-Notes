@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models
 description: >-
@@ -109,7 +109,7 @@ tags:
 - **即插即用**：作为正交方法，可以与现有任何微调策略（全微调、LoRA、Adapter等）组合使用
 - **实用性强**：层选择只需一次前向传递，额外开销极小
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 缩放律公式中可能包含需要在验证集上拟合的超参数，这增加了方法的复杂度
 - 层偏差的计算基于前向传递的快照，可能无法完全反映微调过程中层重要性的动态变化

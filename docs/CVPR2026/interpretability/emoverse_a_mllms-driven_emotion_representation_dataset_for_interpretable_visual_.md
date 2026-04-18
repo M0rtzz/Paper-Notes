@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EmoVerse: A MLLMs-Driven Emotion Representation Dataset for Interpretable Visual Emotion Analysis
 description: >-
@@ -28,7 +28,7 @@ tags:
 1. **领域现状**：视觉情感分析（Visual Emotion Analysis, VEA）旨在从图像中预测观者的情感反应。现有数据集（FI、EmoSet、Instagram 等）多采用离散情感分类（Mikels 8 类或 VAD 三维），标注维度单一。
 2. **现有痛点**：(1) 缺乏开源的大规模可解释情感数据集——现有数据集只提供情感类别标签，不解释"为什么引发这种情感"；(2) 离散情感标签（CES）无法捕捉细粒度情感变化，连续表示（DES）的数据集几乎不存在；(3) 缺少 subject-level 的实例定位——不知道图像中哪个主体触发了哪种情感。
 3. **核心矛盾**：VEA 领域急需可解释性和细粒度标注，但人工标注成本极高（1024 维连续空间不可能人工标注），传统众包方式无法覆盖 word-level、subject-level、CES、DES 四个维度。
-4. **本文要解决什么**：如何构建一个兼具 CES 和 DES、具有可解释性标注、且规模足够大的视觉情感数据集？
+4. **本文目标**：如何构建一个兼具 CES 和 DES、具有可解释性标注、且规模足够大的视觉情感数据集？
 5. **切入角度**：利用 MLLM（Gemini 2.5、GPT-4o）做自动标注，配合多轮验证 pipeline 保证质量，引入知识图谱结构化情感归因。
 6. **核心 idea**：B-A-S 三元组将情感分解为 Background（背景场景）、Attribute（视觉属性如颜色/光线）、Subject（主体对象），配合 Grounding DINO + SAM 实现 subject 定位，用 MLLM pipeline 完成标注-验证-修正闭环。
 
@@ -101,7 +101,7 @@ EmoVerse 的构建包括四个阶段：(1) 数据收集与清洗；(2) B-A-S 三
 - **AIGC 补充长尾分布**：用生成模型按需生成特定情感图像是巧妙的数据增强思路，比单纯过采样更有效
 - **Subject-level 定位**：Grounding DINO + SAM 的组合将情感分析从图像级推进到区域级，开辟了局部情感归因的新方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - DES 1024 维的标注质量完全依赖 MLLM，缺少人工验证金标准——MLLM 对连续情感空间的理解可能存在系统性偏差
 - Mikels 8 类 CES 体系相对粗粒度，未覆盖 surprise、neutral 等常见情感
 - AIGC 生成的图像可能带有生成模型的风格偏见，与真实图像的情感表达存在 domain gap

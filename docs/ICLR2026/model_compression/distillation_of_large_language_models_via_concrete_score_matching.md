@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distillation of Large Language Models via Concrete Score Matching
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L}_{\text{CSD}} = \frac{1}{2} \sum_{y_t \in \mathcal{V}} \sum_{x \in 
 - 权重函数设计空间提供了统一框架理解 mode-seeking 与 mode-covering
 - 梯度的解析计算使得 $O(|\mathcal{V}|^2)$ 的 CSM 变为实际可用的 $O(|\mathcal{V}|)$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 权重函数空间的探索仍有限，联合权重函数的设计尚未充分挖掘
 - 分解假设 $w(y_t,x)=w_1(y_t)w_2(x)$ 限制了权重的表达能力

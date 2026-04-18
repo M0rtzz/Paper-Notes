@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilling Long-tailed Datasets
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：蒸馏过程中student在均衡合成数据上训练，但需要匹配在长尾数据上训练的expert，两者权重分布根本不同，导致bi-level优化目标中产生冲突。
 
-**本文要解决什么？** 如何从长尾分布的训练数据中蒸馏出均衡且信息丰富的合成数据集。
+**本文目标** 如何从长尾分布的训练数据中蒸馏出均衡且信息丰富的合成数据集。
 
 **切入角度**：从两方面入手——让student"模拟"长尾训练行为来弥合与expert的分布差距，以及用解耦训练的专家提供更可靠的监督信号。
 
-**核心idea一句话**：用长尾分布感知的损失函数让student的权重分布自动模仿长尾expert，同时用解耦的representation expert和classifier expert分别提供backbone轨迹和分类器轨迹的监督。
+**核心 idea**：用长尾分布感知的损失函数让student的权重分布自动模仿长尾expert，同时用解耦的representation expert和classifier expert分别提供backbone轨迹和分类器轨迹的监督。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ DAM使用长尾分布加权的softmax损失（灵感来自Balanced Softmax）；
 - **反直觉的DAM设计**：直觉上student应该学"正确"的均衡分布，但DAM反而让student去模拟长尾偏置，把偏置控制在student权重中而非合成数据中。这种"以毒攻毒"的思路非常巧妙
 - **解耦专家的互补使用**：不是简单用一个更好的专家，而是让两种专家各负责最擅长的部分（表示 vs 分类），这种分工思路有广泛迁移价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要知道原始数据集的类别分布来构造DAM损失，如果分布未知需要额外估计
 - Expert Decoupling需要训练两组专家轨迹，计算成本翻倍
 - 仅在CIFAR和Tiny-ImageNet级别验证，缺少ImageNet-1K规模的长尾实验

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embedding-Based Context-Aware Reranker
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L}_{\text{contrast}} = -\log \frac{\exp(\text{sim}(q, \hat{p}^+))}{\e
 - 文档 ID 的局部相对设计解决了实用性问题——无需全局唯一 ID，新文档即插即用
 - 在跨段落推理任务上的优势极为显著（Football 80 vs 12），凸显了建模文档结构的重要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在不需要跨段落推理的情况下（如 MLDR），性能略逊于 LLM 重排器（75 vs 84）
 - 嵌入空间的信息瓶颈：段落被压缩为固定大小嵌入，丢失了细粒度文本信息

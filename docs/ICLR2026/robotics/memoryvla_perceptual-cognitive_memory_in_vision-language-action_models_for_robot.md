@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MemoryVLA: Perceptual-Cognitive Memory in Vision-Language-Action Models for Robotic Manipulation
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **感知vs认知的分离**：感知tokens(256个)保留空间细节，认知token(1个)压缩高层语义。PCMB分两个流存储和检索→不同任务需要不同层次的历史信息。
 - **+26在长时序任务上**：这个提升量说明记忆不是锦上添花而是必要条件——没有记忆的VLA在需要时序理解的任务上根本做不好。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 7B VLM推理开销大——实时性受限
 - PCMB容量L需要手动设置——自适应容量管理值得探索
 - 余弦相似度做整合可能不够精细——更复杂的记忆选择策略可能更好

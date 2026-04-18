@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Certified Branch-and-Bound MaxSAT Solving (Extended Version)
 description: >-
@@ -148,7 +148,7 @@ $$v_\eta \Rightarrow \sum_{i \geq k} v_i b_i \leq l \quad \text{且} \quad v_\et
 3. **软件工程价值**：证明日志不仅保证正确性，还是强大的测试和调试方法论
 4. **Theorem 5 的推导步数界**：$O(|\mathcal{O}| + |\mathcal{Q}|)$，证明了认证的多项式开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **证明检查太慢**（43× 求解时间）：需要更快的证明检查器（如 PBOxide）或证明剪裁器
 2. 对大目标文字数实例的证明日志开销过大——可探索更紧凑的定义约束表示

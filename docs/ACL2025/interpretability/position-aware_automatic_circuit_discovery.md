@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position-aware Automatic Circuit Discovery
 description: >-
@@ -120,7 +120,7 @@ tags:
 - **模型感知的 Schema 设计**：通过 input×gradient 显著性分数让 LLM "看到" 模型的计算模式，是一种优雅的 AI 辅助可解释性方法
 - **发现了一个反直觉的现象**：为 GPT2-small 精心设计的人工 Schema 迁移到 Llama-3-8B 后效果反而不如 LLM 自动生成的 Schema
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Schema 要求所有样本中的 span 按相同顺序出现，限制了对更自由文本格式的适用性
 - 什么样的 Schema 是"好"的 Schema 缺乏先验原则，目前只能通过下游忠实度来事后评估

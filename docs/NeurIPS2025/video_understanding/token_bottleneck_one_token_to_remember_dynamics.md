@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Token Bottleneck: One Token to Remember Dynamics
 description: >-
@@ -140,7 +140,7 @@ $$\mathcal{L}_{\text{ToBo}} = \sum_{i \in \mathcal{M}} d(\hat{\mathbf{x}}_i^{t+k
 4. **实际部署验证**：真实物理机器人上的评估提供了强有力的实用性证据
 5. **推理无额外开销**：推理时所有模型使用相同骨干和输入分辨率，FLOPs完全相同
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多帧源输入的朴素扩展效果不佳（46.9% vs 61.1%），需要专门的多帧瓶颈设计
 - 当前仅用于机器人操控和视频标签传播，未在更广泛的视频理解任务上验证

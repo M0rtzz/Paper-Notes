@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VisFocus: Prompt-Guided Vision Encoders for OCR-Free Dense Document Understanding
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{M}(\mathbf{p}, X) = \mathcal{M}_L(\mathbf{p}, \mathcal{M}_V^p(\mathbf
 - Prompt Dropout策略简单但有效，借鉴Dropout思想解决了语言模型可能"旁路"视觉编码器的问题
 - 文档密度分析实验有力证明了聚焦机制在密集文档上的价值递增特性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 聚焦能力主要针对文本区域，对包含信息图、图表、图片的文档效果有限（InfoVQA上与Pix2Struct仍有差距）
 - 未探索超越文本的prompt感知预训练任务（如引导视觉编码器关注图表中与查询相关的视觉区域）
 - 模型规模仍较小（<300M参数），与数十亿参数的大型VLM相比有天然劣势

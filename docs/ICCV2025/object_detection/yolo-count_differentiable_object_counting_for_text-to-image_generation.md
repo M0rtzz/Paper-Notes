@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] YOLO-Count: Differentiable Object Counting for Text-to-Image Generation
 description: >-
@@ -128,7 +128,7 @@ YOLO-Count 在可微分模型中全面 SOTA，在 LVIS/OpenImg7/Obj365 的开放
 - **混合训练策略实用性强**：利用现有的实例分割标注进行预训练，仅需少量手动点标注背景即可微调，大大降低了计数数据集的构建成本
 - **开放词汇计数新基准**：构建了 OpenImg7-New 和 Obj365-New 两个新评测基准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基数图需要实例分割掩码来构建，限制了强监督预训练的数据来源
 2. 弱监督阶段需要手动标注背景负样本点（~5秒/图），虽然高效但仍有人工成本

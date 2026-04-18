@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlyPrompt: Brain-Inspired Random-Expanded Routing with Temporal-Ensemble Experts for General Continual Learning
 description: >-
@@ -141,7 +141,7 @@ FlyPrompt 全面领先，A_last 提升尤为显著（CIFAR-100: +5.85%, ImageNet
 - 提供了 REAR 和 TE2 的理论保证，不仅仅是经验改进
 - 在极端设置下（如 DINO-1K 预训练的 CUB-200）仍能有效工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 主要在视觉分类任务上验证，需要扩展到 NLP 和多模态场景
 2. 专家数量与任务数量绑定，大量任务时可能导致参数量线性增长

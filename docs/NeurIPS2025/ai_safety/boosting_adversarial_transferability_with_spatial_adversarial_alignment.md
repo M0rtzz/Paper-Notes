@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Boosting Adversarial Transferability with Spatial Adversarial Alignment
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L}_{SAA} = \mathcal{L}_{SA}(x;\theta_s) + \kappa \cdot \mathcal{L}_{A
 3. **即插即用**：SAA 仅需微调代理模型 1 个 epoch，可无缝叠加到 MI、DI、TI、SSA 等主流迁移攻击上
 4. **跨架构提升显著**：CNN→ViT 迁移率提升 25-39%，远超仅对齐 logits 的 MA 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖见证模型选择**：不同见证模型对最终迁移性影响差异较大，论文提供了经验指导但缺乏理论保证
 2. **仅考虑分类任务**：未验证在检测、分割等下游任务上的效果

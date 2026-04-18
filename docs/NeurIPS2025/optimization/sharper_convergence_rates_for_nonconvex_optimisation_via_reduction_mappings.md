@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sharper Convergence Rates for Nonconvex Optimisation via Reduction Mappings
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **实践指导**：明确了何时以及如何利用解结构来加速优化
 - 43 页详尽论文，包含完整证明
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要（至少局部）已知解流形结构，自动发现结构的方法待研究
 - 随机优化（SGD）的分析不如确定性完整
 - 深度网络中解流形的精确刻画仍是开放问题

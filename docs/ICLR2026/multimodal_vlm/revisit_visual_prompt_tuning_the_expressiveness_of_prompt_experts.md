@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisit Visual Prompt Tuning: The Expressiveness of Prompt Experts
 description: >-
@@ -30,9 +30,9 @@ tags:
 - **领域现状**：Visual Prompt Tuning（VPT）通过在 ViT 输入中附加可学习的 prompt tokens 实现参数高效微调，已成为 PEFT 方法中的重要分支
 - **现有痛点**：VPT 的理论理解不够深入；近期 Le et al.（2024）建立了注意力机制与 MoE 的联系，揭示每个注意力头可解释为多个 MoE 模型的组合，而 VPT 就是向这些 MoE 中添加新的 prompt experts
 - **核心矛盾**：通过 MoE 视角可以发现，预训练的 experts $f_j(\bm{X}) = W_m^{V\top} \bm{x}_j$ 是输入 $\bm{X}$ 的线性函数，而 prompt experts $f_{N+j'}(\bm{X}) = W_m^{V\top} \bm{p}_{j'}$ 是固定常量向量，与输入无关。这种表达力不对等限制了 VPT 的适应能力
-- **本文要解决什么**：在保持参数效率的前提下，增强 prompt experts 的函数表达力
+- **本文目标**：在保持参数效率的前提下，增强 prompt experts 的函数表达力
 - **切入角度**：设计输入自适应的 prompt 生成机制，同时保持简洁的函数形式以支撑理论分析
-- **核心 idea 一句话**：用 token-wise 投影器聚合全局特征 + 共享 MLP 投影器生成自适应 prompt，使 prompt expert 从常量函数升级为输入的非线性函数
+- **核心 idea**：用 token-wise 投影器聚合全局特征 + 共享 MLP 投影器生成自适应 prompt，使 prompt expert 从常量函数升级为输入的非线性函数
 
 ## 方法详解
 
@@ -44,7 +44,7 @@ VAPT 在每个 ViT block 中通过 VAPT block 动态生成 prompt tokens $\bm{P}
 
 #### 1. Token-wise 投影器 + Channel-wise 卷积
 
-- **做什么**：从特征图中聚合全局信息，为每个 prompt token 生成一个全局描述
+- **功能**：从特征图中聚合全局信息，为每个 prompt token 生成一个全局描述
 - **核心思路**：
     - **Channel-wise 卷积**：对特征图 $\bm{X}_{\text{img}} \in \mathbb{R}^{H \times W \times d}$ 施加共享权重的 $K \times K$ 卷积（所有 $d$ 个通道共享同一卷积核），编码局部空间关系：$\bm{X}_{\text{conv}} = F * \bm{X}_{\text{img}}$
     - **Token-wise 投影**：$G_{j'}(\bm{X}_{\text{conv}}) = \sum_{k=1}^{H' \cdot W'} \alpha_{j',k} \bm{x}_k^{\text{conv}} \in \mathbb{R}^d$，通过可学习标量 $\alpha_{j',k}$ 对 token 加权求和，聚合全局信息
@@ -53,7 +53,7 @@ VAPT 在每个 ViT block 中通过 VAPT block 动态生成 prompt tokens $\bm{P}
 
 #### 2. 共享特征投影器
 
-- **做什么**：对全局特征进行非线性变换，生成最终的自适应 prompt tokens
+- **功能**：对全局特征进行非线性变换，生成最终的自适应 prompt tokens
 - **核心思路**：$g(\bm{x}) = W^{(2)} \sigma(W^{(1)} \bm{x})$，其中 $W^{(1)} \in \mathbb{R}^{r \times d}$，$W^{(2)} \in \mathbb{R}^{d \times r}$，$r \ll d$（瓶颈 MLP）
 - **最终 prompt**：$\bm{P}_{j'}(\bm{X}) = W^{(2)} \sigma(W^{(1)} W_{j'} \bm{X}) \in \mathbb{R}^d$
 - **更新后的 prompt experts**：
@@ -116,7 +116,7 @@ VAPT 在 VTAB-1K 上超过全量微调 7.34%，在 FGVC 上超过 1.04%。
 3. **反常识发现**：用更少参数 (0.36% vs 0.73%) 获得更好性能，打破了"更多参数=更好性能"的刻板印象
 4. **MoE 解释框架**的方法论价值：为理解和改进各种 prompt-based 方法提供了统一视角
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. token-wise 投影器的权重 $\alpha_{j',k}$ 是可学习标量但与输入无关，可考虑进一步使其自适应
 2. 共享特征投影器相同——不同层可能需要不同的非线性变换

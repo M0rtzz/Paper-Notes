@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoComplete: Geometry-Aware Diffusion for Reference-Driven Image Completion
 description: >-
@@ -156,7 +156,7 @@ $\mathbf{w}_j$ 为有效区域权重，仅在可见区域计算损失。
 - **鲁棒性设计**：条件遮罩训练策略使模型天然具备对上游误差的鲁棒性
 - **端到端几何估计**：VGGT + LangSAM 替代传统多阶段流水线，避免误差累积
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 每个场景需单独微调（2000 iterations），无法实现零样本泛化
 2. 依赖 VGGT 的几何估计质量，对极端动态场景可能退化

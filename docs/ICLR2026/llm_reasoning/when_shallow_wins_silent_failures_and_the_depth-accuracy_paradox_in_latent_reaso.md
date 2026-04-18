@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Shallow Wins: Silent Failures and the Depth-Accuracy Paradox in Latent Reasoning
 description: >-
@@ -123,7 +123,7 @@ $$\text{SR} = \frac{1}{|\mathcal{P}|} \sum_{q \in \mathcal{P}} \mathbb{I}[\text{
 - **双阶段计算模型的发现**：中间层负责关键推理操作，后期层负责放大和输出格式化，与电路发现（circuit discovery）的研究一致
 - **评估改革的呼吁**：单样本准确率不足以保证计算可靠性，需要多次推理一致性评估和稳定性加权的评分机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 GSM8K 的 6%（500题）上评估，结论推广需全数据集验证
 - Faithfulness 度量缺乏理论基础，阈值选择为经验性的

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MMRL: Multi-Modal Representation Learning for Vision-Language Models
 description: >-
@@ -93,7 +93,7 @@ MMRL 基于冻结的 CLIP 模型，引入一个共享可学习表征空间 $\mat
 - 正则项 $\mathcal{L}_{cos}$ 同时约束视觉和文本侧的 class feature，从两端防止特征漂移
 - 在 few-shot 学习中，随着 shot 数增加优势更明显，说明适配能力上限更高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方法专门针对 CLIP 类双编码器结构设计，不直接适用于生成式 VLM（如 LLaVA）
 - 16-shot 以下的极端少样本场景提升有限
 - 正则项需要额外的冻结 CLIP 前向传播来计算零样本特征，增加训练开销

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predict and Resist: Long-Term Accident Anticipation under Sensor Noise
 description: >-
@@ -176,7 +176,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{an} + \alpha(\mathcal{L}_{actor} + \beta \m
 4. **RL框架的巧妙应用**：将"何时预警"建模为序列决策问题，time-weighted reward自然编码了"越早越好"的安全需求
 5. **实用性导向**：在RTX 3050上即可训练，模型轻量（256单元GRU），具有很强的实际部署潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **去噪过度问题**：极端噪声下（$\sigma \geq 10$），移除图像扩散有时反而更好，说明当前固定的残差系数 $\lambda$ 和扩散步数可能需要自适应调整
 - **脉冲噪声50%时性能下降明显**：AP降至91.6%（A3D），在密集城市场景中可能不够可靠

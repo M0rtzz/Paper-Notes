@@ -45,25 +45,25 @@ BinaryAttention 由三个核心组件组成：(1) **Scaled Binary Representation
 
 ### 关键设计一：Scaled Binary Representations（缩放二值表示）
 
-- **做什么**：将 Query $\mathbf{q}_i$ 和 Key $\mathbf{k}_j$ 通过 sign 函数量化为 $\{-1, +1\}^d$，得到 $\mathbf{s}_i = \mu_q \cdot \text{sign}(\mathbf{q}_i)$，$\mathbf{t}_j = \mu_k \cdot \text{sign}(\mathbf{k}_j)$。
+- **功能**：将 Query $\mathbf{q}_i$ 和 Key $\mathbf{k}_j$ 通过 sign 函数量化为 $\{-1, +1\}^d$，得到 $\mathbf{s}_i = \mu_q \cdot \text{sign}(\mathbf{q}_i)$，$\mathbf{t}_j = \mu_k \cdot \text{sign}(\mathbf{k}_j)$。
 - **核心思路**：点积相似度 $\mu_q \mu_k \mathbf{s}_i^T \mathbf{t}_j$ 可用 XNOR + popcount 位运算高效计算，理论上 $\mathbf{QK}^T$ 部分可获得 16× 加速。
 - **设计动机**：Theorem 1 证明二值 Q/K 的外积是原始协方差矩阵的一致估计，从统计层面保证了二值注意力的表达能力；缩放因子 $\mu_q, \mu_k$ 保留了原始 token 的幅值信息，减小量化误差。
 
 ### 关键设计二：Bias Enhancement（偏置增强）
 
-- **做什么**：在二值点积上加一个偏置项：$S_{ij} = \mu_q \mu_k \mathbf{s}_i^T \mathbf{t}_j / \sqrt{d} + b_{ij}$。
+- **功能**：在二值点积上加一个偏置项：$S_{ij} = \mu_q \mu_k \mathbf{s}_i^T \mathbf{t}_j / \sqrt{d} + b_{ij}$。
 - **核心思路**：偏置可以是 dense 可学习矩阵、相对位置偏置或上下文感知偏置，增加注意力得分矩阵的秩，避免 softmax 分布塌缩为均匀分布。
 - **设计动机**：1-bit 量化丢弃了幅值信息，导致注意力系数趋于均匀（"flattened effect"），无法区分显著特征；偏置项将上下文/空间结构信息重新注入，恢复注意力的判别能力。消融实验显示偏置对小模型（DeiT-T +0.44%）效果尤为明显。
 
 ### 关键设计三：Hybrid Quantization（混合量化）
 
-- **做什么**：对 softmax 后的注意力系数 $P_{ij}$ 采用无符号 8-bit 静态量化（scale = 1/255）；对 Value $\mathbf{v}_j$ 采用 channel-wise 8-bit 量化。
+- **功能**：对 softmax 后的注意力系数 $P_{ij}$ 采用无符号 8-bit 静态量化（scale = 1/255）；对 Value $\mathbf{v}_j$ 采用 channel-wise 8-bit 量化。
 - **核心思路**：$\mathbf{PV}$ 乘法使用 INT8 Tensor Core 指令 `mma.s32.u8.s8.s32`，实现该部分 2× 加速。
 - **设计动机**：仅量化 QK 不足以实现端到端加速，PV 乘法同样是计算瓶颈；8-bit 精度在注意力系数（自然落在 [0,1]）和 Value 上足够保持精度。
 
 ### 关键设计四：QAT + Self-Distillation 训练策略
 
-- **做什么**：采用 Quantization-Aware Training 在训练/微调中模拟量化效果；以全精度模型为教师进行自蒸馏。
+- **功能**：采用 Quantization-Aware Training 在训练/微调中模拟量化效果；以全精度模型为教师进行自蒸馏。
 - **核心思路**：STE（直通估计器）使 sign 函数可反向传播；蒸馏 loss 引导二值表示的相似度与全精度对齐。
 - **设计动机**：1-bit 量化导致分布偏移和近似误差，仅靠 PTQ 不够。消融显示自蒸馏对大模型 DeiT-B 提升 +0.66%，表明它有效对抗了量化的分布偏移。
 

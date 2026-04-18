@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ABRA: Teleporting Fine-Tuned Knowledge Across Domains for Open-Vocabulary Object Detection
 description: >-
@@ -38,11 +38,11 @@ tags:
 
 **核心矛盾**：需要在目标域检测某个类别，但该类在目标域完全不可见（zero-shot class transfer across domains）。
 
-**本文要解决什么？** 将源域中已学到的类别检测能力传送到无该类数据的目标域。
+**本文目标** 将源域中已学到的类别检测能力传送到无该类数据的目标域。
 
 **切入角度**：域知识和类知识可以解耦——域专家学视觉统计（光照/纹理/天气），类专家学类别语义。通过对齐两个域的 SVD 基底，类残差可在域间"传送"。
 
-**核心 idea 一句话**：$\theta_T^{(c)} \approx U_T(\Sigma_T + U_T^\top U_S \cdot \Delta\Sigma_S^{(c)} \cdot V_S^\top V_T) V_T^\top$，闭式解无需训练。
+**核心 idea**：$\theta_T^{(c)} \approx U_T(\Sigma_T + U_T^\top U_S \cdot \Delta\Sigma_S^{(c)} \cdot V_S^\top V_T) V_T^\top$，闭式解无需训练。
 
 ## 方法详解
 
@@ -134,7 +134,7 @@ ParamΔ 在 SDGOD 上崩溃（恒等映射在激进域偏移下失效），ABRA 
 - SVFT 残差极轻量（仅对角矩阵），适合多类场景的并行训练和存储
 - 闭式解使传送零延迟，适合部署时快速适配新域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 正交 Procrustes 假设源/目标域 SVD 子空间有良好对应——极端域偏移（如 CT→超声）下需验证
 - Objectification 仅用 top-3 类，类数选择可能因数据集而异

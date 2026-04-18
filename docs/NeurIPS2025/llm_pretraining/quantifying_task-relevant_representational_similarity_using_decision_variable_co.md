@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantifying Task-Relevant Representational Similarity Using Decision Variable Correlation
 description: >-
@@ -131,7 +131,7 @@ Cohen's Kappa 的高模型间一致性源于解码器引入的决策偏差。当
 - 实验结果挑战了"更好的网络 = 更像大脑"的流行假说，揭示了深度网络和灵长类视觉表征之间可能存在的**根本性策略差异**。
 - 对 Cohen's Kappa 文献的系统性再分析是方法论贡献的重要组成部分。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅使用两只猴子的数据，样本量有限，后续需要更大规模的神经记录数据验证。
 2. 高维特征空间的降维可能丢失信息，尽管作者做了多种维度设置的鲁棒性验证。

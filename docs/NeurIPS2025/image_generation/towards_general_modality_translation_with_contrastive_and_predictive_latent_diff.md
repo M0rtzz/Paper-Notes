@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards General Modality Translation with Contrastive and Predictive Latent Diffusion Bridge
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{bridge}} + \mathcal{L}_{\text{pred}} + \mathc
 - **对比+预测的双重约束**: 对比损失负责全局对齐，预测损失保证端到端保真度，两者互补形成强有力的训练信号
 - **"翻译器"视角下的架构选择**: 受 NLP 翻译任务启发，选择编码器-解码器 Transformer 而非仅解码器 DiT，这一决策得到消融实验有力验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅支持配对翻译，未探索非配对模态翻译
 - 编码器/解码器仍为模态特定组件，需要为新模态设计

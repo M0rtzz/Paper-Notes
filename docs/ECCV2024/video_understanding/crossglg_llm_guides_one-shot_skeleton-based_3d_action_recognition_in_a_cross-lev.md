@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CrossGLG: LLM Guides One-Shot Skeleton-Based 3D Action Recognition in a Cross-Level Manner
 description: >-
@@ -139,7 +139,7 @@ JID插入位置消融（Npre）：第5个编码块最优（太浅特征不够丰
 3. **全局-局部-全局范式**：先全局文本聚焦关键关节（局部），再局部特征交互汇聚全局表示
 4. **可视化验证**：对未见类别的动作，模型无需微调即能关注正确的关键关节
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM生成的文本质量依赖于prompt设计和LLM能力，不同动作的描述质量可能不均
 - JID的关节重要性是静态的（每个动作类别固定），未考虑同一动作不同阶段的动态变化

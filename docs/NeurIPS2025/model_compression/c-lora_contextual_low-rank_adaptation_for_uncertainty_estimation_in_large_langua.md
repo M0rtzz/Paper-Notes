@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] C-LoRA: Contextual Low-Rank Adaptation for Uncertainty Estimation in Large Language Models
 description: >-
@@ -32,7 +32,7 @@ tags:
 - **领域现状**：LoRA 等参数高效微调方法已是 LLM 下游适配的主流范式，近期 BLoB、Laplace-LoRA 等工作尝试将贝叶斯方法引入 LoRA 以实现不确定性量化（UQ）
 - **现有痛点**：现有贝叶斯 LoRA 方法（如 BLoB）对适配器参数施加固定的变分分布，该分布不随输入样本变化，忽略了数据本身带来的 aleatoric uncertainty（认知不确定性 vs 数据不确定性未解耦）
 - **核心矛盾**：在少样本微调场景中，LLM 容易过拟合产生过度自信的预测；而现有方法仅建模 epistemic uncertainty，无法捕捉因不同输入导致的预测可变性差异
-- **本文要解决什么**：如何在 LoRA 微调框架内高效建模样本级的数据依赖不确定性（heteroscedastic UQ），同时保持低参数开销
+- **本文目标**：如何在 LoRA 微调框架内高效建模样本级的数据依赖不确定性（heteroscedastic UQ），同时保持低参数开销
 - **切入角度**：在 LoRA 的 B 和 A 之间插入一个低维矩阵 E，并让 E 的分布参数由输入驱动的轻量级上下文模块生成，将贝叶斯推断约束在 r×r 的低维空间
 - **核心 idea**：Contextual LoRA——将 LoRA 权重的随机性从"固定分布采样"升级为"输入条件化分布采样"，实质上是对 LoRA 做了 amortized variational inference
 
@@ -44,19 +44,19 @@ C-LoRA 在标准 LoRA 的 $\mathbf{B} \in \mathbb{R}^{d \times r}$ 和 $\mathbf{
 
 ### 关键设计一：轻量级 LoRA 分解（Lightweight LoRA Factorization）
 
-- **做什么**：将标准 LoRA 的 $\Delta\mathbf{W} = \mathbf{BA}$ 扩展为 $\Delta\mathbf{W} = \mathbf{BEA}$，在中间插入 $\mathbf{E} \in \mathbb{R}^{r \times r}$
+- **功能**：将标准 LoRA 的 $\Delta\mathbf{W} = \mathbf{BA}$ 扩展为 $\Delta\mathbf{W} = \mathbf{BEA}$，在中间插入 $\mathbf{E} \in \mathbb{R}^{r \times r}$
 - **核心思路**：将贝叶斯推断的目标从 d 维空间（A 矩阵有 r×d 个参数）降到 r² 维空间（E 矩阵仅 r×r 个参数），复杂度与模型维度 d 完全解耦
 - **设计动机**：BLoB 对整个 A 矩阵做变分推断，参数量随 d 线性增长；插入 E 后，贝叶斯化部分的参数量为常数 r²，使得 data-dependent 的贝叶斯推断在计算上可行
 
 ### 关键设计二：上下文模块（Contextual Module）
 
-- **做什么**：每层配备一个两层全连接网络 $h_\varphi^l$，输入为 $\mathbf{z}^l = \mathbf{A}^l \mathbf{x}^{l-1} \in \mathbb{R}^r$（复用主模型特征），输出为 E 的分布参数 $(\boldsymbol{\mu}_{\mathbf{E}}^l, \boldsymbol{\Omega}_{\mathbf{E}}^l)$
+- **功能**：每层配备一个两层全连接网络 $h_\varphi^l$，输入为 $\mathbf{z}^l = \mathbf{A}^l \mathbf{x}^{l-1} \in \mathbb{R}^r$（复用主模型特征），输出为 E 的分布参数 $(\boldsymbol{\mu}_{\mathbf{E}}^l, \boldsymbol{\Omega}_{\mathbf{E}}^l)$
 - **核心思路**：通过 amortized inference 的方式，让变分后验 $q_\phi(\mathbf{E}_{\mathbf{x}}|\mathbf{x}) = \mathcal{N}(\boldsymbol{\mu}_{\mathbf{E}}(\mathbf{x}), \boldsymbol{\Omega}_{\mathbf{E}}^2(\mathbf{x}))$ 随输入改变，实现 sample-level 的异方差 UQ
 - **设计动机**：传统贝叶斯方法中参数分布对所有样本相同，无法反映不同输入的不确定性差异；上下文模块使模型能为"容易"的输入给出高置信预测、为"困难"的输入给出低置信预测
 
 ### 关键设计三：跨层自回归分解与特征复用
 
-- **做什么**：各层的 E 分布按自回归方式分解：$q_\phi(\mathbf{E}_{\mathbf{x}}|\mathbf{x}) = \prod_{l=1}^{L} q_\phi(\mathbf{E}_{\mathbf{x}}^l | \mathbf{x}^{l-1})$，且上下文模块直接以低维向量 $\mathbf{z}^l = \mathbf{A}^l \mathbf{x}^{l-1}$ 为输入而非原始高维特征
+- **功能**：各层的 E 分布按自回归方式分解：$q_\phi(\mathbf{E}_{\mathbf{x}}|\mathbf{x}) = \prod_{l=1}^{L} q_\phi(\mathbf{E}_{\mathbf{x}}^l | \mathbf{x}^{l-1})$，且上下文模块直接以低维向量 $\mathbf{z}^l = \mathbf{A}^l \mathbf{x}^{l-1}$ 为输入而非原始高维特征
 - **核心思路**：利用 LoRA 的 A 矩阵作为天然的降维映射，将 d 维中间表示压缩到 r 维后再送入上下文网络
 - **设计动机**：直接在 d 维特征上学习上下文模块代价过高且容易过拟合；复用 A 矩阵的降维结果，上下文模块的额外计算量仅为 $\mathcal{O}(r^4)$，远小于主模型每层 $\mathcal{O}(d^2)$
 

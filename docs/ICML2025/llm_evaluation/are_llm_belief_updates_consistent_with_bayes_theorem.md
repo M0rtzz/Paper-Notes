@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are LLM Belief Updates Consistent with Bayes' Theorem?
 description: >-
@@ -79,7 +79,7 @@ tags:
 - 为理解 LLM 是否"隐式学习"了概率推理提供了新证据
 - 对 AI 治理有重要意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估了预训练模型，未测试 RLHF/instruction-tuned 模型
 - 置信度提取依赖 prompt 设计，可能引入系统偏差
 - 数据集规模和领域覆盖可以进一步扩展

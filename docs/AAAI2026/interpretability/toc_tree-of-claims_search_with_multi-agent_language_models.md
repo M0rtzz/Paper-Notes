@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ToC: Tree-of-Claims Search with Multi-Agent Language Models
 description: >-
@@ -50,37 +50,37 @@ ToC 将专利权利要求优化建模为**序贯决策问题**：给定初始权
 
 ### 关键设计 1：十种原子编辑操作
 
-- **做什么**：定义了 AddNovelFeature、ReplaceSynonym、ReframeViaFigure、DropElement、MergeElements、SplitElement、AddLimitation、ModifyRelationship、ChangeOrder、AddDependency 共 10 种原子操作，并建立操作间的优先级关系（如 AddNovelFeature 须在 ReplaceSynonym 之前）。
+- **功能**：定义了 AddNovelFeature、ReplaceSynonym、ReframeViaFigure、DropElement、MergeElements、SplitElement、AddLimitation、ModifyRelationship、ChangeOrder、AddDependency 共 10 种原子操作，并建立操作间的优先级关系（如 AddNovelFeature 须在 ReplaceSynonym 之前）。
 - **核心思路**：将自由文本编辑离散化为可组合的原子操作，使搜索树的每个分支对应一个明确且可解释的修改动作。
 - **设计动机**：确保每一步编辑都是可追溯、可审计的，满足法律领域对透明性的强要求；同时限制动作空间防止搜索树爆炸。
 
 ### 关键设计 2：ExaminerAgent（审查智能体）
 
-- **做什么**：对权利要求的每个元素逐一对照先行技术进行披露分析，输出严格 JSON 格式的结构化评估——包括状态（Disclosed/NotDisclosed/PartiallyDisclosed）、证据引文、置信度 $c_i \in [0,1]$ 和认知不确定性 $\sigma_i$。
+- **功能**：对权利要求的每个元素逐一对照先行技术进行披露分析，输出严格 JSON 格式的结构化评估——包括状态（Disclosed/NotDisclosed/PartiallyDisclosed）、证据引文、置信度 $c_i \in [0,1]$ 和认知不确定性 $\sigma_i$。
 - **核心思路**：模拟真实专利审查员的链式推理过程，对每个技术特征做同义/功能/结构等价性检查。
 - **设计动机**：为 EditorAgent 提供精确的"哪些元素已被披露"信息，使编辑有的放矢；同时通过不确定性标记自动识别需要人工介入的边界情况。
 
 ### 关键设计 3：EditorAgent（编辑智能体）
 
-- **做什么**：根据 ExaminerAgent 反馈，针对已披露元素从 10 种操作中选择最优编辑，生成修改后文本及理由。
+- **功能**：根据 ExaminerAgent 反馈，针对已披露元素从 10 种操作中选择最优编辑，生成修改后文本及理由。
 - **核心思路**：偏好最小化修改（minimal change）来击败被引证的证据，同时维持法律语言风格和技术可行性。
 - **设计动机**：避免大刀阔斧的改写导致范围不必要的扩大或缩小，保证每步编辑都是有针对性的精准调整。
 
 ### 关键设计 4：不确定性感知的 MCTS 搜索
 
-- **做什么**：在选择阶段对每个节点估计认知方差 $\sigma_{\text{epi}}(n)$，超过阈值 $\sigma^{\text{epi}}_{\max} = 0.2$ 的路径被剪枝或标记人工审查；将总方差分解为认知项和偶然项 $\sigma^{\text{total}} = \sigma^{\text{epi}} + \sigma^{\text{ale}}$，仅认知项进入不确定性惩罚。
+- **功能**：在选择阶段对每个节点估计认知方差 $\sigma_{\text{epi}}(n)$，超过阈值 $\sigma^{\text{epi}}_{\max} = 0.2$ 的路径被剪枝或标记人工审查；将总方差分解为认知项和偶然项 $\sigma^{\text{total}} = \sigma^{\text{epi}} + \sigma^{\text{ale}}$，仅认知项进入不确定性惩罚。
 - **核心思路**：UCT 选择公式 $\text{UCT}(n) = Q(n)/N(n) + c\sqrt{\ln N(p)/N(n)}$ 加上 $\sigma$-gating 实现"知道自己不知道"的自我审查。
 - **设计动机**：隔离模型自身的认知不确定性与数据噪声，避免在高风险区域做投机性编辑，同时保留偶然性较高但本质合理的修改路径。
 
 ### 关键设计 5：渐进加宽（Progressive Widening）
 
-- **做什么**：扩展阶段仅生成前 $K(n) = \lceil \alpha N(n)^{\delta} \rceil$ 个高价值子节点，$(α,δ) = (2.0, 0.5)$。
+- **功能**：扩展阶段仅生成前 $K(n) = \lceil \alpha N(n)^{\delta} \rceil$ 个高价值子节点，$(α,δ) = (2.0, 0.5)$。
 - **核心思路**：早期广泛探索、后期精细利用，自适应控制分支因子。
 - **设计动机**：在保证语义有效性的同时防止搜索树指数膨胀，兼顾搜索效率与质量。
 
 ### 关键设计 6：多目标奖励函数
 
-- **做什么**：线性加权五个子目标 $R(C_t) = w_1 R_{\text{cov}} - w_2 R_{\text{scope}} + w_3 R_{\text{novelty}} + w_4 R_{\text{cons}} - w_5 R_{\text{uncert}}$，权重 $(1.0, 0.5, 1.5, 0.8, 0.3)$。
+- **功能**：线性加权五个子目标 $R(C_t) = w_1 R_{\text{cov}} - w_2 R_{\text{scope}} + w_3 R_{\text{novelty}} + w_4 R_{\text{cons}} - w_5 R_{\text{uncert}}$，权重 $(1.0, 0.5, 1.5, 0.8, 0.3)$。
 - **核心思路**：覆盖率奖励将"已披露"转为"未披露"；范围惩罚防止不必要缩窄；新颖性仅计算审查员认定为创新的变更；一致性综合法律可读性和技术连贯性；不确定性用认知方差抑制投机编辑。
 - **设计动机**：反映专利修改中多个互相竞争目标的实际权衡，新颖性权重最高(1.5)体现其核心地位。
 
@@ -141,7 +141,7 @@ ToC 将专利权利要求优化建模为**序贯决策问题**：给定初始权
 
 ---
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集单一**：仅在无线通信领域的 USPTO 数据上验证，尚不清楚在生物医药、化学等高度专业化领域的泛化能力。
 2. **计算成本**：MCTS 最大 800 轮迭代 + 3600 秒搜索时间 + 每步需调用两个 LLM agent，API 开销和延迟对实际部署是挑战。

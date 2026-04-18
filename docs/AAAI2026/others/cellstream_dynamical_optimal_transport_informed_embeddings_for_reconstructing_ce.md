@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data
 description: >-
@@ -144,7 +144,7 @@ $$\mathcal{L}_{Match} = \lambda_{Mass} \mathcal{L}_{Mass} + \lambda_{OT} \mathca
 3. **粒子形式的 WFR 计算**：巧妙利用 Euler-Lagrange 等价性，避免了直接求解高维 PDE，使方法可扩展
 4. 提出了两个新的评估指标（VC 和 TC），填补了缺乏 ground truth 时评估嵌入质量的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **解码器重建精度有限**：作者承认当前解码器架构不足以将动态高精度地投射回原始基因表达空间
 2. **嵌入维度固定为 2**：虽然便于可视化，但限制了表达能力，更复杂的生物过程可能需要更高维嵌入

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rascene: High-Fidelity 3D Scene Imaging with mmWave Communication Signals
 description: >-
@@ -105,7 +105,7 @@ $$\mathcal{L} = \sum_{r=1}^N (\lambda_v \mathcal{L}_{\text{voxel}}^{(r)} + \lamb
 - **互补性**：RF 感知对光学材料失效模式（低反照率表面吸收、光滑材料镜面反射）具有天然鲁棒性，与 LiDAR 形成互补
 - 置信度锐度参数 $\eta$ 的设计允许融合过程被高置信度几何信号主导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 感知范围仅 7 米，适用于室内场景，室外大范围场景有待验证
 - 需要已知的 6-DoF 位姿信息（目前依赖外部 IMU）

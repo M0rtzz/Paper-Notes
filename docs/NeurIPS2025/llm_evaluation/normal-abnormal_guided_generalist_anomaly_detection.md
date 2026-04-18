@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Normal-Abnormal Guided Generalist Anomaly Detection
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L} = \mathcal{L}_{cls} + \lambda \mathcal{L}_{seg}$$
 - **设计极简高效**：冻结骨干 + 仅训练 2 个注意力模块，24.4M 参数实现 SOTA
 - RM→AFL 的两阶段设计精巧：先在残差空间提取异常模式原型，再将原型映射回视觉空间定位具体异常
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 异常参考限制为 $K_2=1$，更多异常参考是否能更进一步提升有待探索
 - 假设每种异常类型有 1 个参考样本，若异常类型未覆盖则效果未知

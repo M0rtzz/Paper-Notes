@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization
 description: >-
@@ -76,7 +76,7 @@ UniABG 采用双阶段设计：Stage 1 通过 VAAB 学习视角不变特征 + DB
 - APV 作为几何中间视角的设计巧妙，既辅助域对齐又用于图过滤中的多视角验证
 - 无监督性能接近甚至超过有监督方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 DBSCAN 超参（如 eps），对不同数据集可能需要调参
 - APV 的颜色迁移方式较简单（全局统计量），未考虑局部语义

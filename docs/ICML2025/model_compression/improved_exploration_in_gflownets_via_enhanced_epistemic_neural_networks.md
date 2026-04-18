@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Exploration in GFlowNets via Enhanced Epistemic Neural Networks
 description: >-
@@ -109,7 +109,7 @@ tags:
 - **联合预测的重要性**：不确定性驱动的探索需要联合预测而非边际预测
 - **Enhanced 版本的妙处**：随机选择 ensemble member 而非加权和，更好地模拟 Thompson Sampling
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 toy 环境 (HyperGrid, Bit Sequences) 验证，缺乏分子设计等实际应用
 - ENN-GFN 在较大环境中表现退化的原因需进一步分析
 - 与 GAFN、RND 等其他探索增强方法的比较不够全面

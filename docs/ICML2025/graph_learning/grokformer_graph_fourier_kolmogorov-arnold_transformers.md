@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GrokFormer: Graph Fourier Kolmogorov-Arnold Transformers
 description: >-
@@ -125,7 +125,7 @@ $$\mathbf{X}^{(l)} = \text{FFN}(\text{LN}(\mathbf{X}'^{(l)})) + \mathbf{X}'^{(l)
 3. **异配图优势显著**：在 Chameleon/Squirrel/Texas 等异配图上提升明显，说明多阶谱信息对捕捉节点差异模式至关重要
 4. **理论完备**：严格证明了多项式滤波器和 Specformer 是特例，滤波器可逼近任意连续函数且保持排列等变性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **谱分解开销**：需要离线特征分解 $O(N^3)$，虽然可用稀疏近似但对超大图仍有瓶颈
 2. **大规模可扩展性**：Penn94 (约 42K 节点) 是实验中最大的图，未在百万级图上验证

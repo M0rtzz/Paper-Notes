@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Monte Carlo Expected Threat (MOCET) Scoring
 description: >-
@@ -124,7 +124,7 @@ Dolphin 模型在标准基准上性能略有下降，表面上安全性似乎提
 3. **与政策框架对齐**：与 OpenAI Preparedness Framework、Anthropic RSP、NIST AI RMF 等既有框架兼容
 4. **跨领域方法**：k-NN + 蒙特卡洛的组合方法具有通用性，可扩展到其他安全领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设限制**：假定行为者无法事实核查、不使用 best-of-n 或多轮提示，实际场景中攻击者可能更具策略性
 2. **数据依赖**：伤害函数和步骤概率的准确性依赖历史数据，量级估计有限

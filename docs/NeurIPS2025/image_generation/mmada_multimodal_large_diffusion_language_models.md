@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MMaDA: Multimodal Large Diffusion Language Models
 description: >-
@@ -141,7 +141,7 @@ MMaDA 的训练流程包含三个阶段：
 - WISE Cultural 基准上大幅领先（0.67 vs SDXL 的 0.43），表明推理增强确实帮助了知识密集型图像生成
 - 扩散模型天然的并行解码 + 修复能力是相对 AR 模型的结构性优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与 Qwen2-7B 等顶尖 AR 模型在纯文本任务上仍有差距（MMLU 68.4 vs 70.3，GSM8K 73.4 vs 80.2）
 - 图像分辨率限于 512×512，未探索高分辨率生成

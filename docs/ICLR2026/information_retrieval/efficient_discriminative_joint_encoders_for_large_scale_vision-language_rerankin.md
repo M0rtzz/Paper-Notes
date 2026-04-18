@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Discriminative Joint Encoders for Large Scale Vision-Language Re-ranking
 description: >-
@@ -95,7 +95,7 @@ EDJE分为离线和在线两个阶段：
 - 论文的写作逻辑极其清晰：从瓶颈分析→范式转换→具体设计→实验验证，层层递进
 - 首次系统性地将文本检索中成熟的cross-encoder重排思路引入多模态检索，填补了重要空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅涵盖图文检索，未覆盖多语言多模态检索、音频、视频等模态
 - 联合编码器的判别能力仍有提升空间，可探索更大或更强的语言模型替代MiniLM
 - 压缩到32 Token时性能下降明显，更极致的压缩方法值得研究

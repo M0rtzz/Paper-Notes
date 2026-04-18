@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harnessing the Unseen: The Hidden Influence of Intrinsic Knowledge in Long-Context Language Models
 description: >-
@@ -35,14 +35,14 @@ tags:
 
 **核心矛盾**：外部检索能力(extrinsic retrieval)和参数召回能力(parametric recall)之间可能存在Trade-off——增强前者会抑制后者，但现有评估完全忽视了这一矛盾。
 
-**本文要解决什么？**
+**本文目标**
    - 验证参数知识在长上下文生成中的重要性及其随上下文长度的变化趋势
    - 揭示外部检索能力与参数召回能力之间的Trade-off
    - 设计能同时评估两种能力的新benchmark
 
 **切入角度**：从知识冲突(knowledge conflict)的角度出发，构造参数知识与外部上下文对齐/冲突的数据集，通过控制变量实验揭示两种知识源的交互关系。
 
-**核心idea一句话**：长上下文模型的参数知识影响随上下文增长而增强，提升外部检索会抑制参数召回，需要Hybrid NIAH同时评估两种能力。
+**核心 idea**：长上下文模型的参数知识影响随上下文增长而增强，提升外部检索会抑制参数召回，需要Hybrid NIAH同时评估两种能力。
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ Hybrid NIAH核心结果：
 - **Hybrid NIAH设计极其巧妙**：仅通过修改问题表述（增加一步参数回忆），就将标准NIAH从~100%难度提升到67-95%难度，且能区分不同模型族的能力差异。成本几乎为零但信息量极大
 - **Random facts作为反作弊干扰**：揭示了标准NIAH中模型可能在pattern-matching而非真正检索。这个trick应该成为所有NIAH变体的标配
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅研究了开源模型**：GPT-4o、Claude等闭源模型未测试，而它们可能在参数知识利用上表现不同
 - **I-WhoQA构建依赖模型一致性过滤**：只保留模型"始终给出唯一答案"的实体，可能filter掉了很多有趣的案例
 - **Hybrid NIAH仅用[author]实体类型**：知识类型单一（书→作者），不同类型的参数知识（如科学事实、时间、地理）可能有不同表现

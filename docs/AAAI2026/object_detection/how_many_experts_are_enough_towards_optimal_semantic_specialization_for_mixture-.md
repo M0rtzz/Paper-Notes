@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Many Experts Are Enough? Towards Optimal Semantic Specialization for Mixture-of-Experts
 description: >-
@@ -129,7 +129,7 @@ MASS在DomainBed四个视觉域泛化数据集上均优于DynMoE，在VLCS上取
 - **跨域鲁棒性**：在合成数据、NLU（GLUE）和视觉泛化（DomainBed）三类任务上均表现优异
 - **梯度分解策略精巧**：复制专家时通过对齐/正交分解梯度，保留原专家语义同时让新专家探索分化方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **实验规模偏小**：仅在BERT-large和ViT-S/16上验证，未涉及真正的大规模LLM（如7B+参数量），对超大模型的适用性存疑
 - **扩展仅在前10%步**：将扩展窗口硬编码为前10%训练步，对需要更长warmup或后期出现语义漂移的场景不够灵活

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PerTouch: VLM-Driven Agent for Personalized and Semantic Image Retouching
 description: >-
@@ -120,7 +120,7 @@ PerTouch 包含两大部分：(1) 基于 Stable Diffusion + ControlNet 的语义
 - **强弱指令的统一处理**降低了用户门槛：非专业用户用弱指令快速编辑，专业用户精细控制
 - **场景感知记忆**实现了真正的个性化——不是一刀切的风格偏好，而是根据不同场景自适应选择偏好参数
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 当前仅支持四个可控属性（色彩、对比度、色温、亮度），扩展新属性需要区域级评分函数
 - SAM 的分割质量直接影响结果，复杂场景中分割错误会传播至修图结果

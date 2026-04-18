@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Difficulty-Aware Label-Guided Denoising for Monocular 3D Object Detection
 description: >-
@@ -125,7 +125,7 @@ $$L = L_{recon} + L_{det}$$
 3. **即插即用**：可集成到不同 DETR-based 检测器（MonoDETR、MonoDGP），均有稳定提升
 4. **全面的消融**：逐步验证了 3D-DAB、去噪策略、不确定性损失、DAP 各自的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 KITTI 上验证**：数据集规模较小且场景单一，未在 nuScenes 或 Waymo 等更大规模数据集上评估
 2. **难度分数的 EMA 策略**：依赖全局统计量的指数滑动平均，在训练初期可能不稳定

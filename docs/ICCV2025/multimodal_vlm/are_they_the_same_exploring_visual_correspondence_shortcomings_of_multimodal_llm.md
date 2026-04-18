@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are They the Same? Exploring Visual Correspondence Shortcomings of Multimodal LLMs
 description: >-
@@ -110,7 +110,7 @@ CoLVA仅用4B参数即超越GPT-4o 7.15%，超越Qwen2-VL-72B 11.72%。
 - 精巧的双编码器对比学习设计——不在同一编码器上做对比，而是让辅助编码器在主编码器语义空间中学习判别性特征，兼顾细粒度与对齐
 - 自动化数据生成pipeline设计合理：MLLM不直接做匹配（它们不擅长），而是基于给定标注总结视觉线索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基准集规模（1510样本）相对有限，更大规模评估有待验证
 - 预训练需要带分割标注的图像对，数据获取成本较高（虽然通过伪视频缓解）

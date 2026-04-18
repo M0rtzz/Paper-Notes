@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CodeTool: Enhancing Programmatic Tool Invocation of LLMs via Process Supervision
 description: >-
@@ -141,7 +141,7 @@ CodeTool 在开源和闭源 LLM 上均显著超越现有方法。
 3. **全自动过程数据构建**：不依赖GPT标注，用深度优先搜索和代码执行结果自动构建训练数据
 4. **代码生成模型免训练**：只需训练一个轻量级 PRM，代码生成模型直接使用预训练模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 代码生成能力强烈依赖底层代码模型的质量（CodeLlama-7B效果较差说明了这点）
 - StableToolBench 存在 API 缓存缺失问题，导致需要过滤测试集，可能影响公平性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distributionally Robust Cooperative Multi-Agent Reinforcement Learning via Robust Value Factorization
 description: >-
@@ -120,7 +120,7 @@ tags:
 - "鲁棒性在 MARL 中可以免费获得"的发现具有启发性——协作场景下的鲁棒训练可同时提升稳定性和适应性
 - 选择全局最坏情况模型而非个体最坏情况的设计哲学值得其他多智能体问题借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅支持全局不确定性集合（$\mathcal{P}$ 对所有智能体相同），未探索智能体级别的不确定性集合
 - ρ 的选择依赖验证集，缺乏自适应机制

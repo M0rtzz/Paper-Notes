@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DECOR: Deep Embedding Clustering with Orientation Robustness
 description: >-
@@ -122,7 +122,7 @@ DECOR 是一个三阶段的框架：(A) 旋转和翻转不变的嵌入提取器 
 - **实用性强**：模型轻量（RCAE 参数量小），训练成本低（单 H100 ~8小时），适合工业部署
 - **集成检测策略稳健**：IF 提供全局分区隔离，LOF 捕捉局部密度偏差，AND 融合降低假阳性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要多次运行 DeepDPM**：确定合适的初始 K 和最优训练 epoch 需要反复实验
 2. **多标签评估困难**：NMI 和 ARI 需要将多标签简化为主导标签，可能无法全面反映性能

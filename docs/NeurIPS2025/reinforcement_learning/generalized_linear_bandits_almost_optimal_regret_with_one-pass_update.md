@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalized Linear Bandits: Almost Optimal Regret with One-Pass Update
 description: >-
@@ -119,7 +119,7 @@ $$\text{Reg}_T \lesssim dSR\sqrt{S^2R + \log T} \cdot \sqrt{\frac{T\log T}{\kapp
 - **统一框架**：之前logistic bandit的方法依赖特定的logistic结构，本文通用于所有满足自协调性的GLM
 - **实用价值**：常数空间复杂度意味着算法可直接部署在资源受限的在线场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 主导项中仍有 $S^2$ 依赖，MLE方法已可完全消除（Lee et al., 2024）
 2. 非主导项仍线性依赖 $\kappa$，可能通过warm-up策略改善至 $\kappa_\mathcal{X}$

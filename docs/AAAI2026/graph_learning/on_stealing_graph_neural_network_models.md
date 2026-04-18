@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Stealing Graph Neural Network Models
 description: >-
@@ -122,7 +122,7 @@ $$\hat{y} = f_s(\mathbf{X}, \mathbf{A}) = g(f(\mathbf{X}, \mathbf{A}))$$
 - **K-means查询选择的有效性**：对比随机选择和其他主动学习策略（farthest-first、coreset herding等），K-means在所有数据集上一致最优
 - **同时覆盖inductive和transductive两种设定**，是首个在两种范式下都有效的GNN窃取方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据分布假设**：要求攻击者拥有与victim训练数据同分布的无标签图数据 $\mathbf{G}_D$，在实践中这一假设可能不完全成立
 - **仅限节点级任务**：当前仅针对节点分类，未涉及图分类或链接预测等其他GNN任务

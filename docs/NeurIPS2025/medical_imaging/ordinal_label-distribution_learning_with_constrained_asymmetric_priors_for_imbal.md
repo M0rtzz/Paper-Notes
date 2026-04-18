@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ordinal Label-Distribution Learning with Constrained Asymmetric Priors for Imbalanced Retinal Grading
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：用 WAE 替代 VAE 避免后验塌陷，非对称先验匹配少数类分布特性。
 
-**核心idea一句话**：非对称先验 WAE + 距边距正交紧凑损失 + 方向感知序数软标签，端到端解决 DR 长尾序数分级。
+**核心 idea**：非对称先验 WAE + 距边距正交紧凑损失 + 方向感知序数软标签，端到端解决 DR 长尾序数分级。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ tags:
 - **WAE 优于 VAE**：避免后验塌陷，潜空间更可控
 - **三重创新互补**：先验（分布层面）+ MAOC（表示层面）+ 序数损失（监督层面）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 DR 分级上验证，其他序数任务（如年龄估计、疼痛评级）有待扩展
 - NeurIPS Workshop 论文，篇幅受限，消融实验可更深入
 - 非对称先验的具体分布族选择（skew-normal vs log-normal）缺乏比较

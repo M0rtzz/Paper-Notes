@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continual Learning with Vision-Language Models via Semantic-Geometry Preservation
 description: >-
@@ -67,7 +67,7 @@ $\mathcal{L}_{CL} = \mathcal{L}_{cls} + \lambda_{ACGD} \mathcal{L}_{ACGD} + \lam
 - 无需任何旧数据或外部参考数据，纯粹依靠新任务数据的对抗扰动
 - 双路径推理有效弥补了模态间隙——跨模态 + 视觉原型互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍需维护文本和视觉原型的轻量历史记忆，虽然开销小但并非完全无历史信息
 - 依赖 prompt 模板质量，在严重 OOD 场景下可能受限
 - 仅关注类增量学习，未扩展到跨域/跨任务持续学习

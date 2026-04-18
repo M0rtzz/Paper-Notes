@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeepVideo-R1: Video Reinforcement Fine-Tuning via Difficulty-aware Regressive GRPO
 description: >-
@@ -98,7 +98,7 @@ SEED-Bench-R1验证集和LongVideoBench表现：
 - 从成功路径提取推理线索作为降难手段，是有趣的自我引导策略
 - 方法不限于视频领域，适用于任何使用GRPO的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在7B规模模型上验证，更大规模的缩放效果未知
 - 推理线索提取需额外生成步骤，增加数据准备成本

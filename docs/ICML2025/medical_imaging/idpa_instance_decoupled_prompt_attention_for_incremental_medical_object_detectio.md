@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] iDPA: Instance Decoupled Prompt Attention for Incremental Medical Object Detection
 description: >-
@@ -165,7 +165,7 @@ $$\tilde{f_v} = f_v + \text{Attn}_{t \to v}(f_t, f_v) + \text{Attn}_{t \to v}(p_
 4. **ODinM-13 基准**：构建了首个大规模增量医学目标检测基准，覆盖 13 个跨模态数据集，填补了该领域评估标准的空白
 5. **Exemplar-Free**：无需存储旧任务样本，避免了医学数据的隐私问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Prompt Pool 线性增长**：每个新任务增加一组 Prompt，随任务数增长 Pool 线性膨胀，可探索 Prompt 压缩或共享机制
 2. **依赖预训练 VLOD 质量**：框架建立在 GLIP 等自然域预训练模型之上，其在医学域的初始表示质量直接影响上限

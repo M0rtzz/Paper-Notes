@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WaLRUS: Wavelets for Long-range Representation Using SSMs
 description: >-
@@ -121,7 +121,7 @@ WaLRUS = SaFARi 框架 + Daubechies 小波基
 - **理论优雅**: SaFARi + Daubechies 的组合在数学上非常自然
 - **多分辨率**: 自动获得多尺度表示能力，无需显式设计多尺度架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在纯 NLP 任务上没有明显优势（相对 S4D/Mamba）
 2. 小波阶数的选择需要交叉验证

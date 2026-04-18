@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Your AI-Generated Image Detector Can Secretly Achieve SOTA Accuracy, If Calibrated
 description: >-
@@ -153,7 +153,7 @@ $$\Phi(\alpha) = \int_{-\infty}^{\infty} (z-\alpha) \cdot p(z) dz = 0$$
 3. **理论与实践的完美结合**：两个假设（系统性条件偏移和一致先验偏移）虽然是近似，但在实验中被充分验证
 4. **无监督版本的实用价值**：在无标注数据的现实部署场景中，无监督校准仍能带来显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设的适用范围**：系统性条件偏移假设要求同一生成器的图像具有一致的偏移，当测试集包含多种差异极大的生成器时，单一标量可能不足
 2. **仅针对二分类**：方法目前仅处理真/假二分类，未扩展到生成器归属（attribution）任务

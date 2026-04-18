@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E-3DPSM: A State Machine for Event-Based Egocentric 3D Human Pose Estimation
 description: >-
@@ -149,7 +149,7 @@ $$\mathcal{L}_{total} = \lambda_{3D}\mathcal{L}_{3D} + \lambda_\Delta\mathcal{L}
 3. **可学习卡尔曼融合**：比简单相加或固定参数滤波都好，让模型自动学习信任哪个信号源
 4. **去除中间监督**：不需要 2D 热力图和分割掩码，简化了流水线，也消除了潜在的误差源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **强遮挡+高动态仍有挑战**：论文承认在这些极端场景下精度仍有提升空间
 2. **仅验证了鱼眼自我中心视角**：能否推广到第三人称视角未知

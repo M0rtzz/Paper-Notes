@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SLICE: Semantic Latent Injection via Compartmentalized Embedding for Image Watermarking
 description: >-
@@ -77,7 +77,7 @@ SLICE的pipeline分三步：(1) 从参考图像中提取四个语义因子描述
 - 完全training-free，且有严格的理论保证（误接受率指数衰减）
 - 用中文prompt做语义提取的发现颇有趣——与Qwen3-VL的对齐度最好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对极端几何变换（大幅裁剪/缩放）脆弱，需依赖被动取证补充防御
 - 四个语义因子的粒度是否足够？对某些场景（如多物体交互）可能需要更细的分区
 - 依赖VLM语义提取的稳定性——不同VLM或不同版本可能导致语义漂移

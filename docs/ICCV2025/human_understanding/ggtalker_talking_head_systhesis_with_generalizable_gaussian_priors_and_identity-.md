@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GGTalker: Talking Head Synthesis with Generalizable Gaussian Priors and Identity-Specific Adaptation
 description: >-
@@ -137,7 +137,7 @@ GGTalker 不仅在自重演表现最佳，在跨身份和跨语言的 OOD 场景
 - **UV 空间的巧妙利用**：利用 FLAME 网格的 UV 布局，将 3D 高斯预测优雅地转化为 2D 图像生成问题，避免了逐帧拟合的繁琐流程。
 - **120 FPS 实时渲染**：得益于高斯溅射的高效渲染 + 紧凑的高斯表示，推理速度远超所有竞争方法。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FLAME 仅建模头部区域，躯干和手部需要额外处理（Body Inpainter 的简单 U-Net 方案仍有改进空间）。
 - 对极端面部遮挡（如手遮脸、眼镜反光）的鲁棒性未讨论。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SANA-Sprint: One-Step Diffusion with Continuous-Time Consistency Distillation
 description: >-
@@ -82,7 +82,7 @@ SANA-Sprint基于预训练的SANA模型，三步走：(1) 无损数学变换将f
 - **统一step-adaptive**：同一模型1-4步均高质量，大幅简化部署
 - **稳定化技术通用性强**：Dense time embedding和QK-Norm可以迁移到其他蒸馏方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - SANA-Sprint 1.6B在1步时FID略逊于0.6B（7.69 vs 7.04）——大模型单步可能需要更多蒸馏迭代
 - sCM的JVP计算目前不支持Flash Attention，需使用Linear Attention替代
 - 仅在SANA架构上验证，虽声称适用于FLUX/SD3但未实际测试

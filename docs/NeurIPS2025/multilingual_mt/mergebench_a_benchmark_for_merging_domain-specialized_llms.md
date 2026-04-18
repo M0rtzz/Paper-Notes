@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MergeBench: A Benchmark for Merging Domain-Specialized LLMs
 description: >-
@@ -143,7 +143,7 @@ MergeBench 的设计包含三个关键维度：
 3. **三维评估体系**：不仅评估多任务性能，还同时考量遗忘和效率，提供了实用决策指南
 4. **实用建议清晰**：从无数据到有训练数据的递进式推荐路线（Model Soup → Dataless L&S / Task Arithmetic → L&S / RegMean）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型规模上限 9B**：未覆盖 70B+ 的真正大模型，合并行为可能有质变
 2. **任务间冲突未量化**：五个领域间的干扰程度没有系统分析，不同领域组合可能有不同的最优策略

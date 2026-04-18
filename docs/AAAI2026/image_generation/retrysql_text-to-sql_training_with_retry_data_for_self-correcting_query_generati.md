@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RetrySQL: Text-to-SQL Training with Retry Data for Self-Correcting Query Generation
 description: >-
@@ -193,7 +193,7 @@ Qwen2.5-Coder 1.5B 在 SPIDER 数据集上：
 4. **小模型的实际价值**：1.5B 模型 + RetrySQL 在实际管线中接近 GPT-4o，对成本敏感的生产环境有重要意义
 5. **4.47 GPU 小时的训练成本**：极低成本即可获得显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据有限（BIRD 仅 ~9K 样例），未探索合成数据生成
 - 未探索模型规模的扩展效果（仅 1.5B）

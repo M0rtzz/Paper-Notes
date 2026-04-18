@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Product of Experts with LLMs: Boosting Performance on ARC Is a Matter of Perspective
 description: >-
@@ -160,7 +160,7 @@ $$\text{score}_{\text{agg}}(s) = \prod_{\phi_j \in \Phi} \hat{P}(\phi_j(s)|\phi_
 - **极简 tokenization 反直觉地有效**：从 120k+ token 词表精简到 64 个，看似信息丢失，实则通过消除 BPE 合并的歧义、减小嵌入层使微调更高效，带来性能提升
 - **"计算缓冲区" token**：在输入前添加字母表序列，模型学会将其作为隐式 scratchpad，这一发现有趣且潜在可推广
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **增强变换局限于结构化领域**：当前增强（旋转、反射、颜色置换）高度特定于网格推理任务，推广到自然语言推理等领域需设计新型语义保持变换
 2. **仍依赖人工设计的增强**：增强集 $\Phi$ 需要领域知识来定义，缺乏自动发现有效增强的机制

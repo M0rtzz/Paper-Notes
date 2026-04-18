@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EA3D: Online Open-World 3D Object Extraction from Streaming Videos
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \sum_{t=0}^{t_{\text{now}}} \lambda_1 \mathcal{L}_1 + \lambda_2 
 3. **知识传播机制**：通过匹配分布实现跨帧特征传播，确保知识的时间连续性
 4. 稀疏视角下仍保持高质量，10 帧 PSNR 即达 21.9
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 处理速度仅 0.235 FPS，距实时在线应用仍有距离
 - 需要 A100 80GB GPU，部署要求高

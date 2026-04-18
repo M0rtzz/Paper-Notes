@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SWE-SQL: Illuminating LLM Pathways to Solve User SQL Issues in Real-World Applications
 description: >-
@@ -134,7 +134,7 @@ Bird-Fixer 基于 14B 参数模型，达到与 O3-Mini 可比的性能，超越 
 - f-Plan Boosting 以极低的额外成本（与 baseline 相当的时间）实现 73.7% 的轨迹增加
 - GTM 的"思考-执行解耦"设计确保了跨方言泛化能力——Bird-Fixer 仅在 PostgreSQL 上训练但能泛化到 MySQL、SQL Server、Oracle
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 即使最强模型也仅解决约 39% 的问题，说明 SQL 调试任务仍然极具挑战性
 - 查询类问题（最常见和最重要的类别）成功率最低，需要更强的逻辑推理能力

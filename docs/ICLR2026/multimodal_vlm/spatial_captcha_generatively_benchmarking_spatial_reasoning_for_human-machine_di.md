@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatial CAPTCHA: Generatively Benchmarking Spatial Reasoning for Human-Machine Differentiation
 description: >-
@@ -144,7 +144,7 @@ Spatial CAPTCHA 是一个评测框架而非训练方法。在基准测试（Spat
 4. **难度可控设计**：连续可调的难度参数使系统能在安全性和用户体验之间灵活权衡
 5. **与 reCAPTCHA 的对比实验**具有很强的说服力，直观展示了传统方案的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **时效性风险**：随着 MLLM 空间推理能力的快速提升（如 GPT-5 等新模型），Spatial CAPTCHA 的有效性可能在未来被侵蚀，需要持续更新难度
 2. **用户体验挑战**：空间推理任务（尤其是心理旋转）对部分人群（如空间感知能力较弱的用户）可能不友好，可能影响通过率

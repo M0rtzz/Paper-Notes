@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neighbor GRPO: Contrastive ODE Policy Optimization Aligns Flow Models
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{J}(\theta) = \mathbb{E}_{s,t,i}\left[\min\left(A_i\rho_t^{(i)}, A_i\l
 3. **对称锚点采样**利用 J-L 引理的几何性质，巧妙减少计算量至 $B/G$ 倍
 4. **拟范数重加权**简洁有效地解决 reward flattening，一个超参数即可调控
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 FLUX.1-dev 上验证，对其他 Flow Matching 模型（如 SD3）的适用性待确认
 - 多奖励训练的权重目前采用等权，可探索自适应加权
 - 代理策略的理论保证依赖邻域足够紧（$\sigma$ 足够小），极端设置下的行为未充分分析

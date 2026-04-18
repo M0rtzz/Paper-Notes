@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Sharpness Dynamics in NN Training with a Minimalist Example: The Effects of Dataset Difficulty, Depth, Stochasticity, and More
 description: >-
@@ -111,7 +111,7 @@ $Q$ 随 $N$ 增大而急剧增长，与 progressive sharpening 趋势一致。
 - **层不平衡度 $C$ 的分析**：揭示了 SGD 噪声通过增大 $C$ 来抑制 sharpness 增长的定量机制，将 batch size / 学习率的效应归结为对 $C$ 增量的调控。
 - **双向界**：同时给出 sharpness 的上界和下界（已有工作多只给上界），且数值上界和下界非常紧。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析局限于**线性激活**和**每层单神经元**，虽然实验表明结论对非线性网络有一定迁移性，但缺乏严格保证。
 - EoS 阶段振荡衰减的理论分析尚未完成，且作者发现该行为与**数值精度**高度相关（高精度可能导致 loss 爆炸）。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dense Policy: Bidirectional Autoregressive Learning of Actions
 description: >-
@@ -139,7 +139,7 @@ $$P(A|O) = \prod_{i=1}^{n} P(A^i | A^{i-1}, A^{i-2}, ..., A^0, O)$$
 - **encoder-only 架构的高效性**: 用共享Encoder处理多层级动作表示，显著减少参数
 - **对数复杂度的推理**: 在不牺牲性能的前提下实现极快推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未探索将 Dense Policy 扩展为通用 VLA（Vision-Language-Action）模型
 - 在大规模基础模型上的扩展性和稳定性未验证

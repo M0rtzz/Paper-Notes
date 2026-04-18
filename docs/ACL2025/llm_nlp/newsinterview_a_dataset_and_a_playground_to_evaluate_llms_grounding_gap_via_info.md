@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NewsInterview: a Dataset and a Playground to Evaluate LLMs' Grounding Gap via Informational Interviews
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：LLM 能理解对话上下文，却无法像人类记者那样进行"共情确认→战略提问→信息引导"的多轮规划；当前训练目标缺乏长期策略奖励信号。
 
-**本文要解决什么**：(1) 量化 LLM 在采访场景中的 grounding gap；(2) 构建可用于训练策略性对话代理的模拟环境。
+**本文目标**：(1) 量化 LLM 在采访场景中的 grounding gap；(2) 构建可用于训练策略性对话代理的模拟环境。
 
 **切入角度**：选择新闻采访作为研究场景——采访中记者需要处理焦虑、不配合的信源，天然需要 grounding 沟通，且有大量公开转录可用。
 

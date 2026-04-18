@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpecQuant: Spectral Decomposition and Adaptive Truncation for Ultra-Low-Bit LLMs Quantization
 description: >-
@@ -151,7 +151,7 @@ SpecQuant是两阶段框架：
 4. **激活感知的自适应预算分配**：不依赖权重本身特征，而是基于激活-权重交互强度
 5. **极低的额外开销**：16个截断组仅增加2.7%延迟
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 需要逐层搜索最优平滑强度，校准过程有额外成本
 2. 低频截断的组数需要根据目标比特宽度手动设定
 3. 仅在LLaMA系列上验证，对其他架构（如Mixture-of-Experts）效果未知

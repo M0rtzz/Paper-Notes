@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EReCu: Pseudo-label Evolution Fusion and Refinement with Multi-Cue Learning for Unsupervised Camouflage Detection
 description: >-
@@ -106,7 +106,7 @@ EReCu 在所有四个数据集上全面超越所有 UOS 和 UCOD 基线方法。
 2. **多线索质量度量**：$S_{\text{mc}}$ 通过随机采样 patch 的余弦相似性计算前景-背景可分离性，既优雅又鲁棒，为伪标签质量评估提供了可迁移的工具
 3. **谱张量融合**：用 Tucker 分解 + 截断 SVD 融合多层注意力图，比简单加权聚合更好地保留语义和结构信息，且计算高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 提升幅度在部分数据集/指标上相对有限（如 CHAMELEON 上 $S_m$ 仅提升 0.34%），说明 UCOD 任务在某些场景已接近性能瓶颈
 - 框架复杂度较高（三个协同模块 + 教师-学生架构），推理效率和部署成本值得关注

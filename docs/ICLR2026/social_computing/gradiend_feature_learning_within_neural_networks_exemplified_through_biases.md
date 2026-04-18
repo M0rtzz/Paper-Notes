@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRADIEND: Feature Learning within Neural Networks Exemplified through Biases
 description: >-
@@ -120,7 +120,7 @@ AI系统经常表现出并放大社会偏见（如性别偏见），在法律、
 - **引入Bootstrap置信区间**：揭示了该领域的一个被忽视的问题——先前的去偏方法比较缺乏统计严谨性
 - **解码器偏置的有趣发现**：即使$h=0$（无性别信息），解码器的偏置$b_d$本身就学到了一个有效的去偏方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了二元的性别特征，能否推广到连续特征（如情感）、多值特征（如德语冠词der/die/das）或其他类型偏见（种族、宗教）需要进一步探索
 - 仅在encoder-only模型上测试，未验证在生成式Transformer（GPT类）上的效果
 - 事实/反事实梯度的构造依赖于MLM任务，CLM任务下的适配方案有待制定

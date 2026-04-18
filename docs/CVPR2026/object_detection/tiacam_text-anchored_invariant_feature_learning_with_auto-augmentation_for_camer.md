@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TIACam: Text-Anchored Invariant Feature Learning with Auto-Augmentation for Camera-Robust Zero-Watermarking
 description: >-
@@ -126,7 +126,7 @@ TIACam 由三个模块组成，以三方对抗循环联合训练：
 - **真实场景验证充分**：在屏幕翻拍、打印翻拍、截图三种真实物理退化下均大幅领先 SOTA
 - **无需定位步骤**：利用不变特征空间的强鲁棒性，直接在整幅图像上提取水印，无需先检测水印区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 领域标注为 object_detection 但实际为多媒体安全/水印领域，分类待修正
 - 图像统一缩放到 128×128，对高分辨率图像的局部特征保持能力未充分讨论

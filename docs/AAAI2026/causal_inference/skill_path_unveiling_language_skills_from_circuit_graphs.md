@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Skill Path: Unveiling Language Skills from Circuit Graphs
 description: >-
@@ -130,7 +130,7 @@ $$\text{Eff}_{\text{Skill}}(\text{Path}^i) = \frac{N_{\text{Path}^i \in \mathcal
 3. **首次定量验证**：将"简单技能在浅层、复杂技能在深层"以及"复杂技能包含简单技能"从定性猜想提升为定量证据
 4. **框架通用性**：三步框架与具体剪枝策略解耦，可即插即用替换不同的 circuit discovery 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型规模受限**：仅在 GPT2-small（12层12头）上验证，更大规模模型的适用性未知
 2. **技能路径无法保持输出忠实度**：因为只包含技能效应（不含背景和自身效应），无法完整恢复原始输出，限制了传统电路评估指标的使用

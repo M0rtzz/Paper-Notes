@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LILAD: Learning In-context Lyapunov-stable Adaptive Dynamics Models
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **状态相关衰减因子 $\gamma(x)$**：不需要假设 Lyapunov 函数的凸性（与之前工作不同），通过中值定理巧妙证明解的存在性，实际用二分法即可高效求解
 - **对抗训练策略**：动力学模型和 Lyapunov 函数交替更新，让两者共同收敛到一致的稳定表示
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅适用于自治系统（无外部控制输入），未扩展到受控系统
 - 假设所有参数化系统共享相同的平衡点（原点），限制了适用范围
 - GPT-2 作为 backbone 在高维时需要较大的模型和较长的训练（PDE-SM 需要 2M epochs）

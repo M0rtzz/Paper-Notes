@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Image Aesthetics with Dual-Conditioned Diffusion Models Guided by Multimodal Perception
 description: >-
@@ -115,7 +115,7 @@ $$L_{inp} = \|\epsilon_{inp} - \epsilon_\theta(x_{inp}(t\%t_s), c, x_{inp}, t\%t
 - **MAP 设计有针对性**：HSV 对应色彩美学、轮廓图对应结构美学，比直接用 RGB 更符合美学评估的感知维度
 - **可与 MLLM 集成**：DIAE 可接入美学理解 MLLM 自动生成 MAP 输入，形成端到端流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **未处理人像场景**：人像的美学涉及面部特征和体态等复杂因素，作者明确排除了此类数据
 - **SD v1.5 底座较旧**：相比 SDXL/SD3 在生成质量上有差距

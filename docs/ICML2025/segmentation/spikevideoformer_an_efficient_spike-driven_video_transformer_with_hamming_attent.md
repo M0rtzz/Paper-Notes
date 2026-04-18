@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpikeVideoFormer: An Efficient Spike-Driven Video Transformer with Hamming Attention and $\mathcal{O}(T)$ Complexity
 description: >-
@@ -132,7 +132,7 @@ Hamming 注意力贡献最显著之一，去掉时序建模性能断崖式下降
 4. **效率优势随序列增长更明显**：T=8→32 时功耗仅增 4.1×，而 ANN 增 8.3×，体现 $\mathcal{O}(T)$ 复杂度优势
 5. **阈值缩放的理论指导**：$s = 1/2D$ 是理论推导得到的最优值，优于以往经验设定的固定值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **VSS 性能仍有差距**：在 VSPW 大规模数据集上与 CFFM 差距较大（37.9 vs 49.3 mIoU），主要因采用简单分割头
 2. **GPU 上推理速度优势不明显**：SNN 的加法优势体现在神经形态芯片上，当前 GPU 测试中推理时间改善有限

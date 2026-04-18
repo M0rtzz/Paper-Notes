@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraLoRA: Granular Low-Rank Adaptation for Parameter-Efficient Fine-Tuning
 description: >-
@@ -140,7 +140,7 @@ Best GraLoRA 平均 86.0%，超越 LoRA (84.2%)、VeRA (85.2%)、FourierFT (85.0
 4. **覆盖面广**: 5 个任务（代码/常识/数学/NLU/图像）× 多种模型架构（LLaMA/Qwen/RoBERTa/SDXL）× 多种 rank，实验非常充分
 5. **训练时间增加极少**: 相对 LoRA 仅增加 3%–10% 训练时间，远小于 MoRA 的 40%+
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **均匀分块假设**: 当前设计假设所有子块等大小，未考虑不同通道重要性差异，自适应分块可能更优
 2. **$k$ 需要手动选择**: 虽然给了经验规则 $r/k^2 \approx 8$，但不同任务/模型的最优 $k$ 仍需 sweep

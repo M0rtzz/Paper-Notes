@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Configurable Preference Tuning with Rubric-Guided Synthetic Data
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(s,x,y_w
 - 仅用900个合成样本+1 epoch LoRA就能显著改变模型行为，数据效率极高
 - 框架具有良好的可扩展性：可以定义任意新rubric来控制新维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅在开放式写作任务上验证，未涉及结构化输出、代码生成等更复杂场景
 - rubric的设计仍需人工，如何自动生成/优化rubric是开放问题
 - 生成质量依赖教师模型能力，教师模型的偏见可能传播到合成数据

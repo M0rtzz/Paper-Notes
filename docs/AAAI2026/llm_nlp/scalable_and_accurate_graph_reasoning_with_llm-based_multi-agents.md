@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable and Accurate Graph Reasoning with LLM-Based Multi-Agents
 description: >-
@@ -93,7 +93,7 @@ tags:
 - 将分布式图计算的思想迁移到 LLM Agent 是非常优雅的设计——"既然单个 LLM 处理不了大图，那就用多个 LLM 分而治之"。这不仅解决了规模问题，还让推理过程透明可追溯
 - 6 个组件的统一分布式范式是将图算法知识编码为 LLM 可理解格式的巧妙方式——可以推广到其他需要分布式处理的 Agent 场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Agent 数量等于节点数量，对 1000+ 节点的图需要 1000+ 个 Agent 并行运行，计算成本巨大
 - 仅在多项式时间任务上有效，对 NP-hard 问题（如图着色、TSP）的效果未知
 - 每个 Agent 都是一个完整的 LLM 调用，多轮消息传递导致 token 消耗巨大

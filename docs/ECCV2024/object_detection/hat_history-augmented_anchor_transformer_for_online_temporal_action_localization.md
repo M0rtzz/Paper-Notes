@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HAT: History-Augmented Anchor Transformer for Online Temporal Action Localization
 description: >-
@@ -140,7 +140,7 @@ AFL参数：$\lambda_b = 0.025$，$s = 0.05$。
 - 自适应焦点损失解决了前景类间的不平衡问题，这是现有焦点损失变体忽略的维度
 - 推理速度147 FPS（RTX 4090），满足在线实时要求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **固定历史长度**：$L_h$ 需要手动调参，不同动作可能需要不同长度的历史上下文
 - 未探索动态历史跨度调整（类似语言模型中的adaptive attention span）

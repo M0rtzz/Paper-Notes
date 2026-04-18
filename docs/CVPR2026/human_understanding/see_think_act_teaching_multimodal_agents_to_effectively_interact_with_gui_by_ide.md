@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] See, Think, Act: Teaching Multimodal Agents to Effectively Interact with GUI by Identifying Toggles
 description: >-
@@ -68,7 +68,7 @@ StaR (State-aware Reasoning) 是一种多模态推理方法，通过将状态感
 
 #### 设计一：三步标注流水线 (State Control Benchmark 构建)
 
-**做什么**：从 6 个公开数据集（AMEX、RICOSCA、GUIAct-Mobile、AndroidWorld、AITW、OS-Atlas grounding）构建高质量的 toggle 控制基准。
+**功能**：从 6 个公开数据集（AMEX、RICOSCA、GUIAct-Mobile、AndroidWorld、AITW、OS-Atlas grounding）构建高质量的 toggle 控制基准。
 
 **核心思路**：
 
@@ -82,7 +82,7 @@ StaR (State-aware Reasoning) 是一种多模态推理方法，通过将状态感
 
 #### 设计二：StaR 三步推理链
 
-**做什么**：在推理链中显式嵌入状态感知，替代原始的 Thought→Action 模式。
+**功能**：在推理链中显式嵌入状态感知，替代原始的 Thought→Action 模式。
 
 **核心思路**：
 
@@ -94,7 +94,7 @@ StaR (State-aware Reasoning) 是一种多模态推理方法，通过将状态感
 
 #### 设计三：保持通用性的混合训练策略
 
-**做什么**：在 toggle benchmark 和 agentic benchmark 上联合训练，避免灾难性遗忘。
+**功能**：在 toggle benchmark 和 agentic benchmark 上联合训练，避免灾难性遗忘。
 
 **核心思路**：对 agentic benchmark（AndroidControl、AITZ、GUI-Odyssey）中涉及 toggle 的 episode，将推理链替换为 StaR 风格；其他 episode 保留原始推理。Agent 学会在 toggle 场景自适应使用 StaR 推理，在其他场景保持原有推理模式。
 
@@ -157,7 +157,7 @@ StaR (State-aware Reasoning) 是一种多模态推理方法，通过将状态感
 - **双标注器交叉验证**的数据构建流水线具有通用参考价值
 - **实验全面**：静态 benchmark + 通用 agentic benchmark + 真实动态环境，三个层面逐步验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅聚焦于移动端 toggle（二值状态），未涉及 slider、dropdown 等连续/多值控件
 - 动态评估仅 20 个任务，规模偏小

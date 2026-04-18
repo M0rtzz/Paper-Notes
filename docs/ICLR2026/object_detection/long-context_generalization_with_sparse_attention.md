@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Long-Context Generalization with Sparse Attention
 description: >-
@@ -117,7 +117,7 @@ Associative Recall 任务（训练长度 64）的长度外推准确率：
 - **$O(s^L)$ vs $O(n^L)$ 的洞察**：揭示了稀疏注意力在深层网络中的本质优势——梯度路径的组合爆炸被稀疏性有效抑制
 - **简洁的实现**：仅替换 softmax 为 α-entmax + 可学习温度，无需额外架构修改，工程实现友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算效率**：α-entmax 的前向/反向传播涉及排序操作，复杂度为 $O(n \log n)$，比 softmax 的 $O(n)$ 更高；尽管稀疏输出可加速后续计算，但注意力计算本身更慢
 2. **预训练成本**：需要从头预训练或全量微调，不能简单作为 drop-in replacement 应用于已有预训练模型

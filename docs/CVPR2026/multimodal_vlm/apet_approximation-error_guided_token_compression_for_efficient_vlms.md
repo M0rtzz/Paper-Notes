@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ApET: Approximation-Error Guided Token Compression for Efficient VLMs
 description: >-
@@ -166,7 +166,7 @@ ApET 的核心优势之一是天然兼容 FlashAttention：
 - **视频理解中"去噪"效应**：压缩后性能反而提升的现象令人惊喜，为视频 VLM 的 token 管理提供了新思路
 - **计算开销极低**：压缩模块本身仅 ~1ms，相对 LLM 推理的数百毫秒可忽略不计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 LLaVA-1.5 (7B/13B) 上验证，未测试更大规模模型（如 LLaVA-OneVision-72B、InternVL2-76B）
 - 线性近似假设 token 空间的冗余结构是线性的，对于高度非线性的特征关系可能低估某些 token 的重要性

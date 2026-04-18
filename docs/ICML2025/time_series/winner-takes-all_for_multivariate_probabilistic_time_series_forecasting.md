@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Winner-takes-all for Multivariate Probabilistic Time Series Forecasting
 description: >-
@@ -128,7 +128,7 @@ TimeMCL 的预测轨迹在所有数据集上都显著更平滑，这与理论分
 4. **即插即用**：可在任意 RNN/Transformer 主干上叠加多头+WTA损失，无需改变基础架构
 5. **合成+真实数据双重验证**：在 Brownian Motion / Bridge / AR(5) 上定性验证了量化性质
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设数 K 需预先指定**：类似 K-Means 需先确定簇数，K 的选取影响精度与效率的平衡，论文未给出自适应选择策略
 2. **主干限于 RNN**：实验仅使用 LSTM 主干；在 Transformer 主干上的表现尚待验证

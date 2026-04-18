@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Latent Proxies for Controllable Single-Image Relighting
 description: >-
@@ -121,7 +121,7 @@ ScaLight 测试集，三类光照变化（色温/方向/强度）：
 - **DPO 引入 PBR 质量优化**：将 RLHF 范式引入 intrinsic 估计是新颖的跨领域应用
 - **ScaLight 大规模数据集**：30万物体+系统光照参数变化，填补了可控物体级重光照数据的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 场景级性能仍与物体级有差距，复杂全局光传输（长距离阴影投射）是薄弱环节
 - 高频几何和强高光区域易被过度平滑，proxy 缺少足够高频约束

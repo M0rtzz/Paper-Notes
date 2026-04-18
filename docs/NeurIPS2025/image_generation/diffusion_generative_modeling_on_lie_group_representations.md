@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion Generative Modeling on Lie Group Representations
 description: >-
@@ -155,7 +155,7 @@ $$\mathbb{E}_t\left\{w(t)\mathbb{E}_{\mathbf{x}(0)}\mathbb{E}_{\mathbf{x}(t)}\le
 - **维度压缩**：当数据结构与群对称匹配时，分数学习的有效维度可大幅降低
 - **simulation-free 训练**：前向 SDE 有精确解，避免了非阿贝尔群上扩散的数值模拟困难
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 交换性条件限制了可用的群-空间组合，需要仔细选择
 2. 分子对接实验规模较小（与 DiffDock 等未直接对比）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hyperbolic Hierarchical Alignment Reasoning Network for Text-3D Retrieval
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L}_{ord} = \max(0, \theta(\mathbf{h}_t, \mathbf{h}_p) - \phi(\mathbf{
 - **贡献感知聚合**利用双曲距离自然地区分重要和冗余特征，无需额外监督信号
 - 可学习的曲率参数和缩放因子增加了模型的灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对比的基线方法只有RMARN一个，缺乏与更多方法的比较
 - T3DR-HIT数据集即使扩展后也只有8935对，规模仍然有限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridge Past and Future: Overcoming Information Asymmetry in Incremental Object Detection
 description: >-
@@ -119,7 +119,7 @@ BPF 基于 Faster R-CNN 构建，包含三个核心组件：桥接过去（Bridg
 3. **DwF 蒸馏有理论美感**：利用背景概率的可分解性，通过概率重组实现逐类蒸馏，比简单合并背景更精细
 4. **无记忆回放即超越回放方法**：在严格 rehearsal-free 设置下超越使用样本存储的 ABR 等方法，实际应用价值高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证于 Faster R-CNN**：虽然论文提到可扩展到 transformer 检测器（DETR 系列），但未提供实验验证
 2. **伪标签质量依赖旧模型**：若旧模型本身性能较差或在当前图像上泛化不佳，伪标签可能引入噪声

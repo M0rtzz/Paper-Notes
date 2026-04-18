@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When One Modality Sabotages the Others: A Diagnostic Lens on Multimodal Reasoning
 description: >-
@@ -87,7 +87,7 @@ tags:
 - Top-k推理的使用非常精到：不是为了通过猜测提高准确率，而是诊断模型在被破坏时是否仍保留了正确的内部排序。
 - 质量加权消融的"负面结果"本身就是重要发现——模型的自我校准能力仍然不足。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在情感识别领域验证，泛化到VQA、视频理解等其他多模态任务有待探索。
 - 使用自报置信度而非模型内部概率/logits，可能引入额外噪声。

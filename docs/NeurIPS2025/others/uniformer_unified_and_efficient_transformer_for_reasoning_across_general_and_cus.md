@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniFormer: Unified and Efficient Transformer for Reasoning Across General and Custom Computing
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 发现"过度加速"问题：并非所有组件都应使用自定义内核，有时 PyTorch 原生实现更优
 - FPGA 上的近线性延迟增长 vs vanilla attention 的二次增长，在长序列场景优势明显
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 ImageNet 分类任务上验证，缺少 NLP、目标检测等下游任务评估
 - FPGA 实现使用较旧的 Zynq UltraScale+ 平台，未在更现代的 FPGA 上测试
 - 未与最新的线性注意力变体（如 Mamba、RWKV）进行比较

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoRanker: Distance-Aware Ranking for Worldwide Image Geolocalization
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L}_{PL}^{(2)} = -\frac{1}{K^{(2)}} \sum_{i=1}^{K^{(2)}} \log \frac{\e
 3. **GeoRanking 数据集**是首个专为地理排序任务设计的数据集，对相关领域有推动作用
 4. 在 YFCC4K 上 1km 精度提升 37.3%，提升幅度惊人
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 推理时对每个查询-候选对都需通过 LVLM 前向传播，计算成本较高
 2. 推理依赖 GPT-4V 生成候选，引入额外 API 调用成本

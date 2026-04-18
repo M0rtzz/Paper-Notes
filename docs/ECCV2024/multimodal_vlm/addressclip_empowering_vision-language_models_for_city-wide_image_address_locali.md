@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AddressCLIP: Empowering Vision-Language Models for City-wide Image Address Localization
 description: >-
@@ -183,7 +183,7 @@ AddressCLIP 无需检索数据库，存储仅 0.34GB，推理内存仅 0.64MB，
 3. **流形学习约束**：图像-地理匹配损失从拓扑保持角度约束特征空间，是对比学习之外的有效补充
 4. **端到端优势明显**：对比两阶段流程，AddressCLIP 消除了GPS转地址的累积误差和歧义，同时大幅降低存储开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **判别式模型局限**：推理受限于候选地址集合，无法预测训练中未见过的地址
 2. **城市级限制**：目前仅在城市级别验证，扩展到更大地理范围（跨城市/国家）需要更多研究

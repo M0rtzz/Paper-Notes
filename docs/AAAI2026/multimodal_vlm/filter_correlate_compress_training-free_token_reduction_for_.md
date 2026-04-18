@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Filter, Correlate, Compress: Training-Free Token Reduction for MLLM Acceleration
 description: >-
@@ -77,7 +77,7 @@ MLLM中视觉token数量远超文本token，且自然视觉信号固有冗余度
 - training-free + <10行代码 + 可跨5种MLLM架构直接使用，实用性极强
 - 视频理解也适用（Video-LLaVA 92.8%保留率），不仅限于图像
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 极端压缩下（90%+ token丢弃）Fine-grained理解任务（如OCR）仍有明显退化
 - FiCoCo-V是task-agnostic的，在需要精确文本识别的场景中不如FiCoCo-L
 - 超参数虽然不太敏感，但不同MLLM架构仍需微调

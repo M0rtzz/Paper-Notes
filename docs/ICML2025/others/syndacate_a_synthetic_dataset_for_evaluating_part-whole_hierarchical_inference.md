@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SynDaCaTE: A Synthetic Dataset for Evaluating Part-Whole Hierarchical Inference
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：CapsNet在标准分类任务上表现不如现代CNN/Transformer，但我们不清楚它到底是在哪个环节失败了——是从图像提取部件（Image-to-Parts）的能力不足，还是从部件组装整体（Parts-to-Wholes）的能力不足？这两个子任务被耦合在端到端训练中，无法分离评估。
 
-**本文要解决什么？** （1）定义一个清晰的框架来形式化"部分-整体推断"的含义；（2）构建一个带有ground-truth部件信息的合成数据集来解耦两个子任务；（3）精确定位CapsNet的瓶颈，并为未来归纳偏置设计提供方向。
+**本文目标** （1）定义一个清晰的框架来形式化"部分-整体推断"的含义；（2）构建一个带有ground-truth部件信息的合成数据集来解耦两个子任务；（3）精确定位CapsNet的瓶颈，并为未来归纳偏置设计提供方向。
 
 **切入角度**：作者从认知科学中的mereology（整体学）出发，将视觉推断严格分解为两步：先推断部件集合，再从部件推断整体，并通过合成数据提供每一步的ground-truth。
 
-**核心idea一句话**：用带有完整部件标注的合成数据集将层次推断解耦为两个独立可评估的子任务，从而精确诊断模型能力。
+**核心 idea**：用带有完整部件标注的合成数据集将层次推断解耦为两个独立可评估的子任务，从而精确诊断模型能力。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ ImToClass和PartsToClass使用交叉熵损失；ImToParts使用Chamfer MSE损失
 - **SetTransformer的深度敏感性**：≥2层自注意力是Parts-to-Wholes推断所必需的，与Transformer circuits文献中的Induction Heads发现遥相呼应，暗示部件组装需要某种二阶推理能力。
 - **简洁但深刻的数据集设计**：SynDaCaTE虽然只用了线段/字符/单词三层简单对象，但正是这种极简设计使得结论极其清晰——复杂数据集可能引入过多干扰变量。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 合成数据过于简单（2D线段和字符），与自然图像/3D场景差距很大，结论能否迁移存疑
 - 仅评估了Sabour et al. (2017)的原始CapsNet，未测试后续改进版本（如Matrix Capsules、Efficient-CapsNet）
 - Parts-to-Wholes任务假设已知ground-truth部件，但实际中部件提取本身就是核心挑战

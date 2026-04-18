@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VSRM: A Robust Mamba-Based Framework for Video Super-Resolution
 description: >-
@@ -113,7 +113,7 @@ VSRM 包含两个主要部分：特征提取（Conv2d + Feature Propagation Bloc
 - FCL 损失直接对实部/虚部计算Charbonnier损失，相比FFL等方法更简单且效果更好
 - TGFN中3D DWConv的引入使前馈网络也能建模时空信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 参数量（17.1M）和运行时间（223ms）略高于PSRT/IART（13.4M, ~175ms）
 - Mamba 的加速和优化仍在探索阶段，有进一步提速空间
@@ -238,7 +238,7 @@ VSRM 在 REDS4 上比 IART 提升 0.21dB（16帧设置），在 Vid4 上提升 0
 - **DCA 的可变形参考区域**：不同于固定窗口的隐式对齐，通过学习偏移动态调整参考区域，更好地处理运动幅度差异
 - **FCL 损失设计简洁有效**：直接在实/虚部上计算 Charbonnier 损失，避免了幅度/相位计算的数值不稳定问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 参数量（17.1M）和运行时间（223ms）略高于 PSRT/IART（13.4M, 173-180ms），Mamba 的加速优化仍在探索中
 - 仅探索了 4× 超分任务，未验证其他缩放因子和降质模型

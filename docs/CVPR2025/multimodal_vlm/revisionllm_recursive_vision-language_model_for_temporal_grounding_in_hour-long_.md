@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReVisionLLM: Recursive Vision-Language Model for Temporal Grounding in Hour-Long Videos
 description: >-
@@ -121,7 +121,7 @@ VidChapters-7M 数据集（YouTube 视频，最长 12 小时）：
 - **稀疏特征压缩极为高效**：将几分钟视频压缩为单个向量，使得小时级视频不超过 LLM 的上下文窗口
 - **用 LLM 熵做置信度排序**比 CLIP 相似度排序更有效，因为经过对比训练后 LLM 的置信度已被校准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 稀疏特征压缩不可避免地丢失了细节信息，可能遗漏细微事件
 - 层次数固定为 3，自适应层次数可能更优

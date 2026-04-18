@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Vision-Language Model in Face Forensics: Multi-Modal Interpretable Forged Face Detector
 description: >-
@@ -119,7 +119,7 @@ M2F2-Det 由四个组件构成：(1) 冻结的 CLIP 图像编码器 $\mathcal{E}
 - **频域 token 的巧妙引入**：利用伪造人脸在频域高频信号上与真实人脸的显著差异，为 LLM 提供了超越 RGB 视觉信息的判断依据
 - 三阶段训练策略确保各组件稳定学习，避免端到端训练的不稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DFD 数据集上跨域泛化不如 AUNet，可能因为 AUNet 利用了面部动作单元（AU）的先验知识
 - LLM 使用 Vicuna-7B 较小，升级到更大模型可能提升解释质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CADReview: Automatically Reviewing CAD Programs with Error Detection and Correction
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L}_{sgo} = w_i \cdot \mathcal{L}_i, \quad w_i = \begin{cases} 2, & \t
 4. **反馈循环设计**：反馈生成器和代码编辑器的双模块设计让纠正过程可解释，DPO 精炼确保两者协同
 5. **8 类错误分类**：系统性地定义了 CAD 程序错误类型，为后续研究提供了标准化框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未考虑最优代码编辑方案（同一几何组件可有多种代码实现）
 2. 目前仅支持 OpenSCAD 语言，虽声称框架可迁移但未验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GEMeX: A Large-Scale, Groundable, and Explainable Medical VQA Benchmark for Chest X-ray Diagnosis
 description: >-
@@ -123,7 +123,7 @@ V-score (mIoU) - 视觉定位：LLaVA-Med-GEMeX 在四种题型上分别达到 5
 - **质量保障流程**：放射科医生参与的迭代精炼 + GPT-4o 生成 + 人工审核，实现了 98%+ 准确率
 - **测试集价值**：300 张图像经放射科医生逐一审核，含额外人工补充的 600 个问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基线模型 LLaVA-Med-GEMeX 是任务特定的，在其他任务上可能性能下降
 - 仅覆盖胸部 X 光单一模态，未涵盖 CT、MRI 等其他影像

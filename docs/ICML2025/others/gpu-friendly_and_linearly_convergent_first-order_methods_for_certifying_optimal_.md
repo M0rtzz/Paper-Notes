@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GPU-friendly and Linearly Convergent First-order Methods for Certifying Optimal $k$-sparse GLMs
 description: >-
@@ -100,7 +100,7 @@ $$\frac{\sigma}{2}\|\boldsymbol{\zeta} - \boldsymbol{\zeta}^\star\|^2 \leq \Phi(
 4. 从理论到工程的完整闭环：几何分析→收敛保证→高效实现→GPU加速→BnB集成
 5. 与FDPG的对比：FDPG从对偶出发仅得次线性原始收敛，本文从原始出发实现双线性收敛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **几何正则条件**（Firm convexity等）在某些非标准损失函数下可能不满足，适用范围有限制
 2. 线性收敛的常数 $\alpha, \kappa, \sigma$ 依赖于具体问题结构，理论界可能不紧

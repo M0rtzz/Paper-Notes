@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLIPSym: Delving into Symmetry Detection with CLIP
 description: >-
@@ -148,7 +148,7 @@ SDRW + LDRS 数据集反射检测 F1 (%)：
 - **等变性理论保证**：有严格证明的 $C_4$ 等变性，而非仅凭经验
 - **CLIP 的隐含几何知识**：实验证明 CLIP 在大规模训练中确实学习到了对称性相关的视觉特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 等变性仅保证 $C_4$（90° 倍数旋转），对任意角度的等变性依赖 CLIP 预训练的隐式鲁棒性
 - 计算成本 (148.8 GFLOPs) 高于 EquiSym (114.0)，但低于 PMCNet (167.7)

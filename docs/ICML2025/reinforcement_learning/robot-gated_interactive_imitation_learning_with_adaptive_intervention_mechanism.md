@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robot-Gated Interactive Imitation Learning with Adaptive Intervention Mechanism
 description: >-
@@ -109,7 +109,7 @@ $$J^{\text{TD}}(\theta) = \mathbb{E}_{(s,a,s')\sim\mathcal{B}_h\cup\mathcal{B}_r
 4. **TD 传播前瞻能力**：通过时序差分将 Q 值泛化到未见状态，可预判未来错误
 5. **极简 warm-up**：仅需前 2 条轨迹的人类监控即可启动 robot-gated 模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验使用 neural expert 替代真人**：虽是标准做法，但与真实人类交互的差异未被充分验证
 2. **任务复杂度有限**：仅在 MetaDrive 和 MiniGrid 两个相对简单的环境中测试

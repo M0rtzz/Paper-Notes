@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bounds on Agreement between Subjective and Objective Measurements
 description: >-
@@ -107,7 +107,7 @@ $$\hat{\sigma}_{BV}^2 = \frac{n_v}{n_m-1}\left((\hat{\mu}_X-s_L)(s_H-\hat{\mu}_X
 3. **高度实用**：研究者可直接用公式计算特定数据集的合理性能目标，判断模型是否已触及天花板
 4. **代码开源**：GitHub 提供完整实现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未推导 Spearman 秩相关系数 (SRCC) 的界，而 SRCC 在质量评估领域同样常用
 2. 图像和视频测试集偏少（分别仅 2 个），语音测试占主导，覆盖面有限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CG-SLAM: Efficient Dense RGB-D SLAM in a Consistent Uncertainty-Aware 3D Gaussian Field
 description: >-
@@ -133,7 +133,7 @@ tags:
 4. **NetVLAD共可见性**: 替代传统视锥重叠,更高效
 5. **完整位姿导数推导**: 首次给出EWA溅射中位姿导数的完整理论
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **内存消耗**: 231.66MB vs Co-SLAM的6.37MB
 2. **空洞填充弱**: 无全局MLP,未观测区域完整度略差

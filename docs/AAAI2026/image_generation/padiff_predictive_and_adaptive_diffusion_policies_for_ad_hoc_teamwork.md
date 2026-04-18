@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PADiff: Predictive and Adaptive Diffusion Policies for Ad Hoc Teamwork
 description: >-
@@ -65,7 +65,7 @@ PADiff 的训练流程：
 
 #### 1. **离散扩散策略表示（Discrete Diffusion Policy Representation）**
 
-**做什么**：将 ego agent 的策略建模为条件扩散过程，在离散动作空间上进行去噪。
+**功能**：将 ego agent 的策略建模为条件扩散过程，在离散动作空间上进行去噪。
 
 **核心思路**：对于离散动作空间，采用 D3PM（Discrete Denoising Diffusion Probabilistic Models）框架。前向过程使用分类分布：
 
@@ -98,7 +98,7 @@ $$\text{AFM}(\mathbf{x}, z_t, k) = \gamma_2 \cdot (MLP(\gamma_1 \cdot LN(\mathbf
 
 #### 3. **Predictive Guidance Block (PGB)**
 
-**做什么**：在训练过程中让去噪过程学会预测队友意图，推理时无需额外模块即可生成队友感知的动作。
+**功能**：在训练过程中让去噪过程学会预测队友意图，推理时无需额外模块即可生成队友感知的动作。
 
 **核心思路**：PGB 包含两个预测任务：
 
@@ -177,7 +177,7 @@ PGB 模块消融：
 3. **FiLM 机制的妙用**：用极简的 scale/shift 调制代替复杂的注意力机制，在保持高效的同时实现条件化去噪，适合实时决策。
 4. **35.25% 的平均提升**：在所有环境中一致性地大幅超越基线，说明方法的通用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在格子世界和厨房环境验证**：PP、LBF、Overcooked 都是相对简单的离散环境，未在连续控制或高维视觉输入场景验证。
 2. **离散动作空间限制**：使用 D3PM 建模离散动作，未处理连续动作空间（如机器人关节控制）。

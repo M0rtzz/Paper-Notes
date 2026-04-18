@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Visible and Clear: Finding Tiny Objects in Difference Map
 description: >-
@@ -150,7 +150,7 @@ AI-TOD 数据集结果：
 - **即插即用设计**：仅需在 FPN 的 P2 层后添加重建头和 DGFE 模块，适用于各种使用 FPN 的检测器
 - **高效简洁**：不需要 GAN、超分辨率等复杂架构，重建头本身很轻量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅利用 P2 层重建，未探索多尺度重建的可能性
 - 重建约束是无监督的 MSE，没有专门引导重建关注微小目标区域

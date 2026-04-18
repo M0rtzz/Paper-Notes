@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FEAT: Free Energy Estimators with Adaptive Transport
 description: >-
@@ -91,7 +91,7 @@ FEAT 的核心流程：
 - FB RND 消除散度计算的技巧具有广泛适用性
 - 从机器学习角度看，FEAT 架起了变分推断（ELBO/EUBO）和统计物理（Jarzynski/Crooks）的桥梁
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要两端系统的精确样本，不适用于只有单端样本的场景
 - 神经网络训练质量直接影响估计精度

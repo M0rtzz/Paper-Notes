@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Triplets Better Than Pairs: Towards Stable and Effective Self-Play Fine-Tuning for LLMs
 description: >-
@@ -136,7 +136,7 @@ SPIN 在 Iter1 后出现波动和退化，T-SPIN 每轮迭代均稳定提升。
 3. **理论与实践统一**：通过选择特定置信函数类，主玩家和对手玩家的更新规则统一为端到端目标，熵约束自然消除参考策略依赖
 4. **数据效率惊人**：25% 的标注数据 ≥ 100% SFT，具有极强的实践价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型规模有限**：仅在 7B 模型上验证，更大规模模型的效果未知
 2. **数据集单一**：训练集仅用 Ultrachat200k，对其他领域/任务的泛化能力需进一步验证

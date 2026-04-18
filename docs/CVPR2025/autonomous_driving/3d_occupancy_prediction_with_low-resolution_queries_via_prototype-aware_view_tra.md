@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProtoOcc: 3D Occupancy Prediction with Low-Resolution Queries via Prototype-aware View Transformation
 description: >-
@@ -93,7 +93,7 @@ ProtoOcc作为即插即用模块一致性提升所有基线。
 - **多视角解码策略**：体素增强+一致性正则化是解决低分辨率→高分辨率病态问题的巧妙方案
 - **注意力图可视化**：ProtoOcc关注小而关键的物体（行人、摩托车），baseline则被视觉主导区域吸引
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 原型聚类使用简单的超像素方法，更先进的聚类（如学习型）可能进一步提升
 - 多视角解码中的增强组合需要手动实验选择
 - 仅在nuScenes和SemanticKITTI验证，其他(如Waymo)未测试

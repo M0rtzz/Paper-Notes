@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Explicit Continuous Motion Representation for Dynamic Gaussian Splatting from Monocular Videos
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **自适应修剪+加密**的策略非常实用——允许简单运动区域用少量控制点，复杂区域自动加密，既省计算又提升质量
 - **30 分钟训练时间**在同类方法中很有竞争力（对比 MarbleGS 的 13 小时），效率优势明显
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 论文图 7 中承认对大幅度非刚体运动（如人体舞蹈中的衣物飘动）效果不佳，因为 SE(3) B 样条本质上是刚体运动模型
 - SDS 损失引入扩散模型增加了额外依赖和计算，其对不同场景的泛化效果未充分验证

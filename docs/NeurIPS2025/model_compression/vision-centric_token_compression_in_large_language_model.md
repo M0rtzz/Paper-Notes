@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vision-centric Token Compression in Large Language Model
 description: >-
@@ -105,7 +105,7 @@ Vist（Vision-centric Token Compression）采用慢-快双路径设计：
 - **简洁有效的 PVE**：用 token 频率替代昂贵的 LLM 信息熵计算来评估 token 重要性，大幅降低了压缩的计算开销
 - 视觉编码器作为"视觉文本 tokenizer"的四大优势：简化 tokenization、缓解词表瓶颈、抗字符噪声、多语言高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在 TinyLlama 和 Mistral 7B 上验证，缺乏在更大规模 LLM（如 70B+）上的实验
 - 在高类别多样性任务（如 NLUS、TREC、TREF）上，轻量编码路径与全 LLM 仍有差距

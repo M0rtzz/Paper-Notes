@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AgentStealth: Reinforcing Large Language Model for Anonymizing User-generated Text
 description: >-
@@ -147,7 +147,7 @@ $$R = \alpha \cdot R_{anon} + \beta \cdot R_{utility} + \gamma \cdot R_{fluency}
 3. **实用性强**：支持从1.5B到8B多种规模的模型，适配不同的部署环境
 4. **开源**：代码和训练配置完全开源，可复现性好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语言局限**：目前主要在英文数据上验证，中文等其他语言的匿名化效果未知
 2. **属性覆盖有限**：主要关注几类常见的个人属性，更细粒度的身份推断（如写作风格分析）未充分考虑

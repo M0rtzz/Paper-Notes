@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KTCF: Actionable Recourse in Knowledge Tracing via Counterfactual Explanations for Education
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{L}_{\text{KTCF}} = \mathcal{L}_{\text{pred}} + \lambda_{\text{spar}} 
 - **KC 关系约束**：利用知识概念图谱嵌入损失函数，使建议的修改在知识结构上连贯
 - **后处理方案**巧妙地将 TSPP 用于生成最优学习路径，减少学生学习负担
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 DKT（LSTM）上验证，未测试 Transformer 架构的 KT 模型（如 AKT、SAINT 等），泛化性有待验证
 - KC 关系图依赖预定义结构，对无此类信息的数据集不适用
 - 二值响应的反事实生成对初始化策略敏感，虽然 KC 损失提升了鲁棒性，但根本问题未解决

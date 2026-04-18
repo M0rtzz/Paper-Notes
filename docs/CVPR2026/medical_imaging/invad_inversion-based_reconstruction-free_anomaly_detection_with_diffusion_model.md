@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models
 description: >-
@@ -96,7 +96,7 @@ tags:
 - 即插即用设计使其可作为现有扩散 AD 方法的通用推理加速器
 - 特征空间扩散建模是提升效率和效果的重要设计选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仍需多于 1 次函数求值（NFE=3），可通过扩散蒸馏压缩到 1 步
 - 像素级定位性能（AP、F1_max）不如部分重建方法，反演方法在精确边界定位上有天然劣势

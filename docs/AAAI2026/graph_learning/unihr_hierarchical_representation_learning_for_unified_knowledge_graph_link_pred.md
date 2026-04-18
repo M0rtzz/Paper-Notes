@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniHR: Hierarchical Representation Learning for Unified Knowledge Graph Link Prediction
 description: >-
@@ -127,7 +127,7 @@ $$\mathbf{h}_i^{l+1} = \sum_{(r,j) \in \mathcal{N}(i)} \sigma(\omega_{\tau(r)}^l
 - **超越统一方法本身的潜力验证**：展示了联合训练、组合型KG（超关系时序KG）、多任务学习等场景的性能提升，wikimix联合训练使MR在HKG和TKG上分别改进17.1%和39.7%
 - **在5种KG类型9个数据集上达到SOTA或竞争性结果**，特别是在NKG的FBH数据集上triple prediction MRR达0.946，超越NestE的0.922
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **HiDR转换引入额外节点和边**：虽然作者声称存储开销小，但在超大规模KG上（如完整Wikidata）的可扩展性仍需验证
 - **解码端依赖Transformer**：序列化嵌入后用Transformer解码，对于长序列（如含大量key-value对的超关系事实）可能存在效率瓶颈

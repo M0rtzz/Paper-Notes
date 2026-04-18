@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Integrating Intermediate Layer Optimization and Projected Gradient Descent for Solving Inverse Problems with Diffusion Models
 description: >-
@@ -122,7 +122,7 @@ $$\|g_1(\hat{\boldsymbol{x}}_1) - \boldsymbol{x}^*\|_2 \leq \left(1 + \frac{3}{\
 4. **前向算子引导投影**：DMILO-PGD 中利用 $\mathcal{A}$ 引导投影比纯距离投影效果更好，有直观的理论支撑
 5. **非线性任务大幅领先**：PSNR 提升 2.5–3.5 dB，显示方法在复杂退化下的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **PGD 对盲去模糊效果有限**：DMILO-PGD 在 BID 任务上不如 DMILO，作者推测是朴素梯度更新不适合核估计，需要设计专门的核更新策略
 2. **计算效率未充分讨论**：虽然显存降低，但多轮外迭代 × 多轮内迭代的计算量可能很大（如超分辨率需 400 内迭代 × 10 外迭代）

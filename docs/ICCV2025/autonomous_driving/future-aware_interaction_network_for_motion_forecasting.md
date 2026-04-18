@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Future-Aware Interaction Network For Motion Forecasting
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{L} = \mathcal{L}_{traj} + \mathcal{L}_{score} + \mathcal{L}_{traj}^{i
 - 用 Mamba 进行时序精炼确保轨迹时间一致性是很自然的设计
 - 效率指标令人印象深刻：FLOPs 降低 95%，实际延迟降低 68%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Mamba 虽然理论 FLOPs 低，但因依赖顺序计算，GPU 加速不如 Transformer 充分
 - ARS 的参考点预测依赖启发式设计，可能存在场景泛化问题

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BayesG: Bayesian Ego-Graph Inference for Networked Multi-Agent Reinforcement Learning
 description: >-
@@ -32,11 +32,11 @@ BayesG 让网络化 MARL 中的每个 agent 通过贝叶斯变分推断学习其
 
 **核心矛盾**：agent 只有局部观测，但需要决定"从哪些邻居获取信息最有用"——这本身是一个不确定性问题。
 
-**本文要解决什么？** 去中心化地让每个 agent 学习任务自适应的局部通信图结构。
+**本文目标** 去中心化地让每个 agent 学习任务自适应的局部通信图结构。
 
 **切入角度**：将边的存在/不存在建模为 Bernoulli 随机变量，用变分贝叶斯推断从局部数据估计后验。
 
-**核心 idea 一句话**：每个 agent 对其自我图的边做贝叶斯变分推断（Bernoulli + Gumbel-Softmax），ELBO 目标联合优化策略和图结构，实现去中心化的动态通信。
+**核心 idea**：每个 agent 对其自我图的边做贝叶斯变分推断（Bernoulli + Gumbel-Softmax），ELBO 目标联合优化策略和图结构，实现去中心化的动态通信。
 
 ## 方法详解
 
@@ -80,7 +80,7 @@ agent $i$ 的策略条件化于采样的子图：$\pi_i(u_i, G_{\mathcal{V}_i} |
 - **贝叶斯处理不确定性很自然**：不确定哪个邻居有用时，概率采样比硬选择更鲁棒
 - **KL 正则化自动实现稀疏**：不需要手动设定通信预算
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 未分析学习图结构随时间的演化
 - 仅测试到 167 agent
 - 固定通信间隔

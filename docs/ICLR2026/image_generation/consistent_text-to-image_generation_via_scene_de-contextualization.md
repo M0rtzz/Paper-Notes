@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Consistent Text-to-Image Generation via Scene De-Contextualization
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：T2I 模型在大规模自然图像上训练，自然学到了主体与场景的关联先验（如牛通常在草地而非海中），导致不同场景提示下模型改变主体的外观特征。注意力机制使场景 token 的信息不可避免地注入到 ID token 中。
 
-**本文要解决什么？** (a) 理论解释 ID 偏移的来源 (b) 提出无需训练、无需知道所有场景的 per-scene 解决方案
+**本文目标** (a) 理论解释 ID 偏移的来源 (b) 提出无需训练、无需知道所有场景的 per-scene 解决方案
 
 **切入角度**：从注意力机制出发，证明场景上下文化（scene-to-ID 信息泄露）几乎是不可避免的（需要 $W_V$ 恰好块对角才能避免——零测集事件），然后在 prompt embedding 空间通过 SVD 分析来识别和抑制这种关联。
 
-**核心 idea 一句话**：scene contextualization 是 ID 偏移的根源且几乎不可避免，但可以在 prompt embedding 层面通过 SVD 方向稳定性分析来反向解耦。
+**核心 idea**：scene contextualization 是 ID 偏移的根源且几乎不可避免，但可以在 prompt embedding 层面通过 SVD 方向稳定性分析来反向解耦。
 
 ## 方法详解
 
@@ -111,7 +111,7 @@ SDeC 是一个 training-free 的 prompt embedding 编辑方法：
 - **Training-free + per-scene**：不需要训练、不需要事先知道所有场景——这两个约束的同时满足使得方法在实际工程中非常实用。可以迁移到任何需要在条件生成中"解耦条件信号"的场景。
 - **SVD 方向稳定性分析**思路新颖——通过观察特征值在"施加扰动"前后的变化来识别被"污染"的方向，这是一个通用的技巧，可以迁移到其他需要信号解耦的领域。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 1P1S 在 ID 纯粹性上仍然更好（CLIP-I 0.8798 vs 0.8655），说明 SDeC 的去上下文化不够彻底
 - 仅在 text-only prompt 設定下验证，缺少 image-conditioned（如 IP-Adapter）场景的测试
 - 理论分析聚焦第一个注意力层，多层累积效应未被量化

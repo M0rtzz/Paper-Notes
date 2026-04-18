@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Functional Embeddings Enable Aggregation of Multi-Area SEEG Data for Robust BCI
 description: >-
@@ -90,7 +90,7 @@ FunctionalMap 分两阶段：
 - 对比学习几何差异有意义：PSC 的紧凑质心 vs MSC 的角度分离
 - 掩蔽区域重建不需要行为标签，纯利用区间神经回路信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖区域标签进行对比训练
 - 仅限基底节-丘脑回路，未验证皮层 ECoG
 - 仅验证信号重建，未测试行为解码等下游任务

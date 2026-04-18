@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniMoMo: Unified Generative Modeling of 3D Molecules for De Novo Binder Design
 description: >-
@@ -96,7 +96,7 @@ tags:
 - 小分子：CrossDocked2020 数据集
 - 统一训练利用了约 13K+ 跨域样本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未经实验室湿实验验证，仅依赖计算指标（如 Vina Score）。
 - 片段词汇表的大小和质量影响生成多样性，次优的分解可能导致无法生成某些结构。

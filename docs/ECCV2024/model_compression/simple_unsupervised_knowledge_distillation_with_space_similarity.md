@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Simple Unsupervised Knowledge Distillation With Space Similarity
 description: >-
@@ -124,7 +124,7 @@ EfficientNet-B0 仅有 4M 参数（teacher 的 16.3%），top-1 达到 67.36%，
 - **不需要特征队列**：SEED/BINGO 等方法需要维护 ~100K 长的特征队列，CoSS 完全不需要，训练更简单高效
 - **可迁移的设计原则**：Space Similarity 的思想可以轻松嵌入到任何基于余弦相似度的蒸馏框架中，通用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了 CNN 架构（ResNet、EfficientNet），未在 ViT 等 Transformer 架构上验证（作者指出 AttnDistill 专注 ViT，但未与其对比）
 - Teacher 仅使用了 Moco-v2（较早的 SSL 方法），未验证更强的 teacher（如 DINO、MAE）

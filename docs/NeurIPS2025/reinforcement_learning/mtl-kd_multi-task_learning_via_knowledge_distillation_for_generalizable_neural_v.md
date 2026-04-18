@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MTL-KD: Multi-Task Learning Via Knowledge Distillation for Generalizable Neural Vehicle Routing Solver
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L}_{KD}^{(t)} = \sum_{m=1}^{M} \text{KL}\left(\pi_{\theta^{T_m}}(a_t|
 - "先分后合"的训练策略：单任务教师专精各自任务，学生通过蒸馏同时吸收多种任务的策略知识。
 - R3C推理策略通过子路径重排序增加采样多样性，是一种通用且对各种VRP约束友好的改进。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预训练多个教师模型，整体训练流程较复杂。
 - 目前仅在16种VRP变体上验证，更复杂的实际约束组合有待探索。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Intention-Guided Cognitive Reasoning for Egocentric Long-Term Action Anticipation
 description: >-
@@ -164,7 +164,7 @@ $$R = \omega_1 S_{len} R_{task} + \omega_2 R_{Soft}$$
 - **意图奖励的巧妙设计**：利用GPT-4.1生成伪意图标签作为监督，避免了昂贵的人工标注，同时sigmoid归一化确保了奖励信号的梯度友好性
 - **共现矩阵的简洁有效**：简单的统计先验即可显著减少语义不合理的预测，实现成本极低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 意图的伪ground-truth依赖GPT-4.1生成，引入了外部模型偏差，且生成质量难以保证
 - 视觉编码器冻结限制了模型对特定场景的适应性，端到端微调可能进一步提升

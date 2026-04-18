@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LineFlow: A Framework to Learn Active Control of Production Lines
 description: >-
@@ -139,7 +139,7 @@ $$R(s_t, \pi(s_{t-1})) = C_\pi(T_{\text{step}} \cdot (t+1)) - C_\pi(T_{\text{ste
     - 动作空间组合爆炸
     - 多类干预的复合副作用难以学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **加工时间假设受限**：统一采用指数分布（$T + \mathrm{Exp}_S$），实际产线加工时间分布可能更复杂（如 Weibull、对数正态）
 2. **复杂产线的 RL 扩展性不足**：在工业级多工站场景下，当前 RL 算法难以收敛，需要更好的奖励塑形（reward shaping）、层级控制（hierarchical RL）和课程学习策略

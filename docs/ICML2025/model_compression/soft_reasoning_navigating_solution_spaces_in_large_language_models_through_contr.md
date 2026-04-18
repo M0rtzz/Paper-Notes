@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Soft Reasoning: Navigating Solution Spaces in Large Language Models through Controlled Embedding Exploration
 description: >-
@@ -149,7 +149,7 @@ Soft Reasoning 是一种**纯推理时方法（test-time method）**，不需要
 
 5. **模型无关的即插即用架构**：只需 embedding 输入接口和文本输出接口，不依赖特定模型架构、参数或训练流程，适用范围极广。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **首 Token 扰动的局限**：仅扰动首个 token 的假设在需要中途修正推理方向的场景中可能不够充分，某些复杂问题可能需要在中间步骤进行干预。
 

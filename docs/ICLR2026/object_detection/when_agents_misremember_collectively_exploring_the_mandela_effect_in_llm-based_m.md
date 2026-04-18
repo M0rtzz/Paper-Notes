@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Agents "Misremember" Collectively: Exploring the Mandela Effect in LLM-based Multi-Agent Systems
 description: >-
@@ -125,7 +125,7 @@ $$\sigma_{max} = |(\mathcal{Q}_{\times}^{GS} \cup \mathcal{Q}_{\times}^{GL} \cup
 - **平衡训练的必要性**：仅训练抵抗虚假信息会导致模型过度拒绝所有外部输入，韧性集+合作集的平衡方案确保了区分能力
 - **知识域分析**：即使基线错误率仅 9.4% 的通识领域，σ 也达 48%，专业领域更是 67.5%，说明强知识基础并不免疫
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ManBench 使用多选题格式，简化了真实世界非结构化对话的复杂性
 - 未探索开放式讨论和动态角色变换场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Novel View Synthesis from A Few Glimpses via Test-Time Natural Video Completion
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L} = \sum_{i \in \text{real}} \mathcal{L}_1(I_i, \hat{I}_i) + \lambda
 - **零样本泛化**：不依赖数据集特定的训练，在多个 benchmark 上一致优于专用方法
 - **3D 与 2D 的闭环协同**：迭代反馈让重建和生成相互改进，是一种优雅的系统设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理速度较慢：视频扩散模型的多次采样带来显著计算开销
 - 对相机轨迹的预设有依赖，不同的轨迹选择可能影响结果

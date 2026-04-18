@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One for All: Update Parameterized Knowledge Across Multiple Models with Once Edit
 description: >-
@@ -152,7 +152,7 @@ OnceEdit 编辑 3 个模型的总时间最少——其他方法需要 2-4 倍的
 - **零初始化策略的简洁有效**：仅仅将搜索初始点从 LLM 分布改为零向量，就大幅提升了新知识的传递效果——说明在知识有冲突时，去除先验比添加信息更重要
 - **方法框架的正交性**：OnceEdit 对插件模型的编辑可以用任何现有的知识编辑方法（目前用全量微调），未来可以替换为更先进的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 引入插件模型增加了推理开销（需要同时运行两个模型），虽然可以并行解码但仍有成本
 2. 仅在批量编辑（batch editing）设定下测试，未探索序列编辑（sequential editing）和多跳编辑（multi-hop editing）

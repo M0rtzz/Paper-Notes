@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Multi-Agent Conversational Bandit Approach to Online Evaluation and Selection of User-Aligned LLM Responses
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: 如何在多设备、异构臂集合、动态偏好的场景下高效地在线选择最优 LLM 响应。
 
-**本文要解决什么？** 设计多智能体会话式 Bandit 框架，在多设备匿名访问场景下在线评估和选择与用户偏好对齐的最优 LLM 响应。
+**本文目标** 设计多智能体会话式 Bandit 框架，在多设备匿名访问场景下在线评估和选择与用户偏好对齐的最优 LLM 响应。
 
 **切入角度**: 结合 phase elimination 和自适应对话机制，通过关键词查询探索特征空间中的不足方向，避免 G-optimal 设计的高计算开销。
 
-**核心idea一句话**: 用信息矩阵特征值分解识别偏好估计的薄弱方向，并通过自适应关键词对话定向补充信息。
+**核心 idea**: 用信息矩阵特征值分解识别偏好估计的薄弱方向，并通过自适应关键词对话定向补充信息。
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ StyleEval 数据集上不同 embedding 模型和 agent 数量的累积 regret：
 - **多 agent 异构处理**: 不要求所有 agent 共享相同响应集，更贴合实际
 - **理论与实验双强**: regret 界紧致，实验大幅超越 baseline
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 线性奖励假设可能不适用于复杂的非线性偏好场景
 - 需要预定义关键词集合 $\mathcal{K}$ 并满足特征空间覆盖条件（Condition 1），实际中可能难以保证

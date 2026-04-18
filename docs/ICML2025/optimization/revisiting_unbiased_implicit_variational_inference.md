@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Unbiased Implicit Variational Inference
 description: >-
@@ -124,7 +124,7 @@ AISIVI 在相同计算预算下（10k 迭代）远超 IWHVI、BSIVI、PVI、UIVI
 - **恒定内存训练**：基于 logaddexp 的批聚合方案允许任意增大隐变量采样数而不增加内存，非常实用
 - **高维有效**：在 100 维条件扩散过程中，AISIVI 仅 10k 迭代即接近需要 100k 迭代的 KSIVI
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CNF 使用 affine coupling layers，虽可扩展但可能限制表达力，论文也提到替换为更灵活的 NF 架构可能有额外增益
 - 在低维玩具示例中 AISIVI 并非全面优于 BSIVI（Multimodal 和 X-shape 上 BSIVI 更优），说明额外的 CNF 在低维可能带来不必要的开销

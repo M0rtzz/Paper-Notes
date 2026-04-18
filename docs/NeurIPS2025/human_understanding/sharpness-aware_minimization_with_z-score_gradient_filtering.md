@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sharpness-Aware Minimization with Z-Score Gradient Filtering
 description: >-
@@ -121,7 +121,7 @@ $$\min_w \max_{\|\epsilon\| \leq \rho} L(w + \epsilon)$$
 - **即插即用**: 方法可以轻松地应用到任何基于 SAM 的优化方法中，仅需在扰动步骤前添加过滤
 - **理论直觉清晰**: 过滤掉不重要的梯度分量，使扰动更集中在真正的高曲率方向上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 Workshop 论文级别**: 实验规模相对有限，缺乏大规模数据集（ImageNet-1K）和大型模型的验证
 2. **$Q_p$ 的自适应调整**: 固定的百分位阈值可能不是最优选择，可以考虑根据训练进度动态调整

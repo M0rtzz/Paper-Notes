@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neutral Residues: Revisiting Adapters for Model Extension
 description: >-
@@ -137,7 +137,7 @@ $$
 4. **实用性强**：不要求原始训练数据，仅需近似分布（如 Wikipedia）即可工作
 5. **与 MoE 理念相通但更简洁**：每层仅一个额外 FFN + gate，无需路由或负载均衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证多语言场景**：虽然方法通用，但缺乏代码、数学、多模态等其他领域扩展的验证
 2. **规模有限**：最大仅 Gemma-2B，未在 7B+ 模型上验证

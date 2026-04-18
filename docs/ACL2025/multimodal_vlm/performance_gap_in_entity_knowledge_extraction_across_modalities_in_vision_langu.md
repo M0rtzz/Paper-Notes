@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Performance Gap in Entity Knowledge Extraction Across Modalities in Vision Language Models
 description: >-
@@ -103,7 +103,7 @@ VLM 在图像理解任务上表现优异，但一个关键问题被忽略了：*
 - **反直觉发现**：与认知心理学中"图像优越效应"（humans perform better with images）相矛盾，VLM 表现了"文本优越"。
 - **模型不能 efficient 利用层**：即使视觉编码器已经完成了实体识别（早期层已包含足够信息），LLM 部分仍需到中间层才开始利用这些信息。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **机制分析仅限 LLaVA 架构**：其简单架构利于干预实验，但其他架构（如 Qwen2-VL）的有利结果未做深入分析。
 2. **图像中的混淆因素**：运动员穿国家队球衣可能被误识别，图像中的视觉线索可能引导或误导答案。

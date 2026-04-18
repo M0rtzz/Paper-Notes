@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RePIC: Reinforced Post-Training for Personalizing Multi-Modal Language Models
 description: >-
@@ -122,7 +122,7 @@ RL 后训练各组件的贡献:
 - **多概念突破**: 在最困难的多概念场景中优势最大
 - **实际意义**: 个性化视觉助手（如识别用户的宠物、物品）有广泛应用前景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 奖励函数的设计依赖于实体检测器的准确性
 2. RL 训练不如 SFT 稳定,需要仔细调整 KL 约束系数

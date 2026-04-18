@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] INACTIVE: Invisible Backdoor Attack against Self-supervised Learning
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：分析 SSL 增强操作的作用域——ColorJitter 主要在 RGB 空间中工作，但 HSV/HSL 空间中的某些变换方向不在 ColorJitter 的范围内。在 HSV 的"未覆盖方向"上设计触发器。
 
-**核心idea一句话**：在 HSV 色彩空间中寻找 SSL 增强的"盲区"设计触发器 = 增强不变的不可见后门。
+**核心 idea**：在 HSV 色彩空间中寻找 SSL 增强的"盲区"设计触发器 = 增强不变的不可见后门。
 
 ## 方法详解
 
@@ -71,7 +71,7 @@ $\mathcal{L}_{total} = \mathcal{L}_{stealthy} + \alpha \mathcal{L}_{disentangle}
 - **SSL 后门的首次系统化突破**——之前不可见后门在 SSL 中被认为不可行
 - **增强空间分析方法论**——分析增强操作的数学作用域来找盲区，可推广到其他安全分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要知道目标 SSL 的增强策略
 - 假设可访问干净预训练编码器
 - 下游任务迁移在分布差距大时可能减弱

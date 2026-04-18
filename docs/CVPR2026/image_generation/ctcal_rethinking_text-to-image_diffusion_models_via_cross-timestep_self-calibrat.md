@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CTCal: Rethinking Text-to-Image Diffusion Models via Cross-Timestep Self-Calibration
 description: >-
@@ -47,26 +47,26 @@ tags:
 
 1. **Part-of-Speech-based Cross-Attention Map Selection**：
 
-    - **做什么**：只提取名词 token 的 attention maps 用于 CTCal 损失，忽略冠词（"the"）、连词（"and"）等无空间语义的 token。
+    - **功能**：只提取名词 token 的 attention maps 用于 CTCal 损失，忽略冠词（"the"）、连词（"and"）等无空间语义的 token。
     - **核心思路**：用 Stanza 做词性分析，$\mathcal{Y}_{\text{noun}}$ 为名词集合，$\mathcal{L}_{\text{CTCal}} = \frac{1}{N_{\text{noun}}} \sum_{\mathbf{y}_i \in \mathcal{Y}_{\text{noun}}} \mathcal{D}(\mathbf{A}_{\text{stu},\mathbf{y}_i}, \mathbf{A}_{\text{tea},\mathbf{y}_i})$
     - **设计动机**：消融实验表明，对所有 token 施加约束反而降低性能——因为非名词 token 的 attention maps 不包含有意义的空间语义信息，引入噪声干扰。
 
 2. **Pixel-Semantic Space Joint Optimization**：
 
-    - **做什么**：同时在像素空间和语义空间对齐 attention maps。引入轻量自编码器 $(f_{\text{attn}}^{\text{enc}}, f_{\text{attn}}^{\text{dec}})$，加入重建代理任务防止模式崩塌。
+    - **功能**：同时在像素空间和语义空间对齐 attention maps。引入轻量自编码器 $(f_{\text{attn}}^{\text{enc}}, f_{\text{attn}}^{\text{dec}})$，加入重建代理任务防止模式崩塌。
     - **核心公式**：
     $\mathcal{L}_{\text{CTCal}} = \lambda_1 \underbrace{\mathcal{D}(\mathbf{A}_{\text{stu}}, \mathbf{A}_{\text{tea}})}_{\text{Pixel}} + \lambda_2 \underbrace{\mathcal{D}(f^{\text{enc}}(\mathbf{A}_{\text{stu}}), f^{\text{enc}}(\mathbf{A}_{\text{tea}}))}_{\text{Semantic}} + \lambda_3 \underbrace{\mathcal{D}(f^{\text{dec}}(\mathbf{A}_{\text{tea}}), \mathbf{A}_{\text{tea}})}_{\text{Reconstruction}}$
     - **设计动机**：像素级对齐捕获空间位置信息，语义级对齐捕获高层语义一致性，重建任务防止编码器退化。
 
 3. **Subject Response Alignment Regularization**：
 
-    - **做什么**：将所有主体（名词）的 attention 响应对齐到响应最高的主体：
+    - **功能**：将所有主体（名词）的 attention 响应对齐到响应最高的主体：
     $\mathcal{R}_{\text{subject}} = \frac{1}{N_{\text{noun}}} \sum \text{ReLU}(\mathcal{S}_{\text{attn}} - \max(\mathbf{A}_{\text{stu},\mathbf{y}_i}) - \tau)$
     - **设计动机**：防止高响应主体压制低响应主体，导致后者无法在生成图像中正确渲染（如 "cat and dog" 只生成 cat）。
 
 4. **Timestep-aware Adaptive Weighting**：
 
-    - **做什么**：$\lambda_t = t_{\text{stu}} / T_{\text{train}}$，大时间步下 CTCal 权重更大，小时间步下扩散损失主导。
+    - **功能**：$\lambda_t = t_{\text{stu}} / T_{\text{train}}$，大时间步下 CTCal 权重更大，小时间步下扩散损失主导。
     - **设计动机**：小时间步下扩散损失本身已足以建立对齐，大时间步下才需要 CTCal 的显式校准。
 
 ### 损失函数 / 训练策略
@@ -116,7 +116,7 @@ tags:
 - **自监督范式**：模型用自己的小时间步输出教大时间步，无需额外标签或教师模型
 - **模型无关性**：同时适用于 U-Net (SD 2.1) 和 Transformer (SD 3) 架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练数据构建依赖于 reward-driven 采样，数据构建成本不低
 - 使用 LoRA 微调，完整微调的效果未探索
 - 名词选择依赖 POS 标注工具，对非英语 prompt 适用性未知

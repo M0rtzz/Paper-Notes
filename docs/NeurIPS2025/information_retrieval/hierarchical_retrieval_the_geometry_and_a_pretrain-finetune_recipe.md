@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Retrieval: The Geometry and a Pretrain-Finetune Recipe
 description: >-
@@ -143,7 +143,7 @@ d=64 时，预训练+微调将总体召回率从 71.4% 提升至 **92.3%**，最
 4. 理论界 d=O(s·log m) 是 logarithmic in m，意味着低维嵌入就能处理大规模文档集
 5. 与 Guo et al. (2019) 的多标签分类界的对比清晰，本文推广到了任意间隔 2ε
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **长距离数据集构建**：实践中层次不可见时，如何获取长距离对需要领域知识
 2. **微调阶段需早停**：持续微调会损害短距离质量
 3. **仅考虑 lookup-table DE**：未探索 Transformer-based 编码器的行为差异

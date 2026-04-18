@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harnessing Feature Resonance under Arbitrary Target Alignment for Out-of-Distribution Node Detection
 description: >-
@@ -144,7 +144,7 @@ $$\hat{\mathbf{x}}_j^{(t+1)} = \lambda\big(\hat{\mathbf{x}}_j^{(t)} - \frac{\alp
 - **共振期的自动定位**：通过简单的 ID/OOD 验证集在训练过程中定位微观共振最显著的 epoch，实用性强。
 - **合成 OOD 节点与共振的协同**：用共振分数筛选候选 OOD 节点引导 SGLD 生成，使合成节点更贴近真实 OOD 分布，优于 EnergyDef 的无引导生成。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **验证集假设**：虽然不需要多类标签，但仍需要一个含 ID/OOD 二元标注的验证集来定位共振期，这在某些场景下可能不易获取。
 - **计算开销**：需要完整训练过程并在每个 epoch 计算所有节点的表征变化，对大规模图可能有效率瓶颈。

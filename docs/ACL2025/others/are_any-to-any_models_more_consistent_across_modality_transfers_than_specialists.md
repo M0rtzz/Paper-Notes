@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are Any-to-Any Models More Consistent Across Modality Transfers Than Specialists?
 description: >-
@@ -125,7 +125,7 @@ Any-to-any 生成模型旨在用统一框架同时理解和生成多种模态（
 
 4. **视觉分词器的设计启示**：语义对齐的视觉分词器（如 Seed-X、VILA-U 所用）比纯图像重建目标的分词器在跨模态一致性上更有优势。这为未来 any-to-any 模型的架构设计提供了具体指导。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 以模型整体进行评估，无法隔离数据、架构和训练过程中特定因素对一致性的贡献。
 2. ACON 数据集聚焦于自然照片，不包含艺术图像、2D 画作和 3D 渲染。

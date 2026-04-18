@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedPM: Federated Learning Using Second-order Optimization with Preconditioned Mixing of Local Parameters
 description: >-
@@ -162,7 +162,7 @@ FedPM 在所有设置下一致性地优于其他方法。
 3. **理论与实践统一**：超线性收敛理论在实验中得到验证，FOOF 近似使大规模实现可行
 4. **分类学贡献**：将 FL 方法系统化为 FOGM/FOPM/SOGM/SOPM 四类，并展示 FedPM 是唯一能在 SOPM 框架下实现全局二阶优化的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外通信开销**：需要传输局部预条件器（或 FOOF 矩阵），增加了通信量
 2. **理论分析受限**：收敛证明仅限于强凸+单步更新，K>1 的理论保证缺失

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FFaceNeRF: Few-Shot Face Editing in Neural Radiance Fields
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 高质量的 3D 面部编辑依赖精确的语义分割引导，但分割布局的固定性严重限制了用户控制力和应用场景。
 
-**本文要解决什么**: 用极少的标注样本（10 张）让 NeRF 面部编辑模型适配到任意自定义 mask 布局。
+**本文目标**: 用极少的标注样本（10 张）让 NeRF 面部编辑模型适配到任意自定义 mask 布局。
 
 **切入角度**: 不重新训练整个几何解码器，而是在其后添加轻量级几何适配器（MLP），通过注入三平面特征和视角方向补充预训练时丢失的细粒度语义信息，并用潜码混合进行数据增强避免过拟合。
 
-**核心 idea 一句话**: 用 adapter + feature injection + latent augmentation 三件套，实现 10 样本级的 mask 布局快速适配。
+**核心 idea**: 用 adapter + feature injection + latent augmentation 三件套，实现 10 样本级的 mask 布局快速适配。
 
 ## 方法详解
 
@@ -53,17 +53,17 @@ tags:
 ### 关键设计
 
 **1. 几何适配器 + 特征注入（Geometry Adapter with Feature Injection）**
-- **做什么**: 在冻结的 $\Psi_{geo}$ 后添加轻量 MLP $\Phi_{geo}$，将 $\Psi_{geo}$ 的分割输出从固定布局映射到自定义布局。同时直接注入归一化三平面特征 $\hat{F}'_{tri}$ 和视角方向 $v_d$。
+- **功能**: 在冻结的 $\Psi_{geo}$ 后添加轻量 MLP $\Phi_{geo}$，将 $\Psi_{geo}$ 的分割输出从固定布局映射到自定义布局。同时直接注入归一化三平面特征 $\hat{F}'_{tri}$ 和视角方向 $v_d$。
 - **核心思路**: $\Psi_{geo}$ 在预训练时只关注固定布局的几何信息，其他细粒度信息（如瞳孔边界、鼻翼轮廓）被丢弃。三平面特征包含面部生成所需的完整信息，注入后可补回这些细节。视角方向与 EG3D 的数据预处理（对齐五官）相关，也携带语义信息。
 - **设计动机**: 消融实验证明没有特征注入时，即使用 30 张训练数据，精度也不如有注入的 10 张数据。
 
 **2. 潜码混合三平面增强（LMTA: Latent Mixing for Triplane Augmentation）**
-- **做什么**: 在训练 $\Phi_{geo}$ 时，将 ground-truth 潜码 $w^+$ 的后 5 层（10-14 层）与随机潜码按 $\alpha=0.5$ 混合，生成增强的三平面特征作为训练输入。
+- **功能**: 在训练 $\Phi_{geo}$ 时，将 ground-truth 潜码 $w^+$ 的后 5 层（10-14 层）与随机潜码按 $\alpha=0.5$ 混合，生成增强的三平面特征作为训练输入。
 - **核心思路**: 风格生成器中，早期层控制几何/粗结构，后期层控制色调/亮度等细节。混合后期层不改变语义信息（mIoU 几乎不变），但增加了输入多样性（L1 距离增大），有效防止 10 样本训练的过拟合。
 - **设计动机**: 实验分析了 14 层中每层混合对语义（mIoU）和多样性（L1）的影响，发现 top-5 mIoU 层（10-14）是语义保持和增强效果的最佳平衡点。混合所有层会破坏几何结构导致灾难性失败。
 
 **3. 基于 overlap 的推理优化**
-- **做什么**: 推理时优化编辑向量 $\delta w^+$，使生成 mask 匹配编辑后的目标 mask。损失函数除 cross-entropy 外加入 DICE coefficient 的 overlap loss：$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{ovlp}$。
+- **功能**: 推理时优化编辑向量 $\delta w^+$，使生成 mask 匹配编辑后的目标 mask。损失函数除 cross-entropy 外加入 DICE coefficient 的 overlap loss：$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{ovlp}$。
 - **核心思路**: 为未编辑区域保留 LPIPS 损失 $\mathcal{L}_{LPIPS}(I' \otimes (1-r), I \otimes (1-r))$，为编辑区域使用 $\mathcal{L}_{CE} + \mathcal{L}_{ovlp}$。
 - **设计动机**: 传统仅用 CE 的优化忽略小区域编辑（如瞳孔放大），DICE overlap 按类别计算重叠率，不受类别面积大小影响。
 
@@ -116,7 +116,7 @@ tags:
 - DICE overlap loss 解决小区域编辑的思路简洁有效
 - 不仅限于 EG3D/NeRFFaceEditing，FFaceGAN 实验证明了方法的可移植性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理需要迭代优化（~31 秒/次编辑），无法实时交互
 - 1-shot 性能有限（0.711 mIoU），因为几何适配器仍需多样化训练数据

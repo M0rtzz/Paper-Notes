@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM-SRBench: A New Benchmark for Scientific Equation Discovery with LLMs
 description: >-
@@ -85,7 +85,7 @@ LLM嵌入了大量科学知识可辅助假设生成。但现有基准（Feynman/
 4. 数值误差曲线分析是区分记忆vs发现的简洁工具。
 5. 为LLM+SR社区提供了标准化评测平台。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 31.5%的上限说明问题极其困难，也可能是基准过难。
 2. 变换方法可能引入不自然的数学形式。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distribution-Aware Robust Learning from Long-Tailed Data with Noisy Labels
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L} = \mathcal{L}_{MixMatch} + \mathcal{L}_{BMixMatch} + \lambda_{SBCL
 3. **Mixup 作为硬负样本**：将 Mixup 生成的样本作为 memory bank 的负样本，同时增强了表示学习和数据多样性
 4. **实验全面**：涵盖对称/非对称噪声、不同不平衡率、真实噪声数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **计算开销**：DaCC 需要对所有样本做前向传播来估计中心，且使用 co-training 框架（两个网络），计算成本较高
 2. **超参数较多**：$\tau_T, \tau_c, \tau_s, \tau_m, \lambda_{SBCL}, \lambda_{MIDL}$ 等参数需要调优
 3. **分类领域假设**：方法主要面向分类任务，向检测/分割等任务的迁移性未探讨

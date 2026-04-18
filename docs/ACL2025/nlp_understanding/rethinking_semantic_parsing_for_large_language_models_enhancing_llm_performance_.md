@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Semantic Parsing for Large Language Models: Enhancing LLM Performance with Semantic Hints
 description: >-
@@ -111,7 +111,7 @@ SENSE在全部7个任务上均正向提升，而SP-Input、SP-Output和CoT均存
 - **与CoT的互补性**：CoT适合推理链，SENSE适合语义理解，两者可能在不同任务类型上各有所长
 - **注意力分析**提供了可解释性证据，不是黑箱提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在LLaMA和GPT系列上验证，需要在更多模型架构上确认通用性
 - 任务覆盖面主要集中在已知语义解析有益的任务，更多元化的任务测试是必要的
 - SENSE如何影响LLM内部决策过程的机制仍不清楚（LLM是黑箱）

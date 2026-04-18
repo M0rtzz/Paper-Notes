@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aggregating Diverse Cue Experts for AI-Generated Image Detection
 description: >-
@@ -78,7 +78,7 @@ GenImage上特别突出的单子集结果：
 - **跨模型泛化强**：在BigGAN上从FatFormer的49.9%飙升到98.8%，说明多线索互补确实能覆盖单线索盲区
 - **位置嵌入打乱**：简单而有效的策略，防止CI通道学到冗余的内容特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CI基于朗伯反射模型假设，对非朗伯材质（金属、镜面）可能失效
 - 输入固定224×224，丢失高分辨率细节；更高分辨率的CLIP（如ViT-L/14@336）可能有进一步提升空间
 - 仅使用DWT提取高频，未探索其他频域变换（DCT、FFT）的效果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RDNet: Region Proportion-Aware Dynamic Adaptive Salient Object Detection Network in Optical Remote Sensing Images
 description: >-
@@ -126,7 +126,7 @@ $$L_{total} = \frac{1}{N} \sum_{i=1}^{N} (L_{bce} + L_{iou} + L_{fm} + L_{mse})$
 3. **三模块分层设计**（高层定位 + 中层上下文 + 低层细节）逻辑清晰，各模块有明确分工
 4. 实验非常充分：21 种方法对比 + 7 组消融 + t-test 统计显著性检验 + 失败案例分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度偏慢**：13.6 FPS 在实时遥感应用中难以满足需求，矩阵运算密集是瓶颈
 2. **区域比例分为三档过于粗糙**：连续回归可能比离散三档分类更精细

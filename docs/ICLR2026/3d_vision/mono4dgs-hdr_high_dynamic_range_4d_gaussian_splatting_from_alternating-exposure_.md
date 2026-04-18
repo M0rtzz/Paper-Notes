@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mono4DGS-HDR: High Dynamic Range 4D Gaussian Splatting from Alternating-exposure Monocular Videos
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：先在正交相机坐标空间训练"视频高斯"（回避位姿估计），恢复 HDR 训练帧→用恢复的 HDR 帧做光度重投影估计位姿→变换到世界空间联合优化。
 
-**核心idea一句话**：两阶段解耦——先解 HDR（正交空间），再解位姿和 3D（世界空间），通过 Video-to-World变换桥接两个阶段。
+**核心 idea**：两阶段解耦——先解 HDR（正交空间），再解位姿和 3D（世界空间），通过 Video-to-World变换桥接两个阶段。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ $\mathcal{L} = \lambda_{rgb}\mathcal{L}_{rgb} + \lambda_{ue}\mathcal{L}_{ue} + \
 - **2D 协方差不变性**：从视频空间到世界空间的高斯变换中，保持投影后 2D 形状不变——这个约束简洁但对避免形变至关重要
 - **归一化差异做时间正则化**：$\frac{H_1 - H_2}{H_1 + H_2}$ 消除 HDR 绝对尺度的影响，仅关注相对变化——适用于任何动态范围
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖多个预处理模型（DepthCrafter + SpatialTracker + RAFT），预处理管线复杂且可能引入误差
 - 仅支持 2-3 种交替曝光模式，更复杂的曝光策略（如随机曝光）未探索
 - 训练 1.5 小时仍然较长，不适合实时应用场景

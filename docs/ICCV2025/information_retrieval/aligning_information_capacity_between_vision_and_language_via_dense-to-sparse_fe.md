@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aligning Information Capacity Between Vision and Language via Dense-to-Sparse Feature Distillation
 description: >-
@@ -157,7 +157,7 @@ Surround方式最优，因为稀疏文本在稠密文本中的位置未知，前
 3. **掩码信号建模的新应用**：将MAE的思想创新性地用于跨模态蒸馏，将稀疏文本视为稠密文本的掩码版本
 4. **方法简洁有力**：核心思想简单清晰，实现高效，效果显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖LLaVA生成稠密文本，生成质量直接影响预训练效果
 2. 当前一对一的图像-稠密文本对应关系可能不够灵活，多角度的稠密描述可能更有帮助

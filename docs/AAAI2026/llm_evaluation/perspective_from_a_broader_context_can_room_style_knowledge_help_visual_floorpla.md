@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Perspective from a Broader Context: Can Room Style Knowledge Help Visual Floorplan Localization?
 description: >-
@@ -128,7 +128,7 @@ tags:
 4. **单帧提升显著**：特别是在长序列跟踪任务上 R@0.2m 提升 13.5%，表明房间风格知识对消除歧义非常有效
 5. **方法具有通用性**：可以作为即插即用模块集成到不同的 FLoc 框架中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **预训练依赖 Gibson 导航数据**：约束矩阵的构建依赖机器人导航 episode 的元信息，推广到没有导航数据的场景时需要重新设计数据收集策略
 2. **未与 3D 几何先验结合**：作者在结论中提到了这一点，将 3D 几何和场景上下文统一的框架值得探索

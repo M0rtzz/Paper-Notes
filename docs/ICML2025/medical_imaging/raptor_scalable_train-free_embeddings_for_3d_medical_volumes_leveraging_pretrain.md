@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Raptor: Scalable Train-Free Embeddings for 3D Medical Volumes Leveraging Pretrained 2D Foundation Models
 description: >-
@@ -119,7 +119,7 @@ Raptor 回归任务平均比 Merlin 提升 +24%，比 SuPreM 提升 +30%，比 S
 4. **极致压缩**：Raptor-B（$K=10$）嵌入仅 7680 维，比 SuPreM 小 28.8 倍，但性能相当甚至更优
 5. **三轴互补**：消融实验证实三轴采样互补性强，单轴特征丢失可被其他轴恢复（类似三角定位）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **部分数据集表现一般**：Fracture3D 等数据集上效果不佳（AUC 0.677 vs VoCo 0.699），说明某些任务仍需领域特定先验
 2. **空间分辨率受限**：模拟实验显示当特征小于 16px 时检测能力急剧下降（AUC 降至 ~0.5），受限于 ViT patch size

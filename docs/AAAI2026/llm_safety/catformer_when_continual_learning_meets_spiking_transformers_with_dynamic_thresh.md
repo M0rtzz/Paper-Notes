@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CATFormer: When Continual Learning Meets Spiking Transformers With Dynamic Thresholds
 description: >-
@@ -126,7 +126,7 @@ $$\min_{\{\phi^{(k)}, W_k\}} \mathbb{E}_{(x,y) \sim \mathcal{D}^k} [\mathcal{L}_
 2. **阈值即记忆**的设计理念新颖：不修改权重，仅通过调节神经元兴奋性来编码新知识，类似于大脑的神经调质机制
 3. 将持续学习研究从 CNN 骨架推进到脉冲 Transformer，填补了重要空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 门控网络的任务预测准确率未单独报告，这可能是系统瓶颈
 2. 仅在分类任务上验证，未涉及检测、分割等更复杂任务

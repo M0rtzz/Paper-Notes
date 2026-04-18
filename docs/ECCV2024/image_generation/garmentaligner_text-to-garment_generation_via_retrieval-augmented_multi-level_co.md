@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GarmentAligner: Text-to-Garment Generation via Retrieval-augmented Multi-level Corrections
 description: >-
@@ -177,7 +177,7 @@ GarmentAligner 在所有指标上均取得最优，FID 降低至 8.735，CLIPSco
 3. **检索增强解决数据稀缺**：通过组件级相似性检索构建正负样本，有效利用有限数据
 4. **多损失协同设计**：视觉（CLIP反馈）、空间（attention map对齐）、数量（检测计数）三个正交维度的校正，覆盖了服装生成的主要失败模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖提取管线精度**：组件信息完全依赖 GroundingDINO 和 SAM 的准确性，大规模数据中不可避免存在错误
 2. **预训练模型偏见**：继承了 SD 模型的固有偏差，可能导致输出缺乏鲁棒性和用户友好性

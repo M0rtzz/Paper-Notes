@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OGNI-DC: Robust Depth Completion with Optimization-Guided Neural Iterations
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}_\mathbf{G} = \sum_{t=1}^T \gamma^{T-t} \|\hat{\mathbf{G}}_t - \mat
 3. **首次将 DROID-SLAM 式的耦合优化-迭代精炼范式引入单视图任务**
 4. 随机遮掩的数据增强简单而有效，使模型在未见过的稀疏度下仍然工作良好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **极端稀疏场景**（如仅5个观测点）下表现略逊于 SpAgNet，因为深度梯度积分中的误差会在大范围无观测区域累积
 2. 推理速度有一定开销（DDI 求解耗时），可探索更快的求解器或近似方法

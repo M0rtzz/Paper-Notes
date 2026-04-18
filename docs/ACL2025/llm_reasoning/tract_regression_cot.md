@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRACT: Regression-Aware Fine-tuning Meets Chain-of-Thought Reasoning
 description: >-
@@ -41,7 +41,7 @@ tags:
    - CoT 推理和回归感知训练各有优势，但如何有效地将两者结合是一个开放问题
    - GPT-4 生成的 CoT 与微调后模型自生成的 CoT 之间存在显著分布差异
 
-**本文要解决什么？**
+**本文目标**
    - 如何在 LLM-as-a-Judge 微调中同时利用 CoT 推理能力和回归感知损失
    - 如何缓解训练与推理阶段 CoT 来源的分布偏移问题
 
@@ -49,7 +49,7 @@ tags:
    - 将 CE 损失用于 CoT 学习，RAFT 损失用于分数预测，组合形成 CoT-RAFT 目标
    - 采用两阶段训练策略，第二阶段使用模型自生成的 CoT 替代外部注释
 
-**核心idea一句话**:
+**核心 idea**:
    - 通过两阶段自生成 CoT + 回归感知微调，实现 CoT 推理与数值预测的最佳结合
 
 ## 方法详解
@@ -118,7 +118,7 @@ TRACT（Two-stage Regression-Aware fine-tuning with CoT）包含两个阶段：
 - **模块化设计思路清晰**: CoT-RAFT 目标优美地将 CE 和回归损失结合，各司其职
 - **代码和模型完全开源**: 便于复现和应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 LLM-as-a-Judge 任务上验证，未拓展至其他数值预测场景（如 STS-B 回归任务）
 2. 两阶段训练增加了计算开销，需要生成自 CoT 再重新训练

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vamba: Understanding Hour-Long Videos with Hybrid Mamba-Transformers
 description: >-
@@ -133,7 +133,7 @@ Vamba 在 LVBench 上超越所有高效 LMM **4.3%**，甚至超过基线 Qwen2-
 - 初始化策略的消融启示："架构替换 + 权重继承"是将高效模块集成到预训练模型的关键技巧。
 - Mamba-2 的成功验证了线性复杂度模型在视觉序列建模中的潜力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 增加了约 3B 参数（交叉注意力 + Mamba 层），总参数量从 7B 增至 10B。
 - Mamba 在硬件上的优化仍不如 Transformer 成熟，理论加速尚未完全转化为实际加速。

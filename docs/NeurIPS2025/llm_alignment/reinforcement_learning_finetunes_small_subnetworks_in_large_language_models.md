@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforcement Learning Finetunes Small Subnetworks in Large Language Models
 description: >-
@@ -126,7 +126,7 @@ $$o_1 = \frac{|\mathcal{I}_1 \cap \mathcal{I}_2|}{|\mathcal{I}_1|}, \quad o_2 = 
 4. **实践意义**：为高效 RL 训练方法提供理论基础——可以只训练子网络来节省计算量
 5. **预训练模型中存在可迁移结构**：不同条件下子网络的高重叠度暗示模型本身存在"天然适合 RL 的子结构"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 由 RL 计算成本限制，每次只变化一个因素，可能忽略因素间的交互效应
 - 部分实验依赖公开 checkpoint 而非完全控制的训练

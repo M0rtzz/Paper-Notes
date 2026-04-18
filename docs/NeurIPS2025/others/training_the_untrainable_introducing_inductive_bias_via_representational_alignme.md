@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training the Untrainable: Introducing Inductive Bias via Representational Alignment
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L}(\theta^T) = \mathcal{L}_T(\theta^T) + \sum_{i \in I} \bar{\mathcal
 - **错误一致性实验**特别精彩：guided FCN不是泛泛地变好，而是继承了guide的特定决策风格
 - 挑战了"某些架构天然不适合某些任务"的传统观念
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **覆盖广度优先于单一任务最佳性能**：没有在任何一个任务上做到SOTA，超参调优和长时间训练可能进一步提升
 - **仅使用CKA一种距离函数**：其他表征距离（如CCA, RSA）可能有不同效果

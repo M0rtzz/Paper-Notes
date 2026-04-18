@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases
 description: >-
@@ -123,7 +123,7 @@ $$I^g = G(f^s + z^d_{\text{FDM}}, \tilde{f^s_\pi})$$
 - **即插即用设计**：EMI和EDI可适配到其他GAN框架（如FOMM、AniTalker等）
 - **三目标统一**：同时实现实时效率（27.6 FPS）、解耦控制和高质量渲染
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 记忆网络的容量（slot数量 $S$）影响性能上限，极大规模的身份库可能需要更大容量
 - 音频驱动中需要额外的Audio-to-Motion模块

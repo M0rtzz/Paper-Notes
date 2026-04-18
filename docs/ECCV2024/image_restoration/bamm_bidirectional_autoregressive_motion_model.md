@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BAMM: Bidirectional Autoregressive Motion Model
 description: >-
@@ -150,7 +150,7 @@ $$\mathcal{L}_{\text{hybrid}} = -\mathbb{E}_{\mathbf{X} \in p(\mathbf{X})}\left[
 - **级联解码策略**：粗生成→精炼的两阶段思路，类似于 coarse-to-fine 的思想在离散运动生成中的体现
 - **完备的能力矩阵**：见 Table 1，BAMM 是唯一同时支持长度预测、长度输入和编辑的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 级联解码需要两轮推理，虽然自回归生成已经较快，但仍比单次前向推理慢
 - 残差向量量化增加了模型复杂度（需要额外的精炼 Transformer）

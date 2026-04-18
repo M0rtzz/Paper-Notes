@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization
 description: >-
@@ -151,7 +151,7 @@ $\lambda{=}0.2$，与原始 3DGS 一致。
 4. **通用性强**：LLFF（前向场景）、Mip-NeRF360（360° 场景）、DTU（物体）、Blender（合成）全部有效
 5. 类似机器学习中 co-training / mutual teaching 的思想，但首次应用于 3DGS
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练两个辐射场将训练时间翻倍（2.5min → 6min），对实时应用有影响
 2. 伪视角采样仅在两个最近训练视角之间插值，可能无法覆盖所有重要未见区域

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**: 终端条件是 $\Gamma(0,X) = 0$ if $X=0$, $+\infty$ otherwise — 这是一个奇异边界条件，PDE 残差损失难以充分捕捉其约束力。
 
-**本文要解决什么？**: 如何在 PINN 框架下强有力地执行硬零终端库存约束，同时保持训练稳定性。
+**本文目标**: 如何在 PINN 框架下强有力地执行硬零终端库存约束，同时保持训练稳定性。
 
 **切入角度**: 不仅在 PDE 残差层面训练，还从「控制-轨迹」视角出发，直接模拟执行轨迹并惩罚终端库存偏差。
 
-**核心idea一句话**: 用 rollout-based trajectory loss + BPTT 传播终端惩罚，配合 $\lambda$-curriculum 从风险中性到风险厌恶逐步过渡。
+**核心 idea**: 用 rollout-based trajectory loss + BPTT 传播终端惩罚，配合 $\lambda$-curriculum 从风险中性到风险厌恶逐步过渡。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ MT-PINN 的终端库存均值仅为 Vanilla PINN 的 1/10，满足 $|X_T| \le 0.
 - **极小网络超越大网络**：MT-PINN 用 32 宽度 MLP 胜过 500 宽度 baseline，说明归纳偏置（轨迹损失）比模型容量更重要
 - **理论-实践一致**：$\lambda=0$ 时与 TWAP 一致、与解析解对齐，建立了可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑单资产、线性永久冲击模型，未涉及多资产、非线性冲击、订单簿动态
 - 不包含交易费用和隔夜风险
 - 轨迹损失的计算复杂度为 $\mathcal{O}(J \times N_{\text{dt}} \times P)$，规模受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Heterogeneous Federated Fine-Tuning with Parallel One-Rank Adaptation
 description: >-
@@ -93,7 +93,7 @@ PLoRA: $\Delta W = \sum_{j=1}^{R} B_{(j)}A_{(j)}$，等价于标准LoRA但模块
 - **PLoRA的模块独立性**：虽然数学上等价于标准LoRA，但模块独立性使得子集选择+独立聚合自然成立。这是一个architectural trick带来的系统性改进。
 - **统一噪声分析框架**：为FLoRA/FlexLoRA/HETLoRA/Fed-PLoRA提供了统一的初始化噪声和聚合噪声分析，清晰展示了各方法的优劣。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 随机选择模块可能不是最优——基于重要性/梯度的选择策略可能更有效
 - 折叠操作在每轮增加 $O(dk(R-r_i))$ 计算——虽然比训练小得多但非零
 - 下行通信多了 $O((d+k)(R-r_i))$ 比HETLoRA/FlexLoRA

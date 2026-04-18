@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bregman Conditional Random Fields: Sequence Labeling with Parallelizable Inference
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：现代深度学习全靠 GPU 并行加速（Transformer、SSM 等），但 CRF 层成为训练/推理的瓶颈。
 
-**本文要解决什么**：设计一个与标准 CRF 性能等价但推理可并行化的替代模型。
+**本文目标**：设计一个与标准 CRF 性能等价但推理可并行化的替代模型。
 
 **切入角度**：受 entropic optimal transport（Cuturi, 2013）和 SparseMAP（Niculae et al., 2018）启发，使用**均值正则化**（mean regularization）替代标准 CRF 的分布正则化，使推理可分解为可并行的 KL 投影子问题。
 
@@ -101,7 +101,7 @@ Bcrf 用 $B_Y(\mathbf{w}) = \max_{\mathbf{q} \in \text{conv}(Y)} \langle \mathbf
 - **Partial label 支持**：CRF 从部分标签学习通常需要 Forward 算法（仍顺序），Bcrf 天然支持并保持并行
 - **与 GPU 硬件趋势一致**：随着模型越来越大、GPU 并行度越来越高，CRF 层的顺序瓶颈会越来越突出，Bcrf 的价值会随硬件发展增长
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **近似推理**：IBP 给出的是近似解，不是精确的 MAP/边际概率；精度依赖迭代次数
 - **温度超参 $\tau$**：MAP 近似需要小 $\tau$ 但不能为 0（数值不稳定），需要调参
 - **仅限线性链**：一阶 Markov 依赖，未扩展到 semi-Markov 或高阶 CRF

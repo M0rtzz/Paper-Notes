@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Reliable and Holistic Visual In-Context Learning Prompt Selection
 description: >-
@@ -89,7 +89,7 @@ RH-Partial2Global在Partial2Global基础上引入两个正交增强：(1) Jackkn
 - 覆盖设计是解决"如何系统性采样成对关系"的优雅数学工具，将组合优化引入排序聚合
 - 两个增强模块均为推理阶段modification，不增加训练成本，即插即用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 改进幅度一致但较小（平均~0.6%），在小fold上受限于校准集大小
 - $\alpha=0.85$为所有任务统一设定，自适应$\alpha$选择可能进一步提升
 - 覆盖设计的预计算对超大规模候选集（$K > 100$）可能有计算开销

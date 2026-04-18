@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Benchmarks and Challenges in Pose Estimation for Egocentric Hand Interactions with Objects
 description: >-
@@ -114,7 +114,7 @@ JointTransformer 表现最优，使用冻结的 DINOv2 ViT-G 权重，通过 Tra
 3. **大模型+冻结权重范式**：JointTransformer 证明冻结大规模视觉基础模型 (DINOv2 ViT-G) 配合轻量解码器是手-物体重建的有效策略
 4. **多视角自适应融合**：不同视角质量差异大，自适应选择远优于简单平均
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **快速手部运动**仍是未解决的难题，高速指尖动作（如拧螺丝）估计误差大
 - **第一人称窄视角物体重建**困难，物体常位于图像边缘且被手臂遮挡

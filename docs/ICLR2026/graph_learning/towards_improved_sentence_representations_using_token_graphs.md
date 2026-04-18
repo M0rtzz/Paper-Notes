@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Improved Sentence Representations using Token Graphs
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：如何在不微调 LLM 的条件下，从冻结模型的输出中获得高质量句子表征？
 
-**本文要解决什么**：将池化重新定义为"先做关系学习，再聚合"——token 不是独立集合而是图。
+**本文目标**：将池化重新定义为"先做关系学习，再聚合"——token 不是独立集合而是图。
 
 **切入角度**：LLM 的 token 隐状态天然携带相似性结构（cosine similarity），可以构建潜在图。GNN 在图上传播信息后再聚合，比 DeepSets 框架更强。
 
@@ -48,19 +48,19 @@ tags:
 
 1. **Token 图构建**:
 
-    - **做什么**：基于 cosine 相似度构建稀疏图
+    - **功能**：基于 cosine 相似度构建稀疏图
     - **核心思路**：$\mathbf{S}_{ij} = \cos(\mathbf{x}_i, \mathbf{x}_j)$，仅 $\mathbf{S}_{ij} > \tau$ 时创建边。$\tau$ 是超参数
     - **设计动机**：保留语义相关的 token 间连接，丢弃无关连接。阈值控制图稀疏度
 
 2. **Token-GNN 细化**:
 
-    - **做什么**：在 token 图上传播信息
+    - **功能**：在 token 图上传播信息
     - **核心思路**：$K$ 层 GNN，$\mathbf{a}_i^{(\ell)} = \text{AGGREGATE}_{j \in \mathcal{N}_i}(\mathbf{h}_j^{(\ell)})$，$\mathbf{h}_i^{(\ell+1)} = \sigma(\mathbf{W}^{(\ell)} \text{CONCAT}(\mathbf{h}_i^{(\ell)}, \mathbf{a}_i^{(\ell)}))$
     - **设计动机**：GNN 捕获 token 间依赖，如"not good"中 not 对 good 的否定。DeepSets（K=0）无法建模此类交互
 
 3. **可学习 Readout**:
 
-    - **做什么**：加权聚合细化后的 token 表征
+    - **功能**：加权聚合细化后的 token 表征
     - **核心思路**：$m_i = \mathbf{v}^\top \tanh(\mathbf{W}_m \mathbf{u}_i + \mathbf{b}_m)$，$\pi = \text{softmax}(\mathbf{m})$，$\mathbf{z} = \sum_i \pi_i \mathbf{u}_i$
     - **设计动机**：自适应权重优于固定 mean/max。理论证明 Glot 泛化了 mean/max/CLS 和 AdaPool
 
@@ -99,7 +99,7 @@ tags:
 - **冻结 LLM + 轻量 GNN 的实用价值**：避免昂贵微调，仅需少量可训练参数
 - **压力测试的诊断价值**：90% 噪声下的鲁棒性差异清晰展示了关系学习 vs 独立聚合的本质区别
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 图构建依赖 cosine 相似度阈值 $\tau$，需要调参
 - GNN 增加内存和计算开销（虽比微调少得多）
 - 未探索预训练 GNN head 跨任务迁移的可能性

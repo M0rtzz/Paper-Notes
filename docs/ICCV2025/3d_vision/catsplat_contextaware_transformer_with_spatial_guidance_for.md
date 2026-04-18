@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CATSplat: Context-Aware Transformer with Spatial Guidance for Generalizable 3D Gaussian Splatting from A Single-View Image
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **文本prompt格式很重要**：单句描述最优，过长或过短都不理想
 - **cross-attention的迭代次数有增益**：3层全做CA优于只在1-2层做
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对遮挡区域和截断区域效果仍有限（作者自述）
 - 训练仅用RE10K，数据多样性不足，扩展到更多数据集可提升实用性
 - VLM推理增加额外计算开销（LLaVA前向），实时性受影响

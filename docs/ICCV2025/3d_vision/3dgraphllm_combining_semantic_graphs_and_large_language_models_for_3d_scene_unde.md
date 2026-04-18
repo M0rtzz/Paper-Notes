@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding
 description: >-
@@ -96,7 +96,7 @@ tags:
 - 两阶段训练（GT预训练+预测分割微调）有效缓解了分割噪声对语义关系编码的影响
 - 推理效率高：每场景仅800个token，ScanRefer推理仅0.4秒/query
 
-## 局限性 / 可改进方向
+## 局限与展望
 - n-gram指标（CIDEr/BLEU）不能准确评估LLM生成的丰富描述，可能低估模型性能
 - 语义关系编码器VL-SAT在3RScan上训练，跨域到ScanNet可能存在性能差距
 - 固定k=2的近邻数量可能对不同复杂度的场景不够灵活

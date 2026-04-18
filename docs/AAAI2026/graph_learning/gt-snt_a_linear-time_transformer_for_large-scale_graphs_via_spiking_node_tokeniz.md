@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GT-SNT: A Linear-Time Transformer for Large-Scale Graphs via Spiking Node Tokenization
 description: >-
@@ -128,7 +128,7 @@ GT-SNT 包含四个模块：
 - **实用价值突出**：在大规模图上真正可用的线性时间 GT，推理速度提升巨大
 - **消融实验全面**：码本利用率、隐空间大小、传播步数、能耗等多个维度的分析非常扎实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 arXiv 数据集上未超过 VQGraph 和 SGFormer（72.4 vs 72.4 / 72.6），大规模异同性图上的优势不一致
 - 目前仅验证了节点分类任务，图分类和链接预测的效果待探索

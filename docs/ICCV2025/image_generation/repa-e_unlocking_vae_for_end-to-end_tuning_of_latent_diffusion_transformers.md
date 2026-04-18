@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] REPA-E: Unlocking VAE for End-to-End Tuning with Latent Diffusion Transformers
 description: >-
@@ -141,7 +141,7 @@ REPA-E 仅用 80 epochs 即超越 REPA 800 epochs 的最终结果（4.07 vs 5.90
 - Batch-Norm 替代全局统计量的技巧简单实用，可广泛应用于其他端到端训练场景
 - 实验设计非常全面：不同模型尺度、不同 VAE、不同对齐编码器、不同对齐深度全部验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要额外的预训练视觉模型（DINOv2）用于 REPA 损失，增加了训练的依赖和计算开销
 - VAE 正则化涉及 GAN 损失等多个辅助目标，调超参可能不平凡

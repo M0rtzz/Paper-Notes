@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Scalable Oversight via Partitioned Human Supervision
 description: >-
@@ -117,7 +117,7 @@ $$|\hat{A}_{\text{mix}} - A| \leq \sqrt{2v\log\frac{2}{\delta}} + c\log\frac{2}{
 4. **双重应用**：同一框架既能评估 AI（无需 ground truth）又能训练 AI（agent 训练信号）
 5. **IVW 和 ML 估计器高效**：少量互补标签即可实现接近全量标注的估计精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 均匀采样假设($p(\bar{Y}=k|Y) = 1/(K-1)$)在实践中可能不严格成立
 - 仅验证了多选题设置，开放生成任务的适配需要额外工作

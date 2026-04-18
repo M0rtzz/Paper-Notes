@@ -269,9 +269,16 @@ def submit_urls(urls: list[str], credentials_path: str, action: str,
 
 
 def submit_urls_indexnow(urls: list[str], key: str,
-                         dry_run: bool = False) -> tuple[int, int]:
-    """Submit URLs via Bing IndexNow API (batch, up to 10,000 per request).
-    Returns (success, fail) counts."""
+                         dry_run: bool = False,
+                         endpoint: str = "https://www.bing.com/indexnow") -> tuple[int, int]:
+    """Submit URLs via IndexNow protocol (batch, up to 10,000 per request).
+
+    By default submits to Bing's direct endpoint (faster than the api.indexnow.org
+    aggregator, since Bing is our primary target). Use endpoint to switch.
+    Per IndexNow spec, response 200 = received, 202 = received + key validation pending.
+    Returns (success, fail) counts.
+    """
+    import urllib.error
     import urllib.request
 
     if dry_run:
@@ -283,6 +290,7 @@ def submit_urls_indexnow(urls: list[str], key: str,
 
     success = 0
     fail = 0
+    key_location = f"https://{HOST}/Paper-Notes/{key}.txt"
 
     # Submit in batches (max 10,000 per batch)
     for batch_start in range(0, len(urls), INDEXNOW_BATCH_SIZE):
@@ -290,12 +298,12 @@ def submit_urls_indexnow(urls: list[str], key: str,
         payload = json.dumps({
             "host": HOST,
             "key": key,
-            "keyLocation": f"https://{HOST}/Paper-Notes/{key}.txt",
+            "keyLocation": key_location,
             "urlList": batch,
         }).encode("utf-8")
 
         req = urllib.request.Request(
-            "https://api.indexnow.org/indexnow",
+            endpoint,
             data=payload,
             headers={"Content-Type": "application/json; charset=utf-8"},
             method="POST",
@@ -304,15 +312,32 @@ def submit_urls_indexnow(urls: list[str], key: str,
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 status = resp.status
-            if status in (200, 202):
-                success += len(batch)
-                print(f"  [OK] IndexNow batch submitted: {len(batch)} URLs (HTTP {status})")
-            else:
-                fail += len(batch)
-                print(f"  [WARN] IndexNow returned HTTP {status}")
+                body = resp.read(512).decode("utf-8", errors="replace").strip()
+        except urllib.error.HTTPError as e:
+            status = e.code
+            body = e.read(512).decode("utf-8", errors="replace").strip() if e.fp else ""
         except Exception as e:
             fail += len(batch)
             print(f"  [ERROR] IndexNow submit failed: {e}")
+            continue
+
+        # 200 OK / 202 Accepted (key validation pending) both count as success
+        if status in (200, 202):
+            success += len(batch)
+            note = "" if status == 200 else " (key validation pending)"
+            print(f"  [OK] IndexNow batch submitted: {len(batch)} URLs (HTTP {status}){note}")
+        else:
+            fail += len(batch)
+            # Diagnostic hints per IndexNow spec
+            hint = {
+                400: "Invalid format",
+                403: "Key not valid (file missing or content mismatch)",
+                422: "URL not under host, or key/keyLocation mismatch",
+                429: "Too many requests",
+            }.get(status, "")
+            extra = f" - {hint}" if hint else ""
+            body_snippet = f" body={body!r}" if body else ""
+            print(f"  [WARN] IndexNow returned HTTP {status}{extra}{body_snippet}")
 
     return success, fail
 

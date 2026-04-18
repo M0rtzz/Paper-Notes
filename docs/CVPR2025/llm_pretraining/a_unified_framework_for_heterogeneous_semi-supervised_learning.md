@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified Framework for Heterogeneous Semi-supervised Learning
 description: >-
@@ -95,7 +95,7 @@ $\mathcal{L}_{total} = \mathcal{L}_{cl}^L + \lambda_{pl} \mathcal{L}_{pl}^U + \l
 - **2C类扩展的优雅性**：简单但有效——把"同一概念在不同域"视为不同类，让模型自然学习域内和域间的特征差异，无需复杂的域分类器
 - **渐进式Mixup的课程学习思想**：体现了"先易后难"的课程学习原则——先信赖标记数据，逐步信赖伪标签
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设两个域共享完全相同的C个类，无法处理类集不完全重叠的情况
 - 2C类分类在类数大时可能导致分类器容量瓶颈

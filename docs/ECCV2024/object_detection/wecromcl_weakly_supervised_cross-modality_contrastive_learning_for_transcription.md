@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WeCromCL: Weakly Supervised Cross-Modality Contrastive Learning for Transcription-only Supervised Text Spotting
 description: >-
@@ -146,7 +146,7 @@ WeCromCL vs. oCLIP（测试集 F-measure）：
 3. **聚类中心的类比**：转录作为聚类中心关联所有包含它的图像，模型在大量图像中学到该转录的共性外观模式——非常直觉的解释
 4. **低成本负样本增强**：仅增加文本侧负样本（计算几乎为零），即可获得显著性能提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 两阶段流水线导致锚点定位误差会传播到检测阶段，可探索端到端的联合优化
 2. 当多个相同转录出现在同一图像时，激活图可能产生歧义

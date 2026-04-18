@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DictPFL: Efficient and Private Federated Learning on Encrypted Gradients
 description: >-
@@ -136,7 +136,7 @@ DictPFL 包含两个核心模块：
 4. **HRC 重激活机制**：优雅解决了 HE 环境下剪枝不可逆的问题，通过动态概率在效率和收敛性之间取得平衡
 5. **跨任务通用性**：在图像分类、文本分类、文本生成任务上均有效，覆盖 ViT、BERT、TinyLlama 等模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **固定字典**：字典在训练前一次性构建并冻结，无法适应高度异质性的客户端数据分布，未来可探索动态字典
 2. **场景限制**：仅评估了 cross-silo 场景（少量客户端），尚未验证 cross-device 场景（大量资源受限设备）

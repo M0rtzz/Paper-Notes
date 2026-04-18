@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhysGS: Bayesian-Inferred Gaussian Splatting for Physical Property Estimation
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：将每个高斯原语视为概率实体，其物理属性信念通过贝叶斯后验更新不断精化
 
-**核心idea一句话**：用 Dirichlet-Categorical 模型融合离散材质分类 + Normal-Inverse-Gamma 先验建模连续属性的偶然和认知不确定性
+**核心 idea**：用 Dirichlet-Categorical 模型融合离散材质分类 + Normal-Inverse-Gamma 先验建模连续属性的偶然和认知不确定性
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **不确定性分解的实用性**：偶然 vs 认知的区分对下游机器人决策非常重要。比如在高认知不确定性区域，机器人应该更谨慎或寻求更多观测
 - **VLM 作为物理先验源**：利用 GPT-5 作为材质识别和属性估计的零样本先验源是一个可行方案，虽然精度有限但通过贝叶斯多视角融合可以显著改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VLM 的物理属性估计是零样本的，缺乏领域校准，可能在非常见材质上偏差很大
 - 质量估计依赖于密度估计 × 体积积分，体积估计的误差会级联放大
 - NeRF2Physics 在 ALDE 和 MnRE 上仍然更好，说明在某些度量下贝叶斯方法反而引入了偏差

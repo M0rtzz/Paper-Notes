@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synthetic Perception: Can Generated Images Unlock Latent Visual Prior for Text-Centric Reasoning?
 description: >-
@@ -117,7 +117,7 @@ tags:
 - 设计了3个"关键基线"（文本扩展/知识检索/Oracle）系统排除混淆因素，方法论严谨
 - Flux.1-schnell的效率分析为实际部署提供了可行性论证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在文本分类任务上验证，未涉及生成任务（如摘要、QA）
 - 合成图像的计算开销是实际部署的主要瓶颈，即便Flux.1-schnell也需0.8s/样本

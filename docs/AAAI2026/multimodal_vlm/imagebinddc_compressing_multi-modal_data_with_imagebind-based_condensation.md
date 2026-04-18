@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ImageBindDC: Compressing Multi-modal Data with ImageBind-based Condensation
 description: >-
@@ -169,7 +169,7 @@ ImageBindDC比DM快2.4倍以上，显存降低37.5%。
 3. **三级对齐**的思想完整覆盖了多模态数据结构，从方法论角度十分干净
 4. 在NYU-v2上5个样本/类就实现无损性能，展现了该方法的实际价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅验证了音频-视觉、深度-文本、音频-文本三种双模态组合，是否适用于三模态及以上尚未验证
 - ImageBind的质量直接决定了压缩效果的上限——如果ImageBind在特定领域嵌入质量不高，方法可能受限

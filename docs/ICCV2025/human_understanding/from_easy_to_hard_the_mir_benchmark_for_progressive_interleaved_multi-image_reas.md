@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Easy to Hard: The MIR Benchmark for Progressive Interleaved Multi-Image Reasoning
 description: >-
@@ -102,7 +102,7 @@ Qwen2-VL 在 MIR 上的各阶段表现：
 - **数据构建的严谨性**：多源采集（自拍/短视频平台/教育资源）+ 半自动标注 + 多轮人工校验，有效避免数据泄漏
 - MIR 数据集规模大（22,257 QA 对，138,277 张图像），平均每实例 6 张图，推理步骤约 3,970 字符
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅支持 MCQ 格式评估，开放式问答未涉及
 - Sequential 任务的图像来自视频帧提取，可能丢失关键时序信息

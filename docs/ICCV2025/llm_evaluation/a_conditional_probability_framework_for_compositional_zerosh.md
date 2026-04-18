@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Conditional Probability Framework for Compositional Zero-shot Learning
 description: >-
@@ -160,7 +160,7 @@ $$\hat{c} = \arg\max_{c_{i,j} \in \mathcal{C}_{test}} p(c_{i,j}|x) + p(a_i|x, v_
 4. **良好的可扩展性**：可无缝集成到 CLIP 等视觉-语言模型中，在最具挑战性的 C-GQA 数据集上也取得 SOTA
 5. **浅深层特征互补使用**：深层特征用于全局对象理解，浅层特征保留细粒度属性信息，分层设计合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语义歧义问题**：对类标签间存在语义歧义的情况（如"highway" vs "road"，"thick" vs "folded"）仍然容易混淆
 2. **视觉混淆**：对视觉高度相似的目标（如"thawed meat" vs "frozen fish"）识别能力不足

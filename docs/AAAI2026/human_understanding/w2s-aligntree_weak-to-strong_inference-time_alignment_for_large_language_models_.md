@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] W2S-AlignTree: Weak-to-Strong Inference-Time Alignment for Large Language Models via Monte Carlo Tree Search
 description: >-
@@ -111,7 +111,7 @@ W2S-AlignTree 采用双阶段策略：
 - **MCTS + W2SG 的首次系统融合**：将 MCTS 强大搜索能力与弱模型轻量监督结合，理论上证明代理奖励保序性，数学基础扎实
 - **EA-PUCT 的信息论创新**：将信息熵嵌入 UCT 探索项实现不确定性感知，高熵多探索、低熵多利用的自适应策略巧妙解决 LLM 尖峰分布导致的过早收敛
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **推理延迟增加**：$m$ 次强模型前向 + $m \times K$ 次弱模型前向，对延迟敏感场景不友好
 - **双模型内存占用**：需同时加载强弱模型，GPU 内存需求大（可通过量化缓解）
 - **代理质量依赖弱模型**：弱模型自身偏差可能传递到搜索过程

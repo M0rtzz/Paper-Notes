@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InftyThink: Breaking the Length Limits of Long-Context Reasoning in Large Language Models
 description: >-
@@ -101,7 +101,7 @@ InftyThink 将推理分为多轮迭代：第1轮生成推理段 $RP_1$ + 摘要 
 - 无需架构修改、无需专门训练基础设施，仅需数据重构和SFT即可获得显著提升
 - 挑战了"推理深度与计算效率必须权衡"的假设——两者可同时改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 摘要质量如何影响推理正确性缺乏系统分析——信息丢失可能在长推理链中累积
 - $\eta$（段长度）固定为4K，动态调整可能更优（简单段无需4K，困难段可能不够）
 - 依赖SFT训练，若结合RL（如GRPO）可能释放更大潜力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probability Calibration for Precipitation Nowcasting
 description: >-
@@ -132,7 +132,7 @@ $$\hat{p} = \begin{cases} \sigma_{\text{softmax}}(z), & \text{if } \hat{y} = y \
 - **FiLM条件机制的引入**：将前置时间信息融入校准器是领域适配的关键创新，对所有方法都有正面作用
 - **极其轻量**：最佳方案仅需3,254个额外参数，实际部署成本几乎可以忽略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在北美地区的MRMS数据上验证，地理泛化性未知
 - 校准器使用的是logit空间信息，未利用原始输入（如卫星图像）的空间上下文

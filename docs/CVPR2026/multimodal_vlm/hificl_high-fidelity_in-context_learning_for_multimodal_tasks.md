@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：回到注意力公式基础，精确推导含 ICD 时的注意力输出。
 
-**核心idea一句话**：ICL 的"shift effect"不是需要近似的目标，而是注意力公式的直接解析推论——应该参数化其源头 $(K_D, V_D)$ 而非近似其效果。
+**核心 idea**：ICL 的"shift effect"不是需要近似的目标，而是注意力公式的直接解析推论——应该参数化其源头 $(K_D, V_D)$ 而非近似其效果。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - 揭示 HiFICL 作为 context-aware PEFT 的新形式：LoRA 是静态/输入无关的权重空间适配，HiFICL 是动态/内容感知的激活空间适配
 - 幻觉分析（CHAIRi 从 3.9 降至 2.2）证明高保真上下文建模也能减少事实幻觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 虚拟 key-value 对数量 $n=8$ 和 rank $r$ 需按任务调参
 - 仅在自回归架构（LLaVA、Idefics2）上验证，交叉注意力架构（如 Flamingo）需重新推导

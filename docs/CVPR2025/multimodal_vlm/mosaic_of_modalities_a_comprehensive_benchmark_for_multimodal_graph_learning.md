@@ -1,4 +1,4 @@
----
+﻿---
 title: "Mosaic of Modalities: A Comprehensive Benchmark for Multimodal Graph Learning"
 description: "首个同时包含文本和视觉节点属性的多模态图学习基准MM-Graph，涵盖7个数据集和3类图任务"
 tags: ["multimodal graph learning", "benchmark", "GNN", "knowledge graph", "CVPR2025"]
@@ -95,7 +95,7 @@ MM-Graph包含7个数据集（3个链接预测+2个节点分类+2个知识图谱
 - **实验设计严谨**：4种视觉×3种文本编码器×6种GNN/KGE的全组合实验，使用Optuna自动调参
 - **数据高质量**：从Amazon/Goodreads/CoDEx等可靠源构建，爬取高分辨率图片
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持节点级多模态特征，未考虑边级别的多模态信息
 - 视觉特征通过预训练编码器提取后冻结，未探索端到端联合训练

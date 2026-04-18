@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-alignment of Large Video Language Models with Refined Regularized Preference Optimization
 description: >-
@@ -124,7 +124,7 @@ RRPO 在所有 setup 上超越 TPO，VideoHallucer 提升达 5.2%。
 3. **概念级精准对齐**：只惩罚差异概念而非整个响应，避免过度惩罚
 4. **TKL 作为信任区域约束**：防止模型大幅偏离，允许使用更大学习率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 扰动策略仍较简单（帧遮蔽+乱序），更复杂的视觉扰动可能更有效
 2. 依赖 GPT-4o-mini 进行概念对比和正确性验证

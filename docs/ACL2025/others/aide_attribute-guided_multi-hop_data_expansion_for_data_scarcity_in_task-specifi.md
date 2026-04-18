@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AIDE: Attribute-Guided Multi-Hop Data Expansion for Data Scarcity in Task-Specific Fine-tuning
 description: >-
@@ -114,7 +114,7 @@ AIDE微调vs人工数据微调的平均相对提升：Mistral-7B +7.0%，Llama-3
 - **残差连接的巧妙借鉴**：将深度学习中的residual connection概念嫁接到文本合成中，解决语义漂移
 - **Self-Reflection质量把关**：合成后加入评分筛选，确保最终数据质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM合成器可能引入偏见和有害内容
 - 对数学推理任务效果有限(零-shot仅~21%)，可考虑结合CoT

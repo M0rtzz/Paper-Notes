@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpaceJAM: a Lightweight and Regularization-free Method for Fast Joint Alignment of Images
 description: >-
@@ -133,7 +133,7 @@ SpaceJAM 的优化目标是在 ViT 特征空间中最大化一组图像变换后
 4. **ViT 特征的价值**：进一步证实 DINO/DINOv2 等自监督 ViT 特征是极强的视觉语义表示
 5. **启发式思考**：当上游特征足够好时，下游任务的建模可以极大简化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对齐能力"match"而非"surpass"现有方法，在极端变形场景可能不如非参数化方法灵活
 - 紧凑的参数化变换可能限制了处理高度非刚性变形的能力

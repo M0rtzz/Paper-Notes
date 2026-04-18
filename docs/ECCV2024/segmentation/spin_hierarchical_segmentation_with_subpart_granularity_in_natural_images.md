@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPIN: Hierarchical Segmentation with Subpart Granularity in Natural Images
 description: >-
@@ -125,7 +125,7 @@ SPIN 微调效果（General 类别提示）：
 - **GPT-4 辅助数据集类别设计**：展示了用 LLM 加速数据集本体论构建的实用方法
 - **揭示了位置先验 vs 语言先验的效果差距**：暗示未来方向应结合 SAM 的定位能力 + VLM 的语义理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模有限（~1 万张图），每张图通常只含一个显著物体
 - 子部件类别定义存在主观性（GPT-4 + 人工）

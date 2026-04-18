@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoT-RVS: Zero-Shot Chain-of-Thought Reasoning Segmentation for Videos
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **模块化设计的灵活性**: 分割模型(LISA/Seg-Zero)和视频处理器(SAM2/Cutie)可灵活替换，未来各模块进步可直接带来系统提升
 - **在线扩展的实用性**: 在线推理VOS方案极少见，对实时监控、自动驾驶等场景有意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GPT-4o版本推理成本高（每个视频多次API调用），大规模应用不现实
 - 开源版本(Gemma3)与闭源(GPT-4o)在MeViS上差8个点，说明MLLM视觉推理能力仍是瓶颈

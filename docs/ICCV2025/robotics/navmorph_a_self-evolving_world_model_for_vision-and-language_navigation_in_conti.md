@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NavMorph: A Self-Evolving World Model for Vision-and-Language Navigation in Continuous Environments
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L}_W = \underbrace{\ell_{re}}_{\text{重建}} + \underbrace{\ell_{ac}
 - 特征级预测避免了像素生成的复杂度，同时 NDTW 正则化保证了时序连贯——这是一个实用的工程取舍
 - 世界模型与导航策略的解耦设计使 NavMorph 可作为即插即用模块增强多种现有 VLN 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CEM 仍依赖余弦相似度检索，对语义理解深度有限
 - 奖励函数缺乏直接来自真实目标的信号，未能做显式规划（acknowledged by 作者）

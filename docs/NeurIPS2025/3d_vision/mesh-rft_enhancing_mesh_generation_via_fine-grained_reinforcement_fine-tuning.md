@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mesh-RFT: Enhancing Mesh Generation via Fine-Grained Reinforcement Fine-Tuning
 description: >-
@@ -105,7 +105,7 @@ tags:
 - BER 和 TS 的设计巧妙：基于四边形转换评估三角网格质量，契合工业应用对四边形网格的偏好
 - 截断训练+滑动窗口推理的工程设计解决了长序列网格生成的实际问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试了点云条件生成，未探索文本/图像条件
 - DeepMesh 仅比较了 0.5B 版本，可能不公平

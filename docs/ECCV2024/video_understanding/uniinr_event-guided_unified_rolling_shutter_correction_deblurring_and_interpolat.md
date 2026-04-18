@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniINR: Event-guided Unified Rolling Shutter Correction, Deblurring, and Interpolation
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L} = \lambda_b \mathcal{L}_b + \lambda_{re} \mathcal{L}_{re}$$
 - **事件相机的互补性**：事件流提供高时间分辨率的运动信息，完美弥补了 RS 模糊帧的信息缺失
 - **灵活的输出模式**：通过改变 ETE 中的时间戳图，可以输出 RS 或 GS 帧，框架设计非常灵活
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖事件相机数据，限制了在普通相机场景的应用
 2. 当前方法基于仿真数据训练，真实世界数据缺乏 GT 无法定量评估

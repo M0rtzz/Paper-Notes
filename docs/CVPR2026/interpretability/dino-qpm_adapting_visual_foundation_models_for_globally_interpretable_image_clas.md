@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DINO-QPM: Adapting Visual Foundation Models for Globally Interpretable Image Classification
 description: >-
@@ -130,7 +130,7 @@ DINO-QPM 在准确率上超越不可解释的 DINOv2 线性探测（88.3 vs 87.9
 3. **训练效率极高**：由于骨干完全冻结，可预计算 patch 嵌入，每 epoch 训练仅 6 秒
 4. **Plausibility 指标设计合理**：引入膨胀掩码处理 patch 边界效应，避免对精确轮廓上的激活不公平惩罚
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在细粒度分类（CUB-2011、Stanford Cars）上验证，通用图像分类场景待测试
 2. ViT-L 骨干效果反而变差，可能需要针对不同骨干大小调整适配器设计

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shallow Robustness, Deep Vulnerabilities: Multi-Turn Evaluation of Medical LLMs
 description: >-
@@ -103,7 +103,7 @@ MedQA-Followup构建了一个**二维分类法**来组织所有评估方式：
 - 分类法（浅/深 × 直接/间接）为后续研究提供了清晰框架
 - Claude Sonnet 4的极端脆弱性令人警醒（91.2%→13.5%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估基于选择题格式，可能低估开放式临床对话中的脆弱性
 - 仅评估5个模型，更多模型家族（如Gemini、Llama 3.1）未覆盖

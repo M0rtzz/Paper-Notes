@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ambiguity-aware Truncated Flow Matching for Ambiguous Medical Image Segmentation
 description: >-
@@ -161,7 +161,7 @@ ATFM 推理速度远快于其他扩散方法，仅需 25 步扩散 + 一次 GTR 
 4. **效率优势显著**：113s vs 420-1100s，推理速度提升 3.7-9.7 倍，同时性能更优
 5. **FM 替代 DDPM**：避免高斯约束对细粒度分割的干扰，是合理的技术选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：仅在 LIDC（肺部CT）和 ISIC3 子集（皮肤病变，仅300张图片）上验证，未覆盖更多模态和器官
 2. **标注数量固定**：LIDC 4个标注、ISIC3 3个标注，未探讨标注数量变化对方法的影响

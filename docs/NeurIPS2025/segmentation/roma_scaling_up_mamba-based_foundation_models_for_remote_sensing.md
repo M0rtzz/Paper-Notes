@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RoMA: Scaling up Mamba-based Foundation Models for Remote Sensing
 description: >-
@@ -109,7 +109,7 @@ RoMA以85M参数量超越了307M参数的SatMAE++（ViT-L）。
 - 多尺度预测策略简洁有效，缓解了1D序列建模对2D空间关系的损失
 - 实验中RoMA以小参数量超越大模型的结果具有很强的实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 像素级任务（语义分割）上Mamba的优势不如分类和检测任务明显
 - Mamba-Large的训练不够充分（仅300 epochs），未能展示大模型的全部潜力

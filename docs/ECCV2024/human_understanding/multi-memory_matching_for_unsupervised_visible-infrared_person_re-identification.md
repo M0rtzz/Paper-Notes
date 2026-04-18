@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Memory Matching for Unsupervised Visible-Infrared Person Re-Identification
 description: >-
@@ -127,7 +127,7 @@ MMM 在无监督设置下超越多个半监督和有监督方法。在 RegDB 上
 3. **GMM 置信度估计**：利用损失分布建模来软化噪声伪标签的影响，比硬阈值过滤更优雅
 4. **方法的通用性**：MMM 可作为插件增强其他方法（如 ADCA+MMM、MMM+PCLHD），验证了框架的广泛适用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 作者坦言与有监督方法仍有差距（如 DEEN Rank-1 74.7% vs MMM 61.6%），主要受限于缺少跨模态数据标注
 2. 多记忆的子聚类数 $n$ 需手动设定，不同数据集/身份可能需要不同值

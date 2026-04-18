@@ -68,7 +68,7 @@ $$F_\Theta(x, d, z_{t_i}) = (c, \sigma)$$
 
 #### 1. 单序列连续动力学（Continuous Single-Sequence Dynamics）
 
-- **做什么**：从一段动态视频中学习连续时间的场景演化，支持精细内插和长程外推。
+- **功能**：从一段动态视频中学习连续时间的场景演化，支持精细内插和长程外推。
 - **核心思路**：采用 Latent ODE（ODE-RNN 变分自编码器）建模时序演化。训练分两阶段：
     - **Warmup 阶段**：先冻结 nODE，学习前两帧对应的 latent code $z_{t_0}$、$z_{t_1}$，同时训练 NeRF 拟合这两帧图像。
     - **联合训练阶段**：解冻 nODE，将两个 latent 输入 ODE-RNN 编码器，学习隐空间的正态分布；从中采样得到初始状态 $z_{t_0}$，经 ODE solver 求解各时刻的动态 latent $z_{t_i}^{\text{dyn}}$，再通过解码器 $\mathcal{D}$ 映射为 NeRF latent。
@@ -77,7 +77,7 @@ $$F_\Theta(x, d, z_{t_i}) = (c, \sigma)$$
 
 #### 2. 多序列泛化学习（Generalized Multi-Sequence Learning）
 
-- **做什么**：从多条遵循相同物理规律但初始条件不同的序列中，学习通用的连续动力学模型，推理时给一组新的初始条件即可预测全新轨迹。
+- **功能**：从多条遵循相同物理规律但初始条件不同的序列中，学习通用的连续动力学模型，推理时给一组新的初始条件即可预测全新轨迹。
 - **核心思路**：
     - Warmup 阶段学习一个 **静态 latent** $z_{\text{static}}$ 捕捉静态背景。
     - 联合训练阶段优化一个 **规范 latent** $z_{\text{can}}$ 作为场景参考。将初始位置 $p_0^c$ 通过 MLP 编码器 $\mathcal{E}$ 编码，与初始速度 $v_0^c$ 和 $z_{\text{can}}$ 拼接后输入 nODE，计算各时刻的动态 latent $z_{t_i,c}^{\text{dyn}}$。
@@ -86,7 +86,7 @@ $$F_\Theta(x, d, z_{t_i}) = (c, \sigma)$$
 
 #### 3. Lipschitz 正则化
 
-- **做什么**：约束 NeRF 网络各层的 Lipschitz 常数上界，使隐空间更结构化。
+- **功能**：约束 NeRF 网络各层的 Lipschitz 常数上界，使隐空间更结构化。
 - **核心思路**：对每个线性层 $y = \sigma(W_i x + b_i)$ 引入可训练的 Lipschitz bound $c_i$，通过 $W_i \leftarrow \text{normalization}(W_i, \text{softplus}(c_i))$ 归一化权重，并优化 $\mathcal{L}_{\text{lipschitz}} = \prod_i \text{softplus}(c_i)$。
 - **设计动机**：无正则化时隐空间杂乱，不同轨迹的 latent 无法形成有意义的拓扑结构。加入 Lipschitz 正则后，隐空间出现清晰的分岔点和吸引子结构（如 Bifurcating Hill 数据集中可视化出山顶的不稳定点和两个谷底的稳定吸引盆），使模型的动力学可解释、可分析。
 

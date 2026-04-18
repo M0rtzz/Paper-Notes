@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Point-SRA: Self-Representation Alignment for 3D Representation Learning
 description: >-
@@ -143,7 +143,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{recon} + 0.5 \cdot \mathcal{L}_{MFM} + \mat
 4. **Flow-Conditioned Fine-Tuning**：巧妙地将预训练学到的分布知识通过 flow vector 注入到微调阶段，避免预训练知识浪费
 5. **跨任务泛化强**：在分类、分割、检测、医学影像等多个任务上均有显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **参数量**：40.1M 参数，虽比 ReCon (44.3M) 少，但显著大于 Point-MAE (22.1M)，限制了在资源受限场景的部署
 2. **多模态依赖**：预训练阶段需要 image 和 text 模态的条件信息，增加了数据准备成本，微调阶段虽不再需要但预训练数据获取门槛提高

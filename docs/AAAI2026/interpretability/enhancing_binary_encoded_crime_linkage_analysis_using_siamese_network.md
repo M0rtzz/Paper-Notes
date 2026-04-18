@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Binary Encoded Crime Linkage Analysis Using Siamese Network
 description: >-
@@ -167,7 +167,7 @@ $$\mathcal{L}_{\text{recon}} = \mathbb{E}\left[\frac{v_1^\top \hat{v_1}}{\|v_1\|
 3. **领域专家驱动的特征工程**：5 种降维策略来自不同专业背景的专家，展示了 ML 与领域知识结合的最佳实践。
 4. **伦理考量周全**：有详细的部署安全保障、偏见审计计划和人在环设计。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **二进制编码丢失信息**：将复杂犯罪行为简化为 0/1 编码可能丢失重要的频次和程度信息。
 2. **时间分布漂移**：模型在 post-2021 数据上性能显著下降，需要持续再训练机制。

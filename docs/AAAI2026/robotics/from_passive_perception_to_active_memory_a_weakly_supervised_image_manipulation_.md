@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Passive Perception to Active Memory: A Weakly Supervised Image Manipulation Localization Framework Driven by Coarse-Grained Annotations
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}_{loss} = BCE(A_{refined}, \hat{M}_{teacher})$$
 - **实用性极强**：低标注成本 + 轻量模型 + 快速收敛 + 无推理时提示需求
 - **对全监督方法过拟合问题的深刻分析**：揭示了像素级掩码标注可能引入语义偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在社交网络压缩场景下性能仍低于 Mesorch 等全监督方法（如 WeChat: 0.477 vs 0.583）
 - 输入分辨率较低（224×224 vs 其他方法的 512×512），可能限制了细粒度定位

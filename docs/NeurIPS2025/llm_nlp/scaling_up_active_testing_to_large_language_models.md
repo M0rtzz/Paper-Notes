@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Up Active Testing to Large Language Models
 description: >-
@@ -118,7 +118,7 @@ $$\hat{R}_{\text{LURE}} = \frac{1}{M}\sum_{m=1}^M v_m \ell(f(x_{i_m}), y_{i_m})$
 3. **Bootstrap 诊断工具**：为实际部署提供了判断 active testing 是否有效的方法
 4. **数据集筛选的副产品**：active testing 可用于 dataset curation，选择子集评估模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅实验了文本分类任务，生成任务更复杂
 2. 标签错误情况下 active testing 可能失效（SST-2 案例）

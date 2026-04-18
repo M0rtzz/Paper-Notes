@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Global Compression Commander: Plug-and-Play Inference Acceleration for High-Resolution Large Vision-Language Models
 description: >-
@@ -118,7 +118,7 @@ GlobalCom²的设计理念是"**全局到局部**"（global-to-local）的层级
 - **扩展性好**：在无[CLS]模型和视频理解上都展示了适配方案，通用性较强。
 - **极端压缩下优势突出**：R=10%时相比其他方法优势最大（比第二名高1.7%均分），在别人"崩溃"的场景下保持鲁棒。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限vision encoding阶段压缩**：虽然这保证了FlashAttention兼容性，但也意味着无法利用text query信息做question-aware的压缩。作者通过组合实验（+FastV/SparseVLM）缓解了这一限制，但两阶段并行还有优化空间。
 - **超参数依赖**：$\tau$和$\alpha$虽然不太敏感，但对不同模型/任务的最优值可能不同，且$\alpha=0.5$的等权混合显得粗糙——可以学一个task-adaptive的$\alpha$。

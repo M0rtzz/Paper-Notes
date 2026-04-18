@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L}_{\text{render}} = (1-\lambda_{\text{ssim}})\|I_{\text{pred}} - I_{
 - **新数据集的价值**：构建了涵盖不同飞行高度和运动条件的真实 UAV 数据集，填补了该领域的评测空白。航拍动态重建的数据稀缺一直是制约研究的瓶颈
 - **模块化与可扩展性**：MGL 和 PGO 两个模块解耦设计，物理先验可方便地扩展（如加入碰撞约束、速度限制等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **物理先验的适用范围**：地面支撑和直立稳定性主要适用于地面车辆和行人，对于空中动态目标（如鸟群、其他无人机）这些先验可能不成立
 - **地面平面估计精度**：地面支撑先验依赖准确的地面平面估计，在复杂地形（丘陵、阶梯、多层建筑）中可能需要更精细的地面模型

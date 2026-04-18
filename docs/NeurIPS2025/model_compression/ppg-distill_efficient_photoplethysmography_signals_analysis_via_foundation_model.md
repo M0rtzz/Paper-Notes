@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PPG-Distill: Efficient Photoplethysmography Signals Analysis via Foundation Model Distillation
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L} = \mathcal{L}_{sup} + \alpha \mathcal{L}_{KD}^Y + \beta \mathcal{L
 3. **对比学习与关系蒸馏的结合**：形态蒸馏用InfoNCE保持Patch判别性，节律蒸馏用关系距离矩阵保持跨Patch结构，两者互补
 4. **实际可部署价值**：19倍内存压缩和7倍加速使智能手表部署成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务覆盖有限**：仅在心率估计和房颤检测两个任务上验证，PPG还可用于血压估计、血氧检测、压力评估等更多任务
 2. **学生架构单一**：仅使用GPT-PPG-1m和MLP作为学生，未探索其他轻量架构（如MobileNet变体、TinyTransformer等）

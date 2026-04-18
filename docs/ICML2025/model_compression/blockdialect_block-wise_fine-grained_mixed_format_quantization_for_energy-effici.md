@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BlockDialect: Block-wise Fine-grained Mixed Format Quantization for Energy-Efficient LLM Inference
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：既然每个 block 有独立的 scale factor，为什么不也给它独立的数值格式？
 
-**本文要解决什么**：设计块级混合数值格式量化。
+**本文目标**：设计块级混合数值格式量化。
 
 **切入角度**：设计 FP4 变体（方言）来适应不同 block 的数据分布，用两阶段方法实现在线最优格式选择。
 
@@ -98,7 +98,7 @@ LLaMA3-8B 零样本准确率：
 - 缩放整数约束确保硬件兼容性，是实用化的关键
 - 两阶段在线选择使方法可部署，不依赖离线校准
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 格式元数据（每 block 2-3 bits）增加存储开销
 - 自定义 MAC 单元尚未有公开硬件实现
 - 格式书设计依赖经验分析，自动化搜索可能更优

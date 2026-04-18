@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JULI: Jailbreak Large Language Models by Self-Introspection
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：对齐训练应该消除有害知识的表达，但 LLM API 返回的 top-k token 概率中是否仍泄露有害信息？
 
-**本文要解决什么？** 能否仅用 API 返回的少量 token 概率（如 top-5）高效越狱主流商用 LLM？
+**本文目标** 能否仅用 API 返回的少量 token 概率（如 top-5）高效越狱主流商用 LLM？
 
 **切入角度**：统计发现 >85% 的有害 response token 出现在 top-5 概率中——对齐只是压低了它们的采样概率而非消除知识。
 
-**核心idea一句话**：用轻量 BiasNet（<1% 目标模型参数）学习 logit bias 来提升有害 token 采样概率，仅需 100 条有害数据训练。
+**核心 idea**：用轻量 BiasNet（<1% 目标模型参数）学习 logit bias 来提升有害 token 采样概率，仅需 100 条有害数据训练。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ BiasNet $F_\theta$ 接收目标 LLM 的 log probability 输出 $\log p_\alpha(x_
 | 困难子集 | 在 AdvBench 的 5% 困难子集上仍有效，而基线方法几乎失败 |
 | Harmful Info Score | 新提出的评估指标，与人类判断的相关性高于 BERT Score 和 Harmful Score |
 
-## 局限性 / 可改进方向
+## 局限与展望
 - BiasNet 需要少量有害数据训练（100 条），限制了完全零知识攻击
 - 防御方案未深入讨论——限制 API 返回的 token 数或对概率加噪是显而易见的缓解措施
 - API 提供商可以通过不返回 log probability 来防御，但这会牺牲合法用途

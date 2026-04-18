@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Positional Attention: Expressivity and Learnability of Algorithmic Computation
 description: >-
@@ -121,7 +121,7 @@ Positional Transformer 在所有五个算法任务上**OOD 泛化显著优于标
 - **简洁而深刻的架构改动**：仅将 Q/K 输入从 $X$ 换为 $P$，就消除了泛化界中的指数依赖项
 - 通过 PCOC 代理模型优雅地桥接了静态通信限制与 MPC 的动态通信
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **固定位置编码**限制了对更长输入的泛化（长度泛化仍是开放问题）
 - OOD 理论分析不够精细，现有 OOD 泛化界不足以刻画两种架构的差异

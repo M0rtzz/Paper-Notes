@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MRO: Enhancing Reasoning in Diffusion Language Models via Multi-Reward Optimization
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **TVR的理论分析**值得关注：leave-one-out log-probability近似最大化成对互信息，为序列内相关性优化提供了理论支撑
 - **SGRO是DLM特有的RL技术**：针对长去噪轨迹的方差问题量身定制，解决了将RL应用于DLM的核心技术障碍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数学记号存在不严谨之处（reviewer指出Eq.3中边际分布与联合分布直接等号连接的问题），论文的部分形式化写作有待改进
 - 奖励分类（intra-sequence vs inter-sequence）边界模糊——答案正确性奖励实际上也依赖序列内相关性

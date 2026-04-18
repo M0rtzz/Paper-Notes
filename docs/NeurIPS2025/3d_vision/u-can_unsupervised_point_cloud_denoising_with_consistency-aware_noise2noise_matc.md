@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] U-CAN: Unsupervised Point Cloud Denoising with Consistency-Aware Noise2Noise Matching
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{N2N}} + \lambda_1 \mathcal{L}_{\text{geo}} + 
 - **跨域通用约束**: 几何一致性约束的 2D 图像去噪泛化非常出彩
 - **理论支撑**: 对 N2N 方案的统计推理有严格的数学论证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要同一场景的多个噪声观测，单次扫描场景无法直接应用
 2. 对于非均匀噪声分布的鲁棒性有待验证

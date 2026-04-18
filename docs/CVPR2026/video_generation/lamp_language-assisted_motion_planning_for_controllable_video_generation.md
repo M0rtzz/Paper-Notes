@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LAMP: Language-Assisted Motion Planning for Controllable Video Generation
 description: >-
@@ -108,7 +108,7 @@ LAMP在简单(pure)和复杂(mixed)分割上一致超越所有基线的F1分数
 - 解耦设计允许在视频合成前迭代修改运动，大幅降低创作成本
 - 首次统一了对象和相机运动的自然语言控制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅支持单对象场景（3D bounding box），多对象交互场景未处理
 - 运动序列限制为4个时间段，更长的复杂运动需要扩展

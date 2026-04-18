@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Sparse IMU-based Motion Capture with Motion Label Smoothing
 description: >-
@@ -117,7 +117,7 @@ $$u = \texttt{sk-Perlin}(JC, \mathcal{H}, size)$$
 - **系统化的运动属性分析**：首次严格定义并验证了运动标签的三个关键属性（时间平滑性、关节相关性、低频主导性），为Perlin噪声的设计提供了理论依据
 - **跨方法和数据集的强泛化性**：在3种SOTA方法 × 4个数据集上均一致提升，其中GlobalPose在TotalCapture上SIP误差降低20.41%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **继承底层方法的固有限制**：方法依赖SMPL模板人体模型，忽略了体型差异对IMU数据的影响，对儿童或极端体型用户的泛化能力有限
 - **数据集运动类型有限**：训练数据（AMASS）虽然规模大但运动类型受限，对滑倒、街舞等复杂运动的重建仍有困难

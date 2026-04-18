@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stochastic Self-Guidance for Training-Free Enhancement of Diffusion Models
 description: >-
@@ -116,7 +116,7 @@ $$\tilde{D}_\theta^\lambda(x_t|c) = D_\theta(x_t|\phi) + \lambda(D_\theta(x_t|c)
 - **覆盖多模态任务**：在类条件图像生成、T2I、T2V三大任务上均一致提升，跨SD3/SD3.5/Wan等多个模型验证。
 - **动态多样性优于固定策略**：随机drop的时变多样性自然避免了固定弱模型贯穿整个去噪过程的局限。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **40%计算开销**：虽然显存不变，但每步额外一次前向传播在大规模部署中仍有成本。
 - **超参ω需手动设定**：S²Scale的最优值可能因模型和任务不同而变化，较大ω会导致过度调整。

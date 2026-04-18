@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inherited Goal Drift: Contextual Pressure Can Undermine Agentic Goals
 description: >-
@@ -38,7 +38,7 @@ tags:
    - **偏移脆弱的 agent**：可能被压力推向错误行为——直接的对齐风险
    - **偏移坚定的 agent**：如果 agent 能顽固追求目标，也可能更难纠正(不可纠正性)——间接助长 deception/manipulation 风险
 
-**核心idea一句话**：Agent 对直接攻击鲁棒但对上下文传染脆弱，且指令层级能力不能预测偏移抗性。
+**核心 idea**：Agent 对直接攻击鲁棒但对上下文传染脆弱，且指令层级能力不能预测偏移抗性。
 
 ## 方法详解
 

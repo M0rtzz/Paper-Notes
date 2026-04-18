@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLAP: Isolating Content from Style through Contrastive Learning with Augmented Prompts
 description: >-
@@ -55,13 +55,13 @@ CLAP 的流程分为三步：
 
 ### 关键设计 1：因果生成模型（理论基础）
 
-- **做什么**：建立视觉-语言数据的因果生成模型，将隐空间分为 content $c$ 和 style $s$
+- **功能**：建立视觉-语言数据的因果生成模型，将隐空间分为 content $c$ 和 style $s$
 - **核心思路**：$s := g_s(c)$, $x := g_x(c,s)$, $t := g_t(c,s)$, $y := g_y(c)$。标签 $y$ 仅由 content 决定，图像和文本由共享的 $(c,s)$ 通过不同生成过程产生
 - **设计动机**：提供理论保证——当所有 style 变量被 soft intervention 改变时，对比学习可以 block-identify content 变量。这为用数据增强解耦 content 提供了正当性
 
 ### 关键设计 2：文本 Prompt 增强策略
 
-- **做什么**：设计针对 template prompt 的增强方法，在不改变 content 的前提下最大化 style 变化
+- **功能**：设计针对 template prompt 的增强方法，在不改变 content 的前提下最大化 style 变化
 - **核心思路**：基于结构化 prompt "a [art style] [image type] of a [object size] [object color] [class]"，设计五种增强操作：
     - **OSD** (Object Size Deletion)：删除尺寸描述
     - **OCD** (Object Color Deletion)：删除颜色描述
@@ -73,7 +73,7 @@ CLAP 的流程分为三步：
 
 ### 关键设计 3：解耦网络结构（Residual MLP + Zero Init）
 
-- **做什么**：设计一个轻量网络附加在 CLIP 编码器之上，从混合特征中提取 content
+- **功能**：设计一个轻量网络附加在 CLIP 编码器之上，从混合特征中提取 content
 - **核心思路**：采用 residual MLP 结构，主分支包括一个正态初始化的 Linear → SiLU → 一个 **零初始化**（无 bias）的 Linear。shortcut 分支保留原始输入特征。推理时引入权重系数 $\alpha$ 控制主分支输出与输入特征的融合比例
 - **设计动机**：零初始化借鉴自 ControlNet 的 zero-conv 思想，确保训练初始阶段网络输出等于输入特征（从 CLIP 预训练空间开始优化），避免从随机起点开始破坏已有表征
 
@@ -162,7 +162,7 @@ CLAP 在所有 prompt 形式和所有数据集上均超越 CLIP 和 Im.Aug。特
 4. **Zero-init residual 设计思想**：从 ControlNet 的 zero-conv 借鉴到 MLP 场景，保证微调从预训练空间开始，避免灾难性遗忘
 5. **方法极其轻量**：解耦网络仅为两层 MLP，不增加推理延迟，不需修改 CLIP 编码器权重
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 template prompt 结构**：增强策略（OSD、OCD 等）是针对特定 prompt 模板设计的，泛化到自由文本描述可能需要新的增强策略
 2. **合成数据的类别覆盖**：训练 prompt 需要预先知道类别名称列表，对开放词汇场景的适用性有待验证

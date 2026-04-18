@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Establishing Linear Surrogate Regret Bounds for Convex Smooth Losses via Convolutional Fenchel–Young Losses
 description: >-
@@ -108,7 +108,7 @@ $$L_{\Omega_T}(\boldsymbol{\theta}, y) = \min_{\boldsymbol{\pi}\in\Delta^N}\Omeg
 - **不违反已知下界**：poly_regret 的下界要求局部强凸，而本文损失在边界不强凸（因 $T$ 不可微），巧妙避开限制
 - **统一框架**：适用于任意离散目标损失——多类、多标签、top-k、结构化预测等
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **纯理论工作，缺乏实证实验**：实际训练中该损失与交叉熵的收敛速度对比尚未验证
 - 高维结构化预测中求解 $\Omega_T^*$ 可能仍有较高计算开销

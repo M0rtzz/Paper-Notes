@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prune Wisely, Reconstruct Sharply: Compact 3D Gaussian Splatting via Adaptive Pruning and Difference-of-Gaussian Primitives
 description: >-
@@ -111,7 +111,7 @@ $$\text{DoG}(x) = G(x) - G_p(x)$$
 - 3D-DoG 负密度环：巧妙利用 DoG 的「边缘增强」特性弥补剪枝后的细节损失
 - 90% 剪枝后仍接近原始质量，训练速度提升 1.23×，推理 FPS 提升 2×
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 Bicycle 等复杂场景中 90% 剪枝目标下仍有轻微性能下降
 - DoG 激活时有短暂 PSNR 抖动（25k 迭代处），需后续迭代恢复

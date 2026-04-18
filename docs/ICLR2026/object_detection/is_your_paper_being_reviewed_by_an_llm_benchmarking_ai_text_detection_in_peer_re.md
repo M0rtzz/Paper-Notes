@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Is Your Paper Being Reviewed by an LLM? Benchmarking AI Text Detection in Peer Review
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **全面的分析维度**：涵盖 prompt 鲁棒性、编辑程度敏感性、bullet-point 生成场景等多角度分析
 - **数据集公开可用**：发布在 HuggingFace，支持后续研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **领域局限**：仅涵盖 AI 领域会议（ICLR/NeurIPS），其他学科的评审风格和 LLM 表现可能不同
 - **Anchor 方法依赖 API**：需要调用 LLM 生成锚定评审和调用嵌入模型，有成本和时延开销

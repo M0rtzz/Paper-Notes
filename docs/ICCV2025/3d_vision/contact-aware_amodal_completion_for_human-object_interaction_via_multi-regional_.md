@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Contact-Aware Amodal Completion for Human-Object Interaction via Multi-Regional Inpainting
 description: >-
@@ -123,7 +123,7 @@ tags:
 3. **接触+凸包的物理先验**：将几何先验自然融入修复流程，显著提升了遮挡区域定位精度
 4. **实用性强**：in-the-wild流水线结合SAM+HMR+VLM，无需任何标注即可工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要在室内单人-单物场景验证，对多人多物的复杂场景泛化性未知
 - 单图处理，缺乏时序一致性，不适用于视频任务

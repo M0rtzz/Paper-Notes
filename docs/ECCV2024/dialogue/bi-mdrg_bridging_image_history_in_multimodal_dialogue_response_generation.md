@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BI-MDRG: Bridging Image History in Multimodal Dialogue Response Generation
 description: >-
@@ -142,7 +142,7 @@ $$r_t^{\text{Image}} = \mathcal{F}(u_t \mid \{r_i^{\text{Image}} \mid c_i = c_t\
 4. **创建了 MDIC 评测数据集**：填补了多模态对话图像一致性评测的空白，300 条手工标注对话
 5. **揭示了一个重要洞察**：单纯增大模型无法解决图像一致性问题，必须有专门的框架来维持
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Pipeline 式架构**：依赖多个独立组件串联（POS tagger → 检测器 → 分割 → 特征提取 → 聚类），错误会逐级传播
 2. **单物体追踪限制**：Citation Module 每轮只提取一个主要物体词，无法处理多物体同时需要一致性的场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaOut: Do We Really Need Mamba for Vision?
 description: >-
@@ -29,9 +29,9 @@ tags:
 1. **领域现状**：Mamba 作为一种基于 SSM 的 RNN-like 架构，凭借线性复杂度在 NLP 中表现出色，随后被引入视觉任务（Vision Mamba、VMamba、PlainMamba 等），试图替代 Transformer 的二次复杂度 attention。
 2. **现有痛点**：然而，视觉 Mamba 模型在实际性能上令人失望——与卷积模型和 attention 模型相比始终落后。例如 CAFormer-M36 使用 7 年前的分离卷积+vanilla attention 就能超过所有同等大小的视觉 Mamba 模型 1% 以上。
 3. **核心矛盾**：社区一直在给 Mamba 加各种视觉改进（双向扫描、局部归纳偏置等），却没人从根本上追问：SSM 对视觉任务到底是不是必要的？
-4. **本文要解决什么**：从 Mamba 的 RNN 本质出发，分析 SSM 适合的任务特征，然后检验视觉任务是否符合这些特征。
+4. **本文目标**：从 Mamba 的 RNN 本质出发，分析 SSM 适合的任务特征，然后检验视觉任务是否符合这些特征。
 5. **切入角度**：作者从记忆机制出发——SSM 的固定大小隐状态是有损记忆，只有在长序列时才能体现优势（attention 会爆内存）；同时 SSM 的递归本质决定了它是 causal mode（只能看到之前的 token），适合自回归任务而非理解任务。
-6. **核心 idea 一句话**：SSM 适合长序列+自回归任务，ImageNet 分类两个特征都不满足，所以 SSM 是不必要的——去掉 SSM 的 Gated CNN 就能超越视觉 Mamba。
+6. **核心 idea**：SSM 适合长序列+自回归任务，ImageNet 分类两个特征都不满足，所以 SSM 是不必要的——去掉 SSM 的 Gated CNN 就能超越视觉 Mamba。
 
 ## 方法详解
 
@@ -95,7 +95,7 @@ MambaOut 在所有尺度上均超越视觉 Mamba 模型，且 MACs 更低。
 - **Occam's Razor 实践**：MambaOut 作为最简 baseline，用"减法"而非"加法"证明观点。去掉 SSM 效果更好，比复杂改进更有说服力
 - **长序列阈值公式**：$L > 6D$ 的判据简洁实用，可以快速判断任何视觉任务是否受益于线性复杂度 token mixer
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 作者只验证了分类/检测/分割三类任务，对视频理解、点云等真正的长序列视觉任务未做验证
 - MambaOut 的 Gated CNN block 在下游任务（检测/分割）上不如 SSM 模型，说明纯卷积的全局建模能力确实有局限
 - 论文未讨论最新的 Mamba-2 等改进 SSM 是否能改变结论

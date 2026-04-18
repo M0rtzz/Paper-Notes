@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reason-SVG: Enhancing Structured Reasoning for Vector Graphics Generation with Reinforcement Learning
 description: >-
@@ -99,7 +99,7 @@ Reason-SVG 采用"先规划后绘制"的范式，给定文本提示 $\mathcal{T}
 - **轻量化思维奖励**：不深入评估推理内容，只检查结构标签是否存在，在成本和效果间取得了好的平衡
 - 框架可扩展到 Image-to-SVG（矢量化），SSIM 达 0.9273、DINOScore 达 0.9731
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理链较长（~3200 tokens），生成速度（12s）虽然远快于优化方法但仍有优化空间
 - 数据集 SVGX-DwT-10k 以图标类为主（>80%），在 UI/图表等复杂结构上的泛化性有待更多验证
 - DwT 的六阶段结构是人为预定义的，能否让模型自主发现最优推理结构是有趣的后续方向
@@ -120,7 +120,7 @@ Reason-SVG 采用"先规划后绘制"的范式，给定文本提示 $\mathcal{T}
 ## 亮点与洞察
 
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 
 ## 相关工作与启发

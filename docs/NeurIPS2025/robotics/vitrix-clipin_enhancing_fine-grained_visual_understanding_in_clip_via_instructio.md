@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VITRIX-CLIPIN: Enhancing Fine-Grained Visual Understanding in CLIP via Instruction Editing Data and Long Captions
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{CLIP}} + \alpha \mathcal{L}_{\text{HN}} + \be
 - **下游价值**: 减少 MLLM 幻觉的效果非常显著，直接提升了实际应用质量
 - **RoPE 扩展**: 优雅地解决了 CLIP 文本长度限制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 指令编辑数据集主要覆盖视觉属性编辑，对抽象概念差异的覆盖不足
 2. 长描述的生成依赖外部模型，可能引入噪声

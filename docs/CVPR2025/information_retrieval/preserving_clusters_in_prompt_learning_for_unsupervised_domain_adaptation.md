@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Preserving Clusters in Prompt Learning for Unsupervised Domain Adaptation
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_S + \lambda_T \mathcal{L}_T + \lambda_\mathc
 - **聚类假设+最优传输的优雅结合**：利用 CLIP 视觉嵌入的天然聚类性质，通过 Wasserstein 距离将文本嵌入"拉"到聚类质心位置，比简单的对齐损失更有理论保证（Lemma 1）
 - **距离感知的跨域迁移权重**：不同源域用不同权重，比简单平均更合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在目标域与源域差异极大时（如 DomainNet 的 Quickdraw），SPL 的提升有限（仅 10.6%），因为源域 prompt 本身对该域也不具备迁移能力
 - $\lambda_T = \lambda_\mathcal{W} = 0.5$ 的简单设置可能不是所有场景最优

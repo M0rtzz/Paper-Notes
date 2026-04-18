@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Theoretical Guarantees on the Best-of-n Alignment Policy
 description: >-
@@ -104,7 +104,7 @@ $$\hat{D}_{\text{KL}}(\varepsilon_n) = (1-\varepsilon_n)^n \left(\log n + (n-1)\
 4. **统一理论框架**：同时分析了 best-of-n 和 rewind-and-repeat，证明 best-of-n 在 win rate vs KL 权衡上近似最优
 5. **关键洞察**：Rényi 熵 $H_2$ 是控制所有 gap 的核心量——高 Rényi 熵（低概率输出多）时经典公式好用，低 Rényi 熵时失效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **猜想未证**：Conjecture 4.4（估计器期望是 KL 上界）和 Conjecture 7.2（win rate-KL 权衡上界）仅有数值验证，缺乏严格证明
 2. **离散假设**：分析假设有限输出空间，对连续输出（如扩散模型）的推广依赖后续工作（Mroueh 2024）

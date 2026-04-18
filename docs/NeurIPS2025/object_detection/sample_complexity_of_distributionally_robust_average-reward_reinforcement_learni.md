@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sample Complexity of Distributionally Robust Average-Reward Reinforcement Learning
 description: >-
@@ -112,7 +112,7 @@ $$\widetilde{O}\left(|S||A| \cdot t_{\mathrm{minorize}}^2 \cdot \mathfrak{p}_\we
 - **无需先验知识**：两种算法均不需要预先知道mixing time $t_{\mathrm{mix}}$，通过自适应参数选取实现
 - **最优依赖关系**：在$|S||A|$和$\varepsilon$的依赖关系上达到信息论下界，$(1-\gamma)^{-2}$的有效时间域依赖在非鲁棒设定下已知是最优的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **均匀遍历性假设较强**：要求所有策略下MDP均有有限mixing time，排除了weakly communicating和multichain MDP
 - **不确定集半径约束**：Assumption 2要求$\delta$足够小（$\delta \leq O(\mathfrak{p}_\wedge / m_\vee^2)$），限制了对抗者的力量

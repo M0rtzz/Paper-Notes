@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Yggdrasil: Bridging Dynamic Speculation and Static Runtime for Latency-Optimal Tree-Based LLM Decoding
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：动态性带来的高 AAL 和编译器需要的静态形状之间存在根本 trade-off，没有现有框架能同时实现两者。
 
-**本文要解决什么？** (1) 设计一种既能动态适应上下文又能保持静态算子形状的树结构；(2) 用真实延迟而非 AAL 作为优化目标；(3) 消除推测解码中 CPU 逻辑导致的 GPU 空闲气泡。
+**本文目标** (1) 设计一种既能动态适应上下文又能保持静态算子形状的树结构；(2) 用真实延迟而非 AAL 作为优化目标；(3) 消除推测解码中 CPU 逻辑导致的 GPU 空闲气泡。
 
 **切入角度**：将推测解码视为算法-系统协同设计问题，从三个层面同时优化。
 
-**核心 idea 一句话**：用等宽增长树 (EGT) 兼顾动态适应性和编译友好性，从算法到运行时全栈优化延迟。
+**核心 idea**：用等宽增长树 (EGT) 兼顾动态适应性和编译友好性，从算法到运行时全栈优化延迟。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ Yggdrasil 基于 PyTorch 2.0 和 TorchInductor 编译器，核心抽象是 Token
 - **EGT 的巧妙约束**：通过限制每步增长的叶子数为常数，将树结构参数化为三个可解耦的子问题，既保持了编译时的静态性又允许运行时的动态性。这是一个优雅的工程-算法折中
 - **从 branch prediction 类比到推测解码**：论文将推测解码类比为 CPU 的分支预测和 cache prefetching，ahead-of-time 执行的思路直接借鉴了推测执行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅适用于单请求延迟优化**：Yggdrasil 假设单个请求独占 GPU，不适用于 batch serving 场景。与 batch scheduler 的联合优化是重要的开放问题
 - **需要 offline profiling**：深度预测器和阶段调度策略需要针对每个 drafter-verifier pair 和硬件做 offline 训练/搜索

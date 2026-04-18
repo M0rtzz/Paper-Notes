@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NSW-EPNews: A News-Augmented Benchmark for Electricity Price Forecasting with LLMs
 description: >-
@@ -103,7 +103,7 @@ NSW-EPNews 基准包含三个核心组件：数据构建、提示模板设计、
 - **揭示 LLM 的"伪能力"**：高回声率说明 LLM 并非真正进行数值推理，而是在模式匹配和复制
 - **幻觉检测方法实用**：四类幻觉检测算法简洁有效，可推广到其他数值预测场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未尝试对 LLM 进行微调（fine-tuning），可能显著改善适配性
 2. 新闻仅来自单一来源 WattClarity，多源新闻可能提供更丰富信号

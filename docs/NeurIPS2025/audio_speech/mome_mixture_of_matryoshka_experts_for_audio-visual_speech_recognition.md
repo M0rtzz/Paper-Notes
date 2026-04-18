@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoME: Mixture of Matryoshka Experts for Audio-Visual Speech Recognition
 description: >-
@@ -99,7 +99,7 @@ MoME在所有压缩率下全面超越基线，同时活跃参数少2-4倍。
 - "浅层大脑假说"(shallow brain hypothesis)的类比很有启发性：深层LLM + 并行浅层MoME模块
 - 单一模型权重支持弹性推理，是端侧部署友好的设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证英文语音识别，多语言/多任务泛化性待验证
 - MoME模块的最优插入位置（MHSA/FFN/LAYER）因数据集而异，缺乏自动选择机制

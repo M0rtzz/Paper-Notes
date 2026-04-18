@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PICS: Pairwise Image Compositing with Spatial Interactions
 description: >-
@@ -140,7 +140,7 @@ tags:
 - **自监督训练避免了标注成本**：composition-by-decomposition 从现有图像自动构造训练对
 - **输入顺序不变性**：α-blending 机制确保交换对象 a/b 编号不影响结果，这是理想的对称性质
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **shape encoder 容量有限**：在极度杂乱环境中偶尔出现几何和纹理退化（论文 Figure 10 failure cases）
 - **仅限成对合成**：虽然展示了 3/4 对象扩展，但 MoE 专家数量随对象数指数增长，更多对象的场景需重新设计路由

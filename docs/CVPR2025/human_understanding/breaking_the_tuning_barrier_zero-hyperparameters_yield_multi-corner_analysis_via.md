@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Breaking the Tuning Barrier: Zero-Hyperparameters Yield Multi-Corner Analysis Via Learned Priors
 description: >-
@@ -32,14 +32,14 @@ tags:
 
 **核心矛盾**：模型表达能力与自动化之间的fundamental trade-off——简单模型（IS）易自动化但精度差，复杂模型（GP/NF）精度高但需调参。
 
-**本文要解决什么？**
+**本文目标**
    - 如何既保持复杂模型的表达能力又实现零调参的工业自动化？
    - 如何在多corner场景下自动跨corner迁移知识？
    - 如何处理高维电路参数（1152D）的特征选择？
 
 **切入角度**：用在百万回归任务上预训练的Foundation Model（TabPFN）替代所有手工先验，通过in-context learning实现零调参推理。
 
-**核心idea一句话**：用learned priors（预训练权重中编码的先验）替代engineered priors（手工设计的核函数/分布假设），消除Tuning Barrier。
+**核心 idea**：用learned priors（预训练权重中编码的先验）替代engineered priors（手工设计的核函数/分布假设），消除Tuning Barrier。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ tags:
 - **learned prior vs engineered prior的哲学转变**：从"设计好的核函数/假设"到"从数据分布中学到的先验"，是一种paradigm shift。适用于任何需要Bayesian prior的场景
 - **attention as learned kernel**：将Transformer的attention解释为data-dependent nonlinear kernel，建立了与GP的理论联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **TabPFN输入维度限制**：需要特征选择降维，对极高维电路可能丢失信息
 - **仅在SRAM benchmark上验证**：未测试analog/RF等其他电路类型
 - **合成预训练数据的domain gap**：TabPFN在合成回归任务上预训练，与真实电路仿真数据分布可能有差异

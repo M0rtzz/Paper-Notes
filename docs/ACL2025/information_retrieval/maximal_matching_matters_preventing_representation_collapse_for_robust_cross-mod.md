@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Maximal Matching Matters: Preventing Representation Collapse for Robust Cross-Modal Retrieval
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L} = \mathcal{L}_{TRI} + λ_{GD}\mathcal{L}_{GD} + λ_{ISD}\mathcal{L
 3. **训练-推理解耦设计**：训练时用匈牙利算法确保精确匹配，推理时用 top-k 近似加速，实用性强。
 4. **损失函数设计层次清晰**：GD 负责将嵌入推离全局中心（防止退化为单向量），ISD 负责将同一集合内嵌入互相推离（防止集合坍塌），职责明确。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集局限**：只在 MS-COCO 和 Flickr30k 上测试，这两个数据集的描述主要是具体物体和动作，缺乏抽象概念或情感内容的评估。
 2. **模态限制**：目前仅支持图文双模态，扩展到音频、视频等多模态场景需要重新设计匹配机制。

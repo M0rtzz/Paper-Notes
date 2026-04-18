@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learned Image Compression with Dictionary-based Entropy Model
 description: >-
@@ -121,7 +121,7 @@ tags:
 3. **速度-性能的极佳平衡**: 193ms 延迟 + SOTA BD-rate，远优于 MLIC++ (772ms)
 4. **与 global token 的对比**（Tab.5）: 128 词条的字典比 8 个 global token 性能更好（-7.28% vs -6.59%），因为字典可以存储跨图像的通用模式
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 字典对**非自然图像**（如医学影像、遥感图像）的泛化性未验证
 2. 当前字典词条固定不变，**在线自适应更新**可能进一步提升特定域的压缩效率

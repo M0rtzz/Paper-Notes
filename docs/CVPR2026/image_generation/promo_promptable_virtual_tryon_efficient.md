@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PROMO: Promptable Outfitting for Efficient High-Fidelity Virtual Try-On
 description: >-
@@ -84,7 +84,7 @@ PROMO建立在FLUX.1-dev（Flow Matching DiT）骨干上，采用LoRA（rank=128
 - **VLM蒸馏的实用范式**: 大模型标注→严格过滤→小模型微调，得到的7B模型反而比72B更准（因为只见过合规数据）。这个模式可广泛复用
 - **全面的商业级评估**: 不仅在学术benchmark上评测，还与Huiwa、Kling、抖音等商业产品做用户研究对比，总体优秀率84.42%领先
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Paired SSIM/LPIPS不是最优**: 在paired setting下略逊于Any2AnyTryon的SSIM，说明像素级重建精度还有提升空间
 - **依赖人体解析和DensePose**: 前处理流程仍较重，需要分割模型和pose估计模型，端到端简化是一个方向
 - **仅公开benchmark评估**: 论文提到自收集的in-the-wild数据集但未公开

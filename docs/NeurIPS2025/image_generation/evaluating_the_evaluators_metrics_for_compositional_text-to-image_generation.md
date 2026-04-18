@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating the Evaluators: Metrics for Compositional Text-to-Image Generation
 description: >-
@@ -131,7 +131,7 @@ tags:
 - **对奖励模型的警示**：指标作为奖励信号时，其偏差会直接误导模型训练
 - **多维度分析**：不仅做相关分析，还做回归分析和分布分析，发现更全面的 pattern
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅基于 T2I-CompBench++ 一个基准（6 种较旧的模型），未涵盖最新模型（DALL-E 3、SD3、FLUX 等）
 - 仅分析了线性相关和线性回归，未探索非线性关系

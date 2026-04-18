@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Context-Robust LLMs: A Gated Representation Fine-tuning Approach
 description: >-
@@ -135,7 +135,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{FT}}(\hat{y}_i, y_i) + \mathca
 - **从表示工程角度解决 RAG 鲁棒性问题**：不同于修改 prompt 或大规模微调，直接在 LLM 内部表示上进行最小化干预，方向新颖且有效
 - 即插即用的设计使其可以轻松集成到现有 RAG 系统中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅处理**单个**上下文-问题对，未考虑多文档交互场景下更复杂的内外知识关系
 - 实验主要基于 Llama-2-7B 和 Llama-3-8B，需要在更多模型上验证泛化性

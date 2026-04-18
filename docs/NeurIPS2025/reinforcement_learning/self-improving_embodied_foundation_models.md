@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Improving Embodied Foundation Models
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **首次将 RL 后训练引入机器人基础模型训练流程**：借鉴 LLM 的 SFT→RL 范式，但通过 steps-to-go 创造性地解决了奖励工程难题。这一方法的优雅之处在于奖励函数自然地继承了基础模型的泛化能力——同一个模型既是策略又是奖励的来源。
 - **BananaTable 实验的启示性**：与之前的语义泛化（如 RT-2 在新语境下执行相同动作）不同，BananaTable 展示了**行为泛化**——策略学会了全新的操作技巧。这说明 web 规模预训练 + 在线 Self-Improvement 的组合能解锁模仿学习永远无法覆盖的行为空间。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Self-Improvement 超过性能峰值后会出现退化，缺少有效的 early stopping / 自适应正则化机制
 - 仅使用 on-policy REINFORCE，无数据复用；off-policy 方法可能进一步减少所需的机器人小时数
 - Steps-to-go 估计对分布外失败状态的建模不充分——模仿数据中没有失败恢复轨迹

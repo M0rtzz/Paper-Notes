@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PDE-Transformer: Efficient and Versatile Transformers for Physics Simulations
 description: >-
@@ -172,7 +172,7 @@ $$\mathcal{L}_S = \mathbb{E} \left[ \| \mathcal{M}_\Theta(\mathbf{u}_{\text{in}}
 4. **边界条件的显式处理**：通过 token 滚动和 mask 注意力分数优雅地支持周期和非周期边界，这对物理模拟至关重要但常被忽略
 5. **同时支持监督和扩散两种训练模式**：通过 adaLN-Zero 的灵活条件化机制实现，拓宽了应用场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持 2D 规则网格**：当前架构限于二维空间数据，未扩展到 3D 或非结构化网格
 2. **预训练数据仅 16 种 PDE**：作为"基础模型"，PDE 类型覆盖面仍有限，距离真正通用的物理基础模型有距离

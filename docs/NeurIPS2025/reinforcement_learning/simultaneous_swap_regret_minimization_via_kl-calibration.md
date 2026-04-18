@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Simultaneous Swap Regret Minimization via KL-Calibration
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **非均匀离散化**：打破了所有先前工作使用均匀网格的范式，正弦平方网格在处理边界奇异性时表现优异
 - **随机取整的精细设计**：RROUND^log 的概率权重精确匹配 log loss 的曲率结构，使取整误差与离散化步长的平方成正比
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 非构造性证明（Theorem 1）无法提供显式算法，显式算法仅给出 pseudo 版本的较弱保证
 - 对 $\mathcal{L} \setminus (\mathcal{L}_G \cup \mathcal{L}_2)$ 仍为 $O(T^{2/3})$，能否进一步改进至 $\sqrt{T}$（如 Hu & Predict）？

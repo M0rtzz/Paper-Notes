@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can One Safety Loop Guard Them All? Agentic Guard Rails for Federated Computing
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：将安全 guard-rail 与隐私机制解耦，在两者之间插入一层后端无关的领域特定语言（DSL），使同一套安全循环逻辑可跨所有隐私后端运行。
 
-**核心 idea 一句话**：用 DSL 抽象隐私操作、用 Agentic-AI 安全循环执行统一 guard-rail，实现"一个安全环路守护所有隐私后端"。
+**核心 idea**：用 DSL 抽象隐私操作、用 Agentic-AI 安全循环执行统一 guard-rail，实现"一个安全环路守护所有隐私后端"。
 
 ## 方法详解
 

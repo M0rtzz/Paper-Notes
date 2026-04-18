@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaGen: Learning Adaptive Policy for Image Synthesis
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **统一四种生成范式**的MDP建模思路清晰，Table I和Table II的总结非常赏心悦目
 - 推理时将训练副产品（判别器+值网络）复用做精化，不浪费任何训练成果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 虽然策略网络本身轻量，但RL训练过程需要大量采样，训练成本未详细讨论
 - 对抗奖励的训练稳定性在大规模模型（如SD-XL、FLUX）上是否仍然成立有待验证

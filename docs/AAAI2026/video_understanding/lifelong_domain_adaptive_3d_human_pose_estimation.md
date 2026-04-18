@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lifelong Domain Adaptive 3D Human Pose Estimation
 description: >-
@@ -78,7 +78,7 @@ tags:
 - **Part-aware 编码**：6 个 body part segments 提升 pose 表示的全面性
 - 所有 3 个实验设置中均一致超越 5 种对比方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Diffusion sampler 在每个新域都需重新训练/更新，随域数增长开销可能增大
 - 实验仅使用 16-keypoint body model 和 FC-based estimator（VideoPose3D），未验证 Transformer-based 架构
 - 目标域间的适应顺序固定，未讨论顺序对最终性能的影响

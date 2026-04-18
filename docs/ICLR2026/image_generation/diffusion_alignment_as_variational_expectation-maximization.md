@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion Alignment as Variational Expectation-Maximization
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：reward 优化 vs 多样性保持的 trade-off。Reverse-KL 天然 mode-seeking，容易坍缩到单一模式。
 
-**本文要解决什么？** 设计一个对齐框架，能有效优化奖励的同时保持样本多样性和自然性，且适用于连续（图像）和离散（DNA）扩散模型。
+**本文目标** 设计一个对齐框架，能有效优化奖励的同时保持样本多样性和自然性，且适用于连续（图像）和离散（DNA）扩散模型。
 
 **切入角度**：将对齐问题形式化为变分 EM——引入最优性变量 $\mathcal{O}$ 和轨迹潜变量 $\tau$，E-step 找多模态后验，M-step 用 forward-KL（mode-covering）蒸馏。Forward-KL 天然鼓励覆盖所有模式而非聚焦单一模式。
 
-**核心 idea 一句话**：E-step 用 test-time search 发现多模态高奖励样本，M-step 用 forward-KL 蒸馏保持多样性，循环迭代逐步改善。
+**核心 idea**：E-step 用 test-time search 发现多模态高奖励样本，M-step 用 forward-KL 蒸馏保持多样性，循环迭代逐步改善。
 
 ## 方法详解
 
@@ -111,7 +111,7 @@ DAV 在训练中交替执行：
 - **Test-time search amortization** 是一个通用思路——先搜索再蒸馏，将推理时计算转化为模型能力。可以迁移到任何需要在推理时做昂贵搜索的场景（如代码生成、分子设计等）。
 - **跨模态适用**：同一框架同时处理连续（图像）和离散（DNA）扩散，说明方法论的通用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - E-step 的 test-time search 增加训练开销（每个 EM 迭代需要多次 ODE/forward pass）
 - Tweedie's formula 估计 $Q^*_{\text{soft}}$ 只是近似，对高噪声时间步可能不准
 - 只在 SD v1.5 上验证，缺少 SDXL/Flux 等更大模型的实验

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FOLDER: Accelerating Multi-modal Large Language Models with Enhanced Performance
 description: >-
@@ -118,7 +118,7 @@ FOLDER 有两种使用模式：
 - **激进压缩的合理性**：最后层的 token 高度冗余，允许无损的激进压缩
 - **双重用途**：推理时作为加速器，训练时作为正则化器，体现了方法的灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 匹配函数的选择空间未充分探索（沿用了 ToMe 的余弦相似度）
 - 多次 FOLD 迭代引入少量额外计算开销，虽然作者声称可忽略，但在极端压缩比下可能不可忽视

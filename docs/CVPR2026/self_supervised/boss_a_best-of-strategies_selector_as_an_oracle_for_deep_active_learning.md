@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning
 description: >-
@@ -69,13 +69,13 @@ BoSS 的工作流程在每轮主动学习中包含四步：
 
 #### 设计二：随机子池采样
 
-- **做什么**：对未标注池 $\mathcal{U}$ 随机采样一个大小为 $k_{\max}$ 的子集 $\mathcal{U}' \subseteq \mathcal{U}$，每种策略在 $\mathcal{U}'$ 上而非完整 $\mathcal{U}$ 上运行
+- **功能**：对未标注池 $\mathcal{U}$ 随机采样一个大小为 $k_{\max}$ 的子集 $\mathcal{U}' \subseteq \mathcal{U}$，每种策略在 $\mathcal{U}'$ 上而非完整 $\mathcal{U}$ 上运行
 - **设计动机**：(i) 将计算复杂度从 $O(|\mathcal{U}|)$ 降到 $O(k_{\max})$，使 BoSS 可扩展到 ImageNet 级别数据；(ii) 随机子池在不同策略间增加 batch 差异性
 - **$k_{\max}$ 选择**：实验发现 $k_{\max} = 10 \times b$（$b$ 为 batch 大小）即可达到良好效果
 
 #### 设计三：冻结 Backbone 快速评估
 
-- **做什么**：评估每个候选 batch 时，不重训整个模型，而是冻结预训练/自监督 backbone（DINOv2-ViT-S/14），仅重训最后一层线性分类头
+- **功能**：评估每个候选 batch 时，不重训整个模型，而是冻结预训练/自监督 backbone（DINOv2-ViT-S/14），仅重训最后一层线性分类头
 - **核心思路**：将当前已标注集 $\mathcal{L}$ 与候选 batch $\mathcal{B}_m$ 合并，在 $\mathcal{L} \cup \mathcal{B}_m$ 上训练线性头，在验证集上评估准确率
 - **设计动机**：全模型重训几十轮 × $M$ 个候选 = 不可行。线性头训练只需几秒，$M$ 个候选并行评估也很快
 
@@ -158,7 +158,7 @@ $$\mathcal{B}^* = \arg\max_{\mathcal{B}_m, m \in \{1,...,M\}} \text{Acc}(\theta_
 - **发现深刻**：证实了"没有免费午餐"——不同场景下最优策略确实不同，且即使最好的策略也距离 oracle 甚远
 - **实践指导**：BoSS 本身也可作为一种实用的 AL 策略——在标注预算充裕但不确定用哪个策略时，直接用 BoSS 自动选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖固定的策略池，新策略需要手动加入；可考虑自动发现/生成策略的元学习方案
 - 冻结 backbone 评估在微调场景下可能不够准确（仅在线性探测设定下验证了强相关性）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InterEdit: Navigating Text-Guided Multi-Human 3D Motion Editing
 description: >-
@@ -118,7 +118,7 @@ InterEdit3D 测试集评测（5161个三元组，80/10/10划分）：
 - **频域交互建模**：DCT 分解+频带能量描述符优雅地捕捉了交互的节奏和同步特性
 - **Plan Token 的 InfoNCE 对齐**：无需显式标注"哪些关节该改"，通过对比学习自动获取编辑意图
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持双人交互，扩展到三人及以上场景需重新设计交错策略
 - 依赖 InterHuman 数据集的动作类型范围（日常活动+武术/舞蹈），更多场景需扩展数据

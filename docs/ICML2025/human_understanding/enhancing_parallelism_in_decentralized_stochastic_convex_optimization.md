@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Parallelism in Decentralized Stochastic Convex Optimization
 description: >-
@@ -118,7 +118,7 @@ $$\mathbb{E}[f(\bar{x}_T) - f^*] \leq \mathcal{O}\left(\frac{\sigma D_1}{\sqrt{M
 - **通用性**：Anytime SGD 框架此前已用于异步和局部训练，本文将其优势延伸至去中心化设置
 - **直觉清晰**：共识距离的改善源于查询点变化速度更慢（$1/t^2$ 递推因子），打破了 D-SGD 的瓶颈
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限凸设置**：分析在 SCO 框架下，未扩展到非凸优化（实际深度学习的主要场景）
 - **通信开销翻倍**：需同时交换 $w_t^i$ 和 $x_t^i$，通信量是 D-SGD 的两倍

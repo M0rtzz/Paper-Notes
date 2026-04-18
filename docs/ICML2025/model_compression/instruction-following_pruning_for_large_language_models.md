@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Instruction-Following Pruning for Large Language Models
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = \sum_{k=1}^{K-1} \sum_{x_i \in \mathbf{x}^{(k+1)}} \ell\big[f(\m
 4. **稀疏预测器极小**（302M），相比被剪枝的 LLM（6-12B）开销可忽略
 5. **扩展性良好**：6B→9B→12B 模型在 IFPruning 下性能稳步提升，且增益在编程/数学上最显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅剪枝 FFN 层**：attention heads 和 embedding 层未被剪枝，理论上可进一步压缩
 2. **训练成本高**：需要联合优化预测器和 LLM，两阶段训练需数百万 SFT 样本 + 预训练数据

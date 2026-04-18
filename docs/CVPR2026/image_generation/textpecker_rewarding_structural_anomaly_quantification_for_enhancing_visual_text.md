@@ -47,7 +47,7 @@ TextPecker 采用 GRPO（Group Relative Policy Optimization）框架，核心改
 
 ### 关键设计 1：结构质量分数 $\mathcal{S}_Q$
 
-- **做什么**：量化生成文本中结构异常字符的比例，并通过缩放因子放大对罕见但严重缺陷的惩罚。
+- **功能**：量化生成文本中结构异常字符的比例，并通过缩放因子放大对罕见但严重缺陷的惩罚。
 - **公式**：
 
 $$\mathcal{S}_Q = \text{clip}\left(1 - \omega \frac{N_a}{N_P},\ 0,\ 1\right)$$
@@ -57,7 +57,7 @@ $$\mathcal{S}_Q = \text{clip}\left(1 - \omega \frac{N_a}{N_P},\ 0,\ 1\right)$$
 
 ### 关键设计 2：语义对齐分数 $\mathcal{S}_E$
 
-- **做什么**：在词级别进行匈牙利匹配，计算目标文本与生成文本的归一化编辑距离，并惩罚未匹配词。
+- **功能**：在词级别进行匈牙利匹配，计算目标文本与生成文本的归一化编辑距离，并惩罚未匹配词。
 - **公式**：
 
 $$\mathcal{S}_E = 1 - \frac{\sum_{(t_i, p_j) \in \mathcal{M}} \text{NED}(t_i, p_j) + \text{Penalty}(\mathcal{T}, \mathcal{P}, \mathcal{M})}{\max(|\mathcal{T}|, |\mathcal{P}|)}$$

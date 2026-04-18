@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Oryx: a Scalable Sequence Model for Many-Agent Coordination in Offline MARL
 description: >-
@@ -105,7 +105,7 @@ $$J_Q(\phi) = \mathbb{E}_\mathcal{B}\left[\left(r + \gamma \frac{\exp(Q_{\phi^-}
 - **统一解决离线 MARL 的两大核心挑战**：通过自回归策略更新解决协调失调，通过 ICQ 约束解决外推误差，两者在序列建模框架下自然融合。这种设计的优雅之处在于自回归结构同时服务于动作生成和策略约束。
 - **50 智能体规模的系统性验证**：当前大多数离线 MARL 工作仅在 3-10 个智能体上测试，Oryx 通过 Connector 环境展示了在 50 智能体下的稳健性能，切实推动了可扩展性边界。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 自回归策略更新的顺序依赖引入额外计算开销，且解码时间与智能体数量线性增长
 - 在连续动作空间（MAMuJoCo）上的优势小于离散动作空间（SMAC/RWARE），可能因为连续空间中 ICQ 的重要性采样效率较低
 - 数据集质量和覆盖度对性能影响显著，但论文缺少对数据集质量的系统分析

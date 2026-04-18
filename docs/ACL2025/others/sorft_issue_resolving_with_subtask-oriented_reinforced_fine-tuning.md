@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SoRFT: Issue Resolving with Subtask-oriented Reinforced Fine-Tuning
 description: >-
@@ -98,7 +98,7 @@ SoRFT 包含三个核心部分：
 - Pipeline 框架比 Agent 框架更适合构建训练信号：Agent 的中间步骤难以评估，而 Pipeline 各阶段可独立评分
 - Fβ score 的设计选择（β=3 侧重 recall）基于合理直觉：定位任务中漏掉目标比多选更严重
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Python 仓库上做实验，缺乏多语言验证（但框架本身语言无关）
 - 基于规则的奖励存在 false negative 问题：一个 Issue 可能有多个正确解决方案，仅与单一 ground-truth 比较可能错误惩罚正确解

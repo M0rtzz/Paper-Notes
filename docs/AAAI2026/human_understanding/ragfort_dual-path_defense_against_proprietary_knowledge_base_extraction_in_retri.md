@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAGFort: Dual-Path Defense Against Proprietary Knowledge Base Extraction in Retrieval-Augmented Generation
 description: >-
@@ -171,7 +171,7 @@ $$\hat{r}(x_{<t}, z) = 1 \iff \max_y q_t(y) < \max_y p_t(y) - \alpha \cdot D_{\t
 4. **攻击-防御完整评估**：同时测试了两种主流攻击方式，覆盖三个领域和三个模型
 5. **兼顾效率**：级联生成在提供安全保护的同时还能降低 FLOPs
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅评估了黑盒攻击，白盒/灰盒场景下的鲁棒性未知
 2. HDBSCAN 聚类质量可能影响类间保护效果，对知识库结构有隐式假设

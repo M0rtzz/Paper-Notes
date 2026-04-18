@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interpreting Fedspeak with Confidence: A LLM-Based Uncertainty-Aware Framework Guided by Monetary Policy Transmission Paths
 description: >-
@@ -101,7 +101,7 @@ $$CR(a_t) = \frac{K}{\sum_{k=1}^{K}(\alpha_k + 1)}$$
 - **高 PU 预警机制**：可识别不可靠预测，支持 human-in-the-loop 决策
 - **全面超越 GPT-4.1**：在会议纪要和演讲上大幅领先闭源大模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 新闻发布会表现弱于 GPT-4.1（-1.3%），实时问答的动态上下文依赖捕捉不足
 - 依赖手工模板构建传导路径，自动化程度有限
 - 仅在 FOMC 英文数据上验证，未扩展到 ECB/BoE 等其他央行或多语言场景

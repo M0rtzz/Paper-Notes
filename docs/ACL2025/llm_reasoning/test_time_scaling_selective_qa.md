@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Is That Your Final Answer? Test-Time Scaling Improves Selective Question Answering
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：test-time scaling 研究只报告准确率，忽视了模型是否"知道自己对不对"的能力
 
-**本文要解决什么？** 在允许拒绝回答的场景下评估 test-time scaling，并提出标准化的评估方法
+**本文目标** 在允许拒绝回答的场景下评估 test-time scaling，并提出标准化的评估方法
 
 **切入角度**：用推理链末尾的 token log-probability 作为置信度指标，结合不同错误惩罚的效用函数
 
-**核心idea一句话**：增加 test-time compute 不仅找到更多正确答案，还增强了模型区分正确/错误答案的置信度，但不同模型的校准能力差异巨大
+**核心 idea**：增加 test-time compute 不仅找到更多正确答案，还增强了模型区分正确/错误答案的置信度，但不同模型的校准能力差异巨大
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **Jeopardy Odds 作为标准评估协议**：非常好的建议——$r_t=-1$ 是最自然的"答错 vs 不答"权衡点，简单且直觉一致
 - **R1 vs S1 的深层差异**：标准 benchmark 上相当的两个模型，在置信度校准上差异巨大——这个发现对模型选择有重要指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **置信度估计方法简单**：仅用 token log-prob 作为置信度，更好的方法（如基于推理链一致性的置信度）可能效果更好
 - **仅在 AIME（数学竞赛）上评估**：是否推广到其他任务（代码、自然语言理解）未验证
 - **Budget forcing 的副作用**：强制延长推理链可能不是最优的 compute 控制方式

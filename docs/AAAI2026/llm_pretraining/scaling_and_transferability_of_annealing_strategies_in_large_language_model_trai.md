@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling and Transferability of Annealing Strategies in Large Language Model Training
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **积分形式的优雅统一**：用学习率积分和动量积分分别捕获前向推动力和退火收敛效应，物理直觉清晰
 - **MoE模型的退火规律首次被系统研究**：证明MoE和Dense模型遵循相同的幂律框架但系数不同
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验模型最大1.5B参数，能否推广到100B+规模有待验证
 - 仅验证了Cosine和WSD两种调度器，更复杂的调度策略未覆盖

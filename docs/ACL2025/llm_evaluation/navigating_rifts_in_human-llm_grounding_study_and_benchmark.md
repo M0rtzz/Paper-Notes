@@ -47,19 +47,19 @@ tags:
 
 ### 关键设计一：Grounding 行为分类体系
 
-- **做什么**：将对话行为分为三大类：Advancing（推进共识：Next Turn、Follow-up、Acknowledgment）、Addressing（修复失败：Reformulation、Repair、Restart）、Disambiguating（消歧：Clarification、Overresponse）。
+- **功能**：将对话行为分为三大类：Advancing（推进共识：Next Turn、Follow-up、Acknowledgment）、Addressing（修复失败：Reformulation、Repair、Restart）、Disambiguating（消歧：Clarification、Overresponse）。
 - **核心思路**：基于 Clark & Schaefer 的经典 grounding 理论，结合 LLM 对话的特殊性，同时覆盖人类和 LLM 发起的行为。每种行为作为 grounding 状态（成功/失败/不确定）的可观测信号。
 - **设计动机**：比前人工作更全面——不仅关注人类发起的行为（如追问、澄清），也纳入 LLM 发起的行为（如过度回应 Overresponse）。三层分类直接对应 grounding 的成功、失败和不确定状态。
 
 ### 关键设计二：Grounding Forecaster
 
-- **做什么**：训练一个模型，仅基于用户的初始消息预测未来对话中的 grounding 行为类别（advancing/addressing/disambiguating）。
+- **功能**：训练一个模型，仅基于用户的初始消息预测未来对话中的 grounding 行为类别（advancing/addressing/disambiguating）。
 - **核心思路**：使用条件训练（conditional training），在每条用户消息后附加一个 grounding 预测 token，微调 Llama-3.1-8B 学习预测。推理时分析预测 token 的 logits 分布来判断对话走向。
 - **设计动机**：post-hoc 标注只能事后分析，forecaster 可以在对话发生前预判，从而实现主动干预。这是极具挑战性的任务——需要在看不到 LLM 回复的情况下预测用户的后续行为（相当于对所有可能的助手回复取边际化）。
 
 ### 关键设计三：Rifts 基准构建与评测
 
-- **做什么**：从 WildChat 中筛选约 1.8K 条真实用户 prompt，按 forecaster 预测的 grounding 类别分层（Advancing/Addressing/Disambiguating/No Grounding），构建标准化评测基准。
+- **功能**：从 WildChat 中筛选约 1.8K 条真实用户 prompt，按 forecaster 预测的 grounding 类别分层（Advancing/Addressing/Disambiguating/No Grounding），构建标准化评测基准。
 - **核心思路**：用 forecaster 过滤出 grounding 困难最大的 prompt（logit 最高的 top-150），再加入不需要 grounding 的 prompt 作为对照。评测函数：Advancing 类任务需 follow-up，Addressing/Disambiguating 类任务需 clarify，No Grounding 类任务不应做额外 grounding。
 - **设计动机**：基于真实用户交互（而非人造场景），隐含的假设是某些 prompt 无论 LLM 如何回复，用户都必须来回沟通才能建立共识。基于 forecaster 的筛选比随机采样更具代表性。
 

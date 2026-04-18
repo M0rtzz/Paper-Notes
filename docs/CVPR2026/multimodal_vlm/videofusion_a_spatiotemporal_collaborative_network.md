@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoFusion: A Spatio-Temporal Collaborative Network for Multi-modal Video Fusion
 description: >-
@@ -82,7 +82,7 @@ tags:
 - 模态分离（unmixing）同时提供去退化结果——一个模型既做融合又做退化修复
 - CmDRM用差分信息而非原始互模态信息做注意力，有效减少冗余
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练时T=7帧受GPU显存限制，大时序窗口可能进一步提升
 - BiCAM只看相邻帧（±1），对快速运动场景可能不够——虽然堆叠可间接扩大感受野
 - M3SVD的分辨率(640×480)和帧率(30fps)相对有限

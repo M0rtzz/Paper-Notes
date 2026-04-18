@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRiCo: Triadic Game-Theoretic Co-Training for Robust Semi-Supervised Learning
 description: >-
@@ -114,7 +114,7 @@ ImageNet 25% 标签下 TRiCo 达到 88.3%，接近全监督大模型性能。
 - 冻结预训练编码器 + 轻量 MLP 学生的设计是 foundation model 时代 SSL 的务实架构选择。
 - Stackelberg 博弈的形式化赋予了方法理论优雅性（Nash 均衡存在性）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖两个**特定的**冻结预训练编码器（DINOv2 + MAE），编码器选择对性能的影响需要更系统的研究。
 - 互信息的 Monte Carlo dropout 估计（$K=5$ 次前向传播）增加了计算开销。

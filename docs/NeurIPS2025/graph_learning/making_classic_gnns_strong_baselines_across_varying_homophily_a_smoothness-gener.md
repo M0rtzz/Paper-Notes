@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Making Classic GNNs Strong Baselines Across Varying Homophily: A Smoothness-Generalization Perspective
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：随消息传递层数增加，smoothness（表示趋同）不可避免地增强，而 generalization（处理分布偏移的能力）相应下降。这在高阶同质邻域和所有异质邻域中都是致命的。
 
-**本文要解决什么？**：(1) 从理论上统一理解 oversmoothing、poor generalization、heterophily 三个问题的共同根源；(2) 设计最小改动使经典 GCN 成为通用强基线。
+**本文目标**：(1) 从理论上统一理解 oversmoothing、poor generalization、heterophily 三个问题的共同根源；(2) 设计最小改动使经典 GCN 成为通用强基线。
 
 **切入角度**：通过 Lipschitz 常数和距离到子空间 $\mathcal{M}$ 的度量，形式化 smoothness-generalization dilemma，并导出设计原则。
 
-**核心 idea 一句话**：Smoothness 和 Generalization 是 GNN 消息传递中不可避免的 trade-off，通过分离各跳变换、感知聚合和邻域关系学习可系统缓解。
+**核心 idea**：Smoothness 和 Generalization 是 GNN 消息传递中不可避免的 trade-off，通过分离各跳变换、感知聚合和邻域关系学习可系统缓解。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ IGNN (Inceptive GNN) 基于三个最小设计原则构建在经典 GCN 之上：
 - **最小改动原则**：三个设计原则都是对经典 GCN 的轻量修改，没有引入复杂结构，体现 Occam's razor 精神。
 - **一个重要发现**：部分 homoGNN 天然具备通用性（如 JK-Net 隐式实现了 IN），解释了为什么调参后的 homoGNN 在异质图上也能工作。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **理论基于线性 GCN**：Theorem 4.1 的分析基于线性 GCN，对非线性激活的 GNN 是否完全适用需要更多验证
 - **计算开销**：IN 需要并行计算多跳结果，每跳独立的权重矩阵增加了参数量
 - **可改进**：将 IGNN 原则应用到 GAT、GraphSAGE 等其他架构；与图结构学习结合

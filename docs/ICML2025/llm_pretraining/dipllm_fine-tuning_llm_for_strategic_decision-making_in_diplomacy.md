@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DipLLM: Fine-Tuning LLM for Strategic Decision-Making in Diplomacy
 description: >-
@@ -78,7 +78,7 @@ LLaMA 3 8B + LoRA（$\alpha=32$, rank=16），AdamW lr=2e-4，5 epochs，仅约 
 - 理论保证让方法有坚实基础
 - 1.5% 数据超 SOTA，体现 LLM 预训练知识的杠杆效应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍依赖外部数据生成
 - 仅测试 no-press 版本
 - 未充分探索与在线搜索结合的潜力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Internal Planning in Language Models: Characterizing Horizon and Branch Awareness
 description: >-
@@ -88,7 +88,7 @@ LLM展现出令人惊叹的能力，但其训练目标——下一token预测—
 - "模型内部保留替代路径信息"这一发现对理解LM的鲁棒性具有重要意义
 - nMI在PF任务中对第二节点高于第一节点，暗示了隐式的"逆向规划"，与人类解题策略吻合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VQ-VAE的压缩不可避免地丢失信息，MI估计的绝对值不可靠（作者也承认只分析相对趋势）
 - 实验基于GPT-3 Small（约125M参数），在更大模型上的规划行为可能不同
 - 对自然语言(OpenWebText)仅做了计算历史信息的诊断而非前瞻/分支分析

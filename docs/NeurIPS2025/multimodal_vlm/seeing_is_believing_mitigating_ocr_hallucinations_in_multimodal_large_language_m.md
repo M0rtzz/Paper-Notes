@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Seeing is Believing? Mitigating OCR Hallucinations in Multimodal Large Language Models
 description: >-
@@ -90,7 +90,7 @@ tags:
 - 通过拒绝回答机制增加任务难度，教会模型在无法确定时主动拒绝，而不是编造答案。
 - 冷启动阶段利用GPT-4o+DeepSeek-R1的协同方案解决多模态CoT数据生成难题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基准数据集规模相对有限（2000训练+400测试），退化类型和文档类型可进一步丰富。
 - 目前仅在Qwen2.5-VL-7B上验证，更大规模模型的效果有待探索。

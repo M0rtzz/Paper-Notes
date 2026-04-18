@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Geometry-Guided Camera Motion Understanding in VideoLLMs
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: VideoLLM 的 vision encoder 在深层进行 token 压缩以优化语义对齐，但这会衰减运动敏感线索；而相机运动理解需要精确的几何信息。
 
-**本文要解决什么**: 让 VideoLLM 具备可靠的细粒度相机运动识别能力，并能生成相机感知的视频描述。
+**本文目标**: 让 VideoLLM 具备可靠的细粒度相机运动识别能力，并能生成相机感知的视频描述。
 
 **切入角度**: 不修改 VideoLLM 权重，而是利用冻结的 3D 基础模型提取几何相机线索，通过轻量分类器预测运动原语，以结构化 prompt 注入。
 
-**核心 idea 一句话**: 用 3DFM 的几何先验补偿 VideoLLM 缺失的相机运动表示，通过 plug-and-play 的结构化提示实现零训练的相机运动增强。
+**核心 idea**: 用 3DFM 的几何先验补偿 VideoLLM 缺失的相机运动表示，通过 plug-and-play 的结构化提示实现零训练的相机运动增强。
 
 ## 方法详解
 
@@ -50,24 +50,24 @@ tags:
 ### 关键设计
 
 **1. CameraMotionDataset 与 CameraMotionVQA 构建**
-- **做什么**: 从 MultiCamVideo（Unreal Engine 5 渲染，有精确相机外参）构建 12,274 个 1 秒片段的数据集，包含 15 种原子相机运动标签。
+- **功能**: 从 MultiCamVideo（Unreal Engine 5 渲染，有精确相机外参）构建 12,274 个 1 秒片段的数据集，包含 15 种原子相机运动标签。
 - **核心思路**: 通过逐帧相机外参计算 yaw/pitch/roll 变化和平移变化，经阈值匹配映射到运动原语；定义互斥矩阵 $\mathbf{M}$ 约束不兼容组合（如 pan-left 与 pan-right）。
 - **设计动机**: 合成数据提供确定性标注（人工验证 93% 一致率），避免了真实数据标注的主观性；平衡采样解决类别不平衡。
 
 **2. 约束正则化运动分类器**
-- **做什么**: 线性投影 camera token 到 512 维，加位置编码和 [CLS] token，经 4 层 Transformer encoder 预测 $K=15$ 类 logits。
+- **功能**: 线性投影 camera token 到 512 维，加位置编码和 [CLS] token，经 4 层 Transformer encoder 预测 $K=15$ 类 logits。
 - **核心思路**: BCE 损失 + 两个正则化项：
     - 不兼容损失 $\mathcal{L}_{\text{inc}} = \sum_{i<j} \mathbf{M}_{ij} p_i p_j$（惩罚互斥原语共现）
     - 基数损失 $\mathcal{L}_{\text{card}}$（约束激活原语数在 1-3 之间）
 - **设计动机**: 物理约束确保预测结果语义合理，如不会同时预测 pan-left 和 pan-right。
 
 **3. Vision Encoder 探测实验**
-- **做什么**: 在 Qwen2.5-VL 的冻结 vision encoder 中间层特征上训练 Q-Former 风格探测器，诊断相机运动信息的保留程度。
+- **功能**: 在 Qwen2.5-VL 的冻结 vision encoder 中间层特征上训练 Q-Former 风格探测器，诊断相机运动信息的保留程度。
 - **核心思路**: 在 ViT 的全注意力层（第 7/15/23/31 层）提取特征，发现浅层性能最好、深层逐渐下降。
 - **设计动机**: 证实 VideoLLM vision encoder 在深层丢失了相机运动信息，为外部几何线索注入提供理论依据。
 
 **4. VGGT-Q-Former 蒸馏**
-- **做什么**: 用轻量 Q-Former 学生模型蒸馏 VGGT 的相机感知能力，减少推理开销。
+- **功能**: 用轻量 Q-Former 学生模型蒸馏 VGGT 的相机感知能力，减少推理开销。
 - **核心思路**: 交替 local-frame attention 和 global attention，3 阶段渐进训练（分类器→蒸馏回归→联合微调）。
 - **设计动机**: VGGT 推理代价高（1.2B 参数），蒸馏后实现 5.3× 吞吐量提升，39% 峰值内存。
 
@@ -113,7 +113,7 @@ tags:
 - 结构化提示零训练方案具有很强的实用性和通用性
 - 合成数据 + 约束建模 + 蒸馏的技术路线值得借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据与真实视频存在 domain gap
 - 仅关注相机外参变化，未涵盖内参变化（如 zoom）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DG-PIC: Domain Generalized Point-In-Context Learning for Point Cloud Understanding
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：统一模型需要兼顾任务泛化（多任务）和域泛化（多域），而现有方法只能二选一。
 
-**本文要解决什么？** 在一个统一模型中处理多个领域和多个任务的点云理解，并在测试时不更新模型参数即可泛化到未知域。
+**本文目标** 在一个统一模型中处理多个领域和多个任务的点云理解，并在测试时不更新模型参数即可泛化到未知域。
 
 **切入角度**：将 PIC 的多任务 ICL 与测试时领域泛化结合——预训练阶段用 PIC 学习跨域泛化信息，测试时通过特征平移将目标域拉向源域。
 
-**核心idea一句话**：双层次源域原型 + 双层次测试时特征平移，无需模型更新即可将未知域测试数据对齐到已知源域。
+**核心 idea**：双层次源域原型 + 双层次测试时特征平移，无需模型更新即可将未知域测试数据对齐到已知源域。
 
 ## 方法详解
 
@@ -52,7 +52,7 @@ DG-PIC 分为两个阶段：(1) 预训练阶段——基于 Masked Point Modelin
 
 1. **多域 Prompt 配对 (Multi-domain Prompt Pairing)**:
 
-    - **做什么**：在预训练时从不同源域随机选取样本作为 prompt，增强跨域关联。
+    - **功能**：在预训练时从不同源域随机选取样本作为 prompt，增强跨域关联。
     - **核心思路**：设 query 来自域 $D_s^i$，prompt 来自域 $D_s^j (j \neq i)$，预测的 masked patch 为：
     $P \sim (D_s^i, D_s^j) = Trans([F_\theta(I_i) \oplus F_\theta(T_i^k) \oplus F_\theta(I_j) \oplus F_\theta(T_j^k)], Mask)$
       训练损失使用 Chamfer Distance：$\text{CD}(P,G) = \frac{1}{|P|}\sum_{x \in P}\min_{y \in G}\|x-y\|^2 + \frac{1}{|G|}\sum_{y \in G}\min_{x \in P}\|y-x\|^2$
@@ -60,7 +60,7 @@ DG-PIC 分为两个阶段：(1) 预训练阶段——基于 Masked Point Modelin
 
 2. **双层次源域原型估计 (Dual-level Source Prototype Estimation)**:
 
-    - **做什么**：为每个源域计算全局和局部两个层次的原型，作为测试时特征对齐的锚点。
+    - **功能**：为每个源域计算全局和局部两个层次的原型，作为测试时特征对齐的锚点。
     - **核心思路**：
         - **局部原型** $Z_{local}^{i,m}$：对域 $D_s^i$ 中所有样本的 patch 级特征取平均：$Z_{local}^{i,m} = \frac{1}{N_{D_s^i}} \sum_{n=1}^{N_{D_s^i}} F_\theta(P_m)$
         - **全局原型** $Z_{global}^i$：对所有 patch 特征做 max pooling 后取平均：$Z_{global}^i = \frac{1}{N_{D_s^i}} \sum_{n=1}^{N_{D_s^i}} max(F_\theta(P_m))$
@@ -69,7 +69,7 @@ DG-PIC 分为两个阶段：(1) 预训练阶段——基于 Masked Point Modelin
 
 3. **双层次测试时特征平移 (Dual-level Test-time Feature Shifting)**:
 
-    - **做什么**：在测试时将目标域特征向源域方向平移，无需更新模型参数。
+    - **功能**：在测试时将目标域特征向源域方向平移，无需更新模型参数。
     - **核心思路**：
         - **宏观语义系数 $\alpha$**：从全局距离导出，控制各源域对特征平移的贡献度：$\alpha = softmax(\mathcal{E}_{global})$
         - **微观位置系数 $\beta^i$**：从局部距离导出，考虑 patch 位置对齐关系：$\beta^i = softmax(\mathcal{E}_{local}^i)$
@@ -79,7 +79,7 @@ DG-PIC 分为两个阶段：(1) 预训练阶段——基于 Masked Point Modelin
 
 4. **测试时 Prompt 选择**:
 
-    - **做什么**：从最近源域中选择最相似样本作为 prompt。
+    - **功能**：从最近源域中选择最相似样本作为 prompt。
     - **核心思路**：综合全局和局部距离确定最近源域：$\mathcal{E}^i = \lambda \cdot \mathcal{E}_{global}^i + (1-\lambda) \cdot \frac{1}{M}\sum_{m=1}^{M}\mathcal{E}_{local}^{i,m}$（$\lambda=0.5$），在该域中找特征距离最小的样本作为 prompt。
 
 ### 损失函数 / 训练策略
@@ -130,7 +130,7 @@ DG-PIC 分为两个阶段：(1) 预训练阶段——基于 Masked Point Modelin
 - **微观位置系数的设计直觉精妙**：同一物体同位置的 patch 跨域应有相似几何结构，这一先验被有效利用
 - **统一模型做三个任务**：重建、去噪、配准共享一个网络，通过 prompt 切换任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - benchmark 仅包含 7 个共有类别，规模和多样性有限
 - 仅考虑了 xyz 坐标回归型任务（重建/去噪/配准），未涵盖分类、分割等判别型任务

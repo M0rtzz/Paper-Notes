@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Heavy Labels Out! Dataset Distillation with Label Space Lightening
 description: >-
@@ -131,7 +131,7 @@ $$\phi^e = \phi^{e-1} - \alpha \nabla_\phi (MSE(f_\phi(\mathcal{A}(X_s)), Y^*) +
 - **LoRA 在新场景的应用**：将 LoRA 从 LLM 微调推广到数据集蒸馏中的投影器构建
 - **跨架构泛化**：特别是在 Transformer 架构上的显著优势值得关注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 大规模 + 大 IPC 场景（IN-1K IPC=50）性能仍不及 RDED，投影器精度有限
 - 依赖 CLIP 预训练模型，对 CLIP 覆盖不好的领域（如医学影像）效果可能受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MaskSQL: Safeguarding Privacy for LLM-Based Text-to-SQL via Abstraction
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **混合架构**：SLM 负责信任环节（schema linking、还原），LLM 负责推理环节（SQL 生成），各取所长。
 - **可控隐私策略**：用户可自定义 $\Psi$ 决定保护哪些元素，灵活适应不同法规要求。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Schema linking 依赖 SLM 质量，复杂 schema 下可能遗漏
 - 仅在 BIRD 基准的 300 条复杂查询上评估，规模有限

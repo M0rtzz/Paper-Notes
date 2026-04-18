@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AutoOpt: A Dataset and a Unified Framework for Automating Optimization Problem Solving
 description: >-
@@ -32,11 +32,11 @@ AutoOpt 构建了首个优化问题图像到代码的端到端框架——11554 
 
 **核心矛盾**：将优化问题从图像到解需要三个不同能力——视觉识别、语义理解、求解算法——但没有系统同时解决。
 
-**本文要解决什么？** 构建图像→LaTeX→PYOMO→求解的完整自动化管线。
+**本文目标** 构建图像→LaTeX→PYOMO→求解的完整自动化管线。
 
 **切入角度**：分三个模块各个击破——M1 用 CNN+Transformer 混合编码器处理图像→LaTeX；M2 用微调 DeepSeek-Coder 处理 LaTeX→PYOMO；M3 用双层分解处理复杂优化。
 
-**核心 idea 一句话**：AutoOpt-11k 数据集 + ResNet-Swin-mBART 图像→LaTeX + DeepSeek-Coder LaTeX→PYOMO + 双层优化分解 = 图像到优化解的全自动管线。
+**核心 idea**：AutoOpt-11k 数据集 + ResNet-Swin-mBART 图像→LaTeX + DeepSeek-Coder LaTeX→PYOMO + 双层优化分解 = 图像到优化解的全自动管线。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ AutoOpt 构建了首个优化问题图像到代码的端到端框架——11554 
 - **端到端管线**从图像→解的全自动化在优化社区是首次
 - **CNN+Transformer 混合**在数学 OCR 上的优势被量化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅处理单页公式——多页跨页未解决
 - 大规模优化问题（十亿变量）未测试
 - 标注者一致性有差异（BLEU 0.82-0.86）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CURE: Curriculum-guided Multi-task Training for Reliable Anatomy Grounded Report Generation
 description: >-
@@ -54,7 +54,7 @@ CURE 以 MedGemma-4B-IT 为基础模型，采用 LoRA (rank=16, 4-bit) 微调，
 
 #### 1. 误差感知课程学习（Error-Aware Curriculum Learning）
 
-- **做什么**：训练过程中周期性评估模型在各数据源和类别上的表现，根据误差动态调节采样概率
+- **功能**：训练过程中周期性评估模型在各数据源和类别上的表现，根据误差动态调节采样概率
 - **核心思路**：
     - **数据集级（Inter-Dataset）**：对每个数据源 $D_i$ 计算综合得分 $s_i = \alpha \cdot \text{IoU}_i + (1-\alpha) \cdot \text{CXRFEScore}_i$，误差 $e_i = 1 - s_i$，下一轮采样概率 $p_i = e_i / \sum_j e_j$——表现越差的数据集被采样越多
     - **类别级（Intra-Dataset）**：在 MS-CXR 按 8 种短语类别重加权，在 Chest ImaGenome 按 29-38 个解剖区域重加权，PadChest-GR 因多标签无法单一归类故保持均匀采样
@@ -62,7 +62,7 @@ CURE 以 MedGemma-4B-IT 为基础模型，采用 LoRA (rank=16, 4-bit) 微调，
 
 #### 2. 解剖级细粒度任务分解（AGRG）
 
-- **做什么**：将 Chest ImaGenome 的场景图拆解为三个子任务
+- **功能**：将 Chest ImaGenome 的场景图拆解为三个子任务
 - **核心思路**：
     - **Locate**：给定解剖位置名称 → 输出 bounding box `[cx, cy, w, h]`（36 个位置）
     - **Describe**：给定解剖位置名称 → 输出文本描述（38 个位置）
@@ -72,7 +72,7 @@ CURE 以 MedGemma-4B-IT 为基础模型，采用 LoRA (rank=16, 4-bit) 微调，
 
 #### 3. 统一指令格式与数据增强
 
-- **做什么**：将 PG（短语定位）、GRG（有根据报告生成）、AGRG 三类任务统一为 instruction-following 格式
+- **功能**：将 PG（短语定位）、GRG（有根据报告生成）、AGRG 三类任务统一为 instruction-following 格式
 - **核心思路**：
     - PG: `"Ground the phrase: {phrase}"` → `"phrase: [cx,cy,w,h]..."`
     - GRG: `"Generate a grounded report"` → 含 bbox 坐标的完整报告
@@ -152,7 +152,7 @@ CURE 在 CheXbert Cosine Similarity (0.792) 和 F1-Ma (0.415) 上取得最佳，
 - **从无到有赋予定位能力**：MedGemma-4B-IT 原本没有视觉定位功能，经 CURE 训练后定位能力超越专门设计的 MAIRA-2
 - **训练代价低**：LoRA rank=16 / 4-bit，9000 步即完成，无需大规模算力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **报告级文本质量略逊**：在 PadChest-GR GRG 任务上文本指标仍不如使用私有数据的 MAIRA-2（F1-Mi 0.507 vs. 0.592）
 2. **仅在胸部 X 光上验证**：所有实验限于 CXR 领域，对 CT/MRI/病理等模态的迁移能力未知

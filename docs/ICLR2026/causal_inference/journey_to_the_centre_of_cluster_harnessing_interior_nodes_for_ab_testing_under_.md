@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Journey to the Centre of Cluster: Harnessing Interior Nodes for A/B Testing under Network Interference
 description: >-
@@ -105,7 +105,7 @@ $$\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\su
 - **harmlessness property**：当 interior 与全体总体无分布差异时，AMII 的校正项不引入额外偏差
 - **理论假设显著弱于 CAE**：MII 的一致性仅要求 interior 节点比例渐近均匀和代表性，不需要 cluster 内均值为常数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅证明了一致性**，未建立 CLT：无法直接进行假设检验和置信区间构造，实际部署需要 bootstrap 等替代方案
 - **interior 节点占比很低**（约 8%）：在极稀疏图或聚类质量差时可能更低，数据利用效率受限

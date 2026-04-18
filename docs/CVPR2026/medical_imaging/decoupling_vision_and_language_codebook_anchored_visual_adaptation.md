@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decoupling Vision and Language: Codebook Anchored Visual Adaptation
 description: >-
@@ -112,7 +112,7 @@ CRAFT 以 VILA-U-7B 为替代模型时达到最优：**平均 68.58%，比 zero-
 - **测试时 token 剪枝**：基于频率稀有度的无训练剪枝方案，进一步提升效率和鲁棒性；keep ratio 0.6 以上性能稳定
 - **离散 token 的新优势论证**：首次系统证明离散视觉 token 支持模块化、可迁移的视觉适配，为离散 LVLM 开辟新应用场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖于预训练好的离散 codebook（VILA-U 的 16384 条目），codebook 质量和规模是性能上限；Table 6 显示 codebook 缩小到 10% 时均值从 76.71% 降至 32.28%
 - 当替代模型能力远弱于推理 backbone 时，部分细粒度任务（Flowers、Dogs）反而会退化——0.5B 替代模型使 Flowers 从 75.80% 降至 72.31%

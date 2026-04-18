@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Alleviating Textual Reliance in Medical Language-guided Segmentation via Prototype-driven Semantic Approximation
 description: >-
@@ -104,7 +104,7 @@ ProLearn = PSA模块 + Language-guided U-Net。PSA模块一次性从少量图文
 - 两级聚类（HDBSCAN按文本语义 + K-means按视觉特征）的设计保证了原型空间既语义清晰又视觉多样
 - 性能退化曲线（图5）直观展示了ProLearn vs 其他方法在文本递减时的鲁棒性差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 原型空间的初始化依赖BioMedCLIP的特征质量，对于BioMedCLIP覆盖不佳的医学领域可能效果折扣
 - 代理标签提取需要先训练一个Language-guided U-Net来获取注意力权重，增加了pipeline复杂度
 - 未探索原型空间的在线更新策略（如新数据到来时增量更新）

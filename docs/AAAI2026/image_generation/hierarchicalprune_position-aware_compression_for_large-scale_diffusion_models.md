@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HierarchicalPrune: Position-Aware Compression for Large-Scale Diffusion Models
 description: >-
@@ -142,7 +142,7 @@ SGDistill 对每个块的参数更新按其敏感度的倒数 $\frac{1}{\Delta P
 - **反直觉的蒸馏策略**：对最重要的块施加最小更新，与传统蒸馏中重点更新关键层的思路相反，但在激进压缩下效果显著
 - 首次将深度剪枝 + 知识蒸馏 + INT4 量化统一到一个框架中用于 8B+ 级别扩散模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了 SD3.5 和 FLUX 两个 MMDiT 架构，未测试 U-Net 或其他生成模型架构
 - 激进压缩（30%）下的 13.3% 质量退化在某些应用场景可能仍不可接受
 - 蒸馏成本（615-1,287 A100 GPU 小时）对学术团队而言仍较高

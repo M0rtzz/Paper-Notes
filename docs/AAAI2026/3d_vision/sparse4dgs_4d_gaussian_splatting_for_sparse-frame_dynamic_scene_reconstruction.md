@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction
 description: >-
@@ -169,7 +169,7 @@ $$L = L_{rgb} + \lambda_1 \cdot L_{tex} + \lambda_2 \cdot L_{tadr}$$
 3. **SGLD的创造性应用**：将SGLD引入纹理感知优化，利用结构化噪声引导高斯收敛方向
 4. **PCC替代L1处理空间不一致性**：是一个简洁有效的技术选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖Sobel算子提取纹理信息，可能对噪声敏感；可考虑使用学习型纹理描述子
 2. 依赖DPT单目深度估计器的质量，深度估计不准确时可能传播误差
@@ -313,7 +313,7 @@ $$L = L_{rgb} + \lambda_1 \cdot L_{tex} + \lambda_2 \cdot L_{tadr}$$
 4. **PCC替代L1**：在存在空间不一致性的场景中，PCC作为相关性度量比L1更鲁棒
 5. **真实场景验证**：提出 iPhone-4D 数据集，展示了在手机拍摄视频上的实际应用潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当场景中纹理信息极度匮乏时（如纯色墙壁），方法效果可能受限
 2. 依赖 DPT 单目深度估计器的精度，预训练深度模型的误差会传播

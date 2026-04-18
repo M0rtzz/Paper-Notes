@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaussian Splatting with Discretized SDF for Relightable Assets
 description: >-
@@ -120,7 +120,7 @@ tags:
 - **极致的效率**：4G显存+1小时训练就超过需要22G+1.5小时的GS-ROR，实际中非常有意义
 - **中位数统计量的巧妙使用**：用全局统计信息（中位数）来指导局部参数（变换宽度），解决联合优化的锚定问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑直接光照，对复杂遮挡和间接照明的场景可能失效，需要加入间接照明项
 - 在复杂相互反射的场景中（如Toaster、Luyu）仍不如引入完整SDF网络的GS-ROR

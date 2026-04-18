@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Black Boxes to Transparent Minds: Evaluating and Enhancing the Theory of Mind in Multimodal Large Language Models
 description: >-
@@ -134,7 +134,7 @@ $$T_{l+1} = T_l + \sum_{h=1}^{H} \left(Attn_l^h(P_l^h T_l) + \alpha \sigma_l^h \
 4. **数据集设计精巧**：2D 网格世界避免了高层语义干扰，可精确控制感知信息，使评估更纯粹
 5. **Both 指标的引入**：比单独看 TB 或 FB 更能反映模型的真实信念推理能力，避免了偏倚模式带来的虚假高分
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **场景过于简化**：2D 网格世界与真实世界场景差距大，结论能否迁移到复杂视觉场景仍需验证
 2. **模型覆盖有限**：干预实验仅在 LLaVA-Next-Video-7B 和 Qwen2-VL-7B 上验证，缺少更大规模模型（如 GPT-4o）的内部分析（闭源无法探测）

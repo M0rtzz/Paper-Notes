@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AlignVAR: Towards Globally Consistent Visual Autoregression for Image Super-Resolution
 description: >-
@@ -49,7 +49,7 @@ AlignVAR 在 VQ-VAE + 自回归 Transformer 的 next-scale 预测架构上，引
 
 1. **空间一致性自回归（SCA）**：
 
-    - **做什么**：在每个尺度的自回归预测中引入结构感知的空间调制，打破注意力的局部偏差
+    - **功能**：在每个尺度的自回归预测中引入结构感知的空间调制，打破注意力的局部偏差
     - **核心思路**：
         - 从低分辨率输入 $I_{LR}$ 提取结构引导图：$s = |\text{Laplacian}(I_{LR})|$，下采样到各尺度分辨率并归一化得到 $\bar{s}_k$
         - 用轻量 MLP 掩码生成器预测空间调制场：$m_k = \sigma(\mathcal{M}_\phi([r_k, \bar{s}_k]))$
@@ -58,7 +58,7 @@ AlignVAR 在 VQ-VAE + 自回归 Transformer 的 next-scale 预测架构上，引
 
 2. **层级一致性约束（HCC）**：
 
-    - **做什么**：在每个尺度都监督累积的全尺度重建结果，而不仅是残差
+    - **功能**：在每个尺度都监督累积的全尺度重建结果，而不仅是残差
     - **核心思路**：
         - 构建全尺度 ground truth：$u_{\text{gt}}^k = \mathcal{Q}(\text{Down}(z, S_k))$，即将 HR 图像的 VAE 编码下采样到各尺度并量化
         - 累积预测：$\hat{u}_{\text{pred}}^k = \hat{u}_{\text{pred}}^{k-1} + \hat{r}_{\text{pred}}^k$
@@ -133,7 +133,7 @@ AlignVAR 比 PASD 快 **13.8×**，比 DiffBIR 快 **11.7×**，比 VARSR 也快
 3. **10× 加速优势**：0.43 秒 vs 5+ 秒的扩散方法，在实际部署中意义重大
 4. **参数更少效果更好**：1056.5M vs 1900.4M（DiffBIR），说明 VAR 范式在 ISR 中的效率潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 保真度指标（PSNR/SSIM）未达到最优，在 LR 图像高频细节严重丢失时仍有恢复瓶颈
 - 掩码依赖 Laplacian 的手工设计，可探索学习式结构检测

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiveStar: Live Streaming Assistant for Real-World Online Video Understanding
 description: >-
@@ -111,7 +111,7 @@ SVeD 通过单次前向传播验证来确定最佳响应时机：
 3. **OmniStar 基准**：首个涵盖 15 种真实场景 × 5 项在线任务的综合数据集，填补了在线视频理解评估的空白
 4. **显著领先**：在所有 5 项任务上全面超越现有在线 Video-LLM，且推理速度最快
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 每帧压缩为 16 个 visual token，牺牲了细粒度视觉细节，不利于微妙运动变化或复杂场景
 2. 仅支持视觉-文本模态，未整合音频信息，限制了多模态推理能力

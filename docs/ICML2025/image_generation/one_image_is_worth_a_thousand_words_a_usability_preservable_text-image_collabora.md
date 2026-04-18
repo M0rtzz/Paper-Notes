@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Image is Worth a Thousand Words: A Usability Preservable Text-Image Collaborative Erasing Framework
 description: >-
@@ -128,7 +128,7 @@ Co-Erasing 可作为即插即用模块嵌入其他擦除框架：
 
 与 MACE 结合擦除 5 类物体（dog/cat/bird/fish/horse），$H_c$ 综合指标在大部分类别上持平或提升，证明方法的可扩展性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **自生成图像质量依赖**：擦除效果取决于干净模型能否准确生成目标概念的代表性图像；对于模型本身表征不佳的概念，图像引导的提升可能有限
 2. **训练开销增加**：引入图像编码器分支和精炼模块增加了训练时的计算量，尽管推理不受影响

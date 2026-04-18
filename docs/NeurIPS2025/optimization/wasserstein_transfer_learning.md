@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Wasserstein Transfer Learning
 description: >-
@@ -103,7 +103,7 @@ $$m_G^{(0)}(x) = \arg\min_{\mu \in \mathcal{W}} E\{s_G^{(0)}(x) d_{\mathcal{W}}^
 - AWaTL的自适应选择机制优雅地解决了负迁移问题
 - 利用 $d_\mathcal{W}^2(\mu_1, \mu_2) = \int_0^1 (F_{\mu_1}^{-1}(u) - F_{\mu_2}^{-1}(u))^2 du$ 将Wasserstein度量转化为 $L^2$ 度量进行计算
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅处理**一维分布**，多维分布需要Sinkhorn或Sliced Wasserstein距离
 - 理论分析假设完整观测分布，实际中通常只有有限采样

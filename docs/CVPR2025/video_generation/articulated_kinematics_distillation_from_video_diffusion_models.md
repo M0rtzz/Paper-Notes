@@ -1,4 +1,4 @@
-# Articulated Kinematics Distillation from Video Diffusion Models
+﻿# Articulated Kinematics Distillation from Video Diffusion Models
 
 **会议**: CVPR 2025  
 **arXiv**: [2504.01204](https://arxiv.org/abs/2504.01204)  
@@ -19,7 +19,7 @@
 
 **切入角度**：不在隐式变形场上优化，而是直接在骨骼关节角度参数空间上做 SDS 优化，通过可微分前向运动学映射到 3D 姿态。
 
-**核心idea一句话**：在铰链关节角度空间做 SDS 优化（而非变形场），通过可微分前向运动学+高斯散射渲染+物理刚体模拟，从视频扩散模型蒸馏出物理合理的角色动画。
+**核心 idea**：在铰链关节角度空间做 SDS 优化（而非变形场），通过可微分前向运动学+高斯散射渲染+物理刚体模拟，从视频扩散模型蒸馏出物理合理的角色动画。
 
 ## 方法详解
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VISAGE: Video Instance Segmentation with Appearance-Guided Enhancement
 description: >-
@@ -124,7 +124,7 @@ VISAGE基于Mask2Former检测器构建，分为三个核心组件：
 3. **打破常规**：query-based方法通常认为query已包含足够信息，但VISAGE证明显式提取外观特征是必要且有效的
 4. **简化>复杂**：去除大量heuristic超参数(NMS阈值、tracklet管理阈值等)后性能反而提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅基于ResNet-50**：未在更强backbone(如Swin-L)上验证，可能还会有更大的提升空间
 2. **外观特征的全局性不足**：当前mask pooling的外观特征是"局部平均"，可能丢失细粒度纹理信息

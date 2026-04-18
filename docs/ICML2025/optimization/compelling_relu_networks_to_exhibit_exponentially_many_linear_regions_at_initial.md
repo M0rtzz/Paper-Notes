@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compelling ReLU Networks to Exhibit Exponentially Many Linear Regions at Initialization and During Training
 description: >-
@@ -129,7 +129,7 @@ $$s_{i+1} = s_i (1 - a_{i+1}) \cdot a_{i+2}$$
 4. **可微性条件的自然推导**：定理 3.1 给出缩放系数的唯一确定关系，将正则化内化为网络结构
 5. **与 KAN 的联系**：类似 Kolmogorov-Arnold 网络，用一维构造作为更大网络的激活函数实现多维逼近
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **宽度限制**：核心构造仅适用于宽度 4 的网络，扩展到任意宽度尚缺理论框架
 2. **分类任务收益有限**：VGG-16 实验表明在分类任务上优势不显著，实用价值需更多验证

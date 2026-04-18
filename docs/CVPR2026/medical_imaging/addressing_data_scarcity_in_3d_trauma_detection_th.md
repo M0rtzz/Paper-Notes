@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：深度学习 3D 检测需要大量标注数据，但医学影像标注成本极高(仅 4.4% 有标注)；通用 3D 预训练(自然视频/合成数据)迁移到医学影像效果差(HU 分布、解剖模式完全不同)。
 
-**本文要解决什么？** 如何在仅百例级别标注 3D CT 的极端稀缺条件下，实现可靠的腹部创伤检测和定位。
+**本文目标** 如何在仅百例级别标注 3D CT 的极端稀缺条件下，实现可靠的腹部创伤检测和定位。
 
 **切入角度**：两阶段学习——先在全部无标注 CT 上自监督预训练学习解剖先验，再结合少量标注和大量未标注数据做半监督检测微调。
 
-**核心idea一句话**：MIM 预训练提供解剖先验 + 3D 顶点 RPE 建模复杂几何 + Mean Teacher 半监督利用未标注数据，三者协同解决极端标注稀缺。
+**核心 idea**：MIM 预训练提供解剖先验 + 3D 顶点 RPE 建模复杂几何 + Mean Teacher 半监督利用未标注数据，三者协同解决极端标注稀缺。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ $\mathcal{L}_{total} = \mathcal{L}_{supervised} + \lambda(t) \times (\mathcal{L}
 - 冻结编码器即达 94% 分类精度是预训练质量的最佳证明——特征已 maximally discriminative
 - 设计选择(两阶段训练、学习率差异化、半监督延迟激活)体现了对训练动态的深入理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在腹部创伤 CT 上验证，其他解剖区域/病变类型的泛化性未知
 - 分类 AUC 仅 51.4%(置信度校准问题)，需要后处理温度缩放但未实施

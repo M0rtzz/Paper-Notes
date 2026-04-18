@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ExpGuard: LLM Content Moderation in Specialized Domains
 description: >-
@@ -117,7 +117,7 @@ tags:
 4. **领域特化 + 通用不退化**：ExpGuardTest 上大幅领先的同时，8 个公开 benchmark 上保持/超越 SOTA
 5. **揭示 API 工具的严重不足**：量化展示主流 API 在专业场景几乎完全失效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **领域覆盖有限**：仅覆盖金融/医疗/法律三个领域，其他专业领域（如网络安全、化工等）有待扩展
 - **仅支持英语**：多语言领域审核是重要的未来方向

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Asymmetric Cross-Modal Knowledge Distillation: Bridging Modalities with Weak Semantic Consistency
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L}_{all} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_{kd} + \lambda_
 4. **动态匹配策略有教育学直觉**：从易到难的课程学习思想与人类教育过程类比，进一步提升效果
 5. **完整的 benchmark 构建**：涵盖不同设备（Sentinel-2、天宫二号）、不同区域（欧洲/中国/全球）、不同标签类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练速度开销**：Student-Friendly Matching（特别是 DynM）带来额外训练时间，作者在 Table 8 中承认此为未来改进方向
 2. **仅验证遥感场景分类**：ACKD 概念具有通用性，但实验仅限于遥感领域，缺少自然图像等其他域的验证

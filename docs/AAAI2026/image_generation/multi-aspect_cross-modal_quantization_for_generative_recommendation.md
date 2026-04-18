@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Aspect Cross-modal Quantization for Generative Recommendation
 description: >-
@@ -59,7 +59,7 @@ MACRec 包含两个主要模块：
 
 #### 1. **双模态伪标签生成（Dual-modality Pseudo-label Generation）**
 
-**做什么**：为跨模态对比学习构造正样本对。
+**功能**：为跨模态对比学习构造正样本对。
 
 **核心思路**：分别对所有物品的文本嵌入 $\{\mathbf{t}_i\}$ 和视觉嵌入 $\{\mathbf{v}_i\}$ 进行 K-means 聚类（$K$=512），得到文本聚类标签 $\mathcal{C}_{text}$ 和视觉聚类标签 $\mathcal{C}_{vision}$。
 
@@ -67,7 +67,7 @@ MACRec 包含两个主要模块：
 
 #### 2. **跨模态量化与对比学习（Cross-modal Quantization with Contrastive Learning）**
 
-**做什么**：在 RQ-VAE 的每一量化层引入跨模态对比学习，增强残差表示的判别性。
+**功能**：在 RQ-VAE 的每一量化层引入跨模态对比学习，增强残差表示的判别性。
 
 **核心思路**：
 
@@ -84,7 +84,7 @@ $$\mathcal{L}_{con}^{l,v\rightarrow t} = -\frac{1}{B}\sum_{i=1}^{B}\log\frac{\ex
 
 #### 3. **跨模态重建对齐（Cross-modal Reconstruction Alignment）**
 
-**做什么**：在量化后的表示上施加跨模态对齐约束，进一步优化码本。
+**功能**：在量化后的表示上施加跨模态对齐约束，进一步优化码本。
 
 **核心思路**：将各层码字求和得到量化表示 $\hat{\mathbf{z}}^t = \sum_{l=0}^{L-1}\mathbf{e}_{l,c_k^t}^t$，对同一物品的文本和视觉量化表示进行双向对比对齐：
 
@@ -94,7 +94,7 @@ $$\mathcal{L}_{align}^{t\rightarrow v} = -\frac{1}{B}\sum_{i=1}^{B}\log\frac{\ex
 
 #### 4. **隐式对齐（Implicit Alignment）**
 
-**做什么**：在 GR 模型的潜在空间中对齐同一物品的文本和视觉语义 ID 表示。
+**功能**：在 GR 模型的潜在空间中对齐同一物品的文本和视觉语义 ID 表示。
 
 **核心思路**：将文本和视觉语义 ID 分别通过 T5 Encoder 编码并进行 Mean Pooling，然后通过双向 InfoNCE 损失对齐：
 
@@ -104,7 +104,7 @@ $$\mathcal{L}_{implicit} = \mathcal{L}_{implicit}^{t\rightarrow v} + \mathcal{L}
 
 #### 5. **显式对齐（Explicit Alignment）**
 
-**做什么**：通过跨模态生成任务在输出空间进行对齐。
+**功能**：通过跨模态生成任务在输出空间进行对齐。
 
 **核心思路**：设计两类跨模态生成任务：
 - **物品级对齐**：文本 ID → 视觉 ID，视觉 ID → 文本 ID
@@ -184,7 +184,7 @@ MACRec 有效降低了两种模态的 ID 冲突率。
 3. **伪标签机制巧妙**：利用一种模态的聚类结果为另一种模态提供正样本，避免了跨模态标注成本。
 4. **ID 冲突率分析深入**：不仅看推荐性能，还分析了量化质量（冲突率、码字分布），为理解方法有效性提供了多角度证据。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅使用文本+图像两种模态**：未考虑其他可能有用的模态（如价格、类别标签、用户评论）。
 2. **聚类数 K=512 固定**：对不同数据集可能需要不同的聚类粒度设定。

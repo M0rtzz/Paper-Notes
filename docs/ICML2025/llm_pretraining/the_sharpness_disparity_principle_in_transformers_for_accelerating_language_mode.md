@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Sharpness Disparity Principle in Transformers for Accelerating Language Model Pre-Training
 description: >-
@@ -152,7 +152,7 @@ LLaMA 0.25B on OpenWebText, 50K steps：
 4. **EoS 视角统一**：将 Blockwise LR 解释为"加速 river/stable direction 上的 slow dynamics"，与 EoS 理论优雅统一
 5. **锐度差异在训练极早期（~2% 步数）就已建立**：暗示可以一开始就使用 Blockwise LR，无需等到训练稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了语言模型预训练**：未在 Vision Transformer、多模态等领域验证
 2. **倍率手动调优**：虽然鲁棒，但理论上可以从锐度比值自动推导，实现 adaptive blockwise LR

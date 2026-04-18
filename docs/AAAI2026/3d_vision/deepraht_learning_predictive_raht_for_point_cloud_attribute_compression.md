@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeepRAHT: Learning Predictive RAHT for Point Cloud Attribute Compression
 description: >-
@@ -163,7 +163,7 @@ $$\ell = \ell_{bits} + \lambda(\ell_{recon} + \ell_{pred})$$
 4. **DC = 下一尺度归一化属性**的等价关系，是避免冗余编码的关键理论基础
 5. **实用性极强**：编解码最快、显存最少、鲁棒性最好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练仅在 RWTT 数据集上进行，泛化到 LiDAR 和动态点云有待验证
 2. Batch size 限制为 1，大规模训练效率有瓶颈

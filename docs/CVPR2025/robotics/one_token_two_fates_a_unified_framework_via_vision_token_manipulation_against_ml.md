@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Token, Two Fates: A Unified Framework via Vision Token Manipulation Against MLLMs Hallucination
 description: >-
@@ -57,13 +57,13 @@ tags:
 
 ### 关键设计 1: SVC — 协同视觉校准
 
-- **做什么**: 在关键中间层注入丰富的视觉上下文，对抗视觉衰减
+- **功能**: 在关键中间层注入丰富的视觉上下文，对抗视觉衰减
 - **步骤**: (1) 对输入图像做随机翻转+高斯模糊+椒盐噪声生成增强图像 → (2) 拼接原始和增强vision token得协同视觉记忆库 $\mathbf{V}_{\text{syn}} \in \mathbb{R}^{2N_v \times d}$ → (3) 在第 $L_c$ 层用scaled dot-product attention将hidden state作为Query、 $\mathbf{V}_{\text{syn}}$ 作为Key/Value → (4) 通过插值融合注入: $\mathbf{H}'_t = (1-\lambda_s) \mathbf{H}_t + \lambda_s \mathbf{C}_t$
 - **设计动机**: 利用F2的语义互补性，无需额外参数，在单一层干预即可有效增强视觉表示
 
 ### 关键设计 2: CRC — 因果表示校准
 
-- **做什么**: 在浅层纯化隐表示，消除"幻觉方向"
+- **功能**: 在浅层纯化隐表示，消除"幻觉方向"
 - **步骤**: (1) 随机裁剪vision token至仅保留 $N_h=5$ 个，生成K=3个负样本 → (2) 在首步t=0并行前向传播获取原始和负样本的隐状态 → (3) 差值平均得稳定的幻觉方向向量: $\mathbf{v}_{\text{crc}}^{(l)} = \frac{1}{K}\sum_{k=1}^{K} (\mathbf{H}_{\text{org}}^{(l)} - \mathbf{H}_{\text{neg}}^{(l,k)})$ → (4) 后续每步在归一化空间做校正: $\mathbf{h}_{\text{crc}} = \mathbf{h}_{\text{norm}} + \lambda_c \mathbf{v}_{\text{norm}}$，再缩放回原始量级
 - **因果理论支撑**: 基于结构因果模型(SCM)，差值向量精确捕获了"因视觉信息缺失而产生的偏差"，与text/query/bias的共享效应无关
 - **关键参数**: $N_h=5$（保留5/576个token，精确触发偏差探测），$K=3$（性能与效率的最佳折中）
@@ -123,7 +123,7 @@ tags:
 - **极低开销**: 仅1.06×延迟，显著优于VCD的2.4×，因为幻觉方向向量只需计算一次
 - **跨架构泛化**: 在linear projection(LLaVA/Shikra)和Q-Former(MiniGPT-4/InstructBLIP)两类架构上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在~7B规模MLLM上验证，更大模型(如70B+)的效果未知
 - SVC的增强策略（翻转+模糊+噪声）较固定，可能不是最优的语义互补组合

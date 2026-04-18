@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embodied Representation Alignment with Mirror Neurons
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 发现了表征对齐与任务成功率的正相关关系，为"为什么对齐有用"提供了实验证据
 - 与Platonic Representation Hypothesis的联系——不同目标训练的模型趋向于共享现实的统计模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 动作理解和具身执行的数据来自同一模拟环境（RLBench），真实世界的模态差异会更大
 - 仅使用线性变换进行对齐，非线性变换可能捕获更复杂的跨模态关系
 - 对齐需要共享语义标签（语言指令）来构建正样本对，无标签场景下的对齐策略未探索

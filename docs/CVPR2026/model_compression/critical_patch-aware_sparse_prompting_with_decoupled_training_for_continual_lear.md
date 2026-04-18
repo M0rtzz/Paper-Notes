@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Critical Patch-Aware Sparse Prompting with Decoupled Training for Continual Learning on the Edge
 description: >-
@@ -47,7 +47,7 @@ CPS-Prompt 沿用 PCL 标准两阶段架构：(1) 冻结 query encoder $f_q$ 前
 
 1. **Critical Patch Sampling (CPS)**：
 
-    - **做什么**：从 query encoder 最后一层提取 class token 到 patch token 的注意力权重 $A^L_{\text{cls},j}$ 和 value 向量的 L2 范数 $\|V^L_j\|_2$，计算临界分数：
+    - **功能**：从 query encoder 最后一层提取 class token 到 patch token 的注意力权重 $A^L_{\text{cls},j}$ 和 value 向量的 L2 范数 $\|V^L_j\|_2$，计算临界分数：
     $s_j = A^L_{\text{cls},j} \cdot \|V^L_j\|_2$
     - **核心思路**：注意力权重反映 patch 对类别表征的贡献强度，value 范数反映特征的显著性。两者乘积构成综合重要性分数。经温度缩放 softmax 转为采样概率：
     $p_j = \frac{\exp(s_j/\tau)}{\sum_i \exp(s_i/\tau)}$
@@ -56,7 +56,7 @@ CPS-Prompt 沿用 PCL 标准两阶段架构：(1) 冻结 query encoder $f_q$ 前
 
 2. **Decoupled Prompt and Classifier Training (DPCT)**：
 
-    - **做什么**：将 $E$ 个 epoch 分为两个阶段——前 $\lfloor \lambda \cdot E \rfloor$ 个 epoch 联合优化 prompt $\phi$ 和分类器 $\theta$（用稀疏 patch 输入）；后 $E - E_p$ 个 epoch 冻结 prompt，仅用全 patch 输入微调分类器。
+    - **功能**：将 $E$ 个 epoch 分为两个阶段——前 $\lfloor \lambda \cdot E \rfloor$ 个 epoch 联合优化 prompt $\phi$ 和分类器 $\theta$（用稀疏 patch 输入）；后 $E - E_p$ 个 epoch 冻结 prompt，仅用全 patch 输入微调分类器。
     - **核心思路**：
     $\mathcal{L}_p = \mathcal{L}(f_p(\mathbf{X}_{\text{sampled}}; \theta, \phi), y)$
     $\mathcal{L}_{\text{cls}} = \mathcal{L}(f_p(\mathbf{X}_{\text{full}}; \theta, \phi), y), \quad \text{(}\phi \text{ frozen)}$
@@ -111,7 +111,7 @@ CPS-Prompt 沿用 PCL 标准两阶段架构：(1) 冻结 query encoder $f_q$ 前
 - **任务感知 token reduction**：巧妙利用 PCL 两阶段架构中本已存在的 query forward pass 信号，零额外训练开销
 - **解耦训练的简洁性**：分两阶段分别用稀疏/全 patch 训练 prompt/分类器，设计简单但有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 ViT-Tiny/16 上验证，更大模型（ViT-Base/Large）上的表现未知
 - 固定的 patch 削减比 $r=0.4$，未探索动态自适应策略
 - 仅考虑 class-incremental 设定，未涉及 task-incremental 或 domain-incremental

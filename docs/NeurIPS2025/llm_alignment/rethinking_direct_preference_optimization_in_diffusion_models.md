@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Direct Preference Optimization in Diffusion Models
 description: >-
@@ -120,7 +120,7 @@ SD1.5 上的结果:
 - **通用性**: 可作为即插即用模块集成到任何扩散偏好优化方法中
 - **实际洞察**: 时间步奖励不平衡是扩散 DPO 中被忽视但重要的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. $\alpha$ 的最优值依赖于具体任务和模型
 2. 参考模型更新增加了内存需求（需要存储额外模型参数）

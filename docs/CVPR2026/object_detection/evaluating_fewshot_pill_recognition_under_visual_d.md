@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Few-Shot Pill Recognition Under Visual Domain Shift
 description: >-
@@ -109,7 +109,7 @@ tags:
 - **数据真实性 > 数据规模**：CURE 有 196 类 vs MEDISEG 仅 32 类，但后者因视觉复杂性更高而在跨域少样本中更优
 - **评估设计周到**：因标注异质性放弃 AP 转而使用分类-误差信号的决策有理有据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **未提出新方法**：纯分析性工作，无方法创新
 2. **新类别数量有限**：仅 5-way 设定，受标注约束

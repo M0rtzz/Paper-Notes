@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRAP: Targeted Redirecting of Agentic Preferences
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{sem} + \lambda_2 \mathcal{L}_{dis
 - 布局感知掩码设计使语义编辑精确限制在前景区域，增强了攻击的隐蔽性
 - 黑盒威胁模型的设定现实且有意义——攻击者只能控制自己的图像，不需要环境或模型访问
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设智能体依赖对比式视觉语言相似度评分，未来非对比架构可能减弱攻击效果
 - 攻击成功依赖辅助组件（布局掩码、扩散模型）的质量，在边缘案例上可能退化

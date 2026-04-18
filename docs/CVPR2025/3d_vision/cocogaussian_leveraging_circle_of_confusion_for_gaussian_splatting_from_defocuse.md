@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoCoGaussian: Leveraging Circle of Confusion for Gaussian Splatting from Defocused Images
 description: >-
@@ -93,7 +93,7 @@ $$\mathcal{L}_{rgb} = (1-\lambda)\mathcal{L}_1 + \lambda\mathcal{L}_{D\text{-}SS
 - 场景的**景深和焦平面可在渲染时自由调整**，实现了传统3DGS不具备的创意控制能力
 - 方法对全对焦图像也有效，泛化性好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自适应缩放因子$\beta$目前仅能处理CoC直径被高估的情况（$\beta \leq 1$），低估时无法补偿
 - 模型生成$M \times N$个额外高斯，增加了训练和渲染的计算开销

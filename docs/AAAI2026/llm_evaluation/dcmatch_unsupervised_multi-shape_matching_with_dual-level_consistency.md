@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DcMatch: Unsupervised Multi-Shape Matching with Dual-Level Consistency
 description: >-
@@ -166,7 +166,7 @@ $$\mathcal{L}_{cycle} = \sum_{i,j}^n (1 - \cos(\Pi_i^\top \widetilde{\Phi}_i \ma
 3. **Frobenius vs 余弦损失的选择策略**：近等距→Frobenius，非等距→余弦，体现了对不同变形类型的适配考虑
 4. **推理时的对应计算$\Pi_{ij} = \Pi_i\Pi_j^\top$**天然保证循环一致性，无需后处理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **宇宙大小需预先固定**：设为参考形状顶点数或数据集最大顶点数，可能不是最优选择
 2. **整个形状集合作为图处理增加了计算开销**：内存消耗8.4GB vs 基线的2.6-3.5GB

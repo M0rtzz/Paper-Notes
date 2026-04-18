@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Error as Signal: Stiffness-Aware Diffusion Sampling via Embedded Runge-Kutta Guidance
 description: >-
@@ -109,7 +109,7 @@ $$\hat{\mathbf{x}}^{\text{Heun}}_{\sigma_{i+1}} = \mathbf{x}^{\text{Heun}}_{\sig
 4. **理论扎实**：从 ODE 数值分析中推导出 LTE 与主特征向量对齐的理论依据，并通过 2D toy 实验和 ImageNet 实验验证
 5. **低步数优势**：步数越少，LTE 占误差比例越大，ERK-Guid 改善越显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要使用产生嵌入式对的求解器（如 Heun），对纯一阶求解器（如 Euler/DDIM）不直接适用
 2. 超参数 $w_{\text{stiff}}$ 和 $w_{\text{con}}$ 需要根据模型/步数调优，虽然实验显示对超参鲁棒但仍增加调参负担

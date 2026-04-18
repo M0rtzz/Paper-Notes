@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Toward Real-world Text Image Forgery Localization: Structured and Interpretable Data Synthesis
 description: >-
@@ -100,7 +100,7 @@ $$I^s = \text{Generator}(I^o | \{a_k, t_k, \phi_k\}_{k=1}^K)$$
 - 傅里叶级数的类比虽非严格数学对应，但提供了直觉上优美的框架：复杂篡改行为 = 基本操作模式的加权叠加
 - 数据收集管线的设计有实用价值：通过记录人类的编辑过程（而非逆向工程篡改图像）来获取真实参数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前只覆盖5种篡改类型，未涵盖基于深度生成模型（GAN/Diffusion）的新型篡改手段
 - 假设 $t_k \approx \hat{t}_k$（合成基配置近似真实基配置）是否成立缺乏理论保证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LocalDPO: Direct Localized Detail Preference Optimization for Video Diffusion Models
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **Bézier时空掩码的工程巧妙**：随机Bézier曲线生成的不规则封闭区域模拟了真实局部伪影的自然形态——比矩形掩码更有效
 - **效率优势质变**：单次推理+无需外部评估→GPU时间降至传统DPO的1/4，使偏好对齐在资源受限环境下也可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Bézier掩码的位置和大小是随机的——能否基于模型当前的弱点"智能选择"最有价值的腐蚀区域？
 - latent space corruption可能不精确对应像素空间的感知退化——VAE的解码误差可能引入假阳性
 - 当前仅在text-to-video验证，image-to-video和video-to-video的适用性待探索

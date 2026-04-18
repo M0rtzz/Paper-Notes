@@ -1,4 +1,4 @@
----
+﻿---
 title: "CryptoFace: End-to-End Encrypted Face Recognition"
 description: "首个端到端全同态加密人脸识别系统，通过混合浅层patch CNN架构实现7倍加速"
 tags: ["face recognition", "homomorphic encryption", "privacy-preserving", "FHE", "patch CNN"]
@@ -31,7 +31,7 @@ tags: ["face recognition", "homomorphic encryption", "privacy-preserving", "FHE"
 3. **无法处理高分辨率人脸图像**：现有 FHE CNN 仅支持小分辨率（如 CIFAR 的 32×32），无法直接处理人脸图像
 4. **余弦相似度无法在 FHE 下直接计算**：$\ell_2$ 归一化涉及非同态的非线性运算
 
-### 本文要解决什么
+### 本文目标
 
 构建首个**端到端**加密人脸识别系统：从加密图像输入到加密匹配结果输出，全程不解密，同时实现可接受的推理延迟和高识别精度。
 

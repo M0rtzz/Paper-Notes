@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Grokking in LLM Pretraining? Monitor Memorization-to-Generalization without Test
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：预训练 loss 收敛后模型内部仍在发生什么变化？为什么 loss 不变但泛化在提升？有没有不依赖外部评估的指标来追踪泛化？
 
-**本文要解决什么？** (a) 验证 grokking 是否在实际 LLM 预训练中存在；(b) 揭示记忆到泛化转变的内部机制；(c) 提供零成本泛化监控指标。
+**本文目标** (a) 验证 grokking 是否在实际 LLM 预训练中存在；(b) 揭示记忆到泛化转变的内部机制；(c) 提供零成本泛化监控指标。
 
 **切入角度**：MoE 架构天然将计算组织为 expert 选择序列（pathway），可以追踪每个样本的 pathway 如何演化——从随机/instance-specific（记忆）到结构化/跨样本共享（泛化）。
 
-**核心 idea 一句话**：Grokking 在 LLM 预训练中以局部、异步的形式存在；MoE pathway 从个体特异到跨样本共享的演化是记忆到泛化转变的可观测信号。
+**核心 idea**：Grokking 在 LLM 预训练中以局部、异步的形式存在；MoE pathway 从个体特异到跨样本共享的演化是记忆到泛化转变的可观测信号。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ tags:
 - **零成本泛化监控的实用价值**：对 LLM 训练者来说，不用做 instruction tuning + benchmark 就能判断何时停止预训练，极其有价值
 - **局部 grokking 暗示数据课程设计**：不同数据的记忆→泛化延迟不同，暗示可以据此设计数据混合策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 OLMoE-7B 上分析，更大规模模型和 dense 架构的 grokking 行为未验证
 - Pathway 指标依赖 MoE 架构，不能直接推广到 dense Transformer
 - instruction tuning 的选择（LoRA vs full-finetune）可能影响泛化测量

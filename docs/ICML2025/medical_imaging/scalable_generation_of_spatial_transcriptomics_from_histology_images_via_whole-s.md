@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Generation of Spatial Transcriptomics from Histology Images via Whole-Slide Flow Matching
 description: >-
@@ -128,7 +128,7 @@ $$\boldsymbol{Z}'_i = \text{MLP}\left(\sum_{j\in\mathcal{N}(i)} \boldsymbol{A}_{
 4. **可扩展性**：k-近邻局部注意力解决了全切片数万 spot 的内存瓶颈，同时通过多层堆叠仍可捕获长程依赖
 5. **生物学解释性强**：注意力权重中融入基因表达差异 $(Y_{t,i} - Y_{t,j})$，直接建模细胞间基因调控信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度**：flow matching 需要多步迭代采样（S 步 ODE 求解），推理速度慢于单步回归方法；可探索蒸馏或 consistency model 加速
 2. **先验参数估计**：ZINB 先验的 $\mu, \phi, \pi$ 从训练集估计，跨数据集泛化性有待验证

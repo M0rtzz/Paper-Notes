@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synergy over Discrepancy: A Partition-Based Approach to Multi-Domain LLM Fine-Tuning
 description: >-
@@ -117,7 +117,7 @@ PMS-FT 在所有模型和所有任务上均超越基线。
 3. **方法的通用性**：框架可与任何参数高效微调方法（LoRA、Adapter 等）组合
 4. **实际可用性**：分区步骤计算量极小，不增加微调本身的 GPU 内存
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **域数量限制**：实验最多测试 $k \leq 10$ 个域，大规模域场景（如数百个）下的表现未知
 2. **协同度量较启发式**：词汇 Jaccard + 嵌入余弦可能不够精确，更精细的域关系建模有改进空间

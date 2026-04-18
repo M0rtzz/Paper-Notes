@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FSBench: A Figure Skating Benchmark for Advancing Artistic Sports Understanding
 description: >-
@@ -97,7 +97,7 @@ SkateLLM 基于 MotionGPT 进行指令微调：
 - **AutoDQ 评估指标**比传统 BLEU/METEOR 更适合评估技术描述的语义准确性，通过提取关键事件进行匹配
 - **负样本的重要性**：以往数据集多来自顶级赛事，缺少失误样本；FSAnno 覆盖多级别赛事，包含充足的负 GOE 样本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前实验主要聚焦 motion-based 方法，video-based MLLM 的完整评估留待后续
 - SkateLLM 仅做了最基础的动作描述任务，更复杂的评分和解说任务尚未展开

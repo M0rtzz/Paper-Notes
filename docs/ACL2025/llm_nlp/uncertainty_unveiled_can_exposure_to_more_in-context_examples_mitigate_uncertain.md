@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty Unveiled: Can Exposure to More In-context Examples Mitigate Uncertainty for Large Language Models?
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **残差流可视化直观**：Case study 清晰展示 4-shot 下置信度剧烈波动，而 128-shot 下正确答案从约第 22 层起稳定保持最高概率。
 - **实用建议明确**：实际应用中推荐选择较大 k 值，同时提升性能和可靠性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **未覆盖开放式生成任务**：仅聚焦分类和 MCQA，对摘要、翻译等自由生成场景缺乏可靠 UQ 技术。
 2. **未探索 CoT/推理 ICL**：Chain-of-Thought 等推理范式的不确定性属性未研究，现有 UQ 方法难以捕获逻辑复杂度。

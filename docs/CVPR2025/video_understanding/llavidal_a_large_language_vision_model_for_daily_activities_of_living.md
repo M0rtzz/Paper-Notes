@@ -1,4 +1,4 @@
----
+﻿---
 title: "LLAVIDAL: A Large Language Vision Model for Daily Activities of Living"
 description: "提出LLAVIDAL模型和ADL-X数据集，通过多模态渐进式训练策略整合视频、3D骨架和人物-物体交互线索，显著提升日常活动理解的LLVM性能"
 tags: ["视频理解", "大语言视觉模型", "日常活动识别", "多模态融合", "CVPR2025"]
@@ -101,7 +101,7 @@ LLAVIDAL 由三大部分组成：
 - **MMPro 渐进式训练**是解决多同步模态对齐矛盾梯度问题的优雅方案，用 curriculum learning 原则确定模态整合顺序
 - 推理阶段无需骨架/HOI 是一个很实用的设计——训练时多模态提升学习能力，推理时单模态保持简洁
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据来源单一（仅 NTU RGB+D 120），背景和主体多样性有限
 - 骨架数据来自 GT 标注，实际场景中骨架估计可能不准确

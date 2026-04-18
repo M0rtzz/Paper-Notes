@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Align Multi-Faceted Evaluation: A Unified and Robust Framework
 description: >-
@@ -126,7 +126,7 @@ ARJudge 在所有微调评估器中最优，在 LLMBar 上比最佳微调基线 
 - **Analyzer-Refiner 分工设计**：微调的专家分析 + 未微调的通用综合，兼顾深度和广度
 - **反向验证机制**：代码生成后通过"解释→核查"两步确保代码与评估目标一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅限于成对比较评估，不支持对单个回复的评分
 2. 工具使用仅限 Python 代码，未考虑搜索引擎、知识库等其他验证工具

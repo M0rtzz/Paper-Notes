@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MedEyes: Learning Dynamic Visual Focus for Medical Progressive Diagnosis
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{J}(\theta) = \frac{1}{N}\sum_{i=1}^N \frac{1}{|\tau_i|}\sum_{t=1}^{|\
 - **可解释性强**：每步推理显式绑定到图像区域，注意力热图直观展示渐进聚焦过程
 - **"认知锚点"概念有启发性**：off-policy 轨迹作为认知锚点帮助初始能力弱的模型跳出局部最优，这个思路可推广到其他 RL 场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **定量测量问题**：在肿瘤大小测量等需要像素-厘米校准的任务上，基于比例估计的方法误差大
 - **细粒度概念区分**：偶尔混淆形态相似的病理亚型（如动脉瘤 vs 夹层动脉瘤）

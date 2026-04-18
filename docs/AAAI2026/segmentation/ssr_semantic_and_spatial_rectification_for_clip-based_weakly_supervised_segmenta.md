@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SSR: Semantic and Spatial Rectification for CLIP-based Weakly Supervised Segmentation
 description: >-
@@ -149,7 +149,7 @@ CAM种子质量方面，SSR在VOC train上取得78.7% mIoU，超越SOTA至少0.7
 3. **SLIC > SAM**：在空间先验场景中选择轻量级SLIC而非重量级SAM，体现工程实用主义
 4. **CLIP+DINO融合思路**：利用两个预训练模型的互补性（全局语义 vs 局部空间），是多模型协同的典范
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. SGC中的超像素参数（如SLIC的数量和紧凑度）可能需要对不同数据集进行调优
 2. 原型更新频率（每5000步）较粗糙，可考虑引入指数移动平均等更平滑的更新策略

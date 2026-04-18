@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CCCaption: Dual-Reward Reinforcement Learning for Complete and Correct Image Captioning
 description: >-
@@ -85,7 +85,7 @@ CCCaption 基于 GRPO 强化学习算法，核心包含三个部分：(1) Comple
 - 多 MLLM query 生成 + 多样性过滤是解决单模型偏差的有效方案
 - 揭示了 RL captioning 中"reward 上升但质量下降"的 reward hacking 现象，并提供了实用解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - query 生成和 correctness 评估依赖冻结的 judge MLLM，其偏差会传递到奖励信号中
 - CCaption-44k 规模相对较小，更大规模的多样化 query 数据集可能进一步提升
 - 目前仅在图像描述任务上验证，能否推广到视频描述或多轮对话有待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compression of 3D Gaussian Splatting with Optimized Feature Planes and Standard Video Codecs
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{render}} + \lambda_{\text{ent}} \mathcal{L}_{
 - 渐进训练 + 通道重要性的组合形成了完整的"粗到细 + 差异化压缩"策略
 - 方法独立于密化过程，与原始3DGS渲染管线完全兼容，渲染速度无额外开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时间较长（~90分钟/场景），主要受限于网格方法的收敛速度
 - 未引入点剪枝，点位置的存储占比随压缩率提高而增大，有进一步优化空间

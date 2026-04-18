@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Nets with Subsampling Layers Unwittingly Discard Useful Activations at Test-Time
 description: >-
@@ -117,7 +117,7 @@ $$\Delta = \sum_{l=1}^{L} s_l \prod_{l'=1}^{l} R^{(l')}$$
 - 空间对齐设计精巧，解决了不同选择索引之间的空间不匹配问题
 - 方法具有很强的通用性，在CNN和ViT上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 测试时计算开销增加（需多次前向传播），不适用于实时应用场景
 - 性能提升幅度相对有限（分类约0.3-2%，分割约0.2-0.5 mIoU），在已经很强的模型上收益递减

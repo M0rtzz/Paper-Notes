@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoLeaF: A Contrastive-Collaborative Learning Framework for Weakly Supervised Audio-Visual Video Parsing
 description: >-
@@ -124,7 +124,7 @@ $$\hat{y}_t^{ao} = \hat{y}_t^a \odot (1 - \hat{y}_t^v)$$
 5. **框架通用性强**：任何 AVVP 方法均可作为 Anchor 嵌入，即插即用
 6. **新指标贡献**：Ao/Vo 指标更准确反映未对齐事件检测能力，揭示了传统指标的误导性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 LLP 和 UnAV-100 两个数据集上验证，缺乏更大规模数据集的评估
 2. 伪标签的质量依赖预设阈值 $\theta$，对不同数据集可能需要调参

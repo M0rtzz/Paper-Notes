@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning
 description: >-
@@ -112,7 +112,7 @@ GraphVLM 将 VLM 在 MMGL 中的角色分为三类，构建统一评估协议：
 - 揭示 VLM 在图结构数据上的潜力：不仅是特征提取器，更可以是端到端的图推理骨干
 - 实验规模大（6数据集 × 多种方法 × 多种配置），结论可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅关注节点分类任务，未涵盖链接预测、图分类等其他图学习任务
 - 数据集仅限电商共购和社交网络两个领域，科学知识图谱等场景缺失

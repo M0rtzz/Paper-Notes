@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Model, Many Budgets: Elastic Latent Interfaces for Diffusion Transformers
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L}_{\text{RF}} = \mathbb{E}_{t, \mathbf{X}_1, \mathbf{X}_0} \| \mathc
 - **实验覆盖全面**：图像（256px/512px）+ 视频（Kinetics-700）+ 大规模 MM-DiT（20B Qwen-Image）+ 多架构 + 详尽消融
 - **动机实验说服力强**：零填充对比实验优雅地证明了 DiT 的均匀计算问题，attention map 可视化直观展示了 ELIT 的计算重分配效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **大规模从头训练未验证**：Qwen-Image 实验是微调+蒸馏设置，从头训练 20B 级模型的收益尚不明确，可能面临不同的收敛挑战
 2. **CCFG 饱和问题**：CCFG 倾向于比 CFG 更快地使图像饱和，在某些场景下可能导致色彩过度

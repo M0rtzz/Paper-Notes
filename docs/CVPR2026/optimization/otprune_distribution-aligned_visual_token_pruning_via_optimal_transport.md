@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OTPrune: Distribution-Aligned Visual Token Pruning via Optimal Transport
 description: >-
@@ -52,25 +52,25 @@ tags:
 
 ### 关键设计 1：OT 分布对齐建模
 
-- **做什么**：将 token pruning 建模为分布近似问题，最小化完整 token 集 $P$ 与裁剪子集 $Q$ 之间的 2-Wasserstein 距离
+- **功能**：将 token pruning 建模为分布近似问题，最小化完整 token 集 $P$ 与裁剪子集 $Q$ 之间的 2-Wasserstein 距离
 - **核心思路**：$\min_Q \mathcal{W}_2^2(P, Q) = \inf_{\pi \in \Pi(P,Q)} \mathbb{E}_{(x,y) \sim \pi} [\|x - y\|_2^2]$，直接在嵌入空间衡量两个分布的几何差异
 - **设计动机**：与仅追求多样性的 DivPrune 不同，Wasserstein 距离同时编码了局部多样性和全局代表性——保留的子集不仅彼此不同，还能忠实近似原始特征流形的几何结构
 
 ### 关键设计 2：Gaussian 代理 + log-det 子模目标
 
-- **做什么**：用零均值 Gaussian 近似 token 分布 $P \approx \mathcal{N}(0, \Sigma)$, $Q \approx \mathcal{N}(0, \Sigma_\mathcal{C})$，将 Wasserstein 距离转化为协方差矩阵的 trace 目标，再用 $\gamma$-log-det 算子取下界
+- **功能**：用零均值 Gaussian 近似 token 分布 $P \approx \mathcal{N}(0, \Sigma)$, $Q \approx \mathcal{N}(0, \Sigma_\mathcal{C})$，将 Wasserstein 距离转化为协方差矩阵的 trace 目标，再用 $\gamma$-log-det 算子取下界
 - **核心思路**：Gaussian 假设下 $\mathcal{W}_2^2$ 有闭式解 $\text{tr}(\Sigma) + \text{tr}(\Sigma_\mathcal{C}) - 2\text{tr}((\Sigma^{1/2} \Sigma_\mathcal{C} \Sigma^{1/2})^{1/2})$。通过对特征做单位方差归一化后，最大化 trace 目标。再利用 $\log\det(\bm{I} + \gamma \bm{X}) \leq \gamma \text{tr}(\bm{X})$ 的下界关系，得到代理目标 $\max_\mathcal{C} \log\det(\bm{I} + \gamma \Sigma^{1/2} \Sigma_\mathcal{C} \Sigma^{1/2})$
 - **设计动机**：log-det 函数是可证明的单调子模函数（monotone submodular），保证贪心算法具有 $(1 - 1/e)$ 近似比，且避免了直接计算矩阵平方根的高开销
 
 ### 关键设计 3：Sylvester 变换 + Cholesky 贪心选择
 
-- **做什么**：利用 Sylvester 行列式恒等式将 $d \times d$ 矩阵运算转化为 $k \times k$ 矩阵运算，然后通过增量 Cholesky 分解贪心选取 token
+- **功能**：利用 Sylvester 行列式恒等式将 $d \times d$ 矩阵运算转化为 $k \times k$ 矩阵运算，然后通过增量 Cholesky 分解贪心选取 token
 - **核心思路**：预计算 $\tilde{\bm{V}} = \bm{V}\bm{V}^\top$，则目标变为 $\max_\mathcal{C} \log\det(\bm{I} + \tilde{\gamma} \tilde{\bm{V}}_\mathcal{C} \tilde{\bm{V}}_\mathcal{C}^\top)$。每次贪心迭代选择使目标增量最大的 token $j = \arg\max_{i \notin \mathcal{C}} d_i^2$，并通过 Cholesky 系数增量更新剩余 token 的增益
 - **设计动机**：总复杂度 $O(mk^2)$，远低于暴力枚举的 $\binom{m}{k}$；子模性保证贪心解质量有理论下界；实验表明实际近似比远超 $(1 - 1/e) \approx 0.632$
 
 ### 关键设计 4：超参数 $\gamma$ 的鲁棒性
 
-- **做什么**：$\gamma$ 控制 OT 损失与 token 选择正则化之间的平衡
+- **功能**：$\gamma$ 控制 OT 损失与 token 选择正则化之间的平衡
 - **核心思路**：实验表明 $\gamma = 0.01$ 在 LLaVA 1.5-7B/13B 和 LLaVA 1.6-7B 上均表现良好，性能对 $\gamma$ 不敏感
 - **设计动机**：无需大量调参即可部署，增强了方法的实用性
 
@@ -118,7 +118,7 @@ tags:
 4. **假设验证充分**：通过 Spearman 相关性分析明确证明了"OT 距离越小 → 下游性能越好"这一核心假设
 5. **计算高效**：$O(mk^2)$ 复杂度，在保留约 10-15% token 情况下仅需原始 FLOP 的 ~15%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Gaussian 近似的局限**：token 分布在高维空间中可能并不服从 Gaussian，尤其对于语义丰富的图像，多模态分布可能更合适（如 Gaussian Mixture）
 2. **零均值假设较强**：实际 token embedding 通常不以零为中心，忽略均值匹配可能在某些场景下引入偏差

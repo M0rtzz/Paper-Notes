@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ross3D: Reconstructive Visual Instruction Tuning with 3D-Awareness
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \mathcal{L}_{text} + \mathcal{L}_{3D}^{cross} + \mathcal{L}_{3D}
 - **即插即用的设计**：去噪网络仅在训练时使用，推理时不增加任何开销
 - **两种pretext task的互补性**：跨视图关注局部细粒度关系，全局视图关注宏观布局，完美互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖于深度图生成位置感知的视频表示，深度估计的质量会影响最终效果
 - BEV图像从稀疏点云渲染，存在空洞问题，可能限制全局视图重建的效果

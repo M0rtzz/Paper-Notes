@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Reason without External Rewards
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：要提升推理能力需要 RL 训练，但高质量奖励信号的获取成本限制了 RL 的适用范围。
 
-**本文要解决什么？** LLM 能否仅依靠自身内在信号（无外部验证器/标准答案）提升推理能力？
+**本文目标** LLM 能否仅依靠自身内在信号（无外部验证器/标准答案）提升推理能力？
 
 **切入角度**：LLM 在遇到困难问题时置信度更低，正确回答时置信度更高——这种内在信号可以作为训练奖励。
 
-**核心idea一句话**：用模型自身的 self-certainty（平均 KL(Uniform || p_model)）替代 GRPO 中的外部奖励，实现完全无监督的推理能力提升。
+**核心 idea**：用模型自身的 self-certainty（平均 KL(Uniform || p_model)）替代 GRPO 中的外部奖励，实现完全无监督的推理能力提升。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ $$\mathcal{J}(\theta) = \mathbb{E}\left[\frac{1}{G}\sum_{i=1}^{G}\frac{1}{|o_i|}
 - **Online vs Offline 奖励的对比实验**：清晰展示了 reward hacking 的发生机制和防御方式。静态奖励模型的脆弱性是 RLHF 领域的经典问题，Intuitor 用 co-evolving reward 优雅解决。
 - **Self-certainty 比 entropy 更可靠**：KL(U||p) 的 mode-seeking 性质使其不偏向长文本，这个设计选择值得在其他需要内在奖励的场景中复用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 域内数学性能略低于 GRPO（-3~4%），说明 self-certainty 并非完美的正确性代理
 - 仅在 ≤14B 模型上验证，离"超人类推理"的 RLIF 愿景还很远
 - Self-certainty 可能偏向模型已知的知识范围，对全新知识的学习可能受限

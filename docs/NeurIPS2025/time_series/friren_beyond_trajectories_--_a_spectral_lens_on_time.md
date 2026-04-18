@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fern: Chaining Spectral Pearls — Ellipsoidal Forecasting Beyond Trajectories for Time Series
 description: >-
@@ -127,7 +127,7 @@ Rössler 上 Fern MSE 仅为 TimeMixer 的 0.62%、PatchTST 的 0.47%、DLinear 
 3. **理论优雅**：将 Normalizing Flows、Optimal Transport、Koopman 算子三大框架统一到椭球体传输中
 4. **评估方法论贡献**：SWD+EPT+混沌压力测试构成更全面的评估体系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Weather 等简单数据集上不占优**：当数据本质接近随机游走时，几何预测的优势不明显
 2. **ETTh2 非最优**：在 ETTh2 上 TimeMixer 和 PatchTST 更强，可能与该数据集的特殊非平稳性有关

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Role of Label Noise in the Feature Learning Process
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：经验观察清楚地表明网络"先学简单模式、后记忆噪声"，但在feature learning理论下缺少完整数学刻画。根本难点在于当 $n \cdot \text{SNR}^2 = \Theta(1)$ 时信号和噪声在同一量级，动态交织难以解耦。
 
-**本文要解决什么**：在feature learning理论框架下完整刻画标签噪声对训练动态的影响，揭示二阶段机制，为早停和样本选择提供正确性证明。
+**本文目标**：在feature learning理论框架下完整刻画标签噪声对训练动态的影响，揭示二阶段机制，为早停和样本选择提供正确性证明。
 
 **切入角度**：信号-噪声数据分布（每个样本 = label-dependent信号patch + label-independent噪声patch），$n \cdot \text{SNR}^2 = \Theta(1)$ 的关键条件使信号和噪声处于竞争关系。
 
-**核心idea一句话**：标签噪声在训练中创造了信号学习与噪声记忆的"竞赛"——前者先胜出但后者最终追上，分界点就是早停最佳位置。
+**核心 idea**：标签噪声在训练中创造了信号学习与噪声记忆的"竞赛"——前者先胜出但后者最终追上，分界点就是早停最佳位置。
 
 ## 方法详解
 

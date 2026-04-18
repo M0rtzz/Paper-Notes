@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MagicQuill: An Intelligent Interactive Image Editing System
 description: >-
@@ -50,7 +50,7 @@ tags:
 ### 关键设计
 
 **1. 双分支可控图像 Inpainting（Editing Processor）**
-- **做什么**: 在冻结的 Stable Diffusion UNet 上外挂两个可训练分支——inpainting 分支提供像素级内容感知修复，control 分支（ControlNet 架构）提供结构引导
+- **功能**: 在冻结的 Stable Diffusion UNet 上外挂两个可训练分支——inpainting 分支提供像素级内容感知修复，control 分支（ControlNet 架构）提供结构引导
 - **核心思路**:
     - **笔触信号→控制条件**: add brush 在边缘图上叠加新边缘，subtract brush 擦除区域边缘，两者合成 $\mathbf{E}_{cond}$；color brush 通过 alpha blending 着色后降采样 16× 再最近邻上采样得到 $\mathbf{C}_{cond}$（颜色块），限制颜色只影响大结构
     - **编辑区域**: 三种笔触区域取并集后膨胀 p 像素得到 mask $\mathbf{M}$
@@ -59,7 +59,7 @@ tags:
 - **设计动机**: 双分支不修改预训练权重，可即插即用适配社区微调模型；inpainting 分支保证区域外一致性，control 分支保证边缘/颜色精确对齐
 
 **2. Draw&Guess 意图预测（Painting Assistor）**
-- **做什么**: 用微调的 LLaVA 模型从用户笔触+图像上下文实时推断编辑意图，自动生成文字 prompt
+- **功能**: 用微调的 LLaVA 模型从用户笔触+图像上下文实时推断编辑意图，自动生成文字 prompt
 - **核心思路**:
     - 定义新任务"Draw&Guess"：输入带笔触的图像+笔触 bounding box → 输出一个词/短语描述用户意图
     - 数据集构建：从 DCI 数据集选 top-5 高边缘密度 mask → BrushNet inpainting 擦除区域内容 → 叠加原始边缘图模拟笔触 → 保留 DCI 标签作为 GT（24K+ 图，4.4K 类别）
@@ -68,7 +68,7 @@ tags:
 - **设计动机**: 消除反复敲 prompt 的认知负担，实现连续编辑流；微调数据集模拟真实笔触场景保证准确率
 
 **3. 用户界面设计（Idea Collector）**
-- **做什么**: 提供 Prompt 区域、工具栏、图层管理、画布、生成预览、参数调节等一体化界面
+- **功能**: 提供 Prompt 区域、工具栏、图层管理、画布、生成预览、参数调节等一体化界面
 - **设计动机**: 降低使用门槛，支持连续迭代编辑；SUS 评分显著高于 baseline（ComfyUI + Painter Node）
 
 ### 损失函数 / 训练策略
@@ -118,7 +118,7 @@ tags:
 - 专门的数据集构建流程（BrushNet 擦除 + 边缘叠加模拟笔触）是使 MLLM 理解手绘的关键
 - 系统工程完整度高：编辑核心 + AI 助手 + UI 三位一体，可直接使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持 scribble 和 color 两类控制，未涵盖参考图引导编辑
 - Draw&Guess 准确率仍有提升空间（GPT-4 Sim 仅 2.71/5）

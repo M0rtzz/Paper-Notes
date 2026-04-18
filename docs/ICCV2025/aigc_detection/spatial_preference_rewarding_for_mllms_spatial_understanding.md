@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatial Preference Rewarding for MLLMs Spatial Understanding
 description: >-
@@ -141,7 +141,7 @@ SPR 的提升随 IoU 阈值升高而显著增大——**在 0.9 阈值下 7B 模
 4. **模型无关性**：在 Ferret、LLaVA-OV、CogVLM 三个不同 MLLM 上均有效
 5. **高 IoU 阈值的实验设计**：区别于常规只看 0.5 阈值，提供了更深入的定位精度分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CLIP 作为语义评分器可能对某些细粒度差异不够敏感
 - 偏好数据仅基于 Objects365 构建，领域泛化性有待验证

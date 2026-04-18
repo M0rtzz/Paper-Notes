@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConFu: Contemplate the Future for Better Speculative Sampling
 description: >-
@@ -94,7 +94,7 @@ tags:
 - MoE 动态 token 在不同上下文下自适应选择"提示指令"——这是一个优雅的设计
 - 方法建立在 EAGLE-3 之上，实现了正交改进，与基线架构演进兼容
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Llama-3 3B/8B 测试，更大模型（70B+）是否有同比提升未知
 - Soft prompt tokens 数量（默认 16）和 MoE expert 数量的最优配置未系统研究

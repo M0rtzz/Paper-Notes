@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating the Evaluation of Diversity in Commonsense Generation
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **对形式级指标的有力批判**：self-BLEU 在高/低质量混合场景中完全不可靠（准确率 < 30%），而很多现有论文仍在使用——这个发现应该影响未来的评估实践
 - **务实的建议**：推荐使用 VS-Embed-0.5 或 Chamfer Distance，基于 SimCSE 嵌入，计算成本可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在英语上评估——形态丰富的语言中形式级指标可能表现不同
 2. 仅用 GPT-4o 作为标注LLM——其他LLM可能有不同偏好

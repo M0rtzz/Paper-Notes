@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hessian Geometry of Latent Space in Generative Models
 description: >-
@@ -117,7 +117,7 @@ $$L[\gamma(t)] = \int_0^1 \sqrt{\dot{\gamma}(t)^T g_F(\gamma(t)) \dot{\gamma}(t)
 4. **实用价值**：Fisher 度量引导的测地线插值在感知上比线性插值更平滑
 5. **JSD 训练技巧**：用 Jensen-Shannon 散度替代 MSE 损失解决梯度消失问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **维度受限**：当前方法仅处理 2D 潜空间切片（依赖 Bryant–Amari–Armstrong 定理），高维潜空间的完整分析仍不可行
 2. **计算开销大**：需为每个 2D 切片生成 60000 张图像，扩展性差

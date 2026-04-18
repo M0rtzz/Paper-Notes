@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RefineVAD: Semantic-Guided Feature Recalibration for Weakly Supervised Video Anomaly Detection
 description: >-
@@ -95,7 +95,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{MIL}} + \lambda_1 \mathcal{L}_
 - MoTAR 中基于方差的运动强度估计是无参的、噪声鲁棒的，计算开销极低，适合实时应用。
 - 框架的模块化设计使得各组件可独立验证贡献，工程上也便于替换升级。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 UCF-Crime AUC 上未超过 π-VAD（90.33% vs 88.92%），说明视频级类别预测在高 IoU 阈值下对帧级精确边界定位存在结构性劣势。
 - 类别原型数量需预先设定且与数据集绑定，面对开放世界的新异常类型扩展性有限。

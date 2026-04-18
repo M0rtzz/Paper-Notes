@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Split-Layer: Enhancing Implicit Neural Representation by Maximizing the Dimensionality of Feature Space
 description: >-
@@ -154,7 +154,7 @@ Split-Layer 在 6 种 INR 骨干、4 个任务上进行了全面评估。
 3. **正交于现有方法**：Split-Layer 与位置编码、激活函数等方法互不冲突，可叠加使用
 4. **NTK 视角验证**：从神经切线核的角度进一步解释了性能提升的理论基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **最优拆分公式为经验公式**：$N^* \approx (0.17C)^{2/3}$ 缺乏严格理论推导，仅通过实验拟合得到
 2. **Hadamard 积可能带来训练不稳定性**：高阶多项式可能导致梯度爆炸/消失问题，论文未深入分析

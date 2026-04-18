@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BrushNet: A Plug-and-Play Image Inpainting Model with Decomposed Dual-Branch Diffusion
 description: >-
@@ -118,7 +118,7 @@ BrushNet 在 EditBench 上同样全面领先：IR 达 4.40（次优 SDI 仅 1.86
 4. **全面的评测体系**：提出 BrushBench 和 BrushData，区分 inside/outside inpainting，7 项指标覆盖三个维度
 5. **背景感知能力**：定性结果中，BrushNet 能识别遮罩图像中已有的物体（如金鱼），避免重复生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **生成质量依赖基础模型**：BrushNet 作为插件，其输出质量与选择的预训练模型强相关，若基础模型域不匹配（如用动漫模型处理自然图像），结果会不连贯
 2. **异形/不规则 mask 处理欠佳**：对形状异常的 mask 仍可能产生较差的生成结果

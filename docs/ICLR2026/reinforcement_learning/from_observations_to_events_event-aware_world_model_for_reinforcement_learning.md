@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Observations to Events: Event-Aware World Model for Reinforcement Learning
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}(\theta) = \mathcal{L}_{\text{WM}}(\theta) + \beta_o \mathcal{L}_o(
 4. **无监督事件生成**：完全不需要手工标签，AGMM 自动检测统计显著变化，这使得框架可直接应用于各种环境
 5. **DMC-GB2 泛化**：GES 通过关注任务相关的运动特征而忽略背景干扰，实现了优秀的视觉泛化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. GES 实现刻意保持简单，未来可考虑用神经网络建模 GES 函数以同时实现效率和表达力
 2. 虽然 EADream 和 EASimulus 使用固定超参数跨域训练，但开发统一多任务模型仍是挑战

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LongLLaDA: Unlocking Long Context Capabilities in Diffusion LLMs
 description: >-
@@ -158,7 +158,7 @@ $$\lambda = 10^{-4} \cdot \left(\frac{t}{2\pi}\right)^{d/d_{extra}}, \quad d_{ex
 - **实用性强**：LongLLaDA 完全无需训练，即插即用
 - **发现了扩散 LLM 在 QA 任务上的独特优势**：这为后续研究提供了重要方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验主要集中在 LLaDA 系列和推理阶段，尚未验证微调外推
 - 采样策略对长上下文性能的影响未充分分析

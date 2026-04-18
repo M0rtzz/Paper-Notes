@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoopTrack: Exploring End-to-End Learning for Efficient Cooperative Sequential Perception
 description: >-
@@ -139,7 +139,7 @@ V2X-Seq 数据集上与协同感知 SOTA 对比（ResNet101 backbone）：
 - 多维特征解耦（语义 vs 运动）解决了 query-based 方法中隐式耦合导致的解码歧义
 - 关联标签的自动生成方案巧妙利用了第一阶段模型的预测能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 两阶段训练流程较复杂，未来可探索端到端一阶段训练
 - 仅在车-路（V2I）场景验证，V2V 多车场景待探索

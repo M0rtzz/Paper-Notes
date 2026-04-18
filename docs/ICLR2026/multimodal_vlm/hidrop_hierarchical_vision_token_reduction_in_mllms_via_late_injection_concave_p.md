@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiDrop: Hierarchical Vision Token Reduction in MLLMs via Late Injection, Concave Pyramid Pruning, and Early Exit
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：如何让 token 剪枝策略与模型内部层级处理动态真正匹配？
 
-**本文要解决什么**：设计与 MLLM 层级功能对齐的 token 管理策略——浅层不需要处理视觉 token（直接跳过）、中层是融合冗余最高的地方（激进剪枝）、深层已完成融合（直接丢弃）。
+**本文目标**：设计与 MLLM 层级功能对齐的 token 管理策略——浅层不需要处理视觉 token（直接跳过）、中层是融合冗余最高的地方（激进剪枝）、深层已完成融合（直接丢弃）。
 
 **切入角度**：先做系统的层级行为分析（intra-modal similarity + cross-modal influence），用数据驱动发现取代启发式假设。
 
-**核心 idea 一句话**：根据 MLLM 层级功能分工（传播/融合/推理），在正确的位置做正确的事——晚注入、猛剪枝、早退出。
+**核心 idea**：根据 MLLM 层级功能分工（传播/融合/推理），在正确的位置做正确的事——晚注入、猛剪枝、早退出。
 
 ## 方法详解
 
@@ -125,7 +125,7 @@ LLaVA-1.5-7B 上 11 个 benchmark 比较（保留约 64 tokens，压缩 88.9%）
 - **"延迟注入"是认知突破**：之前所有方法都默认视觉 token 从第一层就参与计算，HiDrop 首次提出"浅层根本不需要视觉信息"——这是对 MLLM 工作机制的深刻洞察，可推广到其他模态（如音频 token）
 - **三阶段与层级功能一一对应**：Late Injection-传播层、Concave Pruning-融合层、Early Exit-推理层，设计美感强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 LLaVA-1.5 验证**：层级行为分析的结论可能不适用于所有 MLLM（如 Qwen-VL、InternVL 的层级功能可能不同），需要更多架构的验证
 - **注入层和退出层固定**：$L_{inj}=9$, $L_{exit}=25$ 是硬编码的，不同输入（简单 vs 复杂图像）可能需要不同的处理窗口

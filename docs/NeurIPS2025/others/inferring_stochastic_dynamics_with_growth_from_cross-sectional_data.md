@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inferring Stochastic Dynamics with Growth from Cross-Sectional Data
 description: >-
@@ -104,7 +104,7 @@ Theorem 2.3 证明在连续时间极限下，此损失对OU过程有唯一最小
 - **物理正当性**：Lagrangian形式化保留了物理可解释性，推断出的漂移场和增长率有生物学意义
 - Theorem 2.3证明了正则化训练在OU情形下有唯一解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 漂移和增长的可辨识性在非线性情形下未完全解决，正则化引入了归纳偏置
 - 得分匹配在高维稀疏数据上可能不准确

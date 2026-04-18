@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation
 description: >-
@@ -193,7 +193,7 @@ HF-Fuser 和 SA-Coupler 消融：
 - **ID-Pruner 的双路设计精巧**：V-to-L 映射保留全局动作线索（解决"知道做什么但不知道怎么做"），L-to-V 过滤保留局部语义锚点（解决"看不见做不了"）
 - **效率提升惊人**：仅用 1/8 视觉 token 和 3/7 动作 token，训练 3× 快推理 2.7× 快，性能反超
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 OpenVLA 作为骨干 LLM，对基座模型仍有依赖
 - SigLIP 和 DINOv2 各有 24-27 层，双编码器架构的参数量和前向计算仍较大

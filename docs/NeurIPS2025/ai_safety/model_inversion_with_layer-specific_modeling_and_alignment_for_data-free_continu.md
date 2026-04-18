@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model Inversion with Layer-Specific Modeling and Alignment for Data-Free Continual Learning
 description: >-
@@ -169,7 +169,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda_1 \mathcal{L}_{KD} + \lambda_
 3. **通用性强**：方法与 CL 策略正交，可与多种持续学习方法结合使用
 4. **对大模型特别友好**：在 CLIP 等预训练模型上效率提升最为显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **高斯假设的局限**：类别级特征分布不一定是高斯的，多模态或长尾分布可能导致建模不准确
 2. **存储协方差矩阵**：对特征维度很高的层，协方差矩阵存储可能仍然较大（需对角化近似）

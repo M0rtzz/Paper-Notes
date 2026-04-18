@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoDistill: Geometry-Guided Self-Distillation for Weakly Supervised Cross-View Localization
 description: >-
@@ -118,7 +118,7 @@ GeoDistill分为两阶段流水线：
 - 锐化温度参数 $\tau$ 对"暗知识"的精炼效果优于两个极端（全暗知识 vs 完全丢弃），体现了信息理论中噪声-信号的trade-off
 - 即插即用特性：不修改架构，仅通过蒸馏训练范式就能提升多个已有方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在全景图输入上验证FoV遮挡策略，对本身就是有限FoV的输入（如KITTI的pinhole相机），GeoDistill在KITTI上的提升较VIGOR小
 - 方向估计网络依赖BEV投影的道路结构对齐，在非道路场景（如山地、森林）可能效果减弱

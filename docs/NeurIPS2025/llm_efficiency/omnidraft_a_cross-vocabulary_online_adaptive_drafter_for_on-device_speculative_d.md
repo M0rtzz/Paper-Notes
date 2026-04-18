@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniDraft: A Cross-Vocabulary Online Adaptive Drafter for On-Device Speculative Decoding
 description: >-
@@ -104,7 +104,7 @@ OmniDraft 包含三个核心组件：（1）跨词表 n-gram 缓存用于草稿/
 - N-gram 缓存是优雅的工程设计，将跨词表映射问题转化为在线缓存查找
 - 混合蒸馏损失对直接映射和 n-gram token 采用不同损失函数，体现了对问题结构的深入理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在线适应仅一次遍历数据流，对全新数据可能不稳定
 - 尚未解决特殊 token（如多模态 token）的跨词表映射

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DSR: Bridging Diffusion Models and 3D Representations for 3D Consistent Super-Resolution
 description: >-
@@ -69,7 +69,7 @@ tags:
 - **无微调即插即用**: 不修改任何预训练模型，纯利用3DGS的几何归纳偏置
 - **与任意SR模型兼容**: 框架对ISR/VSR方法都适用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每步去噪都需训练5K步3DGS——计算开销显著
 - NIQE指标(无参考画质)不如StableSR——3D一致性约束可能牺牲部分感知质量
 - 仅验证了×4上采样

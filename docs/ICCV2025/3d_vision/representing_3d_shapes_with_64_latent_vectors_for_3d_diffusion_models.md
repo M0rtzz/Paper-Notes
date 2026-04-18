@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Representing 3D Shapes with 64 Latent Vectors for 3D Diffusion Models
 description: >-
@@ -170,7 +170,7 @@ Triplane解码器重建速度达42.68 sample/s，是VecSet CrossAttn的12.4×，
 - **不确定性剪枝思路通用**：自适应计算资源分配的思路可推广到其他需要处理大量token的3D任务
 - **训练策略聪明**：两阶段训练让latent decoder专注通道解压，比端到端训练更稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Triplane表示对非凸物体可能存在表达局限（xy/yz/xz三平面的信息遗漏）
 - 不确定性head预测基于初始triplane tokens，精度受限于此阶段的特征质量

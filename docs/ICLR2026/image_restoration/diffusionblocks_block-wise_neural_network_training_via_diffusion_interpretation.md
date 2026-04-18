@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffusionBlocks: Block-wise Neural Network Training via Diffusion Interpretation
 description: >-
@@ -102,7 +102,7 @@ $$\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$$
 4. **多重效率收益**：训练 $B$ 倍显存缩减；diffusion model 推理 $B$ 倍加速；recurrent-depth 模型省去 BPTT
 5. **部分场景超越端到端**：ImageNet B=2/3 的 FID 优于不分 block 的端到端训练，说明适度专业化有正收益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验中 ViT 分类仅在 CIFAR-100 上验证（60.25→59.30），大规模 ImageNet 分类未测试
 - 推理时仍需按序调用各 block，无法并行化推理步骤

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CaptionSmiths: Flexibly Controlling Language Pattern in Image Captioning
 description: >-
@@ -111,7 +111,7 @@ CaptionSmiths在CIDEr上分别提升9.3%/59.1%/257.8%，在长描述数据集上
 - 自检索指标超越GT描述本身，说明条件化使模型学到了更具区分性的描述方式
 - 三属性控制的解耦性验证了去相关处理的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 生成长描述时存在幻觉问题（hallucination），这是LLM的固有局限
 - 仅控制三个属性，其他重要属性（如情感色彩、领域专业度）未涉及
 - 独特性值的直觉指定较困难（依赖数据集统计）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Know "No" Better: A Data-Driven Approach for Enhancing Negation Awareness in CLIP
 description: >-
@@ -115,7 +115,7 @@ Rand-P1 consistently 低于 P1，验证了"合理物体选择"的重要性。P1 
 - **评估基准设计考究**：NegRefCOCOg 避免了现有基准的偏见问题，支持多样化否定类型
 - **跨任务验证**：在图像-文本匹配、T2I 生成、指代图像分割三个不同任务上都验证了有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅微调文本编码器，视觉编码器未做适配，可能限制了更深层的否定语义理解
 - 否定数据生成依赖 LLM/MLLM 的能力，存在生成噪声和成本问题

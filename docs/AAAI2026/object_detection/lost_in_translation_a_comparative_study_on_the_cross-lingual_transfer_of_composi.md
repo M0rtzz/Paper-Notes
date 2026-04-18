@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lost in Translation? A Comparative Study on the Cross-Lingual Transfer of Composite Harms
 description: >-
@@ -138,7 +138,7 @@ CompositeHarm 是一个基于翻译的安全评估基准，旨在通过控制变
 - **与多模态攻击的对比**：与 Derner & Batistič (2025) 的工作对比表明，LLM 安全在语言泛化和模态泛化两个轴上都是脆弱的
 - **边缘部署风险警示**：最轻量（适合边缘部署）的模型恰恰最脆弱，计算效率与多语言安全存在严重权衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖五种印度语言，未涉及汉藏语系、闪含语系等其他语系
 - 使用 LLM-as-a-judge 评估方式，未引入人类评估验证

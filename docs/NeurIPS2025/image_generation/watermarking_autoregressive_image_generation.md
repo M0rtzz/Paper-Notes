@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Watermarking Autoregressive Image Generation
 description: >-
@@ -110,7 +110,7 @@ RCC 微调将 valuemetric 鲁棒性从 0.26 提升到 0.92；同步层将 geomet
 - 跨模态统一检测的 p-value 计算保持了理论严谨性（二项分布检验）
 - 同步层的思路（用辅助信号估计变换 → 反转变换 → 检测水印）具有通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 同步层假设裁剪保留一个角落，对任意裁剪需更复杂的同步模式
 - 同步层和 valuemetric 鲁棒性之间存在 tradeoff（同步信号被破坏导致错误反转）
 - 仅研究零比特水印（检测有无），未探索多比特消息嵌入

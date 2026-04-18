@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models
 description: >-
@@ -31,11 +31,11 @@ MambaMia 提出了基于双向 Mamba 的两阶段层次化视频 Token 压缩框
 
 **核心矛盾**：长视频包含两类冗余——帧内空间冗余（大量相似 patch）和帧间时序冗余（连续帧内容高度相似），但同时也包含需要保留的细粒度关键事件。需要一个既能大幅压缩又不丹失关键信息的通用方案。
 
-**本文要解决什么？** 如何在标准硬件上高效压缩小时级视频的视觉 Token，同时保持理解性能？
+**本文目标** 如何在标准硬件上高效压缩小时级视频的视觉 Token，同时保持理解性能？
 
 **切入角度**：利用状态空间模型（Mamba）的线性复杂度处理超长序列，并巧妙复用 Mamba 内部的自适应步长 $\Delta_t$ 作为帧重要性信号做自适应采样。
 
-**核心 idea 一句话**：用双向 Mamba + 门控聚合做空间压缩，再复用 Mamba 步长做自适应时间帧筛选，实现层次化长视频压缩。
+**核心 idea**：用双向 Mamba + 门控聚合做空间压缩，再复用 Mamba 步长做自适应时间帧筛选，实现层次化长视频压缩。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ MambaMia 提出了基于双向 Mamba 的两阶段层次化视频 Token 压缩框
 - **LLM 前的模块化压缩**：与 VAMBA（在 LLM 内压缩）不同，MambaMia 在 LLM 之前独立压缩，保持了模块化和轻量性
 - **严谨的实验方法论**：强调 from-scratch 训练、控制变量对比、多随机种子验证、统计检验——实验设计值得学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 384 帧时性能饱和，说明压缩层可能存在信息瓶颈——更多帧但更好的压缩策略值得探索
 - 当前 GPA 的 query conditioned pooling 只看 query token，没有 content-aware attention（为了效率），可能丢失 patch 间的关系
 - $\delta_{\text{thresh}}$ 是手动设定的，可以改为自适应阈值

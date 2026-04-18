@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predicting Training Re-evaluation Curves Enables Effective Data Curriculums
 description: >-
@@ -142,7 +142,7 @@ tags:
 - **与现有工作的整合自然**：成功解释了 OLMo-2、Feng et al.、Pangu-Ultra 等已发表训练方案的数据策略选择
 - **对 CPT/SFT 场景有直接指导**：TREC 预测不仅适用于预训练，也适用于持续预训练（CPT）阶段
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **优化器范围局限**：预测模型专为 AdamW 设计，扩展到 Adagrad、Adafactor、SGD 等非 EMA 类优化器是开放问题
 2. **TREC 绝对值不可跨调度比较**：TREC 在同一调度内可靠指导放置，但跨不同调度的绝对值比较会失效

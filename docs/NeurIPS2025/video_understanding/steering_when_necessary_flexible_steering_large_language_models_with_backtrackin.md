@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Steering When Necessary: Flexible Steering Large Language Models with Backtracking
 description: >-
@@ -120,7 +120,7 @@ TruthfulQA 开放生成任务（LLaMA2-7B-CHAT）：
 - 状态追踪复用生成过程中已有的隐状态，零额外计算开销
 - Probe 方法的探针参数直接复用为引导向量和分类器权重，设计极其简洁统一
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 回溯步数 $s$ 和阈值 $\beta$ 需要超参搜索，增加了调参成本
 - 当前仅在真实性场景验证，安全性、公平性等场景的效果待探索

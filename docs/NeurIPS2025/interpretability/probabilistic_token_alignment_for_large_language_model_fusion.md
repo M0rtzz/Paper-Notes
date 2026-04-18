@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probabilistic Token Alignment for Large Language Model Fusion
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：不同 LLM 虽然词表和 token ID 不同，但其 logit 概率分布编码了相似的语义知识——通过在分布层面对齐（而非字符串层面硬匹配）可以实现更连贯的融合。
 
-**核心 idea 一句话**：将 token 对齐重新建模为最优传输问题，用 Sinkhorn 算法求解全局传输计划，实现 logit 分布的软概率对齐。
+**核心 idea**：将 token 对齐重新建模为最优传输问题，用 Sinkhorn 算法求解全局传输计划，实现 logit 分布的软概率对齐。
 
 ## 方法详解
 
@@ -130,7 +130,7 @@ PTA-LLM 遵循知识融合范式：将多个 source LLM 的概率分布矩阵通
 - **可解释性的量化验证**：通过 Isomap+PCA 降维可视化 token 分布，量化了内部距离和中心距离，提供了 token 对齐为何有效的分布层面解释
 - **MinCE 优于 AvgCE**：选择当前预测最好的 source 模型（而非加权平均）效果更好，说明"精选"比"混合"更重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限 7B 模型**：所有实验基于 Llama-2 7B / OpenLLaMA 7B / MPT 7B，未验证更大规模模型的效果
 - **提升幅度有限**：平均 +1.72% 的相对增益在某些场景可能不够显著
 - **BBH 上改进极小**：+0.17%，当 source 模型在某领域较弱时，更精确的对齐也可能传递"噪声知识"

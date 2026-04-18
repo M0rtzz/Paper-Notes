@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-IDE: 3D Implicit Depth Emergent
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{ce} + \mathcal{L}_{\text{geometry}} 
 - **推理零开销**是巨大实用优势：部署时只需普通RGB视频管线
 - **"双重信息损失"分析** 深刻揭示了显式坐标注入的根本缺陷
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练仍需GT深度图和相机位姿，对数据要求高
 - 验证器和全局教师的损失权重需要调参
 - 在 Scan2Cap 上性能略逊于显式3D输入方法（-4.8 CIDEr）

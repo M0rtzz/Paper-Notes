@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LEGION: Learning to Ground and Explain for Synthetic Image Detection
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{s2} = \mathcal{L}_{CE}(y_d, \hat{y}_d)$$
 - **多任务统一框架**：检测、定位、解释在一个 MLLM 中统一，比分离式方案更高效
 - **`<SEG>` token 的语言引导分割**：LLM 自然语言描述与像素级分割无缝衔接
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练的 SAM 和 CLIP，对于极新生成器的图像可能需要更新基础模型
 - 两阶段训练增加复杂度，可探索端到端联合训练

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Conditional Panoramic Image Generation via Masked Autoregressive Modeling
 description: >-
@@ -118,7 +118,7 @@ PAR基于掩码自回归建模（MAR），整体pipeline为：
 - **推理速度优势**：0.3B模型比PanFusion快约3倍，同时FID更低
 - **连续token设计**：使用连续token+MLP去噪，避免了离散token的量化误差
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **小物体细节不足**：作者承认在桌椅等小物体细节上仍有失败案例（Fig.15）
 - **数据稀缺**：全景图数据远少于透视图数据，限制了模型质量的进一步提升，作者指出在更大规模真实全景数据上训练可能缓解
 - **分辨率有限**：目前固定在512×1024，高分辨率全景图生成未探索

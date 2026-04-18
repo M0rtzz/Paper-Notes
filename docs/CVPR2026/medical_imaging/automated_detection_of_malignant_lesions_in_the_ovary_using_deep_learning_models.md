@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Automated Detection of Malignant Lesions in the Ovary Using Deep Learning Models and XAI
 description: >-
@@ -123,7 +123,7 @@ tags:
 - **XAI三方交叉验证**：同时使用LIME/SHAP/IG并做对比分析，增强了可解释性结论的可信度
 - **模型选择的权衡思考**：不单纯追求最高准确率(VGG19=97.19%)，而是综合考虑XAI兼容性选择InceptionV3，体现了实用导向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据集极小**：仅2490张增强图像(原始498张)，与临床规模差距巨大，泛化能力存疑
 - **无外部验证**：所有实验在单一数据集上完成，未使用独立测试集或跨中心数据评估

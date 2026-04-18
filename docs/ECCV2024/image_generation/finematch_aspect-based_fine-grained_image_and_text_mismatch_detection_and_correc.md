@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FineMatch: Aspect-based Fine-grained Image and Text Mismatch Detection and Correction
 description: >-
@@ -179,7 +179,7 @@ ITM-IoU 排名与人工评估排名高度一致，验证了指标的合理性。
 4. **揭示了 VLM 的能力边界**：即使是最强的 GPT-4V 在 few-shot 下也无法有效完成细粒度图文匹配分析
 5. **实际应用价值**：AutoAlign 系统展示了 FineMatch 在 T2I 幻觉检测纠正中的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一纠正**：每个不匹配只提供一种纠正，但实际可能有多种合理纠正
 2. **与人类差距大**：最优模型仍落后人类 ~22 分，说明任务本身非常具有挑战性

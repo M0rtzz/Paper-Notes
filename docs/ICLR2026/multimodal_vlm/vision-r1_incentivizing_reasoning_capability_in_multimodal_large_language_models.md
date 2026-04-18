@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vision-R1: Incentivizing Reasoning Capability in Multimodal Large Language Models
 description: >-
@@ -115,7 +115,7 @@ Vision-R1-7B vs 基座Qwen2.5-VL-7B：GEO +13.4, ALG +10.3, GPS +16.4, MathVista
 - 仅用10K数据做RL即可获得~6%平均提升，数据效率极高
 - "Aha moment"在MLLM中首次被观察到（如自我纠正和反思）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RL训练仅使用数学数据，对通用推理任务的泛化有待验证
 - PTST的阶段数和长度设置目前靠经验，缺乏理论指导

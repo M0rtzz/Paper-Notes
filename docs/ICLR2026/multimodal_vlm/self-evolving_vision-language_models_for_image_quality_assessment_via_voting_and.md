@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Evolving Vision-Language Models for Image Quality Assessment via Voting and Ranking
 description: >-
@@ -124,7 +124,7 @@ EvoQuality 在 7 个主流 IQA 基准上进行了评估：
 3. **正反馈循环设计优雅**：迭代自进化机制使得训练过程具有"自我加速"的特性
 4. **实用价值高**：完全消除了 IQA 领域对人工标注的依赖，大幅降低了部署成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **迭代效率**：多轮迭代+多次采样的计算开销较大，尤其是大规模 VLM
 2. **投票质量依赖基础模型**：如果基础 VLM 的质量感知能力极弱，投票可能无法收敛到有意义的排序

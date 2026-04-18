@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LIVS: A Pluralistic Alignment Dataset for Inclusive Public Spaces
 description: >-
@@ -105,7 +105,7 @@ $$\mathcal{L}_{\text{DPO}}(\theta) = -\mathbb{E}_{(x_w, x_l)} \left[ \log \sigma
 4. **人类 vs LLM 提示词对比**：揭示了人类创造力在生成差异化视觉输出中的独特作用
 5. **可复用方法论**：社区参与+多标准标注+DPO 的流程可推广到文化遗产保护、医疗、教育等领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **地域局限**：仅覆盖蒙特利尔一个中型多元文化城市，推广到其他文化背景需验证
 - **参与者规模小**：仅约 18 位核心标注者，评估集仅 2,200 条；统计显著性有限

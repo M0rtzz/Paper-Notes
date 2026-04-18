@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EditScore: Unlocking Online RL for Image Editing via High-Fidelity Reward Modeling
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：参数规模无法替代领域对齐的准确性——通用 VLM 评估精细编辑质量时表现不佳（一致性判断甚至不如随机），特别是在一致性（Consistency）维度。
 
-**本文要解决什么？** 构建一个高保真、领域专用的奖励模型来解锁图像编辑的在线 RL。
+**本文目标** 构建一个高保真、领域专用的奖励模型来解锁图像编辑的在线 RL。
 
 **切入角度**：全栈系统——benchmark 驱动奖励模型开发，奖励模型驱动 RL 训练。
 
-**核心idea一句话**：高保真的领域专用奖励模型是解锁图像编辑在线 RL 的关键。
+**核心 idea**：高保真的领域专用奖励模型是解锁图像编辑在线 RL 的关键。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ tags:
 - **跨模型/跨算法泛化**：EditScore 在 OmniGen2 和 FLUX-Kontext-dev 上均有效，兼容 Flow-GRPO 和 TempFlow-GRPO
 - **双专家讨论标注**：显著提升标注一致性（Consistency 维度一致性率提升 12.12%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据构建依赖 GPT-4.1 标注，成本不低且可能引入偏差
 - EditScore 基于 Qwen2.5-VL 微调，随 VLM 迭代需持续更新（已验证 Qwen3-VL-8B 更优）
 - Text Change 等需要 OCR 能力的任务评估可能不够充分

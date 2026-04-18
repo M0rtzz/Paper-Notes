@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAPS: Multi-Agent Personality Shaping for Collaborative Reasoning
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：从心理学的大五人格理论（Big Five）出发——人类团队协作的有效性很大程度上来自成员性格的互补性。将这一理论映射到 Agent 设计中，每个 Agent 的"性格"决定其推理侧重点。
 
-**核心 idea 一句话**：用大五人格理论塑造 4 个功能 Agent 的推理风格（实现异质化），加上苏格拉底式 Critic 做反思修正（实现迭代精炼）。
+**核心 idea**：用大五人格理论塑造 4 个功能 Agent 的推理风格（实现异质化），加上苏格拉底式 Critic 做反思修正（实现迭代精炼）。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ tags:
 - **信息瓶颈理论的新应用**（Proposition 2）：将多 Agent 协作推理建模为协作信息瓶颈优化，每个 Agent 负责压缩输入但保留任务相关信息，Critic 监控是否违反约束——为多 Agent 系统提供了信息论的理论分析视角
 - **与同组 MARS 论文（APO 方向）有共同作者和互补关系**：MARS 做提示优化，MAPS 做推理协作，两者都用五 Agent + 苏格拉底对话 + POMDP/变分推理的框架思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 四步推理是固定顺序的（Interpreter→Aligner→Scholar→Solver），不支持动态跳过或循环
 - 人格 embedding 实际上是通过 prompt 实现的，不是真正的可学习向量，"人格塑造"更像是角色扮演的 prompt engineering
 - 只在科学推理（数学/物理/化学）上评估，缺少更广泛的推理任务（如常识推理、法律推理）

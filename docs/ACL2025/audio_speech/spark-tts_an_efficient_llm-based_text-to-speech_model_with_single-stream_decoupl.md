@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spark-TTS: An Efficient LLM-Based Text-to-Speech Model with Single-Stream Decoupled Speech Tokens
 description: >-
@@ -38,11 +38,11 @@ tags:
 
 **核心矛盾**: 如何在保持架构与文本 LLM 统一（单流自回归）的同时，既实现高质量语音重建，又支持灵活的声音属性控制？
 
-**本文要解决什么**: 设计统一架构实现零样本 TTS + 属性可控语音生成，且完全对齐标准文本 LLM 范式。
+**本文目标**: 设计统一架构实现零样本 TTS + 属性可控语音生成，且完全对齐标准文本 LLM 范式。
 
 **切入角度**: 设计 BiCodec 将语音解耦为语义 token（时变语言内容）和全局 token（时不变说话人属性），配合 Chain-of-Thought 生成策略实现从粗到细的属性控制。
 
-**核心idea一句话**: 用 BiCodec 将语音分解为语义 token + 全局 token 的单流结构，让标准文本 LLM 直接建模语音生成。
+**核心 idea**: 用 BiCodec 将语音分解为语义 token + 全局 token 的单流结构，让标准文本 LLM 直接建模语音生成。
 
 ## 方法详解
 
@@ -148,7 +148,7 @@ BiCodec 在 <1kbps 低码率范围内几乎所有指标 SOTA。
 - **VoxBox 数据集贡献**: 100K 小时全开源 + 性别/音高/语速标注，填补了可控 TTS 训练数据的空白
 - **效率优势**: 0.5B 参数打败 8B 同类模型，50 TPS 的低帧率减少了序列长度
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 说话人相似度（SIM）低于多阶段方法，AR 语言模型推理时引入的说话人变异性是根本原因
 2. 全局 token 和语义 token 之间未施加显式解耦约束，可考虑通过 formant/pitch 扰动增强解耦

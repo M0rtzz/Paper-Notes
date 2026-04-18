@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SketchSplat: 3D Edge Reconstruction via Differentiable Multi-view Sketch Splatting
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **端到端优化**：sketch 参数直接受 2D 图像损失约束，保证了 3D 边缘与 2D 的一致性
 - **工程设计精巧**：拓扑操作在优化中穿插而非后处理，保证结果仍与图像一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 2DGS-SN 检测器依赖深度图和法线图的质量，需要预先用 2DGS 重建场景
 - 仅处理直线和三阶 Bézier 曲线，对更复杂曲线类型未探索

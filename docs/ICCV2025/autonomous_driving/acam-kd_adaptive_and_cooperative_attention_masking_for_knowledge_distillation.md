@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ACAM-KD: Adaptive and Cooperative Attention Masking for Knowledge Distillation
 description: >-
@@ -184,7 +184,7 @@ $$L = L_{task} + \alpha (L^c_{distill} + L^s_{distill}) + \lambda L_{div}$$
 - **FPN neck 蒸馏 + 分割图蒸馏**：对两种任务采用不同的蒸馏位置是合理的适配
 - **多样性损失避免掩码退化**：简单有效的正则化，Figure 3 可视化展示了掩码的互补性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Cross-attention 模块增加了计算开销（额外的 Q/K/V 投影和注意力计算），文中未单独报告训练时间增加
 - 仅在 CNN 架构（ResNet 系列）上验证，未涉及 ViT/Swin 等 Transformer 架构

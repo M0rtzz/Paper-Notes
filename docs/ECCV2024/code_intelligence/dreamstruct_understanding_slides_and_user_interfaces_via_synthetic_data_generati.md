@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamStruct: Understanding Slides and User Interfaces via Synthetic Data Generation
 description: >-
@@ -93,7 +93,7 @@ DreamStruct的核心pipeline分为三个阶段：(1) 利用大语言模型（LLM
 - 方法简单实用，不需要复杂的模型架构创新，而是从数据角度解决问题
 - 对于辅助技术领域有直接的应用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据的视觉真实感仍有提升空间，生成的幻灯片和UI在视觉复杂度上可能不如真实场景
 - 代码生成的多样性受限于LLM的能力和prompt设计

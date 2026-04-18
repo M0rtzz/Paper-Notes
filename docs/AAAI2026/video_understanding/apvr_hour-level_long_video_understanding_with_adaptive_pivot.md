@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] APVR: Hour-Level Long Video Understanding with Adaptive Pivot Visual Information Retrieval
 description: >-
@@ -79,7 +79,7 @@ APVR+Qwen2.5-VL-7B在LVB上超过GPT-4V(59.1)和Gemini-1.5-Pro(64.0)。
 - **查询扩展极大增强检索**: 从简单问题扩展出物体、关系、语义等多维信息，使CLIP/GD的匹配更精准
 - **7B模型超越GPT-4V**: 训练免费方法+7B模型在LVB上64.9% > GPT-4V 59.1%
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖外部模型**: 需要CLIP+Grounding-DINO+LLM三个额外模型做查询扩展和帧打分，增加系统复杂度
 - **延迟**: 每个查询需要2分钟处理小时级视频，实时应用可能不够快
 - **仅限多选QA**: 所有benchmark都是选择题形式，开放问答的效果未知

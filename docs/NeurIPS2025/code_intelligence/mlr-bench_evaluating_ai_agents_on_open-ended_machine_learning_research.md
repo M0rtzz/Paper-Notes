@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MLR-Bench: Evaluating AI Agents on Open-Ended Machine Learning Research
 description: >-
@@ -146,7 +146,7 @@ MLR-Bench 包含三个核心组件和两种评估模式：
 4. **实用的代理对比**：同时评估了 6 个前沿模型 + 2 个编码代理 + AI Scientist V2，提供了全景式能力对比
 5. **"新颖性缺乏"洞察**：AI 生成的研究常常是现有方法的表面组合，缺乏对"为什么需要这种组合"的深层推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Experimentation 和 Writing 步骤仅在 10 个任务上评估**，样本量较小，统计功效有限
 2. **缺乏过程透明度**：人类评审者面对完整论文时难以判断每个部分是否科学可靠

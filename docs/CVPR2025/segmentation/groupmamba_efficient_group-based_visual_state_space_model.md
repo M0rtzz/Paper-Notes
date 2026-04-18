@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GroupMamba: Efficient Group-Based Visual State Space Model
 description: >-
@@ -49,18 +49,18 @@ tags:
 ### 关键设计
 
 **1. Visual Single Selective Scan (VSSS) Block**
-- **做什么**: 基于 Mamba 的 token-channel 混合器，由一个 Mamba block + FFN 组成，各前接 LayerNorm
+- **功能**: 基于 Mamba 的 token-channel 混合器，由一个 Mamba block + FFN 组成，各前接 LayerNorm
 - **核心思路**: 对输入 $\mathbf{Z}_{in}$ 先经 Mamba SSM 做 token mixing（序列建模），再经 FFN 做 channel mixing，均带残差连接
 - **设计动机**: 作为分组扫描的基本单元，每个 VSSS block 仅处理 $C/4$ 个通道的单方向扫描
 
 **2. Grouped Mamba Operator（分组扫描）**
-- **做什么**: 将输入 $C$ 通道分为 4 组（各 $C/4$），分别按左→右、右→左、上→下、下→上四个方向展平为 1D 序列，各自独立通过一个 VSSS block 处理后拼接
+- **功能**: 将输入 $C$ 通道分为 4 组（各 $C/4$），分别按左→右、右→左、上→下、下→上四个方向展平为 1D 序列，各自独立通过一个 VSSS block 处理后拼接
 - **核心思路**: 
 $$\mathbf{X}_{GM} = \text{Concat}(\text{VSSS}(\mathbf{X}_{LR}), \text{VSSS}(\mathbf{X}_{RL}), \text{VSSS}(\mathbf{X}_{TB}), \text{VSSS}(\mathbf{X}_{BT}))$$
 - **设计动机**: 每组只处理 $C/4$ 通道和单方向扫描，参数量和计算量大幅降低（参数减少约 26%）；四个方向覆盖完整空间依赖
 
 **3. Channel Affinity Modulation (CAM)**
-- **做什么**: 对分组 Mamba 输出进行通道重标定，增强跨组通道信息交换
+- **功能**: 对分组 Mamba 输出进行通道重标定，增强跨组通道信息交换
 - **核心思路**: 
     - 全局平均池化 → 两层 FC（类似 SE block）→ Sigmoid 得到通道权重
     - $\mathbf{X}_{CAM} = \mathbf{X}_{GM} \cdot \text{Affinity}(\mathbf{X}_{in})$
@@ -120,7 +120,7 @@ $$\mathcal{L}_{total} = \alpha \mathcal{L}_{CE}(Z_s, y) + (1-\alpha) \mathcal{L}
 - 蒸馏解决 SSM 训练不稳定的方案具有通用性
 - 三个变体（T/S/B）形成完整的精度-效率 tradeoff 系列
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 蒸馏依赖于外部教师模型（RegNetY-16G），增加了训练复杂度
 - 仅验证了图像分类、检测、分割，未扩展到视频理解或时序任务

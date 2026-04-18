@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Directional Embedding Smoothing for Robust Vision Language Models
 description: >-
@@ -84,7 +84,7 @@ tags:
 3. **从 LLM 到 VLM 的自然扩展**：利用 VLM 中文本/视觉 token 共享嵌入空间的特性，无缝迁移 RESTA
 4. **大规模多样化评估**：在 28K 攻击样本和 14 种攻击策略上评估，结果具有说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **缺乏自适应攻击评估**：仅在静态 benchmark 上测试，未评估针对 RESTA 设计的自适应攻击（adaptive attacks），防御是否真正鲁棒尚不确定
 2. **理论基础薄弱**：虽然受 randomized smoothing 启发，但越狱攻击与传统对抗样本有本质区别（不限于小扰动、输出空间复杂），缺乏严格的理论保证
 3. **模型覆盖有限**：仅测试了两个相对较小的模型（7B 和 4B），对更大规模或商用 VLM 的效果未知

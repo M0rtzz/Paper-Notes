@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Contrastive Prompting Enhances Sentence Embeddings in LLMs through Inference-Time Steering
 description: >-
@@ -104,7 +104,7 @@ CP 是纯推理时干预，可与 PromptEOL、Pretended CoT、Knowledge、MetaEO
 - PromptEOL 提升最大（+5.24），因为其原始提示最简单、非核心信息最多，CP 的增益与基线方法的"弱点"成正比
 - 辅助提示只传播到低层（5\~7 层），额外计算开销仅 11%\~19%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 方法设计假设辅助提示能捕获"非核心信息"，但对何为"核心"无理论保证，效果依赖辅助提示与正常提示的语义互补性
 - 仅在英语 STS 和分类任务上评估，跨语言效果未验证

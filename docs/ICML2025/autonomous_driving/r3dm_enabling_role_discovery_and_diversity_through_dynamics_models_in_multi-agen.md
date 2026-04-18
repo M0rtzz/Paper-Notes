@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] R3DM: Enabling Role Discovery and Diversity Through Dynamics Models in Multi-agent Reinforcement Learning
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{TD}(\theta) = \left[r^t + \alpha r_{\text{int}}^t + \gamma \max_{
 - 信息论推导严谨，从 MI 目标到可操作下界到具体奖励设计，每步都有定理支撑
 - 定性分析（战术演示）非常有说服力，直观展示了角色分化带来的战术协调优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **角色数量需预设**：$|M|$ 是超参数，未来可探索从 replay buffer 动态推导
 2. **世界模型基于局部观测**：仅用 ego agent 观测建模，未考虑其他智能体的动作/角色影响

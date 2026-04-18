@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VinePPO: Refining Credit Assignment in RL Training of LLMs
 description: >-
@@ -124,7 +124,7 @@ K 越大方差越小，且计算效率反而更高（更少迭代次数收敛）
 5. **显存友好**：无需 value network，7B 模型节省 112GB 显存
 6. **名称来源**：源自 TRPO 的 "Vine" 变体（Schulman et al., 2015），原作者认为该变体仅适用于可中间重置的环境——而语言生成恰好满足此条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **采样开销**：MC rollout 增加了采样时间，尤其对小模型（1.1B 慢 5 倍），大规模应用需要更高效的采样策略
 2. **K 的选择**：K 越大越好但越慢，缺乏自适应选择 K 的机制

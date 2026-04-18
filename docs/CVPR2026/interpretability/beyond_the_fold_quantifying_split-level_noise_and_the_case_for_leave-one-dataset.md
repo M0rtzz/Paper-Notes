@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Fold: Quantifying Split-Level Noise and the Case for Leave-One-Dataset-Out AU Evaluation
 description: >-
@@ -103,7 +103,7 @@ tags:
 - LODO协议不仅消除分区随机性，还测试了真正的领域泛化能力
 - F1 vs AUC的波动性分析为度量选择提供了量化指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在AU检测领域验证，但核心结论（小数据集+阈值度量=不稳定评估）适用于更多领域
 - LODO需要多数据集，不是所有子领域都有足够数据集
 - 未提出如何修补现有单数据集评估（如minimum报告多次分区结果+置信区间）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NIMO: a Nonlinear Interpretable MOdel
 description: >-
@@ -50,36 +50,36 @@ $$f(\mathbf{x}) = \beta_0 + \sum_{j=1}^d x_j \beta_j (1 + g_{\mathbf{u}_j}(\math
 
 1. **排除自身特征 ($\mathbf{x}_{-j}$)**
 
-    - **做什么**：神经网络 $g_{\mathbf{u}_j}$ 的输入不含第 $j$ 个特征
+    - **功能**：神经网络 $g_{\mathbf{u}_j}$ 的输入不含第 $j$ 个特征
     - **核心思路**：$x_j$ 仅通过线性项 $\beta_j$ 贡献预测，保证 $\beta_j$ 的可解释性
     - **设计动机**：若 $g_j$ 也依赖 $x_j$，则边际效应无法简洁用 $\beta_j$ 表示
 
 2. **零点约束 $g_{\mathbf{u}_j}(\mathbf{0}) = 0$**
 
-    - **做什么**：前向传播中减去 $g_{\mathbf{u}}(\mathbf{0})$ 强制约束
+    - **功能**：前向传播中减去 $g_{\mathbf{u}}(\mathbf{0})$ 强制约束
     - **核心思路**：标准化数据均值为零，约束保证均值处模型退化为纯线性
     - **设计动机**：$\text{MEM}_j = \frac{\partial f}{\partial x_j}\big|_{\mathbf{x}=\mathbf{0}} = \beta_j$
 
 3. **参数消去优化（Parameter Elimination）**
 
-    - **做什么**：推导 $\hat{\boldsymbol{\beta}}(\mathbf{u}) = (B_\mathbf{u}^T B_\mathbf{u} + \lambda I)^{-1} B_\mathbf{u}^T \mathbf{y}$ 的闭式解，代入后仅优化 $\mathbf{u}$
+    - **功能**：推导 $\hat{\boldsymbol{\beta}}(\mathbf{u}) = (B_\mathbf{u}^T B_\mathbf{u} + \lambda I)^{-1} B_\mathbf{u}^T \mathbf{y}$ 的闭式解，代入后仅优化 $\mathbf{u}$
     - **核心思路**：profile likelihood 方法，将 $\boldsymbol{\beta}$ 消去
     - **设计动机**：避免 $\boldsymbol{\beta}$ 和 $\mathbf{u}$ 联合优化的困难
 
 4. **自适应岭回归实现稀疏性**
 
-    - **做什么**：用 adaptive ridge regression (Grandvalet, 1998) 替代 Lasso
+    - **功能**：用 adaptive ridge regression (Grandvalet, 1998) 替代 Lasso
     - **核心思路**：每步有闭式解，且在最优点等价于 Lasso
     - **设计动机**：Lasso 无闭式解，无法用参数消去；自适应岭在保持闭式的同时实现稀疏
 
 5. **共享网络 + 位置编码**
 
-    - **做什么**：一个共享 $g_\mathbf{u}$ 加特征索引位置编码替代 $d$ 个独立网络
+    - **功能**：一个共享 $g_\mathbf{u}$ 加特征索引位置编码替代 $d$ 个独立网络
     - **设计动机**：高维场景中 $d$ 个独立网络不可行
 
 6. **Group $\ell_2$ 正则化**
 
-    - **做什么**：对第一层权重矩阵的每列施加 group $\ell_2$
+    - **功能**：对第一层权重矩阵的每列施加 group $\ell_2$
     - **设计动机**：鼓励特征级稀疏，提供额外的可解释性层次
 
 ### 损失函数 / 训练策略
@@ -139,7 +139,7 @@ Toy example 验证（3维）：
 4. **与 GLM 自然扩展**：通过 IRLS 可直接应用于逻辑回归等 GLM
 5. **自适应岭等价 Lasso**：利用经典结果在保持闭式解的同时实现稀疏
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 极高维 ($d > 1000$) 的可扩展性未验证
 - 假设非线性修正来自其他特征交互，忽略了特征自身非线性效应

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Task-aware MoILE: Hierarchical-Task-Aware Multi-modal Mixture of Incremental LoRA Experts for Embodied Continual Learning
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：如何在不知道 task ID 的情况下，让多模态 agent 同时持续学习不同层次的技能而不遗忘？
 
-**本文要解决什么？** 定义层次化持续学习设置 + 设计无 task ID 依赖的持续学习方法。
+**本文目标** 定义层次化持续学习设置 + 设计无 task ID 依赖的持续学习方法。
 
 **切入角度**：用视觉-文本嵌入聚类替代 task ID，SVD 分解 LoRA 保护旧知识。
 
-**核心idea一句话**：跨模态聚类识别任务 + 双路由 MoE-LoRA 选专家 + SVD 正交约束防遗忘。
+**核心 idea**：跨模态聚类识别任务 + 双路由 MoE-LoRA 选专家 + SVD 正交约束防遗忘。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **SVD 正交训练 LoRA**：巧妙利用 LoRA 低秩结构，通过 SVD 分解+冻结+正交约束实现参数空间划分。可推广到任何基于 LoRA 的持续学习场景。
 - **无 task ID 的任务识别**：通过多模态嵌入聚类实现，比假设已知 task ID 的方法更实用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 评估环境为 ALFRED 仿真，真实物理机器人验证不足
 - 聚类数需预设，如何自适应扩展未讨论
 - 5 种设置的组合关系及难度梯度分析还可更深入

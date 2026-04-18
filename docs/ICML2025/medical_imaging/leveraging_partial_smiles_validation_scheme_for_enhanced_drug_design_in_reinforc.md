@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Partial SMILES Validation Scheme for Enhanced Drug Design in Reinforcement Learning Frameworks
 description: >-
@@ -126,7 +126,7 @@ $$L^{\text{HD}}_{PSV}(\theta) = \mathbb{E}_t \left[ \text{HD} \left[ \pi_{\theta
 - **框架可扩展性**：PSV 框架可以扩展到注入其他领域知识（如合成可行性、毒性约束等），不局限于有效性验证
 - **兼容性强**：基于标准 LSTM + PPO 架构，可方便地集成到现有 SMILES 生成管线中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PSV 验证只保证部分 SMILES 的局部有效性，**不能保证最终完整分子一定有效**（但显著提高了有效率）
 - 实验主要基于 LSTM 预训练模型，未验证在 Transformer 等更强架构上的效果

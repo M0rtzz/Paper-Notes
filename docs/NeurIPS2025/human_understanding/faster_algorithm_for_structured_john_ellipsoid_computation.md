@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faster Algorithms for Structured John Ellipsoid Computation
 description: >-
@@ -125,7 +125,7 @@ $$\frac{1}{\sqrt{1+\varepsilon}} \cdot Q \subseteq P \subseteq \sqrt{d} \cdot Q$
 - **望远镜引理创新**：相比 CCLY19 仅分析 sketching 误差，本文同时处理 sketching 和 sampling 的误差累积
 - **理论贡献扎实**：强概率保证，精确的近似因子分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 纯理论工作，无数值实验验证实际运行效率
 - 近似杠杆分数计算中 $d^\omega$ 项在 $d$ 很大时仍可能成为瓶颈
 - 树宽算法需要先计算树分解（NP-hard 精确求解，仅有 $O(\tau \log^3 n)$ 近似）

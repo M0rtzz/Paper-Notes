@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Walking Further: Semantic-aware Multimodal Gait Recognition Under Long-Range Conditions
 description: >-
@@ -83,7 +83,7 @@ $$F_{i,j}^{3d}[k] = \text{Maxpool}_{u \in \mathcal{N}}(\text{MLP}(e_{k,u}))$$
 
 #### 2. CLIP语义挖掘模块（SeMi）
 
-**做什么**：利用CLIP提取身体部位级别的语义线索，作为跨模态对齐的中间桥梁。
+**功能**：利用CLIP提取身体部位级别的语义线索，作为跨模态对齐的中间桥梁。
 
 **核心思路**：
 - 构建身体部位提示："A photo of the [PART] of a [X] person"，[PART]从["head", "arms", "torso", "legs", "feet"]中取
@@ -98,7 +98,7 @@ $$F_{i,j}^{3d}[k] = \text{Maxpool}_{u \in \mathcal{N}}(\text{MLP}(e_{k,u}))$$
 
 #### 3. 语义引导对齐模块（SGA）
 
-**做什么**：利用SeMi产生的多粒度语义线索作为中间桥梁，对齐RGB和点云特征。
+**功能**：利用SeMi产生的多粒度语义线索作为中间桥梁，对齐RGB和点云特征。
 
 **核心思路**：使用交叉注意力，以2D/3D特征为Query，语义特征 $t^*$ 为Key/Value：
 
@@ -114,7 +114,7 @@ $$\hat{F}_{i,j}^{2d} = \text{LayerNorm}(\tilde{F}_{i,j}^{2d} + \text{FFN}(\tilde
 
 #### 4. 对称交叉注意力融合模块（SCAF）
 
-**做什么**：在对齐后的共享空间中，通过对称双流交叉注意力层级式整合互补信息。
+**功能**：在对齐后的共享空间中，通过对称双流交叉注意力层级式整合互补信息。
 
 **核心思路**：2D和3D特征交替作为Query并关注对方作为Key/Value，实现双向对齐和互信息融合：
 
@@ -129,7 +129,7 @@ $Q_k$ 来自2D特征，$K_k, V_k$ 来自3D特征（反向亦然）。
 
 #### 5. 时空模块（ST）
 
-**做什么**：聚合全局步态动力学。
+**功能**：聚合全局步态动力学。
 
 - **时间池化**：对2D特征序列沿时间维度做MaxPool → $F_i^{tp} \in \mathbb{R}^{h \times w \times d}$
 - **空间池化**：对3D特征沿点维度做AvgPool → $F_i^{sp} \in \mathbb{R}^{n \times d}$
@@ -209,7 +209,7 @@ $$\mathcal{L} = \alpha \mathcal{L}_{tri} + \beta \mathcal{L}_{ce}$$
 4. **PointGNN用于步态识别**：首次将基于图的3D骨干引入步态任务，通过特征相似度而非空间距离构图，适应稀疏点云
 5. **LiDAR长距离行人检测基准**：额外注标了4500帧的长距离行人检测标签，具有独立的研究价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **日夜域迁移问题严重**：夜间性能大幅下降，需要专门的多模态域自适应方法
 2. **CLIP冻结使用**：未探索针对步态数据微调CLIP的可能性

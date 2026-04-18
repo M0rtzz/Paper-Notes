@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeepASA: An Object-Oriented Multi-Purpose Network for Auditory Scene Analysis
 description: >-
@@ -104,7 +104,7 @@ DeepASA + CoI 达到 SELD 分数 **0.253**，优于 DCASE 2023 挑战赛冠军 N
 4. **Dynamic STFT**：时变可学习窗函数实现自适应时频分辨率权衡，优于固定窗和时不变可学习窗
 5. **噪声解码器显著提升**：显式估计背景噪声使分离性能提升 0.7 dB SI-SDRi，SED 性能同步大幅改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ATST 预训练模型参数量巨大（96.8M），占总参数量的绝大部分，需要探索更轻量的分类特征提取方案
 - 训练数据的混响时间限于 0.2–0.6 秒，在长混响环境下性能可能退化

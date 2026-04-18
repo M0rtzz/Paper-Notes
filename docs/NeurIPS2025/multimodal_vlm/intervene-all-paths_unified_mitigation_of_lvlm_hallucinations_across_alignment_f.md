@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Intervene-All-Paths: Unified Mitigation of LVLM Hallucinations across Alignment Formats
 description: >-
@@ -118,7 +118,7 @@ AllPath 分三步：(1) 用两种轻量方法识别 text-to-text (T2T) 和 image
 - **image-to-input-text 与 image-to-output-text 路径独立**的发现打破了"只需关注输出"的直觉假设
 - 方法的 plug-and-play 特性使其可直接应用于任何基于 Transformer 的 LVLM
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 主要在 LLaVA-v1.5-7B 上验证，虽附录有 Qwen-VL 和 Qwen2.5-VL 结果但不够充分
 - 缩放因子 $\gamma^+, \gamma^-$ 和 head 数 $\xi, \zeta$ 对不同任务格式需要手动调整
 - T2T head 和 I2T head 的选择依赖于标注的幻觉/非幻觉 token，需要一个小的标注集

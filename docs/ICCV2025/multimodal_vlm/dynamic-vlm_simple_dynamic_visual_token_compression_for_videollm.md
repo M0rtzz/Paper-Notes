@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic-VLM: Simple Dynamic Visual Token Compression for VideoLLM
 description: >-
@@ -138,7 +138,7 @@ Dynamic-VLM-7B 在 VideoMME 上比 LLaVA-OneVision-7B 提升 **2.7%**，在 EgoS
 - **多图像泛化**: 视频训练的模型自然获得了多图像理解能力，说明视频理解能力可泛化
 - **时间戳格式**: 将时间信息以文本方式"1s: \<image\>"注入，提供了时序线索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖闭源模型生成训练数据，可重复性受限
 - 自适应池化是手工设计的压缩方式，未考虑场景内容自适应

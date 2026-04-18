@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modern Methods in Associative Memory
 description: >-
@@ -32,11 +32,11 @@ IBM&MIT团队的系统性教程，将Dense Associative Memory (DenseAM)从经典
 
 **核心矛盾**：AM理论的解释力与现代深度学习架构之间存在断层。DenseAM解决了容量瓶颈，但如何系统地将AM视角应用于理解和设计现代架构仍缺乏清晰的教学路径。
 
-**本文要解决什么？**：提供一个从经典Hopfield网络到DenseAM、再到现代Transformer和扩散模型的统一教学框架，让研究者能够：(1) 理解AM的核心数学工具；(2) 看透现代架构的AM本质；(3) 利用AM理论设计新架构。
+**本文目标**：提供一个从经典Hopfield网络到DenseAM、再到现代Transformer和扩散模型的统一教学框架，让研究者能够：(1) 理解AM的核心数学工具；(2) 看透现代架构的AM本质；(3) 利用AM理论设计新架构。
 
 **切入角度**：从能量函数的Lyapunov性质出发，将所有AM统一为"能量下降导致的记忆检索"过程。这个视角天然适配Transformer的注意力计算和扩散模型的去噪过程。
 
-**核心idea一句话**：通过能量函数框架统一经典AM与现代深度学习架构，将Transformer注意力解读为DenseAM的一步记忆检索、将扩散去噪解读为能量景观上的梯度下降。
+**核心 idea**：通过能量函数框架统一经典AM与现代深度学习架构，将Transformer注意力解读为DenseAM的一步记忆检索、将扩散去噪解读为能量景观上的梯度下降。
 
 ## 方法详解
 

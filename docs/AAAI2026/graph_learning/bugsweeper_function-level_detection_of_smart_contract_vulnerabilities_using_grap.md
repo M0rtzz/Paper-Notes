@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BugSweeper: Function-Level Detection of Smart Contract Vulnerabilities Using Graph Neural Networks
 description: >-
@@ -118,7 +118,7 @@ BugSweeper F1 超过最强基线 AME 约 **3.1 个百分点**，同时 Precision
 4. **两阶段 GNN 设计合理**：第一阶段降噪 + 第二阶段高层推理，SAGE 和 GAT 各发挥所长
 5. **多漏洞泛化**：同一框架统一检测三类漏洞，无需为每种漏洞单独设计规则
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **漏洞类型有限**：仅验证了 3 种漏洞，未覆盖更隐蔽的逻辑漏洞（如访问控制、整数溢出等）
 2. **数据不均衡影响明显**：Unchecked Low-Level Calls 和 Time Manipulation 的 F1 明显低于 Reentrancy，说明对少样本类型泛化仍有不足

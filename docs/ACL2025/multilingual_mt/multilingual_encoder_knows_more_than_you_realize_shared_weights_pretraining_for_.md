@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multilingual Encoder Knows More Than You Realize: Shared Weights Pretraining for Extremely Low-Resource Languages
 description: >-
@@ -30,7 +30,7 @@ tags:
 
 **核心矛盾**：多语言编码器（如 XLM-R）在极低资源语言上已学到可用的表示，但编码器架构不能直接做生成。同时从零训练 decoder 又缺少数据。如何利用编码器已学到的语言知识来初始化和加速 decoder 的学习？
 
-**本文要解决什么**：提出一种高效的权重复用策略，将多语言编码器的知识转移到编码器-解码器架构的 decoder 部分，使得小模型（457M）在极低资源语言上也能进行高质量的文本生成。
+**本文目标**：提出一种高效的权重复用策略，将多语言编码器的知识转移到编码器-解码器架构的 decoder 部分，使得小模型（457M）在极低资源语言上也能进行高质量的文本生成。
 
 **切入角度**：观察到编码器和 decoder 的 Transformer 层结构有大量共享——self-attention 和 FFN 部分完全同构，区别仅在于 decoder 多了 cross-attention 层。因此可以将编码器权重直接复用到 decoder 的 self-attention 和 FFN，只需随机初始化 cross-attention。
 
@@ -129,7 +129,7 @@ XLM-SWCM (Cross-lingual Language Model with Shared Weight Cross-modal) 的核心
 - **CustomDecoder + NormalDecoder 交替设计优雅**：不是简单地全部共享或全部随机，而是通过频率控制在"知识保留"和"生成自由度"之间取得平衡，设计简洁但有效
 - **对"编码器-解码器已过时"论调的反驳**：在 decoder-only 架构主导的时代，本文证明对于极低资源语言，编码器-解码器架构配合权重复用策略仍然是更优选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅测试摘要和翻译两种任务**：对话生成、问答、指令跟踪等其他生成任务未验证——权重共享策略在这些任务上是否同样有效？
 - **编码器选择有限**：仅基于 XLM-R——如果换成更新更大的多语言编码器（如 XLM-R XXL 或 NLLB encoder），效果可能进一步提升
 - **低资源语言范围仍有限**：测试了藏语/维吾尔语/蒙古语三种阿尔泰语系+藏语——非洲班图语系、南岛语系等其他低资源语言族尚需验证

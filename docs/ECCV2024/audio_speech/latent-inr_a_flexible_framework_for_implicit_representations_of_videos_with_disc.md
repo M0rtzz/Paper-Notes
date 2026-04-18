@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent-INR: A Flexible Framework for Implicit Representations of Videos with Discriminative Semantics
 description: >-
@@ -119,7 +119,7 @@ $\lambda=0.01$ 为最佳平衡点：PSNR 仅从 30.03 降至 29.46（-0.57 dB）
 - **插帧性能碾压**：latent 空间的线性插值特性使其在视频插帧上远超其他 INR 方法
 - **灵活对齐**：latent 可与任意大模型（CLIP、VideoLlama）对齐，具有良好的可扩展性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 编码时间仍然较长（每个视频需单独训练整个系统），未从根本上解决 INR 的训练效率问题
 - 压缩性能虽可比，但并未显著超越 NVP 等方法，额外的语义能力需要额外计算代价

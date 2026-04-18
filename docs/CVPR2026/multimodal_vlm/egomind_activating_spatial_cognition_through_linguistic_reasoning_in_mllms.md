@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoMind: Activating Spatial Cognition through Linguistic Reasoning in MLLMs
 description: >-
@@ -90,7 +90,7 @@ $$R_i = w_f R_{\mathrm{format}}(y|x) + w_a R_{\mathrm{accuracy}}(y|x)$$
 - **数据效率极高**——5K CoT + 20K RL 即达竞争性能，与百万级训练集的方法持平
 - CoT 中的 under-noising 和视角转换描述是很好的 linguistic spatial reasoning 范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 时序推理能力仍有限，对长时间轴的视频理解不够充分
 - CoT 数据的合成多样性有待提升

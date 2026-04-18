@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unified Reinforcement and Imitation Learning for Vision-Language Models
 description: >-
@@ -117,7 +117,7 @@ RIL 包含三个核心组件：学生 VLM（Generator）、判别器（Discrimin
 - **架构/tokenizer无关**：RIL 纯粹基于文本回答进行学习，学生和教师可以使用完全不同的图像嵌入和分词器
 - **LLM-as-a-Judge 的通用性**：传统 RL 奖励依赖 answer parsing（只适用于数学等有标准答案的任务），Judge 可评估开放式问答
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要访问大教师 VLM 生成回答，训练成本包含大模型推理
 - 判别器训练的稳定性仍需仔细调参（初始化、预训练步数等）

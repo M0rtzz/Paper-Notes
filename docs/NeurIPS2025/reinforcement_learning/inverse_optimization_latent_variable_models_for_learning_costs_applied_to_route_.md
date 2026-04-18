@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inverse Optimization Latent Variable Models for Learning Costs Applied to Route Problems
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **成本空间 vs 解空间的洞察**：传统 VAE 学解空间的分布，IO-LVM 学成本空间的分布——后者更紧凑且物理意义更明确。一个成本函数可以生成无穷条路径（不同起终点），但反过来不行
 - **无监督 agent 分离**：不需要知道"谁走的这条路"，IO-LVM 自动从路径中反推成本偏好并聚类
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖高效求解器——TSP 等 NP-hard 问题的大规模实例可能成为瓶颈
 - 假设观测路径是成本下的最优解（最短路径），实际中人类决策可能次优
 - Fenchel-Young 梯度估计的 Proposition 1 需要所有可行路径等长，这只在 TSP（哈密顿回路）中严格成立，在最短路径中是近似

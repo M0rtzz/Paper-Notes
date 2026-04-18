@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UPRE: Zero-Shot Domain Adaptation for Object Detection via Unified Prompt and Representation Enhancement
 description: >-
@@ -139,7 +139,7 @@ RDD 损失组合消融（MAD = 均值绝对偏差，衡量训练稳定性）：
 - **三种 prompt 的分工设计**（图像级/正/负）比共享 prompt 更有效，体现了检测任务中不同组件需要不同域知识的洞察
 - RDD 的"相对距离"思想比单纯拉近/推远更优雅——要求视觉域偏移与语言域偏移保持一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 域描述 $k_d$ 仍需手工定义（如"rainy night"），如何自动发现目标域的语言描述是开放问题
 - URE 的增强粒度（$M \times N$ 的块划分）是固定的，自适应的粒度选择可能更优

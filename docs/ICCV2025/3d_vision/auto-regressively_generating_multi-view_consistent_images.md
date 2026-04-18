@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Auto-Regressively Generating Multi-View Consistent Images
 description: >-
@@ -118,7 +118,7 @@ Shuffle View 是贡献最大的组件（去掉后 FID 恶化 +29，PSNR 下降 4
 - Shuffle View 数据增强简单有效，适用于所有基于序列的多视图方法
 - SSA 的设计解决了 in-context 条件中文本被图像干扰的通用问题，可迁移到其他多模态 AR 模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AR 模型的**单向性**和**离散编码**是固有限制，生成质量受 VQVAE 重建质量约束
 - **累积误差**：前序视图质量差会影响后续视图，虽然提到了但未完全解决
 - 当前使用2D VQVAE 编码，未来使用因果3D VAE可能进一步提升跨视图一致性

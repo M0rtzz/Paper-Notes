@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SwiReasoning: Switch-Thinking in Latent and Explicit for Pareto-Superior Reasoning
 description: >-
@@ -127,7 +127,7 @@ Token 效率提升：
 
 5. **连接了两个研究社区**：将隐式推理（latent reasoning）和显式推理（CoT）这两个方向桥接起来，提供了一个统一视角。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在推理 LLM 上验证**：虽然免训练是优势，但专门训练的切换策略可能带来更大的性能增益。未来可以探索轻量级微调来进一步优化切换决策。
 

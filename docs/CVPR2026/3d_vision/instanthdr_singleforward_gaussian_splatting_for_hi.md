@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction
 description: >-
@@ -39,11 +39,11 @@ tags:
 
 **核心矛盾**：前馈范式的速度优势 vs HDR场景的曝光不一致+CRF多样性+数据稀缺。
 
-**本文要解决什么？** 如何在无需逐场景优化的情况下，从未标定、曝光不一致的多视角LDR图像中快速重建高质量HDR 3D场景？
+**本文目标** 如何在无需逐场景优化的情况下，从未标定、曝光不一致的多视角LDR图像中快速重建高质量HDR 3D场景？
 
 **切入角度**：冻结几何backbone + 可训练外观分支解耦几何与外观；复用几何编码器中间层attention map做跨视角融合引导；元网络预测CRF参数实现一次前向适配多相机。
 
-**核心idea一句话**：几何引导的外观建模解决曝光不一致融合 + 元网络预测色调映射实现泛化 = 单次前向HDR重建。
+**核心 idea**：几何引导的外观建模解决曝光不一致融合 + 元网络预测色调映射实现泛化 = 单次前向HDR重建。
 
 ## 方法详解
 
@@ -123,7 +123,7 @@ tags:
 - **MetaNet预测CRF全部参数**实现"一网适配多相机"——从per-scene MLP到meta-learned参数的范式转变
 - **构建HDR-Pretrain数据集**填补社区空白——168场景比此前最大HDR数据集大10倍以上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零样本HDR输出偏亮——极端辐射值在单次前向中难以准确预测
 - 合成场景dense view下与GaussianHDR仍有PSNR差距(约2-6 dB)——后者有专门的3D-2D双分支tone mapping

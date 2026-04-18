@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VQToken: Neural Discrete Token Representation Learning for Extreme Token Reduction in Video Large Language Models
 description: >-
@@ -149,7 +149,7 @@ VQToken 框架流程：
 - **Token Hash 函数设计精巧**：用简洁的 3D 索引图替代昂贵的运动跟踪（如光流），既保留了时空关系又几乎不增加计算开销
 - **TokDense 评价指标**：提出了"每 token 贡献的准确率"这一新指标，为极限压缩场景下的方法比较提供了更合理的衡量标准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 0.5B 参数的 LLaVA-OneVision 上验证，更大规模 LLM 的效果未知
 - K-Means 聚类需要对全序列 token 一次性计算，难以流式处理

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Measuring Physical-World Privacy Awareness of Large Language Models: An Evaluation Benchmark
 description: >-
@@ -116,7 +116,7 @@ tags:
 - **物理隐私评估的开创性**：将隐私评估从文本扩展到物理世界，用 PDDL+多模态线索模拟具身感知，是一个重要的评估范式转变
 - **Thinking 退化**对 scaling reasoning 的警示：更多推理不总是更好——在需要"常识"而非"深度分析"的隐私场景中，推理可能过度复杂化简单判断
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅基于美国法律/社会规范框架，跨文化适用性需探索
 - PDDL 格式的物理描述与真实视觉感知有差距——未使用真实图像/视频
 - 400+ 场景的规模相对于物理世界的复杂度仍有限

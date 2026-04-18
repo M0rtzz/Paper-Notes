@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Preventing Catastrophic Overfitting in Fast Adversarial Training: A Bi-level Optimization Perspective
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L}_{PCO} = \mathcal{L}_{CE}(f_\theta(\boldsymbol{x}_{train}), \mathbf
 4. 在 WideResNet34-10 + CIFAR-100 这一公认困难设置下，10/10 次完全避免过拟合
 5. 比 FGSM-MEP 仅多 3 分钟训练时间，但节省 1/3 显存
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **训练开销仍高于最简单的 FAT**：需要存储上一轮对抗样本并做额外前向传播，比 FGSM-RS 慢约 50%
 2. **放大因子 $\gamma$ 固定为 2**：未探索动态调整策略，不同数据集/模型可能需要不同设置
 3. **AA（AutoAttack）指标上未超越 TRADES**：在最强攻击下的鲁棒性仍有差距（48.04% vs 49.47%）

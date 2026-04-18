@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Supervised Learning of Graph Representations for Network Intrusion Detection
 description: >-
@@ -100,7 +100,7 @@ GraphIDS 分三步：(1) 构建网络流量的局部通信图；(2) 归纳式 GN
 - **自监督范式**：无需攻击标签训练，契合实际部署场景
 - 99.98% PR-AUC 的极高性能令人印象深刻
 
-## 局限性 / 可改进方向
+## 局限与展望
 - NetFlow 级别的检测粒度，可能无法捕捉应用层攻击细节
 - 阈值选择依赖正常数据分布假设
 - 大规模实时部署的延迟和吞吐量未充分评估

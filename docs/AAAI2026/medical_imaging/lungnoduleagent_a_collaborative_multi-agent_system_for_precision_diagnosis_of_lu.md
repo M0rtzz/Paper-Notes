@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LungNoduleAgent: A Collaborative Multi-Agent System for Precision Diagnosis of Lung Nodules
 description: >-
@@ -139,7 +139,7 @@ Nodule Spotter 内部消融：
 - 医学知识图谱 + 多智能体讨论实现了循证诊断，而非纯靠模型内部参数记忆，这是提升可信度的关键
 - LungDLC-score 评估指标的设计很有参考价值，通过属性级 QA 避免了对 ground truth 报告的依赖
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 系统依赖多个大型 VLM 级联调用，推理成本高、延迟大，离临床实时部署有差距
 - 三个模块间是顺序管道设计，错误会逐级传播——如果 Nodule Spotter 漏检，后续模块无法补救

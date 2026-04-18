@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] mRAKL: Multilingual Retrieval-Augmented Knowledge Graph Construction for Low-Resourced Languages
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 低资源语言缺乏结构化标注数据，但拥有相对更多的非结构化单语文本（如 Wikipedia 文章），如何利用这些非结构化数据来构建 KG。
 
-**本文要解决什么**: 为 Tigrinya（3.5k 三元组）和 Amharic（34k 三元组）这样的极低资源语言构建和补全知识图谱。
+**本文目标**: 为 Tigrinya（3.5k 三元组）和 Amharic（34k 三元组）这样的极低资源语言构建和补全知识图谱。
 
 **切入角度**: 将 KG 三元组转换为 QA 对（head + relation → question, tail → answer），用 RAG 方式从 Wikipedia 检索相关段落辅助生成。
 
-**核心idea一句话**: 用 RAG + 跨语言 QA 将非结构化单语数据转化为 KG 补全能力，弥补低资源语言结构化数据的不足。
+**核心 idea**: 用 RAG + 跨语言 QA 将非结构化单语数据转化为 KG 补全能力，弥补低资源语言结构化数据的不足。
 
 ## 方法详解
 
@@ -128,7 +128,7 @@ mRAKL 由两个核心组件构成：
 - **真实低资源场景**: 3.5k 规模的 Tigrinya KG 是真正的低资源设置，具有很高的实际参考价值
 - **迁移语言选择的洞察**: 语言家族和文化/地域相关性都影响迁移效果
 
-## 局限性/可改进方向
+## 局限与展望
 
 - Tigrinya 数据量极小（3.5k 三元组、272 实体），结果可能不够稳定
 - 检索器（BM25/LaBSE）的性能仍有很大提升空间，可尝试为低资源语言专门训练的检索器

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mod-Adapter: Tuning-Free and Versatile Multi-concept Personalization via Modulation Adapter
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：抽象概念（姿态、光照、材质）不是独立的视觉实体，它们与物体强耦合，难以从图像中单独提取。同时，将提取的视觉特征映射到 DiT 的调制空间存在巨大 gap。
 
-**本文要解决什么？** (i) 无需测试时微调地泛化到新概念；(ii) 同时支持物体和抽象概念的定制；(iii) 实现多概念之间的解耦控制。
+**本文目标** (i) 无需测试时微调地泛化到新概念；(ii) 同时支持物体和抽象概念的定制；(iii) 实现多概念之间的解耦控制。
 
 **切入角度**：利用 DiT 中 AdaLN 调制空间的局部性和语义可加性——不同 token 使用不同调制向量可以实现局部化的概念控制。
 
-**核心 idea 一句话**：训练一个 Mod-Adapter 模块预测概念特定的调制方向，通过 VLM 引导预训练解决 image-modulation 空间的巨大 gap。
+**核心 idea**：训练一个 Mod-Adapter 模块预测概念特定的调制方向，通过 VLM 引导预训练解决 image-modulation 空间的巨大 gap。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ tags:
 - **VLM 引导预训练**：将 VLM 的图像理解能力作为桥梁来缩小 image-modulation gap，是一个优雅的 warm-up 策略。不需要通过 DiT 反传，预训练开销很低
 - **k-means MoE 路由**：用无参数的聚类方法替代可学习门控，从根本上解决 expert 利用不均衡问题，思路简单但效果好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 模型参数量 1.67B，虽然是唯一需要训练的部分，但比 TI 类方法重得多
 - 抽象概念的训练数据通过 FLUX 自蒸馏合成，数据质量和多样性可能受限

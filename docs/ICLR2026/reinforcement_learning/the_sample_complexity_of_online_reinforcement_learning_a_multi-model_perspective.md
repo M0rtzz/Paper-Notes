@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Sample Complexity of Online Reinforcement Learning: A Multi-Model Perspective
 description: >-
@@ -123,7 +123,7 @@ $$s_k^i = \sum_{j=1}^{k-1} \frac{|x_{j+1} - f_i(x_j, u_j)|^2}{1 + |(x_j, u_j)|^2
 3. **恢复经典结果**：线性动力系统的遗憾界 $\mathcal{O}(\sqrt{T} \cdot (d_x^2 + d_x d_u))$ 与已有文献一致，验证了框架的正确性。
 4. **理论贡献深刻**：揭示了模型基RL中对数依赖 $\ln(m)$ 与模型无关RL中多项式依赖 $m$ 的本质差异。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **持续激励假设**：Assumption 3.2 要求在任何初始状态和激励方差下都满足，对于某些退化系统可能难以验证。
 2. **计算可行性**：S2中的 argmin 和 greedyCover 在一般情况下计算不可行，S2主要是理论兴趣。

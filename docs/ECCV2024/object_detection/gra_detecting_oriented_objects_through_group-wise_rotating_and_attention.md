@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRA: Detecting Oriented Objects Through Group-Wise Rotating and Attention
 description: >-
@@ -128,7 +128,7 @@ Oriented R-CNN + R50_GRA: mAP 72.59%，优于 ARC 的 72.39%。
 3. **灵活性强**：即插即用模块，兼容多种单阶段和两阶段检测器；支持复用公开预训练权重，降低训练成本
 4. **分析细致**：通过置信度分布可视化清晰揭示了 ARC 加权求和导致特征退化的根因
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **核大小限制**：目前仅替换 $3 \times 3$ 卷积核，在更大核（如 $7 \times 7$）上的效果未验证
 2. **仅限 ResNet 架构**：未在 ConvNeXt、ViT 等现代架构上测试，通用性有待验证

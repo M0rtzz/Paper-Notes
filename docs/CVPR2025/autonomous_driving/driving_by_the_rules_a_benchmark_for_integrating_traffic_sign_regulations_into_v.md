@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Driving by the Rules: A Benchmark for Integrating Traffic Sign Regulations into Vectorized HD Map
 description: >-
@@ -121,7 +121,7 @@ tags:
 - 模块化和端到端方案的对比实验提供了有价值的启示：两种路线各有优劣
 - 数据集的长尾分布反映了真实世界，具有挑战性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集仅覆盖中国三个城市的交通标志，缺乏国际化数据（不同国家的标志差异很大）
 - 当前方案假设OCR结果已知（规则提取）或向量化地图已知（对应推理），在全自动流水线中还需整合OCR和在线建图
 - 最终F1仅64%左右，说明任务仍有很大提升空间

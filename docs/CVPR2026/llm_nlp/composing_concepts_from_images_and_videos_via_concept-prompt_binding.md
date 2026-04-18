@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Composing Concepts from Images and Videos via Concept-prompt Binding
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：需要同时解决精确概念分解（不需要掩码输入）和跨模态概念组合（图像+视频）两个相互耦合的挑战。
 
-**本文要解决什么？** 实现从图像和视频中灵活提取并组合任意视觉概念（包括非物体概念如风格、运动）。
+**本文目标** 实现从图像和视频中灵活提取并组合任意视觉概念（包括非物体概念如风格、运动）。
 
 **切入角度**：利用T2V扩散模型的概念定位能力，将文本token与对应视觉概念绑定（one-shot训练），然后通过token级别的组合实现概念合成。
 
-**核心idea一句话**：先将视觉概念绑定到prompt token上（Bind），再从不同来源选择绑定token组合成目标prompt（Compose），整个过程通过层次化binder结构+多样化吸收机制+时序解耦策略实现。
+**核心 idea**：先将视觉概念绑定到prompt token上（Bind），再从不同来源选择绑定token组合成目标prompt（Compose），整个过程通过层次化binder结构+多样化吸收机制+时序解耦策略实现。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ BiCo在主观Overall Quality上比前作DualReal提升 **+54.67%**（3.00→4.64
 - **设计上的可扩展性**：binder是轻量模块，不同概念来源的binder独立训练，可按需组合
 - **衍生应用丰富**：图像/视频分解（只保留部分token）、文本引导编辑
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 将所有token等同对待，但token对T2V生成的重要性分布不均匀——表示主体/运动的token远比功能词重要
 - 基于1.3B模型，scaling到更大T2V模型（如CogVideoX、Sora级别）的效果未验证
 - 定量评估中自动指标（CLIP-T、DINO-I）与人工评估的一致性有待进一步确认

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Splat-LOAM: Gaussian Splatting LiDAR Odometry and Mapping
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_{\text{map}} = \mathcal{L}_d + \lambda_o \mathcal{L}_o + \lambda_n
 - 尺度正则化损失 $\mathcal{L}_s$ 的阈值设计允许各向异性 splat，比直接最小化平均偏差更灵活
 - GPU 内存需求极低，适合机器人实时感知场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 LiDAR 运动畸变敏感，需要同时估计速度
 - 未包含 Loop Closure 模块，长距离轨迹会有累积漂移

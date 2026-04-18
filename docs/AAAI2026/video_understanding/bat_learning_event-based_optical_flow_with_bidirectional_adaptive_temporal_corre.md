@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BAT: Learning Event-based Optical Flow with Bidirectional Adaptive Temporal Correlation
 description: >-
@@ -106,7 +106,7 @@ tags:
 4. SATMA 中 deformable attention 的使用既高效又聚焦于相关运动特征
 5. 在 DSEC-Flow 和 MVSEC 两个主流基准上均取得大幅领先的 SOTA 结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在相机剧烈抖动等**快速运动变化**场景下，后向和前向时序运动差异大，后向线索帮助有限
 - 基于线性运动假设推导相邻帧间光流，对非线性运动场景可能不够精确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TrackingWorld: World-centric Monocular 3D Tracking of Almost All Pixels
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{L}_{\text{dyn}} = \lambda_{\text{ba}} \mathcal{L}_{\text{ba}} + \lamb
 4. **物理一致的3D跟踪**：通过bundle adjustment强制几何一致性，深度精度相比原始单目估计提升约3倍
 5. **副产品**：可直接输出时间一致的视频深度序列，在多个基准上超过现有video depth方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖多个辅助模型（2D跟踪器、深度估计器、动态掩码），引入额外计算开销和对组件质量的要求
 - 优化方式处理30帧需约20分钟（加速后8分钟），距实时仍有差距

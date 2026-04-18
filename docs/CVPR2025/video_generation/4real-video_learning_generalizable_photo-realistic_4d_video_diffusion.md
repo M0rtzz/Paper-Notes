@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4Real-Video: Learning Generalizable Photo-Realistic 4D Video Diffusion
 description: >-
@@ -118,7 +118,7 @@ tags:
 - 像素空间扩散模型在小模型规模下训练更快、运动更连贯（对比latent-based）
 - 无需显式相机位姿条件，通过条件视频自动推断视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Base model仅600M参数，限制了视觉质量和分辨率上限
 - 不支持360°视角生成
 - 对动态元素（如奔跑的马、火焰）的freeze-time视频生成鲁棒性有限

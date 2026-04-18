@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAxSS: Retrieval-Augmented Sparse Sampling for Explainable Variable-Length Medical Time Series Classification
 description: >-
@@ -101,7 +101,7 @@ $$\hat{p}^{(i)} = \sum_{k \in K_i} \alpha_k \, p_k$$
 3. **凸组合的理论保证**：在概率空间聚合保证输出仍是有效概率分布，避免了logit空间聚合的潜在问题
 4. **可操控性**：温度参数 $\tau$ 和邻居数 $m$ 提供了调节可解释性粒度的旋钮
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 检索局限于同一通道/记录内，跨被试/跨中心的模式检索可能增强证据质量但引入隐私问题
 - 相似度/温度参数目前手动设置，可通过数据学习

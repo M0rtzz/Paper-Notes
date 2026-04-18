@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Small Step with Fingerprints, One Giant Leap for De Novo Molecule Generation from Mass Spectra
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **先验调整阈值无数据泄漏**：巧妙利用训练集统计信息调整阈值，无需访问测试集标签
 - **揭示了明确的改进方向**：指纹预测（编码器）是主要瓶颈，为后续研究指明了方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 编码器（MIST）是整个流水线的瓶颈，指纹预测质量直接限制最终性能
 - 依赖质谱峰的化学公式标注，自动标注程序的质量会影响结果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] T-SHIRT: Token-Selective Hierarchical Data Selection for Instruction Tuning
 description: >-
@@ -148,7 +148,7 @@ $$\hat{\sigma}^2(x,y) = \frac{1}{M}\sum_{i=1}^M (\text{S-IFD}_k(\ldots) - \hat{\
 4. **极致效率**：单 GPU 40 分钟处理 52k 样本，无 API 成本，实际可用性极高
 5. **与 SLM 互补**：T-SHIRT 在数据准备阶段操作，不改变训练过程，可与选择性语言建模（SLM）叠加
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型规模限制**：实验仅在 7B-14B 模型上进行，更大模型（70B+）的效果未验证
 2. **数据安全未考虑**：未将安全性纳入选择标准，可能选中有害样本

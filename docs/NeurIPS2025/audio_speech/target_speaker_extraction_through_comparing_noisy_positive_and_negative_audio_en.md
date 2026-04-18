@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Target Speaker Extraction Through Comparing Noisy Positive and Negative Audio Enrollments
 description: >-
@@ -112,7 +112,7 @@ tags:
 - 两阶段训练中使用**知识蒸馏**将干净编码器的知识迁移到噪声编码器，有效解耦了两个学习难点
 - 孪生编码器共享参数的设计减少了模型规模同时保持了一致的特征空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设用户能粗略区分目标说话人何时在说话/沉默，这在极嘈杂或多人快速交替场景中可能困难
 - 正干扰者的重叠率较高时性能下降（论文有讨论但程度有限）

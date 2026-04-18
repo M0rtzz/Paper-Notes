@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exo2Ego: Exocentric Knowledge Guided MLLM for Egocentric Video Understanding
 description: >-
@@ -158,7 +158,7 @@ $$\mathcal{L}_{\text{CCL}}(F, G) = \mathbb{E}_x[\|G(F(x)) - x\|_1] + \mathbb{E}_
 5. **显著超越 GPT-4o**：在 EgoPlan (+5.9%) 和 VLN-QA (+10.5%) 等实践导向任务上超越闭源最强模型
 6. **双向 cycle consistency**：不仅前向映射，还学习逆映射并强制循环一致性，避免退化解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **EgoSchema 上仍显著落后闭源模型**：61.3% vs GPT-4o 72.2%，说明在需要长视频深度推理的任务上仍有差距
 2. **训练成本高**：初始化阶段需要 103M exo + 3.8M ego 数据，加上三个阶段的训练，16 块 A800 的计算需求不低

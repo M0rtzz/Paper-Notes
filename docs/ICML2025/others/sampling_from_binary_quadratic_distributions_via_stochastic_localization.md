@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sampling from Binary Quadratic Distributions via Stochastic Localization
 description: >-
@@ -116,7 +116,7 @@ $$P_q\left[\left|\frac{1}{n}\sum_{i=1}^n X_i - \mathbb{E}_{\nu_{\beta,h}}[X]\rig
 4. **即插即用**：SL 是通用包装器，可增强任何现有离散 MCMC 采样器而无需修改其内部结构
 5. **理论-实验一致**：指数衰减分配策略的优越性，完美验证了"后期采样更容易"的理论预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限二元变量**：当前框架限于 $x \in \{-1,1\}^N$，未推广到多值离散变量
 2. **仅限二次分布**：无法处理未知形式分布（如深度能量模型），需高效二阶 Taylor 近似

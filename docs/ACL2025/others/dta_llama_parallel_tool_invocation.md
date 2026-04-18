@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Divide-Then-Aggregate: An Efficient Tool Learning Method via Parallel Tool Invocation
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：类比操作系统的 Process/Thread 机制——每轮"Process"分解任务为可并行的子任务，多个"Thread"并行执行工具调用，执行后聚合结果。
 
-**核心 idea 一句话**：将树搜索的串行路径转为 DAG 并行结构训练数据 + Process/Thread 推理框架，实现每轮多工具并行调用。
+**核心 idea**：将树搜索的串行路径转为 DAG 并行结构训练数据 + Process/Thread 推理框架，实现每轮多工具并行调用。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ DTA-Llama2-7B（开源 7B 模型）的性能与 GPT-3.5 Parallel Function Callin
 - **Process/Thread 类比操作系统的设计**直观且有效：Intermediate State Lock 的聚合机制是保证并行可靠性的关键
 - 开源 7B 模型逼近 GPT-3.5 的并行函数调用能力，展示了数据结构优化的力量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 GPT-4 做串行→并行转换，引入成本和潜在偏差
 - 并行调用假设 API 支持并发且不会过载，实际部署时可能面临限流等问题
 - 仅在 ToolBench 生态下验证，其他工具调用基准（如 API-Bank）的效果未知

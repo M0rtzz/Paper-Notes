@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Systematic Reward Gap Optimization for Mitigating VLM Hallucinations
 description: >-
@@ -105,7 +105,7 @@ TPR-CL 在 ObjHal 上相比基线 LLaVA-1.5 减少了 ~93% 的幻觉（CHs: 53.6
 - 使用模型自身重采样避免外部模型引入偏差，是一个优雅的设计
 - Topic 级别的解耦操作（不同 topic 弱相关）为精细控制提供了理论基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 LLaVA-NeXT-34B 作为 labeler 模型打分，成本不低
 - Topic 聚类的质量依赖 VLM 的 topic 判断能力，可能对复杂场景不准
 - 课程学习的阶段划分（60/40）和难度调度是手动设计的，可以探索自适应策略

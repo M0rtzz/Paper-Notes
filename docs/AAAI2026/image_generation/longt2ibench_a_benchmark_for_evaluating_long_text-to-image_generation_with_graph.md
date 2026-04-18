@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LongT2IBench: A Benchmark for Evaluating Long Text-to-Image Generation with Graph-structured Annotations
 description: >-
@@ -152,7 +152,7 @@ $$\mathcal{L} = \mathcal{L}_I + \lambda \cdot \mathcal{L}_S$$
 - **统一评分+解释**：LongT2IExpert 在单一模型中同时实现定量评分和结构化解释
 - **HA-CoT 思想可推广**：层次化推理链可扩展到其他细粒度多模态评估任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 标注成本高昂（从 4.5K 筛选到 3K），规模扩展受限
 - 仅使用 6 种 T2I 模型生成图像，覆盖面有限

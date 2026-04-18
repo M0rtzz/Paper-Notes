@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L} = \mathcal{L}_{data} + \mathcal{L}_{shape\_reg} + \mathcal{L}_{ske
 5. **支持多分辨率**：从6,890到115,834顶点，原生高分辨率训练
 6. **工程质量高**：优化的CUDA实现使推理比SMPL-X更快（同顶点数下2.47ms vs 3.74ms）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据覆盖不完全**：15,000主体仍不能覆盖人体变化的全部范围（极端体型、残障人士等）
 2. **数据采集成本高**：高分辨率人体扫描的采集和处理仍然耗时昂贵，是扩展的瓶颈

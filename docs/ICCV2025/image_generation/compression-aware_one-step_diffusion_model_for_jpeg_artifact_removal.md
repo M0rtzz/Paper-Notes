@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal
 description: >-
@@ -59,7 +59,7 @@ CODiff 采用两阶段训练：
 
 #### 1. **压缩感知视觉嵌入器（CaVE）**
 
-- **做什么**：将低质量图像 $\mathbf{I}_L$ 编码为一组特征向量 $\mathbf{c}_L = \{\mathbf{c}_{L_k} \in \mathbb{R}^d\}_{k=1}^K$，作为 JPEG 压缩先验
+- **功能**：将低质量图像 $\mathbf{I}_L$ 编码为一组特征向量 $\mathbf{c}_L = \{\mathbf{c}_{L_k} \in \mathbb{R}^d\}_{k=1}^K$，作为 JPEG 压缩先验
 - **核心架构**：UNet 编码器 + 轻量 QF 预测器 + UNet 解码器
 - **设计动机**：利用 UNet 的多尺度特征提取能力，同时从多个分辨率捕获压缩相关信息
 
@@ -77,7 +77,7 @@ CODiff 采用两阶段训练：
 
 #### 3. **单步扩散生成器**
 
-- **做什么**：将低质量图像的 latent 表示作为输入（替代高斯噪声），一步去噪恢复高质量图像
+- **功能**：将低质量图像的 latent 表示作为输入（替代高斯噪声），一步去噪恢复高质量图像
 - **核心公式**：$\hat{\mathbf{z}}_H = \frac{\mathbf{z}_L - \sqrt{1-\bar{\alpha}_{T_L}} \varepsilon_\theta(\mathbf{z}_L; \mathbf{c}_L, T_L)}{\sqrt{\bar{\alpha}_{T_L}}}$
 - **训练**：VAE encoder + UNet 通过 LoRA（rank=16）微调，VAE decoder 冻结
 - **判别器**：使用预训练 SD UNet encoder + 轻量 MLP
@@ -146,7 +146,7 @@ Prompt 生成方式对比（LIVE-1, QF=5）：
 - **不依赖蒸馏**：与 OSEDiff 不同，CODiff 用 GAN 替代蒸馏，不受教师模型上限约束
 - **t-SNE 可视化**：直观展示了双重学习如何帮助泛化到未见压缩级别
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练 QF 范围 8-95，对极低 QF（1-7）的泛化依赖双重学习的隐式扩展能力
 - 仅针对 JPEG 压缩设计，未探索 WebP、HEIF 等现代压缩格式

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation
 description: >-
@@ -133,7 +133,7 @@ Wan 14B (720p) 上 LinVideo 达 **1.71×** 加速（1127s vs 1931s），结合 D
 4. **正交性设计**：LinVideo 仅替换注意力类型（dense linear vs dense quadratic），与稀疏注意力方法正交，未来可以组合使用
 5. **极端加速潜力**：4 步蒸馏版本在仅 ~1% 质量损失下实现 15.9–20.9× 加速，展现出实用部署价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **未使用专用 kernel**：当前线性注意力未使用自定义 CUDA kernel，加速比有进一步提升空间
 2. **替换上限**：target 过大（>18/30）时质量显著下降，说明某些层的 softmax attention 不可替代

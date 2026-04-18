@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sample-Adaptivity Tradeoff in On-Demand Sampling
 description: >-
@@ -144,7 +144,7 @@ $$\Omega\left(\frac{dk^{1/r}}{r\log^2 k}\right)$$
 - **AdaBoost的新应用**：巧妙利用AdaBoost的边缘放大性质在分布级别进行boosting，而非传统的样本级别
 - **下界构造的精巧性**：可实现下界利用有限域上随机线性函数和多级难度分层；OODS下界通过分层关键索引的凹函数构造
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **可实现设定上下界gap**：上界 $k^{2/r}$ vs 下界 $k^{1/r}$，指数差2倍未完全闭合
 - **不可知设定缺乏MDL层面的轮次下界**：OODS下界不直接蕴含MDL下界，Open Question 1（是否 $\text{polylog}(k/\varepsilon)$ 轮即可）仍未解决

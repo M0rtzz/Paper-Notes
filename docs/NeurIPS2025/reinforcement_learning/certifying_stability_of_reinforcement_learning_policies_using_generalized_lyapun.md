@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Certifying Stability of Reinforcement Learning Policies using Generalized Lyapunov Functions
 description: >-
@@ -97,7 +97,7 @@ $$V(\mathbf{x};\boldsymbol{\theta}_1) = |J_\gamma^{\boldsymbol{\pi}_{\text{RL}}}
 4. **联合合成更大 ROA**：在 Inverted Pendulum 上 M=3 的 ROA 体积是 M=1 的两倍以上
 5. **开源实现**：提供完整代码，可复现所有实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **$M$ 的选择**：horizon 长度 $M$ 在训练前固定，缺乏针对给定系统自动确定最优 $M$ 的方法
 2. **高维系统未验证**：实验仅涉及低维系统（最高 6 维状态），未测试类人机器人或灵巧操控等高维场景

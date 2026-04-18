@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Weakly Supervised Visible-Infrared Person Re-Identification via Heterogeneous Expert Collaborative Consistency Learning
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L}_{phase2} = \mathcal{L}_{id}^{exp} + \mathcal{L}_{id}^{stro} + \mat
 - **专家协同学习**形成正反馈循环：更好的对应关系→更好的特征→更准确的专家预测→更好的对应关系
 - 信息熵自适应加权实现了"越不确定越需要约束"的直觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 异构专家采用简单的分类器，可考虑更复杂的专家结构（如 MoE）
 - 对应关系建立是离散的一次性过程，可考虑端到端的软对齐方案（如最优传输的连续松弛）

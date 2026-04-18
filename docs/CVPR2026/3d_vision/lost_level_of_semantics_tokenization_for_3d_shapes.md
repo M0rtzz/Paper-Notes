@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LoST: Level of Semantics Tokenization for 3D Shapes
 description: >-
@@ -115,7 +115,7 @@ AR生成：
 - **前缀解码的语义渐进**：从"通用类别"到"特定实例细节"，如从"通用山"到"有人脸的山"
 - 连续token + 扩散损失避免了VQ的信息损失，是AR生成的有效替代范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于VAE triplane潜空间，未来需扩展到其他3D表示（如Gaussian Splats）
 - 扩散解码器增加了推理成本，不如纯AR解码高效

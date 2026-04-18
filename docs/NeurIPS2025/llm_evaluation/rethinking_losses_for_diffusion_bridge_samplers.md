@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Losses for Diffusion Bridge Samplers
 description: >-
@@ -101,7 +101,7 @@ $$\nabla_\nu D_{LV}^{q_{\alpha,\nu}^*}(q_{\alpha,\nu}, p_{\phi,\nu}) = \mathbb{E
 - 发现不同维度的最优扩散系数显著不同（图1中间），说明维度级别的自适应噪声调节是有意义的
 - 从实践角度解决了扩散桥社区一个长期困扰：为什么 LV 经常需要精心调参且训练不稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - rKL-LD 仍然因 rKL 的 mode-seeking 特性而存在 mode collapse 风险（在超参不当时）
 - 当前只考虑了时间不变的扩散系数，时间依赖的 $\sigma_{\text{diff}}(t)$ 是未来方向

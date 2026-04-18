@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GenePheno: Interpretable Gene Knockout-Induced Phenotype Abnormality Prediction Framework
 description: >-
@@ -117,7 +117,7 @@ GenePheno 接受两种输入：(1) 基因序列嵌入 $\mathbf{e}_i$（由 GENER
 - 用 LLM 自动挖掘表型本体中的互斥对，方法论上很新颖且可扩展到其他本体
 - GO 瓶颈层同时服务于性能和可解释性，是设计的亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在 GWAS 等小数据集上提升相对有限（$F_{\max}$ 仅 +2.71）
 - CAFA2 数据集需要 PPI 信息来保证公平比较，限制了与不需要 PPI 的方法的对比范围
 - 互斥对的质量依赖 LLM 的判断，可能引入噪声

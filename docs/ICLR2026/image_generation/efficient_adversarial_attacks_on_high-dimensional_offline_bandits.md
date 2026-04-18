@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Adversarial Attacks on High-dimensional Offline Bandits
 description: >-
@@ -118,7 +118,7 @@ tags:
 - OSA heuristic 以 $\mathcal{O}(\log T)$ 约束实现近最优攻击，工程价值高
 - 防御方案（打乱数据）虽简单但方向正确，提示了未来研究的可能路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 防御机制仍不完善，完全防御仍是开放问题
 - NTK 线性近似对实际的深层窄网络可能不够准确

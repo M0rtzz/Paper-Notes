@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Let the Experts Speak: Improving Survival Prediction & Calibration via Mixture-of-Experts Heads
 description: >-
@@ -94,7 +94,7 @@ tags:
 - Personalized MoE 的参数效率设计(通过分块共享)使其在小数据集上也表现良好
 - 使用标准端到端训练而非复杂的变分推断或 EM 算法，降低了使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未与 DeepHit、连续时间参数混合等更多模型类别进行比较
 - ARI 为 0.36 的路由稳定性仍有提升空间

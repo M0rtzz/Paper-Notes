@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EMAD: Evidence-Centric Grounded Multimodal Diagnosis for Alzheimer's Disease
 description: >-
@@ -135,7 +135,7 @@ $$\mathbf{A}_{t \to v} = \text{Attn}(h_t', h_v', h_v'), \quad \mathbf{A}_{v \to 
 - **可验证奖励设计**：Executable-Rule GRPO 将临床指南编码为可程序化验证的奖励函数（格式/NIA-AA/蕴含性），无需人工偏好标注
 - **训练策略精巧**：三阶段渐进训练（PT→SFT→RFT）逐步建立对齐→忠实→可验证能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集仅基于 ADNI + AIBL，样本多样性有限（主要为欧美白人群体）
 - 3D sMRI 编码使用 ViT-based 架构，对高分辨率全脑扫描的计算开销较大

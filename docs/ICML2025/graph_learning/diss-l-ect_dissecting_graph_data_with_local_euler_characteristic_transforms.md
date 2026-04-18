@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diss-l-ECT: Dissecting Graph Data with Local Euler Characteristic Transforms
 description: >-
@@ -121,7 +121,7 @@ $$d_{\text{ECT}}(X, Y) := \inf_{\rho \in \text{SO}(n)} \|\text{ECT}(X) - \text{E
 4. **可解释性**：基于 XGBoost 的特征重要性可追溯到 ECT 的具体方向和阈值，提供拓扑层面的决策解释
 5. **旋转不变度量**：提出可高效近似计算的 $d_{\text{ECT}}$ 度量，为图数据空间对齐提供了几何工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算复杂度**：ℓ-ECT 需为每个节点提取 $k$-hop 子图并计算 ECT，当 $k$ 较大或图稠密时开销显著增长，论文承认在大规模图上存在可扩展性挑战
 2. **同质图未占优**：在 Cora/CiteSeer 等同质图上略逊于 GCN/GAT，消息传递的全局信息汇聚在此类任务中仍有优势

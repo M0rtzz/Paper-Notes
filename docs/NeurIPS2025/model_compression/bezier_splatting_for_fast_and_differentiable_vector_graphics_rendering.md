@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bézier Splatting for Fast and Differentiable Vector Graphics Rendering
 description: >-
@@ -32,11 +32,11 @@ Bézier Splatting 将 Gaussian Splatting 框架与 Bézier 曲线结合，沿曲
 
 **核心矛盾**：传统可微渲染需要精确处理曲线边界的抗锯齿梯度，但这导致计算瓶颈。需要一种绕过逐像素边界采样的渲染方式。
 
-**本文要解决什么？** 在保持矢量图形质量的前提下大幅加速可微渲染，使优化从小时级降到分钟级。
+**本文目标** 在保持矢量图形质量的前提下大幅加速可微渲染，使优化从小时级降到分钟级。
 
 **切入角度**：Gaussian Splatting 已在 3D 渲染中证明了高效可微渲染的能力。将 Bézier 曲线参数化为沿曲线分布的 2D Gaussian 点，复用 Gaussian Splatting 的高效渲染管线。
 
-**核心 idea 一句话**：沿 Bézier 曲线均匀采样 2D Gaussian 点，用曲线切线方向定义旋转、邻点距离定义尺度，通过 α-blending 渲染和自适应剪枝/密化实现快速可微矢量化。
+**核心 idea**：沿 Bézier 曲线均匀采样 2D Gaussian 点，用曲线切线方向定义旋转、邻点距离定义尺度，通过 α-blending 渲染和自适应剪枝/密化实现快速可微矢量化。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ Bézier Splatting 将 Gaussian Splatting 框架与 Bézier 曲线结合，沿曲
 - **参数化设计很自然**：切线→旋转、邻点距离→尺度，几乎无损地将曲线几何信息编码为 Gaussian 参数
 - **150× 反向加速意味着交互式矢量化成为可能**：从小时级到分钟级的跨越打开了实时应用的大门
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LPIPS 指标与 LIVE 接近甚至略差，感知质量有提升空间
 - 闭合曲线的配对结构限制了形状表达能力（只能表示条状区域）
 - 未与最新的神经矢量化方法（如 VectorFusion）比较

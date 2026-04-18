@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TaylorPODA: A Taylor Expansion-Based Method to Improve Post-Hoc Attributions for Opaque Models
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**: 在事后、模型无关的设置下，缺乏ground truth解释，固定的预定义交互分配方案可能导致任意的归因结果，偏离被分析实例的真实特征重要性顺序。
 
-**本文要解决什么？** 在Taylor展开框架下建立一套理论严谨的归因准则，并设计满足所有准则且可自适应优化的归因方法。
+**本文目标** 在Taylor展开框架下建立一套理论严谨的归因准则，并设计满足所有准则且可自适应优化的归因方法。
 
 **切入角度**: 从Taylor展开的独立效应和交互效应出发，用公理化方式规范归因过程，再通过可调参数实现面向任务的自适应分配。
 
-**核心idea一句话**: 用三个公设规范Taylor项的归属，再用AUP优化驱动的Dirichlet采样来自适应分配交互效应权重。
+**核心 idea**: 用三个公设规范Taylor项的归属，再用AUP优化驱动的Dirichlet采样来自适应分配交互效应权重。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ $$a_i^{(\text{TaylorPODA})} = f(\mathbf{x}) - f_{G\setminus\{i\}}(\mathbf{x}) - 
 - **SHAP-style可视化**: TaylorPODA满足零偏差意味着可以像SHAP一样做贡献加和的条形图可视化
 - **Dirichlet搜索的巧妙性**: 利用Dirichlet分布的归一化性质自然满足约束，避免了复杂的约束优化- **Table 2的对比价值**: 公设/属性满足情况的对比表是论文的核心贡献，一目了然地展示了TaylorPODA的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **计算效率**: 完整版需要 $2^{|G|-1}$ 个Harsanyi dividend计算，每个涉及 $2^{|S|}$ 个masked output查询，高维特征空间不可行
 - 论文使用截断近似（限制 $|S| \leq c$），但误差分析不够完善
 - Dirichlet随机搜索不保证全局最优，可探索更高效的优化算法（如贝叶斯优化、梯度方法）

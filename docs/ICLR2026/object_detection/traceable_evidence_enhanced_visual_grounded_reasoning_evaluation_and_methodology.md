@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Traceable Evidence Enhanced Visual Grounded Reasoning: Evaluation and Method
 description: >-
@@ -120,7 +120,7 @@ $$R_{\text{IoU}} = \frac{1}{2}(R_{\text{IoU}}^{\text{R}} + R_{\text{IoU}}^{\text
 - **双 IoU 奖励设计优雅**：同时约束召回和精确，避免了模型"穷举框"的 reward hacking 策略
 - **冷启动+RL 范式高效**：相比 DeepEyes 的纯 RL 方案（32×H100, 48h），冷启动大幅降低了计算成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - TreeBench 规模较小（仅 405 题），统计显著性受限
 - TreeVGR 不实际裁剪和回看图像（仅文本空间定位），可能错失视觉细节

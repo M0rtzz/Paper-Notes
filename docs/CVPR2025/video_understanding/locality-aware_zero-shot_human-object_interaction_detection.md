@@ -1,4 +1,4 @@
----
+﻿---
 title: "Locality-Aware Zero-Shot Human-Object Interaction Detection"
 description: "提出LAIN框架，通过局部性适配器和交互适配器增强CLIP表征的局部感知和交互感知能力，在多种零样本HOI检测设定下达到SOTA"
 tags: ["零样本学习", "人物-物体交互", "CLIP", "目标检测", "CVPR2025"]
@@ -102,7 +102,7 @@ LAIN 是一个两阶段 HOI 检测框架：
 - **参数高效**：仅在 CLIP 每层前插入轻量适配器，冻结 CLIP 主体，训练代价小
 - 空间布局嵌入引入了检测器输出（框坐标+类别+置信度），无需额外标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练 DETR 的检测质量，漏检或误检会直接影响后续 HOI 检测
 - 仅在图像级 HOI 检测上验证，未拓展到视频 HOI 或时序场景

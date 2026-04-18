@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding
 description: >-
@@ -62,7 +62,7 @@ CAT-Net 是三阶段架构（如 Figure 1）：
 
 #### 1. **空间-时间编码器（Spatial and Temporal Encoders）**
 
-**做什么**：分别为 EEG 和 EMG 提取空间和时间特征。
+**功能**：分别为 EEG 和 EMG 提取空间和时间特征。
 
 **空间编码**：两层 1×1 逐点 Conv1D，kernel 大小 $1 \times 2C_{EEG/EMG} \times F$（$F$=64, 128），每个时间步独立地学习通道间的空间组合：
 
@@ -82,7 +82,7 @@ $$\tilde{\mathbf{H}} = s' \odot \mathbf{H} \in \mathbb{R}^{T \times F}$$
 
 #### 2. **交叉模态注意力融合（Cross-Modal Attention Fusion）**
 
-**做什么**：让 EEG 和 EMG 动态互相关注对方最具信息量的特征。
+**功能**：让 EEG 和 EMG 动态互相关注对方最具信息量的特征。
 
 **核心思路**：对 $\mathbf{Z}^{EEG}$ 和 $\mathbf{Z}^{EMG}$，各自生成 $Q, K, V$ 矩阵，然后交叉查询：
 
@@ -97,7 +97,7 @@ $$\mathbf{C}^{(m)} = \text{MHA}(Q^{(m)}, K^{(e)}, V^{(e)})$$
 
 #### 3. **域判别器与梯度反转（Domain Discriminator + GRL）**
 
-**做什么**：通过对抗训练迫使特征提取器学习被试不变的表征。
+**功能**：通过对抗训练迫使特征提取器学习被试不变的表征。
 
 **核心思路**：在融合特征 $\mathbf{f} \in \mathbb{R}^{128}$ 上附加域判别器头，通过梯度反转层（GRL）：
 
@@ -192,7 +192,7 @@ CAT-Net 的准确率从 88.08% 仅降至 85.10%（-2.98%），而 EEGNet 和 Dee
 4. **无声语音条件的强表现**：88.08% 的无声语音精度甚至略高于有声语音（87.83%），暗示 EMG 信号在无声条件下可能提供更"纯净"的肌肉信息
 5. **SHAP 可解释性**：使用 SHAP 值量化 EEG 和 EMG 特征的相对贡献，增强模型的可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **被试数量有限**：10 名被试可能不足以代表更广泛的人群多样性（年龄、性别、口音变异等）
 2. **声调级别而非音素/词级别**：四声调分类离实际语音 BCI 的需求（连续语音解码）仍有距离

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Luminance-Aware Statistical Quantization: Unsupervised Hierarchical Learning for Illumination Enhancement
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**: 重建保真度 vs 跨场景泛化能力——专注于域内精度则泛化差，追求泛化则域内不足。
 
-**本文要解决什么**: 建立基于自然照明物理规律的 LLIE 统计模型，不依赖配对数据。
+**本文目标**: 建立基于自然照明物理规律的 LLIE 统计模型，不依赖配对数据。
 
 **切入角度**: 经验发现自然亮度转换服从幂律密度分布，可用分层幂函数近似。
 
@@ -52,13 +52,13 @@ tags:
 
 1. **亮度变化坐标系 (Luminance Variation Coordinate System)**:
 
-    - **做什么**: 建立低光-正常光亮度关系的几何框架
+    - **功能**: 建立低光-正常光亮度关系的几何框架
     - **为什么**: 需要将亮度转换的物理规律数学化
     - **怎么做**: 对每个像素 $i$，以 $(I_L^{(i)}, I_N^{(i)})$ 为坐标点，发现这些点遵循幂律分布 $y = ax^\kappa$，不同 $\kappa$ 对应不同的亮度适配策略（$\kappa < 0.5$: 暗区恢复，$0.5 < \kappa < 1$: 中间调增强，$\kappa \to 1$: 高光保持）
 
 2. **层次化亮度适配算子 (Hierarchical Luminance Adaptation Operator, LAO)**:
 
-    - **做什么**: 构建从全局到局部的多尺度亮度校正算子
+    - **功能**: 构建从全局到局部的多尺度亮度校正算子
     - **怎么做**: 对区域 $\mathcal{P}$ 计算亮度标量 $G_\mathcal{P}$ 及 LAO：
     $\gamma_\mathcal{P} = (\alpha + G_\mathcal{P})^{\beta_\mathcal{P}}, \quad \beta_\mathcal{P} = 2G_\mathcal{P} - 1 + \eta\frac{\sigma_{G_\mathcal{P}}^2}{\sigma_{G_\mathcal{P}}^2 + \delta}$
     - **分布建模**: LAO 服从截断高斯分布 $\gamma \sim \mathcal{N}_{\text{trunc}}(\mu=\gamma_0, \sigma^2; \gamma_{\min}, \gamma_{\max})$
@@ -66,7 +66,7 @@ tags:
 
 3. **MCMC 层次采样**:
 
-    - **做什么**: 从 LAO 分布空间中渐进采样，生成从粗到细的增强图像集合
+    - **功能**: 从 LAO 分布空间中渐进采样，生成从粗到细的增强图像集合
     - **怎么做**: 第 $n$ 次迭代产生 $2^{n-1}$ 个 LAO 配置：
     $p(\mathcal{I}_H^{(n)}) \approx \sum_{z=1}^{2^{n-1}} p(\mathcal{I}_H^{(n)}|\gamma_{\mathcal{P},z}^{(n)}) p(\gamma_{\mathcal{P},z}^{(n)})$
    转移核为截断高斯：$q(\gamma_z^{(n)}|\gamma_{z-1}^{(n)}) = \mathcal{N}_{\text{trunc}}(\gamma_z^{(n)}|\gamma_{z-1}^{(n)}, \lambda^2)$
@@ -74,7 +74,7 @@ tags:
 
 4. **层次引导扩散模型 (Hierarchically-Guided Diffusion)**:
 
-    - **做什么**: 将 MCMC 采样的层次化增强嵌入扩散前向过程
+    - **功能**: 将 MCMC 采样的层次化增强嵌入扩散前向过程
     - **怎么做**: 通过时间映射 $\psi(t) = \lfloor t \cdot N/T \rfloor$ 将 $T$ 步扩散对齐到 $N$ 层层次化特征。前向过程在每个时间区间 $T_n$ 内使用对应的 $\mathcal{F}_H^{(\psi(t))}$ 作为照明归一化参考
     - **训练**: 噪声预测目标 $\mathcal{L}_d$ + 全局标签弱引导 $\mathcal{L}_g$
     - **LASQ++ 扩展**: 可选加入非配对正常光照参考的对抗判别器：
@@ -145,7 +145,7 @@ LASQ 在保持扩散模型性能优势的同时，推理效率接近非扩散方
 - **双模式兼容**: 无缝支持有/无正常光照参考两种场景
 - **幂律分布发现**: 自然亮度转换的幂律分布特性本身是有价值的经验发现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MCMC 采样增加了训练时间（虽然推理时不使用）
 - 幂律假设可能在极端场景（如纯黑/纯白区域）不成立

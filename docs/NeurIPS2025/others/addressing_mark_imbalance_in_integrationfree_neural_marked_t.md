@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Addressing Mark Imbalance in Integration-free Neural Marked Temporal Point Processes
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **实用性强**：阈值方法可作为后处理应用于任何MTPP模型
 - $\Gamma^*(m,t)$ 的统一建模是核心技术贡献，同时解决了标记概率和时间采样两个问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅处理分类标记，未扩展到连续标记空间
 - 阈值方法假设先验概率在训练集和测试集间一致，分布漂移时可能失效

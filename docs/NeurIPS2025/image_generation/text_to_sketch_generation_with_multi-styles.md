@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Text to Sketch Generation with Multi-Styles
 description: >-
@@ -117,7 +117,7 @@ $$\tilde{\epsilon}_t = \epsilon_\theta(z_t^{tar}, t, \emptyset) + \omega_1 \cdot
 4. **跨域鲁棒性**：在参考与目标结构差异大时仍保持质量（这是K/V替换方法的痛点）
 5. **双平台支持**：同时在SD v1.5和SDXL上验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\omega_1, \omega_2, \lambda$需要按风格类型手动调整（如Style 6的抽象草图需不同参数）
 - SD v1.5上的抽象草图可能产生伪影（需轮廓正则引导）
 - 基础模型在自然图像上训练→过高$\lambda$可能导致自然风格输出

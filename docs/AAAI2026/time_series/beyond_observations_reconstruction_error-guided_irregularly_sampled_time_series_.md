@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] iTimER: Reconstruction Error-Guided Irregularly Sampled Time Series Representation Learning
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：重建误差不仅是损失，更是反映模型不确定性和归纳偏好的信息源。将其分布传播到未观测区域生成伪观测值。
 
-**核心 idea 一句话**：从观测点的重建误差分布采样，与最近观测值 mixup 生成伪观测，用 Wasserstein 距离确保观测/伪观测误差分布一致。
+**核心 idea**：从观测点的重建误差分布采样，与最近观测值 mixup 生成伪观测，用 Wasserstein 距离确保观测/伪观测误差分布一致。
 
 ## 方法详解
 
@@ -89,7 +89,7 @@ tags:
 - Mixup 生成伪观测比直接填补或加噪声更有物理合理性
 - Wasserstein 基于高斯闭式解计算高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 高斯假设可能不适用于所有误差分布
 - 仅用最近观测值作为 anchor，对长间隔缺失可能不够
 

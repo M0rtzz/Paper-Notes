@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tracking Meets LoRA: Faster Training, Larger Model, Stronger Performance
 description: >-
@@ -141,7 +141,7 @@ LoRA vs 全微调（LaSOT SUC / P）：
 - **LoRA 在视觉任务中的系统性探索**：不仅验证了可行性，还系统发现了阻碍其应用的具体问题（位置编码、卷积头），并给出了解决方案
 - **ViT-g 的首次跟踪应用**：打开了大模型跟踪的新空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LoRA 秩 r=64 对所有变体统一，未进行针对性搜索
 - 仅验证了 DINOv2 预训练权重，未探索 MAE、CLIP 等其他预训练

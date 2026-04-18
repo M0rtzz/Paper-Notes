@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Navigating Simply, Aligning Deeply: Winning Solutions for Mouse vs. AI 2025
 description: >-
@@ -94,7 +94,7 @@ $$\hat{\mathbf{x}} = \frac{\mathbf{x} - \boldsymbol{\mu}_{\text{running}}}{\bold
 - 观测归一化的"一行代码"效果惊人，单独贡献3.8个百分点的最终得分提升
 - 系统性记录失败方案（InceptionNet、深度ResNet、LSTM、数据增强）的做法非常有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 任务特异性：结果可能不泛化到更复杂的视觉导航场景
 - 评估指标局限：线性读出和表征相似度仅捕获生物视觉的部分方面

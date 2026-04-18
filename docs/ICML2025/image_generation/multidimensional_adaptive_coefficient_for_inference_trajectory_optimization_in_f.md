@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multidimensional Adaptive Coefficient for Inference Trajectory Optimization in Flow and Diffusion
 description: >-
@@ -139,7 +139,7 @@ FD_DINOv2 显著优于 CTM（70.2 vs 157.7），说明 MAC 在感知质量上优
 4. **搜索空间扩展**：从标量调度扩展到维度级自适应调度，允许非线性弯曲轨迹和样本级自适应步长
 5. **理论优雅**：通过 Fourier 基+低通滤波的设计排除了粗糙系数，假设集设计合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **FID vs 感知质量**：FID 在 NFE 极少（如 4 步）时性能骤降（DDPM_γ 在 4 NFE 时 FID=72.64），距离实用的 1-2 步生成仍有差距
 2. **判别器依赖**：使用 StyleGAN-XL 判别器进行对抗训练，引入了额外的训练复杂度和超参数调优负担

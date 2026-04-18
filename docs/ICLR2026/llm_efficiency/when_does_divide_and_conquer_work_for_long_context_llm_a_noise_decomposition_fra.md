@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Does Divide and Conquer Work for Long Context LLM? A Noise Decomposition Framework
 description: >-
@@ -103,7 +103,7 @@ tags:
 - **快速 chunk size 估计**使得实际部署中的调参成本极低
 - 与 TheaterLM ("Limits of Long-Context Reasoning in Bug Fixing") 的发现互相印证：长上下文 ≠ 有效推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 三类噪声项无法直接分别观测，只能通过代理指标间接衡量
 - 高跨 chunk 依赖任务（如角色推理）中 D&C 仍然失败，框架没给出解决方案
 - Planner 本身也是 LLM，其分块策略质量依赖模型能力

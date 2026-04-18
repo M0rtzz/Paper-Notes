@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Token Prepending: A Training-Free Approach for Eliciting Better Sentence Embeddings from LLMs
 description: >-
@@ -41,13 +41,13 @@ tags:
    - decoder-only LLM 的因果注意力限制了双向信息流动，但 training-free 的句子嵌入方法需要依赖 causal attention 的框架来工作
    - 如何在不改变模型参数、不引入训练的前提下，让因果注意力机制也能实现类似双向注意力的效果？
 
-**本文要解决什么？**
+**本文目标**
    - 在不引入额外训练和显著推理开销的情况下，解决 decoder-only LLM 中因果注意力导致的前向 token 信息编码偏差问题
 
 **切入角度**:
    - 从 LLM 的层间信息传递入手，在模型内部层级间插入操作，将每层解码得到的句子嵌入 token 前置到下一层输入的句子开头
 
-**核心idea一句话**:
+**核心 idea**:
    - 将上一层最后一个 token（包含完整句子信息）的表示前置到下一层句子的开头位置，让因果注意力下所有 token 都能感知完整句子语义
 
 ## 方法详解
@@ -118,7 +118,7 @@ TP 方法修改了 LLM 的层间传播过程，主要由三部分组成：
 - **几乎零成本**：相比 Echo 的重复输入方法，TP 只增加一个 token，推理开销可忽略
 - **通用性强**：作为 plug-and-play 技术，可以叠加在各种 prompt 方法之上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前只在 7B 规模的模型上验证，更大规模模型的效果有待验证
 2. `<PST>` token 的随机初始化可能不是最优选择，更好的初始化策略值得探索

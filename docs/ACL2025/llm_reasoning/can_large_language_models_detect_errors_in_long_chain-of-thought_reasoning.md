@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can Large Language Models Detect Errors in Long Chain-of-Thought Reasoning?
 description: >-
@@ -105,7 +105,7 @@ DeltaBench的构建流程：
 - **"27%冗余+68%反思无效"的定量发现**：对o1类模型的效率问题提供了有力证据
 - **揭示了PRM在长CoT场景的不足**：最强PRM的F1仅29.22%，说明现有PRM远未解决长CoT评估问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集规模受限于高成本人工标注（1,236个样本），扩展性有限
 - 人工标注不可避免存在主观偏差，尤其在"推理有用性"判断上
 - 作为静态基准，无法实时反映o1类模型的快速进展

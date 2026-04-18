@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Cross-Hand Policies of High-DOF Reaching and Grasping
 description: >-
@@ -122,7 +122,7 @@ $$L_{point}(\theta) = \frac{1}{2}\sum_{k=1}^{K}\sum_{i=0}^{1}(e_k^i - p_k^i - \D
 - **IBS的跨域有效性**：IBS作为Voronoi图的产物，天然对交互双方的几何具有鲁棒性，这在抓取以外的接触密集任务中也可能有用
 - **关键点作为通用动作空间**：类似动画系统中的IK控制，语义关键点提供了一种直观且统一的动作接口
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在仿真环境中验证**：基于PyBullet，未在真实机器人上测试sim-to-real迁移
 2. **手型差异有限**：测试的5种手型均为类人手，未测试非类人构型（如软体手）

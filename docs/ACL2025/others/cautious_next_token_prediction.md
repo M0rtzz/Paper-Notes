@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cautious Next Token Prediction
 description: >-
@@ -166,7 +166,7 @@ CNTP 可以作为 Self-Consistency 的"内层"优化：在 SC 的每个独立推
 - 作为 training-free 方法，CNTP 可即插即用于任何自回归模型，部署成本极低
 - 与 Entropix（并行工作）理念相似但有关键差异：CNTP 的标点停止+正相关采样策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 引入额外 token 计算，虽然远低于 Beam Search/SC，但仍增加推理延迟
 - 超参数 H_min=0.01、H_max=1.5、N_max=10 在所有实验中固定，未针对不同任务/模型调优

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Collapse under Gradient Flow on Shallow ReLU Networks for Orthogonally Separable Data
 description: >-
@@ -118,7 +118,7 @@ Neural Collapse（NC）是深度网络训练末期出现的一种引人注目的
 - **RMSNorm的理论支持**：理论预测并实验验证RMSNorm可促进更强的NC，为归一化层设计提供理论指导
 - **多分类隐式偏置扩展**：将GF最大间隔偏置的分析从二分类扩展到多分类交叉熵损失，填补了隐式偏置理论的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **正交可分性假设较强**：要求同类正相关、异类负相关，现实数据仅近似满足
 - **多分类需更强条件**：Proposition 1需要额外的数据条件限制（涉及数据范数比和分离度），是分析工具的限制

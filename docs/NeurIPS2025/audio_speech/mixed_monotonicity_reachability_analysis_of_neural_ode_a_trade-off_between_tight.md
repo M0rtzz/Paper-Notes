@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mixed Monotonicity Reachability Analysis of Neural ODE: A Trade-Off Between Tightness and Efficiency
 description: >-
@@ -138,7 +138,7 @@ tags:
 3. **可扩展性**：区间盒表示的复杂度与维度线性相关（不像 zonotope 或 star set 与维度多项式或指数相关）
 4. **方法论启发**：利用问题结构（单调性）简化分析的思路可推广到其他验证任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅演示了 2D 系统**：高维系统的实验验证不足，虽然理论上可扩展，但实际效果需要验证
 2. **过逼近仍较宽松**：特别是单步法，过逼近体积可达最优方法的 2 倍以上

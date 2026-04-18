@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Infinite-ID: Identity-preserved Personalization via ID-semantics Decoupling Paradigm
 description: >-
@@ -187,7 +187,7 @@ AdaIN-mean 消融：
 3. **双特征互补**：CLIP 捕获结构、ArcFace 捕获面部特征，两者拼接提供了全面的身份表示
 4. **训练规模充足**：100 万步训练在 LAION 级别数据上确保了模型的泛化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **不支持多人个性化**：当前框架仅处理单一身份，无法同时保持多个不同身份
 2. **小脸伪影**：当人脸仅占图像小部分区域时，可能产生伪影（继承自底层扩散模型的限制）

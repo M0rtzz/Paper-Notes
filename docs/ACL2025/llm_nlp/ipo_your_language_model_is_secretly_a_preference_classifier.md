@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IPO: Your Language Model is Secretly a Preference Classifier
 description: >-
@@ -99,7 +99,7 @@ DPO训练后的下游任务效果：
 - **揭示了LLM的隐式偏好能力**：即使是base模型也具有一定的偏好分类能力，这说明预训练过程中已经隐含地学到了质量判断。
 - **连续vs离散信号**：概率值比离散评分（1-5分）提供了更细粒度的偏好信号，是偏好表示的重要改进。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要预先分类数据集（Chat/Code/Math/Safety），虽然可考虑让模型自动生成类别标签
 2. 仅在1B和7B规模上评估，且使用了4k条prompt的较小子集

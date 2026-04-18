@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EVEv2: Improved Baselines for Encoder-Free Vision-Language Models
 description: >-
@@ -78,7 +78,7 @@ EVEv2.0基于Qwen2.5-7B LLM，用简单的双层卷积做patch embedding（strid
 - **数据效率出色**：100M公开数据达到需要1.3B数据的Mono-InternVL的可比水平
 - **透明和可复现**：所有数据公开、代码开源、训练细节详尽
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 因计算资源限制，未充分探索更大模型（>7B）和更多数据的scaling
 - 知识密集型任务（MMMU）仍落后于encoder-based方法
 - 文档理解任务（DocVQA等）有一定差距

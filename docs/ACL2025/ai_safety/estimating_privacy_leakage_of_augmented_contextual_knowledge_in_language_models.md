@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Estimating Privacy Leakage of Augmented Contextual Knowledge in Language Models
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **分析全面**：系统考察了模型大小、上下文大小、生成位置、n-gram粒度等多维因素
 - **实用指导**：(1)敏感信息放在上下文后部可降低泄露；(2)可采用自适应隐私级别（开头严格、后期放松）；(3)预训练数据选择影响隐私保证的可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 未考虑模型解码时的entropy对context influence的影响（更自信的模型influence更小，可能产生误导）
 - 仅关注上下文隐私泄露，不涉及参数知识的隐私泄露（记忆化问题）
 - 仅使用temperature sampling，未分析top-p/top-k等采样策略的影响

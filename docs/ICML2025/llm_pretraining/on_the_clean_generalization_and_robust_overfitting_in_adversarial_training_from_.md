@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Clean Generalization and Robust Overfitting in Adversarial Training from Two Theoretical Views: Representation Complexity and Training Dynamics
 description: >-
@@ -118,7 +118,7 @@ $$\underbrace{\text{Clean Classifier}}_{\text{poly}(D)} \lesssim \underbrace{\te
 4. **三阶段分析技术**：将复杂的对抗训练动态解耦为三个可分析的阶段，是特征学习理论在对抗鲁棒性领域的首次应用
 5. **理论-实验一致性**：合成数据实验精确复现了理论预测的三阶段相变
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据假设较强**：Patch结构化数据与真实图像数据差距较大，单信号patch假设过于简化
 2. **激活函数限制**：理论分析使用 $\text{ReLU}^q$（$q \ge 2$）而非标准ReLU，实践中并不常用

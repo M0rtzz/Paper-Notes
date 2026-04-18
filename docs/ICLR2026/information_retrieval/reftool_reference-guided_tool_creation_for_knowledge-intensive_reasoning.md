@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RefTool: Reference-Guided Tool Creation for Knowledge-Intensive Reasoning
 description: >-
@@ -92,7 +92,7 @@ tags:
 - **层次化 toolbox**利用了教材的自然结构——不需要额外的知识工程
 - 可推广到任何有结构化参考资料的专业领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖高质量参考资料的可获取性——若无好教材则无法使用
 - 每个 section 仅生成最多 2 个工具，信息密集的章节可能遗漏重要功能
 - 工具层次结构固定为两级，复杂知识体系可能需要更灵活的组织

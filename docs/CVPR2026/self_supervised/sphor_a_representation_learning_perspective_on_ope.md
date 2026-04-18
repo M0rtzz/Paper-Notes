@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpHOR: A Representation Learning Perspective on Open-set Recognition
 description: >-
@@ -74,7 +74,7 @@ tags:
 - 引入AS和NS两个新度量解释Mixup和LS的互补机制，给后续工作提供了分析工具
 - 训练效率高：$O(B \cdot C)$ vs SupCon的 $O(B^2)$，小batch也稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 正交约束要求嵌入维度 $p \geq |C|$，大规模细粒度分类（如1000+类）可能面临维度限制
 - 主要用ResNet50验证，Transformer backbone（ViT等）的验证不足
 - $\mathcal{R}_{Ortho}$ 在某些数据集上改善有限（Aircraft上AUROC略降），需要进一步理解dataset-dependent行为

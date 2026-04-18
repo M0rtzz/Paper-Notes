@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model Swarms: Collaborative Search to Adapt LLM Experts via Swarm Intelligence
 description: >-
@@ -125,7 +125,7 @@ Model Swarms **无需任何梯度更新或监督训练**。它完全依赖效用
 - **全局最差排斥项**：在经典 PSO 基础上新增了远离全局最差位置的排斥力，帮助探索更多有效区域
 - **Token Swarms 扩展**：在概率分布层面进行搜索，使得不同架构的模型也能参与协作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：每次迭代需要评估所有 N 个粒子的效用函数，对大模型来说成本较高。论文提出了 dropout 式加速策略但未深入展开
 2. **初始专家选择**：多样性对方法至关重要，但如何从 HuggingFace 上 90 万+ 模型中选择最优初始专家池仍是开放问题

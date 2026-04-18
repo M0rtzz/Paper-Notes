@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] M2rc-Eval: Massively Multilingual Repository-level Code Completion Evaluation
 description: >-
@@ -136,7 +136,7 @@ M2rc-Instruct 的微调采用标准的代码补全目标——给定文件内上
 4. **覆盖面广**：18种编程语言覆盖了主流和部分小众语言，填补了多语言代码补全评估的空白
 5. **实用价值**：M2rc-Instruct 提供了可直接使用的多语言仓库级代码指令数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 补全光标位置限制为不超过5行，可能低估长序列补全的难度
 2. 仅使用了文本匹配指标（EM 和 ES），未考虑语义等价性（如功能等价但写法不同的代码）

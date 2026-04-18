@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffusionNFT: Online Diffusion Reinforcement with Forward Process
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：反向过程 RL 需要似然估计，但扩散模型的似然不可精确计算。离散化近似引入系统性偏差。
 
-**本文要解决什么？** 能否在**前向过程**（flow matching 目标）上做 RL，完全避开似然估计、求解器限制和 CFG 依赖？
+**本文目标** 能否在**前向过程**（flow matching 目标）上做 RL，完全避开似然估计、求解器限制和 CFG 依赖？
 
 **切入角度**：一个扩散策略有唯一的前向过程但多个反向过程（不同求解器）。在前向过程上优化更本质——直接用正/负样本对比定义策略改进方向，嵌入 flow matching 的监督学习框架中。
 
-**核心 idea 一句话**：把 RL 信号转化为前向过程中正负样本的对比式 flow matching 目标，用隐式参数化将 reinforcement guidance 直接整合进单一策略模型。
+**核心 idea**：把 RL 信号转化为前向过程中正负样本的对比式 flow matching 目标，用隐式参数化将 reinforcement guidance 直接整合进单一策略模型。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ tags:
 - **隐式参数化** 技巧极为巧妙——通过 $\mathbf{v}_\theta^+ = (1-\beta)\mathbf{v}^{\text{old}} + \beta \mathbf{v}_\theta$，只需训练一个模型就等价于同时做"向好靠拢+离坏远走"。这比显式训练 guidance 模型高效得多。
 - **NFT vs GRPO** 的类比类似 LLM 中的 DPO vs PPO——将 RL 转化为监督学习框架，工程实现更简单。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\beta$ 的选择需要调优，过大导致过拟合奖励
 - 正负样本划分基于采样概率而非硬阈值，可能引入噪声
 - 仅在 SD3.5-Medium 上验证，未在其他架构（SDXL/Flux/DiT）上测试

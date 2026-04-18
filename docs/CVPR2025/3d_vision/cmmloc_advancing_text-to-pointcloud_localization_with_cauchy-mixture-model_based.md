@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CMMLoc: Advancing Text-to-PointCloud Localization with Cauchy-Mixture-Model Based Framework
 description: >-
@@ -100,7 +100,7 @@ tags:
 - CDI 模块将方位信息（东/西/南/北）编码为文本嵌入再融入注意力，巧妙利用了文本编码器的语义理解能力
 - "先预对齐再精定位"的策略有效缓解了跨模态差距
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖语义分割标签的准确性，分割噪声会影响性能
 - 物体按语义标签排序但组内随机排列并非最优

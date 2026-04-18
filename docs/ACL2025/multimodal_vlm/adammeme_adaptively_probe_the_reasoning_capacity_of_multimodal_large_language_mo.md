@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdamMeme: Adaptively Probe the Reasoning Capacity of Multimodal Large Language Models on Harmfulness
 description: >-
@@ -123,7 +123,7 @@ AdamMeme是一个**评估框架**（evaluation framework），不涉及模型训
 - **Misbelief Statement设计**：将隐含有害性显式化为"错误信念陈述"，不仅提供了评估基准，也有助于理解有害性的本质
 - **图文分离分析**：通过OCR-SAM擦除文字创建纯图像版本，是分析图文交互有害性的有效方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **评估agent的偏见**：用LLM（如GPT-4）作为评估agent，其本身可能存在偏见，影响评分的客观性
 - **文化局限性**：主要基于英文meme数据集，对中文、日文等其他语言和文化的meme覆盖不足

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlexRAG: A Flexible and Comprehensive Framework for Retrieval-Augmented Generation
 description: >-
@@ -137,7 +137,7 @@ FlexRAG 本身是工程框架，不涉及新的训练方法。但它支持所有
 - **多模态和 Web 检索**的支持是相对于 FlashRAG 等竞品的重要差异化
 - **低资源消耗**使得在普通服务器上进行大规模检索实验成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验较为基础**：仅展示了 ModularAssistant 在三个标准 QA 任务上的表现，缺乏对 Web RAG 和多模态 RAG 的实际评估
 2. **缺少与 LangChain、LlamaIndex 等更知名框架的对比**：仅与 FlashRAG 比较资源开销

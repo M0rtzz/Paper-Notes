@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoCoLex: Confidence-guided Copy-based Decoding for Grounded Legal Text Generation
 description: >-
@@ -124,7 +124,7 @@ CoCoLex vs CoLex（去掉置信度引导的静态插值版本）：
 - CoCoLex+ 的全文档复制特别适合法律场景：法律文档动辄数十页，关键引用分散各处
 - 对弱模型的提升尤为显著——这意味着在资源受限场景下，复制机制可以作为增强小模型忠实性的低成本手段
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验基于 Oracle 文档设置（假设检索完美），真实检索噪声下的鲁棒性未评估
 - 不处理需要跨文档推理、综合多源或解决矛盾先例的场景——仅能复制而不能推理

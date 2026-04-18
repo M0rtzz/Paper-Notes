@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Understanding Safety Alignment: A Mechanistic Perspective from Safety Neurons
 description: >-
@@ -118,7 +118,7 @@ $\mathcal{C} \approx 1$ 表示这些神经元完全解释了安全能力；$\mat
 3. **Alignment Tax 解释**：首次从神经元层面给出机制性解释——安全和有用性共享同一组高度重叠的神经元，但需要不同的激活模式，这类似"资源竞争"
 4. **实际应用**：安全防护（safeguard）应用展示了在生成前预测有害输出的可能性，且分类器开销 <0.001 秒
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对齐方式局限**：仅验证了 (IA)³ + DPO 的设置，全参数微调的安全对齐可能打破神经元功能保持假设
 2. **模型规模**：实验集中在 3B~7B 模型，更大规模模型的安全神经元分布可能不同

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Variability of Concept Activation Vectors
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **从 LIME 到 TCAV 的理论分析路线**：借鉴了 Garreau & Mardaoui (2021) 对 LIME 稳定性的分析范式，建立了 XAI 方法可靠性分析的理论框架
 - **实用价值高**：给出了具体的计算预算分配建议，对实际使用 TCAV 的研究者有直接指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析假设优化器完美收敛，实际中求解器收敛不完全可能引入额外方差
 - "包围均值"假设（Assumption 1）虽然通常成立，但未给出可验证的充分条件
 - 未分析非线性概念边界（如 CAR、Concept Gradient 等方法）的方差行为

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multilingual Retrieval Augmented Generation for Culturally-Sensitive Tasks: A Benchmark for Cross-lingual Robustness
 description: >-
@@ -143,7 +143,7 @@ BordIRLines 是一个**评估基准**，不涉及训练。关键配置：
 3. **49 种语言的规模**：覆盖了大量低资源语言，揭示了低资源语言在 RAG 中面临的独特挑战
 4. **文档标注的附加价值**：相关性和观点标注使 BordIRLines 不仅是一个 QA 基准，还可用于 IR 质量评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务特殊性**：领土争端是一个非常特定的任务，发现是否能推广到其他文化敏感任务（如宗教、历史事件）有待验证
 2. **Wikipedia 偏差**：虽然 Wikipedia 有中立性规范，但不同语言版本的编辑者群体可能有系统性偏差

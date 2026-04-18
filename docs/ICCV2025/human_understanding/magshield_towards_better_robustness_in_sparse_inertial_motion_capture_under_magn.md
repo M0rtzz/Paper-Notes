@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MagShield: Towards Better Robustness in Sparse Inertial Motion Capture Under Magnetic Disturbances
 description: >-
@@ -97,7 +97,7 @@ MagShield 作为 IMU 方向估计模块，输入 6 个 IMU 的传感器本地原
 - 磁场干扰数据合成方法具有通用性，解决了此类数据稀缺的问题
 - 加权校正策略避免在正常磁场下过度干预，平衡了精度与鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 磁场扰动检测仅使用 IMU 位置信息，未利用相对旋转和局部磁场方向关系
 - 未考虑磁力计磁化问题（永久性磁化导致的测量偏移），此情况下方法可能失效

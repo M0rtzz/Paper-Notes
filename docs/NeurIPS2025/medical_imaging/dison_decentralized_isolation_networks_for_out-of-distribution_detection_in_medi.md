@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DIsoN: Decentralized Isolation Networks for Out-of-Distribution Detection in Medical Imaging
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：借鉴 Isolation Forest 的"隔离"思想 + 联邦学习的参数交换机制，用收敛速度作为 OOD 分数
 
-**核心idea一句话**：训练一个二分类器分离单个测试样本和训练数据，OOD 样本容易分离（收敛快），ID 样本难以分离（收敛慢）；通过去中心化训练实现不共享数据
+**核心 idea**：训练一个二分类器分离单个测试样本和训练数据，OOD 样本容易分离（收敛快），ID 样本难以分离（收敛慢）；通过去中心化训练实现不共享数据
 
 ## 方法详解
 
@@ -127,7 +127,7 @@ Near-OOD 中 CC-DIsoN 比次优方法高 8.4%。
 - **Class-conditioning 的简洁性**：仅需传递一个预测标签即可提升性能，实现成本几乎为零
 - Instance Norm 替代 Batch Norm 的选择对单样本节点至关重要，这个洞察可迁移到其他 few-shot/single-sample 联邦场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理开销较大（每样本需多轮通信训练），不适合实时场景
 - 当前每次只隔离一个样本，批量测试样本需逐个处理，效率可优化
 - 理论等价只在 $E=1$ 时严格成立，$E>1$ 是近似

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **通用框架**：教师模型可替换，在物体级和场景级数据集上都验证了有效性
 - SDEdit中的噪声级别临界点 $t^*$ 的洞察非常巧妙——足够大的噪声可以抹平不完美教师和真实GT之间的分布差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 计算成本：多步去噪训练仍较昂贵，batch size被迫降至10
 - 教师模型质量的下限：如果教师模型太差，噪声分布可能即使在高噪声级别也难以对齐
 - 目前仅验证了3DGS表征，是否可推广到NeRF或Mesh等其他3D表征有待探索

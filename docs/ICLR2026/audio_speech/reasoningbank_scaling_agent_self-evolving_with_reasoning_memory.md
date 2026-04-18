@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReasoningBank: Scaling Agent Self-Evolving with Reasoning Memory
 description: >-
@@ -118,7 +118,7 @@ ReasoningBank 是一个闭环记忆系统：Agent 接收新任务 → 从 Reason
 - **记忆驱动的经验扩展作为新的 scaling 维度**: 传统 scaling 只增加计算量，MaTTS 将记忆质量和 scaling 联动，开辟了 Agent 能力提升的新途径
 - **设计上的简洁性**: 整个系统不需要训练，仅靠 in-context learning + embedding retrieval + LLM judge，极易部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 LLM-as-a-judge 提供正确性信号，judge 本身可能出错导致记忆污染
 - 记忆合并策略过于简单（直接追加），大规模部署时记忆池膨胀可能降低检索效率
 - 检索仅用 embedding 相似度，缺乏推理感知的检索机制

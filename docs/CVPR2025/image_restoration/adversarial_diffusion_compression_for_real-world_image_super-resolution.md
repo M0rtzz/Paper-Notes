@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdcSR: Adversarial Diffusion Compression for Real-World Image Super-Resolution
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：系统分析 OSEDiff 各模块，将其分为可移除型（VAE 编码器、提示提取器、文本编码器等）和可剪枝型（UNet、VAE 解码器），设计两阶段方案逐步压缩。
 
-**核心 idea 一句话**：模块移除 + 通道剪枝 + 分阶段对抗蒸馏 = 实时扩散超分。
+**核心 idea**：模块移除 + 通道剪枝 + 分阶段对抗蒸馏 = 实时扩散超分。
 
 ## 方法详解
 

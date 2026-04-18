@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harmonic Dataset Distillation for Time Series Forecasting
 description: >-
@@ -161,7 +161,7 @@ $$\underset{\mathcal{F_S}}{\text{argmin}} \; \mathcal{L}_{\text{grad}} + \lambda
 3. **跨架构泛化的根本解决**：谐波是数据的内在属性而非特定模型的产物，这保证了模型无关性
 4. **实用价值显著**：834x-1839x的训练加速、大规模数据集上的有效性、基础模型微调的应用——每一个都有即时的工业价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **合成数据大小M的选择**：虽然性能随M持续改善，但最优M值需要实验确定
 2. **谐波数k的超参数选择**：top-k的k值对结果有影响，但未提供自适应选择策略

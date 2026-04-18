@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EffiCoder: Enhancing Code Generation in Large Language Models through Efficiency-Aware Fine-tuning
 description: >-
@@ -159,7 +159,7 @@ EffiCoder 的思想可概括为：
 5. 对“数据即算法”提供了强证据。
 	对代码任务而言，高质量目标分布本身就是很强的优化信号。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 评测成本较高。
 	大规模本地执行、跨语言环境配置、沙箱安全都会增加数据构建成本。

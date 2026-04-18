@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaSeg: Harnessing Mamba for Accurate and Efficient Image-Event Semantic Segmentation
 description: >-
@@ -98,7 +98,7 @@ tags:
 3. **定性结果**显示 MambaSeg 在小目标（行人、交通标志）和复杂光照下明显优于 EISNet
 4. 消融实验设计很系统，从模块级到子组件级都有详细分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **数据集单一**：仅在自动驾驶场景的 DDD17（6类）和 DSEC（11类）上验证，类别少、场景单一，泛化能力未知
 2. **事件表示局限**：采用固定时间窗口的 Voxel Grid，可能丢失事件流的精细时间信息；可考虑自适应时间分段或直接处理异步事件
 3. **编码器未联合训练**：两条分支用相同的预训练 VMamba-T 初始化，事件分支用 ImageNet 预训练是否最优有待验证

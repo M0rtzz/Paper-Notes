@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Does It Take to Build a Performant Selective Classifier?
 description: >-
@@ -123,7 +123,7 @@ $$D_{\text{rank}}(c) = \Pr(X \in A_c^* \setminus A_c) + \Pr(X \in A_c \setminus 
 - **误差预算（error budget）** 的视角使得实践者可以量化诊断瓶颈并据此分配改进资源
 - 与 multicalibration / loss prediction 的联系（Section 3.4 末尾）提供了自检机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 五个误差项之间存在交互（如增加容量同时影响逼近和排序），无法完全独立归因
 - SAT、mixup、focal loss 等训练时校准方法同时影响排序和全覆盖准确率，混淆了 budget 分离

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Hard Is It to Rig a Tournament When Few Players Can Beat or Be Beaten by the Favorite?
 description: >-
@@ -122,7 +122,7 @@ tags:
 - WWF 是一个非常漂亮的中间结构——它既够小（仅 $k \cdot 2^k$ 个节点）使颜色编码可行，又保留了足够的信息使其存在性等价于原问题
 - 出度参数化的简洁性（"能赢的人太少就不可能赢"）与入度参数化的技术深度形成鲜明对比，展示了同一问题的两面
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 入度参数化的运行时间中 $k \cdot 2^k$ 出现在指数上，实际可用性局限于 $k$ 非常小的情况
 - 子集 fas 和子集 fvs 的参数化复杂度仍是开放问题（甚至不知道当这些值为 1 时 TFP 是否 NP-hard）

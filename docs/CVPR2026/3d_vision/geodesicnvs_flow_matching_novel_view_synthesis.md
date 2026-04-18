@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeodesicNVS: Probability Density Geodesic Flow Matching for Novel View Synthesis
 description: >-
@@ -92,7 +92,7 @@ D2D流匹配损失：$\|v_\theta(x_t, t) - (x_1 - x_0)\|^2$。测地线训练：
 
 - D2D-FM的视角变换范式从根本上更合理：NVS是确定性映射而非噪声采样。概率密度测地线的数学框架优美，用扩散score（已有的预训练模型副产品）作为密度代理是精巧的工程选择，避免了显式密度估计的困难。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多阶段训练（D2D + GeodesicNet蒸馏）流程复杂，可扩展性受限
 - 测地线优化依赖预训练扩散模型的score质量

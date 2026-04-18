@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Generative Modeling with Residual Vector Quantization-Based Tokens
 description: >-
@@ -100,7 +100,7 @@ $$z_i = \sum_j e(x_{i,j}; j) \odot (1 - m_{i,j})$$
 3. 完整的离散扩散+变分推断概率框架，理论严谨。
 4. 两个模态(图像+语音)验证了方法普适性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 代码开源状态未确认，复现可能有门槛。
 2. 不同RVQ深度(D=4 vs D=8)的最优选择标准不清晰。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Watermark: A Selective Watermarking Framework for Large Language Models via Multi-Objective Optimization
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：选择性水印（只对部分token施加水印）是解决质量-检测权衡的有前途方向，但现有方法SWEET仅用熵阈值作为选择标准，需要大量网格搜索手动调参，且忽略了语义上下文等重要信息。
 
-**本文要解决什么**：如何自动学习最优的水印施加决策——何时该给token加水印、何时不该？
+**本文目标**：如何自动学习最优的水印施加决策——何时该给token加水印、何时不该？
 
 **切入角度**：将选择性水印决策建模为一个可学习的网络输出，利用多目标优化同时优化检测性和文本质量两个冲突目标。
 
@@ -123,7 +123,7 @@ $$\mathcal{L}_D = -\lambda_z z + \lambda_{\text{wm}} \mathcal{L}_{\text{wm\_rati
 - **多目标优化的优雅应用**：用MGDA处理检测性和质量的冲突目标，避免了手动权衡超参数。这种multi-objective框架可迁移到其他存在conflicting objectives的AI安全场景
 - **训练-推理分离的巧妙设计**：训练时用连续mask确保可微性，推理时用硬binary mask增强鲁棒性，二者通过输出正则化（推向0/1）无缝衔接
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 选择器网络在OPT-1.3b上训练，迁移到更大模型时是否仍然最优未验证
 - sentence embedding窗口大小的选择（文中讨论了大小的权衡但未系统搜索最优值）
 - 释义攻击下LTW-1的鲁棒性略逊于Unigram基线，说明KGW基础上的选择性水印在鲁棒性方面仍有提升空间

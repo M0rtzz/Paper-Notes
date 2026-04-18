@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NexusSum: Hierarchical LLM Agents for Long-Form Narrative Summarization
 description: >-
@@ -98,7 +98,7 @@ MENSA 数据集上各模块贡献（逐步累加）：
 - **迭代压缩实现精确长度控制**：通过 $\delta$（chunk 大小）和 $\theta$（目标字数）两个参数就能精确控制输出长度，这个策略对任何需要长度约束的生成任务都有参考价值
 - **无需微调的多Agent协作**：三个 Agent 各司其职，通过 prompt 工程即可适配不同数据集/领域，体现了 LLM Agent 框架的灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **可读性差距明显**：人类评估中 NexusSum 的可读性只有 2.17/5，远低于 Zero-Shot 的 4.17，说明信息密度高的摘要不一定是人类偏好的
 - **评估指标局限**：BERTScore 提升 30% 但人类更喜欢 Zero-Shot，暴露了自动指标与人类偏好的脱节
 - **计算成本高**：需要 4 张 A100 GPU 运行 123B 模型，三阶段流水线的推理时间未充分讨论

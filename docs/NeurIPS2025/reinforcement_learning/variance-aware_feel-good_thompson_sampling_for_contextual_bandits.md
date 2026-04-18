@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Variance-Aware Feel-Good Thompson Sampling for Contextual Bandits
 description: >-
@@ -103,7 +103,7 @@ $$\sum_{t=1}^T (f_t(z_t) - f_*(z_t)) \leq \sum_{t=1}^T \frac{\gamma}{\beta_t} \s
 - 广义解耦系数的引入为分析异质权重Thompson采样提供了统一工具，可能对其他在线学习问题也有价值。
 - 用$\Lambda_t$替代$\Lambda$避免对$T$的依赖，这个小技巧体现了对证明结构的深刻理解。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前要求$\sigma_t^2$对智能体已知（"弱对手+方差揭示"设定），将结果推广到未知方差情形是重要的未来工作。
 - 本文为纯理论工作，缺乏实证实验来验证FGTS-VA在实际问题中的表现是否优于UCB类方法。

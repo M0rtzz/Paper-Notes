@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding
 description: >-
@@ -94,7 +94,7 @@ $$\text{ID}_n = (d_n - 1) \cdot K + k_n$$
 - 超参 τ 和 $S_{\max}$ 提供灵活的 rate-quality 控制旋钮
 - 在语义评估任务上也显著优于固定帧率基线，说明动态 token 分配学到了更好的表征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 LibriTTS（585h）上训练，未验证大规模数据和多语言场景
 - 聚类算法不可微，无法端到端联合优化分割策略

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Solving Continuous Mean Field Games: Deep Reinforcement Learning for Non-Stationary Dynamics
 description: >-
@@ -121,7 +121,7 @@ $$e_k^{\text{true}} < C_0 e_0^{\text{cnf}} + \frac{1}{k}\sum_{i=1}^{k-1}\left[(i
 - **模块化设计**：三个组件（DRL、监督学习、CNF）各司其职，可独立改进
 - **理论保障**：误差传播分析明确了三种误差源对最终exploitability的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析尚不完整，特别是深度网络训练的精细分析缺失
 - 仅考虑了标准MFG，未扩展到多种群、graphon博弈或含公共噪声的MFG

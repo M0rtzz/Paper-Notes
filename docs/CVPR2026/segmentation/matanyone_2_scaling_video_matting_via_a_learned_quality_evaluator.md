@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MatAnyone 2: Scaling Video Matting via a Learned Quality Evaluator
 description: >-
@@ -112,7 +112,7 @@ $$\alpha = \alpha_V \odot (1 - M^{fuse}) + \alpha_I \odot M^{fuse}$$
 - **纯 CNN 超越扩散方法**：不依赖视频扩散先验，仅需首帧 mask 即超越 GVM 等扩散方法
 - **参考帧策略零额外显存**：通过引入远距离帧而非加长训练序列来建模长时变化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MQE 训练依赖静态图像抠图数据集 P3M-10k，可能对极端场景（如透明材质、烟雾）泛化不足
 - 双分支标注管线的质量上限受限于 MatAnyone 和 MattePro，若基础模型失败则 MQE 也无法修复

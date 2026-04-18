@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] U-Mind: A Unified Framework for Real-Time Multimodal Interaction with Audiovisual Generation
 description: >-
@@ -147,7 +147,7 @@ U-Mind 基于 LLaMA2-7B 构建，采用两阶段训练：
 - **文本优先解码**验证了"推理先于生成"的范式在多模态系统中的关键性
 - 消融实验设计出色：每个组件的贡献都被清晰量化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 动作表达力受 RVQ-VAE 离散词表限制，面部表情和手部细动作精度不足
 - 预训练数据比例靠经验确定，缺乏理论指导的平衡框架
 - 基于 LLaMA2-7B，模型规模限制了推理复杂度上限

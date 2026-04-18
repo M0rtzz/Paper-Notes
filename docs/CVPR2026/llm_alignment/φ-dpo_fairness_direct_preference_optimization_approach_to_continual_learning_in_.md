@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] $\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models
 description: >-
@@ -134,7 +134,7 @@ $\varphi$-DPO 与经验回放自然兼容：回放缓冲区中的旧数据和新
 - **focal loss 思想的巧妙迁移**：将原本用于目标检测中类别不平衡的 focal loss 思想迁移到持续学习的组间不平衡问题，跨领域迁移自然合理
 - **轻量级改动**：相比标准 DPO 仅增加了一个调制因子 $(1-p)^\gamma$，实现几乎零额外成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **$\gamma$ 的自适应选择**：目前 $\gamma$ 是手动设定的超参数，理想情况下应根据各组的不平衡程度自适应调整
 2. **偏好对的质量依赖**：rejected 回答由 LLM 生成 + 人工验证，可扩展性受限于标注成本
 3. **长序列 CL 的验证不足**：目前最多测试 8 个阶段的持续学习，更长序列（如 50+ 阶段）下 $\pi_{t-1}$ 参考策略的累积偏差未被研究

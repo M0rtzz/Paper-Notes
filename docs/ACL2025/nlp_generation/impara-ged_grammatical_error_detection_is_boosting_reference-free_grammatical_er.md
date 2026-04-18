@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IMPARA-GED: Grammatical Error Detection is Boosting Reference-free Grammatical Error Quality Estimator
 description: >-
@@ -127,7 +127,7 @@ IMPARA-GED (ModernBERT-Large + 2-class GED) 在句子级 SEEDA-S 上超越所有
 - 通过简单的两阶段训练（GED→QE）就超过了昂贵的 GPT-4 评估，性价比极高
 - "标签可靠性 > 标签信息量" 的洞察对其他 NLP 任务也有启发意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 SEEDA 一个元评估基准上验证，缺乏跨领域泛化验证
 - 训练数据仅用 CoNLL-2013 和 FCE 两个小数据集，使用更大数据集（如 W&I+LOCNESS）可能进一步提升

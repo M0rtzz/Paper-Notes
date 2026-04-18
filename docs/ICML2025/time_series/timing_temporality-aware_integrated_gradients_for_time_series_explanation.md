@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TIMING: Temporality-Aware Integrated Gradients for Time Series Explanation
 description: >-
@@ -108,7 +108,7 @@ TIMING 相对 IG 的提升：MIMIC-III +8.7%、PAM +5.1%、Boiler +109.8%、Wafe
 4. **理论+实践兼备**：保留 IG 的 Sensitivity 和 Implementation Invariance，同时具备高效的单样本近似方案
 5. **Boiler 数据集提升 109.8%**：说明在时序依赖更强的工业数据上，时序感知的优势特别显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **不满足 Completeness**：归因之和不等于预测差异，在需要归因预算分配的场景下不够理想
 2. **分段超参数（n, s_min, s_max）**：需要根据数据集调整，论文虽展示了超参数不敏感性但仍增加了使用门槛

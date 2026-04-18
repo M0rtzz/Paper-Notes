@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HybridBooth: Hybrid Prompt Inversion for Efficient Subject-Driven Generation
 description: >-
@@ -165,7 +165,7 @@ $$\mathcal{L}_{\boldsymbol{M}} = \frac{1}{n}\sum_{i=1}^{n}\text{mean}(\boldsymbo
 3. **实用价值高**：与社区模型和 ControlNet 等控制方法无缝兼容，因为方法仅操作文本嵌入空间而不修改生成模型本身
 4. **仅 5 步迭代**即可超越需要 200-5000 步的优化方法，效率提升 40-1000 倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **无法进行精确语义编辑**：如调整表情、年龄等细粒度属性的控制能力不足
 2. **继承了 Stable Diffusion 的缺陷**：如手指等精细结构的生成质量不佳

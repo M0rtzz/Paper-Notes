@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Strassen Attention, Split VC Dimension and Compositionality in Transformers
 description: >-
@@ -131,7 +131,7 @@ $$a_{ijk} = \text{Softmax}_{j,k}\left(\frac{f_i g_j + g_j h_k + h_k f_i}{\sqrt{d
 3. **Strassen 矩阵乘法的跨领域灵感**：将 70 年代的矩阵乘法算法思想（Strassen 1969）巧妙地引入注意力机制设计
 4. **理论与实验的一致性**：所有理论预测都在实验中得到了精确验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限单层分析**：理论结果仅适用于单层 Transformer；多层设置下的表达能力分析仍是开放问题
 2. **实验仅在合成数据上**：未在真实 NLP 任务上验证 Strassen 注意力的实际效用

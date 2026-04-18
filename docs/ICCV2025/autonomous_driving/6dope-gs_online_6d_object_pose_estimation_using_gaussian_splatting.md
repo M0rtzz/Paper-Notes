@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting
 description: >-
@@ -126,7 +126,7 @@ HO3D消融：
 - 基于MAD的异常关键帧过滤比简单阈值更鲁棒，属于工程上的好实践
 - 整体思路是将scene-level GS-SLAM的思想下沉到object-level，开辟了新方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在HO3D的ADD绝对得分上仍低于BundleSDF，手部遮挡导致的监督信号不足是主因
 2. 高斯栅格化在大旋转/平面外旋转上梯度计算不如可微光线投射精确

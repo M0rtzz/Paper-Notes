@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sliding Windows Are Not the End: Exploring Full Ranking with Long-Context Large Language Models
 description: >-
@@ -94,7 +94,7 @@ $$\mathcal{L}_{ia} = -\sum_{i=1}^{|y|} w_i \log P_\theta(y_i | x, y_{<i})$$
 - **Importance-aware loss** 设计直观有效，与排序评估指标（NDCG 关注 top-ranked）的偏好一致
 - 实验非常全面：涵盖 zero-shot / SFT 两种设定、开源/闭源多种模型、效率/效果/成本多维分析、不同 N 值的泛化性验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 7B/8B 规模模型上实验，未涉及 30B/70B 等更大模型，模型规模对 full ranking 的影响未知
 - 未针对排序任务设计专用的长上下文 LLM 架构
 - Multi-pass sliding window 标签构造的成本较高（GPT-4o 生成1k查询标签需 $261，远高于 sliding window 的 $29）

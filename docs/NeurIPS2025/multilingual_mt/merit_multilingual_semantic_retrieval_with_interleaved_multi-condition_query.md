@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MERIT: Multilingual Semantic Retrieval with Interleaved Multi-Condition Query
 description: >-
@@ -102,7 +102,7 @@ tags:
 - ⭐⭐⭐⭐ **Coral 设计优雅**：掩码重建作为对比学习的互补手段，思路简洁有效
 - ⭐⭐⭐ **实验全面**：9 个 SOTA 基线 + 8 个外部 benchmark + OOD 分析 + 错误归因
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 数据集仅覆盖电商产品检索场景，向其他领域（学术搜索、新闻检索）的迁移性待验证
 2. 重建解码器增加训练开销，推理时虽可丢弃但训练效率需关注
 3. 语言覆盖偏向东南亚，未包含中文、日文等东亚语言

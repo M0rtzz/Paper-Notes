@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MOBO-OSD: Batch Multi-Objective Bayesian Optimization via Orthogonal Search Directions
 description: >-
@@ -107,7 +107,7 @@ MOBO-OSD的流程可概括为四步：
 - 批量选择策略中探索空间多样性约束的设计简洁而有效
 - OSD子问题的双目标选择步骤（最大化 $\lambda$ 与最小化偏离距离）体现了平衡探索与利用的思想
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅处理**无噪声观测**，实际应用中往往存在观测噪声
 - 未与HVKG等最新方法全面比较（但文中提到了兼容性）

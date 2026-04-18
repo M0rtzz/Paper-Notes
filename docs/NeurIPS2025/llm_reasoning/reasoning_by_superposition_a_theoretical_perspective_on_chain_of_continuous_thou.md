@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning by Superposition: A Theoretical Perspective on Chain of Continuous Thought
 description: >-
@@ -98,7 +98,7 @@ $$[\mathbf{t}_c] = \frac{1}{\sqrt{|\mathcal{V}_c|}} \sum_{v \in \mathcal{V}_c} \
 4. **Theory-Practice对齐**：理论构造中的注意力模式（第一层拷贝、第二层扩展）在训练模型中被实际学到
 5. **仅需线性嵌入维度**：理论构造只需O(|Voc|)维嵌入，优于并行工作中的指数维度要求
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 尚未证明离散CoT步数的下界，即CoT和Coconut之间的严格表达力分离仍然开放
 2. 仅研究了图可达性这一特定问题，更一般推理任务的理论分析待扩展
 3. 叠加态探索行为如何仅从确定性搜索轨迹中通过训练涌现，缺乏理论解释

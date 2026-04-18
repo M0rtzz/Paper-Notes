@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved and Oracle-Efficient Online $\ell_1$-Multicalibration
 description: >-
@@ -114,7 +114,7 @@ $$\mathbb{E}[K(\pi_T, \mathcal{H})] \leq \widetilde{O}(T^{-1/4}\sqrt{\log T})$$
 3. **Lipschitz 性质的利用**：$\ell_1$-多校准误差关于 $\mathcal{H}$ 的 1-Lipschitz 性质是此前未被发掘的结构性质，使得从有限到无穷假设类的推广自然而然。
 4. **离线 vs 在线 oracle**：将 oracle 需求从在线回归降到离线评估，是实用性的重要提升——离线 oracle 仅需一次性优化，不需要维护在线状态。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Oracle 高效方法的假设限制**：Theorem 1.4 要求 (a) 二值假设类 $\mathcal{H}: \mathcal{X} \to \{0,1\}$，(b) transductive 或充分分离的上下文。能否放松这些假设是开放问题。
 2. **速率差距**：改进速率 $T^{-1/3}$ 需要枚举 $\mathcal{H}$，oracle 高效版本降到 $T^{-1/4}$——能否在 oracle 高效下也达到 $T^{-1/3}$ 仍未解决。

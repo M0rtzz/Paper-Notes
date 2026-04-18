@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evolution and compression in LLMs: On the emergence of human-aligned categorization
 description: >-
@@ -100,7 +100,7 @@ $$\mathcal{F}_\beta[q] = I_q(M;W) - \beta \cdot I_q(W;U)$$
 4. **跨域泛化**：Shepard 圆实验提供了颜色以外的初步泛化证据
 5. **人类-AI 对齐的新视角**：表明 IB 效率可能是智能行为的一种涌现属性，无论人类还是 LLM 都未被显式训练优化该目标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅 Gemini 2.0 达到完整复杂度范围**：其他 SOTA 模型限于低复杂度解，说明 IICLL 对 in-context learning 能力要求极高，结论的通用性有待验证
 2. **偏置来源不明**：IB 效率偏置究竟来自训练数据分布、指令微调还是模型架构？论文未能解耦这些因素

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Recursive Multi-Scale Representations for Irregular Multivariate Time Series Forecasting
 description: >-
@@ -135,7 +135,7 @@ $$\mathcal{L} = \frac{1}{Y_Q} \sum_{j=1}^{Y_Q} (\hat{z_j} - z_j)^2$$
 3. **老方法焕新生**：PrimeNet 提升 62.3%、GRU-D 提升 25.8%，说明多尺度补充是关键缺失环节
 4. **效率优势**：利用轻量骨干（如 GraFITi）可同时实现最优精度和最优效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ODE-based 模型与 ReIMTS 结合时缺乏理论解释
 - 扩散模型的噪声潜在表示与 ReIMTS 的融合机制不直接兼容

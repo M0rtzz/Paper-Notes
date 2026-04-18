@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shortcutting Pre-trained Flow Matching Diffusion Models is Almost Free Lunch
 description: >-
@@ -113,7 +113,7 @@ $$\Delta\theta^- = \mu \Delta\theta^- + (1-\mu)\Delta\theta$$
 - **LoRA的"几乎免费"特性**：得益于LoRA参数化，仅更新极少量参数，EMA更新也可在LoRA空间高效完成
 - **泛化性设计**：方法适用于任何预训练flow matching模型，理论上可扩展到视频、3D、音频等模态
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SD3.5未做CFG嵌入蒸馏，导致推理时需要双倍函数评估（条件+无条件）
 - 1步生成能力有限，可能需要结合ADD等对抗蒸馏进一步提升

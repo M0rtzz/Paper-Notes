@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LoRA Fine-Tuning Without GPUs: A CPU-Efficient Meta-Generation Framework for LLMs
 description: >-
@@ -80,7 +80,7 @@ tags:
 - 民主化 LLM 适配，打破 GPU 壁垒
 - 元学习框架可扩展：adapter bank 可社区贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能差距明确：CPU adapter 不能替代 GPU 微调
 - 仅在 Mistral-7B 验证
 - Adapter bank 构建本身需 GPU

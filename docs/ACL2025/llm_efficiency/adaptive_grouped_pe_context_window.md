@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LaMPE: Length-aware Multi-grained Positional Encoding for Adaptive Long-context Scaling Without Training
 description: >-
@@ -32,9 +32,9 @@ tags:
 - **领域现状**: RoPE（Rotary Position Embedding）已成为主流 LLM 的标准位置编码方式（Llama、Qwen、Mistral 等均采用），但模型的有效上下文受限于预训练阶段的窗口长度（如 Llama2 的 4K、Llama3 的 8K）。
 - **现有痛点**: 当输入超过预训练窗口时，RoPE 遇到 OOD（Out-of-Distribution）的相对位置，导致注意力崩溃。现有外推方法（SelfExtend、DCA）采用 **固定映射策略**——不管输入多长，分组大小 $G$ 和映射范围都是手动预设的常数。
 - **核心矛盾**: ① 固定映射忽视了训练阶段相对位置的 **左偏频率分布**（短距离位置被充分训练，长距离位置严重欠训练），所有位置被同等对待；② 固定分组大小无法适应不同长度的输入，同一个 $G$ 对短序列过度压缩、对长序列又不够压缩。
-- **本文要解决什么**: 如何根据输入长度动态确定最优映射长度，并设计位置分辨率随区域变化的多粒度注意力机制？
+- **本文目标**: 如何根据输入长度动态确定最优映射长度，并设计位置分辨率随区域变化的多粒度注意力机制？
 - **切入角度**: 通过系统性实验发现困惑度随映射长度变化呈 V 形或单调递减模式，且最优映射长度与输入长度之间存在 S 形关系，可用 sigmoid 函数精确建模。
-- **核心 idea 一句话**: 用 scaled sigmoid 函数自适应确定映射长度 + 三区域多粒度位置编码同时捕获局部精细信息和长程依赖。
+- **核心 idea**: 用 scaled sigmoid 函数自适应确定映射长度 + 三区域多粒度位置编码同时捕获局部精细信息和长程依赖。
 
 ## 方法详解
 
@@ -152,7 +152,7 @@ LaMPE 在 RULER 128K 上达到 59.48，是第二名 SelfExtend (35.97) 的 **1.6
 
 5. **无需手动调参**：彻底消除了 SelfExtend 中需要手调 $G$ 和 $w$ 的负担，sigmoid 函数参数通过简单曲线拟合自动确定。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **仅在 Llama 系列验证**：实验覆盖 Llama2-7B-Chat、Llama3-8B-Instruct、Llama3.1-8B-Instruct 三个模型，但未涉及 Qwen、Mistral、Phi 等其他 RoPE-based 架构，泛化性有待验证。
 

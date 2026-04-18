@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoreMatching: A Co-adaptive Sparse Inference Framework with Token and Neuron Pruning for Comprehensive Acceleration of Vision-Language Models
 description: >-
@@ -159,7 +159,7 @@ Core Neurons 保留比例验证（TextVQA / LLaVA-1.5-7B）：
 - **理论贡献**：Projection-guided Criterion 从理论上解释了为何纯 attention score 不够好——需同时考虑 value 方向信息
 - **自适应阈值**：最大几何距离法避免手动调比例，不同样本自动确定保留 token 数量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型规模**：主要在 LLaVA-1.5-7B 上验证，对更大模型（13B/70B）和更新架构的泛化性有待验证
 2. **视频/多图场景**：当前仅针对单图理解任务，视频 VLM 场景是否适用需要探索

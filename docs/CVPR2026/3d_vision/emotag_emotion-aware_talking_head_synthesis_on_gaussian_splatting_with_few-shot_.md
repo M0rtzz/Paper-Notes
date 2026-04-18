@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EmoTaG: Emotion-Aware Talking Head Synthesis on Gaussian Splatting with Few-Shot Personalization
 description: >-
@@ -130,7 +130,7 @@ EmoTaG 由两大核心组件组成（Fig. 3）：
 - **极简适配策略**：冻结主网络仅微调 AdaIN 参数，兼顾效率和个性化效果
 - 将口腔内区域独立出来做精细化拟合，弥补了 FLAME 对口腔内部建模的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖外部的 pose & expression frames 作为推理时的辅助输入，无法纯音频驱动
 2. 情感蒸馏依赖 DeepFace 这一特定模型，其识别准确度直接影响训练质量

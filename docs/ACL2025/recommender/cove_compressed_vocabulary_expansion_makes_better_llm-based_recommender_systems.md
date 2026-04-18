@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoVE: Compressed Vocabulary Expansion Makes Better LLM-based Recommender Systems
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**: LLM 具有强大的 next-token prediction 能力，但现有推荐框架未能直接利用这一能力，反而要求 LLM 完成更困难的多 token 标题生成任务。
 
-**本文要解决什么**: 如何设计一个框架让 LLM 直接利用 next-token prediction 进行推荐，同时解决大规模物品空间下嵌入表的内存效率问题。
+**本文目标**: 如何设计一个框架让 LLM 直接利用 next-token prediction 进行推荐，同时解决大规模物品空间下嵌入表的内存效率问题。
 
 **切入角度**: 借鉴领域自适应中的词表扩展技术，为每个物品分配唯一 token，将推荐转化为单 token 预测问题。
 
-**核心 idea 一句话**: 扩展 LLM 词表使每个物品对应一个唯一 token，通过 next-token prediction 的 logits 直接推荐，用哈希压缩解决嵌入表内存瓶颈。
+**核心 idea**: 扩展 LLM 词表使每个物品对应一个唯一 token，通过 next-token prediction 的 logits 直接推荐，用哈希压缩解决嵌入表内存瓶颈。
 
 ## 方法详解
 
@@ -53,12 +53,12 @@ CoVE 的核心流程：
 ### 关键设计
 
 #### 1. 微调任务设计
-- **做什么**: 将推荐任务建模为标准的 next-token prediction
+- **功能**: 将推荐任务建模为标准的 next-token prediction
 - **核心思路**: 训练样本包含任务指令（Task Instruction）、用户历史（Task Input，包含物品 ID 和标题）、目标物品（Task Output）。训练时最小化 next-token prediction loss；推理时只需要 lm_head 输出的 logits 中最后 $|\mathcal{I}|$ 维对应的分数
 - **设计动机**: 将多 token 标题生成简化为单 token ID 预测，消除幻觉，大幅加速推理
 
 #### 2. 哈希嵌入压缩
-- **做什么**: 将物品嵌入表从 $|\mathcal{I}|$ 压缩到 $|\mathcal{S}|$（$|\mathcal{S}| \ll |\mathcal{I}|$）
+- **功能**: 将物品嵌入表从 $|\mathcal{I}|$ 压缩到 $|\mathcal{S}|$（$|\mathcal{S}| \ll |\mathcal{I}|$）
 - **核心思路**: 定义 $k$ 个通用哈希函数 $h_1, \ldots, h_k$，每个将物品映射到共享嵌入空间。物品 $i$ 的嵌入通过平均其哈希映射的共享嵌入得到：
 
 $$\mathbf{e}_i = \frac{1}{k} \sum_{j=1}^{k} \mathbf{e}_{h_j(i)}$$
@@ -126,7 +126,7 @@ Video Games 数据集上 CoVE vs. BIGRec (finetune-and-retrieval)：
 - **实验充分**: 4 个数据集、12+ baseline 比较、多种消融、推理速度分析、case study，论据完整
 - **case study 有启发**: 微调后 LLM 能在生成时自动输出正确的 ID-标题对应关系，说明 CoVE 确实让 LLM 学到了物品语义
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 嵌入压缩仅探索了哈希方法，更先进的压缩技术（量化、低秩近似）值得探索
 2. 仅在 Amazon 电商数据集上实验，缺少其他领域（新闻、视频、音乐）的验证

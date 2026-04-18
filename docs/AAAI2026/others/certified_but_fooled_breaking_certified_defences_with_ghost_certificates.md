@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Certified but Fooled! Breaking Certified Defences with Ghost Certificates
 description: >-
@@ -138,7 +138,7 @@ $$\max_\delta \sum_{i=1}^N L(f_\theta(x + \Delta_i + \delta \odot m), y) \quad \
 3. **新的威胁维度**：证书伪造不仅是分类错误，还产生"虚假安全感"——这对安全关键应用（自动驾驶、医疗）尤为危险
 4. 揭示了认证防御的一个根本局限：$\ell_2$ 范数约束的认证在语义空间中可能不够
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **白盒威胁模型**：需要完全访问模型参数，现实中攻击者未必有此权限
 2. 对 DensePure 在 $\sigma=0.5$ 时的 ASR 显著下降，说明更强的去噪器仍具防御潜力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraspLDP: Towards Generalizable Grasping Policy via Latent Diffusion
 description: >-
@@ -89,7 +89,7 @@ GraspLDP 采用两阶段训练：(1) Action Latent Learning 阶段：用 VAE 将
 - graspness map 作为视觉 prompt 的设计简洁有效，自监督重建确保信息利用
 - 真实世界实验中，GraspLDP 在杂乱场景的 Scene Completion Rate 达到 96.2%，接近开环方法 AnyGrasp 的 92.3%
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖预训练的抓取检测网络（如 AnyGrasp），若检测器在新物体上失效则 pose 先验变差
 - 目前仅针对抓取子任务，未扩展到完整的长序列操作
 - VAE 训练和扩散训练分为两阶段，端到端联合训练可能更优

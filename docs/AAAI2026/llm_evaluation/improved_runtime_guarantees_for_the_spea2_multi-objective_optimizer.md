@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Runtime Guarantees for the SPEA2 Multi-Objective Optimizer
 description: >-
@@ -101,7 +101,7 @@ tags:
 - 实际意义重大：在实际应用中Pareto前沿大小未知，这意味着SPEA2的参数调优难度远低于NSGA-II——即使种群大小设置过大，性能保证也不会显著变差
 - 分析方法具有可推广性：均衡选择和乘法增长这两个核心论证仅依赖于标准位变异能以适当概率产生副本，因此可自然推广到其他表示空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分析仅限于二目标benchmark（OneMinMax、OJZJ、LOTZ），向更高维目标函数和更复杂问题的推广尚未完成
 - 缺乏实验验证：理论界反映的是最坏情况行为，实际运行时可能更好或有不同的参数依赖模式

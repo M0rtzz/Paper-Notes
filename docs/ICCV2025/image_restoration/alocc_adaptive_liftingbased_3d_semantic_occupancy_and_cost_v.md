@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ALOcc: Adaptive Lifting-Based 3D Semantic Occupancy and Cost Volume-Based Flow Predictions
 description: >-
@@ -116,7 +116,7 @@ tags:
 - BEV cost volume复用历史帧cached特征，不需要二次推理，设计高效
 - 三个速度/精度变体从30.5FPS到6FPS，实用性极强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自适应提升中的偏移传播只用top-k点，极端密集遮挡场景可能不够
 - Flow预测仅在BEV平面(X/Y)，高度方向(Z)运动信息被压缩

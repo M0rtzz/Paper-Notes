@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlagEvalMM: A Flexible Framework for Comprehensive Multimodal Model Evaluation
 description: >-
@@ -104,7 +104,7 @@ FlagEvalMM 由两大组件构成：**评估服务器 (Evaluation Server)** 和 *
 - 基于 SQLite 的缓存机制有效避免重复推理，实用性强
 - 已集成到 FlagEval 平台和 HuggingFace Spaces，可直接使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估方法的覆盖仍有限——尚未纳入多轮对话、交互式游戏和高级推理能力评估
 - 生成任务中自动评估与人工评估差距大，仍需依赖人工标注

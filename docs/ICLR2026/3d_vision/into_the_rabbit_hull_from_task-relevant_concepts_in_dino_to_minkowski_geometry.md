@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Into the Rabbit Hull: From Task-Relevant Concepts in DINO to Minkowski Geometry
 description: >-
@@ -105,7 +105,7 @@ $$\mathcal{X} = \bigoplus_{i=1}^{m} \mathcal{P}_i, \quad \mathcal{P}_i = \text{c
 - **跨学科视角**：将认知科学（Gärdenfors 概念空间）、离散几何（Minkowski 和）和深度学习可解释性有机结合
 - **对 steering 的深刻启示**：MRH 预测概念操控存在天然上界（到达原型后饱和），这解释了当前 SAE probing 中的 plateau 和反转现象
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MRH 目前主要是假说层面，实证信号为"相容证据"而非严格证明，多种几何假说可能产生类似现象
 - Minkowski 分解本质上不可识别（Proposition 2），仅从单层激活无法唯一恢复原始生成因子
 - 分析集中在 DINOv2-B 一个模型上，未验证对其他 ViT 变体或更大模型的泛化性

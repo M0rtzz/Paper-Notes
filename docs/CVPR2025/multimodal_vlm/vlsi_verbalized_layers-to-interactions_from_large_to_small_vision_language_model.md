@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VLsI: Verbalized Layers-to-Interactions from Large to Small Vision Language Models
 description: >-
@@ -95,7 +95,7 @@ VLsI 的训练分三步走：(1) Verbalization Step：在大小 VLM 的中间目
 - 不修改模型架构、不增加推理成本，蒸馏完成后可直接使用小模型
 - VLsI-0.5B 在 LLaVA-OV-72B 指导下也能达到不错效果（MMB=72.5），展示了极端规模差距下蒸馏的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 大小模型必须共享同一 tokenizer 和词表索引，限制了跨模型族的迁移（如 Qwen 系列内可以但不能跨到 LLaMA）
 - 训练需要同时加载大小两个模型，显存开销较大（72B teacher + 7B student）
 - verbalization 阶段为每个目标层独立训练，层数多时训练成本增加

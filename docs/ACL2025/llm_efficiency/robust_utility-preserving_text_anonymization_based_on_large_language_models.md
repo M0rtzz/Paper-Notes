@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust Utility-Preserving Text Anonymization Based on Large Language Models
 description: >-
@@ -104,7 +104,7 @@ RUPTA框架包含三个基于LLM的核心组件，形成迭代优化循环：
 - 利用优化过程中间产物构建DPO偏好数据，巧妙利用了迭代优化的副产品
 - 创建了DB-bio数据集，填补了匿名化研究中缺乏下游任务标签的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 基于LLM的迭代匿名化计算开销大（即使蒸馏后仍有限制）
 - DB-bio数据集主要来自名人传记，可能无法代表所有文本匿名化场景
 - 假设静态对抗模型（攻击者能力不变），实际中攻击者可能进化

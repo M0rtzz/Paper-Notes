@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Precise Affordances from Egocentric Videos for Robotic Manipulation
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{focal} + \mathcal{L}_{dice}$$
 - **完整的从感知到操作的闭环验证**：179 次真实机器人试验覆盖 7 个任务、34 个物体，包括递交等复杂场景
 - **开放词汇能力**：可用 CLIP 文本 embedding 替代可学习 embedding，支持未见 affordance
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 收集数据依赖视频中的手-物交互和工具-物体交互的时间顺序，视频缺少某些交互类型时需要启发式替代
 2. 分割精度受 SAM prompt 质量影响，遮挡严重时 prompt 点可能不准确

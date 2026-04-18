@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting the Predictability of Performative, Social Events
 description: >-
@@ -114,7 +114,7 @@ $$\mathbb{E}_{\mathcal{D}(f)} (p-y)^2 \geq \max_{h \in \mathcal{H}} \mathbb{E}_{
 4. **优雅的技术路径**：通过 online-to-batch 归约将复杂的 performative 问题简化为已有大量算法的在线学习问题
 5. **随机化的必要性**：在不连续分布映射下，确定性预测器可能无法实现自洽，随机化预测器是必须的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 outcome performativity**：假设预测只影响结果 $y$ 的分布，不影响特征 $x$；真实场景中人们可能因预测改变行为特征
 2. **stateless 设定**：未考虑历史预测对当前结果的累积影响（stateful performativity）

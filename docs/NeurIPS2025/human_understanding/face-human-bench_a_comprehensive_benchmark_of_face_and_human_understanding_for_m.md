@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Face-Human-Bench: A Comprehensive Benchmark of Face and Human Understanding for Multi-modal Assistants
 description: >-
@@ -111,7 +111,7 @@ tags:
 - **实用洞察丰富**：(a) 开源可超闭源；(b) 位置敏感度是被忽视的重要维度；(c) CoT 对闭源有效对开源无效
 - **明确了人-机能力鸿沟**：deepfake 检测、人群计数、困难人脸识别三大任务中 MLLM 远不如专家模型，指明了改进方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估静态图片，未覆盖视频中的人脸人体理解
 - 多选题格式限制了开放式理解能力的评估
 - 数据来源为公开数据集，可能存在数据泄露（模型训练数据包含部分测试集）

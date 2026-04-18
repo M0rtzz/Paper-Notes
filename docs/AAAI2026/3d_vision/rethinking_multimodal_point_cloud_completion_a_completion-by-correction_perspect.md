@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Multimodal Point Cloud Completion: A Completion-by-Correction Perspective
 description: >-
@@ -156,7 +156,7 @@ $$\mathcal{L} = \frac{1}{K+1}\left(\mathcal{L}_{\text{CD}}(P_c, P_{gt}) + \sum_{
 3. **显著性门控机制**：统一了 Salient Transformer 和 Grounding Transformer 的门控设计，简洁有效
 4. **特征空间插值**：Dual-Source Association 中对先验特征采用特征空间 kNN 而非空间 kNN，巧妙规避了几何不对齐问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖预训练 image-to-3D 模型（Trellis），先验质量直接影响上限，且增加了推理开销
 2. 每个类别单独训练 100K 步，训练成本较高，未验证跨类别泛化能力

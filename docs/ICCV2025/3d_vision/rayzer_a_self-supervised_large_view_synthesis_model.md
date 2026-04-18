@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RayZer: A Self-supervised Large View Synthesis Model
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \frac{1}{K_\mathcal{B}} \sum_{\hat{I} \in \hat{\mathcal{I}}_\mat
 - **信息流控制精妙**：使用原始图像token而非相机估计器输出，防止信息泄露；两子集分离确保非平凡解
 - **潜在表示优于显式3D**：3DGS表示完全无法收敛于自监督训练，验证了潜在表示在this设置下的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 学到的位姿空间与真实位姿空间不完全对应，限制了位姿估计的直接应用
 - 连续视频帧训练效果好于无序图像集，说明对输入顺序仍有一定依赖

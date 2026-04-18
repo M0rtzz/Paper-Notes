@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Blind2Sound: Self-Supervised Image Denoising without Residual Noise
 description: >-
@@ -156,7 +156,7 @@ $$\mathcal{L} = \mathcal{L}_{arv} + 0.01 \cdot \mathcal{L}_{est}$$
 4. **跨通道/子块细粒度约束**：Cramer 高斯损失通过多尺度噪声一致性缩小解空间，解决了 FBI-D 估计不准的问题
 5. **灰度图上超越有监督**：在 Set12、Urban100 上超越 N2C/N2N，说明自监督方法在噪声感知下的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **sRGB 空间增益有限**：高噪声下跨通道去噪更困难，增益较灰度图小；跨通道建模可进一步加强
 2. **噪声模型假设**：依赖 Poisson-Gaussian 模型，对更复杂的真实噪声（如空间相关噪声）可能需要扩展

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiPrompt: Bilateral Prompt Optimization for Visual and Textual Debiasing in Vision-Language Models
 description: >-
@@ -137,7 +137,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \lambda_1 \mathcal{L}_{
 - **极轻量的测试时适应**：仅需更新门控参数和归一化权重，无需重训练或额外领域监督
 - 理论上等价于最小化虚假特征与预测的条件互信息，有信息论支撑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **性能上限受限于 Grad-CAM 质量**：如果注意力图不准确，结构化擦除可能失效
 2. **与重训练方法（α-CLIP）差距仍明显**：在 Tiny-ImageNet 上差距超过 30%，说明测试时适应的上限有限

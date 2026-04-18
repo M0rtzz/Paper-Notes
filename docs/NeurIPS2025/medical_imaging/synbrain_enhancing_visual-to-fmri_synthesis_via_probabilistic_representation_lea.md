@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SynBrain: Enhancing Visual-to-fMRI Synthesis via Probabilistic Representation Learning
 description: >-
@@ -124,7 +124,7 @@ SynBrain 单次采样即超越 MindSimulator 5 次采样取平均的结果。注
 - 一步映射 vs 扩散模型：更简洁高效且避免了分布不匹配问题
 - 合成 fMRI 的检索准确率超过原始 fMRI，说明模型学会了"去噪"并提取语义核心
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 CLIP 视觉编码器，可能引入与神经处理不完全对齐的表示偏差
 - 无法建模所有变异来源（如注意力状态波动、神经调质效应）

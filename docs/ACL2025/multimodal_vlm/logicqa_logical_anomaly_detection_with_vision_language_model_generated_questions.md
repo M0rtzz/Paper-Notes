@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LogicQA: Logical Anomaly Detection with Vision Language Model Generated Questions
 description: >-
@@ -157,7 +157,7 @@ LogicQA 在 AUROC 上提升 1.6%，F1-max 上提升 3.3%。在 splicing connecto
 - **自动化程度高**：无需人工 prompt 设计、无需标注、无需训练，仅需修改类名和问题即可适配新场景
 - **log probability 的创新使用**：将 VLM 的输出 confidence 转化为连续的异常评分，使二元的 QA 判断可以计算 AUROC
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 VLM 视觉能力**：性能受限于 VLM 的视觉识别精度，当前仍需特定预处理（BPM、Lang-SAM）
 2. **Main-Q 泛化性**：需要多样的正常图像来生成泛化的问题集，样本不足时可能有偏

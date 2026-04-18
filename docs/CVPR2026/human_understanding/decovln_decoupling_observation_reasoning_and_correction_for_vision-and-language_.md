@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DecoVLN: Decoupling Observation, Reasoning, and Correction for Vision-and-Language Navigation
 description: >-
@@ -111,7 +111,7 @@ $$DM(s_t) = \min_{s^* \in P_{exp}} d_g(s_t, s^*)$$
 - **真实世界部署**：在 Unitree GO2 四足机器人上成功部署，展现了强 sim-to-real 迁移能力
 - **涌现行为**：机器人在运动中主动进行横向微调以保持关键导航点在视野内
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 记忆优化中的三个权重 ($\lambda_R$, $w_V$, $w_T$) 需要手动调节，缺乏自适应学习机制
 - 评估仅在 Matterport3D 环境，未涵盖更大规模或户外场景

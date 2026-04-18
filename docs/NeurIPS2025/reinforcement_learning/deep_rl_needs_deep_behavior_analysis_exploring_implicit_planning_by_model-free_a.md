@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep RL Needs Deep Behavior Analysis: Exploring Implicit Planning by Model-Free Agents
 description: >-
@@ -131,7 +131,7 @@ tags:
 3. **对 model-free vs model-based 辩论的贡献**：提供了 model-free 智能体可以涌现规划能力的强证据，类似于昆虫（无海马体）也能进行类规划行为
 4. **安全对齐启示**：理解智能体的内部表征和行为策略对安全对齐至关重要——不能仅看奖励曲线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **环境相对简单**：ForageWorld 虽比 Craftax 更自然，但仍是 2D 网格世界
 2. **仅分析 PPO/PQN**：未覆盖更复杂的架构如 Transformer-based 智能体

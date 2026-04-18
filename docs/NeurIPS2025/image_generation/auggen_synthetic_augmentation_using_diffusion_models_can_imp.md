@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AugGen: Synthetic Augmentation using Diffusion Models Can Improve Recognition
 description: >-
@@ -94,7 +94,7 @@ WebFace160K 上，AugGen 在 IJB-B/C 的严格阈值下超过更大网络（IR10
 - 混合条件向量的思想类似于 Mixup 在特征空间的扩展，但在生成模型的条件空间中操作，生成的是语义上合理的新样本而非简单插值
 - 合成增强 > 架构升级这一发现，凸显了数据质量/多样性对判别任务的核心作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在人脸识别任务上验证，未扩展到通用图像分类或细粒度识别
 - 混合权重搜索虽高效但仍需要一定计算资源和已训练的判别模型

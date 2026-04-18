@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neighbour-Driven Gaussian Process Variational Autoencoders for Scalable Structured Latent Modelling
 description: >-
@@ -144,7 +144,7 @@ $$q(\mathbf{z}_*|\mathbf{Y}) = \int p(\mathbf{z}_*|\mathbf{Z}_{n(*)}) q(\mathbf{
 3. **地理学第一定律的深刻应用**: "近的事物更相关" 这一直觉在潜空间中同样成立，为 GP 的局部近似提供了合理的理论支撑
 4. **工程实用性**: 使用 Faiss 加速近邻搜索、支持任意核函数、标准编码器-解码器架构，降低了使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **近邻数 $H$ 需要调参**: 虽然实验显示 $H=10$ 较通用，但最优 $H$ 可能随数据集变化，缺乏自适应选择机制
 2. **辅助信息依赖**: 需要明确的辅助输入 $\mathbf{X}$（如时间戳、坐标）来定义近邻关系，对缺乏自然序的数据适用性有限

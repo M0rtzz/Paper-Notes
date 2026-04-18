@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Mean: Fisher-Orthogonal Projection for Natural Gradient Descent in Large Batch Training
 description: >-
@@ -107,7 +107,7 @@ $$\eta_\ell^* = \frac{g_{\ell,\text{tot}}^\top F_\ell^{-1} g_{\ell,\text{comb}}}
 4. **无额外超参**：无需任务特定调参，只需按线性规则缩放学习率
 5. **即插即用**：开源 pip 安装，一行代码集成到现有训练流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在视觉任务（CNN、ViT）上验证，缺乏大规模语言模型的实验
 - 二阶 Taylor 展开中 Hessian≈Fisher 的近似在训练早期和高度非线性模型上可能不准确
 - 分布式实现需要 GPU 数量为偶数以划分 primary/secondary 组

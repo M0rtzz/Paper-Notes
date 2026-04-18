@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GDKVM: Echocardiography Video Segmentation via Spatiotemporal Key-Value Memory with Gated Delta Rule
 description: >-
@@ -132,7 +132,7 @@ GDR 内部消融（状态更新策略）：
 - **临床导向设计**：模拟临床场景（预测时不使用 GT），LVEF 估计与临床金标准高度一致
 - 参数量仅 35.2M，单张 RTX 3090 可训练和推理，部署门槛极低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 中间状态矩阵非标准方阵，限制了分块并行化和硬件加速
 - 模型有时过度依赖自身预测导致困难样本的轮廓偏差（图 10 失败案例）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generative Audio Language Modeling with Continuous-Valued Tokens and Masked Next-Token Prediction
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：离散 token 方便用标准 LM 建模（交叉熵损失），但会丢失音频的细微细节；直接建模连续值 token 的概率分布则面临分布复杂、训练困难等问题。
 
-**本文要解决什么**：探索无需离散 token 的音频生成因果语言模型，并提出新的训练任务来提升性能。
+**本文目标**：探索无需离散 token 的音频生成因果语言模型，并提出新的训练任务来提升性能。
 
 **切入角度**：用 token-wise diffusion 来建模 next continuous-valued token 的分布，同时创新性地将 masked prediction 引入因果 LM 框架。
 
-**核心 idea 一句话**：在因果 LM 中用 token-wise 扩散建模连续 token 分布 + masked next-token prediction 双管齐下，实现高效的连续音频生成。
+**核心 idea**：在因果 LM 中用 token-wise 扩散建模连续 token 分布 + masked next-token prediction 双管齐下，实现高效的连续音频生成。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 3. **参数效率**：连续表示避免了维护大量离散 codebook 的开销
 4. **通用性潜力**：该方法原则上可扩展到视频、音乐等其他连续模态
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Token-wise diffusion 增加了每步采样的计算量（虽然总参数少）
 2. 推理延迟可能高于纯离散 token 方法

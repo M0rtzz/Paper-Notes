@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models
 description: >-
@@ -104,7 +104,7 @@ LLM推理成本已大幅降低至每百万输入tokens约$0.15-$2.50，远低于
 3. **临床专家视角的引入**：2小时深度访谈提供了方法学研究中常缺失的实践者视角
 4. **成本分析量化了价值**：LLM推理成本vs手动TA成本的对比（<$10 vs $200,000+）有力支撑了自动化的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为立场论文未进行实证验证，三维度框架停留在理论层面
 - 文献检索以arXiv为主，可能遗漏重要的期刊论文

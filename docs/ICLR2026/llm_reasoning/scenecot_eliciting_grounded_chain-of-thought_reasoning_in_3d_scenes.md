@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SceneCOT: Eliciting Grounded Chain-of-Thought Reasoning in 3D Scenes
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：将 CoT 推理从文本领域迁移到 3D 场景，将复杂推理分解为可解释的步骤，每步显式关联到场景中的对象/区域。
 
-**核心idea一句话**：通过特殊 token 编码的四阶段 CoT 推理（任务→区域→grounding→推理），将语言推理与 3D 视觉感知紧密耦合。
+**核心 idea**：通过特殊 token 编码的四阶段 CoT 推理（任务→区域→grounding→推理），将语言推理与 3D 视觉感知紧密耦合。
 
 ## 方法详解
 
@@ -85,7 +85,7 @@ $\mathcal{L} = \mathcal{L}_{\text{CoT}} + \mathcal{L}_{\text{ans}} + \mathcal{L}
 - **推理过程可解释**：四阶段 CoT 的每一步都可检查——任务类型正确吗？区域对吗？grounding 到了正确物体吗？这在之前的 3D-LLM 中是不可能的
 - **区域定位作为注意力机制**：时钟参考系简洁优雅地将 3D 空间离散化，大幅减少候选对象——类似于视觉 Transformer 中的区域注意力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MSQA Overall 并未超过 Chat-Scene†（55.6 vs 56.6），在属性任务上较弱（49.6）
 - 依赖外部 grounding 模块（PQ3D），grounding 精度是性能上限——oracle 实验证明了这一点
 - 仅在 ScanNet 场景上训练，室外/大规模场景泛化未验证

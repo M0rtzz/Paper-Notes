@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Janus-Pro-R1: Advancing Collaborative Visual Comprehension and Generation via Reinforcement Learning
 description: >-
@@ -109,7 +109,7 @@ Janus-Pro-R1 采用两阶段训练：
 - **统一生成的正确路径**：证明了理解+生成的协同可以自然地扩展到图像编辑等高级任务
 - 反事实生成案例（方形苹果）很好地展示了 RL 后模型的推理泛化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Counting 相关训练数据较少，计数能力落后于 GPT-4o
 - 图像编辑数据集美学质量不高，影响编辑结果的美观度

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LeMiCa: Lexicographic Minimax Path Caching for Efficient Diffusion-Based Video Generation
 description: >-
@@ -138,7 +138,7 @@ LeMiCa 在所有模型上一致超越 TeaCache。LeMiCa-slow 在 Open-Sora 上 L
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

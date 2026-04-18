@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Data-Free Group-Wise Fully Quantized Winograd Convolution via Learnable Scales
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：Winograd 加速需要在变换域做定点乘法，但变换域的极端动态范围使定点量化失效。
 
-**本文要解决什么？** 让 Winograd 卷积可以安全地全流程 8-bit 量化，同时不需要任何领域特定数据。
+**本文目标** 让 Winograd 卷积可以安全地全流程 8-bit 量化，同时不需要任何领域特定数据。
 
 **切入角度**：Winograd 变换矩阵 $B$ 和 $G$ 可以分解为 $S_B \cdot B'$ 和 $S_G \cdot G'$，其中 $S_B, S_G$ 是对角缩放矩阵。通过优化这些缩放参数来均衡变换域的动态范围——只用随机高斯噪声作为输入，完全无需真实数据。
 
-**核心idea一句话**：微调 Winograd 变换矩阵的对角缩放参数均衡动态范围，用随机噪声做无数据优化，实现全量化 Winograd 卷积。
+**核心 idea**：微调 Winograd 变换矩阵的对角缩放参数均衡动态范围，用随机噪声做无数据优化，实现全量化 Winograd 卷积。
 
 ## 方法详解
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Omniview-Tuning: Boosting Viewpoint Invariance of Vision-Language Pre-training Models
 description: >-
@@ -122,7 +122,7 @@ OVT包含两大贡献：(1) 构建大规模多视角图文对数据集MVCap；(2
 - **参数效率出色**：仅训练约4-12M参数（总参数的3-4%），训练成本远低于VIAT等传统方案
 - 实验设计全面，覆盖Clean/2D-OOD/Viewpoint-OOD三类分布，说服力强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MVCap数据集中合成数据占比较大，与真实场景仍有domain gap
 - Category-Guided caption依赖ground-truth类别标签，限制了对未知类别物体的适用性

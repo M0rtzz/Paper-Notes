@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Face Reconstruction From Radar Images
 description: >-
@@ -32,14 +32,14 @@ tags:
 
 **核心矛盾**：雷达域缺乏可微分渲染器。RGB领域的model-based autoencoder方法（如Tewari et al.的Analysis-by-Synthesis框架）依赖可微分渲染，但物理雷达渲染器（基于光线追踪+后向投影）既不可微分也速度太慢（每张2分钟），无法直接用于训练。
 
-**本文要解决什么？**
+**本文目标**
    - 如何从雷达图像（amplitude image / depth image）估计3DMM参数进行人脸重建？
    - 如何在没有可微分雷达渲染器的情况下实现Analysis-by-Synthesis训练范式？
    - 如何弥合合成雷达图像与真实雷达图像之间的domain gap？
 
 **切入角度**：用神经网络学习一个"可微分雷达渲染器"来近似物理渲染器，从而把RGB领域成熟的model-based autoencoder框架迁移到雷达域。
 
-**核心idea一句话**：用学习到的可微分雷达渲染器替代物理渲染器，构建model-based autoencoder，使3D人脸重建可以从雷达图像通过Analysis-by-Synthesis方式无监督优化。
+**核心 idea**：用学习到的可微分雷达渲染器替代物理渲染器，构建model-based autoencoder，使3D人脸重建可以从雷达图像通过Analysis-by-Synthesis方式无监督优化。
 
 ## 方法详解
 
@@ -124,7 +124,7 @@ tags:
 - **Test-time optimization via image loss**：推理时固定所有权重，仅通过图像重建损失反传优化latent参数，是一种elegant的无标注自适应方式。这本质上是利用了重建一致性作为自监督信号
 - **渲染参数也作为预测目标**：编码器不仅预测3DMM参数，还预测dynamic range、材质因子、天线尺寸等渲染参数，让网络学会理解成像过程本身
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **真实数据极度匮乏**：仅4个男性欧洲人、每人5个表情，diversity严重不足。这导致无法充分验证合成→真实的泛化能力。未来需要大规模真实雷达人脸数据集
 - **Synthetic-to-real domain gap**：合成图像和真实图像存在明显的pattern差异和scale差异，论文中真实数据的shape/expression重建质量显著下降
 - **表情识别失败**：在真实数据上无法有效识别表情变化，只有identity-specific模型可以做到，严重限制了睡眠监测等应用的实用性

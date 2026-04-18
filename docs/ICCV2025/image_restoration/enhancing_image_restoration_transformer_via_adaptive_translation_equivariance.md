@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Image Restoration Transformer via Adaptive Translation Equivariance
 description: >-
@@ -52,19 +52,19 @@ TEAFormer 采用经典的残差套残差结构：输入图像 $I \in \mathbb{R}^
 ### 关键设计
 
 #### 1. **滑动键值自注意力（SkvSA）**
-- **做什么**：将 SA 的全局 KV 索引替换为基于滑动窗口的局部 KV 索引
+- **功能**：将 SA 的全局 KV 索引替换为基于滑动窗口的局部 KV 索引
 - **核心思路**：对第 $i$ 个 query $Q_i$，仅从其滑动窗口 $[i - \frac{w \cdot s}{2}, i + \frac{w \cdot s}{2}]$ 中提取 KV 对进行注意力计算，其中 $w$ 是窗口大小，$s$ 是步长
 - **边界处理**：使用 blocking 方法——边界处的 query 使用预定义的 blocking 窗口内的 KV 对
 - **设计动机**：根据 Theorem 3.2，滑动窗口内的注意力计算天然满足 TE，同时保持 $O(N)$ 复杂度
 
 #### 2. **自适应滑动键值自注意力（ASkvSA）**
-- **做什么**：为每个 query 自适应确定最优的 KV 索引位置
+- **功能**：为每个 query 自适应确定最优的 KV 索引位置
 - **核心思路**：将 K 和 V 从 1D 重排为 2D，使用深度可分离卷积（kernel size $k$）生成自适应索引 $\mathcal{F} \in \mathbb{R}^{H \times W \times 2}$，在固定滑动窗口内 shuffle KV 对的位置
 - **TE 保证**：convolution 满足 TE，与 SkvSA 串联后根据 Theorem 3.3 仍满足 TE
 - **设计动机**：固定窗口限制了 KV 选择的灵活性，自适应索引允许模型为不同 query 找到最相关的 KV 对
 
 #### 3. **下采样自注意力（DSA）+ 自适应融合**
-- **做什么**：通过下采样提供粗粒度的全局 KV 索引，弥补 ASkvSA 无法覆盖远距离像素的不足
+- **功能**：通过下采样提供粗粒度的全局 KV 索引，弥补 ASkvSA 无法覆盖远距离像素的不足
 - **核心思路**：使用 average pooling 将 K'和 V' 下采样到 $N_d$ 个 token，然后与 Q 计算全局注意力
 - **融合方式**：$\text{TEA}_i(X) = \alpha_s \cdot \text{ASkvSA}(X) + \alpha_d \cdot \text{DSA}(X)$，$\alpha_s, \alpha_d$ 是可学习参数
 - **设计动机**：ASkvSA 的自适应索引仅在局部窗口内 shuffle，远距离但相关的像素仍会被遗漏。DSA 以低分辨率补充全局信息
@@ -123,7 +123,7 @@ TEA 的总 FLOPs 为 $3ND^2 + 2NDk^2 + 2Nw^2D + 2NN_dD$，当超参数 $w=15, k=
 3. **打破 SA vs WA 的二选一困局**：通过自适应滑动索引 + 下采样全局注意力的并行组合，在 $O(N)$ 复杂度下同时获得灵活的局部索引和全局感受野
 4. **跨任务泛化性强**：同一架构在超分、去焦模糊、去噪等多个任务上都取得 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理延迟较高**：完整 TEAFormer 的延迟为 386.7ms，比 SwinIR 的 130ms 高约 3×
 2. **边界处理的 blocking 方法不完美**：边界处的 TE 是近似满足的，严格 TE 需要更精细的设计

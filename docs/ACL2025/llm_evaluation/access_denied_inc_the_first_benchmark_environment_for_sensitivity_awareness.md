@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Access Denied Inc: The First Benchmark Environment for Sensitivity Awareness
 description: >-
@@ -88,7 +88,7 @@ Access Denied Inc 是一个完整的三阶段评估 pipeline：(1) 从 Adult 数
 - **"越简单越暴露问题"的实验设计智慧**：故意使用最简单的表格数据和最简规则集，如果模型在这里都失败，复杂场景更不可能成功
 - **失败模式分类有临床价值**：区分 leak/refusal/error 三种失败方式对实际部署的风险评估至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用表格数据，未测试非结构化文档（如混合敏感信息的 PDF 报告）
 - 访问规则极其简单（2 条规则），真实企业的 RBAC 策略远更复杂

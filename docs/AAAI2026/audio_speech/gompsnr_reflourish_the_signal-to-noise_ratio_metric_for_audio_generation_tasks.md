@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GOMPSNR: Reflourish the Signal-to-Noise Ratio Metric for Audio Generation Tasks
 description: >-
@@ -88,7 +88,7 @@ $$SNR = 10\log_{10} \frac{\sum_{k,l} |Y|^2}{\sum_{k,l}(|Y|^2 + |\hat{Y}|^2 + C)}
 - **广泛实验覆盖**：4 个声码器（Vocos、APNet、APNet2、RNDVoc）× 2 个数据集（LJSpeech、LibriTTS）+ Neural Audio Codec，验证充分
 - **即插即用**：所提损失函数无需修改模型架构，可直接替换原始损失，工程友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验仅限于声码器和音频编解码器，未验证在语音增强、语音分离等上游任务中的效果
 - GOMPSNR 依赖参考信号（侵入式指标），无法用于无参考场景
 - 全方位相位导数使用固定的 $3 \times 3$ 卷积核，未探索更大感受野或可学习核的效果

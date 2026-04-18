@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LlavaGuard: An Open VLM-based Framework for Safeguarding Vision Datasets and Models
 description: >-
@@ -132,7 +132,7 @@ $$\text{PES} = \frac{2 \times \text{PER} \times \text{Acc}}{\text{PER} + \text{A
 4. **0.5B 小模型惊艳表现**：仅 0.5B 参数即超越 GPT-4o 和所有专用审核工具，证明领域微调的效能远超模型规模
 5. **实际应用验证**：在大规模数据集标注和 T2I 模型审核两个真实场景中验证了有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：仅 5,466 个样本，在长尾安全场景（如文化敏感内容）的覆盖可能不足
 2. **分类体系固定为 9 类**：虽然支持类别豁免，但新增类别需要重新标注和训练

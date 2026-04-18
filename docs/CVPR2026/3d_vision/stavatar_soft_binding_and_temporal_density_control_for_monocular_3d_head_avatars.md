@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STAvatar: Soft Binding and Temporal Density Control for Monocular 3D Head Avatars Reconstruction
 description: >-
@@ -167,7 +167,7 @@ $$E = (1 - \lambda_1)|\mathcal{L}_1| + \lambda_1 \mathcal{L}_{d\text{-}ssim}$$
 2. **时序 ADC 策略直击痛点**：通过 FLAME 参数聚类让短暂可见区域在结构相似帧中获得充分密度化，FPE-AP 联合考虑几何和纹理误差，均值+峰值双准则避免遗漏
 3. **训练效率极高**：6 epoch 收敛，比 MonoGaussianAvatar (100 epoch) 快一个数量级，得益于双分支网络的高效参数化和 FTC 的聚焦训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 FLAME 跟踪质量**：管线以 VHAP 的 FLAME 拟合为前提，跟踪误差会直接传播到重建结果
 2. **参考帧选择简单**：默认使用第一帧作为参考，未探索多参考帧或自适应选择策略

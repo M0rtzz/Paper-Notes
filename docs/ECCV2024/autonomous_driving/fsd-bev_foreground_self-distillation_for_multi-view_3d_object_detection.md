@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FSD-BEV: Foreground Self-Distillation for Multi-View 3D Object Detection
 description: >-
@@ -146,7 +146,7 @@ FSD-BEV 采用统一框架，由三大核心组件构成：
 - **无额外参数蒸馏**：BEV Encoder 自然充当适配模块，L2 损失即可完成有效蒸馏
 - **伪点分配思路新颖**：为无点云覆盖的物体分配伪点是对点云数据增强的实用方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仍依赖 LiDAR 点云提供深度 GT 和前景分割 GT，推理时虽不需要但训练时必须
 2. 伪点分配使用启发式规则（框中心 + 角点最小深度），更精确的位置估计可能进一步提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Harmonized Uncertainty Estimation for Large Language Models
 description: >-
@@ -90,7 +90,7 @@ CUE（Corrector for Uncertainty Estimation）框架包含三个步骤：
 - **轻量高效**：使用 RoBERTa/DeBERTa 等小模型作为 Corrector，训练和推理成本极低
 - **实证分析扎实**：先通过系统分析暴露现有方法的不足，再有针对性地提出解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖标注数据**：需要目标模型在特定领域的 QA 对及正确性标签来训练 Corrector，冷启动成本不低
 - **跨领域泛化存疑**：在一个领域训练的 Corrector 迁移到其他知识领域时效果可能下降

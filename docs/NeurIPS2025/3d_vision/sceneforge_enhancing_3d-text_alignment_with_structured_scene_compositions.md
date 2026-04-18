@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SceneForge: Enhancing 3D-text alignment with Structured Scene Compositions
 description: >-
@@ -135,7 +135,7 @@ $$\mathcal{L}_{m \to n}(\mathcal{S}) = -\frac{1}{|\mathcal{S}|} \sum_{i \in \mat
 - **3D的独特优势**：利用了3D数据天然无背景、可自由组合的特性，这是2D数据增强无法轻易实现的
 - **空间关系理解的泛化**：只用3种简单关系（over/under/next to）训练，却能泛化到ScanQA中更复杂的空间关系（attached to、sitting on等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 空间关系仅定义了3种（over/under/next to），更丰富的关系（inside、behind等）可能带来进一步提升
 - 无法实时渲染组合场景的2D视角，导致组合样本只能用text-3D损失训练，限制了2D-3D对齐的增强

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continuous-Time Analysis of Heavy Ball Momentum in Min-Max Games
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{J} = \mathcal{S} + \mathcal{A}$$
 4. **理论解释实践现象**：首次从隐式正则化角度解释了为何负动量能改善 GAN 训练稳定性 —— 引导轨迹远离尖锐梯度区域。
 5. **交替更新的定量优势**：Theorem 4.9 精确刻画了 Alt-HB vs Sim-HB 的收敛速率差异，给出 $\frac{h|\sigma|^2}{(1-\beta)^2}$ 的加速量。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **未考虑随机梯度**：所有分析基于确定性梯度，未覆盖 SGD/Adam 等随机设置，而实践中几乎都用 mini-batch。
 2. **强交互假设**：核心结论依赖 Assumption 4.4（$\mathcal{A} \gg \mathcal{S}$），对弱交互博弈不一定成立。

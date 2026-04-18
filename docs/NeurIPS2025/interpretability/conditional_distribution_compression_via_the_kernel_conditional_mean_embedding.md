@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Conditional Distribution Compression via the Kernel Conditional Mean Embedding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：核条件均值嵌入（KCME）的估计代价为 $\mathcal{O}(n^3)$（需要矩阵求逆），这使得大规模数据下的条件分布压缩在计算上不可行。直觉上，直接压缩条件分布应优于通过联合分布间接压缩，但高计算成本阻碍了实际应用。
 
-**本文要解决什么**：如何以线性时间 $\mathcal{O}(n)$ 代价构建一个压缩集 $\mathcal{C}$，使得压缩后的条件分布 $\tilde{\mathbb{P}}_{Y|X=\mathbf{x}} \approx \mathbb{P}_{Y|X=\mathbf{x}}$ 对几乎所有 $\mathbf{x}$ 成立。
+**本文目标**：如何以线性时间 $\mathcal{O}(n)$ 代价构建一个压缩集 $\mathcal{C}$，使得压缩后的条件分布 $\tilde{\mathbb{P}}_{Y|X=\mathbf{x}} \approx \mathbb{P}_{Y|X=\mathbf{x}}$ 对几乎所有 $\mathbf{x}$ 成立。
 
 **切入角度**：利用 tower property（塔性质）的关键观察——在条件分布压缩的目标中，$\mathbb{E}_{\mathbf{x} \sim \mathbb{P}_X}[\langle \mu_{Y|X=\mathbf{x}}, h(\mathbf{x}) \rangle] = \mathbb{E}_{(\mathbf{x},\mathbf{y}) \sim \mathbb{P}_{X,Y}}[h(\mathbf{x})(\mathbf{y})]$，从而避免显式估计 KCME，将复杂度从 $\mathcal{O}(n^3)$ 降至 $\mathcal{O}(n)$。
 
-**核心 idea 一句话**：通过定义条件分布的度量 AMCMD 并利用塔性质简化估计，设计首个线性时间条件分布压缩算法。
+**核心 idea**：通过定义条件分布的度量 AMCMD 并利用塔性质简化估计，设计首个线性时间条件分布压缩算法。
 
 ## 方法详解
 
@@ -52,7 +52,7 @@ tags:
 
 #### 1. AMCMD 度量
 
-**做什么**：定义条件分布族之间的距离度量。
+**功能**：定义条件分布族之间的距离度量。
 
 **核心公式**：
 $$\text{AMCMD}[\mathbb{P}_{X^*}, \mathbb{P}_{Y|X}, \mathbb{P}_{Y'|X'}] = \sqrt{\mathbb{E}_{\mathbf{x} \sim \mathbb{P}_{X^*}} \left[\|\mu_{Y|X=\mathbf{x}} - \mu_{Y'|X'=\mathbf{x}}\|_{\mathcal{H}_l}^2\right]}$$
@@ -61,7 +61,7 @@ $$\text{AMCMD}[\mathbb{P}_{X^*}, \mathbb{P}_{Y|X}, \mathbb{P}_{Y'|X'}] = \sqrt{\
 
 #### 2. 塔性质降复杂度 (Lemma 4.7)
 
-**做什么**：消除对 KCME 显式估计的需求。
+**功能**：消除对 KCME 显式估计的需求。
 
 **核心思路**：对任意向量值函数 $h: \mathcal{X} \to \mathcal{H}_l$：
 $$\mathbb{E}_{\mathbf{x} \sim \mathbb{P}_X}[\langle \mu_{Y|X=\mathbf{x}}, h(\mathbf{x}) \rangle_{\mathcal{H}_l}] = \mathbb{E}_{(\mathbf{x}, \mathbf{y}) \sim \mathbb{P}_{X,Y}}[h(\mathbf{x})(\mathbf{y})]$$
@@ -70,7 +70,7 @@ $$\mathbb{E}_{\mathbf{x} \sim \mathbb{P}_X}[\langle \mu_{Y|X=\mathbf{x}}, h(\mat
 
 #### 3. ACKIP 算法
 
-**做什么**：联合优化压缩集中所有点对，最小化 $\text{AMCMD}^2[\hat{\mathbb{P}}_X, \hat{\mathbb{P}}_{Y|X}, \tilde{\mathbb{P}}_{Y|X}]$。
+**功能**：联合优化压缩集中所有点对，最小化 $\text{AMCMD}^2[\hat{\mathbb{P}}_X, \hat{\mathbb{P}}_{Y|X}, \tilde{\mathbb{P}}_{Y|X}]$。
 
 **目标函数**：
 $$\mathcal{J}^{\mathcal{D}}(\tilde{\mathbf{X}}, \tilde{\mathbf{Y}}) = \frac{1}{n}\text{Tr}(K_{\mathbf{X}\tilde{\mathbf{X}}} W_{\tilde{\mathbf{X}}\tilde{\mathbf{X}}} L_{\tilde{\mathbf{Y}}\tilde{\mathbf{Y}}} W_{\tilde{\mathbf{X}}\tilde{\mathbf{X}}} K_{\tilde{\mathbf{X}}\mathbf{X}}) - \frac{2}{n}\text{Tr}(L_{\mathbf{Y}\tilde{\mathbf{Y}}} W_{\tilde{\mathbf{X}}\tilde{\mathbf{X}}} K_{\tilde{\mathbf{X}}\mathbf{X}})$$
@@ -128,7 +128,7 @@ $$\mathcal{J}^{\mathcal{D}}(\tilde{\mathbf{X}}, \tilde{\mathbf{Y}}) = \frac{1}{n
 3. **统一框架**：提出了联合分布与条件分布压缩的完整方法族，便于系统比较
 4. **实用价值**：KCME 广泛应用于条件密度估计、贝叶斯优化、强化学习等领域，本文的压缩方法可显著扩展其适用范围
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **无收敛保证**：ACKIP 缺乏严格的理论收敛证明，仅有经验收敛观察
 2. **梯度依赖**：核梯度在图、文本等离散结构数据上不适用或难以解释

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AutoCut: End-to-end Advertisement Video Editing Based on Multimodal Discretization and Controllable Generation
 description: >-
@@ -114,7 +114,7 @@ AutoCut 提出了一个端到端的广告视频编辑框架，通过残差向量
 - 低帧率 token 用于推理 + 高帧率帧用于检索的双轨设计兼顾效率和精度
 - BGM 选择任务的引入是亮点——视频编辑中音频选择长期被忽视
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 视频动作和音频节奏的细粒度同步仍有不足（偶尔出现不同步）
 - 控制粒度仅达到片段级别，不支持帧级或情感级编辑
 - RQVAE 的重建虽然余弦相似度高，但信息丢失的影响在下游任务中可能被放大

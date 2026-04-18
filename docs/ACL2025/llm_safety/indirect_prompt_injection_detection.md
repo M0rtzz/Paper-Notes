@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can Indirect Prompt Injection Attacks Be Detected and Removed?
 description: >-
@@ -137,7 +137,7 @@ tags:
 - **小模型高效防御**：DeBERTa（110M）和 Qwen2（1.5B）比 8B 级 Guard 模型效果好得多
 - 在仅用 Naive Attack 训练的前提下对 Ignore、Escape 等攻击泛化良好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 Fake Completion Attack 的泛化能力有限（因为其注入方式与 Naive 差异较大）
 - 过度防御在域外场景仍然显著（12-27%），限制了跨领域部署

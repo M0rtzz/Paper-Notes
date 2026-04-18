@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Thicker and Quicker: A Jumbo Token for Fast Plain Vision Transformers
 description: >-
@@ -135,7 +135,7 @@ Jumbo 在标准 ViT 基础上做了最小改动：(1) CLS token 宽度扩展为 
 - 实验设计的公平性值得称道：所有模型使用相同训练流程（同一教师、同一超参网格），避免了"配方差异 vs 架构差异"的混淆
 - 从图像无缝迁移到时间序列的示范表明 Jumbo 是通用方法而非视觉特化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ViT-small 在 ImageNet-1K 上无增益——方法并非万灵药
 - 参数量增加可观（$J=6$ 时约 2 倍），虽有层间共享+LoRA 解决方案但增加了实现复杂度

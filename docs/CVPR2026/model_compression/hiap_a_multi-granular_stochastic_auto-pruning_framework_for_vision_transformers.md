@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiAP: A Multi-Granular Stochastic Auto-Pruning Framework for Vision Transformers
 description: >-
@@ -269,7 +269,7 @@ ImageNet-1K 上，作者将 HiAP 与多个 ViT 结构化剪枝方法比较，基
 
 换句话说，真正有价值的不是再发明一个更复杂的重要性分数，而是让模型在统一预算下自己决定粗细两级的取舍。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 最直接的局限是 ImageNet 主结果还不够强。
 - 在 3.1G 档位，HiAP 的 79.10% 明显落后于 GOHSP 的 79.98% 和 ViT-Slim 的 79.90%，所以它更像“流程更简洁的竞争方法”，而不是新的绝对 SOTA。

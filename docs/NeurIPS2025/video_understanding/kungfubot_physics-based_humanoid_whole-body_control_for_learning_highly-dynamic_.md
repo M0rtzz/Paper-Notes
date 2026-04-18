@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills
 description: >-
@@ -150,7 +150,7 @@ PBHC 在所有难度级别和所有指标上一致超越可部署基线（OmniH2
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Where, What, Why: Toward Explainable 3D-GS Watermarking
 description: >-
@@ -177,7 +177,7 @@ SBAG、Group Mask、Decoupled Finetuning 三组件缺一不可。全部移除时
 4. **自适应预算机制**：场景感知的载体数量估计（$\kappa_{eff}$），避免过多/过少载体
 5. **渲染质量几乎无损**：32-bit 下 PSNR 35.98 dB，SSIM 0.982，接近未水印模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **超参敏感**：频域解耦训练需仔细调节 loss 权重以平衡质量和鲁棒性
 2. **解码器依赖**：依赖预训练 HiDDeN 解码器，其鲁棒性上界限制了整体系统性能

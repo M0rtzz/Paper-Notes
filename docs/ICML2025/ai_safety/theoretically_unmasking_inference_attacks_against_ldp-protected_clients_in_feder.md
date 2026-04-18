@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Theoretically Unmasking Inference Attacks Against LDP-Protected Clients in Federated Vision Models
 description: >-
@@ -53,14 +53,14 @@ tags:
 ### 关键设计
 
 #### 1. **FC-based 攻击 ($\mathcal{A}^{\mathcal{D}}_{\mathsf{FC}}$)**
-- **做什么**：通过精心设置两层FC的权重和偏置，检测目标样本 $T$ 是否在训练数据中
+- **功能**：通过精心设置两层FC的权重和偏置，检测目标样本 $T$ 是否在训练数据中
 - **核心思路**：第一层计算 $z_0 = \max\{\tau^{\mathcal{D}} - \|\mathcal{M}^\varepsilon(X) - T\|_{L_1}, 0\}$
     - 若 $\mathcal{M}^\varepsilon(X)$ 落在以 $T$ 为中心的 $L_1$ 球内 → 梯度非零 → 表明 $T$ 存在
     - 若超出球外 → 梯度为零
 - **设计动机**：通过设置 $\tau^{\mathcal{D}} = \Delta^{\mathcal{X}}$（数据字母表中最小 $L_1$ 距离的一半），区分目标和非目标样本
 
 #### 2. **Attention-based 攻击 ($\mathcal{A}^{\mathcal{D}}_{\mathsf{Attn}}$)**
-- **做什么**：利用自注意力的记忆能力，配置注意力头以记忆输入batch并排除目标pattern
+- **功能**：利用自注意力的记忆能力，配置注意力头以记忆输入batch并排除目标pattern
 - **核心思路**：
     - 头1过滤目标pattern $v$ → 若 $v$ 在数据中，输出偏向全局均值 $\bar{X}^\varepsilon$
     - 头2正常记忆 → 输出接近输入 $x_i^\varepsilon$
@@ -117,7 +117,7 @@ $$\mathbf{Adv}^{\mathsf{AMI}}_{\text{LDP}}(\mathcal{A}^{\mathcal{D}}_{\mathsf{FC
 3. **跨模态验证**：从视觉（ResNet, ViT）扩展到NLP（BERT, GPT-1, RoBERTa），证明隐私风险无处不在
 4. **实用警示**：LDP作为"金标准"隐私保护，在面对主动对手时可能需要重新审视
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **Attention攻击的理论仅适用于连续域**：NLP（离散token）场景需要独立理论框架
 2. **依赖数据分布先验**：$P_{\mathcal{M}^\varepsilon}$和$P_{\text{proj}}$的具体值依赖于特定LDP机制和数据分布

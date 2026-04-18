@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Kimina Lean Server: A High-Performance Lean Server for Large-Scale Verification
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**: 强化学习训练需要每秒验证大量证明（reward信号），但现有工具的验证吞吐量不足以支撑大规模训练。
 
-**本文要解决什么**: 构建一个专为大规模RL验证流水线设计的高性能Lean服务器。
+**本文目标**: 构建一个专为大规模RL验证流水线设计的高性能Lean服务器。
 
 **切入角度**: 在官方Lean REPL之上构建服务端并行和缓存层。
 
@@ -134,7 +134,7 @@ Kimina Lean Server采用客户端-服务器架构：
 - infotree后处理的tactic提取功能对树搜索模型（如MCTS）极有价值
 - 基于官方Lean REPL构建，确保了长期兼容性和可维护性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅支持Lean 4（但架构可扩展到其他证明助手）
 2. 客户端为同步API，在超大规模场景下可能需要异步支持

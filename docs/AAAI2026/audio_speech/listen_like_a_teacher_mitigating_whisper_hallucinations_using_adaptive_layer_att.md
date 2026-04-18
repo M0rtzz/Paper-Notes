@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Listen Like a Teacher: Mitigating Whisper Hallucinations using Adaptive Layer Attention and Knowledge Distillation
 description: >-
@@ -126,7 +126,7 @@ ALA仅增加0.98%参数，延迟增加8%，RTF增加9%。
 - **多语言泛化**：在Hindi/Arabic/French/English四种语言上均一致有效，证明方法不依赖特定语言特性
 - **注意力分析可解释**：Block 0在噪声条件下获得58.6%平均注意力权重，验证了模型确实学会优先关注噪声鲁棒的底层特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在Whisper-small上验证**：未在Whisper-medium/large等更大模型上实验，泛化性不明
 - **噪声类型单一**：DEMAND数据库覆盖的噪声类型有限，未考虑混响、远场等复杂声学条件

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Narrow Gate: Localized Image-Text Communication in Native Multimodal Models
 description: >-
@@ -104,7 +104,7 @@ tags:
 - 同时也暴露了安全风险——攻击者只需修改1个token就能操控native模型的输出
 - masked fine-tuning方法展示了可以有意识地改变模型内部的信息流模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析image→text方向，text→image方向未研究
 - 未涉及diffusion decoder的native模型或使用连续编码（非VQ-GAN）的模型

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SHINE: Saliency-aware HIerarchical NEgative Ranking for Compositional Temporal Grounding
 description: >-
@@ -56,7 +56,7 @@ tags:
 
 1. **LLM 驱动的层次硬负样本构造**
 
-    - **做什么**：为每个查询生成 3 个语义递进变化的硬负查询
+    - **功能**：为每个查询生成 3 个语义递进变化的硬负查询
     - **核心思路**：
      - 先用 spaCy 对训练集所有查询做词性标注，按五类词性（动词、名词、形容词、介词、副词）构建词典 $D$
      - 按语言学重要性（动词→名词→形容词→介词→副词）渐进 mask 原始查询中的词汇，mask 比例分别为 25%、50%、75%（Charades-CG）
@@ -65,7 +65,7 @@ tags:
 
 2. **粗粒度显著性排序 (Coarse-Grained Saliency Ranking)**
 
-    - **做什么**：在视频级别建立显著性先验约束
+    - **功能**：在视频级别建立显著性先验约束
     - **核心思路**：包含两条约束：
      - **Intra-ranking** $\mathcal{L}_{intra}$：正查询在 ground-truth 区间内的显著性应高于区间外
      - **Inter-ranking** $\mathcal{L}_{inter}$：正查询在 ground-truth 区间内的显著性应高于负查询的显著性
@@ -77,7 +77,7 @@ tags:
 
 3. **细粒度显著性排序 (Fine-Grained Saliency Ranking)**
 
-    - **做什么**：约束层次硬负查询之间的显著性呈梯度递降
+    - **功能**：约束层次硬负查询之间的显著性呈梯度递降
     - **核心思路**：要求显著性分数满足严格的层次结构——正查询 > 1 层负 > 2 层负 > 3 层负 > 无关负，通过多级 margin ranking loss 实现：
 
      $$\mathcal{L}_{fr} = \sum_{i=0}^{3} \max(0, m_i + d(S_p, S_{hn}^i) - d(S_p, S_{hn}^{i+1}))$$
@@ -157,7 +157,7 @@ $$\mathcal{L} = \mathcal{L}_{base} + \alpha \mathcal{L}_{cr} + \beta \mathcal{L}
 - **覆盖全部五类词性**：介词和副词虽非主导词性但对语义影响巨大，将它们纳入负样本构造是一个值得借鉴的思路
 - **粗到细层次约束**：从视频级别到时间分布级别的多粒度排序约束策略，可迁移到其他需要层次对比学习的任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 层次负样本的 mask 比例（25/50/75%）是手动设定的，不同数据集的最优比例不同（ActivityNet-CG 用 10/30/50%）
 - LLM 调用增加训练前的预处理成本（GPT-3.5 Turbo API 费用），且 LLM 生成质量不完全可控

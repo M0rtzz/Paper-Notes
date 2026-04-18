@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Components: Singular Vector-Based Interpretability of Transformer Circuits
 description: >-
@@ -71,7 +71,7 @@ tags:
 - **增广矩阵统一框架**: bias折入使注意力和MLP在同一框架下可比
 - **Logit Receptors**: 为模型编辑和控制提供新工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅GPT-2 Small验证，大模型scalability未知
 - SVD线性假设忽略非线性激活影响
 - 部分方向功能难以语言描述
@@ -113,7 +113,7 @@ tags:
 ## 亮点与洞察
 - 细粒度方向级解释超越组件主义的假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 GPT-2 Small 上验证，缺乏大规模模型评估
 
 ## 评分

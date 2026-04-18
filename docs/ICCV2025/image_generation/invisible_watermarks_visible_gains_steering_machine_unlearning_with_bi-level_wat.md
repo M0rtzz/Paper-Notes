@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Invisible Watermarks, Visible Gains: Steering Machine Unlearning with Bi-Level Watermarking Design
 description: >-
@@ -118,7 +118,7 @@ $$\frac{d\hat{\mathcal{L}}}{d\boldsymbol{\psi}} = \nabla_{\boldsymbol{\psi}} \ha
 - **理论优雅**：BLO + 隐式梯度的方法论有坚实的优化理论基础，同时实现简洁（只需一阶导数）
 - **实际意义**：水印同时服务于数据溯源和遗忘增强，一举两得
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预训练水印网络（HiDDeN），引入额外计算开销
 - Hessian 对角近似可能在某些情况下不够精确

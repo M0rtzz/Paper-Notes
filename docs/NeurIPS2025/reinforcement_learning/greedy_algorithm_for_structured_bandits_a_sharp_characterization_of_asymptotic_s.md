@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Greedy Algorithm for Structured Bandits: A Sharp Characterization of Asymptotic Success / Failure
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：先前工作只在少数特定结构上给出贪心的成功/失败例子（如线性 contextual bandit 需上下文多样性），缺乏对任意有限奖励结构的一般性理论。
 
-**本文要解决什么？** 对任意有限奖励结构，给出贪心算法渐近成功（sublinear regret）vs 失败（linear regret）的完整"iff"刻画。
+**本文目标** 对任意有限奖励结构，给出贪心算法渐近成功（sublinear regret）vs 失败（linear regret）的完整"iff"刻画。
 
 **切入角度**：作者发现"部分可辨识性"——self-identifiability——是关键：若固定次优臂的期望奖励就能识别出它是次优的，则贪心成功；否则存在 decoy 使贪心永久陷入。
 
-**核心idea一句话**：Self-identifiability 是贪心算法在结构化 bandit 中获得 sublinear regret 的充要条件。
+**核心 idea**：Self-identifiability 是贪心算法在结构化 bandit 中获得 sublinear regret 的充要条件。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ $$f_t = \arg\min_{f \in \mathcal{F}} \sum_{s \in [t]} (f(x_s,a_s) - r_s)^2, \qua
 - **DMSO 推广**：MLE + KL 散度，将结论推广到 RL 等复杂设定
 - **实践指导**：大规模实验中 Greedy 的成功可被 self-identifiability 解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $(K/\Gamma)^2$ 常数可能很大，实际收敛慢
 - 失败概率 $p_{\text{dec}}$ 可能很小
 - 无穷函数类完整 iff 刻画仍开放

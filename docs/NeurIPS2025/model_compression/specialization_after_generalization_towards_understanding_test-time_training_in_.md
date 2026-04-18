@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models
 description: >-
@@ -120,7 +120,7 @@ $$\left(f(x^\star) - \langle \Psi(x^\star), \hat{v}_{x^\star}^{\text{TTT}} \rang
 - **连接多个领域**：将可解释性（SAE/LRH）、压缩感知（稀疏恢复）、持续学习（灾难性遗忘）与TTT统一在同一框架下
 - **实践指导价值**：明确指出TTT在欠参数化regime最有效，为实际部署提供计算-预算权衡参考
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅更新最后一层**：实验中TTT只微调最后线性层/LoRA参数（~1%参数），未深入研究端到端TTT的行为和理论
 - **邻域大小选择启发式**：最优邻域大小$k$如何随测试点、任务复杂度变化缺乏系统分析

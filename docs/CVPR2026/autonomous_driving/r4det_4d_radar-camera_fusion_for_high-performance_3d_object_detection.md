@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] R4Det: 4D Radar-Camera Fusion for High-Performance 3D Object Detection
 description: >-
@@ -45,7 +45,7 @@ R4Det 是渐进式 BEV 特征纯化流水线：(1) **PDF** 从多模态输入生
 
 1. **全景深度融合（PDF）**：
 
-    - **做什么**：通过三重监督全面提升深度估计质量——既准确又结构连贯
+    - **功能**：通过三重监督全面提升深度估计质量——既准确又结构连贯
     - **概率监督**：用稀疏 LiDAR 深度构造高斯目标分布，最小化 KL 散度
     $\mathcal{L}_{prob} = \frac{1}{|\mathcal{M}_{\text{sparse}}|} \sum_{i \in \mathcal{M}_{\text{sparse}}} \text{KL}(\mathcal{G}(d_{g_i}^{\text{sparse}}) \| \mathcal{P}_i)$
     - **基础模型引导监督**：同时利用稀疏雷达+密集 Metric3D 伪 GT 做 Smooth L1 绝对深度损失，兼顾关键点精度和全场景覆盖
@@ -56,7 +56,7 @@ R4Det 是渐进式 BEV 特征纯化流水线：(1) **PDF** 从多模态输入生
 
 2. **可变形门控时序融合（DGTF）**：
 
-    - **做什么**：不依赖自车位姿实现时序 BEV 特征对齐与融合
+    - **功能**：不依赖自车位姿实现时序 BEV 特征对齐与融合
     - **解耦思路**：将空间对齐和时序更新显式分离为两个分支
     - **运动感知对齐分支**：用 DCNv2 学习可变形偏移 $\Delta p$ 和调制 mask $m$，从 $X_t$ 和 $H_{t-1}$ 预测：
     $\tilde{H}_{t-1} = \text{DCNv2}(H_{t-1}, \Delta p, m)$
@@ -67,7 +67,7 @@ R4Det 是渐进式 BEV 特征纯化流水线：(1) **PDF** 从多模态输入生
 
 3. **实例引导动态精炼（IGDR）**：
 
-    - **做什么**：利用干净的 2D 实例语义先验动态校准 BEV 特征，解决实例重叠污染和远处小目标模糊
+    - **功能**：利用干净的 2D 实例语义先验动态校准 BEV 特征，解决实例重叠污染和远处小目标模糊
     - **实例语义先验构建**：从 2D RPN 提取实例特征 $E_{features}$，池化+投影得到实例原型 $E_{proj}$，通过 LSS 投影的空间分布 $S_{BEV}$ 做 Softmax 加权融合广播到 BEV 空间：
     $E_{BEV} = \text{BMM}(\text{Softmax}(S_{BEV}/\tau),\, E_{proj})$
     - **原型引导动态校准**（核心创新）：$E_{BEV}$ 通过 Conv 层预测逐位置仿射参数 $(\gamma_{BEV}, \beta_{BEV})$，对可能有噪声的 $F_{RC}$ 做 feature-wise affine：
@@ -138,7 +138,7 @@ R4Det 是渐进式 BEV 特征纯化流水线：(1) **PDF** 从多模态输入生
 3. **结构排序损失的边界采样**：dilated ring 采样策略迫使网络关注深度跳变边缘，是一个有实用价值的技巧
 4. **即插即用验证充分**：不仅在自建框架验证，还成功移植到 BEVFusion/RCBEVDet，增强了可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 Metric3D 作为伪 GT，其自身误差会传播到深度监督
 2. DGTF 采用类 GRU 递推，长时序下可能存在信息衰减；可探索 Transformer 时序建模

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VinTAGe: Joint Video and Text Conditioning for Holistic Audio Generation
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：用预训练的 V2A 和 T2A 教师模型分别提供单模态指导，学习可调的层权重控制每层中各模态的贡献度。
 
-**核心idea一句话**：Flow Transformer + 可学习层权重 + 教师引导去偏置 = 平衡画内外音的联合音频生成。
+**核心 idea**：Flow Transformer + 可学习层权重 + 教师引导去偏置 = 平衡画内外音的联合音频生成。
 
 ## 方法详解
 
@@ -84,7 +84,7 @@ VinTAGe-Bench（636 对）：
 - **首次定义联合视频+文本音频生成任务**——配套了 VinTAGe-Bench 和画内/画外评估协议
 - **教师去偏置的可推广性**——这种用单模态教师引导多模态学生的框架可以用在任何多条件生成任务中
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VinTAGe-Bench 较小（636 对），评估有限
 - 画外音质量依赖 LLM 生成的文本描述
 - 需要预训练两个教师模型，训练成本高

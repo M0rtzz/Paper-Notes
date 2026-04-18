@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Alternative Fairness and Accuracy Optimization in Criminal Justice
 description: >-
@@ -110,7 +110,7 @@ $$\text{s.t.} \quad |FN(h, v_i) - FN(h, v_j)| \leq \tau, \quad \forall i \neq j$
 4. **对三大批评的系统回应**：数据偏差、隐性平权行动、子群体爆炸问题，每一类都给出了清晰分析
 5. **将伦理选择显性化**：$\alpha/\beta$ 比值和 $\tau$ 的设定迫使设计者明确表达错误代价偏好，增强了透明度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏实验验证**：论文没有在真实数据集上实现和测试所提出的优化公式，停留在理论层面
 2. **$\tau$ 的选取缺乏指导**：虽然提出了容差约束，但对 $\tau$ 该如何根据具体场景确定未给出系统方法

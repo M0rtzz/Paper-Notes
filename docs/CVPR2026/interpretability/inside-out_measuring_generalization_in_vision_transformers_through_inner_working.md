@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings
 description: >-
@@ -111,7 +111,7 @@ tags:
 - CSS不需要标签即可检测"静默失败"，在医疗等高风险场景有重要实用价值
 - 电路发现从语言模型迁移到视觉模型，验证了视觉Transformer的电路存在可解释的泛化模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 电路发现的计算成本较高，限制了部署后实时监控的实用性
 - 仅在ViT架构上验证，CNN或混合架构的适用性未知

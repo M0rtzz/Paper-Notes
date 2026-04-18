@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Style Breaks Safety: Defending LLMs Against Superficial Style Alignment
 description: >-
@@ -103,7 +103,7 @@ tags:
 - **重新定义 ASR**：现有 benchmark 报告的 ASR 被风格模式系统性膨胀
 - **安全训练数据应匹配部署风格**——简单但此前被忽视的洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 风格模式的提取依赖 GPT-4o few-shot，可能遗漏某些隐式风格（如修辞手法、句式偏好）
 - SafeStyle 需要知道微调数据的风格分布——在开放式部署场景中这可能不可用
 - 仅测试了 list、poem、news、legal、Shakespeare、code 六种风格，更多元的风格空间（如口语化、学术化）待探索

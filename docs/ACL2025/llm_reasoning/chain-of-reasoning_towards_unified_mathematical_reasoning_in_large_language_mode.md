@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Chain-of-Reasoning: Towards Unified Mathematical Reasoning in Large Language Models
 description: >-
@@ -102,7 +102,7 @@ CoR的核心idea：不同推理范式不应互相替代，而应**链式协作**
 - **PPT的课程学习思路**：从NLR→NLR+AR→NLR+AR+SR的渐进训练，避免了直接混合训练的不稳定性，可迁移到其他需要整合多种技能的场景
 - **零样本超越few-shot模型**：CoR-Math-7B的零样本miniF2F 66.0%超过了所有few-shot专家模型，说明多范式内化比范式外示例更有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 评估以零样本指标为主，与大多数采用few-shot设置的方法对齐困难
 - SMPS组合采样在大规模使用时开销较大（$128 \times 128$=16384次推理），缺少自适应退出机制
 - 目前仅覆盖NLR、AR、SR三种范式，是否可以引入更多范式（如视觉推理、物理推理）值得探索

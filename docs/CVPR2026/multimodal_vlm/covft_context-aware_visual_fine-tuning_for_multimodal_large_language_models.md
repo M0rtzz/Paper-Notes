@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models
 description: >-
@@ -123,7 +123,7 @@ LLaVA-1.5-7B 在 12 个多模态基准上：
 3. **实用价值高**：7B + CoVFT ≈ 13B + Freeze 的发现，意味着通过更好的视觉微调可以减少对大模型参数量的依赖
 4. **实验极为全面**：12个基准、7B/13B、3种视觉编码器、InternVL 架构、数据效率分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. CVE 依赖额外的冻结 BERT 编码器——增加了推理时的计算开销，是否可以利用 LLM 自身的文本编码能力？
 2. CoMoE 仅替换 ViT 后半部分的 FFN，深层 vs 浅层的最优分界点的选择依据不够透彻

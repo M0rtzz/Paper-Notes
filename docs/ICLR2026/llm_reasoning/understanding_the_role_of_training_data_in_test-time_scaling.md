@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding the Role of Training Data in Test-Time Scaling
 description: >-
@@ -145,7 +145,7 @@ $$\min_{\{\pi_\ell\}} \left\| I - \Sigma^{-1} \sum_{\ell} \Lambda_\ell \pi_\ell 
 - **任务难度的特征谱定义**：$\text{Hard}(\Lambda) = \text{tr}(\Lambda)/\lambda_{\min}(\Lambda)$ 是一个简洁而有洞察力的度量
 - **训练-测试计算的可替代性**：严格证明了 test-time compute 可以补偿训练时 context length 的不足——为实践中的资源分配提供了理论指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **理论局限于线性模型**：主要分析限于 linear regression + LSA，对非线性任务和深层 Transformer 的推广需进一步工作
 - **GPT-2 实验仍在合成数据上**：真实推理基准实验（Qwen）只涉及两个特定任务（GCD 和多项式根），覆盖面有限
 - **任务难度定义依赖协方差谱**：实际 NLP 任务中"技能"和"特征分布"难以直接测量，理论到实践的 gap 明显

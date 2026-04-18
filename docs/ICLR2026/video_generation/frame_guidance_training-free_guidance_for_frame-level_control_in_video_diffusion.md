@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Frame Guidance: Training-Free Guidance for Frame-Level Control in Video Diffusion Models
 description: >-
@@ -106,7 +106,7 @@ Frame Guidance 在预训练 VDM 的推理过程中，对选定帧施加基于梯
 4. **极高的灵活性**：支持任意关键帧位置、多种条件信号、多种任务，无需为每个任务训练
 5. **引导帧数可少**：仅引导少数帧即可通过网络梯度传播控制整个视频
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 推理速度较慢（不超过基础模型 4× 的约束下工作），且引导步数和步长需手动调参
 2. 关键帧引导不是像素级精确匹配，而是视觉相似性引导

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LAOF: Robust Latent Action Learning with Optical Flow Constraints
 description: >-
@@ -114,7 +114,7 @@ tags:
 - LAOF-Action的自适应权重设计（$\lambda=M/(N+M)$）随标签比例自动平衡两种信号
 - 作为LAPO范式的扩展，可直接集成到现有具身基础模型训练流程中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练光流模型（RAFT），光流估计错误会传播为噪声标签
 - 物体中心光流依赖LangSAM的分割质量，复杂场景可能失效

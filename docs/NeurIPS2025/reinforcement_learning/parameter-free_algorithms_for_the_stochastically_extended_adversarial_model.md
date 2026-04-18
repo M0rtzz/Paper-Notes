@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parameter-Free Algorithms for the Stochastically Extended Adversarial Model
 description: >-
@@ -79,7 +79,7 @@ tags:
 - 多尺度三层结构（基学习者-中层MsMwC-顶层Master）的系统设计清晰
 - 关于 gradient-variation 界和 worst-case 界之间自适应的讨论（Remark 4.3）揭示了深层理论联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CLA-OONS 的 leading term 是 $\|u\|_2^2$ 而非理想的 $\|u\|_2$，改进这一依赖是重要开放问题
 - CA-OONS 需要 $O(\log T)$ 个梯度查询，降至 $O(1)$ 待解决

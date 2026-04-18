@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stable Coresets via Posterior Sampling: Aligning Induced and Full Loss Landscapes
 description: >-
@@ -106,7 +106,7 @@ Coreset 选择旨在找到训练数据的小规模代表性子集来加速训练
 - **Random baseline 的意外强势**：在高噪声下 Random 采样反而优于多数精心设计的方法，说明复杂选择策略容易被噪声误导。本文方法是首个在此场景下稳定超越 Random 的 coreset 方法
 - **损失曲面平滑效果**：可视化清楚展示了标准 Craig 的 coreset 产生尖锐不规则曲面，本文方法产生平滑且与全数据曲面对齐的曲面
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对音频、视频等非标准数据类型的泛化未验证
 - 后验分布的选择（球形 vs Hessian-逆 vs 集成）的理论最优性未完全建立

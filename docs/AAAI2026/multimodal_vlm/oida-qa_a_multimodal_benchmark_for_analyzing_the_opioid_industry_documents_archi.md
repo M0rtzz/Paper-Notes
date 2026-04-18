@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OIDA-QA: A Multimodal Benchmark for Analyzing the Opioid Industry Documents Archive
 description: >-
@@ -143,7 +143,7 @@ $$\mathcal{L}_{\text{MNRL}} = -\frac{1}{B}\sum_{b=1}^B \log \frac{\exp(s_{b,b}/\
 5. **内容重述策略**：让模型显式学习页面关联，有效弥补训练-测试不匹配
 6. **数据规模领先**：370K多轮QA对，远超现有医疗QA数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. QA对由GPT-4o生成，可能引入模型特有的偏差；虽有100K人工标注但占比有限
 2. 当前仅使用文本信息（OCR），未充分利用提取的视觉和布局信息进行模型训练
 3. Mistral-7B在医疗专业术语理解上可能不如专用医疗LLM

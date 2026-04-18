@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Resource-Constrained Training of Transformers via Subspace Optimization
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **核心洞察**：微调时参数的本质子空间保持稳定（小学习率→每步更新微小→SVD 基底变化极小），因此初始 SVD 后可用廉价的子空间迭代追踪基底变化，无需每步重算。
 
-**核心idea一句话**：同时压缩权重（WSI）和激活（ASI），训练和推理全程在低秩空间执行。
+**核心 idea**：同时压缩权重（WSI）和激活（ASI），训练和推理全程在低秩空间执行。
 
 ## 方法详解
 

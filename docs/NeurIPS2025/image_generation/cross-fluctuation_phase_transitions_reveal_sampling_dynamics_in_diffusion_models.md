@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-fluctuation Phase Transitions Reveal Sampling Dynamics in Diffusion Models
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：扩散模型采样的内部动态缺乏可解释性工具——我们不知道在哪个时间步，不同类别/事件的生成路径变得可区分。
 
-**本文要解决什么**：提供一个系统框架来检测扩散过程中不同"事件"（如不同类别）的统计可区分性转折点（相变），并利用这些转折点直接优化采样。
+**本文目标**：提供一个系统框架来检测扩散过程中不同"事件"（如不同类别）的统计可区分性转折点（相变），并利用这些转折点直接优化采样。
 
 **切入角度**：将统计物理中的涨落理论引入扩散模型分析，将采样动力学视为从高斯噪声到目标分布的相变过程。
 
-**核心 idea 一句话**：不同事件在扩散轨迹中通过 $n$ 阶交叉涨落的不连续点发生离散合并/分裂相变，检测这些相变可直接指导采样策略。
+**核心 idea**：不同事件在扩散轨迹中通过 $n$ 阶交叉涨落的不连续点发生离散合并/分裂相变，检测这些相变可直接指导采样策略。
 
 ## 方法详解
 
@@ -50,14 +50,14 @@ tags:
 
 ### 关键设计 1：交叉涨落统计量
 
-- **做什么**：量化两个事件 $\Omega_1, \Omega_2$ 在扩散过程不同时间步的统计相似性。
+- **功能**：量化两个事件 $\Omega_1, \Omega_2$ 在扩散过程不同时间步的统计相似性。
 - **核心思路**：对状态变量 $\rho$ 定义 $n$ 阶涨落张量 $\mathcal{F}_\rho^{(n)}(\omega) = \bigotimes_{k=1}^n (\rho(\omega) - \mathbb{E}[\rho])$，计算两事件的条件期望张量之间的归一化余弦相似度：
 $$\mathcal{M}_\rho^{(n)}(\Omega_1, \Omega_2) = \frac{|\langle \mathbb{E}_1[\mathcal{F}_\rho^{(n)}], \mathbb{E}_2[\mathcal{F}_\rho^{(n)}] \rangle|}{\|\mathbb{E}_1[\mathcal{F}_\rho^{(n)}]\| \cdot \|\mathbb{E}_2[\mathcal{F}_\rho^{(n)}]\|}$$
 - **设计动机**：$\mathcal{M} \approx 1$ 意味着事件"合并"（不可区分），$\mathcal{M} \ll 1$ 意味着可区分。对 $n=2$，这等价于两个事件条件协方差矩阵之间的 **Centered Kernel Alignment (CKA)**。
 
 ### 关键设计 2：离散相变检测与阈值化
 
-- **做什么**：将连续的交叉涨落曲线转化为离散的"已合并/未合并"判定。
+- **功能**：将连续的交叉涨落曲线转化为离散的"已合并/未合并"判定。
 - **核心思路**：引入阈值化的修正算子：
 $$\widetilde{\mathcal{M}}_\rho^{(n)}(i) = \begin{cases} \mathcal{M}_\rho^{(n)}(\Omega_{1,i}, \Omega_{2,i}), & d(\widehat{F}_\rho^{(2n)}(\Omega_{1,i}), \widehat{F}_\rho^{(2n)}(\Omega_{2,i})) > \varepsilon \\ 1, & \text{otherwise} \end{cases}$$
   其中 $\varepsilon \approx \max_k \lambda_k^{\max}(0) / 400$，使用最大特征值绝对差作为度量。
@@ -126,7 +126,7 @@ $$\widetilde{\mathcal{M}}_\rho^{(n)}(i) = \begin{cases} \mathcal{M}_\rho^{(n)}(\
 3. **零成本改进**：所有改进无需重新训练模型，只需一次前向传播分析
 4. **可解释性强**：merger cascade 提供了扩散过程中结构如何形成的直观可视化
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **VP调度假设**：当前分析限于 variance-preserving SDE，尚未扩展到 EDM 等非VP调度
 2. **各向同性限制**：假设前向SDE为各向同性噪声，各向异性扩散尚未处理

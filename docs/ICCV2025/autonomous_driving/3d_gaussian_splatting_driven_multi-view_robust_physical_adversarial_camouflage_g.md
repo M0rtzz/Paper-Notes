@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation
 description: >-
@@ -99,7 +99,7 @@ PGA包含三个模块：**重建模块** → **渲染模块** → **攻击模块
 - **Min-max背景对抗策略设计巧妙**：通过对抗博弈自动过滤非鲁棒特征
 - **全面的实验验证**：数字域多距离多天气 + 物理域真实部署 + 跨模型黑盒迁移 + 红外检测扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅优化零阶SH丢失了视角相关颜色信息
 - 物理部署需要将Gaussians转化为mesh纹理再打印，转换过程可能引入精度损失
 - Min-max优化的背景噪声预算ε需要手动调节

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoSplatting: Towards Geometry Guided Gaussian Splatting for Physically-based Inverse Rendering
 description: >-
@@ -124,7 +124,7 @@ GeoSplatting 的流程：标量场 $\boldsymbol{\zeta}$ → FlexiCubes 提取三
 3. **14分钟训练**：在保持SOTA性能的同时达到最快训练速度，对迭代式设计工作流极具价值
 4. Split-Sum warm-up + MC采样的两阶段策略平衡了早期稳定性和后期精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖等值面技术（FlexiCubes），受网格分辨率限制，难以处理细薄结构和复杂几何
 2. 训练需要物体mask，限制了在无mask场景中的直接应用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MGE-LDM: Joint Latent Diffusion for Simultaneous Music Generation and Source Extraction
 description: >-
@@ -99,7 +99,7 @@ MGE-LDM 将三个潜在变量——混合 z^(m)、子混合 z^(u)、源 z^(s)—
 - **潜在空间修复的巧妙利用**：将源分离重新定义为条件生成问题，绕过了潜在空间中非线性编解码器带来的线性混合限制。
 - **数据集聚合能力**：将"other"等模糊标签自然整合为子混合，解决了异质多轨数据集的统一训练难题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 潜在空间的非线性编解码可能引入重建误差，影响分离质量。
 - 需要预训练 VAE 和 CLAP 模型，增加了系统复杂度。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging Granularity Gaps: Hierarchical Semantic Learning for Cross-Domain Few-Shot Segmentation
 description: >-
@@ -140,7 +140,7 @@ ViT-base 下 1-shot/5-shot 分别超越 SOTA LoEC **+3.23%** / **+1.89%**。
 3. **超像素作为层次语义先验**：多尺度超像素自然地提供不同粒度的语义分区，简洁有效
 4. **PCMT 的自适应机制**：避免了"一刀切"的阈值策略，根据原型置信度在传统方法和自适应阈值间平滑过渡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 超像素分割模型的质量直接影响 HSM 效果，对于结构简单的目标域（如医学图像）可能不是最优先验
 - 4 个超像素尺度和各种超参数（$\sigma_f$, $\sigma_g$, $K$, $\alpha$, $\beta$, $\gamma$）需要调优

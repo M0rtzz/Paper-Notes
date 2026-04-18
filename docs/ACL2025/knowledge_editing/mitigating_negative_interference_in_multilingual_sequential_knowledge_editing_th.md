@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Negative Interference in Multilingual Sequential Knowledge Editing through Null-Space Constraints
 description: >-
@@ -111,7 +111,7 @@ LangEdit 在英、德、荷、法四种语言上 Efficacy 超越了单语 AlphaE
 - **闭合解**：无需迭代优化，计算一步到位。
 - **实用场景**：对多语言信息检索、多语言 LLM 的事实更新等应用有直接价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零空间维度随编辑量增加而缩小，当编辑量非常大时可能出现"零空间耗尽"
 - 仅在 MLP 层的 W_out 上编辑，注意力层中的知识未被编辑

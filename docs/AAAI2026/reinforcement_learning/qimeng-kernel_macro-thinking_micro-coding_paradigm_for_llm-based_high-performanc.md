@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QiMeng-Kernel: Macro-Thinking Micro-Coding Paradigm for LLM-Based High-Performance GPU Kernel Generation
 description: >-
@@ -152,7 +152,7 @@ Macro Thinking消融（验证策略学习和动作空间的必要性）：
 - **正确性与性能的同步优化**：打破了传统观念中"高性能必然牺牲正确性"的trade-off
 - **实际意义重大**：2.2×超越PyTorch Eager专家内核意味着该方法有真实的部署价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Micro Coding依赖强大的通用LLM**：Gemini 2.5 Pro/Flash等闭源模型带来成本和可用性问题
 2. **离线RL环境的局限**：树结构环境基于预收集的轨迹，无法探索未被覆盖的优化路径

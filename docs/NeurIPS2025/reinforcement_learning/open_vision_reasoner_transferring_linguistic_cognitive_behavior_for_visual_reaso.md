@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Open Vision Reasoner: Transferring Linguistic Cognitive Behavior for Visual Reasoning
 description: >-
@@ -126,7 +126,7 @@ OVR 在 AIME 2024/2025 上超越同规模模型 10% 以上，MATH500 达到 95.3
 - **训练动态的深刻分析**：从行为涌现、迁移率、序列长度课程等多个维度揭示了训练的内在机制
 - **超大规模开源 RL 实践**：在 Qwen2.5-VL-7B 上进行约 1000 步 RL 训练，是已知最大规模的开源多模态 RL 实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅 RL 训练感知任务时可扩展性有限——奖励信号增长但推理复杂度不增
 - 验证（Verification）行为的跨模态迁移率接近零，说明某些认知模式需要更原生的视觉支持

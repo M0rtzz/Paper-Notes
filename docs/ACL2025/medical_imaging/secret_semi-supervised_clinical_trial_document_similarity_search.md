@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SECRET: Semi-supervised Clinical Trial Document Similarity Search
 description: >-
@@ -114,7 +114,7 @@ SECRET 在所有指标上大幅领先，recall@1 相对 Trial2Vec 提升 78%，p
 - 零样本迁移到患者-试验匹配任务仍优于所有基线，泛化能力出色
 - 案例分析表明 SECRET 能更好捕获年龄、干预措施等关键属性的精确匹配
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用了标题、疾病、干预、关键词、结局和入排标准，**未纳入描述和研究设计等重要段落**（受 LLM 资源限制）
 - 未包含知情同意书、不良事件报告等其他临床试验相关文档

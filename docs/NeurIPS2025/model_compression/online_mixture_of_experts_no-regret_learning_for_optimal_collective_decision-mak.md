@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Mixture of Experts: No-Regret Learning for Optimal Collective Decision-Making
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：将专家聚合建模为 contextual bandit 问题，利用 UCB 和加权投票的有效结合。
 
-**核心idea一句话**：将 MoE 转化为在线 bandit 学习问题，构建有理论保证的无遗憾专家聚合算法。
+**核心 idea**：将 MoE 转化为在线 bandit 学习问题，构建有理论保证的无遗憾专家聚合算法。
 
 ## 方法详解
 
@@ -111,7 +111,7 @@ tags:
 - **算法简洁实用**：OWMV 实现简单，附加计算开销极低
 - **LLM 动态路由**：为大模型推理时的专家选择提供理论基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前假设专家质量随时间固定（stationary），非平稳场景需扩展
 - LLM 实验中"聚合"方式较简单（投票），token 级混合可能更有效
 - 委员会大小的选择缺乏理论指导

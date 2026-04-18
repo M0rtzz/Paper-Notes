@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Statistical Guarantees for High-Dimensional Stochastic Gradient Descent
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**: 实践中常数学习率 SGD 效果好 → 理论上缺乏高维保证，尤其在高阶矩和一般范数下。
 
-**本文要解决什么**: 为高维常数学习率 SGD/ASGD 提供严格的统计保证：矩收敛界 + 高概率集中界 + 计算复杂度界。
+**本文目标**: 为高维常数学习率 SGD/ASGD 提供严格的统计保证：矩收敛界 + 高概率集中界 + 计算复杂度界。
 
 **切入角度**: 将 SGD 迭代视为**非线性自回归过程**，借鉴高维非线性时间序列中的耦合技术（functional dependence measure），将时间序列分析的强大工具迁移到在线学习领域。
 
-**核心idea一句话**: 通过在 $\ell^s$ 范数（$s \approx \log d$）下建立 SGD 的几何矩收缩性质，绕开 $\ell^\infty$ 不可微的困难，得到高维 SGD 的完整理论框架。
+**核心 idea**: 通过在 $\ell^s$ 范数（$s \approx \log d$）下建立 SGD 的几何矩收缩性质，绕开 $\ell^\infty$ 不可微的困难，得到高维 SGD 的完整理论框架。
 
 ## 方法详解
 
@@ -57,7 +57,7 @@ ASGD 迭代: $\bar{\boldsymbol{\beta}}_k = \frac{1}{k} \sum_{i=1}^k \boldsymbol{
 
 #### 1. $\ell^s$-$\ell^\infty$ 范数桥接（Bridge）
 
-**做什么**: 绕开 $\ell^\infty$ 范数不可微的困难。
+**功能**: 绕开 $\ell^\infty$ 范数不可微的困难。
 
 **核心思路**: 选择 $s_d = 2\min\{\ell \in \mathbb{N}: 2\ell > \log(d)\}$，则 $|\boldsymbol{x}|_\infty \leq |\boldsymbol{x}|_{s_d} \leq e|\boldsymbol{x}|_\infty$，即 $\ell^{s_d}$ 范数与 $\ell^\infty$ 范数等价，但 $\ell^{s_d}$ 范数（偶数幂次）是可微的，可以使用梯度工具。
 
@@ -65,7 +65,7 @@ ASGD 迭代: $\bar{\boldsymbol{\beta}}_k = \frac{1}{k} \sum_{i=1}^k \boldsymbol{
 
 #### 2. 几何矩收缩（GMC, Theorem 1）
 
-**做什么**: 证明常数学习率 SGD 指数快速遗忘初始化。
+**功能**: 证明常数学习率 SGD 指数快速遗忘初始化。
 
 **核心结果**: 在学习率 $0 < \alpha < \frac{2\mu}{\max\{q,s\} L_{s,q}^2}$ 下，两个共享噪声但不同初始化的 SGD 序列满足：
 
@@ -77,7 +77,7 @@ $$\||\ \boldsymbol{\beta}_k - \boldsymbol{\beta}'_k|_s\|_q \leq r_{\alpha,s,q}^k
 
 #### 3. 高维矩不等式（Lemma 2, Rio 型）
 
-**做什么**: 提供比标准三角不等式更精确的高维范数运算上界。
+**功能**: 提供比标准三角不等式更精确的高维范数运算上界。
 
 **核心公式**: 对任意 $q \geq 2$，偶数 $s \geq 2$，$d$ 维随机向量 $\boldsymbol{x}, \boldsymbol{y}$：
 
@@ -93,7 +93,7 @@ $$\underbrace{O\left(\sqrt{\frac{c_q s_d}{k}} M_{s_d,q}\right)}_{\text{随机方
 
 #### 5. Fuk-Nagaev 型高概率界（Theorem 4）
 
-**做什么**: 给出 ASGD 的高概率集中界（tail bound）。
+**功能**: 给出 ASGD 的高概率集中界（tail bound）。
 
 对任意 $z > 0$:
 
@@ -138,7 +138,7 @@ $$\mathbb{P}(|\bar{\boldsymbol{\beta}}_k - \boldsymbol{\beta}^*|_\infty > z) \le
 - **Rio 型高维矩不等式** (Lemma 2) 独立有价值，可用于分析其他高维学习算法
 - **完整的理论链条**: 从平稳性 → 矩收敛 → 高概率 → 复杂度 → 高斯逼近，一气呵成
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 要求强凸性（$\ell^s$ 范数下），对非凸目标不直接适用
 2. 学习率上界 $\alpha \propto 1/(d^2 \log d)$ 在极高维时可能过于保守

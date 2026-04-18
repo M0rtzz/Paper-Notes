@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Contextual Dynamic Pricing with Heterogeneous Buyers
 description: >-
@@ -99,7 +99,7 @@ $d=1$ 时，结合方差感知置信区间的自适应离散化：
 - **ZoomV 的方差感知维度**揭示了定价问题的特殊结构：低需求区间虽覆盖数多，但方差小、遗憾贡献低
 - 问题建模清晰，将异质买家定价与 contextual bandits 优雅对接
 
-## 局限性 / 可改进方向
+## 局限与展望
 - POPS 的运行时间与离散化模型类大小成正比，在 $K_\star$ 和 $d$ 较大时计算不可行
 - 上下文情形中 $K_\star$ 的最优依赖（上界 $K_\star$ vs 下界 $\sqrt{K_\star}$）仍有 gap
 - 噪声鲁棒性有限：类型分布 $D_\star$ 到 $K_\star$-支撑分布的 Lévy 距离为 $\delta$ 时，遗憾额外增加 $\sqrt{\delta} T^2$

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: All Current Generative Fidelity and Diversity Metrics are Flawed
 description: >-
@@ -163,7 +163,7 @@ Diversity 指标同样普遍失败：
 4. **覆盖表格数据**：补充了表格数据特有的测试场景（重尾分布、离散 vs 连续），填补了以往图像中心评估的盲区
 5. **开源代码**：全部 sanity check 代码公开，便于后续研究者复现和扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **只评估不修复**：作为 position paper 仅暴露问题，未提出具体的替代指标
 2. **sanity check 使用人工分布**：所有测试都基于合成的简单分布（高斯、超立方体等），与真实数据（自然图像、复杂表格）的行为可能存在差异

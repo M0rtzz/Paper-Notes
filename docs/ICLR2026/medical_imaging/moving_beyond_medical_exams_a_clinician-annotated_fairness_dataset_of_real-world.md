@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Moving Beyond Medical Exams: A Clinician-Annotated Fairness Dataset of Real-World Tasks and Ambiguity in Mental Healthcare
 description: >-
@@ -119,7 +119,7 @@ MENTAT是评估数据集，不用于训练。核心评估设计：
 - 人口统计变量替换的系统性评估设计，使偏见分析可控且大规模——比个案分析远泛化性更强
 - "MENTAT is evaluation-first"的定位清晰：不追求大规模而追求高质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模较小（203题基础），虽通过变量扩展放大但题目多样性受限
 - 仅限美国精神科体系（DSM-5-TR、美国计费编码等），不适用于其他国家医疗制度

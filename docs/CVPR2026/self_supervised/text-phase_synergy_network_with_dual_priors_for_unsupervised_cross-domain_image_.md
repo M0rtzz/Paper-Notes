@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Text-Phase Synergy Network with Dual Priors for Unsupervised Cross-Domain Image Retrieval
 description: >-
@@ -96,7 +96,7 @@ $\mathcal{L} = \alpha \mathcal{L}_{pce} + \beta \mathcal{L}_{i2tce}$，其中 $\
 - 文本先验+相位先验的双路径设计很有启发性——前者从语义空间、后者从频率空间分别提供互补的域不变信号。这种"多视角域不变性"比单一对齐策略更鲁棒。
 - 用常数幅度+原始相位重建图像的操作虽然简单，但效果显著——相位确实编码了跨域一致的结构语义信息。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖K-means聚类初始化domain prompt，聚类质量对后续所有步骤影响较大
 - 相位谱仅从灰度图提取，丢失了颜色信息中可能的域不变成分

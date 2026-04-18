@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Problem-Parameter-Free Decentralized Bilevel Optimization
 description: >-
@@ -125,7 +125,7 @@ $$\eta_t^y = \frac{c}{\sqrt{\sum_{s=1}^{t} \|G_s^y\|^2}}$$
 - **鲁棒性优异**: 100 倍步长变化范围内性能几乎不变
 - **理论保证完整**: $\tilde{O}(1/\sqrt{T})$ 收敛率，匹配精调基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论分析仅针对非凸-强凸设置（上层非凸、下层强凸）
 2. Polylogarithmic 因子的差距在某些场景可能不可忽略

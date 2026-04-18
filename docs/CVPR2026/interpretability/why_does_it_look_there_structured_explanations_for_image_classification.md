@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Why Does It Look There? Structured Explanations for Image Classification
 description: >-
@@ -118,7 +118,7 @@ I2X 是分析框架，不引入新的训练损失。但发现的"不确定原型
 - **不确定原型的发现**：找到了跨类摆动的原型是混淆的直接原因，且可以据此设计改进策略，有实际价值。
 - **训练随机性的结构化分析**：第一次用原型追踪解释不同训练运行间的策略差异。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 MNIST 和 CIFAR-10 上验证，复杂数据集（ImageNet）上是否仍可解释有待验证
 - K-Means 聚类数 $K$ 需要手动选择（MNIST 32, CIFAR-10 128），增大数据集时的选择策略不明确
 - 依赖 GradCAM，对 Transformer 架构需要替换为 TokenTM 等方法

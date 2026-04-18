@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OptiTree: Hierarchical Thoughts Generation with Tree Search for LLM Optimization Modeling
 description: >-
@@ -146,7 +146,7 @@ $$\mathcal{P}^{(1)} = \underset{\mathcal{P}_t^{(0)}}{\text{argmax}} \; \mathbb{I
 4. **建模树自动构建**：不需要人工策划，从数据驱动地构建和更新，保证了可扩展性
 5. **搜索空间极大缩减**：从指数级的变量/约束空间缩减到有限子问题集合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **建模树的质量依赖于构建数据集**：如果数据集覆盖的 OR 问题类型有限，树的泛化能力受限
 2. **只关注提示方法**：未与微调方法结合，理论上 OptiTree 的思维可以作为微调数据的增强

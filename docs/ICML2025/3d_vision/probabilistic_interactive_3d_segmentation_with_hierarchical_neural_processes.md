@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probabilistic Interactive 3D Segmentation with Hierarchical Neural Processes
 description: >-
@@ -94,7 +94,7 @@ $$\log p(Y_T|X_T,\mathcal{D}_C) \geq \mathbb{E}_{q(z_s|X_T)}\left\{\sum_{m=0}^{M
 3. 概率原型调制器增强稀疏点击的泛化
 4. 不确定性估计可引导后续用户交互
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Monte Carlo 采样增加推理时间
 - 层级结构增加了模型复杂度

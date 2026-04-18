@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation
 description: >-
@@ -110,7 +110,7 @@ FlyThinker 在所有任务上均超越基线，BLEU 相比 SFT 提升约10%。
 3. **工程上非常优雅**: 训练时一次前向传播完成所有推理，推理时交错并行，几乎无额外开销
 4. **对"上下文漂移"的有效对策**: 位置敏感实验清晰展示了动态推理对长文本后段质量的显著改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **内存开销增加**: 虽然时间效率高，但需同时维护两个模型（Reasoner + Generator），内存占用翻倍
 2. **评估指标有限**: 仅使用 ROUGE/BLEU/METEOR 等自动指标，缺少人工评估和 GPT-based 评价

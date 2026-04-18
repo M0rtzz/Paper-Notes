@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] X2Edit: Revisiting Arbitrary-Instruction Image Editing through Self-Constructed Data and Task-Aware Representation Learning
 description: >-
@@ -81,7 +81,7 @@ $$\mathcal{L}_{task} = -\frac{1}{b}\sum_{i=1}^{N}\log\frac{\sum_j \exp(-D_{ij}/\
 - 极高的参数效率：0.9B 参数媲美 12B 全参数模型，且支持 plug-and-play
 - "Narrow-yet-numerous" expert 策略（12 experts, rank=64）优于少 expert 大 rank
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 非英文 text change 能力弱（受限于 FLUX.1 base model）
 - User study 仅 4 人，统计显著性不足
 - 复杂推理和相机运动任务依赖 GPT-4o 生成数据，开源可复现性受限

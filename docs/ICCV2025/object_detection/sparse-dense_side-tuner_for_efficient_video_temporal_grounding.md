@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparse-Dense Side-Tuner for Efficient Video Temporal Grounding
 description: >-
@@ -127,7 +127,7 @@ SDST 仅使用 SG-DETR 27% 的参数量即达到竞争甚至超越的性能。
 - 首次成功将 InternVideo2 集成到 Side-Tuning 框架中，解决了关键的 token 池化难题
 - 对"中间特征 vs 多步精细化"的深入实验分析提供了新的理解视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预提取的 InternVideo2 特征，未实现端到端训练
 - AdaptivePool 复用的depth-pooling trade-off 限制了利用更浅层特征

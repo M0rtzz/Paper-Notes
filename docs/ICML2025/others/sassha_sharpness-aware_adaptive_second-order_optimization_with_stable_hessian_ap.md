@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sassha: Sharpness-aware Adaptive Second-order Optimization with Stable Hessian Approximation
 description: >-
@@ -115,7 +115,7 @@ $$x_{t+1} = x_t - \eta_t \bar{D}_t^{-1} \bar{m}_t - \eta_t \lambda x_t$$
 4. **全面超越一阶基线**：Sassha 在 6 个视觉任务 + 语言预训练上均优于 SGD、AdamW 和 SAM，是二阶方法首次实现这一成就
 5. **理论支撑完备**：收敛性证明 + 线性稳定性分析解释了 Sassha 为何偏好平坦极小值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销仍高于一阶方法**：即使 $k=10$ 的 lazy 更新，每 10 步仍需额外的 Hessian-vector product 反向传播，wall-clock 时间约为 SGD 的 1.1-1.2 倍
 2. **对角 Hessian 近似的固有局限**：忽略了曲率的非对角结构信息，在高度非对角的损失景观中可能不够精确

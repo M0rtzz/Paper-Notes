@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OPERA: A Reinforcement Learning--Enhanced Orchestrated Planner-Executor Architecture for Reasoning-Oriented Multi-Hop Retrieval
 description: >-
@@ -67,7 +67,7 @@ OPERA 解耦为两层：
 - MAPGRPO 的 expert injection 策略显著降低 policy gradient variance
 - 框架在 out-of-domain 任务（单跳 QA）也能自适应，RL 训练不会过拟合固定模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Rewrite Agent 训练不稳定（条件激活导致 reward 稀疏）
 - 理论仅保证局部收敛，Musique EM 仍 < 40%
 - 推理延迟较高，Analysis-Answer Agent latency 波动大

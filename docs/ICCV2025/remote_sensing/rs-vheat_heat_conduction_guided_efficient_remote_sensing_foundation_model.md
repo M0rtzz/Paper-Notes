@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RS-vHeat: Heat Conduction Guided Efficient Remote Sensing Foundation Model
 description: >-
@@ -163,7 +163,7 @@ RS-vHeat 仅 150M/340G，Scale-MAE 为 310M/2070G，FLOPs 减少超 6 倍。
 
 5. **可解释性**：热传导过程提供了直觉解释——包含复杂目标的区域积聚热量成为高温区，稀疏区域热量扩散成为低温区，这与遥感目标检测的语义逻辑高度一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **FAIR1M 上表现相对弱**：在 FAIR1M-2.0 细粒度目标检测上（mAP 48.29 vs SkySense 54.57），RS-vHeat 未能超越最强基线，说明在多类别、多尺度、多朝向的复杂场景中仍有提升空间。
 

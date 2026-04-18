@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Entropy-UID: A Method for Optimizing Information Density
 description: >-
@@ -122,7 +122,7 @@ Entropy-UID 是一种解码时 token 选择策略，在每个生成步骤中：
 - **UID 假说的计算实现**：为语言学中的 UID 假说提供了一种直接的计算实现路径
 - **结果一致性**：跨三个不同领域数据集的高度一致性增强了方法的可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **评估维度单一**：仅使用信息论指标（熵、surprisal），没有人类质量评估（流畅性、连贯性）
 2. **基础模型过旧**：仅在 GPT-2 上实验，未验证在现代 LLM（GPT-4、LLaMA 等）上的效果

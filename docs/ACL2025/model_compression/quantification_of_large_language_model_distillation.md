@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantification of Large Language Model Distillation
 description: >-
@@ -108,7 +108,7 @@ tags:
 - 实验覆盖了主流闭源和开源模型，结论具有行业参考价值
 - Qwen-Max引用Claude的发现很有趣，暗示了复杂的蒸馏链条
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ICE依赖越狱攻击的成功率，如果模型安全对齐做得好可能会漏检蒸馏
 - RSE以GPT4o为参考模型，但如果目标模型是从其他模型（如Claude）蒸馏的，可能被低估
 - Loose Score的正样本准确率仅0.78-0.90，假阳性问题需要关注

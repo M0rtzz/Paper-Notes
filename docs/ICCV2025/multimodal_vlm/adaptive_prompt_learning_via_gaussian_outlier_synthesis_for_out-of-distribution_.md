@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Prompt Learning via Gaussian Outlier Synthesis for Out-of-Distribution Detection
 description: >-
@@ -175,7 +175,7 @@ $$\mathcal{L} = \xi_1[\gamma_1 \tau \mathcal{L}_{align}^{id} + \gamma_2(1-\tau)\
 4. **提示中隐式编码位置信息**：通过可学习的 \<LOC\> token 引入区域坐标，使提示具备空间感知能力
 5. **真实场景泛化**：用 iPhone 14 Pro Max 拍摄的真实照片也能取得良好检测效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **高斯分布假设**：假设 ID 提示嵌入服从高斯分布，实际分布可能更复杂；可以考虑混合高斯或流模型
 2. **ChatGPT 依赖**：依赖 ChatGPT-3.5 进行标准化，不同 LLM 的标准化质量可能不同

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prompting Language-Informed Distribution for Compositional Zero-Shot Learning
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：prompt 的多样性和信息量需要同时满足——ProDA 有多样性但无信息量，CSP 有一定信息量但无多样性
 
-**本文要解决什么**：如何让 CLIP 的类别文本表示既多样又富含信息，且支持视觉-语言双侧的原语分解
+**本文目标**：如何让 CLIP 的类别文本表示既多样又富含信息，且支持视觉-语言双侧的原语分解
 
 **切入角度**：用 LLM 为每个组合类生成多条句子描述 → 构建类别高斯分布 → 同时在组合和原语空间做分布对齐
 
-**核心 idea 一句话**：用 LLM 生成的描述性句子作为类分布的支撑点（DSP），通过 soft prompt 学习语言知识驱动的类分布，实现多样且有信息量的零样本组合识别。
+**核心 idea**：用 LLM 生成的描述性句子作为类分布的支撑点（DSP），通过 soft prompt 学习语言知识驱动的类分布，实现多样且有信息量的零样本组合识别。
 
 ## 方法详解
 
@@ -139,7 +139,7 @@ $$\mathcal{L} = \mathcal{L}_y + \mathcal{L}_s + \mathcal{L}_o$$
 - **参数效率**：只需一组 soft prompt，远小于 ProDA 需要学的大量 prompt 集合
 - **logit 融合 > 概率融合**：在大类别空间（C-GQA 有 278K 类）中，softmax 概率归一化会丢失类间关系信息，logit 级融合更合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当类别数极大时（C-GQA 278K 类），协方差矩阵 $\mathbf{A} \in \mathbb{R}^{d \times C \times C}$ 的计算需要分组近似才可行
 - LLM 描述的质量对性能有影响，但如何自动评估和筛选描述质量尚未探讨

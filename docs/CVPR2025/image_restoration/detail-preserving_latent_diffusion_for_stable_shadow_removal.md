@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Detail-Preserving Latent Diffusion for Stable Shadow Removal
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：需要扩散模型的生成能力来修复阴影区域，但也需要保留非阴影区域的原始高频细节，而 VAE 的编解码过程天然丢失这些细节。
 
-**本文要解决什么？** 在利用扩散模型的阴影修复能力的同时，保持高频细节并降低推理方差，无需阴影掩码。
+**本文目标** 在利用扩散模型的阴影修复能力的同时，保持高频细节并降低推理方差，无需阴影掩码。
 
 **切入角度**：两阶段分离——Stage 1 训练扩散去噪器做粗修复（用 z₀-prediction 减小方差），Stage 2 训练 Detail Injection 模块补偿 VAE 丢失的高频细节。
 
-**核心idea一句话**：z₀-prediction 的微调 LDM 做低方差粗阴影修复 + RRDB-based 细节注入模块补偿 VAE 解码器损失的高频信息。
+**核心 idea**：z₀-prediction 的微调 LDM 做低方差粗阴影修复 + RRDB-based 细节注入模块补偿 VAE 解码器损失的高频信息。
 
 ## 方法详解
 

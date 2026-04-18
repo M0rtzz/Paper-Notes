@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VoiceCloak: A Multi-Dimensional Defense Framework against Unauthorized Diffusion-based Voice Cloning
 description: >-
@@ -81,7 +81,7 @@ $$\mathcal{L}_{sem} = 1 - \cos(f_{adv}^{(l,t)}, f^{(l,t)}) + \cos(f_{adv}^{(l,t)
 - 在保持扰动不可感知的同时（PESQ 3.22、SNR 33.53 dB），实现极高防御成功率
 - User study (50人) 证实人类感知维度上的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 主要实验基于 DiffVC 架构，对更新的 non-score-based DM（如 flow matching）未验证
 - 对抗扰动依赖白盒梯度，实际场景中目标模型可能未知
 - 优化迭代 50 步可能引入推理延迟，实时场景需加速

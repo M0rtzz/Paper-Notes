@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HealSplit: Towards Self-Healing through Adversarial Distillation in Split Federated Learning
 description: >-
@@ -156,7 +156,7 @@ $$\mu_t = m \cdot \mu_{t-1} + (1-m) \cdot \sigma\left(\kappa \cdot \frac{\mathca
 4. **理论支撑**：证明 HealSplit 降低 SGV，为鲁棒性提供收敛性理论保证
 5. **无需攻击先验**：自动实时检测异常并自适应调整阈值，无需手动调参
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仍然依赖图像分类任务评估，对 NLP 或其他模态的适用性未验证
 - GAN 训练延迟可能影响 SFL 系统效率（需与训练轮次同步）

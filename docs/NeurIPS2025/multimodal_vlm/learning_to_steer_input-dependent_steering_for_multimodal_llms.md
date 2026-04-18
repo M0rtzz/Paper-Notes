@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Steer: Input-dependent Steering for Multimodal LLMs
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **训练成本极低**：只需在表示空间训练小网络，无需主模型梯度，单 24GB GPU 即可完成全流程
 - L2S 在安全任务上**超越 oracle P2S** 说明学到的映射具有正则化效果，泛化性好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对比提示的选择仍需人工设计，不同应用场景需要定制不同的 $(T_X^+, T_X^-)$ 模板
 - 目前只在单层 $L^*$ 施加线性偏移，多层/非线性 steering 可能更有效
 - 辅助网络容量（hidden 100）可能限制了对复杂行为的建模能力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Continual Learning Performance and Efficiency with Auxiliary Classifiers
 description: >-
@@ -30,7 +30,7 @@ tags:
 
 **核心矛盾**：CL 中后层遗忘严重但原有方法只用后层预测；EEN 中任务偏差（task-recency bias）导致旧任务样本无法早退出。
 
-**本文要解决什么**：(1) 探索 EEN 在 CL 中的行为特性；(2) 解决任务偏差对动态推理的负面影响。
+**本文目标**：(1) 探索 EEN 在 CL 中的行为特性；(2) 解决任务偏差对动态推理的负面影响。
 
 **切入角度**：分析发现早期 IC 遗忘更少、"过度思考"（overthinking）在 CL 中更严重，据此提出利用早退出来同时提升效率和性能。
 
@@ -108,7 +108,7 @@ Pipeline：
 - TLC 方法极其简洁（仅两个参数 $a, b$），但效果显著
 - 减少计算和减少遗忘不是矛盾的——这是一个反直觉但重要的发现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - TLC 使用线性修正模型，对复杂偏差模式可能不够
 - 目前只验证了 ResNet32/18 架构，在 Transformer 等架构上的效果未知
 - 退出阈值 $\tau$ 的选择仍然是一个开放问题

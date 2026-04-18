@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ShareGPT4V: Improving Large Multi-Modal Models with Better Captions
 description: >-
@@ -120,7 +120,7 @@ Pipeline: 多来源图像 → 数据特定prompt设计 → GPT4-Vision生成100K
 - **数据源多样化prompt设计**：针对不同图像来源设计prompt是提升caption覆盖度的有效手段
 - **Vision Encoder解冻策略**：在高质量数据场景下，解冻后半encoder是一个可迁移的training trick
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Caption生成依赖GPT4-Vision，初始100K的成本依然不低
 - 仅在7B规模验证，未探索更大模型或更大数据规模的scaling law

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Causal Evidence for the Primordiality of Colors in Trans-Neptunian Objects
 description: >-
@@ -143,7 +143,7 @@ PAG 中的不同边类型携带不同的因果信息：
 
 5. **跨学科融合典范**：将因果推断领域的前沿方法（causal-learn 库）与行星科学深度结合，为两个领域都提供了新的研究范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **样本量有限**：仅 229 个 TNO，非线性检验（KCI）容易过拟合，限制了更复杂因果结构的发现能力
 

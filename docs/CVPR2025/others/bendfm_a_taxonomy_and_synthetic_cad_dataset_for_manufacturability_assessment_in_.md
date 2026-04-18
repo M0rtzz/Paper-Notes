@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending
 description: >-
@@ -120,7 +120,7 @@ tags:
 4. **平衡设计**：40%弯曲保证无碰撞 + 按弯曲数分层采样，避免模型学到虚假相关
 5. **实证验证了重要假设**：配置依赖任务确实比几何任务更难学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一工装配置**：所有零件使用固定的冲头/凹模参数，未探索跨配置泛化
 2. **未验证真实世界迁移**：合成数据训练的模型在真实零件上的效果未知

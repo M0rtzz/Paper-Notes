@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Domain-Adaptive Video Deblurring via Test-Time Blurring
 description: >-
@@ -49,7 +49,7 @@ tags:
 
 1. **Relative Sharpness Detection Module (RSDM)**：
 
-    - **做什么**：从模糊视频中找到相对清晰的 patch 作为伪清晰图像
+    - **功能**：从模糊视频中找到相对清晰的 patch 作为伪清晰图像
     - **核心思路**：设计 Blur Magnitude Estimator (BME)，一个五阶段编码器-解码器网络，结合多尺度特征融合（MSFF）。在 GoPro 数据集上训练 BME，利用光流累积获得的运动轨迹图计算像素级模糊幅度真值：
     $G = \frac{1}{\tau}\sqrt{u^2 + v^2}$
    其中 $u, v$ 为水平和垂直运动轨迹，$\tau$ 为归一化项。测试时用 BME 预测每帧的模糊幅度图 $M_t^{(i)} = BME(V_t^{(i)})$，通过自适应阈值 $\eta^{(i)}$ 二值化后裁剪 $256 \times 256$ 的清晰 patch。阈值设定保证提取前 $r\%=20\%$ 最清晰的 patch
@@ -57,7 +57,7 @@ tags:
 
 2. **Domain-adaptive Blur Condition Generation Module (DBCGM)**：
 
-    - **做什么**：从模糊视频的时序运动线索中估计域特定的模糊方向和幅度，生成 ID-Blau 所需的模糊条件
+    - **功能**：从模糊视频的时序运动线索中估计域特定的模糊方向和幅度，生成 ID-Blau 所需的模糊条件
     - **核心思路**：包含 Blur Orientation Estimator (BOE) 和 BME 两部分。对于伪清晰 patch $\tilde{S}_t^{(i)}$ 及其相邻帧（前后各2帧）的同位patch，通过光流估计运动轨迹：
     $\tilde{\mathcal{F}}_t^{(i)} = \sum_{n=-2}^{1} f(\tilde{S}_{t+n}^{(i)}, \tilde{S}_{t+n+1}^{(i)})$
    归一化后得到域特定模糊方向 $\tilde{O}_t^{(i)} = \frac{\tilde{\mathcal{F}}_t^{(i)}}{\sqrt{\tilde{u}^2 + \tilde{v}^2}}$。模糊幅度通过 Magnitude Adaptation Process 调制：用相邻帧模糊幅度均值来缩放当前帧的归一化幅度：
@@ -66,7 +66,7 @@ tags:
 
 3. **基于 ID-Blau 的域适应微调**：
 
-    - **做什么**：使用域特定模糊条件驱动 ID-Blau 模糊伪清晰图像，生成伪训练对用于微调
+    - **功能**：使用域特定模糊条件驱动 ID-Blau 模糊伪清晰图像，生成伪训练对用于微调
     - **核心思路**：ID-Blau 是条件扩散模糊模型，接受清晰图像 $S$ 和像素级模糊条件图 $C = (x, y, z) \in \mathbb{R}^{H \times W \times 3}$（水平/垂直模糊方向和幅度），生成模糊图像 $B = \text{ID-Blau}(S, C)$。将 DBCGM 生成的域特定方向和幅度组合为条件 $\tilde{C}_t^{(i)}$，对伪清晰 patch 进行模糊化：$\tilde{B}_t^{(i)} = \text{ID-Blau}(\tilde{S}_t^{(i)}, \tilde{C}_t^{(i)})$
     - **设计动机**：ID-Blau 提供了可控的模糊生成能力，结合域特定条件即可生成符合目标分布的训练数据
 
@@ -132,7 +132,7 @@ tags:
 - **通用性强**：方法与去模糊模型无关，可作为即插即用的域适应方案应用于任意去模糊模型（实验验证了4个不同架构）
 - **提升幅度惊人**：在 MMP-RNN 上最高 +7.54dB，这在图像恢复领域是非常罕见的提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要在测试时对每个视频进行指定 epoch 的微调（10 epochs），增加了推理时间开销
 - 伪清晰图像本身仍有残余模糊，作为"清晰"监督信号存在噪声

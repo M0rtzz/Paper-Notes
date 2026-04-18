@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRAB: A Challenging GRaph Analysis Benchmark for Large Multimodal Models
 description: >-
@@ -143,7 +143,7 @@ GRAB 是评估基准，不涉及模型训练。
 - **精确匹配评估的哲学**：指令遵循能力与推理能力同等重要的评估理念值得借鉴
 - **全面揭示 LMM 短板**：图表分析这一看似简单的任务，竟然是当前最强模型的巨大盲区
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据可能与真实世界图表存在分布差异（Matplotlib 风格很固定）
 - 严格精确匹配可能低估了某些模型的真实推理能力

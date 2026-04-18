@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Co-Reinforcement Learning for Unified Multimodal Understanding and Generation
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：ULM 的理解和生成共享同一个 LLM backbone，分别优化容易产生冲突。现有 RL 方法（如 GRPO）的 reward 设计主要面向文本输出，缺乏适用于图像生成的可验证奖励信号。
 
-**本文要解决什么？** 设计一套适合 ULM 的强化学习框架，让理解和生成两种能力在共享的策略优化中互利共进而非互相伤害。
+**本文目标** 设计一套适合 ULM 的强化学习框架，让理解和生成两种能力在共享的策略优化中互利共进而非互相伤害。
 
 **切入角度**：作者做了系统的 pilot study，比较了四种 RL 策略（分别RL/分别RL后权重合并/交替RL/统一RL），发现统一 RL 显著优于其他策略，证明双能力可以在共享优化中协同进化。基于此洞察设计两阶段方案：先统一建立跨任务协同，再分别精细化。
 
-**核心idea一句话**：通过统一 GRPO 框架同时优化 ULM 的理解和生成能力，利用跨任务奖励信号的协同效应实现双能力的共同提升。
+**核心 idea**：通过统一 GRPO 框架同时优化 ULM 的理解和生成能力，利用跨任务奖励信号的协同效应实现双能力的共同提升。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ CoRL 采用"基础→专精"（Foundation-then-Specialization）的两阶段 RL 
 - **自监督式的生成质量奖励设计**：cycle consistency + TIM 奖励不依赖外部大模型打分，而是利用 ULM 自身的表示空间和简单的 re-captioning 流程，降低了对外部 reward model 的依赖
 - **小模型 + RL 后训练的效率**：1.5B 模型通过 CoRL 在多个 benchmark 上达到甚至超越 7B 模型的水平，说明 RL 后训练在效率/性能 trade-off 上极具吸引力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 生成分辨率受限于 Janus-Pro 的 384×384，远低于主流扩散模型的 512/1024
 - 图像生成的采样质量仍需 CFG（guidance weight=5），增加推理成本

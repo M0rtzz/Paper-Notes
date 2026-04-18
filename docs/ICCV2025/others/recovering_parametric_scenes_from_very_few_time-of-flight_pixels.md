@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recovering Parametric Scenes from Very Few Time-of-Flight Pixels
 description: >-
@@ -107,7 +107,7 @@ $$W(t, t_i) = \sigma(k(t-t_i)) - \sigma(k(t-t_i-\Delta t))$$
 - **端到端可微管线**：从成像物理到位姿优化，梯度全程可达
 - **硬件原型验证**：不仅是仿真，用真实机器人臂+TMF8820 传感器在多个物体上验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设朗伯表面 + 共位传感器/光源，真实复杂反射场景性能待验证
 - 传感器距离限制（TMF8820 最远 1.5m），仅能做桌面场景

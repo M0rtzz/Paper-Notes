@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Marker Scoring Accuracy through Ordinal Confidence Modelling in Educational Assessments
 description: >-
@@ -126,7 +126,7 @@ tags:
 - **"置信度即可释放性"**：将置信度建模转化为直接关联考试公平性的指标（CEFR 一致率 × 释放比例），而非抽象的校准度
 - **粒度洞察**：证明了更细粒度的分类目标能带来更好的置信度估计，对不确定性建模有启发意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一考试数据**：仅在一个特定考试上验证，泛化性未知
 2. **评估集较小**：644 响应在统计功效上可能不足

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GenM3: Generative Pretrained Multi-path Motion Model for Text Conditional Human Motion Generation
 description: >-
@@ -159,7 +159,7 @@ GenM3 包含两个核心组件和三阶段训练流程：
 - **Motion Descriptor 的简洁设计**：通过文本引导的注意力将运动序列压缩为上下文 token，计算高效
 - **11 个数据集的统一整合**：覆盖单人运动、双人交互、人物交互，约 220 小时，超越了现有最大的运动数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Diversity 指标略低于某些方法（如 MoMamba 的 9.871），可能是多专家设计倾向于生成更稳定的结果
 - 11 个数据集的统一需要大量手工标注和预处理（如 BABEL 使用 ChatGLM 生成描述、IMHD 手动标注）

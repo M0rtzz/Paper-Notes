@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multivariate Conformal Selection
 description: >-
@@ -91,7 +91,7 @@ $$V^\theta(\bm{x}, \bm{y}) = M \cdot \mathbb{1}\{\bm{y} \notin R^c \cup \partial
 3. **实用价值**：提供了从药物发现到 LLM 认证的通用不确定性量化框架。
 4. **模块化设计**：预训练模型 $\hat{\mu}$ 可独立于选择过程，灵活集成。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要在训练集中划分校准集，减少了用于训练的数据量。
 - mCS-learn 需要额外的训练-验证-校准三路划分，数据效率较低。

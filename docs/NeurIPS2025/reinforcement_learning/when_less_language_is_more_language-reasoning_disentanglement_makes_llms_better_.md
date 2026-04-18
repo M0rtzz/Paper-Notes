@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Less Language is More: Language-Reasoning Disentanglement Makes LLMs Better Multilingual Reasoners
 description: >-
@@ -96,7 +96,7 @@ $$\hat{\boldsymbol{h}} = \boldsymbol{h} - \lambda \boldsymbol{M}_s^\top \boldsym
 - "Less is More"的哲学——去除语言信号反而增强推理，暗示当前 LLM 中语言和推理表征的纠缠可能是制约多语言性能的深层原因。
 - 分层干预策略的发现（中层去除+高层保留）为理解 Transformer 各层的功能分工提供了实验证据。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 虽然中文和英语都是高资源语言，但中文表征也向英语收敛——作者推测与预训练数据中英语占比有关，但具体机制未明。
 - 消融强度 $\lambda$ 和干预层范围目前需要对不同模型调参。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StreamingTOM: Streaming Token Compression for Efficient Video Understanding
 description: >-
@@ -115,7 +115,7 @@ OQM 解决 CTR 之后 kv-cache 仍线性增长的问题：
 4. **实际部署友好**：单张 A6000 即可运行，batch-agnostic，显存增长亚线性。
 5. **双阶段互补**：CTR 降计算、OQM 降显存，两者缺一不可，组合效果远超单阶段。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **固定 G 可能非最优**：所有帧使用相同的 50 token 预算，对信息密度差异大的帧（关键帧 vs 静态帧）不够灵活。
 2. **仅验证单一骨干**：实验主要基于 LLaVA-OV-7B，未在更大模型（如 72B）或其他架构上验证。

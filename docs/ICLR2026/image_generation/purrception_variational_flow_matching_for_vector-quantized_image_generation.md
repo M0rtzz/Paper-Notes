@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Purrception: Variational Flow Matching for Vector-Quantized Image Generation
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L}_{cat} = -\mathbb{E}\left[\sum_k q(k|x_t) \log p_\theta(k|x_t, t)\r
 
 5. **命名的巧思**："Purrception"（Purr = 猫叫声 + Perception）是一个有趣的命名，暗示了模型对编码本的"感知"（perception）过程是柔和的（purr），而非硬决策。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 ImageNet 256×256 上验证**：当前实验规模相对有限。在更高分辨率（如 512×512 或 1024×1024）、更大规模数据集上的表现尚未验证。
 

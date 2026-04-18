@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CuMPerLay: Learning Cubical Multiparameter Persistence Vectorizations
 description: >-
@@ -166,7 +166,7 @@ CuMPerLay 在**有限数据场景下优势尤为突出**：
 4. **C++/CUDA 加速**：持久同调计算通过自定义 CUDA kernel 实现，使得训练在实际中可行。代码已开源 ([circle-group/cmp](https://github.com/circle-group/cmp))
 5. **Gated 融合机制**：拓扑特征通过 sigmoid 门控乘性融合回主干，而非简单拼接，让网络自适应决定拓扑信息的贡献度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持 2D 立方复形**：当前 CUDA 实现仅支持 2D 图像，论文提到 dim=3 虽在框架中预留但未实现。扩展到 3D 医学影像（CT/MRI）是自然方向
 2. **计算开销**：每个 stage 都需要计算完整的立方 PH，虽有 CUDA 加速但仍增加约 30-50% 训练时间

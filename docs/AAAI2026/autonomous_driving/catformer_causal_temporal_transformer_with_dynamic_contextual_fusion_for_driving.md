@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CaTFormer: Causal Temporal Transformer with Dynamic Contextual Fusion for Driving Intention Prediction
 description: >-
@@ -124,7 +124,7 @@ $$\mathcal{L} = \frac{1}{4}\sum_{i \in \mathcal{H}} \text{CE}(\ell_i, y) + \alph
 3. **少模态高性能**：仅用相机就超越了使用 GPS+地图+速度的多模态方法，说明因果建模比简单堆叠传感器更有效。
 4. **可解释的注意力可视化**：时序注意力热图和决策边际显著性图展示了从动态事件理解到静态决策归因的完整推理路径。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一数据集验证**：仅在 Brain4Cars（594 个事件）上评估，数据规模较小，缺乏在大规模数据集和更多场景（恶劣天气、夜间）上的验证。
 2. **五类动作粗粒度**：仅覆盖直行、转弯、变道，未涉及加减速、停车、紧急避让等细粒度意图。

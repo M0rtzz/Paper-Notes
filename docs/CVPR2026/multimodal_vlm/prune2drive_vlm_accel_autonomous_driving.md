@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prune2Drive: A Plug-and-Play Framework for Accelerating Vision-Language Models in Autonomous Driving
 description: >-
@@ -75,7 +75,7 @@ DriveLMM-o1: 10%保留→68.3 vs vanilla 74.2(下降6%),优于FastV(65.3)、DART
 - 6.40×的prefill加速对实时驾驶系统有直接工业价值
 - 兼容FlashAttention且开销极低（0.02s/图）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在离线benchmark上评估,缺少闭环仿真验证
 - T-FPS对大面积均匀色块物体可能欠采样（因为特征相似度高→距离小→不被FPS选中）
 - 视图自适应率是离线搜索的固定值,未做动态输入自适应

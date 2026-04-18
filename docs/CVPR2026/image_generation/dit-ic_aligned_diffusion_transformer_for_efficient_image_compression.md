@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiT-IC: Aligned Diffusion Transformer for Efficient Image Compression
 description: >-
@@ -104,7 +104,7 @@ DiT-IC 在LPIPS和DISTS上均达到最优BD-rate，且解码速度最快（0.15s
 - 自蒸馏无需外部教师，用编码器自身输出作为目标，方案简洁有效
 - 移除文本编码器的设计兼顾了效率和语义——通过对比学习"蒸馏"文本先验到潜表示条件中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 极低码率（<0.01 bpp）下潜表示信息不足，可能需要辅助文本先验
 - 对抗训练可能引入感知-失真权衡，MSE/SSIM等传统指标会略降

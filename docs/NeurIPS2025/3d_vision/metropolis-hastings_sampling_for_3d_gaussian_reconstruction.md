@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Metropolis-Hastings Sampling for 3D Gaussian Reconstruction
 description: >-
@@ -110,7 +110,7 @@ Mip-NeRF360 + Tanks&Temples + Deep Blending综合结果：
 - **与3DGS-MCMC的根本区别**：全局MH链 vs 局部SGLD链——MH能做长跳跃到未探索区域
 - 粗-细提案策略具有通用性，可应用于其他基于点的3D重建方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 重要性近似 $-\Delta\mathcal{L} \approx I(i)$ 的精确性未严格保证
 - 逆提案密度被简单吸收而非精确计算，影响MH链的理论精确性

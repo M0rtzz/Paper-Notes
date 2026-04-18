@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unique Hard Attention: A Tale of Two Sides
 description: >-
@@ -28,9 +28,9 @@ tags:
 1. **领域现状**：理解transformer的表达能力（expressivity）是当前理论研究的热点。许多工作通过分析unique hard attention transformer（UHAT，即注意力只选择一个最大分值位置）来建立transformer与形式语言/逻辑的对应关系。Yang et al. (2024)证明了具有future masking的UHAT等价于线性时序逻辑LTL。
 2. **现有痛点**：UHA在多个位置得分相同时需要打破平局（tiebreaking），可以选最左（leftmost）或最右（rightmost）。Yang et al.的结果使用了leftmost+rightmost两种打破规则，但对"仅用其中一种"的影响未做细致区分，容易被误解为两种打破规则等价。
 3. **核心矛盾**：看似微不足道的tiebreaking方向选择，实际上会根本性地改变transformer的表达能力，而现有工作忽略了这一关键差异。
-4. **本文要解决什么？** (1) leftmost UHA和rightmost UHA的表达能力是否相同？(2) 如果不同，各自对应什么形式系统？(3) leftmost UHA与soft attention的关系是什么？
+4. **本文目标** (1) leftmost UHA和rightmost UHA的表达能力是否相同？(2) 如果不同，各自对应什么形式系统？(3) leftmost UHA与soft attention的关系是什么？
 5. **切入角度**：通过构造B-RASP编程语言的受限变体，证明leftmost操作无法模拟rightmost操作（如无法读取当前位置左边紧邻的值），从而建立严格的表达力分离。结合Jiaoda et al.的soft attention等价结果，得出leftmost UHA = soft attention的推论。
-6. **核心idea一句话**：Tiebreaking方向不是trivial的实现细节，而是决定transformer表达力的关键因素——leftmost UHA = soft attention < rightmost UHA = full LTL。
+6. **核心 idea**：Tiebreaking方向不是trivial的实现细节，而是决定transformer表达力的关键因素——leftmost UHA = soft attention < rightmost UHA = full LTL。
 
 ## 方法详解
 
@@ -90,7 +90,7 @@ tags:
 - Leftmost UHA = soft attention这一等价关系非常有价值——它表明leftmost UHA可能是比rightmost UHA更好的理论代理，因为实际transformer使用的是soft attention
 - 对flip-flop困难的理论解释将理论分析与经验现象直接联系，增强了结果的说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅分析了有限精度、无位置编码的设定，加入位置编码后结果会如何变化需要进一步研究
 - 理论结果基于最坏情况分析，实际transformer在有限长度输入上可能通过近似绕过表达力限制
 - 未提供实验验证——所有结果都是纯理论的，缺乏在实际transformer上的对比实验

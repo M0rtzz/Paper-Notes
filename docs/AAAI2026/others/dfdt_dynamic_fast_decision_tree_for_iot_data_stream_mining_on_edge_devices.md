@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DFDT: Dynamic Fast Decision Tree for IoT Data Stream Mining on Edge Devices
 description: >-
@@ -169,7 +169,7 @@ $$n_{min} = \begin{cases} \lceil \frac{R^2 \ln(1/\delta)}{2(\Delta G)^2} \rceil 
 - **消除超参数调优**：动态 $\tau$ 和 $n_{min}$ 让算法自适应地控制增长速度
 - **完整的消融**：通过线性回归量化交互效应，为变体选择提供理论指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **活动阈值固定**：$f_{deactivate} = 0.02$ 和 $f_{expand} = 2$ 是固定值，虽然实验证明鲁棒，但可能不适用于极端场景
 2. **仅支持分类任务**：未扩展到回归或多输出任务

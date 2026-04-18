@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Plan & Reason for Evaluation with Thinking-LLM-as-a-Judge
 description: >-
@@ -177,7 +177,7 @@ EvalPlanner 采用三阶段自训练循环：
 4. **位置偏差消除** 通过双向排列回答对的方式，简单有效。
 5. **迭代 DPO > 大批量 DPO** 的发现对偏好优化领域有普遍启示意义：用更新模型生成训练数据的"on-policy"特性比单纯增加数据量更重要。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了两轮迭代**：更多轮次的迭代 DPO 是否持续改进尚未探索。
 2. **计划与执行仍为串行生成**：两阶段增加了推理延迟和 token 消耗（最大 2048 tokens），对效率有影响。

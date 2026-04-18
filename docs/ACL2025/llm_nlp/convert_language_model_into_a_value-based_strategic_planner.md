@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Convert Language Model into a Value-based Strategic Planner
 description: >-
@@ -154,7 +154,7 @@ straQ\* 的长期价值（累积回报）显著高于基线，验证了 Q-learni
 - **两种奖励互补**：imit 在自动指标/域内占优，distill 在人类评价/域外泛化占优，适用于不同场景
 - **策略转移矩阵**验证了 straQ\* 学到了合理的 ESC 阶段转换（I→II→III），而 Direct 方法停留在第一阶段
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在情感支持对话（ESConv + EmpatheticDialogues）验证，未扩展至协商、医疗咨询等其他策略导向对话场景
 - 人类评价可能存在偏差——评估者是实习生而非真实求助者，样本量有限

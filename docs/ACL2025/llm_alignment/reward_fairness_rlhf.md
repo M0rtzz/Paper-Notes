@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Reward Fairness in RLHF: From a Resource Allocation Perspective
 description: >-
@@ -102,7 +102,7 @@ tags:
 - 揭示 BT 模型的结构性缺陷：配对内正确 ≠ 跨配对公平，这是策略模型被误导的根本原因。
 - FC 方法的"即插即用"特性对已部署的 RLHF 系统有直接应用价值——无需重训奖励模型。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 公平性度量需要预定义数据分组方式（按长度/类别/人口统计），分组质量影响效果
 - $\alpha$ / $\gamma$ 超参仍需在验证集上调节

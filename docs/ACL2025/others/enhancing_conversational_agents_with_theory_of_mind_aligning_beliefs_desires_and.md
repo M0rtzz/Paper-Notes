@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Conversational Agents with Theory of Mind: Aligning Beliefs, Desires, and Intentions for Human-Like Interaction
 description: >-
@@ -110,7 +110,7 @@ tags:
 - **实用潜力**：证明了即使 ToM 一致性不完美，通过增强正确的 ToM 信息仍能在实际中改善对齐效果
 - **无需微调整个模型**：通过操控内部表征即可实现对齐，计算效率远优于 RLHF/DPO
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **评估依赖 LLM 裁判**：使用 GPT-4o、o1、Gemini 作为评判，缺乏人类评估
 2. **数据集单一**：可控性实验仅在 NegotiationToM 一个数据集上进行

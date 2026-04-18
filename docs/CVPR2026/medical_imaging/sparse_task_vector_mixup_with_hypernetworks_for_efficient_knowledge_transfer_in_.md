@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparse Task Vector Mixup with Hypernetworks for Efficient Knowledge Transfer in Whole-Slide Image Prognosis
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{NLL}}(y, \hat{y}) + \beta \frac{\sum_j \lambd
 - **实验规模充分**：覆盖 13 个癌种、8,818 张 WSI、5-fold CV，可信度较高
 - **通用增强方案**：超网络聚合可即插即用地提升其他模型融合方法的表现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集单一来源**：全部来自 TCGA，部分癌种样本量极少（如肝癌、宫颈癌 < 400 例），评估结果可能有偏
 2. **MIL 架构限制**：实验仅基于通用注意力 MIL 架构，未验证在更先进架构（如 TransMIL、DTFD-MIL）上的效果

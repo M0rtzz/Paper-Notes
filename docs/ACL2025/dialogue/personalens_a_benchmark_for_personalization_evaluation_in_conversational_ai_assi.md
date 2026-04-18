@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PersonaLens: A Benchmark for Personalization Evaluation in Conversational AI Assistants
 description: >-
@@ -126,7 +126,7 @@ PersonaLens 由三大组件构成：
 - **转弯级个性化动态分析**：图 5 展示了不同领域在对话推进过程中个性化分数的变化模式（电影先低后高、消息先高后低），提供了对话策略设计的细粒度洞察
 - **与 PersonaBench 形成互补**：PersonaBench 关注从非结构化文档中提取个人信息，PersonaLens 关注在交互中运用个人信息——两者共同勾勒了个性化 AI 的评估版图
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持文本交互，未涵盖多模态个性化（语音、图像）
 - 评估在原始 LLM 上进行，未集成真实系统（预订/购买等操作为模拟）

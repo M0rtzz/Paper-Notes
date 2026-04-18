@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials
 description: >-
@@ -106,7 +106,7 @@ $$\theta_\tau = \int_0^\tau \{S_1(t|R=1) - S_0(t|R=1)\} dt$$
 3. **灵活性极强**：无需Cox模型假设，允许任意机器学习模型估计努斗函数，仅需乘积收敛率 $o(N^{-1/2})$
 4. **可推广**：框架可直接扩展到任何以生存函数 $S_a(t)$ 为基础的估计目标（中位生存时间等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前假设外部对照中存在一个"可比子集"，但实际中偏差可能是连续的（partial borrowing更灵活）
 - DR-Learner的偏差检测功效在小样本下仍受限，可能误将部分有偏外部对照纳入

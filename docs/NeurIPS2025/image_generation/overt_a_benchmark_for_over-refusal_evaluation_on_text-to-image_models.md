@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OVERT: A Benchmark for Over-Refusal Evaluation on Text-to-Image Models
 description: >-
@@ -100,7 +100,7 @@ OVERT-unsafe 上的安全响应率（%）：
 - 动态安全策略适配的 case study 很有启发性：通过修改生成模板即可生成符合不同安全标准的评测数据集
 - 揭示的安全机制缺陷（拒绝良性>拒绝有害）对安全系统设计具有警示意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集由 LLM 自动生成，可能存在固定模式，缺乏自然人类输入的多样性
 - 使用同一 LLM 既生成又过滤提示可能引入自增强偏差（已通过人工审核部分缓解）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DINO-Tracker: Taming DINO for Self-Supervised Point Tracking in a Single Video
 description: >-
@@ -147,7 +147,7 @@ Phi(I) = Phi_DINO(I) + Phi_Delta(I)
 4. **遮挡处理的根本性突破**：利用语义先验关联遮挡前后的点，而非仅靠光流传播
 5. **先验保留正则化**设计巧妙：同时约束方向和幅度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 测试时优化仍需一定时间（虽远快于Omnimotion但不如前馈方法），不适合实时应用
 - OA（遮挡预测精度）略低于有监督方法（88.1 vs TAPIR 89.5）

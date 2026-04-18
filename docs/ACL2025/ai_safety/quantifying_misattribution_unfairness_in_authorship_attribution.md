@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantifying Misattribution Unfairness in Authorship Attribution
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **简洁有效的指标**：MAUI_k定义直观、计算简单，可直接用于评估任何embed-and-rank归因系统
 - **反直觉发现**：嵌入空间中"最普通"（近质心）的作者反而承受最大风险/最难被正确识别
 
-## 局限性 / 可改进方向
+## 局限与展望
 - "公平"基线假设为随机排列，未考虑作者间的风格/方言相关性（具有相同方言的作者确实更容易混淆，但在法庭场景中这种混淆同样不公平）
 - 仅关注over-attribution（被过多归因）的不公平，未关注under-attribution（正确作者未被找到）
 - 查询作者的选择方式可能影响不公平性度量结果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DAPointMamba: Domain Adaptive Point Mamba for Point Cloud Completion
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L}_{total} = Loss_{(CD)} + \lambda L_{sp} + \beta L_{ch}$$
 3. **Z-order 曲线共享归一化**是一个简洁但有效的跨域空间对齐手段
 4. **线性复杂度 + 高精度的平衡**：在性能超越 Transformer 方案的同时（CD 降低 1.95），复杂度却大幅降低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. UHD 指标（最大点误差）表现一般，可能需要引入边界点的特殊处理
 2. 仅验证了 synthetic→real 和 synthetic→synthetic 的迁移，缺少 real→real 场景

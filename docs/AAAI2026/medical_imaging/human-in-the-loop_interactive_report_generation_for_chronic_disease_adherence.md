@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Human-in-the-Loop Interactive Report Generation for Chronic Disease Adherence
 description: >-
@@ -113,7 +113,7 @@ tags:
 - 保守失安全升级机制是一个值得推广的安全模式：当关键监测任务缺失时自动升级紧急度，防止算法乐观主义
 - 图表-文本配对的局部验证设计有效提升了信息定位效率 (Q11=5.08)，这一界面模式值得在其他文档审阅系统中借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 研究规模极小（3名医生 × 24个案例），统计效力有限，结论需要更大规模验证
 - 案例偏向高风险（14 urgent / 8 attention / 2 stable），不代表真实临床的案例分布

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ParaMETA: Towards Learning Disentangled Paralinguistic Speaking Styles Representations
 description: >-
@@ -198,7 +198,7 @@ ParaMETA-LSTM 仅需 CLAP 1.9% 的参数量、22% 的显存、运行速度快 30
 - **风格操纵的简洁实现**：只需将某个任务子空间的嵌入替换为目标类别的原型，即可在保持其他风格不变的前提下修改特定风格——这完全得益于解耦设计。
 - **模型无关性**：ParaMETA 在 CNN、LSTM、Q-Former、Transformer 四种骨架上均有效，验证了框架的通用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语言操纵效果差**：语言与音素/词汇内容高度绑定，单纯替换嵌入无法改变文本内容，需要配合文本层面的修改。
 2. **数据集规模有限**：93k 样本、混合多个公开数据集，数据分布可能不均衡，且 Genshin Impact 角色语音的真实性存疑。

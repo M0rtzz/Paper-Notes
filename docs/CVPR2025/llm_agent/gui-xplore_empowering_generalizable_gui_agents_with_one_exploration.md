@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GUI-Xplore: Empowering Generalizable GUI Agents with One Exploration
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：缺乏一种机制让 Agent 在推理阶段获取应用特定知识。现有预训练范式只在训练阶段学习通用知识，推理时面对新应用没有上下文。
 
-**本文要解决什么？** (1) 如何让 GUI Agent 快速适应陌生应用（跨应用泛化）；(2) 如何评估 Agent 的多层次 GUI 能力（跨任务泛化）。
+**本文目标** (1) 如何让 GUI Agent 快速适应陌生应用（跨应用泛化）；(2) 如何评估 Agent 的多层次 GUI 能力（跨任务泛化）。
 
 **切入角度**：模拟人类使用陌生软件的方式——先探索一遍应用了解布局和功能，再基于探索获得的知识完成具体任务。
 
-**核心idea一句话**：给 GUI Agent 输入一段应用探索视频作为先验知识，将视频建模为 GUI Transition Graph 辅助推理。
+**核心 idea**：给 GUI Agent 输入一段应用探索视频作为先验知识，将视频建模为 GUI Transition Graph 辅助推理。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ Xplore-Agent 是一个两阶段框架：(1) **Action-aware GUI Modeling** 阶段
 - **图结构建模应用环境**：GUI Transition Graph 巧妙地将线性视频流转化为结构化知识表示，且 GPT 聚类比 rule-based 聚类同时减少 token 用量和提升精度，说明 LLM 的语义理解在结构化任务中有独特优势
 - **五层级任务设计**：从全局理解到局部操作、从静态页面到时序行为，构建了完整的 GUI Agent 能力评估体系
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 探索视频需要预先录制，真实场景中 Agent 应具备自主探索能力（explore-on-the-fly），这是更本质的挑战
 - 当前只输出文本答案而非具体 GUI 操作（如坐标点击），距离端到端 GUI 自动化还有距离
 - 数据收集面临隐私问题（应用截图可能包含敏感信息）

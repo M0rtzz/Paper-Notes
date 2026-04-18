@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prediction-Powered Adaptive Shrinkage Estimation
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：复合估计（compound estimation）设定允许通过引入有控制的偏差来进一步降低MSE。作者发现ML预测可以在PPI中扮演双重角色：(1) 作为方差缩减工具（within-problem），(2) 作为收缩目标（across-problem）。
 
-**核心idea一句话**：先用PPI++在每个问题内做方差缩减得到Power-Tuned估计器，再将其向ML预测均值做自适应收缩，通过最小化一个相关性感知的无偏风险估计来自动选择收缩强度。
+**核心 idea**：先用PPI++在每个问题内做方差缩减得到Power-Tuned估计器，再将其向ML预测均值做自适应收缩，通过最小化一个相关性感知的无偏风险估计来自动选择收缩强度。
 
 ## 方法详解
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mask-Adapter: The Devil is in the Masks for Open-Vocabulary Segmentation
 description: >-
@@ -109,7 +109,7 @@ Mask-Adapter 作为即插即用模块插入任何基于 mask pooling 的 OVS 方
 - **即插即用设计优雅**：仅需在现有方法的 mask pooling 步骤后插入一个轻量模块，不修改骨干网络
 - **一致性损失的几何直觉**：在嵌入空间为未见类保留更多空间，相似 mask 聚拢减少已见类的空间占用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 A-847（847 类细粒度）上的提升不如 A-150 明显，极细粒度分类仍是挑战
 - 训练仅在 COCO 上进行，泛化到更多领域的表现有待验证

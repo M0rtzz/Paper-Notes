@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DGNet: Discrete Green Networks for Data-Efficient Learning of Spatiotemporal PDEs
 description: >-
@@ -139,7 +139,7 @@ $$\mathbf{L} = \mathbf{L}_{\text{physics}} + \mathbf{L}_{\text{neural}}$$
 3. **稀疏计算的实用优化**："一次分解、多次求解"策略使得离散Green求解在大网格上可行
 4. **混合算子的互补设计**：物理先验提供可靠的底层结构，神经修正补偿离散化误差，两者功能分明
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅适用于线性或弱非线性PDE，对于**拟线性PDE**（叠加原理不成立），框架需要原理性扩展
 2. 当前仅在2D域上验证，扩展到**大规模3D系统**是重要的工程挑战

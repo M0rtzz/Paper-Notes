@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Projecting Points to Axes: Oriented Object Detection via Point-Axis Representation
 description: >-
@@ -155,7 +155,7 @@ $$\mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} (\lambda_1 \mathcal{L}_{proj} + \lamb
 4. **与 DETR 的自然融合**：点查询机制与 DETR 的 query 架构契合度高，Group Self-Attention 设计优雅
 5. **实验覆盖广泛**：DOTA、DIOR-R、HRSC2016、COCO 四个数据集，单/多尺度评测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **点数增加收益递减**：K=5 到 K=13 仅提升 0.49%，大量点的计算开销是否值得需进一步分析
 2. **HRSC2016 上优势不大**：该数据集目标长宽比大、形状简单，传统方法本身不存在边界问题

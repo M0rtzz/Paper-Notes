@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unveiling the Lack of LVLM Robustness to Fundamental Visual Variations: Why and Path Forward
 description: >-
@@ -122,7 +122,7 @@ tags:
 - **架构 vs 数据**的明确结论：通过合成数据实验证明问题是架构级而非数据级缺陷
 - Qwen2-VL 的统一架构设计展现出显著优势，为未来方向提供了实证支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅探索了数据增强作为缓解策略，未尝试架构修改、预训练策略改进或测试时自校正方法
 - 四种视觉变化未能穷尽所有可能的视觉变换，长尾情况未被覆盖

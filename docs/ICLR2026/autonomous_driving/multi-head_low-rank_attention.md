@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Head Low-Rank Attention (MLRA)
 description: >-
@@ -53,7 +53,7 @@ MLRA 提供两个变体：
 
 #### 1. 块分解（Block Decomposition）
 
-**做什么**：将 MLA 的 KV latent 矩阵 $C^{KV} \in \mathbb{R}^{n \times d_c}$ 按通道划分为 4 个块 $C_{:,(b)}^{KV}$，同时将 up-projection 矩阵 $W^{UK}, W^{UV}$ 按行划分为对应的 4 个子块。
+**功能**：将 MLA 的 KV latent 矩阵 $C^{KV} \in \mathbb{R}^{n \times d_c}$ 按通道划分为 4 个块 $C_{:,(b)}^{KV}$，同时将 up-projection 矩阵 $W^{UK}, W^{UV}$ 按行划分为对应的 4 个子块。
 
 **为什么**：MLA 中每个头的 NoPE key/value 本质上等价于 4 个子块乘积之和（Eq. 2），将这一求和从 KV 计算移至注意力输出，使得每个子块可以独立计算注意力。
 
@@ -64,7 +64,7 @@ $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C
 
 #### 2. MLRA-2 的分组映射
 
-**做什么**：沿用 GLA-2 的分组策略，将 latent head 二等分，前半注意力头用第一组 latent，后半注意力头用第二组 latent。
+**功能**：沿用 GLA-2 的分组策略，将 latent head 二等分，前半注意力头用第一组 latent，后半注意力头用第二组 latent。
 
 **为什么**：提供一种轻量级替代方案，在 2 分支求和中兼顾模型容量与效率。
 
@@ -72,7 +72,7 @@ $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C
 
 #### 3. 方差校准（Variance Calibration）
 
-**做什么**：对 query 和 KV latent state 施加缩放因子，并对多分支注意力输出进行归一化。
+**功能**：对 query 和 KV latent state 施加缩放因子，并对多分支注意力输出进行归一化。
 
 **为什么**：理论分析表明 NoPE key 的方差为 $d_c \sigma_w^2$，而 RoPE key 的方差为 $d \sigma_w^2$，分支拆分进一步加剧了方差不匹配。多分支求和还改变了输出的方差。
 
@@ -82,7 +82,7 @@ $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C
 
 #### 4. 高效解码（TP-Friendly Decoding）
 
-**做什么**：实现原生 4-way TP 解码，每个设备仅加载 $1.5 d_h$ 的 KV cache。
+**功能**：实现原生 4-way TP 解码，每个设备仅加载 $1.5 d_h$ 的 KV cache。
 
 **为什么**：4 个 latent block 可自然分配到 4 个 TP 设备上，每设备仅加载一个 latent block（$d_h$）加 共享的 RoPE key（$0.5 d_h$）。
 
@@ -152,7 +152,7 @@ $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C
 - **算术强度分析**：MLRA-4 的算术强度约为 $2h$（MLA 也是 $2h$），说明在减少内存加载的同时不牺牲计算效率
 - **完整的工程实现**：基于 FlashAttention-3 实现 MLRA-4 kernel，并在真实 H100 集群上验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 2.9B 规模验证**：未在 7B+ 或更大规模上实验，大模型上 MLRA 的优势是否保持有待验证
 2. **预训练数据单一**：仅使用 FineWeb-Edu-100B，未在多语言或代码混合数据上验证

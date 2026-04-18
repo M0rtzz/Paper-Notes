@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gradient-Variation Online Adaptivity for Accelerated Optimization with Hölder Smoothness
 description: >-
@@ -128,7 +128,7 @@ $$\mathbb{E}[\ell(\bar{\mathbf{x}}_T)] - \ell(\mathbf{x}_\star) \leq \frac{\math
 - ⭐⭐⭐ 凸情形首次实现不依赖 $L$ 的最优梯度变差 regret
 - 建立了梯度变差在线自适应性与离线加速优化间的清晰桥梁
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 强凸仅实现弱通用（光滑 vs 非光滑），尚未扩展到完整 Hölder 参数的强通用
 - 检测机制增加复杂性，实际实现效率待验证

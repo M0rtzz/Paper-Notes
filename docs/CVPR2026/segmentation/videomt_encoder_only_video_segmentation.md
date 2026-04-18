@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VidEoMT: Your ViT is Secretly Also a Video Segmentation Model
 description: >-
@@ -72,7 +72,7 @@ VidEoMT基于EoMT：将N个可学习查询注入到DINOv2 ViT的最后L2层与pa
 - 查询融合设计极度简洁（一个线性层+元素加法），体现了"简洁即力量"
 - FPS的巨大提升主要不是因为FLOPs减少（只减32%），而是因为纯ViT architecture可以更好利用FlashAttention+torch.compile等硬件优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对小ViT（ViT-S/B）性能差距更大，说明方法的有效性严重依赖大模型和强预训练
 - OVIS上（严重遮挡场景）与CAVIS差距约1.6 AP，极端遮挡场景可能需要更多追踪能力
 - 查询融合只用前一帧信息，长期时序建模能力有限

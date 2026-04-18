@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Not All Explanations for Deep Learning Phenomena Are Equally Valuable
 description: >-
@@ -91,7 +91,7 @@ tags:
 - 深度学习现象研究具有独特优势：计算资源需求低、知识门槛低、更接近科学探索而非 SOTA 竞争、理论与实验交叉的良好试验田
 - 对整个社区的研究导向有反思价值：当一个现象不是实际问题时，追求"解决"它可能是在错误的方向上用力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为 position paper，核心论点的评估具有较大主观性——如何量化"一个解释的广义理论价值"仍然模糊
 - 对三个现象的分析虽有代表性，但不够全面（如未讨论 neural scaling laws、emergence 等更新的现象）

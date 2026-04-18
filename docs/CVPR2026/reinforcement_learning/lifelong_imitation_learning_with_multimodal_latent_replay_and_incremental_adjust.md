@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lifelong Imitation Learning with Multimodal Latent Replay and Incremental Adjustment
 description: >-
@@ -90,7 +90,7 @@ tags:
 - IFA 的自适应间隔 $\delta = \alpha \cdot d(h^{(r)}(T_k), h^{(r)}(T_j))$ 意味着任务越相似间隔越小，任务越不同间隔越大，自然适应任务结构
 - 使用语言 embedding 作为参考锚点是一个优雅的选择——语言描述稳定不变，是任务的天然标识符
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖预训练阶段的 CLIP 编码器质量，如果编码器表示不适合目标域可能需要微调
 - 缓冲区的统一随机采样策略可能不是最优的，基于信息量的优先采样可能更好
 - IFA 的 $\alpha$ 对不同数据集需要手动调整（0.1-0.7），自动搜索机制值得探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding
 description: >-
@@ -107,7 +107,7 @@ HyTIP 以 PSNR-RGB 衡量平均节省 26.5% BD-rate，超过 VTM 17.0，与 DCVC
 - 仅用 14% 的缓冲区大小即可匹配 SOTA，对硬件部署（片外内存带宽）非常友好
 - 混合策略具有良好的可扩展性，可轻松迁移到其他学习式视频编解码器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅验证在 RGB 域编码，未扩展到 YUV 编码（传统视频编解码器标准工作模式）
 - HEVC-E（视频会议序列）上性能略弱于 DCVC-DC，表明静态背景场景下混合策略的优势不明显

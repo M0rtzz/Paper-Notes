@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tag-Evol: Achieving Efficient Instruction Evolving via Tag Injection
 description: >-
@@ -108,7 +108,7 @@ Tag-Evol 分为两个阶段：
 3. **与 InsTag 的互补关系**：InsTag 用标签评估数据质量，Tag-Evol 用标签指导数据合成——形成了"评估→生成"的闭环
 4. **实用性强**：标签池构建后可复用，7B 模型即可执行进化，开源框架易于集成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 标签池质量依赖标注模型的能力，不同领域可能需要领域适配
 - 预算参数 $b$ 的最优值需要实验确定，缺少自动化选择机制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MixAT: Combining Continuous and Discrete Adversarial Training for LLMs
 description: >-
@@ -100,7 +100,7 @@ $$\mathcal{L}_{\text{adv}} = \underbrace{\mathbb{E}[\log P_\theta(\hat{\mathbf{y
 - **ALO-ASR指标的实用意义**：揭示了许多看似鲁棒的防御在面对多种攻击组合时的脆弱性（如R2D2抗GCG强但抗PAP弱）
 - **审计现有方法**：系统性地揭示了chat template、量化、非零温度等实际部署因素对防御评估的影响，指出社区评测中的盲点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对GCG攻击的防御仍是相对弱点（12.5% ASR），加入GCG样本可降至2.5%但训练成本增加5倍
 - 仅使用PAP作为离散种子，更多元化的离散攻击方法（如AutoDAN、TAP）可能进一步提升防御覆盖

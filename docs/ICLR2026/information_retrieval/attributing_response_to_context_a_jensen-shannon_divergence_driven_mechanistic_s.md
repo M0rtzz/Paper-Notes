@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attributing Response to Context: A Jensen-Shannon Divergence Driven Mechanistic Study of Context Attribution in Retrieval-Augmented Generation
 description: >-
@@ -122,7 +122,7 @@ ARC-JSD分两大模块：(1) 基于JSD的上下文归因（定位关键句子）
 - **可视化的MLP层语义演变**：通过Logit Lens展示Qwen2如何在高层从中文token逐步转换为英文（"一只→A", "翅膀→wings"），与语言锚定现象一致
 - **实用价值**：门控机制无需重训练即可降低39%幻觉率
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **计算复杂度与上下文长度平方成正比**：$O(|\mathcal{C}|^2)$，当上下文超长（如数百句）时仍然昂贵，论文未讨论如何规模化
 - **仅评估Top-1归因**：现有QA数据集只有句子级gold label，更细粒度（短语级/子句级）的归因能力未被充分验证
 - **门控实验规模有限**：仅在200个HotpotQA样本上验证幻觉降低效果，缺乏大规模和多数据集的验证

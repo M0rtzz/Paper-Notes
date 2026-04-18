@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synthetic Series-Symbol Data Generation for Time Series Foundation Models
 description: >-
@@ -96,7 +96,7 @@ tags:
 - 在纯合成数据上预训练即可获得与真实数据竞争的下游性能，完全绕过数据隐私和稀缺问题
 - 跨模态对比学习让时序编码器学到符号语义这一独特归纳偏置，是对时序预训练范式的有意义探索
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 符号表达式覆盖度受限于选定的运算符集合（未涵盖随机微分方程等）
 - 模型规模较小（6 层 Transformer），未探索更大模型的 scaling behavior
 - 微调后性能比较充分，但未展示零样本预测能力（与 Chronos、Moirai 的零样本对比不足）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Controllable Latent Space Augmentation for Digital Pathology
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \|\rho(\mathbf{z}, (T_k, \alpha_k)) - \mathcal{E}(\tau(\mathbf{x
 - WSI-wise增强策略巧妙——同一张切片的所有patch应该有一致的染色特性
 - 验证了一个重要前提：foundation model如UNI/CONCH对增强变换并非完全不变，所以特征空间增强有意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅支持预定义的变换类型，未来可探索学习式或组合式新变换
 - 仅验证了组织病理学场景，是否可推广到放射影像、皮肤镜等其他医学影像待验证

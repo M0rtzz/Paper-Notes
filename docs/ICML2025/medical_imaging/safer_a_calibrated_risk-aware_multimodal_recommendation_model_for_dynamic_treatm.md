@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAFER: A Calibrated Risk-Aware Multimodal Recommendation Model for Dynamic Treatment Regimes
 description: >-
@@ -100,7 +100,7 @@ $$\mathcal{L} = -\frac{1}{N}\sum_{i=1}^{N}(1 - \hat{\kappa}_i)\sum_{l=1}^{L} y_i
 3. **真正的多模态融合**：首次将临床笔记与结构化 EHR 同时用于 DTR，双向交叉注意力设计让两种模态互相增强
 4. **端到端框架**：多模态学习、不确定性量化与统计推断三位一体，设计完整
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证脓毒症**：虽然框架是通用的，但实验只在脓毒症场景（MIMIC 数据集）上测试，对其他疾病/治疗场景的泛化性未知
 2. **临床笔记质量假设**：依赖 BioClinicalBERT 编码临床笔记，对笔记缺失或质量差的场景鲁棒性有待验证

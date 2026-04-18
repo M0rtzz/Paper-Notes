@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MR-CoSMo: Visual-Text Memory Recall and Direct Cross-Modal Alignment Method for Query-Driven 3D Segmentation
 description: >-
@@ -186,7 +186,7 @@ Backbone替换消融：
 3. **记忆模块的动态权重更新**：基于损失的置信度加权+类内归一化，优雅地处理了样本不均衡
 4. **通用性**：同一框架处理指令/引用/语义三种不同的3D分割任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理速度（2.66 fps）相比3D-STMN（3.53 fps）有所降低
 - 记忆模块存储和检索的计算开销随训练样本增长

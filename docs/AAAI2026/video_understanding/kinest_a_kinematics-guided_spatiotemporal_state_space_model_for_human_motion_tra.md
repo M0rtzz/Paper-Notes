@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KineST: A Kinematics-guided Spatiotemporal State Space Model for Human Motion Tracking from Sparse Signals
 description: >-
@@ -172,7 +172,7 @@ KineST 以 **11M 参数**（SAGE 的 1/12）实现全面最优：MPJRE -2.6%, MP
 3. **几何一致性**：在 SO(3) 李群上定义角速度损失，数学上严谨，物理上有意义
 4. **极致轻量化**：11M 参数超越 137M 的 SAGE，推理 96 帧仅需 12.9ms，适合 AR/VR 部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在复杂运动（体操、杂技等）上性能受限，需引入更丰富的运动先验
 2. 当前仅从 3 个 HMD 跟踪点推断，未利用可能的额外传感器（如腰部 IMU）

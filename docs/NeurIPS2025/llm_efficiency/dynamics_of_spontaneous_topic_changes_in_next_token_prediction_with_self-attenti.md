@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamics of Spontaneous Topic Changes in Next Token Prediction with Self-Attention
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：LLM 的主题切换是由输入中的上下文线索驱动的，而人类的自发思维可以在没有明显线索的情况下发生——这种差异的形式化刻画是什么？
 
-**本文要解决什么？** 形式化定义self-attention中的"主题"和"主题切换"，推导其动力学条件，并与人类认知进行对比。
+**本文目标** 形式化定义self-attention中的"主题"和"主题切换"，推导其动力学条件，并与人类认知进行对比。
 
 **切入角度**：将 Token Priority Graph（TPG）作为"主题"的数学定义，利用 li et al. (2024) 的 self-attention → SVM 收敛理论作为分析框架。
 
-**核心idea一句话**：用 TPG 定义主题，证明 self-attention 在混合主题训练后保持原主题优先级，且主题切换需要低优先级 token 在输入中的频率超过高优先级 token。
+**核心 idea**：用 TPG 定义主题，证明 self-attention 在混合主题训练后保持原主题优先级，且主题切换需要低优先级 token 在输入中的频率超过高优先级 token。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ tags:
 - **TPG 定义主题的优雅性**：用图结构定义主题既数学严谨又直觉自然，与神经科学的关联网络模型对应
 - **AI vs 人类认知的形式化差异**：明确指出了 LLM 与人类在主题切换行为上的质的不同——LLM 是"越长越稳定"，人类是"越长越发散"
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **简化假设较强**：单层 self-attention、log-loss、hardmax 等假设与实际多层 LLM 有较大差距
 - **实验验证间接**：用 cosine similarity 作为主题连续性的 proxy 较粗糙
 - **主题定义局限**：TPG-based 定义无法捕捉语义层面的主题相关性

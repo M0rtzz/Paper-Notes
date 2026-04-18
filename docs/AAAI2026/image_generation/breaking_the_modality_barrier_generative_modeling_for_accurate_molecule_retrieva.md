@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Breaking the Modality Barrier: Generative Modeling for Accurate Molecule Retrieval from Mass Spectra
 description: >-
@@ -117,7 +117,7 @@ GLMR 在 Weight-based 库上 Recall@1 比 JESTR 提升约 **46 个百分点**。
 - **两阶段互补设计**：预检索提供上下文先验，生成式检索利用先验进一步精炼。
 - **新基准 MassRET-20k**：12 种离子化加合物、完整碰撞能量元数据，更贴近真实场景。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 生成阶段需对 K=40 个候选编码+融合+解码，推理成本较高。
 2. 生成的 SMILES 可能化学无效，未引入显式化学约束。

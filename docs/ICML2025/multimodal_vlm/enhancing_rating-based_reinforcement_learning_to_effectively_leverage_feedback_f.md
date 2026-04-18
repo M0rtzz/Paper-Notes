@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ERL-VLM: Enhancing Rating-Based RL to Leverage Feedback from Large VLMs
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L}_{MAE}(\psi, \mathcal{D}) = \mathbb{E}_{(\sigma, \tilde{y}) \sim \m
 4. **真实机器人迁移**：50 条演示 + 离线 rating 即可训练有效策略，证明方法具有实际部署潜力
 5. **Prompt 设计关键**：两阶段 prompt（先分析再评分）显著提升 VLM 反馈质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **VLM 依赖**：依赖 Gemini-1.5-Pro 等大型商业 VLM，推理成本较高且存在 API 不稳定风险
 2. **评分类别数敏感**：$n$ 的选择需要按任务调优，尚无自适应机制

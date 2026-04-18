@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model Performance-Guided Evaluation Data Selection for Effective Prompt Optimization
 description: >-
@@ -128,7 +128,7 @@ IPOMP 额外开销 < 1%，Anchor-Point 预热增加 ~50% 时间。
 3. **通用性**：Stage 2 可即插即用增强任何数据选择方法
 4. **稳定性提升**：SD 降低 50%+ 意味着生产环境中的可靠性大幅提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型覆盖有限**：仅 GPT-3.5 和 GPT-4o-mini
 2. **任务偏向分类**：生成任务上效果未知

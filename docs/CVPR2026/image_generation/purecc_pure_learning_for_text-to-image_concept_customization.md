@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PureCC: Pure Learning for Text-to-Image Concept Customization
 description: >-
@@ -111,7 +111,7 @@ tags:
 - **层级可调概念嵌入**是对标准 Textual Inversion 的有效增强——不同 Transformer 层用不同嵌入，捕捉概念的多尺度特征
 - 首次系统性定义并评估了概念定制的"行为保持"（Seg-Cons 指标），填补了评估体系空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 双分支管线需要维护两个流模型的前向传播，训练成本约为单分支的 2 倍
 - 层级嵌入增加了参数量和训练复杂度，对于极少参考图（1-2张）的场景效果待验证
 - 实验主要在 SD 3.5-M 上验证，其他架构（如基于 DiT 的 FLUX）的适配性未探究

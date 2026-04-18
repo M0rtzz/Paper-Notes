@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning (Approximately) Equivariant Networks via Constrained Optimization
 description: >-
@@ -105,7 +105,7 @@ N-Body物理仿真：SEGNN + ACE在验证MSE和样本效率上均优于标准SEG
 - **通用性强**：适用于任何可微分的 $f_{\theta,\gamma}$ 满足 $f_{\theta,0}$ 等变的架构
 - 对偶方法与同伦/模拟退火的深层联系提供了优化视角的理论洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\gamma_i$ 在有限迭代内不会精确为零，需要最终截断（引入 Thm 4.1 的误差）
 - 非等变分支 $f_\theta^{\text{neq},i}$ 增加了参数量和计算开销

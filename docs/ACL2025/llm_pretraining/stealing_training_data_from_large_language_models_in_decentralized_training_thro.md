@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack
 description: >-
@@ -121,7 +121,7 @@ $$L = -\sum_{k=1}^{N} \log P(y_k | x_1, x_2, \ldots, x_{k-1})$$
 - 微调前后激活的高相似度不仅是攻击可行的基础，对理解微调机制本身也有启发意义
 - 架构敏感性的实验（跨架构攻击 PPL 暴涨 30~5000 倍）间接揭示了不同 Transformer 架构对内部表示空间的影响之大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设攻击者已知受害者模型架构类型，现实中可能需要额外推断步骤
 - 仅在微调场景下测试（5 epoch，模型过拟合），更温和的微调条件下攻击效果需进一步验证

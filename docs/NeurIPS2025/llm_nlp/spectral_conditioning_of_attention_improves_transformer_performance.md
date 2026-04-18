@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spectral Conditioning of Attention Improves Transformer Performance
 description: >-
@@ -139,7 +139,7 @@ $$\mathbf{SpecA}(X) = \text{softmax}(X(W_Q + C_Q)(W_K + C_K)^T X^T) X(W_V + C_V)
 4. **跨域验证全面**：5 种视觉 Transformer + NLP + 长序列，所有场景一致有效
 5. **理论上界被实验验证**：这在深度学习理论中相当难得
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅优化上界，非直接优化条件数**：$\lambda I_k$ 是间接优化，效果可能不是最优
 2. **模型规模限制**：仅在 ~100M 参数模型上验证，10B+ 模型效果未知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Hop Question Generation via Dual-Perspective Keyword Guidance
 description: >-
@@ -148,7 +148,7 @@ DPKG 框架包含三个主要组件：
 2. **训练-推理差距的处理**：$\mathcal{L}_3$ 通过拉近生成关键词和真值关键词的表示来缩小训练时用真值、推理时用生成的差距，方法简洁有效
 3. **框架可扩展性**：DPKG 的编码器-双解码器架构可以容纳更多类型的中间生成任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **关键词标注依赖 SpaCy**：自动标注质量受限于 NER 工具，在复杂文档中可能遗漏重要关键词
 2. **仅在 HotpotQA 上评估**：缺乏在其他多跳 QA 数据集（如 2WikiMultiHopQA）上的验证

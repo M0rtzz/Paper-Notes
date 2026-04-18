@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VisualSync: Multi-Camera Synchronization via Cross-View Object Motion
 description: >-
@@ -135,7 +135,7 @@ VisualSync不是学习型方法，而是基于优化的框架：
 - 成功将多个最新视觉基础模型（VGGT、CoTracker3、MAST3R、GPT-4o）串联成一个实用系统
 - 在EgoHumans这种挑战性场景（自中心视角+大时间偏移）上仍达到46.6ms精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要可靠的相机位姿子集（虽然不需要所有帧都准确）
 - 无法处理非均匀运动速度的视频（如慢动作和正常速度交替）

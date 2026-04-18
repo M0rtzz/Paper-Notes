@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Annealed Relaxation of Speculative Decoding for Faster Autoregressive Image Generation
 description: >-
@@ -78,7 +78,7 @@ Cool-SD本身不需要额外训练，只改变SD的验证和重采样策略。Dr
 - **退火直觉的理论基础**: "前松后紧"的接受策略有直觉上的合理性（前面位置影响范围更大，放宽后面位置收益更小），论文给出了严格证明
 - **实现更简洁**: 与LANTERN++需要构建k-近邻和概率聚合不同，Cool-SD只需修改接受阈值和重采样分布，额外开销几乎为零
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **超参数 $\delta$ 仍需人工调节**: 虽然只有一个超参数，但最优值因模型和应用场景不同，无法自适应选择
 - **退火性质的严格证明仅限 $L=2$**: 虽然论文声称可通过逐对比较推广到 $L > 2$，但正式证明仅覆盖两步情况
 - **假设draft和target分布接近** (Assumption 2: TV ≤ 2/5): 当draft模型质量差时理论保证可能减弱

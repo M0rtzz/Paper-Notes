@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Data Augmentation for Robust LiDAR Semantic Segmentation in Adverse Weather
 description: >-
@@ -138,7 +138,7 @@ SemanticKITTI → SemanticSTF 基准：
 4. **简单有效**：不需要修改基线模型的训练方案（仅限制梯度范数），即插即用
 5. **代价合理**：清洁数据仅损失 1.1 mIoU，换来恶劣天气下 8.1 mIoU 的大幅提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LPD 在所有点上均匀搜索丢弃模式，无法专门针对湿滑地面等特定区域的点丢失
 - 高斯噪声的均值和标准差是固定的经验值，未自适应调整

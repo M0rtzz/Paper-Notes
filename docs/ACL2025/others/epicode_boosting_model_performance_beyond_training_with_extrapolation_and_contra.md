@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EpiCoDe: Boosting Model Performance Beyond Training with Extrapolation and Contrastive Decoding
 description: >-
@@ -118,7 +118,7 @@ EpiCoDe 本身不涉及额外训练。底层微调使用标准设置：AdamW 优
 - **理论贡献扎实**：从logit误差方差的角度建立了对比解码的理论框架，能定量解释为什么选择参数空间近邻作弱模型更好
 - **"局部性"（Locality）是核心洞察**：模型外推天然保证了 θ^ep 和 θ^ft 的局部性，这种局部性进而保证了对比解码的有效性——两个方法形成了完美互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在1.5B-7B规模模型上验证，更大模型（如70B+）的效果未知
 2. 任务局限于中文法律QA、数学、逻辑推理，英文任务和更多NLP任务未覆盖

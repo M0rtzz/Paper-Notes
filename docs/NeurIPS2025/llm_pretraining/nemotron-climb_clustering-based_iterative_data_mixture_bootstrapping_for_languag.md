@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Nemotron-CLIMB: CLustering-based Iterative Data Mixture Bootstrapping for Language Model Pre-training
 description: >-
@@ -121,7 +121,7 @@ $$\min_{\alpha \in A} f(\alpha | S) \quad \text{s.t.} \quad f = \arg\min_{S, f \
 - **开源贡献**：发布 1.2T ClimbLab（20 个语义簇）和 400B ClimbMix 数据集，为数据混合研究提供统一实验平台
 - **实用洞察**：分析了最优混合中各簇的权重分布和主题特征，发现通用推理任务主要依赖 C8（数学/逻辑）、C9（科技新闻）、C18（教育）、C19（百科）四个簇
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **搜索空间受限于聚类粒度**：21 个超级簇可能无法充分表达细粒度领域差异
 2. **代理模型与目标模型的对齐假设**：虽然实验验证了 350M→1B 的迁移，但更大模型（7B+）是否仍然有效尚未验证

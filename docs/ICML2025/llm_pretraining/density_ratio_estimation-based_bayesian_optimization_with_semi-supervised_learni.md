@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Density Ratio Estimation-based Bayesian Optimization with Semi-Supervised Learning
 description: >-
@@ -138,7 +138,7 @@ $$\mathbf{x}_{t+1} = \arg\max_{\mathbf{x} \in \mathcal{X}} \pi_{\hat{\mathbf{C}}
 3. **理论兼容性好**：与 BORE/LFBO 的理论框架完全兼容，半监督分类器仍然输出类概率，可无缝接入 $\zeta$-相对密度比的计算
 4. **两种场景统一处理**：通过截断正态采样和固定池两种方式获取无标签点，覆盖了连续和离散搜索空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性存疑**：Label Propagation/Spreading 需要计算 $(n_l + n_u) \times (n_l + n_u)$ 的相似度矩阵，当 $n_u$ 较大或维度较高时计算开销显著
 2. **半监督方法选择有限**：仅使用了 Label Propagation 和 Label Spreading 两种最经典的方法，未探索更现代的半监督技术（如 FixMatch、MixMatch 等）

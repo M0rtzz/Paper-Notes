@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hamiltonian Neural PDE Solvers through Functional Approximation
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：将 Hamiltonian 框架推广到 PDE 有两大难题：(a) 需要逼近从函数空间到标量的映射（泛函），传统神经网络不是为此设计的；(b) 逼近后的泛函必须具有准确的泛函导数，以便用于 Hamilton 方程的时间演化。
 
-**本文要解决什么？** 设计一种能够学习 Hamiltonian 泛函并准确计算泛函导数的神经网络架构，以此构建遵循 Hamiltonian 框架的神经 PDE 求解器。
+**本文目标** 设计一种能够学习 Hamiltonian 泛函并准确计算泛函导数的神经网络架构，以此构建遵循 Hamiltonian 框架的神经 PDE 求解器。
 
 **切入角度**：利用泛函分析中的 **Riesz 表示定理**——任何连续线性泛函都可以表示为内积 $\mathcal{H}[u] = \langle u, \kappa_\theta \rangle$，从而将泛函逼近问题转化为函数逼近问题，而神经网络天然擅长后者。
 
-**核心 idea 一句话**：用神经场参数化的核积分来逼近 Hamiltonian 泛函，结合自动微分获取泛函导数，构建保守恒律的 PDE 求解器。
+**核心 idea**：用神经场参数化的核积分来逼近 Hamiltonian 泛函，结合自动微分获取泛函导数，构建保守恒律的 PDE 求解器。
 
 ## 方法详解
 
@@ -54,13 +54,13 @@ HNS（Hamiltonian Neural Solver）的工作流程：
 
 #### 1. 积分核泛函（Integral Kernel Functional, IKF）
 
-- **做什么**：将泛函 $\mathcal{H}[u]$ 表示为核积分形式
+- **功能**：将泛函 $\mathcal{H}[u]$ 表示为核积分形式
 - **核心思路**：基于 Riesz 表示定理，$\mathcal{H}[u] = \int_\Omega \kappa_\theta(x, u(x)) \cdot u(x) \, dx$，用 Riemann 求和离散化为 $\mathcal{H}_\theta \approx \sum_i \kappa_\theta(x_i, u_i) \cdot u_i \cdot \mu_i \Delta x$
 - **设计动机**：与神经算子中的积分核算子类似但本质不同——算子输出函数需对每个查询点求和，开销大到需要 Fourier 技巧截断；而泛函输出标量，Riemann 求和只算一次，可以完整保留精度
 
 #### 2. SIREN + FiLM 条件化核参数化
 
-- **做什么**：用神经场架构参数化核函数 $\kappa_\theta$
+- **功能**：用神经场架构参数化核函数 $\kappa_\theta$
 - **核心思路**：采用正弦表示网络（SIREN）作为核架构，每层用 FiLM（Feature-wise Linear Modulation）进行条件化：$\kappa_\theta^{(l)}(x_i, u_i) = \gamma_\theta^{(l)}(u_i) \sin(Wx_i + b) + \beta_\theta^{(l)}(u_i)$
 - **设计动机**：SIREN 不仅拟合函数效果好，其梯度表示也很准确（正弦函数求导仍为正弦），有利于精确计算泛函导数。FiLM 可实现局部/全局条件化，让核函数依赖于输入场
 
@@ -144,7 +144,7 @@ HNS（Hamiltonian Neural Solver）的工作流程：
 4. **实用的参数效率**：权重共享机制使得 HNS 在参数更少的情况下性能更好
 5. **有趣的负面结果**：在 Hamiltonian 值上加辅助 loss 反而有害（模型可能学恒等映射），这揭示了 Hamiltonian 守恒约束的微妙性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **非线性泛函理论不完整**：Riesz 定理只保证线性泛函的逼近，非线性情况缺乏严格理论支撑
 2. **推理开销**：需要反向传播计算泛函导数 + 评价线性算子 $\mathcal{J}$，推理比直接预测方法慢

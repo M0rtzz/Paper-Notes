@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond True or False: Retrieval-Augmented Hierarchical Analysis of Nuanced Claims
 description: >-
@@ -128,7 +128,7 @@ $$n(s_i, T_{\neq i}^h) = 0.5 \times \text{mean}_j(p(s_i, W_j)) + 0.5 \times \max
 3. **端到端观点发现**：不仅构建方面树，还映射语料库中的观点立场，可视化共识程度
 4. **完全零训练**：基于 8B 模型的 ICL 实现，无需微调，领域可迁移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 层次分类和立场检测性能是系统瓶颈——精确率/召回率偏差会导致高估或低估共识
 2. 方面树最大深度固定为 3，可能不适合需要更深分解的领域

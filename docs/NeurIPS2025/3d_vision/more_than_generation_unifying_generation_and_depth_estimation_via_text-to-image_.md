@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] More Than Generation: Unifying Generation and Depth Estimation via Text-to-Image Diffusion Models
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L}_{LDM} = \mathbb{E}_{\varepsilon(x), y, \epsilon \sim \mathcal{N}(0
 - **参数效率惊人**：仅12%额外参数，用不到OneDiffusion千分之一的训练数据，就达到了更好的深度估计性能
 - **GRE的实证发现**很有意义：揭示了DiT模型中相邻层特征的高度冗余性，对模型压缩和高效适配都有启发
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在DIODE等包含大量户外场景的基准上，与判别式方法（DepthAnything v2）仍有差距
 - 语义分割任务难以用此方法实现，因为去噪过程的随机性使得ID映射不稳定

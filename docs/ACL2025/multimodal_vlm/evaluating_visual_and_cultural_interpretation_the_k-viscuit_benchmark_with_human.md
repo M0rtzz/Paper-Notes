@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Visual and Cultural Interpretation: The K-Viscuit Benchmark with Human-VLM Collaboration
 description: >-
@@ -155,7 +155,7 @@ VLM（GPT-4-Turbo）接收以下输入生成问答对：
 3. **多维度分析全面**：从人工评估、语言影响、视觉依赖性、检索增强、生成式评估等多个角度深入分析
 4. **框架可迁移**：虽然聚焦韩国文化，但框架设计可直接应用于其他文化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **图像选择仍需人工**：无法完全自动化数据集生成
 2. **选项顺序敏感**：VLM 对多选项顺序敏感，虽然随机打乱缓解但不完全解决

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MuViT: Multi-Resolution Vision Transformers for Learning Across Scales in Microscopy
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L} = \lambda_{\text{CE}} \cdot \mathcal{L}_{\text{CE}}(\tilde{y}, y) 
 - Dirichlet 采样策略让不同层级的掩码比例随机变化，促进跨尺度互补学习
 - 轻量级架构（~25M 参数）却在三个不同任务上全面超越 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 全注意力机制使计算和显存开销随分辨率层级数线性增长，未来可引入稀疏或跨尺度注意力
 - 仅评估了语义分割任务，未覆盖实例分割、目标检测等下游任务

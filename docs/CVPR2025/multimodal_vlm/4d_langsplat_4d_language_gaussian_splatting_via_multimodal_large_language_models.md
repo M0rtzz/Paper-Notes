@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4D LangSplat: 4D Language Gaussian Splatting via Multimodal Large Language Models
 description: >-
@@ -117,7 +117,7 @@ tags:
 - Status Deformable Network用有限状态原型建模语义演变，是一个简洁有效的结构化约束
 - 时间无关+时间变化双语义场的分工设计，优雅地利用了CLIP和MLLM各自的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖MLLM生成caption的质量，对复杂动态场景MLLM可能描述不准确
 - SAM+DEVA跟踪在遮挡严重时可能丢失物体
 - 状态数 $K$ 需要手动设定，自适应确定更理想

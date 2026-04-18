@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Agentic Retoucher for Text-To-Image Generation
 description: >-
@@ -133,7 +133,7 @@ Agentic Retoucher 在 Plausibility 上从 44.21 提升至 47.10（+2.89），83.
 3. **GenBlemish-27K 数据集价值**：首个大规模 T2I 失真标注数据集，12 类 artifact 的细粒度标注为后续研究提供基准
 4. **迭代循环的实用性**：类比人类修图的"发现→修改→检查→再修改"流程，系统设计贴合实际应用需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练 inpainting 模型的修复质量上限；若基础修复工具本身不够强，Agent 的决策再好也无法产出优良结果
 - 迭代循环的终止条件（阈值 $\tau$）需要手动设定，对不同失真类型可能需要自适应调整

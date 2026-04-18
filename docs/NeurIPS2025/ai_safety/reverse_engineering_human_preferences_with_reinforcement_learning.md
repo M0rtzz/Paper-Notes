@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reverse Engineering Human Preferences with Reinforcement Learning
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}(\phi) = -\mathbb{E}_{p \sim \pi_\phi}[R(p)] + \beta \text{KL}(\pi_
 - **跨模型迁移**: 暗示偏好判断中存在系统性偏差,而非个别模型的弱点
 - **双重含义**: 既是安全警报,也为利用前导文本优化上游输入提供了新思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 前导文本虽"不可见",但分析系统 prompt 仍可发现
 2. 如果评估者同时检查系统 prompt,攻击有效性降低

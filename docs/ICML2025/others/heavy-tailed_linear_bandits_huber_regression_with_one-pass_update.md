@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Heavy-Tailed Linear Bandits: Huber Regression with One-Pass Update
 description: >-
@@ -121,7 +121,7 @@ $$\text{Reg}_T \leq \widetilde{\mathcal{O}}\!\left(d\, T^{\frac{1-\varepsilon}{2
 - **OMD 框架的新应用**：将原本用于对抗性在线学习 regret 最小化的 OMD 适配到随机 bandit 的参数估计，建立了参数间隙与损失间隙的桥梁
 - **当 $\varepsilon=1$（有限方差）时**：恢复经典 $\widetilde{\mathcal{O}}(d\sqrt{T})$ 界，统一了轻尾和重尾场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **纯理论工作**：缺少数值实验验证，无法评估实际性能差异
 - **需要已知矩参数**：算法需输入每轮矩界 $\nu_t$（或全局界 $\nu$）和矩阶 $\varepsilon$，实际场景中可能难以获取

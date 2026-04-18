@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProPerSim: Developing Proactive and Personalized AI Assistants through User-Assistant Simulation
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：需要大量用户-助手交互数据来同时学习"何时推荐"和"推荐什么" → 但真实数据收集不可行。
 
-**本文要解决什么？** 在模拟环境中统一主动性和个性化，开发能随时间适应个体用户的AI助手。
+**本文目标** 在模拟环境中统一主动性和个性化，开发能随时间适应个体用户的AI助手。
 
 **切入角度**：用LLM-based user agent（基于大五人格的丰富persona）模拟真实用户行为，在模拟中收集偏好数据做DPO训练。
 
-**核心idea一句话**：用Generative Agents模拟用户+个性化rubric评估推荐+DPO偏好学习→形成持续改进的proactive+personalized闭环。
+**核心 idea**：用Generative Agents模拟用户+个性化rubric评估推荐+DPO偏好学习→形成持续改进的proactive+personalized闭环。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - **DPO >> in-context reward**：ARS Memory直接把分数放到prompt里但效果远不如DPO训练——显式偏好学习是必要的，in-context reward信号不足以驱动真正的适应
 - **"不推荐"是关键能力**：助手学会抑制推荐（频率下降4×）与推荐内容质量提升同等重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 计算成本极高（单persona 10天A100+$30 API），32个persona的完整实验约320天GPU时
 - 用户行为和评估均基于LLM模拟而非真人——模拟与真实行为的差距未被量化
 - 仅限家庭场景（Smallville house），未扩展到工作、社交、户外等场景

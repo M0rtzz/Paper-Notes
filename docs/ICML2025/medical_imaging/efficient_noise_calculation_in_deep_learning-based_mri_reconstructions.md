@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Noise Calculation in Deep Learning-based MRI Reconstructions
 description: >-
@@ -92,7 +92,7 @@ tags:
 - 本文方法可视为 g-factor 在非线性 DL 重建中的自然推广，保留了体素级空间分辨率。
 - 当 $f$ 为线性时，本文方法精确退化为经典 g-factor 分析。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖一阶 Taylor 近似，对高度非线性网络（如纯 U-Net）可能存在误差。
 - 未考虑生成模型（如扩散模型）的噪声传播，这些模型的随机性引入额外复杂度。

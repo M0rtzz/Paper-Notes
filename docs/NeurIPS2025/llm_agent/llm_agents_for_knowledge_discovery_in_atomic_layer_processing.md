@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM Agents for Knowledge Discovery in Atomic Layer Processing
 description: >-
@@ -156,7 +156,7 @@ $$\frac{\partial \theta_i}{\partial t} = \frac{1}{\sigma_i}\sum_j r_{ij}$$
 4. **"不知道"也有价值**：Agent 忽略先验知识可能开辟更新颖的探索路径，这是一个反直觉但深刻的洞见
 5. **与 Duan et al. 的联系**：同期在生物系统中的类似工作表明，LLM Agent 的科学发现能力是跨领域的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅使用单 Agent**：未探索多 Agent 协作探索（虽然提到了群体策略的可能性）
 2. **仅验证了模拟环境**：未在真实实验室中部署

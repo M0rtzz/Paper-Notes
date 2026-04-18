@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Source-Aware Object Swapping with Initial Noise Perturbation
 description: >-
@@ -103,7 +103,7 @@ $$\hat{z}_T^H[c,k] = \tilde{z}_T^H[c,\pi(k)]$$
 2. 移除源 mask 是反直觉的关键设计——完整源图像信息反而帮助跨物体对齐
 3. 训练数据量比同类少 2-3 个数量级
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基于 SD v1.5，升级更强基础模型可进一步提升
 2. 极端形态差异的物体替换效果可能有限

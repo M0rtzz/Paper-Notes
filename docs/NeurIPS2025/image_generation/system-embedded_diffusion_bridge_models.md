@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] System-Embedded Diffusion Bridge Models
 description: >-
@@ -98,7 +98,7 @@ SDB构建了一个从伪逆重建（pseudoinverse reconstruction, PR）到干净
 - 提供了三个定理的理论支撑，包括OT联系和后验采样的渐近精确性
 - 系统失配鲁棒性实验对实际部署具有重要参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅适用于线性测量系统，非线性扩展仅有初步概念验证
 - 方差调度采用简单的线性设计，值域和零空间的调度交互关系有待深入研究

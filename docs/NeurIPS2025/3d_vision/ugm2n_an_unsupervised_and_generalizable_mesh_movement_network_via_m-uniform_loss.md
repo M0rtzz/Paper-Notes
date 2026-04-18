@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UGM2N: An Unsupervised and Generalizable Mesh Movement Network via M-Uniform Loss
 description: >-
@@ -96,7 +96,7 @@ tags:
 - M-Uniform 损失将网格等分布条件直接作为学习目标，类似 PINN 将物理约束编码进损失的思路
 - 在 Helmholtz 测试中 M2N 出现 -351% ER（严重恶化精度），说明监督方法在分布外场景极不稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅处理 2D 三角网格，3D 体网格扩展是重要但非平凡的挑战
 - 边界节点保持固定不动，限制了边界附近区域的自适应能力
 - 等分布条件只约束了单元体积，未考虑网格单元的等角质量（equilateral alignment）

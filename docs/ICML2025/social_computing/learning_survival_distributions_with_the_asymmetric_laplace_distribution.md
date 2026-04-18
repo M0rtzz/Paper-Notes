@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Survival Distributions with the Asymmetric Laplace Distribution
 description: >-
@@ -113,7 +113,7 @@ CQRNN 基于 Portnoy 估计器的 pinball loss，需要预定义分位数网格 
 4. **校准性突出**：在分布层面的校准指标上表现尤为强劲，说明 ALD 确实能更好地拟合真实生存分布的形状
 5. **统一处理删失类型**：通过简单修改似然即可适配左删失等其他删失类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分布假设仍然存在**：虽然 ALD 比正态/Weibull 更灵活，但仍属于单峰分布族，面对多峰生存分布时可能力不从心
 2. **ALD 支撑域包含负数**：$t < 0$ 在生存分析中无意义，作者声称实际中不太会出现，但缺乏理论保证

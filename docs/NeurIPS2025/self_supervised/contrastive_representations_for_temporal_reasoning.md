@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Contrastive Representations for Temporal Reasoning
 description: >-
@@ -97,7 +97,7 @@ CRTR 的核心改动极其简洁——仅修改对比学习中的负采样方式
 - 涌现的"块构建"策略呼应了人类解谜行为
 - 条件互信息框架漂亮地解释了为何去除上下文可改善时间推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 无搜索解太长（魔方 ~400 步），远非最优
 - Sokoban 成功率仍较低，可能由于死路（irreversible states）问题

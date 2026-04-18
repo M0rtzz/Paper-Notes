@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 2ndMatch: Finetuning Pruned Diffusion Models via Second-Order Jacobian Matching
 description: >-
@@ -110,7 +110,7 @@ Stable Diffusion (COCO 512×512)：Base+2ndM FID从15.76降至13.84，Small+2ndM
 - **Taylor展开的优雅证明**：严格证明了一阶Jacobian匹配在扩散模型中的冗余性，为模型压缩中的损失设计提供理论指导
 - **随机投影的实用性**：通过随机方向估计 $v^\top J^\top J v$ 绕过了高维Jacobian计算的瓶颈，使方法可扩展到大规模模型（Stable Diffusion 1.04B参数）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前使用步级（step-wise）匹配近似多步Jacobian传播，对长程时间依赖的捕捉能力有限
 - 随机投影的效率与估计精度之间的trade-off未充分探讨
 - 仅在图像生成上验证，视频/3D等更复杂的扩散模型应用有待探索

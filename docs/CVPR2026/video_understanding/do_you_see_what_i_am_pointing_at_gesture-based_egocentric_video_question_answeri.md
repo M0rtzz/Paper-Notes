@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do You See What I Am Pointing At? Gesture-Based Egocentric Video Question Answering
 description: >-
@@ -108,7 +108,7 @@ HINT-14B 平均 68.1%，超越 InternVL3-14B baseline 5.4pp，甚至超过 GPT-5
 - 多种 backbone（LLaVA-OV, InternVL3-8B, InternVL3-14B）上一致有效
 - 对 embodied AI / AR 助手方向有很强的启发性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅支持指向手势，未涵盖其他手势类型（如抓取、挥手、比划大小）
 - 依赖 WiLoR 手部重建的准确性，复杂场景（强遮挡、手部不完整）可能失效
 - 合成数据与真实场景仍有 gap，真实数据量偏少（仅 400 视频，100 用于训练）

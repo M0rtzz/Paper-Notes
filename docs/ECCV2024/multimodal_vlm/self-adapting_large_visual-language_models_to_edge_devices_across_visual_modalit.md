@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Adapting Large Visual-Language Models to Edge Devices across Visual Modalities
 description: >-
@@ -134,7 +134,7 @@ EdgeVL是一个两阶段适配框架：
 - **统一双模态编码器**：权重共享设计将存储需求减半，且RGB图像作为非RGB图像的"增强"提升了两种模态的性能
 - **实际部署验证**：在Jetson AGX/Nano/RTX4090上使用TensorRT进行了实际推理测试
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **RGB图像性能权衡**：跨数据集场景中RGB准确率略有损失（因模型大幅缩小），可能需要更多适配数据
 - **仅验证了场景分类**：未在语义分割、目标检测等更复杂任务上评估
 - **适配数据规模有限**：仅使用约4,725对图像进行适配，扩大数据规模可能进一步提升泛化

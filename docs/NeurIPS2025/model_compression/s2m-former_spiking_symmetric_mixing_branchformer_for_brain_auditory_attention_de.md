@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] S2M-Former: Spiking Symmetric Mixing Branchformer for Brain Auditory Attention Detection
 description: >-
@@ -111,7 +111,7 @@ $$H[t,c,n] = V[t-1,c,n] + \frac{1}{\tau_l[c]}(X[t,c,n] - (V[t-1,c,n] - V_{reset}
 2. **1D token 替代 3D 操作**：这一轻量化策略是参数量大幅降低的关键，同时保持甚至提升了性能。
 3. **SNN 的实际价值**：在 EEG 这种天然具有时序脉冲特性的信号上，SNN 不仅带来能效优势，还提供了更好的精度（+4.34% vs ANN），与许多领域中 SNN 精度不如 ANN 的常见认知不同。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 KUL 和 AV-GC 数据集的跨试验设置下标准差较大（>18%），部分被试低于随机水平（50%），泛化性仍有提升空间。
 - 仅验证二分类（左/右注意力）场景，尚未扩展到多说话人场景。

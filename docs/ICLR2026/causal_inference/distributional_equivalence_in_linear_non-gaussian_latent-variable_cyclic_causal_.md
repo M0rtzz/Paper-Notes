@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distributional Equivalence in Linear Non-Gaussian Latent-Variable Cyclic Causal Models
 description: >-
@@ -124,7 +124,7 @@ $$X = BX + \Lambda L + E$$
 - **问题定位精准**："等价性刻画是通用方法的前提"——这一认识论层面的洞察对整个因果发现社区具有指导意义
 - **实用性好**：提供了开源代码和在线交互演示 equiv.cc，降低了使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 限于线性模型假设，非线性因果关系（加性噪声模型、后非线性模型等）未涉及
 - 非高斯性假设在某些领域（如金融数据中近似高斯的情况）可能不成立

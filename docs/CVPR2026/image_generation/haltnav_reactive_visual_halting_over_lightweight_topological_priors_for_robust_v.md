@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HaltNav: Reactive Visual Halting over Lightweight Topological Priors for Robust Vision-Language Navigation
 description: >-
@@ -140,7 +140,7 @@ tags:
 - 层级化设计使 VLN 执行器完全不感知全局地图，降低了局部策略的复杂度
 - 从仿真到真机的完整验证增强了说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预先标注的 osmAG 地图（虽然可从平面图生成，但初始获取仍需人工操作）
 - 仅测试了 5 个 HM3D 场景，规模较小

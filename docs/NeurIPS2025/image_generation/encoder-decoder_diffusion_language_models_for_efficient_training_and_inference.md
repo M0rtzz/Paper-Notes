@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Encoder-Decoder Diffusion Language Models for Efficient Training and Inference
 description: >-
@@ -120,7 +120,7 @@ E2D2 比 AR 吞吐量高 ~75%，ROUGE-L 更高；比 MDLM 快 ~3×。
 4. 通过调节编码器/解码器的层数比例，可以灵活**映射质量-吞吐量的 Pareto 前沿**
 5. **Shared KV Cache 变体**可从预训练 AR 模型直接微调，降低了实践门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验规模相对较小（<2B 参数），未在 7-8B 级模型上验证 E2D2 的扩展性
 2. 编码器需定期重新编码已生成 tokens，对非常长的序列可能成为瓶颈

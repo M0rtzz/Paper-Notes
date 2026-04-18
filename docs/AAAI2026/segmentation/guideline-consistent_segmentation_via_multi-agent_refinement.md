@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Guideline-Consistent Segmentation via Multi-Agent Refinement
 description: >-
@@ -144,7 +144,7 @@ AiRC 效果：动态停止比固定2次迭代多解决110%的违规（0.61 vs 0.
 3. **双Agent分工**：将评估和框生成分给不同Agent，比单一Agent承担所有职责更有效
 4. **可扩展性**：VLM和SAM均冻结，指南更新不需要重训练，只需修改文本输入
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖闭源VLM（Gemini-2.5 API），限制了本地部署和可复现性
 - 量化约束解读困难：VLM难以精确判断"物品是否大于2m"，可能导致误判

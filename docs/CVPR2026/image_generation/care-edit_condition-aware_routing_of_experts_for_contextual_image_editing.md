@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CARE-Edit: Condition-Aware Routing of Experts for Contextual Image Editing
 description: >-
@@ -108,7 +108,7 @@ CARE-Edit 在冻结的 DiT 骨干（基于 FLUX.1 Dev）中嵌入条件感知的
 4. **训练数据效率高**：仅 120K 训练样本即达到与 OmniGen2 竞争的性能（后者数据量远多于此）
 5. **DreamBench++ 全面领先**：在单目标和多目标设定下均优于 OmniGen2、UNO 等强基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **超参数敏感**：top-K 值、路由温度退火策略、λ_shared 等 MoE 固有超参数需要仔细调节
 2. **专家集合固定**：当前仅四种专家覆盖常见模态，面对新的编辑类型（如 3D 感知编辑、物理一致性编辑）可能需要动态专家加载或扩展

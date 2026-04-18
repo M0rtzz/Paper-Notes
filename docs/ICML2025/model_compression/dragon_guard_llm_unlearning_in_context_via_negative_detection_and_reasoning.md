@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DRAGON: Guard LLM Unlearning in Context via Negative Detection and Reasoning
 description: >-
@@ -104,7 +104,7 @@ DRAGON 在所有 forget 比例下 Deviation Score 最低，模型效用完全无
 4. **支持持续遗忘**：提出 DDS/DUS 指标量化持续遗忘稳定性，解决了实际部署中遗忘请求持续到达的问题
 5. **模型越强效果越好**：在 Mixtral-8x7B 等大模型上 RQ 甚至超过 1.0，说明框架与模型指令遵循能力正相关
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **检测阈值依赖人工设定**：$\tau$ 的选择影响遗忘质量与误报率之间的平衡，未提供自适应方案
 2. **Guard 模型本身需要训练**：虽然目标 LLM 不需微调，但 guard 模型的 SFT 仍需 CoT 数据和计算资源

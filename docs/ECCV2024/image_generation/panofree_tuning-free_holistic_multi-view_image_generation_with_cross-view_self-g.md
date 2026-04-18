@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PanoFree: Tuning-Free Holistic Multi-view Image Generation with Cross-view Self-Guidance
 description: >-
@@ -100,7 +100,7 @@ PanoFree是完全无训练的推理时方法，不涉及传统的损失函数。
 - 在效率上大幅领先微调方法，更具实用性
 - 方法框架灵活，支持平面、360°和球面等多种全景格式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 跨视图引导的计算开销在视图数量多时线性增长
 - 对于物体密集或遮挡严重的场景，变形质量可能下降

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DEMO: Reframing Dialogue Interaction with Fine-grained Element Modeling
 description: >-
@@ -131,7 +131,7 @@ DEMO框架包含三层结构：
 - **数据构建工艺精湛**：五步流水线中的冲突评估环节（用LLM检查元素组合合理性）和三步质量控制（双LLM审核+投票+人工复核）确保了benchmark质量
 - **中英双语覆盖**：1:1的中英比例在对话系统研究中较为少见
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DEMO Agent的性能上限受限于专家模型GPT-4o的能力
 - 元素感知与对话交互之间的相互作用机制尚不清楚

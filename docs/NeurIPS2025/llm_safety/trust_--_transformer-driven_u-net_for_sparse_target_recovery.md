@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRUST -- Transformer-Driven U-Net for Sparse Target Recovery
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \|\hat{\mathbf{x}} - \mathbf{x}\|_2^2 + \lambda_1 \|\hat{\mathbf
 - **幻觉抑制**: 通过稀疏支撑估计指导重建，有效抑制深度学习常见的幻觉问题
 - **盲稀疏恢复**: 不需要知道感知矩阵 A，端到端学习，实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅在 2D 信号上验证，3D 体积数据的扩展需要研究
 2. Transformer 编码器的计算开销在高分辨率信号上仍然较大

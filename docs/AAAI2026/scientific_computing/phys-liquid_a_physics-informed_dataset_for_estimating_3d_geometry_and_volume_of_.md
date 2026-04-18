@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Phys-Liquid: A Physics-Informed Dataset for Estimating 3D Geometry and Volume of Transparent Deformable Liquids
 description: >-
@@ -146,7 +146,7 @@ mesh 重建和缩放模块对最终性能影响最大。
 - **端到端验证**：数据集 + 重建管线一体化，不仅提供数据还提供可用的基线方法
 - **可扩展性**：基于 Blender 可渲染法线、折射流等额外模态，具有工具属性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据规模适中（97,200 张），相比大规模视觉数据集仍较小
 - 仅模拟旋转引起的形变，未覆盖倾倒、混合等更复杂操作

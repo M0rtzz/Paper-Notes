@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Validating Mechanistic Interpretations: An Axiomatic Approach
 description: >-
@@ -108,7 +108,7 @@ $$\forall i: \Pr_{x \sim \mathcal{D}}[t(x) = d_t[i{+}1:] \circ \gamma_i \circ d_
 4. **实用性强**：公理验证仅需前向推理 + 统计检验，计算开销低
 5. **2-SAT 案例有趣**：发现模型学会了穷举求值算法，且 MLP 神经元表现出稀疏性（512 中仅 34 个有效）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了小规模模型**：2-SAT（5 变量 10 子句）和模加法（mod 113），能否扩展到实际规模的 LLM 尚不清楚
 2. **$\alpha$ 和 $\gamma$ 函数需手工设计**：目前没有自动化方法来选择合适的抽象/具体化函数

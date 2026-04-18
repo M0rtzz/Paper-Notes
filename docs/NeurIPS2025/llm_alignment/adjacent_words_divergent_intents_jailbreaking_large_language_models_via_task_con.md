@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adjacent Words, Divergent Intents: Jailbreaking Large Language Models via Task Concurrency
 description: >-
@@ -145,7 +145,7 @@ $$\max_{T_b} P(harmful\_response | T_{interleaved}(T_h, T_b))$$
 3. **揭示了LLM的根本性安全弱点**：LLM的并发处理能力本身就是一个安全漏洞
 4. **实验设计全面**：涵盖了攻击成功率、隐蔽性、并发能力验证等多个维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **防御方案缺失**：论文主要关注攻击面，未提出有效的防御方案
 2. **并发输出的实用性**：攻击者需要额外解码步骤来从并发输出中提取有害内容

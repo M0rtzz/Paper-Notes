@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding and Improving Hyperbolic Deep Reinforcement Learning
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：双曲空间的几何优势（低失真层级嵌入）vs 训练稳定性（保角因子爆炸 + 梯度病态）之间的根本冲突。
 
-**本文要解决什么？** 1）形式化分析双曲 PPO 的梯度病态来源；2）设计既保证稳定性又保持表达力的双曲 RL agent。
+**本文目标** 1）形式化分析双曲 PPO 的梯度病态来源；2）设计既保证稳定性又保持表达力的双曲 RL agent。
 
 **切入角度**：从 Poincaré Ball 和 Hyperboloid 两种双曲模型的闭式梯度推导出发，定位不稳定来源，再逐一设计对应组件。
 
-**核心idea一句话**：大范数嵌入是双曲 PPO 崩溃的根源，通过 RMSNorm 约束范数 + Hyperboloid 避免保角因子 + 分类损失对齐几何即可根治。
+**核心 idea**：大范数嵌入是双曲 PPO 崩溃的根源，通过 RMSNorm 约束范数 + Hyperboloid 避免保角因子 + 分类损失对齐几何即可根治。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ PPO clipped surrogate objective 不变。Critic 使用 HL-Gauss 损失（51 bins
 - **组件分工清晰**：categorical loss 稳定 $\partial L / \partial v$，Hyperboloid 稳定 $\partial v / \partial \mathbf{x}_H$，RMSNorm+scaling 稳定 $\partial \mathbf{x}_H / \partial \mathbf{x}_E$——方程 (3) 的链式法则每一项都有对应组件
 - **性能+效率双赢**：回报提升 52% 的同时前向时间减少 ~30%（去掉了 SpectralNorm 的 power iteration）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 聚焦优化视角，未分析双曲表示实际学到了什么层级结构
 - 未研究哪些环境最适合双曲表示（哪些 MDP 的状态空间更"树形"）
 - 几何选择（曲率 $c$、维度 $d$）与不同 RL 算法设计的交互未探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ∇-Reasoner: LLM Reasoning via Test-Time Gradient Descent in Latent Space
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：reward model 本身是可微的（基于 transformer 的分类器），梯度信息唾手可得却被完全浪费。零阶方法无法有效利用 reward landscape 的结构信息。
 
-**本文要解决什么？** 如何在推理时利用 reward 梯度来高效地引导 LLM 输出向高 reward 区域移动，同时保持生成的流畅性？
+**本文目标** 如何在推理时利用 reward 梯度来高效地引导 LLM 输出向高 reward 区域移动，同时保持生成的流畅性？
 
 **切入角度**：将 LLM 推理重新表述为连续优化问题——在 token logits 空间上做梯度下降，用 straight-through estimator 桥接离散与连续空间。
 
-**核心idea一句话**：用一阶梯度下降代替零阶搜索来做推理时策略优化，在 logits 空间上同时最大化 reward 和 LLM 似然。
+**核心 idea**：用一阶梯度下降代替零阶搜索来做推理时策略优化，在 logits 空间上同时最大化 reward 和 LLM 似然。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ tags:
 - **理论优美**：证明了 DTO 的 sample-space 梯度下降等价于 PPO 的 Wasserstein gradient flow，统一了预训练缩放（参数空间优化）和推理时缩放（样本空间优化）
 - **梯度缓存 trick 可复用**：由于 softmax 的硬化性质，one-hot token 不频繁变化的观察可以推广到其他需要对离散结构做梯度优化的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能受限于 base model 和 reward model 的能力上限，无法超越两者的联合瓶颈
 - base model 和 reward model 必须共享同一词表才能做 end-to-end 的 logit 优化，限制了模型组合的灵活性
 - 当前只验证了数学推理任务，在代码生成、开放问答等场景的表现未知

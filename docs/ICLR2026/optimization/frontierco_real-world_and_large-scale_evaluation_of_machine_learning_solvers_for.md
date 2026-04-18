@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FrontierCO: Real-World and Large-Scale Evaluation of Machine Learning Solvers for Combinatorial Optimization
 description: >-
@@ -109,7 +109,7 @@ FrontierCO 涵盖 8 类 CO 问题（路由: TSP/CVRP; 图: MIS/MDS; 设施选址
 - **LLM Agent 的双刃剑特性**: 高方差但偶尔超越 SOTA——说明 LLM 的代码生成能力有创造性但缺乏稳定性和深层理解
 - **标准化的价值**: 提供统一的训练数据/评估协议，终结了跨论文比较中"苹果比橘子"的混乱
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每实例 1 小时的时间限制可能不足以让某些方法收敛
 - 仅评估单 GPU 设置，未考虑分布式并行
 - 某些问题（如 STP）的 Neural baseline 较弱，可能低估了 ML 的潜力

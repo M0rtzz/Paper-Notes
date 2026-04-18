@@ -1,4 +1,4 @@
-# DnLUT: Ultra-Efficient Color Image Denoising via Channel-Aware Lookup Tables
+﻿# DnLUT: Ultra-Efficient Color Image Denoising via Channel-Aware Lookup Tables
 
 **会议**: CVPR 2025  
 **arXiv**: [2503.15931](https://arxiv.org/abs/2503.15931)  
@@ -15,11 +15,11 @@
 
 **现有痛点**：(1) 单通道 LUT 无法建模 RGB 通道间相关性，去噪质量差；(2) 直接做三通道 4D LUT 存储爆炸（输入维度 4 → LUT 大小指数增长）；(3) 旋转集成中标准方形卷积核有像素重叠，导致 4D LUT 无法降维。
 
-**本文要解决什么？** 在极低存储（500KB）和极低能耗（0.1% DnCNN）约束下实现有效的彩色图像去噪。
+**本文目标** 在极低存储（500KB）和极低能耗（0.1% DnCNN）约束下实现有效的彩色图像去噪。
 
 **切入角度**：(1) PCM 配对 RGB 通道（RG, GB, BR）用 1×2 深度 2 核捕获通道相关，仅需 4D LUT；(2) L 形卷积核在旋转集成中无像素重叠，可用 3D LUT 替代 4D LUT。
 
-**核心idea一句话**：成对通道混合器（4D LUT 捕获通道相关）+ L 形无重叠卷积核（3D LUT 替代 4D，存储-17×）。
+**核心 idea**：成对通道混合器（4D LUT 捕获通道相关）+ L 形无重叠卷积核（3D LUT 替代 4D，存储-17×）。
 
 ## 实验关键数据（高斯彩色去噪 σ=25, CPSNR dB）
 

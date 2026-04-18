@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unveiling Language-Specific Features in Large Language Models via Sparse Autoencoders
 description: >-
@@ -151,7 +151,7 @@ $$v = \frac{1}{|\mathcal{X}_+|}\sum_{x \in \mathcal{X}_+} a_L(x) - \frac{1}{|\ma
 4. **Code-switching 实验设计精巧**：通过控制变量（前缀语言 × 名词语言）清晰展示了上下文依赖性
 5. **协同效应的发现**：揭示了同一语言的多个 features 之间的非线性互作，对理解 LLM 内部表示结构有重要意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **主要关注非英语语言**：英语作为主要训练语言有不同特性，但本文未深入分析英语的 features
 2. **SAE 自身的局限性**：SAE 的稀疏性假设可能不完全成立，重建误差可能忽略重要信息

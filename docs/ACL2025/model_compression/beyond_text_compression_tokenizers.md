@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Text Compression: Evaluating Tokenizers Across Scales
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：需要低成本的内在指标来预测 tokenizer 对下游任务的影响，但现有指标（主要是压缩率）在多语言和生成任务上预测性差
 
-**本文要解决什么？** (1) tokenizer 差异是否跨模型尺度一致？(2) 什么内在指标能可靠预测下游性能？
+**本文目标** (1) tokenizer 差异是否跨模型尺度一致？(2) 什么内在指标能可靠预测下游性能？
 
 **切入角度**：利用 scaling consistency——如果 tokenizer 差异真的重要，那么在小模型上就应该能观察到，并且这种差异在大模型上应该保持一致
 
-**核心 idea 一句话**：用 350M 模型的 tokenizer 性能排序来预测 2.7B 模型的排序（节省 85% 计算成本），并提出基于 Zipf 定律的内在指标族来替代单一压缩率。
+**核心 idea**：用 350M 模型的 tokenizer 性能排序来预测 2.7B 模型的排序（节省 85% 计算成本），并提出基于 Zipf 定律的内在指标族来替代单一压缩率。
 
 ## 方法详解
 
@@ -119,7 +119,7 @@ tags:
 - **Zipf 定律视角评估 tokenizer 的新思路很有启发性**：将语言学统计规律引入 tokenizer 评估，提供了超越压缩率的理论依据。可迁移到其他序列建模的"vocabulary"评估（如 codebook 评估）
 - **实验设计非常干净**：严格控制变量，12 个模型只有 tokenizer 不同，是 tokenizer 研究的好范例
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **训练数据以英文为主**：FineWeb 是英文数据，多语言 tokenizer 的优势可能在多语言预训练数据上更大
 - **只测了 350M 和 2.7B 两个尺度**：不确定在 7B+ 规模是否仍有同样的 scaling consistency
 - **Zipfian 指标在英文上无效**：所有 tokenizer 在英文文本上的 Zipf 分布都很相似，指标失去区分度

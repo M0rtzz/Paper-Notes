@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding
 description: >-
@@ -157,7 +157,7 @@ $$L_{\text{GRPO}}(\theta) = -\frac{1}{G}\sum_{i=1}^{G}\min(c_i A_i, \text{clip}(
 - **只用 50 个样本超越全量数据训练的 SOTA**，展示了课程学习在数据效率上的巨大优势
 - CuRPO 的设计是**正交的**——不修改模型架构，任何 VLM + GRPO 的组合都可以直接应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Qwen2-VL-2B 上验证，更大模型（7B/72B）上的效果未知
 - CoT 长度作为难度代理可能在其他任务（如 VQA、图像描述）中不一定成立

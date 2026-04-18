@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Client2Vec: Improving Federated Learning by Distribution Shifts Aware Client Indexing
 description: >-
@@ -92,7 +92,7 @@ DSA-IGN的总损失为 $\mathcal{L} = \mathcal{L}_{\text{div}} + \mathcal{L}_{\t
 - 利用CLIP的跨模态对齐能力巧妙解决了"如何将标签和图像映射到同一空间"的问题。
 - 正交约束的使用贯穿始终（索引生成阶段分离特征索引和数据编码，本地训练阶段分离本地特征和客户端特征索引），体现了一致的设计哲学。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖CLIP预训练模型，对于CLIP覆盖不好的领域（如医学影像）效果可能打折。
 - Global策略需要上传部分数据嵌入到服务器，虽然是CLIP特征而非原始数据，但隐私风险仍需评估。

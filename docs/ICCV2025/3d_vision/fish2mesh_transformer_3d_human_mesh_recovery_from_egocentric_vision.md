@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fish2Mesh Transformer: 3D Human Mesh Recovery from Egocentric Vision
 description: >-
@@ -129,7 +129,7 @@ EPE 的影响最为显著：移除后 ECHP 上 PA-MPJPE 从 57.67mm 增至 92.45
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

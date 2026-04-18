@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Integrate Diffusion ODEs by Averaging the Derivatives
 description: >-
@@ -128,7 +128,7 @@ $$\boldsymbol{x}_s = \boldsymbol{x}_t + (s-t) \boldsymbol{f}_\theta(\boldsymbol{
 - **实现简单**：与训练扩散模型高度并行，不需额外判别器、分数蒸馏等复杂组件
 - **训练效率高**：仅需教师模型1%的训练量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 1步和8步之间仍有显著性能差距，大步跨越仍然困难
 - ImageNet性能依赖CFG，CFG与割线损失的理论关系未充分探索

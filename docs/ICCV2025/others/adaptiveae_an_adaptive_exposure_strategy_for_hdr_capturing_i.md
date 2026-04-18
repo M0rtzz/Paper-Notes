@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaptiveAE: An Adaptive Exposure Strategy for HDR Capturing in Dynamic Scenes
 description: >-
@@ -111,7 +111,7 @@ AdaptiveAE的pipeline分为两部分：**训练**和**推理**。
 - **实际设备验证**：在Sony Alpha 7C-II上通过手动设置参数做了真实拍摄测试，不只是仿真实验
 - **模型极轻量**：RL agent仅7-8M参数，推理<5ms，完整pipeline<250ms，具有实时部署潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **光圈固定**：当前假设光圈和焦距不变，论文结尾提到未来要加入可调光圈
 - **依赖预训练融合网络**：训练时使用DeepHDR计算奖励，策略的最优性受限于融合网络质量。如果换用更强的融合网络，策略可能需要重新训练
 - **离线blur合成**：RIFE插帧在训练前离线完成，这限制了训练的灵活性

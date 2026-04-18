@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning Limitations of Multimodal Large Language Models. A Case Study of Bongard Problems
 description: >-
@@ -121,7 +121,7 @@ tags:
 - "对比推理反而更差"这一发现揭示了MLLM与人类在类比推理上的根本差异
 - 数据集变体（正方形/灰度）的消融显示去除颜色和裁剪空白能提升分类准确率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Bongard-RWR仅60个问题，规模较小
 - 自动评估依赖MLLM集成判断语义等价，可能引入偏差

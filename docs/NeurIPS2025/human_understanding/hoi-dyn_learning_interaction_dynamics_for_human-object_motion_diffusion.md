@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HOI-Dyn: Learning Interaction Dynamics for Human-Object Motion Diffusion
 description: >-
@@ -137,7 +137,7 @@ $$\mathcal{L}_{\text{dyn}} = \mathbb{E}_t \left[\|\Phi(\Delta\hat{o}_t^*, \Delta
 3. **训练-推理解耦**：动力学模型仅用于训练，不增加推理开销
 4. **轻量高效**：0.5M 参数的动力学模型 + 单卡 A4500 约 10 小时训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 FullBodyManipulation 数据集上训练，场景多样性有限
 2. K 需要手动选择，可以探索自适应预测范围

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compute-Optimal Quantization-Aware Training
 description: >-
@@ -36,14 +36,14 @@ tags:
 
 **核心矛盾**：QAT 步数太少→模型无法适应低精度；QAT 步数太多→压缩 FP 阶段→用噪声梯度训练太久。随着总计算量增长，这个平衡点如何变化？
 
-**本文要解决什么？**
+**本文目标**
    - 最优 QAT fraction 如何随模型大小、总 token 数、bit-width 变化？
    - 能否用一个统一的 scaling law 预测所有配置下的最终损失？
    - 能否进一步优化训练流程（如合并 cooldown 和 QAT）？
 
 **切入角度**：引入 tokens-per-parameter-byte $S = D/(N \cdot B/8)$ 作为统一的缩放变量——它同时编码了模型大小、数据量和量化精度的信息。
 
-**核心idea一句话**：QAT 的最优时间分配不是固定的 10%，而是随 tokens-per-parameter-byte 增长的函数，可用一个统一 scaling law 精确建模。
+**核心 idea**：QAT 的最优时间分配不是固定的 10%，而是随 tokens-per-parameter-byte 增长的函数，可用一个统一 scaling law 精确建模。
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ tags:
 - **推翻先前结论的方法论价值**：通过更大规模的系统性实验证明先前的结论是局部的——这在 scaling law 研究中是常见且重要的工作。
 - **Scaling law 的工程实用性**：拟合 757 个实验后，可以直接回答"给定计算预算和内存约束，应该用多少 bit 的量化、花多少比例做 QAT"——对大规模训练计划有直接指导价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试到 2.2B 参数，未在 7B+ 大模型上验证
 - 仅考虑 weight quantization，未涉及 activation quantization
 - Scaling law 有 15+ 个可拟合参数，可能存在过拟合风险

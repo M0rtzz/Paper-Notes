@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Provable Emergence of In-Context Reinforcement Learning
 description: >-
@@ -89,7 +89,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{\text{task}} \left[ \mathbb{E}_{\text{contex
 - **构造性方法**: 通过显式构造 Transformer 参数来证明全局最优解具有 ICRL 能力，方法论上有创新
 - **连接 RL 与 ICL**: 将 in-context learning 的理论分析从监督学习扩展到强化学习领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅证明了策略评估场景，尚未扩展到完整的策略优化（如 Q-learning）
 2. 理论分析限于特定的 Transformer 架构，更一般的架构（如 GPT 风格）需要进一步研究

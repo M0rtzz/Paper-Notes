@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantized Prompt for Efficient Generalization of Vision-Language Models
 description: >-
@@ -111,7 +111,7 @@ QPrompt方法基于对prompt权重分布特征的深入分析，采用K-Means聚
 - **通用性强**：方法可直接集成到CoOp、MaPLe等多种现有方法中，获得一致提升
 - **1-bit量化可行**：在传统场景中被认为是"激进"的1-bit量化，在prompt上反而效果最佳
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 量化位数的选择（b=1,2,4）目前是超参数，缺乏自适应选择机制
 - KL散度阈值 $T_{KL}$ 和最小更新间隔t的设置缺乏理论指导
 - 仅在分类任务上验证，未在检测、分割等下游任务上评估

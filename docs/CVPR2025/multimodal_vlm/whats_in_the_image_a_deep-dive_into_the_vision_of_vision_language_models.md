@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What's in the Image? A Deep-Dive into the Vision of Vision Language Models
 description: >-
@@ -94,7 +94,7 @@ VLM 在图像描述、VQA 等任务上展现了惊人能力，但其内部视觉
 - 在 $\text{KO}_{img \to txt}$ 实验中 F1 为 0，证明 query token 对 VLM 来说不仅是指令载体，更是不可缺少的视觉信息中转站
 - 注意力的长尾分布意味着仅少量 image token 获得显著注意力，为 token pruning 提供了有力的理论支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分析仅覆盖 "describe the image" 这一单一 query，不同 query 类型（如推理、计数）的信息流模式可能不同
 - 仅分析了注意力模块，忽略了 FFN 在信息存储/转换中的作用
 - Image Re-prompting 需要先做一次完整的 "describe" 前向传播来提取 compressed context，不算真正的"免费"加速

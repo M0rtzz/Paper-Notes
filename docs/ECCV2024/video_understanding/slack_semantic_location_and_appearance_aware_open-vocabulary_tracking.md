@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SLAck: Semantic, Location, and Appearance Aware Open-Vocabulary Tracking
 description: >-
@@ -120,7 +120,7 @@ SLAck 构建在预训练的开放词汇检测器之上。Pipeline 分三步：(1
 - **隐式运动建模**替代显式 Kalman Filter，对开放词汇场景的非线性运动更鲁棒
 - DAT 训练策略简单有效，可迁移到所有使用不完整标注的 MOT 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 TAO 一个大词汇数据集上训练和评估，泛化性有待更多数据集验证
 - 当前使用 ResNet-50 作为 backbone，与使用更强 backbone 的方法（如 GroundingDINO）相比定位精度偏低

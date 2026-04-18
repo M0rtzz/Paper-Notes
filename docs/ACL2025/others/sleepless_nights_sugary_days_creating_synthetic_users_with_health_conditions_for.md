@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sleepless Nights, Sugary Days: Creating Synthetic Users with Health Conditions for Realistic Coaching Agent Interactions
 description: >-
@@ -129,7 +129,7 @@ tags:
 4. **对 LLM 偏差的系统性思考**：明确识别并缓解了 LLM 作为合成用户的多种偏差来源
 5. **支持隐私保护**：合成用户可以生成新个体，不依赖真实患者的直接数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 合成用户仍可能缺乏真实生活经验的深度和细微差别
 2. 仅评估了目标和障碍的获取，未评估后续行为改变过程

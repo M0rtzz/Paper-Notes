@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EWC-Guided Diffusion Replay for Exemplar-Free Continual Learning in Medical Imaging
 description: >-
@@ -116,7 +116,7 @@ $$\bar{F} \leq \alpha \cdot D_{\text{KL}}(p_j \| \hat{p}_j) + \beta \sum_i F_i(\
 - **2D/3D 统一处理**：单一扩散模型同时处理 2D（6 个 MedMNIST 任务）和 3D（OrganMNIST3D、NoduleMNIST3D）医学影像，展示了框架的模态通用性。
 - **双记忆理论启发**：基于认知科学的互补学习系统理论构建框架，DDPM 快速回忆 + EWC 渐进巩固的设计理念具有直觉吸引力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **扩散训练开销**：每任务需 200 epochs 训练 DDPM，在任务数量多或图像分辨率高时计算成本可观，未提供生成器蒸馏等加速方案。
 - **固定任务顺序**：主实验采用固定任务序列，尽管附录中分析了顺序鲁棒性，但缺乏 online/streaming 场景的验证。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RNE: plug-and-play diffusion inference-time control and energy-based training
 description: >-
@@ -128,7 +128,7 @@ RNE 在推理时控制场景下**不需要额外训练**（即插即用），在
 4. **推理时缩放特性**：呼应了当前 AI 社区对 test-time compute 和 inference-time scaling 的关注趋势
 5. **离散扩散的适用性**：扩展了框架的适用范围，对文本和蛋白质等离散序列的扩散生成有潜在价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **蒙特卡洛估计的方差**：路径空间中的密度比估计可能有较高方差，特别是在长扩散轨迹中
 2. **计算成本**：虽然不需要额外训练，但推理时需要多次采样路径来估计密度比，增加了推理延迟

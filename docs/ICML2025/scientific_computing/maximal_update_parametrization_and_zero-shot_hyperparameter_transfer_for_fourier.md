@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Maximal Update Parametrization and Zero-Shot Hyperparameter Transfer for Fourier Neural Operators
 description: >-
@@ -136,7 +136,7 @@ $$a(K)=1, \quad b(K) = c(K) = \Theta\!\left(\frac{1}{\sqrt{d\log K}}\right)$$
 4. **泛化性强**：对学习率、batch size、$\beta_2$ 等多种超参数均有效，且兼容 PINO 训练范式
 5. **分辨率无关**：缩放规则不依赖空间离散化，保持 FNO 的核心优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅针对 $K$ 缩放**：宽度 $m$ 和深度 $L$ 的联合缩放未覆盖，实际中三者可能同时变化
 2. **sub-Gaussian 假设**：需要对梯度做 element-wise clipping（clip=0.01）来保证理论假设成立，引入额外调参

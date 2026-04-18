@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Pose Refinement in 3D Gaussian Splatting under Pose Prior and Geometric Uncertainty
 description: >-
@@ -103,7 +103,7 @@ UGS-Loc 包含两个核心模块：（1）蒙特卡洛精化（Monte Carlo Refin
 - **Fisher 信息与 PnP 的优雅结合**：几何不确定性通过采样权重自然融入 RANSAC，无需修改 PnP 求解器本身
 - **跨先验鲁棒性**：弱先验（DFNet）经 UGS-Loc 精化后可接近强先验（ACE）的结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 粒子数增加会线性增加推理时间（16 粒子 ≈ 2× 耗时），实时性受限
 - Fisher 信息需要从所有训练视角预计算聚合，场景更新时需重新计算

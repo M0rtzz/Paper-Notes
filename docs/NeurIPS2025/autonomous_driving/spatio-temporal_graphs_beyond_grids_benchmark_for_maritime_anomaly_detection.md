@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatio-Temporal Graphs Beyond Grids: Benchmark for Maritime Anomaly Detection
 description: >-
@@ -105,7 +105,7 @@ tags:
 3. **LLM辅助数据生成**：利用LLM智能体生成语义丰富的异常（超越规则驱动注入）
 4. **可扩展性**：框架可推广到无人机群、空中交通等其他非网格时空系统
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅关注运动学异常——需扩展到非法会面、AIS欺骗、环境异常等
 - LLM智能体管线尚为规划阶段，未完全实现
 - 数据集仅覆盖西澳大利亚单一区域

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Sensors Fail: Temporal Sequence Models for Robust PPO under Sensor Drift
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：RL策略的鲁棒性与其对时间上下文的利用能力直接相关，但缺乏理论框架量化这种关系。
 
-**本文要解决什么**：(1) 提供传感器故障下奖励退化的理论bound；(2) 系统比较不同序列架构在PPO中的鲁棒性；(3) 理解哪些架构特性驱动了鲁棒性差异。
+**本文目标**：(1) 提供传感器故障下奖励退化的理论bound；(2) 系统比较不同序列架构在PPO中的鲁棒性；(3) 理解哪些架构特性驱动了鲁棒性差异。
 
 **切入角度**：建立两层Markov传感器故障模型（个体+组级别），集成多种序列编码器进PPO，理论+实验双轨验证。
 
-**核心idea一句话**：Transformer通过自注意力机制灵活引用历史有效观测，自然跳过缺失数据gap，是传感器不可靠环境下最鲁棒的策略架构。
+**核心 idea**：Transformer通过自注意力机制灵活引用历史有效观测，自然跳过缺失数据gap，是传感器不可靠环境下最鲁棒的策略架构。
 
 ## 方法详解
 
@@ -111,7 +111,7 @@ $$S \leq \mu_S + C_{\max}\min\left\{\sqrt{\frac{2\tau}{1-\gamma^2}\ln\frac{2}{\d
 - **Transformer vs Recurrence的深层解释**：Stateless Transformer处理所有变量jointly within单个序列，自注意力允许每个输出直接attend到所有可用历史token，自然跳过gap；而recurrent models的sequential state update在缺失输入时会diverge或丢失关键信息
 - **实用的传感器模型**：两层Markov模型可模拟丰富的故障模式（快速个体故障、快速组故障、混合动态、慢恢复长中断）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MuJoCo环境相对简单，更复杂的真实机器人任务有待验证
 - 所有模型共享固定PPO配置和匹配的架构容量——更深入的架构搜索可能改变排名
 - 理论bound依赖策略平滑性假设，对深度网络策略的tight估计仍有挑战

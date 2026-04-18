@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reconstructing the Local Density Field with Combined Convolutional and Point Cloud Architecture
 description: >-
@@ -73,7 +73,7 @@ tags:
 2. **计算效率trick**：置信度网络选择性评估仅2.4%体素，使得计算可行
 3. **物理驱动输入设计**：使用线性重建$\delta_L$而非原始速度场作为输入，更好匹配CNN归纳偏置
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在模拟数据上验证，未涉及观测数据中的系统效应
 - 未包含随机性（生成式方法），仅回归均值
 - 未排除示踪物密度场对预测的影响

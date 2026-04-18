@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalized Tensor-based Parameter-Efficient Fine-Tuning via Lie Group Transformations
 description: >-
@@ -126,7 +126,7 @@ Taylor 近似影响（ConvNeXt-V2-B, r=16）：
 - **秩容量的理论优势**：通过 Hadamard 积实现全秩容量，理论上比纯低秩更新更具表达力
 - **实现简单**：核心改动仅一行代码，从 $W + \Delta W$ 变为 $W + W \odot \Delta W$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅验证到四维张量（卷积核），尚未扩展到更高维参数
 - 对于权重中包含零值的情况（如稀疏网络），李群构造需要额外处理

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Progressive Test Time Energy Adaptation for Medical Image Segmentation
 description: >-
@@ -164,7 +164,7 @@ tags:
 4. **模型无关性**：方法可即插即用到任意分割网络，不需要特定架构设计
 5. **渐进式适应**：每张图像独立适应后恢复权重，避免误差积累
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个样本需要 10 次迭代优化 BatchNorm，推理速度会下降
 - 仅更新 BatchNorm 层可能限制适应能力，对于 BatchNorm 参数较少的架构效果可能有限

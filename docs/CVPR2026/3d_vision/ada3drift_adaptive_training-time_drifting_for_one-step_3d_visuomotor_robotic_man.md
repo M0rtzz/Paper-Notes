@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation
 description: >-
@@ -113,7 +113,7 @@ $$\mathcal{L} = (1 - w_{\text{drift}}) \cdot \mathcal{L}_{\text{MLE}} + w_{\text
 - **无需额外推理开销**：drifting field 仅在训练时使用，推理网络结构与 vanilla FM 完全相同
 - **理论清晰**：从 ODE 速度场的平均化问题出发，drifting field 的引入有明确的几何直觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Batch 内匹配依赖 batch 大小，batch 太小时模式覆盖不全
 - 双向亲和度计算复杂度为 $O(B^2)$（B 为 batch size），超大 batch 时开销显著
 - 多温度 $\tau$ 的选择目前为手动设定，可探索自适应学习

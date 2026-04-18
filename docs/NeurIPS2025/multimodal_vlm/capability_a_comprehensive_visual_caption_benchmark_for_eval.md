@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CAPability: A Comprehensive Visual Caption Benchmark for Evaluating Both Correctness and Thoroughness
 description: >-
@@ -118,7 +118,7 @@ CAPability的设计借鉴了视觉生成基准（如GenEval、VBench、T2VCompBe
 3. **"以一代全"策略的统计学巧思**：利用大数定律解决多粒度标注的可行性问题
 4. **跨图像-视频的统一评估框架**：12个维度覆盖静态和动态，提供了首个统一的视觉描述评估体系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个维度的数据独立收集，未评估模型在单个样本上同时覆盖多个维度的能力
 - 依赖GPT-4 Turbo作为评判器，可能引入评判偏差

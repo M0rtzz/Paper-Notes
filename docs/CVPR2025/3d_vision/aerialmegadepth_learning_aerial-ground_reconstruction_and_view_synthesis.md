@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AerialMegaDepth: Learning Aerial-Ground Reconstruction and View Synthesis
 description: >-
@@ -117,7 +117,7 @@ tags:
 - 非对称共视矩阵的图像对选择策略（AM/HM得分）优雅地刻画了地空视角差异
 - 框架具有很强的可扩展性——可以接入其他众源数据集和地理空间平台
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Google Earth的3D网格质量参差不齐，部分地标的地面纹理较差
 - GPS标签精度有限，可能引入初始对齐误差
 - 数据集覆盖137个地标，地理分布可能存在偏差（主要是旅游景点）

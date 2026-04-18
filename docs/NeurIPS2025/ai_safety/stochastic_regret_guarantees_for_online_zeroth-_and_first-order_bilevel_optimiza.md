@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stochastic Regret Guarantees for Online Zeroth- and First-Order Bilevel Optimization
 description: >-
@@ -125,7 +125,7 @@ $$\text{Regret}_T = \sum_{t=1}^{T} \mathbb{E}[f_t(x_t, y^*(x_t))] - \min_{x \in 
 - **并行化思想**: 将线性系统求解与变量更新并行化是提升效率的关键
 - **统一框架**: 一阶和零阶算法在同一理论框架下分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **强凸性假设**: 对内层问题要求强凸性，限制了应用范围（如神经网络训练通常非凸）
 2. **实验规模较小**: 仅在 MNIST/CIFAR-10 上验证，缺乏大规模场景的测试

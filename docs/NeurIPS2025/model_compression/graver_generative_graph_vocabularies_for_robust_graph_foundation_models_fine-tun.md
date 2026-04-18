@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graver: Generative Graph Vocabularies for Robust Graph Foundation Models Fine-tuning
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：少样本设置下标注样本极少（如 one-shot），模型无法从少量样本中充分捕捉目标域结构模式，而预训练知识的迁移又受到领域差异限制。
 
-**本文要解决什么**：如何在随机 support 集下实现鲁棒且高效的 GFM 微调？
+**本文目标**：如何在随机 support 集下实现鲁棒且高效的 GFM 微调？
 
 **切入角度**：通过生成式增强——利用预训练阶段学到的"图词汇"（可迁移子图模式）来增强 support 样本，减少对特定 support 选择的依赖。
 
-**核心idea一句话**：从预训练图中提取可迁移子图词汇，通过 graphon 生成器建模其分布，微调时用 MoE-CoE 路由将相关词汇嵌入 support 样本实现上下文增强。
+**核心 idea**：从预训练图中提取可迁移子图词汇，通过 graphon 生成器建模其分布，微调时用 MoE-CoE 路由将相关词汇嵌入 support 样本实现上下文增强。
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ $$\alpha_{v \to k}^{(t)} \propto \text{Softmax}_k(\langle \mathbf{h}_{u,k}^{\mat
 - **MoE-CoE 设计精巧**：两层路由分别处理"哪个域"和"哪个类"，避免了负迁移
 - **"root + affix" 类比生动**：结构 token = 词根（决定语义类型），特征 token = 词缀（决定域特性）
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 词汇数量 $K$ 和 graphon 分辨率是关键超参数，敏感性分析有限
 - Graphon 估计在大规模稀疏图上可能不稳定

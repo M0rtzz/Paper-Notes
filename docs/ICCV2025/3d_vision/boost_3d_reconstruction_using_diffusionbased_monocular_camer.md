@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Boost 3D Reconstruction using Diffusion-based Monocular Camera Calibration
 description: >-
@@ -76,7 +76,7 @@ tags:
 - **扩散模型懂焦距**: SD模型确实理解不同焦距的成像特征（Fig.1的长焦vs短焦生成），这个发现本身就有价值
 - **内参→度量深度**: 有了准确内参，仿射不变深度可以升级为度量深度——一个被忽视的关键环节
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 超广角(小焦距)图像效果下降——训练数据中广角少
 - 推理仍需多步扩散采样（可用few-step方法加速）
 - 度量深度训练仍需LiDAR/RGBD数据的稀疏GT

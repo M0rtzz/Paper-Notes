@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GroundVTS: Visual Token Sampling in Multimodal Large Language Models for Video Temporal Grounding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：固定均匀采样在"信息覆盖"和"信号稀释"之间存在根本性的trade-off——增加帧率提供更多时序线索但引入更多冗余，降低帧率减少冗余但可能丢失关键时刻。需要一种自适应、查询感知的采样机制。
 
-**本文要解决什么？** 如何在 Vid-LLM 的视觉 token 层面实现查询引导的自适应采样，在保留关键时空信息的同时抑制冗余内容？
+**本文目标** 如何在 Vid-LLM 的视觉 token 层面实现查询引导的自适应采样，在保留关键时空信息的同时抑制冗余内容？
 
 **切入角度**：从帧率敏感性实验出发——Qwen2.5VL-7B 在 2.0-2.4 FPS 达到最佳 mIoU 47.8%，超过此范围急剧下降。这表明 VTG 需要的是"对的 token"而非"多的 token"。因此将采样粒度从帧级下沉到 token 级，在 VLM 内部（视觉编码器和多模态投影层之后）根据 token-query 相似度进行可微的 top-K 选择。
 
-**核心idea一句话**：在 Vid-LLM 中引入查询引导的 token 级可微采样模块，用 Gumbel-Softmax STE 实现端到端训练，配合三阶段渐进优化策略适应非均匀 token 分布。
+**核心 idea**：在 Vid-LLM 中引入查询引导的 token 级可微采样模块，用 Gumbel-Softmax STE 实现端到端训练，配合三阶段渐进优化策略适应非均匀 token 分布。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ tags:
 - Gumbel-Softmax STE 实现 token 级可微选择在 VTG 场景的应用是巧妙的工程设计。这种"选择即注意力"的思路可以迁移到任何需要稀疏化处理的多模态任务
 - 三阶段渐进优化避免了端到端训练的不稳定性，且消融实验精确量化了每个阶段的贡献，方法论严谨
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 采样比率 $\rho=0.5$ 在所有数据上固定，理想情况下应根据视频复杂度和查询自适应调整
 - GroundVTS-I（InternVL3.5基座）在 Charades-STA 上的提升幅度明显小于 GroundVTS-Q，说明方法与不同采样范式（定帧率 vs 定帧数）的兼容性有差异
 - VTS 模块增加了训练复杂度（三阶段），推理时的 top-K 计算也有额外开销

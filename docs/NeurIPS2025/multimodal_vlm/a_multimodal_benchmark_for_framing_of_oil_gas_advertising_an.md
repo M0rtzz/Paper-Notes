@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Multimodal Benchmark for Framing of Oil & Gas Advertising and Potential Greenwashing Detection
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：视频中的框架信息往往是隐式的（implicit framing）——不直接用文字说"我们环保"，而是通过太阳能电池板画面暗示。VLM 需要同时理解视觉符号、文化语境和企业策略才能准确分类，但目前缺乏评估这种能力的基准。
 
-**本文要解决什么？** (1) 构建首个多模态（视频+文本+转录）的 O&G 广告框架分析基准；(2) 覆盖 Facebook 和 YouTube 两个平台的不同广告策略；(3) 系统评估当前 VLM 在此任务上的能力和瓶颈。
+**本文目标** (1) 构建首个多模态（视频+文本+转录）的 O&G 广告框架分析基准；(2) 覆盖 Facebook 和 YouTube 两个平台的不同广告策略；(3) 系统评估当前 VLM 在此任务上的能力和瓶颈。
 
 **切入角度**：从两个互补平台（Facebook 的政治广告 vs YouTube 的企业品牌宣传）收集数据，分别定义细粒度框架类型，并设计 entity-aware 的 1-shot 提示策略来提升 VLM 表现。
 
-**核心idea一句话**：构建首个多模态 O&G 广告 framing 基准，定量暴露 VLM 在视频 greenwashing 检测任务中隐式框架和文化理解方面的系统性不足。
+**核心 idea**：构建首个多模态 O&G 广告 framing 基准，定量暴露 VLM 在视频 greenwashing 检测任务中隐式框架和文化理解方面的系统性不足。
 
 ## 方法详解
 
@@ -105,7 +105,7 @@ tags:
 - **Entity-aware 提示策略**简单但有效——利用同一企业广告策略的一致性提升 few-shot 效果，这种思路可迁移到任何实体级分类任务（如品牌情感分析、政治广告检测）
 - **"印象型标注"的设计哲学**——YouTube 子集的标签刻意捕捉"观众的主观印象"而非客观事实，这正契合 greenwashing 的本质：它操纵的是印象而非事实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **YouTube 标注覆盖有限**：仅 386 个视频，训练/测试各半，对低资源标签（如 Patriotism、Green Innovation）统计可靠性不足
 - **Facebook 标签为"远程标注"**：原始标注基于广告文本而非视频本身，视频与文本标签之间可能存在不对齐

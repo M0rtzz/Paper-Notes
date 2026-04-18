@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BeeRNA: Tertiary Structure-Based RNA Inverse Folding Using Artificial Bee Colony
 description: >-
@@ -103,7 +103,7 @@ $$\text{mutation\_rate} = \max\left(0.1,\ 0.095 \cdot e^{-\frac{\text{best\_RMSD
 - **结构导向评估**：论文有力论证了以 RMSD/GDT-TS 代替序列恢复率作为评估指标的合理性
 - **生物约束整合**：GC 含量、Watson-Crick 配对等约束直接嵌入优化流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **长 RNA 可扩展性差**：>100 nt 时搜索空间指数增长，RMSD 明显升高（如 2R8S 159 nt 达 26 Å）
 - **依赖 RhoFold 预测精度**：RhoFold 本身的误差会传递到 BeeRNA 的优化结果

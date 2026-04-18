@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvoEngineer: Mastering Automated CUDA Kernel Code Evolution with Large Language Models
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：性能提升与代码正确性之间存在 trade-off。追求高加速比往往导致代码有效率下降，而保守策略又限制了性能提升空间。现有方法要么忽视这个 trade-off（策略盲目），要么通过复杂 prompt 过度消耗 token（资源低效）。
 
-**本文要解决什么？** 如何系统化地选择和设计优化策略，在 LLM-based kernel 优化中同时提升性能和正确性？
+**本文目标** 如何系统化地选择和设计优化策略，在 LLM-based kernel 优化中同时提升性能和正确性？
 
 **切入角度**：将代码演化分解为两个正交组件（traverse + population management），并在 traverse 内部进一步分离策略层和 prompt 工程层，使得分析和设计优化策略成为可能。
 
-**核心 idea 一句话**：通过两层分解的 traverse technique 设计（解耦"用什么信息指导搜索"和"如何写 prompt"），实现对 LLM-based 代码演化策略的系统化分析和选择。
+**核心 idea**：通过两层分解的 traverse technique 设计（解耦"用什么信息指导搜索"和"如何写 prompt"），实现对 LLM-based 代码演化策略的系统化分析和选择。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ EvoEngineer 将 LLM-based 代码演化分解为两个正交组件：**Traverse T
 - **揭示了 LLM 代码演化中的核心 trade-off**：信息越多→正确性越高但加速越保守。这是一个重要的框架级洞察，对后续工作有很强的指导意义。
 - **问题形式化是关键贡献**：将 CUDA kernel 优化形式化为约束优化问题，并定义统一的评估协议，解决了领域碎片化问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在单 GPU 架构 (RTX 4090) 上测试，跨架构泛化性未知
 - 45 次试验的预算限制可能不足以展示某些方法的潜力
 - Open-world 信息（I4: domain knowledge）未被探索，可能是提升上限的关键

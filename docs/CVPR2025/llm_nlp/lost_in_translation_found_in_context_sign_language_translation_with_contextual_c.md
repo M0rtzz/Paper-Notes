@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lost in Translation, Found in Context: Sign Language Translation with Contextual Cues
 description: >-
@@ -79,7 +79,7 @@ tags:
 - 词级/线索级随机删除缩小训练-测试域差
 - LLM评估指标比BLEU更能捕捉语义同义性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 历史预测错误传播问题
 - 难以区分疑问句/陈述句，频繁遗漏否定词
 - Llama3-8B推理延迟可能限制实时应用

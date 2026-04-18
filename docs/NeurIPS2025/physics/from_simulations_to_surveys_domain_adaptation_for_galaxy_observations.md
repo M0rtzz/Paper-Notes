@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Simulations to Surveys: Domain Adaptation for Galaxy Observations
 description: >-
@@ -94,7 +94,7 @@ Domain AUC ≈ 0.5 表示源-目标特征在潜在空间中不可区分（理想
 - **度量工程**：系统对比 46 种距离度量是独特贡献，扩展的 GeomLoss 库对域适应社区有价值
 - **物理意义**：域对齐的目标不仅是提高分类精度，更重要的是保证物理推断的校准性——这区别于一般的域适应工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅三类形态分类（椭圆/旋涡/不规则），尚未扩展到连续物理量（恒星质量、SFR）
 - 不规则星系类别表现仍差，Macro F1 仅 0.626
 - 论文标注为 "preliminary pipeline"，尚未在大规模多红移数据上验证

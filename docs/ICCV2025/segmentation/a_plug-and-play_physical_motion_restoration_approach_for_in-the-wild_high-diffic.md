@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Plug-and-Play Physical Motion Restoration Approach for In-the-Wild High-Difficulty Motions
 description: >-
@@ -174,7 +174,7 @@ $$\mathcal{F}_t = \left(\frac{1}{J}\sum_{i=1}^J\|rela(\hat{p}_t^i) - rela(p_t^i)
 5. **收集206个高难度野外视频作为benchmark**：包含艺术体操、跆拳道、瑜加等，填补评估空白
 6. **问题分析透彻**：清楚区分"瑕疵动作"和"复杂动作模仿"两个独立问题，分别用MCM和PTM解决
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持单人动作**，无法恢复近距离交互的多人运动
 2. TTA推理速度较慢：高难度动作需2000-4000步适应

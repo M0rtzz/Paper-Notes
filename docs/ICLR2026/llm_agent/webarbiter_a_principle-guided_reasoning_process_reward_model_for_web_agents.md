@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WebArbiter: A Principle-Guided Reasoning Process Reward Model for Web Agents
 description: >-
@@ -144,7 +144,7 @@ WebArbiter-7B 以 Avg BoN Acc 超越 GPT-5 达 **9.1 个百分点**，超越前 
 4. **小模型超大模型**：7B 模型超越 GPT-5 和 DeepSeek-R1
 5. **两阶段训练策略**：推理蒸馏 + RL 的组合互补性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练数据仅 30K 且来自 Mind2Web 单一环境，扩展多环境训练数据可能进一步提升
 - 当前仅支持成对比较，多候选设置需要进一步验证
 - 基于文本的观察表示（accessibility tree），未利用视觉信息

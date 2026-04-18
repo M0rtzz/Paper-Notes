@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Swap Joint Diffusion for 2D Long-Form Latent Generation
 description: >-
@@ -106,7 +106,7 @@ SaFa比SyncDiffusion快约12.5倍，比MAD高质量得多。
 - 模态无关（音频+图像）、架构无关（U-Net+DiT）、无需训练的三重通用性极其实用
 - 效率优势巨大：2-20倍加速，同时质量更优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对于1D wave-based VAE潜表示或离散token表示的适用性还有待验证
 - Reference-Guided Swap依赖单一参考轨迹，在语义高度多样化的全景中可能限制内容多样性

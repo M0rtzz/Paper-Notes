@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] K-Sort Eval: Efficient Preference Evaluation for Visual Generation via Corrected VLM-as-a-Judge
 description: >-
@@ -89,7 +89,7 @@ $$i^* = \arg\max_i (U_{\text{unc}}^i + \alpha U_{\text{div}}^i)$$
 - 实用价值高：为新模型提供快速、低成本、自动化的偏好评估方案
 - 同时适用于 T2I 和 T2V 任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 K-Sort Arena 已有数据作为监督信号，新模型类型可能覆盖不足
 - VLM 评判仍有固有偏差，校正只能缓解而非消除
 - 当前仅验证了 GPT-4o 和 Qwen-VL-Max 两个 VLM，更多 VLM 的适用性待验证

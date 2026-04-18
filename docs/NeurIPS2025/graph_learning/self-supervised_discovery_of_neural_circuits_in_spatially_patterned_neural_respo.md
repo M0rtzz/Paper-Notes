@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Supervised Discovery of Neural Circuits in Spatially Patterned Neural Responses with Graph Neural Networks
 description: >-
@@ -116,7 +116,7 @@ GNN推断误差比GLM低70%以上。
 2. **双模块解耦设计**：结构学习与动力学预测的分离使得连接矩阵成为可解释的潜在表示
 3. **生物可验证**：在真实HD细胞数据上验证了环形吸引子假说
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设连接强度在记录期间不变，无法处理突触可塑性
 - 当前仅验证了环形网络拓扑，对任意拓扑的泛化性待验证

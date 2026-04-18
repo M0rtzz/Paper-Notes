@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] REPRO-Bench: Can Agentic AI Systems Assess the Reproducibility of Social Science?
 description: >-
@@ -96,7 +96,7 @@ tags:
 - 对 Agent 失败模式的**系统分类**（4 种类型）为后续改进提供了明确方向。
 - REPRO-Agent 验证了"从失败分析到改进策略"的闭环有效性，71% 的相对提升令人信服。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每篇论文仅有一个任务版本，缺乏含故意错误/修正代码的变体来进一步测试 Agent 鲁棒性。
 - 未探索更难场景（如遮蔽实验结果数据点，仅提供原始数据）。
 - 仅覆盖社会科学领域，未扩展至生物学等同样面临可复现性问题的领域。

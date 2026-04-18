@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Confidence Trap: Gender Bias and Predictive Certainty in LLMs
 description: >-
@@ -141,7 +141,7 @@ Beta post-hoc calibration使ECE降低约3倍，同时提升准确率，但不构
 - **蒸馏传播偏见**：DeepSeek-8B（从Llama-3.1-8B蒸馏）校准误差更高、人类对齐更低，表明蒸馏过程损害了校准质量
 - **规模悖论**：模型增大改善了男性校准但恶化了女性校准（Gemma-2-27B女性ECE↑144%），挑战了"bigger is better"的假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限英语和二元性别代词**：未涉及非二元性别代词（they/them）和多语言场景
 - **仅模板句评估**：Winograd-style控制句与自然语言差距大，Table 8显示在自由文本caption中ECE差异消失

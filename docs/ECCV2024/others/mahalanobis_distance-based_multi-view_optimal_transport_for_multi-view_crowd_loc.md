@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization
 description: >-
@@ -128,7 +128,7 @@ $$C_{ij} = \sum_{k=1}^K \mathbb{1}(d_{cam}^k) \exp(\sqrt{(\mathbf{x}_i - \mathbf
 - **视线方向+距离**的联合建模，充分利用了多视角系统的几何信息
 - 方法是即插即用的损失函数，可与任何现有多视角定位模型结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在小规模单场景数据集Wildtrack上不如3DROM（专门的数据增强方法），可能存在过拟合问题
 - 最近相机的选择策略较为简单，可考虑加权多相机的贡献

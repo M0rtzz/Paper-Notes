@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Describe, Adapt and Combine: Empowering CLIP Encoders for Open-set 3D Object Retrieval
 description: >-
@@ -135,7 +135,7 @@ AB-LoRA 效果（OS-MN40-core, ViT-B/32）:
 - **MLLM 的创造性双用**: 训练时增强文本监督，推理时提供外部语义线索，设计优雅
 - **AB-LoRA 的通用价值**: 在 LoRA 中加偏置来缓解小数据过拟合，思路可迁移到其他领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对高属性机械零件（OS-ESB-core）InternVL 描述能力有限，改进空间大
 - 灰度投影图像丢失了颜色信息，可能影响颜色敏感类别的检索

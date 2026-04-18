@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Generalization Bounds for Transductive Learning by Transductive Local Complexity and Its Applications
 description: >-
@@ -104,7 +104,7 @@ $$\tilde{T}_n(h) \coloneqq \inf_{f_1,f_2 \in \mathcal{F}: \ell_{f_1} - \ell_{f_2
 4. **与归纳学习的桥梁**：Theorem 3.1 建立了转导复杂度与归纳 Rademacher 复杂度的对称化不等式关系
 5. **代理方差算子**的引入为 peeling 策略提供了恰当的局部化度量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对数间隙未完全消除**：与极小极大下界仍差 $\log m$ 因子，最优界的完全紧致性仍待解决
 2. **纯理论工作**：缺乏实验验证，未在实际转导学习算法上测试界的紧致性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Holistic to Localized: Local Enhanced Adapters for Efficient Visual Instruction Fine-Tuning
 description: >-
@@ -110,7 +110,7 @@ Dual-LoRA 内部设计消融：
 3. **效率优势显著**：相同参数量下比所有 LoRA-MoE 方法更好，且推理时间开销微乎其微
 4. **VCE 轻量有效**：仅 5.53 MB 即可从多级特征图聚合局部信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验主要基于 LLaVA-1.5-7B 单一 MLLM，未在更大模型（13B/70B）或更新架构（Qwen-VL-2、InternVL 等）上验证
 - VCE 中间层的选择（2, 8, 14, 20）是手动设定的，可探索自适应选择

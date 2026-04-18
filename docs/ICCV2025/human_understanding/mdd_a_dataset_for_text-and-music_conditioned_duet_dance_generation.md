@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MDD: A Dataset for Text-and-Music Conditioned Duet Dance Generation
 description: >-
@@ -122,7 +122,7 @@ $$E(\theta, t, \beta) = \lambda_1 \frac{1}{N} \sum_{j \in \mathcal{J}} \lambda_p
 - **任务定义合理**：Text-to-Duet 和 Text-to-Dance Accompaniment 分别对应跟随生成和协调生成两种实际需求
 - **数据集对比全面**：与 11 个相关数据集的详细对比突显优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基线方法性能与 Ground Truth 差距较大，说明任务极具挑战性
 - 数据集虽然是"大规模"但对数据驱动方法可能仍不够，特别是某些舞种仅约 30 分钟

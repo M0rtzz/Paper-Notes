@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics
 description: >-
@@ -135,7 +135,7 @@ $$DE(R_\ell^{\hat{x}} \rightarrow R_\ell^x) = P(\hat{y}^{gold} \mid x+q; \text{p
 3. **可解释性驱动的改进策略**：不是盲目微调，而是先用机制可解释性定位问题层，再定向正则化——这种思路具有通用性
 4. **手动+合成双分割设计**：手动保证质量和多样性，合成保证规模和可复现性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数据集规模相对较小（手动 500 + 合成 2114），可能不足以覆盖所有语用现象
 2. 仅测试了 yes-no 问题，开放式问答场景下的鲁棒性可能更差

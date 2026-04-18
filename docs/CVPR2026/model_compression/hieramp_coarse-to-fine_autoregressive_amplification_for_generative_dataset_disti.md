@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HierAmp: Coarse-to-Fine Autoregressive Amplification for Generative Dataset Distillation
 description: >-
@@ -114,7 +114,7 @@ $$\tilde{\mathbf{L}}_n^{(h)} = \mathbf{L}_n^{(h)} + \beta_n \cdot \mathbf{1} \cd
 - **一致的 SOTA**：在 CIFAR-10/100、ImageNet-Woof/100/1K 上全面领先
 - **跨架构泛化**：蒸馏数据在不同 teacher-student 架构组合中表现稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练 VAR 模型，无法直接迁移到其他生成框架（扩散模型、GAN 等）
 - $\rho$ 和 $\beta$ 的阶段调度需要手动设定，缺乏自适应机制

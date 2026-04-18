@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Linking Modality Isolation in Heterogeneous Collaborative Perception
 description: >-
@@ -114,7 +114,7 @@ $$L = L_{\text{det}}(\hat{\mathcal{O}}_i, \mathcal{O}_i^0) + L_{\text{pyramid}} 
 - **强可扩展性**：一对多翻译器使新模态接入成本从 $O(n^2)$ 降至 $O(n)$
 - **即插即用设计**：冻结原始编码器和后端，仅训练轻量插入模块
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 码本量化带来的信息损失导致部分场景 AP70 略低于 HEAL（如 m1+m2 场景 85.56 vs 86.18）
 - 码本大小固定为 16，较小的码本可能无法充分表达复杂场景

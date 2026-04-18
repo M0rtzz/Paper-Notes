@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Out-of-Distribution Detection with Extended Logit Normalization
 description: >-
@@ -91,7 +91,7 @@ ELogitNorm 是一个替代标准交叉熵的训练目标函数。模型架构不
 - Proposition 2 给出了一个优雅的几何解释——为什么到决策边界的距离比到原点的距离更好
 - 无超参数设计是实际应用的重要优势：LogitNorm 需要调 $\tau$，而 ELogitNorm 完全自适应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - near-OOD 的提升相对有限，作者承认这是所有训练时方法的共同挑战
 - 决策边界距离的计算涉及所有 $c-1$ 个平面，当类别数很大时（如 ImageNet-1K 的 1000 类）开销可能增加（虽然作者声称有高效实现）
 - 没有在 ViT 等 Transformer 架构上验证

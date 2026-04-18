@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Highlighting What Matters: Promptable Embeddings for Attribute-Focused Image Retrieval
 description: >-
@@ -155,7 +155,7 @@ tags:
 4. **实际可用的加速方案**：预处理和线性近似策略使方法具备实际部署价值
 5. **跨架构泛化**：方法不绑定特定模型，具有良好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖MLLM**：可提示嵌入需要MLLM级别的模型，计算成本高于纯CLIP
 2. **属性类型的预定义**：预处理加速需要预定义属性集合，难以处理完全开放的查询

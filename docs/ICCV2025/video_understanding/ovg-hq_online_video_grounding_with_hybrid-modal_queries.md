@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OVG-HQ: Online Video Grounding with Hybrid-modal Queries
 description: >-
@@ -140,7 +140,7 @@ $$\mathcal{L}_d = \frac{1}{N}\sum_{i=1}^{N}\left(\mathcal{L}_{\text{KL}}(\mathbf
 - **参数即记忆的新思路**：用 TTT 层的参数作为动态记忆，推理时持续更新参数，比传统记忆库更高效且更具表达力。
 - **在线评估指标设计**：引入时效性衰减因子 $\beta$ 的 oR、omAP 指标，惩罚延迟预测，更好评估在线场景。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅在 QVHighlights 上构建多模态数据集，场景相对简单，未来需在更复杂场景（如监控）验证。
 - 滑动窗口大小固定，未来可探索自适应窗口策略。

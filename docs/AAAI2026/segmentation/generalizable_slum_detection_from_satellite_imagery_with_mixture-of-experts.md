@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizable Slum Detection from Satellite Imagery with Mixture-of-Experts
 description: >-
@@ -143,7 +143,7 @@ GRAM 在所有城市全面领先，特别是在 Dar es Salaam 提升最为显著
 3. **置信度过滤的失败**：清晰展示域偏移下entropy-based方法的脆弱性，为TTA社区提供了重要教训
 4. **社会价值**：支持对缺乏官方统计数据的地区进行贫民窟监测，对城市政策制定有直接实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目标域仅测试了3个非洲城市，缺少亚洲/南美未见城市的评估
 - 区域分类器 $h_\psi$ 的质量直接影响路由准确性，但分类器本身的鲁棒性未深入分析

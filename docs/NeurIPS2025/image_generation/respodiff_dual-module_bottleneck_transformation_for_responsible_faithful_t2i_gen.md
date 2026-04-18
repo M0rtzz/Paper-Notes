@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RespoDiff: Dual-Module Bottleneck Transformation for Responsible & Faithful T2I Generation
 description: >-
@@ -147,7 +147,7 @@ $$\hat{f}(y_{neu}) = g(\mathcal{T}_\theta^{resp,s}(\boldsymbol{h}_{neu}) + \math
 - **可扩展到SDXL等大模型**：轻量模块设计使得适配大模型成本很低
 - **安全性与公平性可组合**：模块化设计允许独立学习、推理时灵活组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 公平性和安全性概念需要预先定义——无法自动发现新兴的偏见类别
 - 依赖预定义的中性提示——虽然实验验证了替代提示的鲁棒性，但自动选择仍是开放问题

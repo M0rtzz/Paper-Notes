@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GEM-TFL: Bridging Weak and Full Supervision for Forgery Localization
 description: >-
@@ -91,7 +91,7 @@ tags:
 2. 图扩散替代 OIC 分数的硬编码外区域设置，减少人为偏差
 3. TCR 的训练无关特性——后处理级别的精化不增加训练开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 与全监督方法仍有约 20% mAP 差距
 2. 潜在属性数量 m 需要手动设置

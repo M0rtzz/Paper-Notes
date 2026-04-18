@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁
 description: >-
@@ -29,9 +29,9 @@ tags:
 1. **领域现状**：Precision 和 Recall 是分类任务最基本的评价指标，但单独使用任何一个都不够全面，因此常取加权调和平均得到 $F_\beta$ 分数。实践中最常用的是 $F_1$（等权），Google Scholar 显示约 31.5 万篇论文使用 F-measure，约 10% 的 CVPR 2025 论文使用 $F_1$。
 2. **现有痛点**：虽然 $F_\beta$ 在数值上确实是 Precision 和 Recall 的折中，但从排名角度看，$F_1$ 诱导的排名是否真的是 Precision 排名和 Recall 排名之间的最优折中？这个问题从未被严格研究过。特别地，当类先验 $\pi_+ \to 0$ 时，所有 $F_\beta$ 都退化为模仿 Precision 的排名而忽略 Recall。
 3. **核心矛盾**：$F_1$ 被默认为"平衡"的折中，但 $\beta=1$ 的选择没有排名理论基础——同一个 $\beta$ 无法在所有类先验下提供最优排名。
-4. **本文要解决什么？** (a) $F_\beta$ 诱导的排名是否构成有意义的路径？(b) $F_1$ 是否是最优排名折中？(c) 如何找到最优的 $\beta$？
+4. **本文目标** (a) $F_\beta$ 诱导的排名是否构成有意义的路径？(b) $F_1$ 是否是最优排名折中？(c) 如何找到最优的 $\beta$？
 5. **切入角度**：用 Kendall 秩相关/距离的理论框架来度量排名之间的距离，将寻找最优折中形式化为 Fréchet 方差最小化问题。
-6. **核心idea一句话**：$F_\beta$ 诱导的排名流形是 Precision 与 Recall 排名之间的测地线，最优 $\beta^2$ 等于所有性能对之间 $\vartheta$ 值的中位数。
+6. **核心 idea**：$F_\beta$ 诱导的排名流形是 Precision 与 Recall 排名之间的测地线，最优 $\beta^2$ 等于所有性能对之间 $\vartheta$ 值的中位数。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ tags:
 - **闭式公式极简实用**: 只需计算所有性能对的 $\vartheta$ 值取中位数即可，无需复杂优化。
 - 作者提出可以在论文中同时报告 $\tau(Pr; F_\beta)$ 和 $\tau(F_\beta; Re)$ 来评估所选 $\beta$ 的最优度，这是一个很好的实践建议。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 本文仅研究二分类的 Precision-Recall 折中，多类分类需要扩展到 macro/micro 平均场景
 - $\vartheta$ 计算需要所有分类器的完整混淆矩阵，在只有排行榜分数的场景下无法直接使用
 - 论文集中于 $F_\beta$ 族，但是否存在更优的非调和均值形式的排名折中尚未讨论

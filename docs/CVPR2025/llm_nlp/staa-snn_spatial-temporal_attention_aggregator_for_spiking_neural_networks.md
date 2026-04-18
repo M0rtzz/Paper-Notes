@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STAA-SNN: Spatial-Temporal Attention Aggregator for Spiking Neural Networks
 description: >-
@@ -82,7 +82,7 @@ tags:
 - 3个1×1卷积实现轻量自注意，参数少但效果好
 - Grad-CAM可视化显示STAA-LIF聚焦更精准
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ImageNet上与ANN差距仍约6%
 - 未报告GC/PE/SA的独立计算成本
 - 超参敏感性的跨架构分析不足

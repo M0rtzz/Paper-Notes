@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Integrating Task-Specific and Universal Adapters for Pre-Trained Model-based Class-Incremental Learning
 description: >-
@@ -113,7 +113,7 @@ ViT-B/16-IN21K backbone, B0 Inc 设置。TUNA 在所有四个数据集上均为 
 - **双 adapter 互补推理**：task-specific 提供细粒度区分，universal 提供跨任务泛化能力
 - **正交约束设计精细**：仅约束 up-projection 这一选择体现了对 adapter 结构功能的深入理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理效率**：选择最优 adapter 需要多次前向传播（等于任务数量），计算开销随任务增多线性增长
 - universal adapter 融合是静态的（每次新任务后重新融合），未探索在线融合或动态调整

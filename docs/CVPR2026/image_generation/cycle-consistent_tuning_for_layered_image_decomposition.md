@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cycle-Consistent Tuning for Layered Image Decomposition
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{L}_{rec} = \mathbb{E}_{x,t}\left[\|v_\theta(x_t, M, t, \tau) - \frac{
 - 单一LoRA同时编码分解和合成能力，参数效率高
 - 不同于操纵式方法（Attend-and-Excite等），本方法对基础模型零修改
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当叠加元素占据画面主体（如大面积墙体广告）时表现退化
 - 目前仅支持双层分解，不能处理多logo叠加

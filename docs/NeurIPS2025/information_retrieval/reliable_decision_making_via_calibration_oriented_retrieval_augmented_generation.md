@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reliable Decision Making via Calibration Oriented Retrieval Augmented Generation
 description: >-
@@ -130,7 +130,7 @@ CalibRAG 使用通用域数据训练，但在医学领域（unseen 检索器 + O
 4. **轻量级方案**：仅需训练 LoRA 适配器和分类头，避免了 PPO 等不稳定训练
 5. **严格理论保证**：使用 strictly proper scoring rule 作为损失函数，保证校准收敛性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据生成和 forecasting function 训练有额外开销
 - 依赖 GPT-4o-mini 作为评估模型 $\mathcal{G}$，可能引入评估偏差

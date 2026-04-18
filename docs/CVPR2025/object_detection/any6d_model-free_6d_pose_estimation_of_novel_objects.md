@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Any6D: Model-free 6D Pose Estimation of Novel Objects
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：利用图像到3D生成模型（InstantMesh）从单张图重建完整 3D 形状，结合深度信息估计度量尺度，实现完整的 full-to-partial 匹配。
 
-**核心 idea 一句话**：单张 RGB-D → InstantMesh 重建归一化 3D → 朝向包围盒粗对齐 → FoundationPose 联合尺寸-位姿精细化 → render-and-compare 选最优假设。
+**核心 idea**：单张 RGB-D → InstantMesh 重建归一化 3D → 朝向包围盒粗对齐 → FoundationPose 联合尺寸-位姿精细化 → render-and-compare 选最优假设。
 
 ## 方法详解
 
@@ -121,7 +121,7 @@ tags:
 - **Full-to-partial 匹配**：完整重建消除了部分匹配的歧义
 - 在手部遮挡（HO3D）和机器人抓取（YCBINEOAT）场景下均显著领先
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 InstantMesh 的重建质量，初始 3D 形状不准确时性能下降
 - 当前不包含形状更新/优化步骤
 - 推理速度受 InstantMesh 限制

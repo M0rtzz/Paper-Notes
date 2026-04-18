@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compress3D: a Compressed Latent Space for 3D Generation from a Single Image
 description: >-
@@ -144,7 +144,7 @@ $$L_R = \lambda_1 L_{rgb} + \lambda_2 L_{mask} + \lambda_3 L_{depth} - \lambda_{
 3. **局部 3D cross-attention**：triplane 查询对应局部立方体而非全局注意力，兼顾表达力与效率
 4. **数据质量 > 数量**：仅 2500 标注训练过滤器，从 Objaverse 筛选 100K 高质量数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 CLIP/OpenShape 预训练模型，对不在训练分布内的物体可能效果有限
 2. FlexiCubes 网格分辨率（90）限制最精细几何细节

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Attribute Steering of Language Models via Targeted Intervention
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：多属性 steering vector 之间存在方向冲突，均匀干预导致过度校正（overcorrection），且无法区分哪些 token 与哪个属性相关。
 
-**本文要解决什么**：(1) 如何在 token 级别精确判断对哪些 token 施加哪个属性的干预？(2) 如何避免多个 steering vector 之间的冲突？
+**本文目标**：(1) 如何在 token 级别精确判断对哪些 token 施加哪个属性的干预？(2) 如何避免多个 steering vector 之间的冲突？
 
 **切入角度**：观察到不同 token 与不同属性的相关性差异很大（如 "harmed" 与 bias 相关，"the" 与任何属性都无关），因此应该选择性地、按需干预。
 
-**核心 idea 一句话**：用属性特定的 gating function 实现 token 级选择性干预，配合 MMD 表示对齐 + 稀疏性 + 正交性约束，解决多属性 steering 的冲突问题。
+**核心 idea**：用属性特定的 gating function 实现 token 级选择性干预，配合 MMD 表示对齐 + 稀疏性 + 正交性约束，解决多属性 steering 的冲突问题。
 
 ## 方法详解
 
@@ -111,7 +111,7 @@ MAT-Steer 在三个数据集上全面超越所有基线，比最强 ITI 基线 L
 - **MMD loss 替代 MSE**捕获分布级别的对齐，比点对点匹配更鲁棒，对无配对数据场景尤其友好。
 - **极高的数据效率**：10% 数据就超过 SFT/DPO 100% 数据，说明 steering vector 方法在数据受限时极具优势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前 gating function 是简单的线性+sigmoid，可能在复杂场景下表达力不足，可以尝试更复杂的 gating（如 MLP 或 attention-based gating）
 - 正交性是软约束，属性数量增加时是否仍能保持性能有待验证
 - 实验主要在 7-8B 模型上进行，更大模型（70B+）上的效果未知

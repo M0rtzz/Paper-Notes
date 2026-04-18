@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EAGLE: Episodic Appearance- and Geometry-Aware Memory for Unified 2D-3D Visual Query Localization
 description: >-
@@ -158,7 +158,7 @@ GLM 消融：
 3. **2D→3D 的高效统一**：用 VGGT 替代传统 SfM (COLMAP)，从分钟级降到秒级推理，且精度更高
 4. **语义×几何双置信度融合**：多视图 3D 聚合时同时考虑分割质量和深度可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 SAM 生成初始伪掩码，SAM 失败时整个管道受影响
 - 记忆库大小固定为 50，对于长视频可能需要更智能的记忆管理策略

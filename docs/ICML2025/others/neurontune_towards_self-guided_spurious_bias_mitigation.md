@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NeuronTune: Towards Self-Guided Spurious Bias Mitigation
 description: >-
@@ -115,7 +115,7 @@ $$\theta_2^* = \arg\min_{\theta_2} \mathbb{E}_{\mathcal{B} \sim \mathcal{D}_{\te
 - **轻量 post hoc**：仅重训最后一层，计算开销极低，可适配任意预训练模型
 - **跨模态通用**：在视觉（ResNet）和文本（BERT）数据上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Avg Acc 会轻微下降**：去偏带来 WGA↑ 的同时整体准确率有 1~3% 的损失（平均-最差 accuracy 的 tradeoff）
 - **识别数据选择敏感**：用训练集做 $\mathcal{D}_{\text{Ide}}$ 效果差（模型已记忆），必须用独立的验证集

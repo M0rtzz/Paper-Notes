@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Eyes and Ears Disagree: Can MLLMs Discern Audio-Visual Confusion?
 description: >-
@@ -185,7 +185,7 @@ $$\mathcal{L}_{OP} = \underbrace{-\frac{1}{T}\sum_{t=1}^{T} \log \pi_\theta(o_t 
 4. **移除 KL 惩罚的合理性**：异构模型间 KL 散度无意义，需要审慎考虑 RL 框架中的默认组件
 5. **实验设计（静音/篡改两种设置）完整**：分别测试了"是否能识别缺失"和"是否能平衡不一致信息"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **基础模型规模较小**：仅用 Qwen2.5-Omni-3B，更大模型可能缓解部分问题
 2. **AV-ConfuseBench 规模有限**：仅 73+100 个样本，可能不足以全面评估

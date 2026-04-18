@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fast Catch-Up, Late Switching: Optimal Batch Size Scheduling via Functional Scaling Laws
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：训练早期信号主导，大 batch 的降噪收益不大但消耗更多数据；训练后期梯度噪声增大，需要大 batch 降噪。但何时切换、如何切换缺乏理论指导。
 
-**本文要解决什么？** (a) 推导固定数据预算下的最优 BSS；(b) 解释为什么 late switching 有效；(c) 在大规模 LLM 预训练中验证理论预测。
+**本文目标** (a) 推导固定数据预算下的最优 BSS；(b) 解释为什么 late switching 有效；(c) 在大规模 LLM 预训练中验证理论预测。
 
 **切入角度**：利用 Functional Scaling Law（FSL）框架将 BSS 优化问题转化为可解析求解的变分问题。
 
-**核心 idea 一句话**：FSL 证明最优 BSS 取决于任务难度——困难任务应大部分时间用小 batch（多做 step 学信号）、最后切大 batch（快速降噪），因为 fast catch-up 效应保证切换后 loss 迅速追平。
+**核心 idea**：FSL 证明最优 BSS 取决于任务难度——困难任务应大部分时间用小 batch（多做 step 学信号）、最后切大 batch（快速降噪），因为 fast catch-up 效应保证切换后 loss 迅速追平。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - **BSS ⟷ LR Schedule 的对偶性**：最优 BSS 的 stable→growth 结构对应 LR 的 warmup→stable→decay，二者在数据效率上等价但 BSS 在迭代次数上更优——BSS 是更高效的旋钮
 - **可操作的外推策略**：最优切换点服从 $D - P^* \sim D^\gamma$ 的 scaling law，可从小规模实验直接外推
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论基于线性回归/核回归推导，LLM 预训练的非线性动力学可能引入额外因素
 - 任务难度参数 $(s, \beta)$ 在实际 LLM 中难以直接测量，需要通过拟合确定
 - 仅考虑恒定学习率 + BSS，与 learning rate warmup/decay 的联合优化未充分探索

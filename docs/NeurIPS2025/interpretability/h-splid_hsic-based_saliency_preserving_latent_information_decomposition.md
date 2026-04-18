@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] H-SPLID: HSIC-based Saliency Preserving Latent Information Decomposition
 description: >-
@@ -118,7 +118,7 @@ H-SPLID 在背景块攻击下比 Vanilla 高 **26 个百分点**。
 - **理论联系清晰**：将 HSIC + 维度压缩与鲁棒性上界建立严格关联
 - **多类扩展**：将 Wang et al. 的二分类理论扩展到任意 $k$ 类
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. HSIC 经验估计器的计算复杂度为 $O(n^2)$（kernel 矩阵），大 batch 时可能成为瓶颈
 2. 显著/非显著维度的阈值固定（0.5），未探索自适应阈值

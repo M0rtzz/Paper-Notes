@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SIGMA: Sinkhorn-Guided Masked Video Modeling
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **Frozen probing 是检验预训练特征质量的黄金标准**: 本文在这一指标上的优势远大于 full finetuning，说明特征本身的语义质量显著提升
 - **时空管级别的聚类赋予了 token-level 的语义意义**：弥补了视觉 token（patch）与语言 token（word）之间的语义差距
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **未扩展到 ViT-L/ViT-H**: 受学术计算资源限制，仅验证了 ViT-S 和 ViT-B
 - **DINO 变体引入了外部监督**: SIGMA-DINO 使用了 ImageNet 预训练的 DINO 模型，不是纯粹的视频自监督

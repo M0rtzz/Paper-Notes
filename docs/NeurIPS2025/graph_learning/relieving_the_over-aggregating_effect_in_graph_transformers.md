@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Relieving the Over-Aggregating Effect in Graph Transformers
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：全局注意力计算中，节点数越多，注意力分数越均匀（Theorem 3.1 证明 entropy 下界随 $n$ 单调递增），关键消息被稀释（over-aggregating）。而 sparse attention 虽然缓解了此问题，却缩小了感受野。
 
-**本文要解决什么？**：在保持全局感受野的同时缓解 over-aggregating。
+**本文目标**：在保持全局感受野的同时缓解 over-aggregating。
 
 **切入角度**：不减少输入节点数，而是将聚合分成多个并行子过程（cluster-wise aggregation），增加输出维度来保留更多信息。
 
-**核心 idea 一句话**：将全局注意力的 all-to-one 聚合拆分为 cluster-to-one 的多路并行聚合，再通过引导机制让目标节点聚焦信息量最大的子集。
+**核心 idea**：将全局注意力的 all-to-one 聚合拆分为 cluster-to-one 的多路并行聚合，再通过引导机制让目标节点聚焦信息量最大的子集。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ Wideformer 是一个即插即用模块，包含两步：
 - **即插即用设计**：Wideformer 不改变骨干架构，直接作为模块插入，实用性强。
 - **与 over-smoothing/over-squashing 的区分论述**很清晰，帮助社区理解图上的不同信息损失机制。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **提升幅度相对温和**：在一些数据集上提升不到 1%，说明 over-aggregating 不是所有场景的主要瓶颈
 - **Cluster 数量 $m$ 的选择**：需要调参，且对不同数据集的最优值可能不同
 - **Hard assignment**：当前用 argmax 做 hard cluster 分配，可能不够灵活

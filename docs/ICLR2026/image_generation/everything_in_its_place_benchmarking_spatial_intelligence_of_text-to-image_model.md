@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Everything in Its Place: Benchmarking Spatial Intelligence of Text-to-Image Models
 description: >-
@@ -155,7 +155,7 @@ SpatialGenEval 将空间智能分为 4 个层级、10 个子领域：
 3. **"E: None" 选项的工程设计**：避免强制选择，提高评估准确性
 4. **SpatialT2I 的数据飞轮**：评估基准的副产品可直接用于模型改进，形成闭环
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 最高分仅 ~63%，面向及格线水平——说明任务仍然极具挑战性
 2. 提示约 60 词可能超出某些 CLIP 编码器的有效处理长度（77 tokens）
@@ -188,7 +188,7 @@ SpatialGenEval 将空间智能分为 4 个层级、10 个子领域：
 
 ## 亮点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 与相关工作的对比
 

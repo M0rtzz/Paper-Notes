@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UNIC: Universal Classification Models via Multi-teacher Distillation
 description: >-
@@ -99,7 +99,7 @@ UNIC的训练流程：(1) 选择多个具有互补优势的预训练教师模型
 - 教师丢弃借鉴了Dropout的理念，应用到教师层面是创新性的迁移
 - 系统化的分析-改进方法论比直接提方法更有说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 蒸馏训练仍需要较大的计算资源
 - 教师模型的选择需要人工经验，缺乏自动化方法

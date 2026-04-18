@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Person Re-Identification Meets Event Camera: A Benchmark Dataset and An Attribute-guided Re-Identification Framework
 description: >-
@@ -89,7 +89,7 @@ tags:
 - **三阶段渐进训练策略**：从 text alignment → multimodal fusion → attribute tuning，逐步引入信息，训练稳定
 - **15 个 SOTA baseline 系统评测**：为社区提供完善的 benchmark
 
-## 局限性 / 可改进方向
+## 局限与展望
 - EvReID 仅 $346 \times 260$ 低分辨率，限制了细粒度特征学习
 - 行人属性依赖外部预训练模型 VTFPAR++ 的预测质量
 - Event 单模态性能远低于 RGB（如 AP3D: 40.6 vs 65.4 mAP），Event 特征利用还有大量空间

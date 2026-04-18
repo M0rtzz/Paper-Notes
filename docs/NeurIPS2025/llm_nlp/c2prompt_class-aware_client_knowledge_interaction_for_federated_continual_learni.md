@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] C²Prompt: Class-aware Client Knowledge Interaction for Federated Continual Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：prompt通信中缺乏类级一致性 → 新prompt之间产生知识冲突 → 还干扰旧prompt → 同时加剧空间遗忘（跨客户端）和时间遗忘（跨任务）。
 
-**本文要解决什么？** (a) 如何在客户端本地弥补非IID带来的类内分布偏差？(b) 如何在服务器端根据类级相关性精确聚合prompt？
+**本文目标** (a) 如何在客户端本地弥补非IID带来的类内分布偏差？(b) 如何在服务器端根据类级相关性精确聚合prompt？
 
 **切入角度**：从类级knowledge coherence的角度切入——既在数据输入层面做分布补偿（LCDC），又在参数聚合层面做类感知加权（CPA）。
 
-**核心idea一句话**：通过估计全局类分布来补偿本地分布偏差 + 通过prompt-类亲和度矩阵实现类感知聚合，双管齐下解决FCL中的知识冲突。
+**核心 idea**：通过估计全局类分布来补偿本地分布偏差 + 通过prompt-类亲和度矩阵实现类感知聚合，双管齐下解决FCL中的知识冲突。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ ImageNet-R上Avg超Powder 2.51%，DomainNet上超2.90%。
 - **类感知聚合的"免费"实现**：client histogram在训练过程中在线累积，零额外计算，但提供了精确的prompt-类亲和度信息作为聚合权重
 - prompt注意力可视化（Figure 5）直观展示了CPA使prompt更关注判别性区域，而Powder的prompt注意力散漫
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 高斯假设可能对复杂多模态分布不准确，特别是类别内部有子簇结构时
 - 仅在ViT-B/16 + 图像分类上验证，未扩展到更大backbone或NLP任务
 - 客户端数量固定为5，对更大规模（如50+客户端）的扩展性未验证

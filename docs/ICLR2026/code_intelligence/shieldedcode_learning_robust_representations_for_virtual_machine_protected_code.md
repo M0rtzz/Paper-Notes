@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ShieldedCode: Learning Robust Representations for Virtual Machine Protected Code
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{M}(x_t^k) = \underbrace{\{x_t^1,...,x_t^m, [\text{VINST}]_t\}}_{\text
 3. FCL 与 PCL 的数学兼容性——FCL 的指数衰减权重和 PCL 的线性缩放约束协同工作，在功能聚类和保护分层间实现稳定均衡（有定理证明）。
 4. 逆向工程用户研究设计完善——12 名研究生 + 3 名专业逆向工程师交叉验证，提供了可信的安全评估。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基于 CodeLlama 34B，模型规模大，实际部署的推理成本较高。
 2. 训练数据仅覆盖 C 语言 x86-64 架构，对其他语言和 ISA（ARM、RISC-V）的泛化性未验证。

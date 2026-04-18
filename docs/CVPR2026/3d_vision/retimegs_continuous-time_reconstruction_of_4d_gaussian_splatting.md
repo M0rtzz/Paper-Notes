@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RetimeGS: Continuous-Time Reconstruction of 4D Gaussian Splatting
 description: >-
@@ -191,7 +191,7 @@ RetimeGS 在三项指标上全面最优。相比最强基线 2D Lifting，PSNR *
 4. **动态拉伸多重收益**：减少冗余 primitive + 释放预算给动态区域 + 静态区域跨帧累积监督减少闪烁
 5. **光流使用精巧**：初始化+双向监督+训练后期自动衰减，从 coarse-to-fine 充分利用光流但不过拟合噪声
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **极低帧率失效**：帧间运动超约 50 像素（@1K）时光流不可靠，中间帧出现伪影；7.5 FPS 快速舞蹈已明显退化
 2. **轻微闪烁**：相邻 primitive 组的不相交本质在输入帧处仍可能导致微小时间不连续

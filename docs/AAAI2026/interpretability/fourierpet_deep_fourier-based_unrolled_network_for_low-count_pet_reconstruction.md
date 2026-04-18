@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FourierPET: Deep Fourier-based Unrolled Network for Low-count PET Reconstruction
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L}_{total} = 0.5 \cdot \mathcal{L}_{Smooth\text{-}L1} + 0.3 \cdot \ma
 3. **0.44M 参数**的极致效率对资源受限的临床部署极具价值
 4. 跨物种零样本泛化暗示频域退化模式具有普遍性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了脑部和全身 PET，未涉及心脏 PET 等其他模态
 - K=3 展开级数是固定的，自适应深度可能进一步提升效果

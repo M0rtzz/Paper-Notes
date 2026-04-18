@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards
 description: >-
@@ -121,7 +121,7 @@ Qwen2.5-VL-72B 上 ChartQA 88.20→91.04（+2.84），MathVista 73.93→76.44（
 4. **方法轻量可复现**：双 LoRA + 冻结骨干，6000 步即可完成训练
 5. **泛化性强**：在 4 种不同架构（Qwen、InternVL、Gemma、Llama）和 2 种规模（7B/72B）上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **提升幅度有限**：最大约 +3%，对于已接近饱和的 benchmark（如 ScienceQA 88→89%）边际效益较小
 2. **仅验证数学推理**：未扩展到更广泛任务（OCR、VQA、视觉对话等），通用性存疑

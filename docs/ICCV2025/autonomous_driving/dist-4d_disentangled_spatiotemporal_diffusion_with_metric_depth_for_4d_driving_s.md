@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiST-4D: Disentangled Spatiotemporal Diffusion with Metric Depth for 4D Driving Scene Generation
 description: >-
@@ -132,7 +132,7 @@ Valid Mask贡献最大（减少FID 15.8%），SCC进一步减少20%。
 - 深度获取管线本身就有独立价值，结合LiDAR+MVS+深度补全的思路可复用
 - 首次实现前馈式时空联合4D场景生成，为自动驾驶模拟设立了new paradigm
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 深度伪GT质量仍有改善空间，特别是远处建筑
 - 两个扩散模型（DiST-T + DiST-S）的推理开销较大
 - 目前仅在nuScenes（700训练视频）上验证

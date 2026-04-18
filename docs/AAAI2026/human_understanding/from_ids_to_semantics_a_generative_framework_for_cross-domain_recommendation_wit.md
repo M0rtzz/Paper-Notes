@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From IDs to Semantics: A Generative Framework for Cross-Domain Recommendation with Adaptive Semantic Tokenization
 description: >-
@@ -130,7 +130,7 @@ GenCDR 在所有场景和指标上均显著优于现有 SOTA（包括单域 SDSR
 - **信息瓶颈正则化**的巧妙运用，从理论上保证了通用与领域特定表示的解耦
 - 前缀树约束生成的设计简洁有效，解决了生成式推荐中无效 ID 的常见问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验数据集虽涵盖三个场景，但领域数量仅为 2，未验证大量领域（>5）时的可扩展性
 - LoRA 适配器数量随领域线性增长，当领域非常多时参数管理成本增加

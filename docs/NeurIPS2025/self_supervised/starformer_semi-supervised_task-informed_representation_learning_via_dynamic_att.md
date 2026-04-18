@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：对比学习需要好的增强策略，但传统随机增强不考虑任务相关性。掩关键区域才能迫使模型学到鲁棒表示。
 
-**本文要解决什么？** 设计将表征学习与下游任务耦合的框架，同时处理非平稳和不规则采样。
+**本文目标** 设计将表征学习与下游任务耦合的框架，同时处理非平稳和不规则采样。
 
 **切入角度**：动态注意力掩码找到任务关键区域→掩码→重建→批内/类内对比学习。
 

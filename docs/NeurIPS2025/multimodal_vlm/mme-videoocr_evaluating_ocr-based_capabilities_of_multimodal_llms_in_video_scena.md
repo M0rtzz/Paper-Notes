@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MME-VideoOCR: Evaluating OCR-Based Capabilities of Multimodal LLMs in Video Scenarios
 description: >-
@@ -109,7 +109,7 @@ tags:
 - ⭐⭐⭐⭐ **发现有价值**：轨迹识别 0%、语言先验偏差、token 压缩缺陷等发现直接指导模型优化方向
 - ⭐⭐⭐ **纯人工标注**：区别于混合标注的 benchmark，质量更可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 总量 2000 QA 对，部分子类别样本数有限（如轨迹识别仅约 50 个），可能导致分数波动
 2. 主要覆盖中英双语，未包含更多语种
 3. 难度分层（易/中/难）设计中，前沿模型在易中难度上表现较好，需持续补充高难度样本

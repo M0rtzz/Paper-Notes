@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation
 description: >-
@@ -105,7 +105,7 @@ $$L_{\text{corr}} = 1 - \frac{1}{5}\sum_{i=1}^{5} g\left(|\mathbf{R}_i^{\mathcal
 - **3D-MOV 数据集设计有深度**: 通过消融发现场景级数据的重要性，而非简单堆量
 - **GeoLink 编码器灵活可扩展**: 与 3D-MVP 不同，微调时可适配任意数量输入视图
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 高精度任务（如 Place Cups）改进有限，受限于下游 RVT 策略本身能力
 - 正交投影可能丢失透视信息，实际机器人相机通常是透视成像

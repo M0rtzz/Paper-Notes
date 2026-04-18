@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ChartCoder: Advancing Multimodal Large Language Model for Chart-to-Code Generation
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：通用LLM训练语料中代码占比低，导致MLLM在代码生成任务上与chart理解任务不对齐；而直接的代码生成容易忽略关键细节（颜色、数据值、样式参数）。
 
-**本文要解决什么？** (a) 如何提高MLLM生成图表代码的可执行率和还原质量？(b) 如何构建大规模高质量chart-to-code训练数据？(c) 如何让模型关注图表中的关键细节？
+**本文目标** (a) 如何提高MLLM生成图表代码的可执行率和还原质量？(b) 如何构建大规模高质量chart-to-code训练数据？(c) 如何让模型关注图表中的关键细节？
 
 **切入角度**：用Code LLM（DeepSeek Coder）替代通用LLM做语言骨干来天然增强代码能力；用LLM先生成代码再执行的方式批量构造数据（一对一映射）；用Snippet-of-Thought分步生成来强调关键信息。
 
-**核心idea一句话**：Code LLM + 160K合成数据 + 逐步推理 = 首个专用chart-to-code MLLM。
+**核心 idea**：Code LLM + 160K合成数据 + 逐步推理 = 首个专用chart-to-code MLLM。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ ChartMimic细粒度子分数（满分各不同）：
 - **Snippet-of-Thought的实用性**：将代码分解为类型→数据→细节→完整代码的4步，既提升了模型表现，也增强了输出的可解释性
 - **数据构建的巧妙反转**：从"看图生成代码"的训练目标出发，用"先生代码再执行"的方式构建数据，保证了代码-图表的精确对应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限Matplotlib/Seaborn**：生成的代码限制在Python标准绑图库，不支持D3.js、ECharts等Web可视化库
 - **27种图表类型仍有限**：未覆盖一些特殊图表（如桑基图、时间轴、地理地图等）
 - **无交互式修改能力**：只能一次性生成完整代码，不支持基于用户反馈的迭代修改

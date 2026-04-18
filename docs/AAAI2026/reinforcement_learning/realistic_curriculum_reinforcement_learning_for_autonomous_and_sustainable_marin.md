@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Realistic Curriculum Reinforcement Learning for Autonomous and Sustainable Marine Vessel Navigation
 description: >-
@@ -183,7 +183,7 @@ $$d_{\text{safe}} = \max\left(\tau \cdot \frac{L_s + B_s + L_t + B_t}{2 \times 1
 - **课程学习设计合理**：渐缩距离阈值的设计直觉清晰——先学到达远处目标，再逐步精细化
 - **安全距离公式融入船舶几何特征**：考虑了自身和目标船只的LOA和beam，更加物理合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验规模有限**：仅在印度洋一个区域的3个实例上验证，缺乏更广泛地理条件的测试
 2. **CRL在Case 3的燃油效率较差**：AFC为28.618，远高于DDPG的9.002，多目标权重可能需要调整

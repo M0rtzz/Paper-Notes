@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Expressivity Theory Misses: Message Passing Complexity for GNNs
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：GCN+虚拟节点（不增加 WL 表达力）在长程任务上优于超越 WL 的高阶模型——表达力理论无法解释。
 
-**本文要解决什么？** 提出既保留不可能性结论又能解释实际性能差异的连续复杂度框架。
+**本文目标** 提出既保留不可能性结论又能解释实际性能差异的连续复杂度框架。
 
 **切入角度**：将 WL 测试概率化——每条消息以随机游走概率独立存活（lossyWL）。
 

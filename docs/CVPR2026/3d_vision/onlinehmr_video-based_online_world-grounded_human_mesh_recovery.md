@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OnlineHMR: Video-based Online World-Grounded Human Mesh Recovery
 description: >-
@@ -219,7 +219,7 @@ $$\mathbf{S}(i,f) = \left|\sum_{k=0}^{L-1} \mathbf{y}(k) w(k-i) e^{-j2\pi fk/N_w
 - **四准则形式化定义**：将在线 HMR 的需求系统化为因果性/忠实性/一致性/效率四个维度，为后续工作提供了清晰的评价框架。
 - **频域抖动指标**：基于 STFT 的频谱分析比传统 Accel/Jitter 指标更贴近人眼感知。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **世界坐标精度仍低于离线方法**：WA-MPJPE 93.5 vs TRAM 76.4 / PHMR 71.0，度量尺度恢复是瓶颈
 2. **尺度漂移问题**：W-MPJPE 偏高说明增量估计的后续帧尺度不够稳定，长序列可能累积误差

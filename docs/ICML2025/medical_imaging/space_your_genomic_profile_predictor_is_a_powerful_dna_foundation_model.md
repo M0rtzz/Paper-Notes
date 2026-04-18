@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPACE: Your Genomic Profile Predictor is a Powerful DNA Foundation Model
 description: >-
@@ -126,7 +126,7 @@ SPACE 在 18 项任务中 **11 项 SOTA**，且参数量远少于 NT-Multispecie
 3. **跨物种泛化**：通过互信息损失显式引导专家-物种对齐，在远缘物种（酵母/病毒）上泛化能力突出
 4. **实验全面**：覆盖 NT 下游任务、GUE 跨物种基准、Genomic Benchmarks 三大类评测，令人信服
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练物种有限**：仅在人类和小鼠上预训练，未纳入更多物种（如植物、昆虫），物种 MoE 的可扩展性尚未验证
 2. **计算开销**：MoE 结构增加了模型复杂度，论文未详细分析推理效率和参数量对比

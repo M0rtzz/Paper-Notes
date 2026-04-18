@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Prior is All You Need: Cross-Task Few-shot 2D Gaze Estimation
 description: >-
@@ -87,7 +87,7 @@ $$\mathcal{L} = \mathcal{L}_{proj} + 0.4\mathcal{L}_{flip} + 0.25\mathcal{L}_{un
 - **极致高效**：10张图像+1.2分钟训练即可部署到新设备，适用于快速校准场景
 - **动态伪标签的坐标系对齐**：通过SVD学习动态变换$\mathcal{T}$的思路优雅地解决了微调中坐标系漂移问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当输入图像无有效人脸时，数学投影可能产生极端值（视线近乎平行于屏幕）
 - 10-shot与全监督仍有差距（56.7 vs 42.3 on MPIIGaze），更多无标注数据利用未探索
 - 屏幕PPI需已知（但通常可获取）

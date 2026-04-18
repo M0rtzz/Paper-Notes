@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection
 description: >-
@@ -96,7 +96,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{text}} + \alpha \mathcal{L}_{\
 4. **无需额外对比损失**：硬负原型通过 attention 机制自然融入训练，简洁高效
 5. **在单张 RTX 3090 上即可训练**：计算资源需求合理，便于复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 双分支推理开销翻倍，实际部署时可考虑蒸馏到单分支（作者也提及此方向）
 - 对非典型 support 样本敏感，极端异常的 support 图像会导致原型质量下降
 - 硬负原型仅考虑 GT box 附近区域，可扩展到 ring/context 区域和 proposal 级别干扰物

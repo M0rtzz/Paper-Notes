@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Supernova Event Dataset: Interpreting Large Language Models' Personality through Critical Event Analysis
 description: >-
@@ -145,7 +145,7 @@ tags:
 - **反事实测试**：用"如果没有这个事件，结果是否改变？"来筛选关键事件，方法论上很严谨
 - **对 AI 辅助科研有意义**：理解 LLM 的推理人格有助于设计更好的人机协作科研工作流
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据偏差**：Wikipedia 天然存在编辑偏见和西方中心主义，可能影响人格标签推断
 2. **LLM-as-Judge 偏差**：评判者模型自身存在风格偏好（stylistic bias），缺乏人类验证

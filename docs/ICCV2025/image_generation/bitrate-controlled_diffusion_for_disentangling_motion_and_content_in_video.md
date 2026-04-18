@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bitrate-Controlled Diffusion for Disentangling Motion and Content in Video
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L} = \mathcal{L}_d + \lambda \mathcal{L}_{VQ} = \text{MSE}(z, \tilde{
 - 学习到的运动空间具有结构性，直接支持GPT-2自回归运动生成，证明运动码本捕获了完整的运动分布
 - Group VQ + Gumbel-Softmax的可微量化方案可直接端到端训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要大量训练数据来实现无先验解耦
 - 最优码率可能因数据集而异，需要手动调整

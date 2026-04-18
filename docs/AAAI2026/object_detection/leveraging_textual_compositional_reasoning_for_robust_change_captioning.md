@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Textual Compositional Reasoning for Robust Change Captioning
 description: >-
@@ -142,7 +142,7 @@ CORTEX（COmpositional Reasoning-aware TEXt-guided）是一个即插即用框架
 - **文本作为结构化推理载体**：巧妙利用 VLM 将图像中隐含的组合语义转化为显式的文本表示，弥补视觉特征在结构化推理上的不足
 - **双重对齐思想**：静态对齐增强场景内理解（"这个场景里有什么"），动态对齐强调跨场景差异（"两个场景有什么不同"），设计合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RTE 模块依赖冻结的 VLM 进行推理，增加了额外的预处理时间（虽然作者提供了离线提取的文本数据）
 - 在真实场景数据集（Spot-the-Diff）上的提升相比合成数据集（CLEVR-Change）更有限，可能因为真实场景的变化更加复杂多样

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry
 description: >-
@@ -170,7 +170,7 @@ $$Y = \text{Exp}_X(Q \cdot \text{diag}(f(\text{spec}(X))) \cdot Q^T)$$
 3. **理论完备性**：提供了完整的黎曼算子闭式表达式 + 陀螺向量空间公理验证 + 变形连续性
 4. **实用性强**：直接插入现有SPD网络框架（SPDNet、GyroSPD、RResNet），无需修改架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验限于中小规模SPD矩阵（$n \leq 93$），超大规模（如 $n > 1000$）的表现有待验证
 2. 仅考虑了分类任务，回归/生成等其他SPD学习任务未涉及

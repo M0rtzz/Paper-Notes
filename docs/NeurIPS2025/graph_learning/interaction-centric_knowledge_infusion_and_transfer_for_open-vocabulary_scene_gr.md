@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L} = \mathcal{L}_{reg} + \mathcal{L}_{giou} + \mathcal{L}_{obj} + \ma
 - **两步查询选择**：先用交互语义筛选，再用对象语义补充，兼顾精度和召回
 - 将知识蒸馏从简单的逐点对齐升级为结构感知的交互一致性对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖语言解析器提取初始三元组，解析质量制约上游伪监督质量
 - IGQS的两步流程增加了推理时的计算开销（需要额外的前向传播）
 - 仅在VLM-based方法上验证，未涉及MLLM-based方法（如LLaVA系列）

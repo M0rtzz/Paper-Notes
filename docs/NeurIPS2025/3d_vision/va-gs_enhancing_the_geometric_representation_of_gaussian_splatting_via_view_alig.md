@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VA-GS: Enhancing the Geometric Representation of Gaussian Splatting via View Alignment
 description: >-
@@ -113,7 +113,7 @@ tags:
 2. 可见性+遮挡权重的设计非常工程化但有效，重投影误差作为遮挡判据简洁优雅
 3. 边缘处降权法线损失的策略（$\delta=(1-\nabla I)^2$）直接有效地解决了边界法线歧义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练速度较慢（15.5m vs 3DGS的3.4m）——多视图对齐的计算开销
 - 法线平滑约束可能在高曲率区域过度平滑

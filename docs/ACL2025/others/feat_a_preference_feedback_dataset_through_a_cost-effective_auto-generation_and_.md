@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FEAT: A Preference Feedback Dataset through a Cost-Effective Auto-Generation and Labeling Framework for English AI Tutoring
 description: >-
@@ -121,7 +121,7 @@ FEAT（Feedback Dataset Generation Framework for English AI Tutoring）由三个
 - **三数据集设计**（DM/DG/DA）本身就是一个优秀的实验设计，清晰展示了成本-质量的权衡空间
 - 验证了一个有启发性的规律：**少量高质量数据 + 大量低成本数据 > 大量高质量数据**，这与 curriculum learning 和 data mixing 的研究方向呼应
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅使用 MCTest 数据集生成辅导场景**，框架在其他教育数据集上的泛化性未经验证
 2. **仅使用 1B 和 3B 模型**，更大模型（7B、13B、70B）的效果未知

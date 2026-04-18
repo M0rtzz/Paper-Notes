@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TabFlex: Scaling Tabular Learning to Millions with Linear Attention
 description: >-
@@ -112,7 +112,7 @@ poker-hand (100 万+ 样本) 上，TabFlex 仅用 **4.88 秒**完成分类，第
 4. **工程简洁**：理论证明 PyTorch 原生实现已达最优 HBM 效率，无需定制 CUDA kernel
 5. **三模型条件选择**：简单规则即可覆盖小数据到百万级、低维到高维的全场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **回归任务支持粗糙**：当前通过将连续值离散化为 bin 来转换为分类任务，在 18 个回归数据集上明显不如 XGBoost
 2. **高维性能仍有差距**：在特征维度 >800 时，XGBoost 的准确率-速度权衡优于 TabFlex

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StegaVAR: Privacy-Preserving Video Action Recognition via Steganographic Domain Analysis
 description: >-
@@ -94,7 +94,7 @@ SDANet 凭借 DWT 高频分量引导在原始视频上也超越 ResNet3D 近 10%
 - **CroDA 差分去噪**：利用 LL 子带近似 cover 语义再做减法，思路简洁有效
 - **多隐写模型兼容**：Weng / HiNet / LF-VSN 三种隐写模型均有效，框架通用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 相比原始视频仍有微小精度损失，可探索更先进的可逆变换或自适应融合
 - 当前 cover 视频从 YouTube-VIS 随机采样，未考虑 cover-secret 语义匹配对性能的影响
 - 超参数 $\theta$ 极为敏感（0.1→70.28, 0.2→71.66, 0.3→68.76），鲁棒性有待改善

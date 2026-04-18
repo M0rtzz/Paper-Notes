@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Memory Efficiency for Training KANs via Meta Learning
 description: >-
@@ -130,7 +130,7 @@ MetaKAGNConv 在 MNIST 上以约 1/5 参数量反超 KAGNConv。MetaKANConv 在 
 4. **Prompt 设计巧妙**：每个激活函数用一个标量 prompt 标识，简单有效，类似 LLM 中的 in-context learning 思想
 5. **层聚类策略**：避免了为每层分配独立 meta-learner 的参数开销，用 K-Means 聚类平衡表达能力和效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **小网络可能不省参数**：当 KAN 很小（总激活函数数量少）时，meta-learner 的固定开销可能导致 MetaKAN 参数量反而更多（如 Table 2 中部分小结构）
 2. **推理时无速度提升**：MetaKAN 仍需在前向传播时通过 meta-learner 生成权重再计算，推理延迟可能不降反升

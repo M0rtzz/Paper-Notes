@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Knowledge Completes the Vision: A Multimodal Entity-aware Retrieval-Augmented Generation Framework for News Image Captioning
 description: >-
@@ -158,7 +158,7 @@ $$\mathcal{L}_{CE} = -\sum_{i=1}^{|\mathbf{c}|} \log P(c_i | c_{<i}, \mathbf{X})
 4. **人脸+非人脸双通道实体匹配**：InsightFace做人脸、CLIP做非人脸，实用性强
 5. 在Visual News上的泛化结果令人印象深刻，证明框架不是过拟合训练数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - EMKB的构建成本较高（需要爬取Wikipedia/IMDb/Google图片），且可能存在知识时效性问题
 - 三阶段CoT推理增加了推理延迟（需要多次MLLM前向），不适合实时应用

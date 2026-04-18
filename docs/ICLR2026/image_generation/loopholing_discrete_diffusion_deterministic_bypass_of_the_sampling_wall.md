@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Loopholing Discrete Diffusion: Deterministic Bypass of the Sampling Wall
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L}_{\text{Loopholing}} = \mathbb{E}_{t,\mathbf{z}_t}\left[\mathbb{I}[
 - 自条件化训练巧妙地模拟了推理时的上下文传播，无需昂贵的反向传播
 - 对 mask 和 uniform 两种离散扩散框架均有效，通用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练时间增加约 30%（两次前向传播），嵌入维度翻倍增加内存
 - 当前仅考虑单步自条件化，多步训练策略可能进一步提升
 - 缺乏严格的数学框架将 loopholing 整合到标准扩散理论

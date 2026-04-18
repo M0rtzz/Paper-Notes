@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Web-CogReasoner: Towards Knowledge-Induced Cognitive Reasoning for Web Agents
 description: >-
@@ -156,7 +156,7 @@ VisualWebBench综合评分：
 3. **KCoT的"知识激活"功能**：与简单增加训练数据不同，KCoT提供了一种显式的知识组织方式，使模型能够在决策时按层调用已有知识
 4. **开源标杆的超越**：7B开源模型在多个维度超越或逼近Claude/Gemini等闭源商用模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖模仿学习**：当前训练完全基于SFT/IL，缺乏强化学习的探索能力，可能限制Agent发现新策略
 2. **在线任务仍落后商用模型较大**：WebVoyager上(30.2% vs Gemini 54.9%)，实际网页交互能力仍有提升空间

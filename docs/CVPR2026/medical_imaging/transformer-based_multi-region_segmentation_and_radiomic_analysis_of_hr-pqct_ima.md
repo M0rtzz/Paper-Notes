@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transformer-Based Multi-Region Segmentation and Radiomic Analysis of HR-pQCT Imaging for Osteoporosis Classification
 description: >-
@@ -118,7 +118,7 @@ SegFormer 在腓骨松质骨（小目标）IoU 提升 **+20.43%**，整体变异
 - **系统的多区域比较**：首次系统比较皮质骨、松质骨、肌腱、脂肪等不同区域的影像组学诊断价值
 - **首个 HR-pQCT 分割标注数据集**：6,720 张五类像素级标注，承诺发表后公开
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **患者级样本量小**：仅 122 人（测试集 24 人），统计功效有限，结论的泛化性需验证
 2. **单中心分类数据**：分类集仅来自 ICMH，跨中心泛化能力未验证

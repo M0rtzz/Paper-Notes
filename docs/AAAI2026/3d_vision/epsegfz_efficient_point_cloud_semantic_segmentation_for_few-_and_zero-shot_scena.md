@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EPSegFZ: Efficient Point Cloud Semantic Segmentation for Few- and Zero-Shot Scenarios
 description: >-
@@ -144,7 +144,7 @@ $$\mathcal{L} = \mathcal{L}_{seg} + \lambda_{con}\mathcal{L}_{con} + \lambda_{al
 3. **DRPE零参数开销**：利用正弦编码将查询-原型关系注入注意力，不增加可训练参数
 4. **统一的少样本/零样本框架**：LGPE 使得仅文本即可构建原型，自然支持零样本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零样本性能与大规模预训练模型（如 SegPoint）相比仍有差距，但训练资源和数据量不可比
 - 文本嵌入来自冻结的CLIP，未探索更细粒度的文本描述

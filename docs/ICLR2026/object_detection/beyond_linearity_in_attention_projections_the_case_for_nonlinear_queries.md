@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Linearity in Attention Projections: The Case for Nonlinear Queries
 description: >-
@@ -90,7 +90,7 @@ $$Q(X) = (X + f_\theta(X)) / 2$$
 - **训练稳定性双赢**：非线性版本不仅性能更好，还能在更激进的超参数（低 WD、高 LR）下保持稳定
 - **代码和 checkpoint 完全开源**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 ~124M 单一规模验证，未测试大模型（是否在大模型上冗余性依然成立？）
 - 未进行多种子实验（通过固定数据顺序和长时间训练缓解）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Logits to Hierarchies: Hierarchical Clustering made Simple
 description: >-
@@ -162,7 +162,7 @@ L2H 在所有数据集上全面碾压专用深度层次聚类模型，NMI 提升
 - **跨范式通用性**：同一算法既适用于无监督聚类也适用于监督分类，为模型可解释性提供了新工具。
 - **极致效率**：ImageNet-1K 规模数据集上 CPU 运行 <1 分钟，而 TreeVAE 需要 GPU 训练数小时。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 logits 质量**：L2H 的效果取决于预训练模型的 logits 的信息量。如果模型校准差（poorly calibrated），logits 可能无法准确反映聚类间的真实关系。
 2. **无自动层级选择**：产生完整的树后，仍需人工检查以提取有意义的粒度层级，缺乏自动选择机制。

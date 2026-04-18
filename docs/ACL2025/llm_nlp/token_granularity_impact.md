@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Impact of Token Granularity on the Predictive Power of Language Model Surprisal
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **Mamba-2 架构选择**：巧妙解决了不同粒度下序列长度不可比的实验设计难题
 - **不同任务需要不同最优粒度**：自然阅读 vs 花园路径的分离结果对认知建模实践有直接指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在英语数据和英语母语者上验证，跨语言泛化性未知（如中文分词粒度的影响可能完全不同）
 - 模型规模有限（最大 88M 参数），更大模型可能完全克服初始偏置使粒度不再重要

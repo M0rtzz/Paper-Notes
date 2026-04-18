@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving
 description: >-
@@ -100,7 +100,7 @@ SQS 采用两阶段设计：
 - 在数据稀缺场景（10% 标注）下优势更明显，具有很强的实用价值
 - 深度渲染远比RGB渲染重要的发现提供了清晰的预训练设计指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 插件式预训练模型引入额外计算和内存开销
 - 对不同下游任务的预训练查询利用不够充分，缺乏语义级区分

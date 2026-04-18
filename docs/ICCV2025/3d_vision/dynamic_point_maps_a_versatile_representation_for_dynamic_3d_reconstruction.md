@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Point Maps: A Versatile Representation for Dynamic 3D Reconstruction
 description: >-
@@ -127,7 +127,7 @@ $$L_{\text{conf}}(\hat{P}, P) = \frac{1}{HW} \sum_{i=1}^{HW} C_i L_{\text{reg}}(
 3. **架构修改极小**：仅增加2个头，充分复用 DUSt3R 预训练，说明好的表示设计比复杂的架构改进更重要
 4. 消除了对光流网络的依赖，使4D重建流程更加统一和简洁
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 合成训练数据的依赖：MOVi-G 的物体运动模式有限，可能影响复杂真实场景的泛化
 2. 成对处理模式：DPM 一次只处理2帧，长序列视频需要 bundle adjustment

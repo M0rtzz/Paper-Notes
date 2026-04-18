@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep FlexQP: Accelerated Nonlinear Programming via Deep Unfolding
 description: >-
@@ -89,7 +89,7 @@ tags:
 - **实用价值极高**：解决了 SQP 中不可行子问题的核心痛点，无需额外修复程序
 - 维度无关的 LSTM 策略设计使单次训练可泛化到任意规模问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 大规模问题训练开销仍大（每 epoch 约3小时），全量训练需 300+ 天
 - 仅在密集 QP 上验证，稀疏 QP（如电力网络优化）可能需要不同策略
 - LSTM 策略的可解释性有限，难以理解学到的调参规则

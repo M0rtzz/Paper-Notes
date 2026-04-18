@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Neural Combinatorial Optimization for Vehicle Routing Problems with Different Constraint Tightness Degrees
 description: >-
@@ -109,7 +109,7 @@ $$P_t = \text{MEM}(H_t, C_k) = \sum_{i=1}^{m} G(C_k) E_i(H_t)$$
 - **硬路由的设计选择**：相比软混合专家的计算开销和训练不稳定性，硬路由的one-hot门控简单直接且足够有效
 - **在C=50/100上的轻微退步**说明VCT用更多策略覆盖度换取了特定点位的精度，这是合理的权衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VCT使用均匀采样策略，自适应采样（如根据各紧度范围的当前性能调整采样频率）可能进一步提升
 - 多专家的硬路由可能导致专家间的知识隔离，软路由或共享底层表示的方案值得探索

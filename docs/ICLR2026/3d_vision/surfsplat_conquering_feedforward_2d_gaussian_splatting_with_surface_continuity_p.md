@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SurfSplat: Conquering Feedforward 2D Gaussian Splatting with Surface Continuity Priors
 description: >-
@@ -113,7 +113,7 @@ $\lambda = 0.05$，在256×256分辨率下训练。Depth Anything V2骨干学习
 3. **2DGS在前馈场景的首次成功**：证明2DGS（面片）比3DGS（椭球）在前馈重建中更适合，提供更强的各向异性和几何精度
 4. **强制混合的巧妙设计**：通过限制不透明度上界解决局部最优问题，保证多层表现力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在标准分辨率下仅勉强超过DepthSplat，优势主要体现在HRRC
 - 每像素单高斯的设定，对复杂场景的覆盖可能不够

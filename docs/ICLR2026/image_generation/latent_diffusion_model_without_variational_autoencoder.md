@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Diffusion Model without Variational Autoencoder
 description: >-
@@ -84,7 +84,7 @@ $$\hat{F}_R = \frac{F_R - \mu(F_R)}{\sigma(F_R)} \cdot \sigma(F_D) + \mu(F_D)$$
 - 实现了生成、感知、理解任务通用的统一特征空间
 - 5 步生成的超强性能展示了语义结构化潜在空间的降维效应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅在 ImageNet 256×256 上验证，未扩展到文本引导生成或高分辨率
 - SVG 特征维度高（384 vs VAE 的 4），内存开销更大
 - 依赖特定的 DINOv3 模型，其他自监督方法（如 MAE、SigLIP）效果较差

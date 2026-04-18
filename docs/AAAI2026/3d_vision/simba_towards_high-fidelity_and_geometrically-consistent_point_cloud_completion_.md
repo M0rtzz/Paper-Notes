@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Simba: Towards High-Fidelity and Geometrically-Consistent Point Cloud Completion via Transformation Diffusion
 description: >-
@@ -72,7 +72,7 @@ tags:
 
 #### 1. SymmGT 预训练（Stage 1）
 
-**做什么**：生成扩散模型训练所需的"干净"目标变换场 $\mathcal{T}_{gt}$。
+**功能**：生成扩散模型训练所需的"干净"目标变换场 $\mathcal{T}_{gt}$。
 
 **核心流程**：
 - 输入：部分点云 $\mathcal{P}_{in}$ 和完整 GT $\mathcal{P}_{gt}$
@@ -86,7 +86,7 @@ tags:
 
 #### 2. Sym-Diffuser（对称扩散模块）
 
-**做什么**：学习变换场的条件分布，生成结构完整的粗糙补全。
+**功能**：学习变换场的条件分布，生成结构完整的粗糙补全。
 
 **核心思路**：
 - **前向过程**：标准 DDPM，$T=100$ 步，逐步给 $\mathcal{Z}_0$（目标变换场）加噪
@@ -104,7 +104,7 @@ $$\mathcal{L}_{\text{proxy}} = \mathbb{E}_{t, \mathcal{Z}_0, \epsilon}\left[\lam
 
 #### 3. MBA-Refiner（级联 Mamba 精修器）
 
-**做什么**：将粗糙补全逐步精修上采样到高保真输出。
+**功能**：将粗糙补全逐步精修上采样到高保真输出。
 
 **核心架构**：三层级联，上采样比例 $[2\times, 2\times, 4\times]$，总计 $16\times$。每层包含特征融合 + MambaForward 精修。
 
@@ -230,7 +230,7 @@ $$\mathcal{L}_{\text{stage2}} = \mathcal{L}_{\text{proxy}} + \sum_{l=1}^{3} L_{C
 3. **异构级联设计**：根据点密度自适应选择融合策略（低密度用 attention，高密度用 Mamba），是工程和理论的良好结合
 4. **强跨域泛化**：仅合成数据训练即在 KITTI 真实数据上 SOTA，对实际部署意义重大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度**：扩散模型需要多步迭代去噪（$T=100$），可能比纯前馈方法慢。论文未报告推理时间
 2. **两阶段训练**：Stage 1 需要单独预训练 SymmGT，增加了总训练复杂度

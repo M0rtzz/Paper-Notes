@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Caption-Based Queries for Video Moment Retrieval
 description: >-
@@ -60,7 +60,7 @@ DETR模型中存在**活跃解码器查询坍塌（active decoder-query collapse
 
 #### 设计1：搜索查询生成管线（Search-Query Pipeline）
 
-**做什么**：将fine-grained的caption转化为under-specified的搜索查询，并自动建立多时刻对应关系。
+**功能**：将fine-grained的caption转化为under-specified的搜索查询，并自动建立多时刻对应关系。
 
 **核心思路**：两阶段管线——
 - **Per-query欠规范化阶段**：使用Gemma-12B构建rewriter-validator双代理系统。Rewriter将详细caption改写为模糊版本（如"a man tying his running shoes before starting a marathon" → "a person getting ready to exercise"），Validator检测不一致并交由人工修正
@@ -70,7 +70,7 @@ DETR模型中存在**活跃解码器查询坍塌（active decoder-query collapse
 
 #### 设计2：移除自注意力（Remove Self-Attention, -SA）
 
-**做什么**：在DETR解码器层中直接移除解码器查询之间的自注意力模块。
+**功能**：在DETR解码器层中直接移除解码器查询之间的自注意力模块。
 
 **核心思路**：标准解码器层为 $\hat{Q}^{l+1} = \text{FFN}(\text{CA}(\text{SA}(\hat{Q}^l), M))$，修改后变为 $Q^{l+1} = \text{FFN}(\text{CA}(Q^l, M))$。移除SA后用NMS做后处理来去除冗余预测。
 
@@ -78,7 +78,7 @@ DETR模型中存在**活跃解码器查询坍塌（active decoder-query collapse
 
 #### 设计3：查询Dropout（Query Dropout, QD）
 
-**做什么**：在训练时随机将k%的可学习解码器查询置零。
+**功能**：在训练时随机将k%的可学习解码器查询置零。
 
 **核心思路**：$\hat{Q} = Q \odot M, \quad M \sim \mathbb{B}(1-k)$，其中$\mathbb{B}$为Bernoulli分布，k=0.25效果最佳。
 
@@ -156,7 +156,7 @@ DETR模型中存在**活跃解码器查询坍塌（active decoder-query collapse
 - **解码器查询坍塌的诊断**非常精准：通过协调坍塌和索引坍塌两个正交维度分析问题，方案简洁有效
 - **不改数据只改结构**的思路具有很高的实用性——避免了昂贵的重新标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语言差距未解决**：本文仅解决了multi-moment gap，language gap被留作future work，作者建议用更强的视觉-语言模型来应对不同粒度的语义推理
 2. **搜索查询由LLM生成而非真实用户**：虽然经过了验证，但与真正的用户搜索行为可能仍有差异

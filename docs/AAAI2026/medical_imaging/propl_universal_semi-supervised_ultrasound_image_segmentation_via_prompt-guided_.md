@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProPL: Universal Semi-Supervised Ultrasound Image Segmentation via Prompt-Guided Pseudo-Labeling
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **文本提示 vs one-hot/可学习提示**：文本提示虽增加 18s/epoch 但语义更丰富，移除后模型崩溃
 - **双解码器互学习**：一个解码器的高置信预测作为另一个的伪标签，通过分歧估计不确定性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集仅包含 2D 超声图像，未扩展到 3D 体积超声
 - 提示模板需要人工设计，自动化提示生成可能进一步提升
 - UPLC 的阈值依赖调参，自适应阈值策略值得探索

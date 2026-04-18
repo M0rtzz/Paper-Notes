@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Common Ground Misalignment in Goal-Oriented Dialog: A Case-Study with Ubuntu Chat Logs
 description: >-
@@ -129,7 +129,7 @@ tags:
 - **LLM 在隐式语用推理上的弱点**的发现对 LLM 作为对话代理的可靠性评估有重要意义
 - Ubuntu IRC 数据集的选择十分恰当——自然产生的目标导向对话、从零建立 CG、纯文本、多轮交互
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅 200 条对话（7950 轮），样本量偏小
 - 标注一致性中等（α=0.58 成功度，Found F1=65.91 摩擦），反映了任务的主观性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OrdShap: Feature Position Importance for Sequential Black-Box Models
 description: >-
@@ -104,7 +104,7 @@ OrdShap 是事后解释方法，不涉及模型训练。最小二乘近似的优
 - **LS 近似的巧妙设计**：利用 Corollary 2.1 将 $\alpha$ 和 $\beta$ 的求解解耦，先用 KernelSHAP 得到值重要性，再回归得到位置重要性
 - 医疗案例分析（Figure 6）生动展示了临床意义：床旁血糖检测的高 KernelSHAP 值实际上主要来自位置效应
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 计算复杂度仍较高，尽管 LS 算法减少了模型调用次数
 - 线性 OrdShap-PI 假设位置效应是线性的，可能无法捕捉非线性位置依赖

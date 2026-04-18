@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Extremely Simple Multimodal Outlier Synthesis for Out-of-Distribution Detection and Segmentation
 description: >-
@@ -116,7 +116,7 @@ tags:
 - **模态不可知**：相同方法适用于 图像+点云 和 视频+光流 两种完全不同的模态组合，扩展性极强。
 - **370× 加速**是杀手级优势——NP-Mix 需要最近邻搜索，对分割任务（百万级点）不可行；Feature Mixing 只需随机索引和赋值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 交换维度数 $N$ 的选择对性能有影响，但论文中未给出系统的敏感性分析。
 - Late Fusion 框架限制——更高级的早期/深度融合架构是否同样受益未知。
 - CARLA-OOD 数据集规模较小（245 样本），且 OOD 物体是人工放置的，与真实场景中的 OOD 出现模式可能不同。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Redirection for Erasing Memory (REM): Towards a Universal Unlearning Method for Corrupted Data
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{step3} = \underbrace{\frac{2}{\beta}\mathbb{E}\log\sigma\left(-\b
 - **重定向机制**: 不是简单地删除或遮忘信息，而是先"转移"再"丢弃"，巧妙地解决了信息残留问题
 - **高规律性损坏放大效应**: 高规律性损坏使得少量未发现样本即可通过泛化重新引入整个损坏模式——这一洞察解释了为何基于保留集的方法在高规律性+部分发现时急剧失败
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 掩码策略为二值（0/1），更软的掩码可能让损坏数据在 $\theta_{o_2}$ 中更好地自组织，缩小与 REM (IDEAL) 的差距
 - 目前仅在视觉分类任务上验证，NLP/LLM 场景的扩展尚未探索

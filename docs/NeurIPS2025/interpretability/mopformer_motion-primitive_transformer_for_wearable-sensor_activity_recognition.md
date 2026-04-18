@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoPFormer: Motion-Primitive Transformer for Wearable-Sensor Activity Recognition
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **效率优势**：原语序列远短于原始信号，Transformer 计算量大幅降低——既提升精度又减少计算。
 - **鲁棒性**：对采样率变化的鲁棒性是实际部署中的关键优势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 原语分段的可解释性有待验证——学到的原语是否对应真实的运动单元
 - 仅在 IMU 数据上验证，其他传感器（EMG、压力）需扩展

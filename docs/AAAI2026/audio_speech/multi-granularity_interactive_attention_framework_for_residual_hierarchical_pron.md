@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-granularity Interactive Attention Framework for Residual Hierarchical Pronunciation Assessment
 description: >-
@@ -142,7 +142,7 @@ HIA在词重音上PCC达0.436，较Gradformer提升30.5%（+0.102），是最显
 - **超越人类专家一致性**：HIA在几乎所有指标上超过5位专家评估者之间的一致性，展示了模型在发音评估中的实用价值
 - **消融实验极为充分**：对交互注意力（逐粒度消融）、残差/层级结构、卷积层数、嵌入维度、注意力头数均做了详尽的消融分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据集单一**：仅在speechocean762上评估，该数据集规模较小（5000句），且completeness评分分布极度不均（4975/5000为满分），限制了部分指标的评估可靠性
 - **输入特征依赖GOP**：使用传统的GOP特征作为输入，未利用自监督语音模型（如wav2vec 2.0、HuBERT）的表示能力，可能限制了性能上限

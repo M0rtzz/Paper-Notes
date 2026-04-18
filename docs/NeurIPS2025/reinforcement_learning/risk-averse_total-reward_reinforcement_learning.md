@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Risk-Averse Total-Reward Reinforcement Learning
 description: >-
@@ -119,7 +119,7 @@ $$(\pi^*, \beta^*) \in \arg\max_{(\pi,\beta) \in \Pi \times \mathcal{B}(\beta_0,
 3. **有界检测机制**: TD残差越界时返回$-\infty$的设计巧妙地检测了β过大导致的发散情况
 4. **EVaR的离散化处理**: 将不满足动态一致性的EVaR问题优雅地分解为一系列ERM子问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限表格设置**: 当前算法和分析局限于表格表示，未涉及函数近似（如深度神经网络）
 2. **参数选择依赖先验**: $z_{\min}$/$z_{\max}$的选择需要平衡——过小可能找不到好解，过大则发散检测过慢

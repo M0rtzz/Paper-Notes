@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MaNGO: Adaptable Graph Network Simulators via Meta-Learning
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \mathbb{E}_{\tau \sim p(\tau)} \left[ \sum_{t} \| \hat{x}_t - x_
 - **神经算子+元学习**：两者结合同时解决了误差累积和参数适应两个问题
 - **接近 oracle 性能**：这一结果说明元学习确实能捕获不同参数间的共享结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **参数范围限制**：外推到训练范围外的参数时性能下降，元学习的泛化边界有待探索
 2. **可扩展性**：论文主要在中等规模物理系统上验证，大规模复杂系统（如湍流）的效果未知

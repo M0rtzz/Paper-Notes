@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Generalize Without Bias for Open-Vocabulary Action Recognition
 description: >-
@@ -109,7 +109,7 @@ Open-MeDe 由两个核心组件构成：（1）跨批次元优化方案，通过
 - **无额外计算开销**：相比 CLIP 正则化方法（需要额外前向传播计算蒸馏损失），元优化仅需在已有批次上多做一步梯度计算
 - **GWA 是简单但有效的集成策略**：高斯先验赋予中间 epoch 最大权重，避免了早期静态偏置和后期过度专业化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 元优化需要两倍批次数据（support + query），虽然理论上无额外开销，但实际内存占用增加
 - 在 SSv2 上的绝对性能仍然较低（HM 14.3），说明纯静态去偏可能不足以解决时序推理问题
 - GWA 的 $\mu$ 和 $\sigma$ 需要手动调整，缺乏自适应机制

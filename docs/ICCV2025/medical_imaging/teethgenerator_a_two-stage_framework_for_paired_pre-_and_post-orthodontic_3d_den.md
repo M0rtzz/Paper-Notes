@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TeethGenerator: A Two-Stage Framework for Paired Pre- and Post-Orthodontic 3D Dental Data Generation
 description: >-
@@ -123,7 +123,7 @@ TeethGenerator 分两个阶段：Stage I 生成矫正后牙齿模型（形态生
 - Lennard-Jones 势函数作为碰撞避免损失的设计源自分子动力学，在3D密集排列场景中非常合适
 - 合成数据有效性验证表明高质量合成3D医学数据可以切实改善下游任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集仅有 720 训练样本，模型泛化到更多错颌类型的能力有待验证
 - Stage I 输出固定 32 颗牙齿 + 掩码策略处理可变牙齿数，在缺牙较多的病例中可能效果受限

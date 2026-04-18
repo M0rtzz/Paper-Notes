@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Designing Truthful Mechanisms for Asymptotic Fair Division
 description: >-
@@ -145,7 +145,7 @@ $$x_{ij} = \frac{\log(b_{ij}) + c}{nC} + \frac{nC - \sum_k(\log(b_{kj}) + c)}{n^
 - **理论工具创新**：将信息论中的 KL 散度引入公平分配，建立了估值差异（$\delta$-分离条件）→ KL 散度下界 → envy margin → 高概率 EF 的完整链条
 - 解决了该领域一个明确的开放问题（Manurangsi & Suksompong 2021）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅期望真实性**：不是事后（ex-post）策略防欺骗的，代理人在某些随机化实现下可能受益于虚报
 2. **渐近性质**：仅在 $m \to \infty$ 时高概率成立，有限实例的精确概率界依赖分布参数

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unsupervised Learning for Class Distribution Mismatch (UCDM)
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{gen}}^{(\mathcal{D}_P, \mathcal{D}_N)} + \mat
 3. **双视角置信度标签机制**：巧妙融合 other-probability-driven 和 known-probability-driven 两种置信度，比单一视角更稳健
 4. **在 open-set 任务上优势巨大**：现有 SSL 方法在 unknown/new 类上几乎完全失效（大多为 0%），而 UCDM 在保持已知类性能的同时能准确识别未知类
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **已知类名的先验假设**：虽然不需要标注，但仍需预先给定已知类的类名列表，在类名未知的场景下不适用
 2. **依赖预训练扩散模型**：方法的有效性依赖于高质量的 text-to-image 扩散模型，对于扩散模型未见过的细粒度类别可能效果有限

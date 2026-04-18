@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Resource-Adaptive Federated Text Generation with Differential Privacy
 description: >-
@@ -120,7 +120,7 @@ Control code（如标签、主题、元数据）是本框架的关键设计：
 3. **精炼效果显著**：在低资源条件下（1-5% 强客户端），单轮精炼就能大幅弥补 DP 导致的性能下降
 4. **反直觉发现**：在严重 non-IID 场景下 DP 噪声反而可能起正则化作用，DP + 精炼可超越无 DP 基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Control code 需预定义**：假设 control code 是公共知识且非隐私的，这在某些敏感场景可能不成立
 2. **仅验证了 GPT-2 级别模型**：虽然附录有 LLaMA 结果，但没有在更大规模 LLM 上充分验证

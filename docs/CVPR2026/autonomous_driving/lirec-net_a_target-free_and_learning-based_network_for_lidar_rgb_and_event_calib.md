@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiREC-Net: A Target-Free and Learning-Based Network for LiDAR, RGB, and Event Calibration
 description: >-
@@ -142,7 +142,7 @@ $$\mathcal{L}^v = (1-w)(\lambda_t \mathcal{L}^v_{\text{trans}} + \lambda_r \math
 - **SDP/SFP的工程洞察**很有价值：resize引入的模糊伪影在精细对齐任务中是关键瓶颈
 - 在DSEC上首次建立了LiDAR-RGB标定基线（此前没有方法在DSEC上报告LiDAR-RGB结果）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **假设RGB和Event相机已预标定**：即 $\mathbf{T}^{\text{Ev} \to \text{RGB}}$ 已知。作者指出可以尝试在框架内联合估计此变换
 - 仅处理LiDAR/RGB/Event三种传感器，未扩展到热成像、毫米波雷达等

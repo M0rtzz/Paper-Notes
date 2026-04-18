@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LIM: Large Interpolator Model for Dynamic Reconstruction
 description: >-
@@ -48,17 +48,17 @@ tags:
 ### 关键设计
 
 **1. LIM 架构——基于 LRM 特征的 Transformer 插值器**
-- **做什么**: 提取 LRM 最后 6 层的中间特征 $\mathcal{F}_k$，拼接时间编码 $\alpha$ 后，通过交叉注意力与下一关键帧图像 token 交互，生成插值 triplane。
+- **功能**: 提取 LRM 最后 6 层的中间特征 $\mathcal{F}_k$，拼接时间编码 $\alpha$ 后，通过交叉注意力与下一关键帧图像 token 交互，生成插值 triplane。
 - **核心思路**: $\hat{\mathcal{T}}_{k+\alpha} = \text{LIM}_\psi(\mathcal{F}_k(\mathcal{I}_k, \Pi_k), \mathcal{I}_{k+1}, \alpha)$。
 - **设计动机**: 复用 LRM 的预训练特征避免从零学习 3D 表示；交叉注意力让插值器能感知目标帧的外观变化。
 
 **2. 因果一致性损失（Causal Consistency Loss）**
-- **做什么**: 约束"直接从 $t_0$ 插值到 $t_\delta$"的结果 与"先插值到中间时刻 $t_{\alpha_{rand}}$ 再插值到 $t_\delta$"的结果一致。
+- **功能**: 约束"直接从 $t_0$ 插值到 $t_\delta$"的结果 与"先插值到中间时刻 $t_{\alpha_{rand}}$ 再插值到 $t_\delta$"的结果一致。
 - **核心思路**: $\mathcal{L}_{\text{causal}} = \|\text{LIM}(\hat{\mathcal{F}}_{k+\alpha_{rand}}, \mathcal{I}_{k+\delta}, \frac{\delta - \alpha_{rand}}{1-\alpha_{rand}}) - \hat{\mathcal{T}}_{k+\delta}\|^2$，其中 $\alpha_{rand} \sim \mathcal{U}(0, \delta)$。
 - **设计动机**: 训练时仅有离散关键帧的监督，因果一致性损失引入任意连续时间 $\alpha$ 的自监督信号，使模型成为真正的时间平滑插值器。
 
 **3. 规范表面坐标与网格跟踪**
-- **做什么**: 训练额外的 $\overline{\text{LRM}}$ 和 $\overline{\text{LIM}}$ 预测规范表面坐标（canonical surface coordinates），将每个时刻的 3D 表面点映射到起始帧的 XYZ 坐标。
+- **功能**: 训练额外的 $\overline{\text{LRM}}$ 和 $\overline{\text{LIM}}$ 预测规范表面坐标（canonical surface coordinates），将每个时刻的 3D 表面点映射到起始帧的 XYZ 坐标。
 - **核心思路**: 在起始帧用 Marching Cubes 提取网格，后续帧利用规范坐标的最近邻匹配追踪顶点位置，保持固定拓扑和共享 UV 纹理。
 - **设计动机**: 规范坐标提供时间不变的表面标识，避免了直接在高斯混合或隐式表面间求对应的困难。
 
@@ -117,7 +117,7 @@ tags:
 - 规范坐标 + 网格跟踪设计使输出可直接用于游戏/影视生产流水线
 - LIM 的递归特性（可接受自身中间特征作为输入）实现了灵活的级联推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在合成数据上训练，迁移到真实数据需要在真实数据上训练的 LRM
 - 对细薄结构的跟踪效果会退化

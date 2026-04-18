@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hybrid eTFCE–GRF: Exact Cluster-Size Retrieval with Analytical p-Values for Voxel-Based Morphometry
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：并查集对其聚类大小的下游消费方式无关——可以馈入置换零分布（eTFCE 方式），也可以馈入 GRF 生存函数（本文方式），切换不需修改数据结构。
 
-**核心idea一句话**：用 eTFCE 的并查集替换 pTFCE 的 CCL 获取精确聚类大小，保留 GRF 解析推断避免置换检验。
+**核心 idea**：用 eTFCE 的并查集替换 pTFCE 的 CCL 获取精确聚类大小，保留 GRF 解析推断避免置换检验。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - 附带发现 FSL TFCE 持续 15 年的缩放 bug（$\Delta\tau$ 遗漏），展示重新实现经典方法的附带价值
 - 六组蒙特卡洛验证（FWER/功效/时间/平滑度/一致性/真实数据）是方法学论文的黄金标准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GRF 假设要求场平稳且充分平滑（FWHM > 3 倍体素），灰白质交界处假设被违反
 - 仅支持 3D 体积（26-连通），皮层表面分析需测地并查集

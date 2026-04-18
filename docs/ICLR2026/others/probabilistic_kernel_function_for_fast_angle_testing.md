@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probabilistic Kernel Function for Fast Angle Testing
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **高斯分布次优性**: 理论和实验均表明高斯投影不是角度测试的最优选择，这挑战了随机投影领域的常见假设
 - **SIMD 友好**: KS2 测试可通过 SIMD 并行处理 16 条边，实现高效的硬件级优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - KS1 对 CEOs 的改进较为有限，实际增益主要体现在 KS2 的图搜索加速上
 - 最优覆盖问题（best covering problem）在一般情况下仍然开放，$m > d+3$ 时无已知最优解

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CortexDebate: Debating Sparsely and Equally for Multi-Agent Debate
 description: >-
@@ -109,7 +109,7 @@ $$W_{i \to j}^d = \frac{C_d \times R_d \times I_d}{S_d}$$
 - **人脑皮层类比的精准性**: 白质调控皮层区域网络的生物机制与 MDM 调控辩论图的计算机制形成优雅的对应。
 - **同时解决双重问题**: 稀疏图机制天然解决上下文过长问题，MDM 中的 I 和 S 因子解决过度自信问题——两个设计互补。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多智能体方法本质上比单代理方法效率更低、成本更高
 - 各 LLM 代理的基础推理能力仍是性能的关键限制因素，CortexDebate 改善的是辩论策略而非推理能力本身

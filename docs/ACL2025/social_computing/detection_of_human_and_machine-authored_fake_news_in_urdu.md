@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Detection of Human and Machine-Authored Fake News in Urdu
 description: >-
@@ -117,7 +117,7 @@ tags:
 - **低资源语言的关注**：乌尔都语有2.3亿使用者，但NLP研究严重不足，本文填补了重要空白
 - **跨域分析揭示的现实问题**：模型依赖文本长度作为特征这一发现，对实际部署中的鲁棒性提出了警示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用xlm-RoBERTa-base，未探索更强的多语言模型（如mBERT、XLM-R-large）
 - TFIDF特征对LSVM基线可能不够优化，NELA等新闻特征可能更好但实现成本高

@@ -55,19 +55,19 @@ PAP（Prediction-As-Perception）框架由**感知模块**与**预测模块**两
 
 ### 关键设计 1：预测 query 注入感知模块
 
-- **做什么**：在每一帧的感知模块中，用上一帧预测模块输出的 query 替换部分或全部随机 query。
+- **功能**：在每一帧的感知模块中，用上一帧预测模块输出的 query 替换部分或全部随机 query。
 - **核心思路**：预测模块输出的坐标经过 embedding 层映射到与感知 query 相同维度后直接拼接，公式为 $q_i^T \in (q_{random}^T \cup q_{predict}^{T-1})$，再送入参考点网络 $c_i^T = \varnothing^{ref}(q_i^T)$。
 - **设计动机**：预测 query 天然靠近目标可能出现的区域，相比随机 query 大幅减少无效搜索，同时保留目标的时序运动线索，有助于跟踪连续性。
 
 ### 关键设计 2：预测模块与 query 嵌入
 
-- **做什么**：将感知模块输出的检测结果 query 传入预测模块，输出多帧未来位置坐标，再嵌入为下一帧可用的 query。
+- **功能**：将感知模块输出的检测结果 query 传入预测模块，输出多帧未来位置坐标，再嵌入为下一帧可用的 query。
 - **核心思路**：$c_{predict}^T = \text{PRED}(\text{PECP}(c_i^T))$，$q_{predict}^T = \phi^{embd}(c_{predict}^T)$，其中 $\phi^{embd}$ 为线性嵌入层。
 - **设计动机**：解耦预测模块的选型——只要能输出未来坐标即可接入 PAP，不改变原预测模块的内部结构和损失函数。
 
 ### 关键设计 3：与 UniAD 的集成
 
-- **做什么**：在 UniAD 的 MotionFormer 输出端取预测 query，经维度对齐后与 Track Query 一起送入 TrackFormer。
+- **功能**：在 UniAD 的 MotionFormer 输出端取预测 query，经维度对齐后与 Track Query 一起送入 TrackFormer。
 - **核心思路**：UniAD 本身模块间已通过 query 交互，PAP 仅需增加一条从 MotionFormer → TrackFormer 的反馈路径，不改变 Planning 模块及其余损失。
 - **设计动机**：利用 UniAD 已有的端到端架构，最小侵入地验证 PAP 思想，同时保持实验公平性（所有超参与原模型一致）。
 

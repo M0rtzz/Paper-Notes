@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DermaCon-IN: A Multi-concept Annotated Dermatological Image Dataset of Indian Skin Disorders
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：从印度门诊前瞻性采集，构建兼具疾病覆盖广度、肤色代表性和多维标注的数据集
 
-**核心idea一句话**：提供首个 South Asian 肤色为主、同时包含诊断层次 + 解剖位置 + 病灶描述符三重标注的皮肤病数据集
+**核心 idea**：提供首个 South Asian 肤色为主、同时包含诊断层次 + 解剖位置 + 病灶描述符三重标注的皮肤病数据集
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ Swin Transformer 在所有指标上一致最优。
 - **概念竞争现象**的发现（双流 CBM 中一组概念被抑制）指出了多概念学习中的表示瓶颈问题，值得后续研究
 - Cohen's Kappa = 0.84 的标注一致性保证了数据质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 面部图像因隐私脱敏（遮挡眼部/裁切）影响面部疾病的建模能力
 - 长尾分布中稀有疾病样本极少，需要 few-shot/long-tail 学习策略
 - 缺少像素级分割标注，无法支持病灶定位和分割任务

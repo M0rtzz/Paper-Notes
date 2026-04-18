@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding
 description: >-
@@ -105,7 +105,7 @@ $$S_i = \frac{1}{n} \sum_{k=1}^{n} E_{img}(C_k^{|}(i)) \times E_{text}(C^t)^T$$
 - 全流程无需人类标注（CLIP + ChatGPT），极大降低了实际部署成本
 - 干预机制不局限于样本级别，而是通过修改黑盒参数实现全局性修正
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 概念提取依赖 CRAFT，该方法并非模型导向，概念与样本的关联可能不够精确
 - ChatGPT 生成的概念瓶颈可能包含抽象概念（幻觉），不利于人类理解

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Implicit Aggregation: Robust Image Representation for Place Recognition in the Transformer Era
 description: >-
@@ -110,7 +110,7 @@ $$\text{Attn}(Q,K,V) = [\underbrace{Q_aK_a^\top V_a}_{\text{Agg-Agg}} + \underbr
 3. **k-means 初始化的传承与创新**：直接借鉴 NetVLAD 的聚类思想，但用更优雅的方式实现——不需要 soft assignment 层，让自注意力自然完成"分配"。
 4. **最小维度最佳性能**：6144 维（8个 token × 768维）描述符同时实现了最低维度和最高性能，说明隐式聚合学到了更紧凑高效的表示。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 强依赖 Transformer 骨干（需要自注意力机制），对 CNN 骨干不适用。
 - 聚合 token 数量（M=8）是人工选定的，虽然实验探索了不同值，但缺少理论指导。

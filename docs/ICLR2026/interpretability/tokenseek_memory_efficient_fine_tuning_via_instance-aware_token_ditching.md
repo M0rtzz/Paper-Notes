@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TokenSeek: Memory Efficient Fine Tuning via Instance-Aware Token Ditching
 description: >-
@@ -92,7 +92,7 @@ Token 比例消融（Llama3.2 1B + QLoRA）：10%→52.61, 20%→51.80, 30%→52
 - 可解释性好：注意力 sink 效应、梯度集中于 response 部分等现象可视化清晰
 - 通用性：架构无关设计，可与多种 PEFT 方法叠加，是真正的 plugin
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要额外的前向和部分反向传播来评估 token 重要性，引入计算开销（虽然论文声称开销小）
 - 在极小规模模型（Qwen 0.5B 单独使用）上性能有下降，表征能力不足时选择可能不准
 - 仅在 instruction tuning 场景验证，对 continual pretraining 等其他微调范式的效果未探索

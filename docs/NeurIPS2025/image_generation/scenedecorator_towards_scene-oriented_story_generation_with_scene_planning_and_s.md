@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SceneDecorator: Towards Scene-Oriented Story Generation with Scene Planning and Scene Consistency
 description: >-
@@ -113,7 +113,7 @@ SceneDecorator 是一个无需训练的框架，由两个核心技术组成：
 - Extrapolable Noise Blending 以 O(1) 显存复杂度实现了 O(N) 个故事的一致性
 - 无需训练的设计使得框架可以与 PhotoMaker、ControlNet、风格 LoRA 等工具灵活组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 场景规划依赖 VLM 的想象力和理解能力，对复杂主题可能失准
 - VLM 预测坐标偶尔超出图像边界（虽然有 snap 修正）
 - 基于 SDXL 的生成质量受限于基础模型，难以超越

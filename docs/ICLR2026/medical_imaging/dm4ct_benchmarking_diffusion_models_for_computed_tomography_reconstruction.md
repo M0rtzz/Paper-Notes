@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction
 description: >-
@@ -123,7 +123,7 @@ DM4CT从贝叶斯视角组织扩散方法：后验分布 $p(\boldsymbol{x}|\bold
 - **深刻的实践洞察**：揭示了值域不匹配、有限训练数据、几何复杂性等真实部署挑战
 - **零空间分析**提供了理解不同数据一致性策略的新视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅评估2D切片重建，未涉及3D重建（螺旋/锥束几何更具挑战性）
 - 未包含flow-based方法（如FlowDPS），这是新兴方向

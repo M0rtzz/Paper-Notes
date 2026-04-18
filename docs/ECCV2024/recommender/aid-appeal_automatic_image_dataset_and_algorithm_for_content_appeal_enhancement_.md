@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AID-AppEAL: Automatic Image Dataset and Algorithm for Content Appeal Enhancement and Assessment Labeling
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：需要构建大规模 ICAA 数据集来训练模型，但人工标注成本不现实；且"内容吸引力"这个概念需要与"美学"严格区分
 
-**本文要解决什么？** (a) 定义并形式化 ICAA 任务；(b) 自动化构建 ICAA 数据集；(c) 训练吸引力评估和增强模型
+**本文目标** (a) 定义并形式化 ICAA 任务；(b) 自动化构建 ICAA 数据集；(c) 训练吸引力评估和增强模型
 
 **切入角度**：利用 Stable Diffusion 的 Textual Inversion 学习"吸引/不吸引"的嵌入表示，通过线性插值控制吸引力等级，生成连续梯度的合成数据
 
-**核心 idea 一句话**：用 Textual Inversion 学习 appealing/unappealing 的文本嵌入，通过 $\alpha$ 线性插值控制合成图像的吸引力等级，训练 Siamese 比较器自动标注真实图像，再训练绝对分数估计器
+**核心 idea**：用 Textual Inversion 学习 appealing/unappealing 的文本嵌入，通过 $\alpha$ 线性插值控制合成图像的吸引力等级，训练 Siamese 比较器自动标注真实图像，再训练绝对分数估计器
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ Pipeline 分四步：(1) 自动搜索收集领域图像（如食物/房间）；
 - **全自动零标注 pipeline**：从搜索查询→合成数据→自动标注→训练，整个过程无需人工标注。核心巧思是用 Textual Inversion 学习吸引力的连续表示
 - **Domain-relevancy map 思路**：BLIP+WordNet+CLIPSeg 的组合精确定位领域相关内容，确保只操作与吸引力相关的区域，很实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **线性插值假设可能过于简化**：嵌入空间中的线性路径不一定对应吸引力的线性变化
 - **仅测试了 food 和 room 两个领域**：对人像、服装等更复杂领域的泛化需要验证
 - **Textual Inversion 的表达能力有限**：单个嵌入向量可能无法捕捉所有维度的"吸引/不吸引"

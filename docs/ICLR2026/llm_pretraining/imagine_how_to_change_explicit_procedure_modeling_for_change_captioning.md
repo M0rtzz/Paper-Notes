@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Imagine How To Change: Explicit Procedure Modeling for Change Captioning
 description: >-
@@ -143,7 +143,7 @@ k=2 最优且效率合理。
 4. **多粒度掩码**：帧级到 patch 级多尺度理解
 5. **非 LLM 竞争力**：证明架构创新而非规模也能显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **帧插值质量依赖**：FI 质量直接影响上限
 2. **假设变化可插值**：物体突然出现/消失无法通过光流建模

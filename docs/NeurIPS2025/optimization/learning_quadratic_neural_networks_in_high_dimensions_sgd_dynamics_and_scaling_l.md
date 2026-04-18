@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Quadratic Neural Networks in High Dimensions: SGD Dynamics and Scaling Laws
 description: >-
@@ -157,7 +157,7 @@ $$\dot{M}(t) = A \cdot M(t) + M(t) \cdot A^T - M(t) \cdot B \cdot M(t) + C$$
 4. **从有限到无穷的统一**：统一处理 population/online、有限/无穷维度，展示了理论的一致性
 5. **物理学启发**：Riccati 方程在控制论和物理中广泛出现，揭示了神经网络学习与这些领域的深层联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **二次激活的特殊性**：分析依赖于 Hermite 多项式的代数性质，推广到 ReLU 等激活函数非显然
 2. **正交信号假设**：要求信号方向正交，放松到一般协方差结构需要新技术

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Align-SLM: Textless Spoken Language Models with Reinforcement Learning from AI Feedback
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：相比文本子词，语音 token 粒度更细、信息密度更低、在频谱和时间维度上变异性更大。单纯的 next-speech-token prediction 目标可能忽视了长程语义——模型学会了"听上去像语音"，但不一定学会了"说有意义的话"。
 
-**本文要解决什么？** SLM 的输出质量不一致——有时生成高质量续写，有时生成无意义内容。能否训练 SLM 一致地生成好的续写、避免差的续写？
+**本文目标** SLM 的输出质量不一致——有时生成高质量续写，有时生成无意义内容。能否训练 SLM 一致地生成好的续写、避免差的续写？
 
 **切入角度**：借鉴文本 LLM 领域的 RLHF/DPO 对齐方法论。由于让人类标注员听语音样本来标注偏好既昂贵又耗时，采用 RLAIF 思路——用 LLM 自动评估 ASR 转录文本的语义质量，构建偏好数据对。
 
-**核心idea一句话**：对预训练 SLM 采样多条语音续写，用 LLM 评分构建 (chosen, rejected) 偏好对，通过 DPO 训练 LoRA adapter 让 SLM 学习生成更有语义的语音。
+**核心 idea**：对预训练 SLM 采样多条语音续写，用 LLM 评分构建 (chosen, rejected) 偏好对，通过 DPO 训练 LoRA adapter 让 SLM 学习生成更有语义的语音。
 
 ## 方法详解
 

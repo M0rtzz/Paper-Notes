@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Long-term Traffic Simulation with Interleaved Autoregressive Motion and Scenario Generation
 description: >-
@@ -65,7 +65,7 @@ $$p(\mathcal{A}'_{t+1:T'} | \mathcal{M}, \mathcal{A}_{0:t_0}) = \prod_{t=t_0}^{T
 
 #### 1. **统一 Token 化方案**
 
-- **做什么**：将地图、运动、位姿和模式控制信息全部转换为离散 token 序列。
+- **功能**：将地图、运动、位姿和模式控制信息全部转换为离散 token 序列。
 - **核心思路**：
 
   四种 Tokenizer：
@@ -82,7 +82,7 @@ $$p(\mathcal{A}'_{t+1:T'} | \mathcal{M}, \mathcal{A}_{0:t_0}) = \prod_{t=t_0}^{T
 
 #### 2. **交替 Next-Token Prediction**
 
-- **做什么**：在每个时间步交替执行运动仿真和场景生成。
+- **功能**：在每个时间步交替执行运动仿真和场景生成。
 - **核心思路**：
 
   **时间运动仿真**（蓝色流）：
@@ -106,7 +106,7 @@ $$p(\mathcal{A}'_{t+1:T'} | \mathcal{M}, \mathcal{A}_{0:t_0}) = \prod_{t=t_0}^{T
 
 #### 3. **Occupancy Grid Encoder**
 
-- **做什么**：将当前场景的智能体空间分布编码为占据栅格特征，供场景生成使用。
+- **功能**：将当前场景的智能体空间分布编码为占据栅格特征，供场景生成使用。
 - **核心思路**：将位置 token 词汇表 $\mathcal{V}_\text{pos}$ 的每个位置标记为 0（空）或 1（被占据），通过 MLP 转换为特征后输入 Grid Attention。
 - **设计动机**：让场景生成模块高效推理智能体的空间分布，决定在哪些区域插入新智能体。
 
@@ -178,7 +178,7 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_\text{motion} + \lambda_2 \mathcal{L}_\tex
 4. **评估体系贡献**：提出 ACE 指标和扩展 WOSAC 指标，为长时程仿真研究建立了评估标准
 5. **Occupancy Grid Encoder 的巧妙设计**：让场景生成模块"看到"当前空间占据状态，避免不合理的重叠放置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **未达行程级仿真**：30 秒仍远短于真实行程（>5 分钟），主要受限于 WOMD 地图覆盖范围
 2. **纯监督学习的局限**：可能过拟合训练数据的因果关系，未来计划引入交互式强化学习

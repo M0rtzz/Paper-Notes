@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CPRet: A Dataset, Benchmark, and Model for Retrieval in Competitive Programming
 description: >-
@@ -140,7 +140,7 @@ $$\mathcal{L}_{\text{triplet}} = \max(0, \mathrm{sim}(x, x^-) - \mathrm{sim}(x, 
 - **竞赛编程检索从"代码级"扩展到"题目级"**是一个有远见的问题定义——从实际需求（赛事查重、教育搜索）出发，填补了现有基准空白
 - **两阶段训练策略**（先 Code 再 Prob）揭示了有趣的 trade-off：T2C 依赖实现细节，P2Dup/S2Full 依赖高层语义，两者存在内在张力，因此发布两个专用模型是合理的工程选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 重复题目对标注量有限（~700 对），P2Dup 测试集仅 168 query，评估鲁棒性和统计显著性受限
 - 仅基于文本嵌入做相似度，未利用题目的结构化信息（如约束范围、算法标签、时间/空间限制）
 - 测试集虽做了时间分割，但随着新模型训练数据更新，这些题目未来仍可能泄露，作者计划每 6-12 个月更新

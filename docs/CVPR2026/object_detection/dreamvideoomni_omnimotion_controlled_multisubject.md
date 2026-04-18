@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamVideo-Omni: Omni-Motion Controlled Multi-Subject Video Customization with Latent Identity Reinforcement Learning
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：(1) 用显式绑定机制（Group/Role Embeddings）解决多主体歧义；(2) 将身份保持从低级像素一致性提升到与人类偏好对齐的高级语义一致性，通过训练专门的身份奖励模型来提供梯度信号。
 
-**核心idea一句话**：通过 Group/Role Embeddings 显式绑定运动信号与主体身份，并训练基于 VDM 的潜空间身份奖励模型在去噪过程中任意时间步提供密集身份反馈。
+**核心 idea**：通过 Group/Role Embeddings 显式绑定运动信号与主体身份，并训练基于 VDM 的潜空间身份奖励模型在去噪过程中任意时间步提供密集身份反馈。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ Stage 1: $\mathcal{L}_{sft} = \mathbb{E}[(1 + \lambda_1 \mathbf{M}) \cdot \|\eps
 - **潜空间身份奖励绕过 VAE 瓶颈**：这是 ReFL 在视频生成中的关键突破——像素空间计算奖励的 GPU 开销使视频 ReFL 几乎不可行，潜空间操作使其成为可能。且在任意时间步提供反馈（而非仅最终步）覆盖了更多结构性信息
 - **统一相机运动和局部运动为轨迹控制**：用背景像素的轨迹表示相机运动，避免了显式 3D 相机参数估计和额外训练数据，大大简化了管线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **训练成本高**：Stage 1 需要 64×A100 训练 40K 步，Stage 2 需要 16×A100，总计算量巨大
 - **数据构建管道复杂**：需要 RAFT 光流、RAM++ 标签、Qwen3-VL 描述、GroundingDINO 检测、SAM2 分割、CoTracker3 轨迹追踪——完整复现困难

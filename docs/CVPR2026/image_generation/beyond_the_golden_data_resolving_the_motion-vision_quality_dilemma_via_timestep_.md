@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Golden Data: Resolving the Motion-Vision Quality Dilemma via Timestep Selective Training
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 挑战了"视频生成必须用黄金数据"的固有假设
 - Beta分布参数化设计优雅，平衡数据自然退化为基线采样
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要预计算MQ/VQ分数（VideoAlign），增加数据准备成本
 - LoRA微调（CogVideoX）下增益较小，全参数训练可能更受益
 - 未探索更细粒度的质量维度（如音频质量、文本对齐度等）

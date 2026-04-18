@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A0: An Affordance-Aware Hierarchical Model for General Robotic Manipulation
 description: >-
@@ -166,7 +166,7 @@ SIAL 的影响最为显著：移除后 HOI4D 上 MAE 增加 13.6 像素，说明
 - **效率优势**：单次推理 4-5 步 vs 25-50 步，对实际部署非常重要
 - **数据融合策略**：将互联网数据、HOI 数据和机器人数据统一到同一表示空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Place Object 任务在 Kinova 上不如 MOKA 和 ReKep，可能因为后两者使用了 SAM/GPT-4 等见过更多真实物体的大模型
 - 长时序规划依赖外部 VLM 进行任务分解，非端到端

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AUVIC: Adversarial Unlearning of Visual Concepts for Multi-modal Large Language Models
 description: >-
@@ -128,7 +128,7 @@ $$\min_\theta \max_\phi \mathbb{E}_{x \sim \mathcal{D}} [\mathcal{L}_f + \lambda
 - **仅修改视觉侧LoRA**：完全不碰语言头，天然保证语言流畅性（PPL最低），是个好的工程选择
 - **VCUBench**：首个面向群体场景的MLLM视觉概念遗忘评测基准，15k+样本，具有标杆意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **概念类型有限**：实验仅覆盖公众人物面部遗忘，未涉及物体类别、场景、动作等更广泛的视觉概念遗忘
 - **模型覆盖面窄**：仅在LLaVA-1.5 (7B)上验证，未测试更大模型（13B/70B+）或其他MLLM架构（如InternVL、Qwen-VL）的适用性

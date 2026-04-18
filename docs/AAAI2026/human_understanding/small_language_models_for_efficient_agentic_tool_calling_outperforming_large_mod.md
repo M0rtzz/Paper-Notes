@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Small Language Models for Efficient Agentic Tool Calling: Outperforming Large Models with Targeted Fine-tuning
 description: >-
@@ -140,7 +140,7 @@ tags:
 2. **单epoch训练的经济性**：仅需5,860步训练即可达到SOTA，训练和推理成本极低，实现了AI能力的"民主化"
 3. **参数-任务对齐**的概念——350M参数恰好是工具调用任务的"甜蜜点"，既有足够容量学习API交互模式，又无复杂度导致的输出不一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **泛化性存疑**：模型专门针对ToolBench优化，对其他工具调用框架或实际API生态的泛化性未验证
 2. **上下文理解受限**：350M参数可能无法处理需要复杂上下文推理的工具选择场景

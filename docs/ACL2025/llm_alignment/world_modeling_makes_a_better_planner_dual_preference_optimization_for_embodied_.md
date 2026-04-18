@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] World Modeling Makes a Better Planner: Dual Preference Optimization for Embodied Task Planning
 description: >-
@@ -116,7 +116,7 @@ VoTa-Bench (Seen) 总体表现 (%SR / %PL)：
 - 树搜索数据收集方法完全自动化，无需人工标注，具有良好的可扩展性
 - 推理时不需要额外的世界模型推断，训练时的世界建模目标已内化为模型的规划能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 AI2-THOR 仿真环境中验证，未扩展到真实物理世界
 - 状态描述是文本形式，可能丢失了视觉细节

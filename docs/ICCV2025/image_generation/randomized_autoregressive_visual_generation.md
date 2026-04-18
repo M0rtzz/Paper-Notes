@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Randomized Autoregressive Visual Generation
 description: >-
@@ -139,7 +139,7 @@ $$r = \begin{cases} 1.0, & \text{if } epoch < start \\ 0.0, & \text{if } epoch >
 5. **参数效率出色**：261M 的 RAR-B 即超越 1.5B+ 的竞争方法，说明双向表示学习比单纯增大模型更有效
 6. **与 XLNet 的联系**：排列目标源自 NLP 中的 XLNet，RAR 将其成功移植到视觉生成，验证了跨领域方法迁移的价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **无法完全实现全局上下文**：生成时总有 token 先于其他 token 生成，无法真正看到全部上下文；论文提到 resampling/refinement 可能有帮助但未探索
 2. **Tokenizer 限制**：使用的 MaskGIT-VQGAN tokenizer 较老（codebook 1024），若换用更强的 tokenizer（如 TiTok、MAGVIT-v2）可能进一步提升

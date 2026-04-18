@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Mathematical Reasoning in LLMs by Stepwise Correction
 description: >-
@@ -109,7 +109,7 @@ StepCo的工作流程：
 - **PSV泛化到非数学任务**：虽然仅在数学数据上训练，PSV在HotpotQA和CSQA上也有效果，说明"步骤质量"的概念有一定通用性
 - **77.8%的token节省**在实际部署中有巨大意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在英语数学任务上训练PSV，多语言和更广泛的推理类型（如代码、科学推理）未验证
 - 对于答案非数值/实体型的问题（如开放式生成），当前方法难以适用
 - PSV基于Llama-3-8B，对于极其复杂的推理（如竞赛级别数学），PSV本身可能无法给出准确判断

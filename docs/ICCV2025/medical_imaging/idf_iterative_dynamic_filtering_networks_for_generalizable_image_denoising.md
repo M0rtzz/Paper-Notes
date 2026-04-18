@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IDF: Iterative Dynamic Filtering Networks for Generalizable Image Denoising
 description: >-
@@ -133,7 +133,7 @@ IDF 采用迭代去噪方案：输入噪声图像 $\mathbf{I}_{Noisy}$ 经过 T 
 - RMS 归一化实现噪声级别无关性，简单有效
 - Power Normalization（p=3）替代 softmax 的选择很有洞察力——对异常值更鲁棒
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理速度受 PyTorch unfold 操作限制，优化这一操作可显著提升速度
 - 在 PolyU 和 Nam 真实数据集上略逊于 CODE，说明极端轻量化有其天花板

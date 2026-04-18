@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation
 description: >-
@@ -147,7 +147,7 @@ tags:
 - **Joint attention**（拼接后统一注意力）vs 交叉注意力的设计选择值得关注——前者允许更直接的模态间信息流
 - 注意力可视化（音频关注面部，视频的音频注意力仅关注唇部）提供了模型确实学会了有意义对齐的强证据
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 受训练资源和数据规模限制，与闭源模型仍有差距
 - 不支持多人参考生成（如 Sora2 的 "Cameo" 功能）
 - 语音克隆能力弱于专用语音模型（MiniMax、Qwen3-Omni），可能因为联合训练分散了音频分支的容量

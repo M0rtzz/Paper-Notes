@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Reasoning Meets Compression: Understanding the Effects of LLMs Compression on Large Reasoning Models
 description: >-
@@ -111,7 +111,7 @@ DeepSeek-R1 及其压缩变体在 4 个推理基准上的表现：
 - **"参数数量影响知识 > 推理"**这一发现有重要实践意义：知识密集型任务应优先选量化而非剪枝/蒸馏
 - **仅 2% 权重保护带来 6.57% 提升**：这个简单的混合精度解法验证了分析的有效性，为未来自适应量化指明方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可解释性分析规模有限**：仅 120 个实例用于 attribution patching，统计显著性存疑
 2. **仅分析线性层**：未覆盖 LayerNorm、Embedding 等其他模块

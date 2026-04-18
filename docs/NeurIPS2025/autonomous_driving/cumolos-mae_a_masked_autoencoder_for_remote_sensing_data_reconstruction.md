@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CuMoLoS-MAE: A Masked Autoencoder for Remote Sensing Data Reconstruction
 description: >-
@@ -118,7 +118,7 @@ CuMoLoS-MAE（Curriculum-Guided Monte Carlo Stochastic Ensemble Masked Autoencod
 4. **微分块设计**：2×2 micro-patch 能更好地捕获精细大气结构，相比标准 16×16 分块更适合此类物理场数据
 5. **频谱保真度指标**：提出了基于 PSD 的低频保真度评估方法，比传统像素级指标更贴合物理场重建需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模极小**：仅使用一个站点（ARM SGP）9 天数据训练、1 天测试，泛化性存疑
 2. **推理成本较高**：每张图需 50 次前向传播，实时部署时计算开销较大

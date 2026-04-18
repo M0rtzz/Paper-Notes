@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Instruction Following of LLMs via Activation Steering with Dynamic Rejection
 description: >-
@@ -124,7 +124,7 @@ Directer 是纯推理时方法，无需训练。核心超参数仅有两个：
 3. **近乎零调参**：α 在 5 个数量级范围稳定，β 全范围优于基线，真正实现即插即用
 4. **KV 缓存操作兼容 FlashAttention**：这是注意力级别干预方法不具备的实际优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要明确的指令区间标注（instruction span），自动化识别指令边界的能力有待探索
 2. 层排序基于单次 prefill 分析，对于多轮对话中指令动态变化的场景可能需要更新

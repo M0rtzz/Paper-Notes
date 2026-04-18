@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiMTok: Learning Hierarchical Mask Tokens for Image Segmentation with Large Multimodal Model
 description: >-
@@ -140,7 +140,7 @@ mask token作为视觉思维链，显著提升了高精度定位(Acc@0.9)。
 - **双向信息流的视觉CoT效果**：先分割再定位的思路新颖，为LMM的视觉推理提供了新视角
 - **架构简洁**：去token化器是轻量级transformer，推理时不需要原图
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - mask token长度需预定义，无法根据物体形状复杂度自适应
 - 当前模型较被动，需要用户指定referring expression，不能主动分割所有感兴趣物体

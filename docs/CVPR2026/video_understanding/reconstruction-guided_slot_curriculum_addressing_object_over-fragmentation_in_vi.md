@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning
 description: >-
@@ -115,7 +115,7 @@ YouTube-VIS 上各组件贡献：
 - **SSIM3D 与课程学习的协同**：SSIM 在早期少 slot 阶段帮助锐化语义边界，使后续 slot 扩展建立在已清晰分离的语义基础上
 - **循环推理极其轻量**（+0.3% 推理时间），却有效弥补早期帧的上下文不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 MOVi-E 等需要精细分割大量小物体的场景中增益有限（针对欠碎片化无效）
 - 课程阶段数和扩展时机目前是手动设定的固定值，场景自适应的调度策略有待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards 3D Object-Centric Feature Learning for Semantic Scene Completion
 description: >-
@@ -66,7 +66,7 @@ SGDA包含两个互补模块：
 
 **3D Semantic Group Attention (SGA3D)**：
 
-**做什么**：利用MobileSAM的实例掩码，在3D空间内对同一实例的体素查询和图像像素进行分组特征交互。
+**功能**：利用MobileSAM的实例掩码，在3D空间内对同一实例的体素查询和图像像素进行分组特征交互。
 
 **核心思路**：
 - 将3D查询提案投影到图像平面，通过最近邻采样分配实例ID
@@ -83,7 +83,7 @@ $$\tilde{Q} = \text{Concat}\left[\frac{\varphi(Q^j) A^j \sum_{i=1}^{m^j} \varphi
 
 **Global Similarity-Guided Attention (GSGA)**：
 
-**做什么**：通过可变形注意力机制，利用MobileSAM的中间特征引导全局特征聚合，弥补SGA3D仅关注局部实例交互的不足。
+**功能**：通过可变形注意力机制，利用MobileSAM的中间特征引导全局特征聚合，弥补SGA3D仅关注局部实例交互的不足。
 
 **核心思路**：计算每个查询提案与MobileSAM中间特征在可变形偏移位置的相似度，作为实例感知权重过滤和强调同一物体的特征：
 
@@ -93,7 +93,7 @@ $$\hat{Q} = \sum_k (G_k W \mathcal{F}(p_q + \Delta p_k)) \odot A_k$$
 
 #### 2. Instance-aware Local Diffusion (ILD) 模块
 
-**做什么**：利用实例级特征增强BEV表征，弥补投影限制导致的信息不足。
+**功能**：利用实例级特征增强BEV表征，弥补投影限制导致的信息不足。
 
 **动态实例解码器（DID）**：
 - 基于实例掩码对多尺度分组特征求和，得到实例级聚合表征
@@ -189,7 +189,7 @@ $$\mathcal{L} = \lambda_d \mathcal{L}_d + \lambda_r \mathcal{L}_{recon} + \mathc
 4. **散射线性注意力**：将计算复杂度降到线性，使大规模实例处理可行
 5. **实验设计充分**：对每个模块都有详细消融，且与DFA3D等替代方案有公平对比
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **远距离和严重遮挡场景仍有困难**：视觉信息不足时，模型难以提取判别性特征（论文Figure 7展示了失败案例）
 2. **MobileSAM运行开销**：虽然轻量化，但额外的分割模型仍增加了推理时间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 2HandedAfforder: Learning Precise Actionable Bimanual Affordances from Human Videos
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：手与物体交互时，手本身会遮挡关键的 affordance 区域，导致直接从交互图像中提取精确接触区域非常困难。
 
-**本文要解决什么？** (a) 如何从视频中自动提取精确的、任务导向的双手 affordance 分割 mask；(b) 如何训练一个能根据文本提示预测左右手分别交互区域的模型。
+**本文目标** (a) 如何从视频中自动提取精确的、任务导向的双手 affordance 分割 mask；(b) 如何训练一个能根据文本提示预测左右手分别交互区域的模型。
 
 **切入角度**：利用视频级别的手部修复（hand inpainting）技术，先"去掉"遮挡手部获得完整物体视图，再通过 mask 补全得到手与物体接触的精确区域。
 
-**核心idea一句话**：通过视频手部修复+mask补全自动提取精确 affordance mask，结合 VLM 实现文本驱动的双手 affordance 预测。
+**核心 idea**：通过视频手部修复+mask补全自动提取精确 affordance mask，结合 VLM 实现文本驱动的双手 affordance 预测。
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ Cropped 版本（消除物体定位影响）：
 - **双解码器架构**：简洁地将双手问题分解为两个并行的 mask 预测，加上分类头选择，设计优雅
 - **可迁移到其他机器人任务**：affordance 区域可直接转换为 6DOF 抓取点云，已在 Tiago++ 真机上验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - IoU 指标整体偏低（所有方法<0.1），任务本身极具挑战性
 - 数据源限于厨房场景（EPIC-KITCHENS），泛化到其他环境需更多数据

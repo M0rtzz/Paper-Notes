@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TestNUC: Enhancing Test-Time Computing Approaches and Scaling through Neighboring Unlabeled Data Consistency
 description: >-
@@ -121,7 +121,7 @@ TestNUC 包含两个步骤：
 3. **无需训练**：利用现成嵌入模型和 LLM，无需任何额外训练
 4. **实用性强**：线性扩展 + 对超参数鲁棒 + 跨模型有效 = 容易部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要有一定量的无标注数据（任务相关的），不适用于完全冷启动场景
 - 增加了 K 次额外 LLM 调用的成本，当 K 较大时可能影响延迟敏感场景

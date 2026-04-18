@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Metric Convolutions: A Unifying Theory to Adaptive Image Convolutions
 description: >-
@@ -126,7 +126,7 @@ CNN 分类（ResNet18, CIFAR-10, LKW-TL）：
 - Finsler/Randers 度量引入的不对称性在边缘保持上有天然优势
 - 移位等变性证明完整（Theorem 3），理论基础扎实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Randers 度量约束单位切球为椭圆形，无法表达更复杂的凸形状
 - 测地球 (UGB) 版本计算太慢，无法在实际 CNN 中使用

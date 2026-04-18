@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QuantVSR: Low-Bit Post-Training Quantization for Real-World Video Super-Resolution
 description: >-
@@ -65,7 +65,7 @@ $$\boldsymbol{XW} = \underbrace{\boldsymbol{XL_1L_2}}_{\text{FP, STCA}} + \under
 
 #### 1. **时空复杂度感知机制（STCA）**
 
-**做什么**：根据每层输入的时间和空间复杂度为全精度分支自适应分配秩，实现性能与效率的平衡。
+**功能**：根据每层输入的时间和空间复杂度为全精度分支自适应分配秩，实现性能与效率的平衡。
 
 **时间复杂度**定义为帧间差异能量：
 $$C_t = \frac{1}{T-1} \sum_{t=1}^{T-1} \frac{1}{CHW} \|\boldsymbol{X}_{t+1} - \boldsymbol{X}_t\|_2^2$$
@@ -88,7 +88,7 @@ $$C_s = \frac{1}{TC} \sum_{t=1}^T \sum_{c=1}^C \sigma_{h,w}(\boldsymbol{X}_{t,c}
 
 #### 2. **双分支联合精炼（Dual-Branch Refinement）**
 
-**做什么**：在层自适应秩分配后，联合优化全精度分支和低比特分支以达到整体最优。
+**功能**：在层自适应秩分配后，联合优化全精度分支和低比特分支以达到整体最优。
 
 **核心思路**：全精度分支改变了低比特分支的数据分布（残差 $R = W - L_1L_2$），可能使量化更困难。两个分支共同贡献最终输出，因此需要联合优化。
 
@@ -99,7 +99,7 @@ $$C_s = \frac{1}{TC} \sum_{t=1}^T \sum_{c=1}^C \sigma_{h,w}(\boldsymbol{X}_{t,c}
 
 #### 3. **可学习偏置对齐模块（LBA）**
 
-**做什么**：修正低比特量化中的系统偏差（biased error）。
+**功能**：修正低比特量化中的系统偏差（biased error）。
 
 **问题分析**：量化误差是有偏的，即全精度模型和量化模型的平均输出不同。当权重和激活同时量化时，偏差公式为：
 $$\mathbb{E}(\hat{W}\hat{X}) - \mathbb{E}(WX) = \Delta W \mathbb{E}(\hat{X}) + W \mathbb{E}(\Delta X)$$
@@ -178,7 +178,7 @@ $$\mathbb{E}(\hat{W}\hat{X}) - \mathbb{E}(WX) = \Delta W \mathbb{E}(\hat{X}) + W
 3. **LBA 的推理零成本性**：可学习偏置在推理时融入层偏置，完全不增加推理开销。
 4. **系统性实验设计**：既评估图像质量（IQA），也评估视频质量（VQA）和时序一致性（E*warp），指标维度全面。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 MGLD-VSR（基于 U-Net）上验证，对 DiT 架构的 VSR 模型（如基于视频生成模型的 VSR）的适用性未知。
 2. 校准数据来自 REDS30，在跨域数据上的泛化性有待考察。

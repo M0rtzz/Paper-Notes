@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DH-FaceVid-1K: A Large-Scale High-Quality Dataset for Face Video Generation
 description: >-
@@ -103,7 +103,7 @@ DH-FaceVid-1K 的构建分为四个关键阶段：
 - **DiT vs UNet 的经验性对比**为研究者选择 backbone 提供了有价值的参考
 - **解决了亚洲人脸数据缺乏的实际痛点**，对实际应用部署具有重要意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 亚洲面孔占 80% 导致其他种族仍然不足，可能引入新的偏差
 - 数据集获取流程严格（需提交申请表、签署协议），可能限制学术社区的广泛使用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CrossEarth-SAR: A SAR-Centric and Billion-Scale Geospatial Foundation Model for Domain Generalizable Semantic Segmentation
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{seg}} + \mathcal{L}_{\text{BC}}$$
 - **系统性贡献**：同时推出200K大规模预训练数据集+22个DG基准+S/B/L三种模型规格，形成完整的研究基础设施
 - **22个基准中20个SOTA**：覆盖单/双/三域差的全面验证，部分场景提升超过10% mIoU
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 伪标签依赖光学配对图像的CrossEarth模型生成，质量受限于光学-SAR匹配精度，部分场景标注可靠性存疑
 - 多域差场景（如D2O、D2F）提升有限甚至略低于Baseline，说明三域差泛化仍是开放问题

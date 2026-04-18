@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CiteEval: Principle-Driven Citation Evaluation for Source Attribution
 description: >-
@@ -108,7 +108,7 @@ CiteEval 将引用评估问题形式化为 $r_i = f_\theta(\mathcal{C}_i; \mathc
 - 编辑动作的显式推理比直接评分或 CoT 推理更有效，说明结构化中间步骤对评估任务的重要性
 - 迭代编辑改善引用质量的发现暗示了推理时间缩放在源归因中的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CiteEval-Auto 依赖 GPT-4o 作为骨干模型，成本较高，需要探索蒸馏到小模型的方案
 - 上下文归因目前仅覆盖 RAG 的典型上下文类型，未考虑个性化等更复杂场景
 - 以句子为单位评估，更细粒度的 chunk 级别评估可能更准确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FDP: A Frequency-Decomposition Preprocessing Pipeline for Unsupervised Anomaly Detection in Brain MRI
 description: >-
@@ -159,7 +159,7 @@ $m_{\text{FRM}}$ 敏感性分析：
 3. **先验上下文库的巧妙设计**：利用健康低频的低维流形性质，通过注意力检索实现低频重建
 4. **频域与空间域的互补利用**：低频重建 + 高频保留的策略既消除病变又保持结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设病变主要在低频**：某些细微纹理型异常（如脱髓鞘早期变化）可能部分出现在中频段
 2. **理想高通滤波器的阶梯效应**：可考虑使用高斯或 Butterworth 滤波器以减少振铃效应

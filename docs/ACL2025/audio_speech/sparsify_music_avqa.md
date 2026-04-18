@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparsify: Learning Sparsity for Effective and Efficient Music Performance Question Answering
 description: >-
@@ -34,7 +34,7 @@ Sparsify 提出三层稀疏化策略（稀疏掩码+自适应稀疏合并+关键
 
 **核心矛盾**：音乐表演数据的密集连续性导致大量冗余，但简单裁剪可能丢失细粒度的时序和语义信息
 
-**核心idea一句话**：在表示、token、样本三个层面同时引入稀疏性，在提升效率的同时改善性能
+**核心 idea**：在表示、token、样本三个层面同时引入稀疏性，在提升效率的同时改善性能
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ AV QA 提升最显著（+12.41 vs DG-SCT）
 - **IQR 自适应阈值**比固定比例 pruning 更鲁棒，可以迁移到其他需要 token 合并的多模态任务中
 - **Key-subset Selection 的指数衰减策略**是一个简洁有效的 curriculum learning 变体
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 Music AVQA 数据集上验证，其他密集音频-视觉任务的泛化性未知
 - 50% 掩码率缺乏超参数敏感性分析
 - Key-subset 算法有多个超参数（k、r、G），消融不够充分

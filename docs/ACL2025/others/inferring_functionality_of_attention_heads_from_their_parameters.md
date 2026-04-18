@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inferring Functionality of Attention Heads from their Parameters
 description: >-
@@ -118,7 +118,7 @@ $$\phi_R(M) = \frac{1}{|\mathcal{D}_R|} \sum_{(s,t) \in \mathcal{D}_R} \mathbb{1
 - **架构洞察**：揭示了多个有价值的架构偏差——小模型倾向于在单个head上编码更多关系；Llama-3.1的分组注意力中同组head常实现相同或相似关系；关系head普遍集中在中间和上层
 - **自动化pipeline**：结合GPT-4o实现了注意力头功能的自动描述，在中上层达到60%-96%的覆盖率，人工评估80%正确
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅分析$W_{VO}$**：忽略了$W_{QK}$矩阵（负责注意力计算/上下文化），未能完整刻画head的选择性行为
 - **词汇空间限制**：只能捕获可用token对表达的操作，无法处理成语、位置特征等更抽象的计算

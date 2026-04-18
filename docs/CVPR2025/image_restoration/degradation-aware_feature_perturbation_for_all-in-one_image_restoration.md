@@ -1,4 +1,4 @@
-# Degradation-Aware Feature Perturbation for All-in-One Image Restoration
+﻿# Degradation-Aware Feature Perturbation for All-in-One Image Restoration
 
 **会议**: CVPR 2025  
 **arXiv**: [2505.12630](https://arxiv.org/abs/2505.12630)  
@@ -19,7 +19,7 @@
 
 **切入角度**：引入退化感知的特征扰动——不改变特征的信息量，只改变特征的组织方式（通道顺序、注意力分配），使不同退化的特征以统一方式呈现给共享参数。
 
-**核心idea一句话**：CLIP 编码退化类型→引导通道混洗（重组特征通道顺序）+ top-K 注意力掩码（选择性传递信息），实现退化感知的特征空间对齐。
+**核心 idea**：CLIP 编码退化类型→引导通道混洗（重组特征通道顺序）+ top-K 注意力掩码（选择性传递信息），实现退化感知的特征空间对齐。
 
 ## 方法详解
 

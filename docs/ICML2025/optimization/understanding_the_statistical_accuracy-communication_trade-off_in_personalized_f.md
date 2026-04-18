@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding the Statistical Accuracy-Communication Trade-off in Personalized Federated Learning with Minimax Guarantees
 description: >-
@@ -106,7 +106,7 @@ $$\mathbb{E}\|\tilde{\mathbf{w}}^{(i)} - \mathbf{w}_\star^{(i)}\|^2 \le C_3 \cdo
 - **实用指导价值**：为选择个性化程度 $\lambda$ 提供了有理论依据的策略
 - **双层优化视角**：将 PFL 问题自然改写为 Moreau 包络形式，算法设计优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 统计分析依赖**强凸 + 光滑**假设，非凸理论仅有实验验证
 - 异构性度量仅考虑模型参数距离 $R$，未涵盖更精细的分布偏移结构

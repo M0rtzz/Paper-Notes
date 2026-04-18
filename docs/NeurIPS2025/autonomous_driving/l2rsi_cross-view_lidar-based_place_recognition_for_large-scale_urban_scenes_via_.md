@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] L2RSI: Cross-View LiDAR-Based Place Recognition for Large-Scale Urban Scenes via Remote Sensing Imagery
 description: >-
@@ -146,7 +146,7 @@ $$P(x,y) = \sum_{m=1}^{M} A_m \cdot \exp\left(-\frac{(x-\mu_{xm})^2}{2\sigma_{xm
 3. **STPE 的聚合思想**：颠覆了粒子滤波的传统范式，更适合"单次观测高不靠谱"的困难检索场景
 4. **跨场景零样本泛化**：在完全不同城市（厦门→牛津）无需微调即可工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖额外的磁力计提供方向信息，增加了硬件需求
 2. 跨场景泛化精度（~42%）尚不足以实际部署，需进一步提升

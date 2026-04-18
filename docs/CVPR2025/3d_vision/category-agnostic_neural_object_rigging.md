@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Category-Agnostic Neural Object Rigging
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 共享 codebook + 交叉注意力的设计巧妙地实现了同类别不同实例间的语义对应
 - "clay-monster"实验展示了该方法对非专业用户的友好性和实际应用潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 不同类别需要分别训练（无跨类别泛化）
 - 需要同一类别的多个动画序列作为训练数据

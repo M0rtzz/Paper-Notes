@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Logical Consistency is Vital: Neural-Symbolic Information Retrieval for Negative-Constraint Queries
 description: >-
@@ -48,7 +48,7 @@ NS-IR 是一个重排序（reranking）框架，流程如下：
 
 #### 1. 逻辑对齐（Logic Alignment, LA）
 
-**做什么**：将 FOL 的整体逻辑语义融入 NL 的表示中。
+**功能**：将 FOL 的整体逻辑语义融入 NL 的表示中。
 
 **核心思路**：基于最优传输（Optimal Transport, OT）的方法，衡量 NL 和 FOL 嵌入之间的分布差异。具体步骤为：
 
@@ -61,7 +61,7 @@ NS-IR 是一个重排序（reranking）框架，流程如下：
 
 #### 2. 连接词约束（Connective Constraint, CC）
 
-**做什么**：精确反映 FOL 中不同词（尤其是逻辑连接词）对 NL 词的影响。
+**功能**：精确反映 FOL 中不同词（尤其是逻辑连接词）对 NL 词的影响。
 
 **核心思路**：让 FOL 中的不同词对 NL 中的词施加不同的注意力权重。关键创新在于 σ 函数的设计：
 
@@ -125,7 +125,7 @@ $$\text{score} = \text{score}_1 + \text{score}_2$$
 - **σ 函数设计精妙**：用 -1/0/+1 三值机制将逻辑否定直接编码为嵌入空间中的方向操作
 - **NegConstraint 数据集**：填补了负约束查询评测的空白，包含三种递增复杂度的查询类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 OpenAI API 进行 NL-FOL 翻译，成本较高（LogicLLaMA 效果较弱）
 2. 只对 Top-K 文档做重排序，可能损失部分召回率

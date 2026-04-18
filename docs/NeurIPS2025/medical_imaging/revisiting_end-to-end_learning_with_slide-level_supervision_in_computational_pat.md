@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting End-to-End Learning with Slide-level Supervision in Computational Pathology
 description: >-
@@ -128,7 +128,7 @@ $$\{\hat{\theta}, \hat{\phi}, \hat{\eta}\} \leftarrow \arg\min_{\theta, \phi, \e
 - 打破了"CPath必须用大规模基础模型"的思维定式：ImageNet预训练的ResNet通过E2E学习即可达到FM水平
 - 成本对比极具说服力：不需要额外预训练，总训练时间9h(3090)，推理速度快50倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 生存分析任务上E2E提升有限（受采样数量影响），未来可探索更多采样量
 - ABMILX的全局注意力矩阵计算为 $O(s^2)$，大规模采样时可能成为瓶颈

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TokenSqueeze: Performance-Preserving Compression for Reasoning LLMs
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L}_{\text{Total}} = \eta \mathcal{L}_{\text{DPO-L}} + (1-\eta) \mathc
 - **KL散度约束精炼**：在步级别进行信息密度优化，保证了语义完整性的同时实现有效压缩
 - 多维消融实验设计（数据构建、精炼方法、优化目标）逻辑完整
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - KL阈值$\varepsilon$的设定仍依赖启发式（当前固定为0.005），缺乏自适应机制
 - 完全离线偏好优化，模型无法在推理时持续优化策略

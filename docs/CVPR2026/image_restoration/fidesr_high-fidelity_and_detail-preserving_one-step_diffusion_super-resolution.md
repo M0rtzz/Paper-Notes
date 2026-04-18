@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FiDeSR: High-Fidelity and Detail-Preserving One-Step Diffusion Super-Resolution
 description: >-
@@ -120,7 +120,7 @@ FiDeSR 基于 SD 2.1-base，采用 LoRA 微调的单步扩散框架：
 4. **LFIM 的灵活性**：推理时可调节增强强度，无需重训练，实用性强
 5. **感知-失真权衡的突破**：FiDeSR 在二者之间取得了比现有方法更好的平衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基于 SD 2.1-base，可能受限于基座模型的生成能力
 2. LFIM 的频率分离依赖 Butterworth 滤波器参数的手动设定

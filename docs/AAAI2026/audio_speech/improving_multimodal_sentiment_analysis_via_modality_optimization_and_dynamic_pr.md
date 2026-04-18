@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Multimodal Sentiment Analysis via Modality Optimization and Dynamic Primary Modality Selection
 description: >-
@@ -103,7 +103,7 @@ InfoNCE 损失从融合特征反向预测各单模态特征，稳定主模态选
 - PCCA 以主模态为桥梁进行信息流动，避免辅助模态间直接交互产生干扰
 - 在 SIMS/SIMSv2 等模态平衡数据集上也显著优于固定主模态方法，验证了动态选择的价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MSelector 的 argmax 操作不可微，训练时依赖 softmax 权重做近似，可能导致选择不够锐利
 - 仅 3 模态场景验证，扩展到更多模态时 MSelector 设计需重新考虑

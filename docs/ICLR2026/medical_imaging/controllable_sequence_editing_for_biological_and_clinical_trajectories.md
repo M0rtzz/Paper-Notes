@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Controllable Sequence Editing for Biological and Clinical Trajectories
 description: >-
@@ -145,7 +145,7 @@ $$\mathcal{L}(\mathbf{x}, \hat{\mathbf{x}}) = \begin{cases} 0.5\mathbf{a}^2, & \
 - **概念可干预**：用户可以直接编辑时间概念的特定维度来生成反事实序列，这是独特的交互能力
 - **正则化效果**：即使在线性模型更优的场景（WOT），Clef 也能显著减小神经网络模型的 MAE，起到正则化作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 时间概念的每个元素对应一个变量，缺乏对变量间高阶关系的建模。可以考虑学习层次化的抽象概念
 - 模型完全依赖数据驱动，没有利用领域因果模型（causal model）的先验知识。未来可通过用户干预反馈来微调因果关系

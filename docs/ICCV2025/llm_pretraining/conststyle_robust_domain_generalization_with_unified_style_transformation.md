@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConstStyle: Robust Domain Generalization with Unified Style Transformation
 description: >-
@@ -90,7 +90,7 @@ ConstStyle分为训练和测试两个阶段：训练阶段包含（i）确定统
 - 理论分析完整（Lemma 1 + Theorem 1/2），为方法设计提供了清晰的理论指导
 - 部分投影策略简单但有效，可解释性强（α的物理含义清晰）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 域风格仅用通道级均值和方差表征，可能无法捕获更高阶的域特征
 - GMM聚类估计域数量存在超参数敏感性

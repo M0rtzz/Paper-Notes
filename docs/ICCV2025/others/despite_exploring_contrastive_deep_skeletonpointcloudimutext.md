@@ -1,4 +1,4 @@
- bu# DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding
+﻿ bu# DeSPITE: Exploring Contrastive Deep Skeleton-Pointcloud-IMU-Text Embeddings for Advanced Point Cloud Human Activity Understanding
 
 **会议**: ICCV 2025  
 **arXiv**: [2506.13897](https://arxiv.org/abs/2506.13897)  
@@ -115,7 +115,7 @@ $$\mathcal{L}_{total} = \alpha \mathcal{L}_{text} + \beta \mathcal{L}_{M}$$
 
 4. **"文本有害但有用"的发现**：文本模态在匹配/检索中有害但在分类中有用，这个看似矛盾的发现值得深入思考——反映了语义对齐粒度和下游任务粒度之间的 mismatch。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **方法本身较为直接**：四个独立编码器 + InfoNCE 对比损失，没有太多架构创新。每种模态使用现有编码器（PST-Transformer、LSTM、ACTOR），贡献更多在于"探索"而非"方法"。
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimas: Optimizing Compound AI Systems with Globally Aligned Local Rewards
 description: >-
@@ -96,7 +96,7 @@ tags:
 - 共享 backbone + 独立头的 LRF 架构可扩展且内存高效
 - 5 个真实系统上一致提升，DSPy 在 Amazon 上反而下降 14.3%
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 坐标最大化在非凸问题中只保证分量最优，非全局最优
 - LRF 在线适配仍需少量系统运行和 Monte Carlo 采样，成本并非为零
 - 实验中组件数量有限（2-5个），更大规模系统的可扩展性未验证

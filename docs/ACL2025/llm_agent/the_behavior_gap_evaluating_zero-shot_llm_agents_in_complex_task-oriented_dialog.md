@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Behavior Gap: Evaluating Zero-shot LLM Agents in Complex Task-Oriented Dialogs
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **本文方案**: 提出一个三维度（dialog acts + tool usage + knowledge usage）的行为评估框架，在 teacher-forcing 设定下逐轮对比 LLM agent 与人类专家行为，量化"行为差距"并验证其与性能退化的因果关系。
 
-**核心 idea 一句话**: LLM agent 的性能问题本质上是行为模式问题——系统量化后发现行为差距与性能退化高度相关，缩小差距可直接提升性能。
+**核心 idea**: LLM agent 的性能问题本质上是行为模式问题——系统量化后发现行为差距与性能退化高度相关，缩小差距可直接提升性能。
 
 ## 方法详解
 
@@ -120,7 +120,7 @@ tags:
 - **PCS 真实客服数据**揭示了学术 benchmark（MultiWOZ）无法反映的挑战：120 轮对话 + 无限 slot 空间 + 多步推理，复杂度远超现有标准
 - **行为注入实验的因果验证**非常有说服力：单纯告诉 agent "该用什么 dialog act / 工具"就能提升 24.3%，说明问题不在能力而在策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **PCS 数据集私有**：核心贡献在最复杂任务上，但其他研究者无法获取数据复现结果
 - **分类器误差传播**：GPT-4o dialog act 分类器 F1 约 0.77，可能系统性低估或高估某些行为差距

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ask a Strong LLM Judge when Your Reward Model is Uncertain
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：如何在有限的LLM judge调用预算下最大化偏好判断准确率？随机路由浪费预算在RM已经判对的样本上。
 
-**本文要解决什么？** 设计一个自适应路由策略，精准识别RM不确定的样本（最可能判错），将其路由到强judge，其余用RM快速处理。
+**本文目标** 设计一个自适应路由策略，精准识别RM不确定的样本（最可能判错），将其路由到强judge，其余用RM快速处理。
 
 **切入角度**：从不确定性量化入手——pairwise RM的偏好分类问题天然适合UQ方法（vs pointwise RM在BT模型下不确定性是ill-defined的），采用SNGP（单次推理、无需集成）高效量化认知不确定性。
 
-**核心idea一句话**：用SNGP给pairwise RM加不确定性感知，高认知不确定性的配对自动路由到LLM judge，低不确定性的用RM快速处理。
+**核心 idea**：用SNGP给pairwise RM加不确定性感知，高认知不确定性的配对自动路由到LLM judge，低不确定性的用RM快速处理。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **Judge的三类标签设计**（好/差/平局）优雅地处理了aleatoric uncertainty——平局返回 $\sigma^{-1}(1/2)=0$，不提供噪声信号
 - 路由框架是通用的——可以替换为任何judge和任何UQ方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Judge（DeepSeek-R1）本身也有偏差（如长度偏好），路由到judge不一定是"ground truth"
 - SNGP的GP层是random feature近似，近似质量受特征维度影响
 - 仅在8B规模验证，更大模型的PM是否还需要路由？

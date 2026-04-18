@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Resilience of Entropy Model in Distributed Neural Networks
 description: >-
@@ -104,7 +104,7 @@ tags:
 3. **简洁有效的防御设计**：基于 total variation 去噪 + entropy soft mask 的方案无需重训练、计算开销小、效果显著——小扰动下甚至可以让数据量低于干净数据
 4. **对自适应攻击的鲁棒性**：在白盒设定下面对专门设计的自适应攻击仍表现稳健
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估分类任务**：未验证在目标检测、语义分割等其他下游任务上的效果
 2. **mask 依赖熵模型本身**：防御使用 $P_Z(z)$ 作为 soft mask，面对更聪明的攻击者可能被利用

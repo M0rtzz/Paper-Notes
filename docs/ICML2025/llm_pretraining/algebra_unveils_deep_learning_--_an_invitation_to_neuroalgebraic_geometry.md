@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Algebra Unveils Deep Learning -- An Invitation to Neuroalgebraic Geometry
 description: >-
@@ -175,7 +175,7 @@ $$\min_{f \in \mathcal{M}} \mathcal{L}_\mathcal{D}(f)$$
 4. **数据判别式** 的引入为理解损失景观的拓扑突变提供了全新视角
 5. 通过 Weierstrass 逼近和热带几何，论证了代数框架的 **普适性**——不仅限于多项式激活
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论为主**：缺乏大规模实际网络上的数值验证，所有显式计算仅限于 toy example（线性两层 MLP）
 2. **架构覆盖有限**：skip connections、GNN、SSM、Transformer（含 softmax）等主流架构尚未纳入分析

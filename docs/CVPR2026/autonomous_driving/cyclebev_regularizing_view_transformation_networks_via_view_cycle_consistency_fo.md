@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CycleBEV: Regularizing View Transformation Networks via View Cycle Consistency for Bird's-Eye-View Semantic Segmentation
 description: >-
@@ -119,7 +119,7 @@ BEVFormer + 数据增强 + CycleBEV：Vehicle 36.38（+3.15），Pedestrian 15.1
 - **对遮挡物体提升显著**：低可见度物体类别提升最大（Pedestrian 最高 +3.74），CVT+Ours 超过更复杂的 BEVFormer。
 - **实验极为充分**：消融、遮挡分析、AE 对比、SA 对比、数据增强兼容性、时序扩展，覆盖面广。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Drivable area 提升有限**（最高仅 +0.74），说明框架对大面积静态区域的改善空间小。
 2. **未涉及时序建模**：当前框架关注空间正则化，忽略了相邻帧的时间一致性（作者在结论中提到未来方向）。

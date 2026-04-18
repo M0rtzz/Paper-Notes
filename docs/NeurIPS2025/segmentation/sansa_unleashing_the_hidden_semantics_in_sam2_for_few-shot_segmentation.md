@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation
 description: >-
@@ -95,7 +95,7 @@ $$\mathcal{M} = [x_r^k, a_r^k]_{k=1}^K \cup [x_t, \varnothing]$$
 - **极简设计哲学**：仅在最后两层插入最简单的 AdaptFormer，~10M 可训练参数就实现 SOTA，证明了"约束更强的适配反而更好"的原则
 - **统一架构优势**：不需要 DINOv2+SAM 的双模型流水线，单一 SAM2 架构同时完成特征匹配和掩码生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 5-shot COCO-20i 上相比 GF-SAM 仍有 -2.5% 的差距
 - 基于 episodic training，可能受限于训练类别的多样性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparse-Pivot: Dynamic Correlation Clustering for Node Insertions
 description: >-
@@ -118,7 +118,7 @@ Reference Clustering 本身是 5-近似，因此总近似比为 $4 \times 5 \tim
 4. **理论-实践一致**：不仅理论改进，实验也全面超越基线，说明设计的实用性
 5. **懒删除的简洁性**：随机删除场景下直接忽略删除、定期重算，分析简洁且有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **近似比仍有较大空间**：$(20+\varepsilon)$ vs. 静态最优 1.437，主要瓶颈在 Break-cluster 的 4 倍放大
 2. **仅支持 soft deletion**：无法处理确定性删除，且删除必须均匀随机

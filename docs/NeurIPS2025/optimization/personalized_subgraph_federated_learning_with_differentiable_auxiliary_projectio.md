@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Personalized Subgraph Federated Learning with Differentiable Auxiliary Projections
 description: >-
@@ -121,7 +121,7 @@ FedAux的工作流程：
 - 用高斯核代替硬排序是关键——解决了梯度阻断问题，使端到端训练成为可能
 - 复杂度分析清晰：客户端 $O(|E_k|d' + N_k^2 d')$，服务器 $O(K^2 d')$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 核聚合的复杂度为 $O(N_k^2)$，对大规模子图可能成为瓶颈
 - APV作为主成分可能在某些数据分布下无法捕获关键的子图结构差异

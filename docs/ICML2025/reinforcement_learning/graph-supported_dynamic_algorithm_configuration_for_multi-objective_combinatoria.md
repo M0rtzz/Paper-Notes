@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graph-Supported Dynamic Algorithm Configuration for Multi-Objective Combinatorial Optimization
 description: >-
@@ -119,7 +119,7 @@ $$\Delta_{\text{current}} = \frac{HV_{\text{current}} - HV_{\text{initial}}}{HV_
 4. **目标数量越多优势越大**：Penta-FJSP（5 目标）上 GS-MODAC 领先幅度最大，说明图表征在高维目标空间中的优势
 5. **强泛化能力**：跨规模、跨约束、跨目标数量三个维度均展现泛化性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练成本高**：大规模问题训练需数天（25j5m FJSP 最长 3 天），实际部署前需大量预训练
 2. **仅验证了两类问题**：FJSP 和 CVRP，对其他 MOCO 问题（如背包、图着色等）的效果待验证

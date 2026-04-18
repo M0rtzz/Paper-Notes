@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SafePath: Preventing Harmful Reasoning in Chain-of-Thought via Early Alignment
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：安全对齐与推理能力之间的 tradeoff——越强的安全约束，推理性能下降越多。
 
-**本文要解决什么？** 设计一种轻量级方法，在不损害推理能力的前提下实现 LRM 安全对齐。
+**本文目标** 设计一种轻量级方法，在不损害推理能力的前提下实现 LRM 安全对齐。
 
 **切入角度**：只在推理链的最开头插入一个"安全引导"信号，利用 LRM 自身的推理能力来建立安全上下文，而非强制拒绝或监督整个链条。
 
-**核心idea一句话**：微调 LRM 在遇到有害 prompt 时，在 `<think>` 后输出 8-token Safety Primer 即可，其余推理完全无监督。
+**核心 idea**：微调 LRM 在遇到有害 prompt 时，在 `<think>` 后输出 8-token Safety Primer 即可，其余推理完全无监督。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ tags:
 - **涌现的安全推理**：Safety Primer 的中途自动重激活是未经训练的涌现行为，暗示 LRM 可以学到"元认知"式的安全检查习惯
 - **实用性极强**：训练几分钟、效果超越需要数百倍计算的方法，ZS 变体甚至不需要训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Safety Primer 的措辞选择**：目前 "Let's think about safety first" 是手动选择的，未系统搜索最优 Primer
 - **仅在 DeepSeek-R1-Distill 上评估**：未在 o1/o3 等闭源 LRM 上测试
 - **对抗适应性攻击**：攻击者如果知道 Safety Primer 的存在，可能设计针对性的绕过策略

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DenoiSplit: A Method for Joint Microscopy Image Splitting and Unsupervised Denoising
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L} = -E_{q(z|x;\phi)}[\log P^{nm}(c_1^N|\hat{c}_1) + \log P^{nm}(c_2^
 - **不确定性量化的实用价值**：在生物学应用中，知道"这个预测有多可靠"与预测本身同样重要。DenoiSplit 的校准不确定性估计使研究人员能够识别低置信区域，做出更可靠的生物学判断。
 - **训练效率**：单模型端到端训练 1.5 小时，远少于 HDN⊕μSplit 的 11 小时。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅处理两通道分解，扩展到多通道分解需要更多噪声模型
 - 噪声模型需要预先获取或估计，对于未知噪声特性的数据可能需要额外工作

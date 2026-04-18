@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Single Pixel Image Classification using an Ultrafast Digital Light Projector
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：SPI的信息采集本质是时空变换（2D空间→1D时间序列），重建步骤是否真正必要？
 
-**本文要解决什么？** 在真实自由空间光学系统上实验验证超快SPIC的可行性，完全绕过图像重建。
+**本文目标** 在真实自由空间光学系统上实验验证超快SPIC的可行性，完全绕过图像重建。
 
 **切入角度**：利用microLED的超快切换能力投射Hadamard pattern，直接对光电信号时间序列做分类。
 
-**核心idea一句话**：用microLED超快投影器实现亚毫秒级Hadamard编码，对单像素检测器的时间序列直接分类而不重建图像。
+**核心 idea**：用microLED超快投影器实现亚毫秒级Hadamard编码，对单像素检测器的时间序列直接分类而不重建图像。
 
 ## 方法详解
 
@@ -117,7 +117,7 @@ DMD显示二值化MNIST图像→microLED投影器依次投射288个Hadamard patt
 - ELM作为异常检测器极其轻量：闭式解训练+31μs推理+AUC>99%，适合嵌入式/边缘部署
 - 首次在真实自由空间光学系统上实验验证kHz级SPIC，从仿真走向实测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在二值化28×28 MNIST上验证，远不及真实机器视觉的复杂度；灰度/彩色/自然场景表现未知
 - 12×12 Hadamard限制源于FPGA内存深度，实际应用需更高分辨率pattern集

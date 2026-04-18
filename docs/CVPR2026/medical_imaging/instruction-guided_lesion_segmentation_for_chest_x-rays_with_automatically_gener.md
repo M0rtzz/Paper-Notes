@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Instruction-Guided Lesion Segmentation for Chest X-rays with Automatically Generated Large-Scale Dataset
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L} = \lambda_{txt}\mathcal{L}_{txt} + \lambda_{bce}\mathcal{L}_{bce} 
 - 数据集规模（1.1M样本）是现有CXR分割数据集的10-100倍
 - RadEdit用于生成异常图的方法很巧妙——用扩散模型生成"正常"图像，通过差分定位异常区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自动标注质量：正样本接受率90.1%低于负样本的97.7%，正样本标注的精度仍需提升
 - 仅覆盖7种主要病变类型，CXR中还有更多细粒度异常

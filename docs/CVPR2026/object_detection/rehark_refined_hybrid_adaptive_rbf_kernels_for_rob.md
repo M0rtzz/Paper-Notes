@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReHARK: Refined Hybrid Adaptive RBF Kernels for Robust One-Shot Vision-Language Adaptation
 description: >-
@@ -70,7 +70,7 @@ tags:
 - GPT3语义描述与CLIP文本权重的融合巧妙地增加了one-shot下的"知识密度"
 - EuroSAT上+9.44%的巨大提升说明框架对结构敏感/分布偏移大的数据集特别有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 1000次Optuna搜索引入计算开销，虽然推理免训练，但超参搜索本身不"免费"
 - GPT3通用描述在高度专业化领域可能不够判别性
 - 仅验证了one-shot场景，few-shot(2/4/8/16-shot)下的表现未报告

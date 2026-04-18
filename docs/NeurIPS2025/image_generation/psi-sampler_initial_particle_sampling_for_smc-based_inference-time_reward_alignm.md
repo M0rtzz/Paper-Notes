@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ψ-Sampler: Initial Particle Sampling for SMC-Based Inference-Time Reward Alignment in Score Models
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **与蒸馏趋势的协同**：当前模型趋向更直的轨迹和更好的早期Tweedie估计，这恰好使初始后验采样更有效
 - **一致的理论-实验对应**：从SOC框架推导的最优初始分布在实验中得到验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设奖励模型可微分——不适用于不可微奖励
 - 依赖Tweedie近似的准确性——早期步的Tweedie估计对非蒸馏模型可能不够准确

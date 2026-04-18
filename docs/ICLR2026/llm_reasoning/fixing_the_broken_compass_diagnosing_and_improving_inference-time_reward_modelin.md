@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fixing the Broken Compass: Diagnosing and Improving Inference-Time Reward Modeling
 description: >-
@@ -85,7 +85,7 @@ CRISP 是纯推理时方法，不需要任何训练。策略模型使用 Qwen2.5
 - 提前终止机制优雅地解决了 RM 在简单题上反而有害的问题
 - R1 模型在非数学任务上的弱势（+高 token 成本）凸显了推理时优化的持续价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 聚类基于最终答案的精确匹配，对于开放式生成任务（如文本摘要）不直接适用
 - 前缀提取的步数随迭代线性增长，对长推理链可能过于受限

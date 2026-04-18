@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Practical do-Shapley Explanations with Estimand-Agnostic Causal Inference
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：do-SV 的理论优越性（无虚假相关）与计算的不实用性之间的矛盾——联盟数指数增长，且每个联盟需要独立的因果推断。
 
-**本文要解决什么？** (a) 消除对每个联盟手动指定 estimand 的需要；(b) 减少需要计算的联盟数量。
+**本文目标** (a) 消除对每个联盟手动指定 estimand 的需要；(b) 减少需要计算的联盟数量。
 
 **切入角度**：直接学习数据生成过程（SCM），一旦 SCM 拟合好，任何可辨识的因果查询都可以通过模拟 do 操作来回答，无需预先推导 estimand。同时利用图结构发现冗余联盟。
 
-**核心 idea 一句话**：用单个 SCM 拟合观测分布实现estimand-agnostic 因果推断 + Frontier-Reducibility 算法约减联盟数 → 实用化 do-SHAP。
+**核心 idea**：用单个 SCM 拟合观测分布实现estimand-agnostic 因果推断 + Frontier-Reducibility 算法约减联盟数 → 实用化 do-SHAP。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **FRA 的图论思想巧妙**：利用因果图的结构信息（拓扑序、路径阻断）发现计算冗余，成本极低但收益巨大
 - **do-SHAP 的实用化扫清了障碍**：从"理论上正确但不可计算"到"可以在真实数据上运行"
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要已知的因果图——实际中因果发现算法可能有误，误差会传播
 - EA 方法没有 doubly-robust 保证（EB 的 estimand 方法可以有）
 - SCM 训练质量直接影响 do-SV 估计精度

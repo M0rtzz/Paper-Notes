@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sequential Monte Carlo for Policy Optimization in Continuous POMDPs
 description: >-
@@ -101,7 +101,7 @@ tags:
 - 嵌套 SMC 算法在理论上可证明收敛
 - 首次将 FK 路径积分引入 POMDP 策略优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 嵌套 SMC 的计算成本随粒子数平方增长
 - 高维观测空间（如图像）的扩展需要结合深度信念模型
 - 与 Transformer-based memory 方法的比较不充分

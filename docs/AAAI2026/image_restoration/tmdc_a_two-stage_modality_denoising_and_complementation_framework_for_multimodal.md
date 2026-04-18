@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TMDC: A Two-Stage Modality Denoising and Complementation Framework for Multimodal Sentiment Analysis
 description: >-
@@ -88,7 +88,7 @@ $$\mathcal{L}_{IMD} = \sum_{m} \left(\sum_{b \in \{Spe,Com\}} \mathcal{L}_b^m + 
 - **噪声鲁棒性显著**: 噪声强度 10 时仍比 MoMKE 平均高 10 个百分点
 - 在 7 种缺失模态组合下全面评估，覆盖极端情况
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 MOSI/MOSEI/IEMOCAP 三个较小的情感数据集上验证
 - 共享表示存在一定冗余（作者在结论中承认），可进一步压缩

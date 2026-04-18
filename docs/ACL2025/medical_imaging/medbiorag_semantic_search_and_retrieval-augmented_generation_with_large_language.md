@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MedBioRAG: Semantic Search and Retrieval-Augmented Generation with Large Language Models for Medical and Biological QA
 description: >-
@@ -121,7 +121,7 @@ MedBioRAG 的工作流分为三个阶段：
 - **在PubMedQA上创造了新的历史最佳记录**（85%），超越了Med-PaLM-2等先前模型
 - **实验证明了弱模型+RAG可能适得其反**，为RAG系统的模型选型提供了实践指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **缺乏医学专家验证**：所有评估基于自动指标，未经医疗专业人员评判模型输出的临床准确性和可靠性
 - **检索文档间的矛盾处理不足**：当检索到的文档包含矛盾信息时，模型缺乏冲突消解机制

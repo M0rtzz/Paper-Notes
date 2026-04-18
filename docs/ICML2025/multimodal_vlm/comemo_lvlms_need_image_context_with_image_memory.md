@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMemo: LVLMs Need Image Context with Image Memory
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：作者通过梯度和注意力权重可视化发现，训练中大部分梯度反传到邻近token和attention sink，中间token被系统性忽视。这启发了"额外加一条不受上下文位置影响的视觉处理路径"的思路。
 
-**核心idea一句话**：在保留LLaVA式自回归处理（Context路径）的同时，增加一条交叉注意力路径（Memory路径）作为图像的"不会遗忘"的持久记忆，通过三阶段训练防止路径失衡。
+**核心 idea**：在保留LLaVA式自回归处理（Context路径）的同时，增加一条交叉注意力路径（Memory路径）作为图像的"不会遗忘"的持久记忆，通过三阶段训练防止路径失衡。
 
 ## 方法详解
 

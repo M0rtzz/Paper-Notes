@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attention to Trajectory: Trajectory-Aware Open-Vocabulary Tracking
 description: >-
@@ -98,7 +98,7 @@ TCR模块无需训练。TraCLIP以CLIP ViT-L/14初始化，冻结视觉和语言
 - 三元分类选择机制巧妙地综合了检测器预测和轨迹级CLIP匹配两种信息源
 - 对OV-MOT当前面临的数据和评估协议挑战有深入讨论（检测密度过高、标注不完整等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 轨迹信息未用于改善定位（LocA无变化），作者讨论了初步尝试但效果有限
 - TSE依赖ChatGPT生成属性描述，增加了离线准备成本
 - TraCLIP的训练数据仅包含已知类别，可能限制了对完全未见类别的泛化能力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IMTS is Worth Time × Channel Patches: Visual Masked Autoencoders for Irregular Multivariate Time Series Prediction
 description: >-
@@ -167,7 +167,7 @@ Few-shot 能力：仅用 20% 训练数据的 VIMTS 已接近或超过 T-PatchGNN
 4. **选择性冻结策略**：根据数据集特性差异化冻结不同模块，兼顾知识保留和任务适配
 5. **可处理连续时间戳查询**：Patch2Point 机制支持任意时间点预测，不局限于固定步长
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 4 个数据集上验证**：虽然涵盖医疗、运动、气候等领域，但缺少金融等高频场景的验证
 2. **计算效率未充分讨论**：GCN + MAE 的组合计算量较大，与 Neural-ODE 方法的效率对比不够充分

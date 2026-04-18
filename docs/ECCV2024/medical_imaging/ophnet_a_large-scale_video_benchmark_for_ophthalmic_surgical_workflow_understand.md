@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OphNet: A Large-Scale Video Benchmark for Ophthalmic Surgical Workflow Understanding
 description: >-
@@ -125,7 +125,7 @@ OphNet的构建分为三个阶段：(1) 数据收集与预处理——从YouTube
 - **四个任务全面覆盖**: 从识别到定位到预测，为手术工作流理解提供完整的评估体系
 - 完全链接算法聚合多人标注边界是一个实用的标注一致性解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - YouTube来源视频质量参差不齐，部分视频可能存在标注噪声
 - 手术识别Top-1准确率仅59%，说明需要更强的模型或更好的表征学习
 - 定位标注仅覆盖523个视频（约23%），大部分视频仅有分类标签

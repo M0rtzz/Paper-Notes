@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ActiShade: Activating Overshadowed Knowledge to Guide Multi-Hop Reasoning in Large Language Models
 description: >-
@@ -93,7 +93,7 @@ ActiShade是一个迭代式多轮检索框架，每轮包含三个模块：
 - **隐式推理显式化**：查询重构不仅仅是换一种问法，而是将推理中间结果写进新查询（如"Gloria作曲家" → "Vivaldi"），让后续检索更精准
 - **泛化性好**：检索器只在MuSiQue训练，但能泛化到其他数据集，说明学到的是一般性的"关注被忽视短语"的能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **嵌入空间访问限制**：GaP需要访问LLM的token embedding层和输出分布，对闭源API模型不适用
 - **计算开销**：每个候选短语都需要一次前向传播来计算扰动后的输出分布，候选短语多时开销不小
 - **只用了最大的7B~14B模型**：受硬件限制没测更大模型（如70B），不清楚更大模型是否知识遮蔽问题更轻

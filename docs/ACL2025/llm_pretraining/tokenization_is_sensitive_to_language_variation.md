@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tokenization is Sensitive to Language Variation
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：不同类型的下游任务对语言变体有截然不同的需求——语义任务（如 NLI）需要对变体**鲁棒**（英式拼写和美式拼写应得到相同标签），而形式任务（如作者验证）需要对变体**敏感**（区分不同拼写风格是关键信号）。同一个 tokenizer 设置能否同时服务这两类需求？
 
-**本文要解决什么**：(RQ1) 同一组 tokenizer 设置是否在鲁棒性任务和敏感性任务上都表现良好？(RQ2) 能否用简单的 task-aware 指标替代 task-agnostic 指标来预测 tokenizer 的下游表现？
+**本文目标**：(RQ1) 同一组 tokenizer 设置是否在鲁棒性任务和敏感性任务上都表现良好？(RQ2) 能否用简单的 task-aware 指标替代 task-agnostic 指标来预测 tokenizer 的下游表现？
 
 **切入角度**：预训练多个 BERT-base 模型，系统变化 BPE 的三个参数（拟合语料、pre-tokenizer、词表大小），在两类任务上进行对照实验，同时提出 logistic regression 作为新的评估指标。
 
-**核心 idea 一句话**：Tokenizer 的最佳设置因任务是否需要对语言变体鲁棒/敏感而不同，pre-tokenizer 是影响最大的设计选项。
+**核心 idea**：Tokenizer 的最佳设置因任务是否需要对语言变体鲁棒/敏感而不同，pre-tokenizer 是影响最大的设计选项。
 
 ## 方法详解
 
@@ -48,7 +48,7 @@ tags:
 
 ### 关键设计一：Tokenizer 三维度变化
 
-**做什么**：系统变化 BPE tokenizer 的三个参数。
+**功能**：系统变化 BPE tokenizer 的三个参数。
 **为什么**：隔离各参数的独立影响。
 **怎么做**：
 
@@ -60,7 +60,7 @@ tags:
 
 ### 关键设计二：两类评估任务
 
-**做什么**：设计并编译两类任务集。
+**功能**：设计并编译两类任务集。
 **为什么**：分别测试对语言变体的鲁棒性和敏感性。
 **怎么做**：
 
@@ -69,7 +69,7 @@ tags:
 
 ### 关键设计三：Logistic Regression 评估指标
 
-**做什么**：提出 task-aware 的 tokenizer 评估方法。
+**功能**：提出 task-aware 的 tokenizer 评估方法。
 **为什么**：传统指标（Rényi efficiency、Corpus Token Count）是 task-agnostic 的，对同一语料上的不同任务给出相同预测，与实际情况不符。
 **怎么做**：使用 tokenizer 词表作为特征集，bag-of-token 方式进行 logistic regression，将任务标签作为因变量。对双文本输入任务，使用句子对间的 token 组合作特征。
 
@@ -137,7 +137,7 @@ tags:
 - **低成本高价值的实验设计**：用 110M 参数的 BERT-base（<15 GPU hours/模型）即可得出有指导意义的结论，远比训练 350M-2.5B 模型经济
 - **方法论贡献**：提出 task-aware 的 tokenizer 评估范式，打破了 tokenizer 评估只看压缩效率的传统思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型规模限制**：仅用 110M BERT-base，无法保证结论推广到更大的 decoder-only 模型（如 Llama 3、GPT-4）
 2. **语言变体类型未细分**：拼写变体、词汇变体、句法变体的影响被混合在一起，未来应分别研究

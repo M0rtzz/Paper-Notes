@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Eyes Wide Open: Ego Proactive Video-LLM for Streaming Video
 description: >-
@@ -108,7 +108,7 @@ $$\text{ESTP-F1} = \frac{2 \times \sum_{k=1}^{M} S(g_k)}{2\sum_{k=1}^{M} S(g_k) 
 - **动态压缩将KV cache压至基线的0.11%**，使长视频流处理成为现实
 - 从任务定义、数据构建、训练策略到推理优化的**完整技术栈**
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Recall-Precision存在明显负相关，主动响应时机判断仍会产生误报
 - NAR/TU任务因有效区间占比大而分数虚高，指标可能需要归一化
 - 第一视角数据收集和精确时间标注成本很高

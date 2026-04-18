@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Smarter, Better, Faster, Longer: A Modern Bidirectional Encoder for Fast, Memory Efficient, and Long Context Finetuning and Inference
 description: >-
@@ -134,7 +134,7 @@ tags:
 
 5. **开源生态友好**：发布 FlexBERT 模块化框架和所有中间训练 checkpoint（借鉴 Pythia），便于社区研究和复现。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持英语**：2T token 全部为英语数据，不适用于多语言场景，对低资源语言更不友好。
 

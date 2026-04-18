@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhanced Continual Learning of Vision-Language Models with Model Fusion
 description: >-
@@ -101,7 +101,7 @@ ConDU维护三个组件贯穿整个持续学习过程：统一模型、任务触
 - 同时兼容全参数微调和参数高效微调，灵活性远超现有方法
 - 零样本能力不仅不退化反而增强，这在持续学习中非常难得
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 任务触发器中的二值掩码与统一delta模型同维度，任务数增加时存储可能成为瓶颈
 - 统一操作中"选最大绝对值"的策略是否最优有待更多理论分析
 - 实验仅在CLIP架构上验证，更多VLM架构（如BLIP、LLaVA）的适用性待探索

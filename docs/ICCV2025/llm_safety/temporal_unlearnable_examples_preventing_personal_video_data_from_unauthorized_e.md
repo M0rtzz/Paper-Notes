@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Temporal Unlearnable Examples: Preventing Personal Video Data from Unauthorized Exploitation
 description: >-
@@ -126,7 +126,7 @@ tags:
 - **时间对比学习的设计直觉清晰**：通过拉近 TUE 对、推远干净样本，最大化"捷径匹配"和"真实匹配"的分布差距
 - **轻量代理+强大迁移**：在最简单的 SiamFC 上训练，但能保护免受最先进跟踪器的利用，说明 TUE 捕获了跟踪任务的通用弱点
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 扰动仅添加在目标/上下文区域，对全帧扰动场景（如动作识别保护）需要新设计
 - $L_\infty \leq 8/255$ 的约束在高压缩视频（如 YouTube 上传后）中可能被破坏
 - 对基于对抗训练或扰动去除的防御方法（如 adversarial training、图像净化）的鲁棒性未充分讨论

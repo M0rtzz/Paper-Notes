@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ParetoQ: Improving Scaling Laws in Extremely Low-bit LLM Quantization
 description: >-
@@ -116,7 +116,7 @@ ParetoQ 的方法论分三步展开：
 - "补偿 vs. 重建"二分法为不同比特的 QAT 行为提供了直觉性解释
 - 2-bit 作为 4-bit 的潜在替代方案具有实际部署价值——INT2 硬件支持是未来社区需要努力的方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅覆盖 MobileLLM 和 LLaMA-3 系列（最大 8B），更大模型（70B+）未验证
 - 2-bit 内核实现仅在 CPU 上，GPU 缺乏原生 INT2 支持

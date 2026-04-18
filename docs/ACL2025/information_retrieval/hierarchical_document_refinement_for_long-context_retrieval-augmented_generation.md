@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Document Refinement for Long-context Retrieval-augmented Generation
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**: 完整文档虽然包含所需信息但噪声太多，chunk-based 方法精简了长度但丢失了文档的整体结构和上下文关系。
 
-**本文要解决什么**: 如何**高效且保真**地精炼长文档，在大幅减少 token 数量的同时保留关键信息。
+**本文目标**: 如何**高效且保真**地精炼长文档，在大幅减少 token 数量的同时保留关键信息。
 
 **切入角度**: 完整文档天然包含丰富的结构信息（逻辑关联、内容组织层次），利用这些结构可以实现比 chunk-based 方法更精准的信息抽取。
 

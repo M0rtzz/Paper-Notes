@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Importance of Gaussianizing Representations
 description: >-
@@ -124,7 +124,7 @@ $$y_i = x_i + z_i \cdot \xi \cdot s, \quad z_i \sim \mathcal{N}(0,1)$$
 5. **Q-Q 图可视化**：清晰展示 NormalNorm 训练后各层激活值的高斯性显著优于 BN
 6. **Power Transform + Noise 解耦消融**：两个模块各自独立贡献性能提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **运行速度**：Power Transform 增加计算开销，训练时偏差较大（附录 A.2），可能不适合极端算力受限场景
 2. **仅验证视觉任务**：实验集中在图像分类（ViT/ResNet），缺少 NLP、语音、推荐系统等其他模态验证

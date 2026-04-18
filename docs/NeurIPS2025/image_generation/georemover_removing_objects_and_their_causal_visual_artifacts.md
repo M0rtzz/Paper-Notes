@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoRemover: Removing Objects and Their Causal Visual Artifacts
 description: >-
@@ -143,7 +143,7 @@ DPO 将结构幻觉插入率从 5.09% 降至 1.48%。
 4. **双向渲染训练**：通过同时训练移除和插入两个方向，增强了模型对几何变化与外观变化的对应关系理解
 5. **实验全面领先**：在 RemovalBench、RORD-Val、CausRem 三个基准上全面超越 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **深度估计失效场景**：运动模糊、高透明度、镜面反射等场景导致深度估计不可靠，需要额外的 Fill-in 策略作为补救
 2. **两阶段计算成本**：相比单阶段方法需要两次扩散推理，Stage 1 训练约 24h，Stage 2 约 60h（8×H100）

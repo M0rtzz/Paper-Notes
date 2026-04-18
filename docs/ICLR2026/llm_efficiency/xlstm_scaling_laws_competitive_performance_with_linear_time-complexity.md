@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] xLSTM Scaling Laws: Competitive Performance with Linear Time-Complexity
 description: >-
@@ -84,7 +84,7 @@ tags:
 - **实用指导**: 证明 xLSTM 在过训练 regime 下指数稳定，支持"小模型 + 大数据"的实际部署策略
 - **推理建模**: 基于 roofline 的理论模型与实测高度吻合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑 cross-entropy loss，未评估下游任务（推理、代码、多语言等）
 - 未涉及 MoE 或 Attention+xLSTM 混合架构
 - 推理实验限于单 GPU，未考量多 GPU 分布式推理场景

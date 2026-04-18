@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RollingQ: Reviving the Cooperation Dynamics in Multimodal Transformer
 description: >-
@@ -153,7 +153,7 @@ RollingQ 显著提升了注意力分数与输入质量之间的相关性（p < 0
 3. **分析充分**：从 key 分布可视化、梯度分析、Pearson 相关性、噪声鲁棒性、OOD 检测等多个角度验证了 RollingQ 确实恢复了动态协作能力
 4. **通用性好**：对 Vanilla MT、MulT、MMML 等多种架构均有效，也适用于 ResNet 骨干
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论分析局限于单层注意力**：虽然提供了多层渐进训练的扩展方案，但对多层 Transformer 中更复杂的动态交互缺乏深入建模
 2. **不直接增强单模态编码器**：RollingQ 仅调整 query 的分配策略，未像 OGM/PMR 等方法直接优化单模态特征质量；结合两类方法可能效果更好

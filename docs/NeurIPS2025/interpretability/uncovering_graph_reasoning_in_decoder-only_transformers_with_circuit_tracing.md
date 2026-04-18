@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncovering Graph Reasoning in Decoder-only Transformers with Circuit Tracing
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = -\sum_t \log P(y_t | y_{<t}, G)$$
 - **双机制发现**: Token merging + structural memorization 提供了直觉性的理解
 - **可操作的洞察**: 了解这些机制有助于设计更高效的图推理模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验仅在小规模 Transformer 上进行，大模型（如 GPT-4）的机制可能不同
 2. 图的文本化表示方式可能影响分析结论

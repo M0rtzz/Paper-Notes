@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems
 description: >-
@@ -95,7 +95,7 @@ NODE 使用标准的 MSE 损失训练，基于 JAX 的 Diffrax 库实现。cart-
 - NODE 的去噪效果是意外发现：连续时间模型的平滑归纳偏置自然过滤了测量噪声
 - 对 SR 的 failure mode 分析（变量选择敏感性、数据范围遮蔽）有实际参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 2 个相对简单的 damped oscillation 系统上验证（cart-pole、细菌营养适应），混沌系统、高维系统未探索
 - SR 分析仅使用单次 shift 数据（单一初始条件→终态），多条件联合分析可能改善方程发现
 - NODE 架构使用基础版本，augmented NODE 或 Neural CDE 等改进架构可能提升外推能力

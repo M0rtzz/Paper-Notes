@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Modular Dataset to Demonstrate LLM Abstraction Capability
 description: >-
@@ -92,7 +92,7 @@ tags:
 - **可复用trick**：探针分类器 + 结构化推理任务的组合可以迁移到其他推理能力分析场景
 - **启发性发现**：推理信息集中在中间-后层，这与representation engineering、activation steering等方向的发现一致，为推理能力的干预提供了靶点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 论文仅7页，实验规模有限（模型种类、数据规模未详细说明）
 - ArrangementPuzzle是人工构造的简单拼图，与自然语言推理的复杂度差距较大

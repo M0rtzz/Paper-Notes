@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diversifying Counterattacks: Orthogonal Exploration for Robust CLIP Inference
 description: >-
@@ -146,7 +146,7 @@ CW 攻击下平均鲁棒准确率：DOC 28.18% vs TTC 20.61%（+7.58%）。AutoA
 4. **完全无训练**：不需数据、不改参数、单 GPU 即可运行，部署门槛极低
 5. t-SNE 可视化直观展示了 DOC 将对抗样本推向干净分布的效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 反攻击预算与攻击预算设为相同值，实际场景中攻击预算未知
 2. 正交分量是随机采样的，每次推理结果可能不同（虽然实验中方差较小）

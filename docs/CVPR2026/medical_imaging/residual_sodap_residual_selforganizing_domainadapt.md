@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Residual SODAP: Residual Self-Organizing Domain-Adaptive Prompting with Structural Knowledge Preservation for Continual Learning
 description: >-
@@ -72,7 +72,7 @@ tags:
 - 不确定性加权免去了5个损失权重的手动调参
 - CORe50 11阶段仅0.003遗忘率，展示了在长序列域漂移下的极强稳定性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在域增量(DIL)设置上验证，未扩展到类增量(CIL)
 - 高斯假设的伪特征可能在特征分布非高斯时失效
 - PUDD的超参（窗口大小、阈值、D_max等）较多，虽不需要手动调损失权重但引入了其他超参

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evolve to Inspire: Novelty Search for Diverse Image Generation
 description: >-
@@ -108,7 +108,7 @@ $$\text{VS}(K) = \exp\left(-\sum_{i=1}^{n} \lambda_i \log \lambda_i\right)$$
 - 方法完全模型无关（model-agnostic），可迁移到任意扩散模型
 - UMAP 可视化清晰展示了进化过程中嵌入空间的多样性扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 新颖性目标偶尔导致语义漂移（约每 5 次运行出现 1 次），可加入相关性惩罚
 - Emitter 需手动设计，可能限制或偏置多样性上限

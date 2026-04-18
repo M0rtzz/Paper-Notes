@@ -41,7 +41,7 @@ tags:
 
 ### 关键设计一：策略-参考双模型架构
 
-- **做什么**：将带top-$p$稀疏注意力的MLLM（如Qwen2-VL+ZipVL）作为策略模型$\pi_\theta$，原始标准注意力MLLM（参数冻结）作为参考模型$\pi_{\text{ref}}$。
+- **功能**：将带top-$p$稀疏注意力的MLLM（如Qwen2-VL+ZipVL）作为策略模型$\pi_\theta$，原始标准注意力MLLM（参数冻结）作为参考模型$\pi_{\text{ref}}$。
 - **核心思路**：策略模型在解码时执行稀疏token选择和KV cache裁剪，参考模型通过KL散度$\mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$锚定训练，防止过度偏离原始能力。
 - **设计动机**：参考模型稳定学习+限制精度损失，即使在高稀疏率下也保持任务保真度。Top-$p$稀疏注意力在每层独立决定保留token数：
 $$b = \min\{p \in \mathbb{Z} \mid \sum_{j=1}^{p} a_{\text{sorted}(j)} \geq p \times \ell\}$$
@@ -49,13 +49,13 @@ $$b = \min\{p \in \mathbb{Z} \mid \sum_{j=1}^{p} a_{\text{sorted}(j)} \geq p \ti
 
 ### 关键设计二：多预算Rollout探索
 
-- **做什么**：对每个视觉-语言query，使用$N$个不同的注意力保留阈值$p_n \sim \mathcal{U}(0,1)$进行独立rollout，生成$N$个答案$\{\mathbf{o}_1, \dots, \mathbf{o}_N\}$及对应token比率$\{\tau_1, \dots, \tau_N\}$。
+- **功能**：对每个视觉-语言query，使用$N$个不同的注意力保留阈值$p_n \sim \mathcal{U}(0,1)$进行独立rollout，生成$N$个答案$\{\mathbf{o}_1, \dots, \mathbf{o}_N\}$及对应token比率$\{\tau_1, \dots, \tau_N\}$。
 - **核心思路**：渐进式预算扫描(progressive budget sweep) — 不同$p$构成从稀疏到密集的梯度测试：小$p$保留少token看是否还能答对，大$p$保留多token作为正确性兜底。训练范围设为$p \in [0.94, 0.975]$，步长0.005。
 - **设计动机**：避免手工定义正/负样本对（DPO的痛点），让多预算rollout自然产生对比信号 — 正确且高效的rollout获正优势，错误或低效的获负优势。随训练推进，最小正确预算动态变化，rollout自动适应。
 
 ### 关键设计三：效率-性能联合奖励与GRPO更新
 
-- **做什么**：为每个rollout计算联合奖励并通过GRPO的组内归一化优势更新策略。
+- **功能**：为每个rollout计算联合奖励并通过GRPO的组内归一化优势更新策略。
 - **核心思路**：性能奖励$r_{\text{per}} \in \{0, 1\}$（答案是否正确）+ 效率奖励$r_{\text{eff}} = 1 - \tau_i$（token减少率）。引入组级指示器$C$：
 $$C = \mathbb{1}\{\exists j: \text{Correct}(\mathbf{o}_j) = 1\}$$
 仅当组内至少一个rollout正确时才计入效率奖励：
@@ -66,7 +66,7 @@ $$\mathcal{J}(\theta) = \mathbb{E}\left[\min\left(\frac{\pi_\theta(\mathbf{o}_n|
 
 ### 关键设计四：推理一致性
 
-- **做什么**：训练和推理使用完全相同的稀疏注意力pipeline — 同一token裁剪策略+KV cache管理。
+- **功能**：训练和推理使用完全相同的稀疏注意力pipeline — 同一token裁剪策略+KV cache管理。
 - **核心思路**：推理时固定$p=0.975$（训练范围上界），保证精度的同时获得训练中学到的效率提升。模型在训练中已学会在$p=0.975$下也能产生更稀疏的注意力分布。
 - **设计动机**：SFT方法训练时teacher forcing、推理时autoregressive→pipeline不一致→效率收益不可靠。RL方法训练时就用autoregressive rollout→deployment-aligned。
 

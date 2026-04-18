@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GS-LIVM: Real-Time Photo-Realistic LiDAR-Inertial-Visual Mapping with Gaussian Splatting
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L} = (1-\lambda_s)\|C - C_{gt}\|_1 + \lambda_s \mathcal{L}_{ssim} + \
 - **CUDA 并行化**：Voxel-GPR 处理数百个体素仅需 < 30ms，实际可部署
 - 体素类型分类（a/b/c/d）减少不必要的计算，是工程上的重要优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $n_s$ 在大场景下可能导致内存问题，需要自适应调整策略
 - 仅使用零阶球谐函数（SH），限制了视角依赖的颜色表达
 - 不支持动态物体建模，运动物体会产生伪影

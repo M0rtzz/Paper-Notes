@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embracing Collaboration Over Competition: Condensing Multiple Prompts for Visual In-Context Learning
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：更多 prompt 提供更多信息，但当前范式只能选一个。合并多个 prompt 需要在保持空间一致性的同时聚合异质信息。
 
-**本文要解决什么？** 设计一个轻量模块将 K 个 prompt 凝聚为 1 个高质量 prompt，使多 prompt 协作成为可能。
+**本文目标** 设计一个轻量模块将 K 个 prompt 凝聚为 1 个高质量 prompt，使多 prompt 协作成为可能。
 
 **切入角度**：Patch-wise 跨注意力——query 图像的每个 patch 只与 K 个 prompt 中同一空间位置的 patch 做注意力聚合。这种局部性保持了空间一致性，同时聚合了多 prompt 的互补信息。
 
-**核心idea一句话**：用 Patch-wise Cross-Attention 将 K 个候选 prompt 凝聚为 1 个，实现"多 prompt 协作"替代"单 prompt 竞争"。
+**核心 idea**：用 Patch-wise Cross-Attention 将 K 个候选 prompt 凝聚为 1 个，实现"多 prompt 协作"替代"单 prompt 竞争"。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ $\mathcal{L} = \mathcal{L}_{TP} + \lambda \cdot \mathcal{L}_{PA}$。MAE-VQGAN ba
 - **"协作替代竞争"的范式转变**：从"选最好的一个"到"融合所有成一个"，思路简洁且有效
 - **Patch-wise 设计的空间一致性**是关键设计——视觉任务中空间信息必须被保持
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Condenser 模块本身需要训练，对新任务可能需要重新训练
 - K 增大时 Condenser 的输入增多但推理不增加——说明过大 K 边际收益递减
 - 仅在 MAE-VQGAN backend 上验证

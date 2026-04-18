@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joint Out-of-Distribution Filtering and Data Discovery Active Learning
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**: 新类别数据是 near-OOD（与 InD 语义相近），OOD 数据是 far-OOD。现有方法粒度不够，无法在三类数据（已知 InD、可发现新类、不相关 OOD）间做细粒度区分。
 
-**本文要解决什么**: 在主动学习中同时实现 OOD 数据过滤和新类别发现，且不增加额外模型复杂度。
+**本文目标**: 在主动学习中同时实现 OOD 数据过滤和新类别发现，且不增加额外模型复杂度。
 
 ## 方法详解
 
@@ -50,17 +50,17 @@ Joda 包含三个阶段：
 ### 关键设计
 
 **1. 深度耦合的训练损失**
-- **做什么**: 将标注池中的 InD 样本和意外标注到的 OOD 样本分别处理：$\mathcal{L}(b) = \mathcal{L}_{CE}(b_{InD}) + \lambda_{OE} \cdot \mathcal{L}_{OE}(b_{OOD})$。
+- **功能**: 将标注池中的 InD 样本和意外标注到的 OOD 样本分别处理：$\mathcal{L}(b) = \mathcal{L}_{CE}(b_{InD}) + \lambda_{OE} \cdot \mathcal{L}_{OE}(b_{OOD})$。
 - **核心思路**: Outlier Exposure 损失正则化模型对 OOD 样本预测均匀分布，这使得 energy score 在 InD/OOD 间产生清晰分界。初始标注池无 OOD 数据时退化为标准 CE。
 - **设计动机**: 不同于外部训练单独的 OOD 检测器，OE 直接融入任务模型训练，构建了区分三类数据的共享特征空间。
 
 **2. Energy-based OOD 过滤**
-- **做什么**: 计算 $E(x) = -\log \sum_{i=1}^{c} \exp(f(x)_i)$，在标注池上做 ROC 分析，找 Youden's J 最优阈值 $t_{opt}$ 进行过滤。
+- **功能**: 计算 $E(x) = -\log \sum_{i=1}^{c} \exp(f(x)_i)$，在标注池上做 ROC 分析，找 Youden's J 最优阈值 $t_{opt}$ 进行过滤。
 - **核心思路**: OE 训练后 OOD 样本的 logits 趋于均匀（energy 低），而 InD 和新类别样本的 energy 较高。新类别作为 near-OOD 不受 OE 正则化影响，energy 分布介于 InD 和 far-OOD 之间。
 - **设计动机**: 利用 OE 训练的副产品自然实现 OOD 过滤，无需额外模型。Youden's J 自适应选阈值。
 
 **3. SISOMe 选择 + 类别平衡**
-- **做什么**: 用 SISOMe 指标综合 energy score 和特征空间内/外距离比，再加类别平衡因子 $b_f(c) = -\sigma_{\hat{m}_l} (\frac{n(c) \cdot C}{|L|} - 1)$。
+- **功能**: 用 SISOMe 指标综合 energy score 和特征空间内/外距离比，再加类别平衡因子 $b_f(c) = -\sigma_{\hat{m}_l} (\frac{n(c) \cdot C}{|L|} - 1)$。
 - **核心思路**: SISOMe 的自平衡机制在能量和多样性之间权衡；新类别因未被 OE 正则化而天然具有较高的选择分数（类似 near-OOD）；类别平衡因子利用伪标签估计类分布，偏向欠采样类。
 - **设计动机**: 闭环设计——训练中的 OE 损失、过滤中的 energy、选择中的 SISOMe 都围绕同一个 energy/logit 空间，三个阶段深度耦合。
 
@@ -111,7 +111,7 @@ Joda 包含三个阶段：
 - 三阶段深度耦合的闭环设计：训练/过滤/选择共享同一特征空间和 energy 指标
 - OE 损失的巧妙利用：不仅做 OOD 检测，还天然区分了 near-OOD（新类别）和 far-OOD
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在图像分类任务上验证，未扩展到目标检测、语义分割等更复杂任务
 - 新类别的阈值 $t_e$ 需要预先设定

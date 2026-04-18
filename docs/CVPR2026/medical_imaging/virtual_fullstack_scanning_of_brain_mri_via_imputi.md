@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CodeBrain: Virtual Full-stack Scanning of Brain MRI via Imputing Any Quantised Code
 description: >-
@@ -77,7 +77,7 @@ CodeBrain补全的T1Gd → 分割Dice 61.44%，vs Full Modalities 87.40%，vs零
 - **Grading loss保持量化空间结构**: ordinal regression保留"3比2大但比4小"的关系，是处理有序离散预测的好方案
 - **模态无关公共特征的设计**: 通过训练时随机mask实现"任何子集都能提取F_c"，简洁优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅做2D slice处理，未利用3D空间信息(作者在limitation中提到)
 - T1Gd的补全质量仍显著低于真实数据(分割Dice 61.44% vs 87.40%)，增强造影模态难以从非造影模态完全推断
 - 可能仍存在hallucination问题

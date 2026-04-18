@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Language Model Distillation: A Temporal Difference Imitation Learning Perspective
 description: >-
@@ -167,7 +167,7 @@ $$\max_Q \mathcal{J}^\star(Q) = \mathbb{E}_{\rho^\star}[\phi((\mathcal{F}_p^\sta
 - **次优性界的实用意义**：$\kappa(p) = -\gamma\log p/(1-\gamma)$ 给出了明确的trade-off——可以量化地决定缩减动作空间到什么程度
 - **Q值≈logits的巧妙设计**：学生模型的logits直接作为Q值，无需额外的value网络，一个模型同时服务策略和value function
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **共享词表假设**：教师和学生必须共享词表才能进行分布匹配，限制了跨架构蒸馏
 - **离线训练的性能上限**：虽然高效，但理论上在线训练能获得更好的最终性能（分布偏移问题未完全解决）

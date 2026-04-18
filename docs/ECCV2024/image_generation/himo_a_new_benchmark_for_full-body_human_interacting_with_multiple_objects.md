@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HIMO: A New Benchmark for Full-Body Human Interacting with Multiple Objects
 description: >-
@@ -226,7 +226,7 @@ $$\mathcal{L} = \lambda_{vel}\mathcal{L}_{vel} + \lambda_{pos}\mathcal{L}_{pos} 
 4. **物体成对距离损失**：巧妙地用简单的L2约束建模物体间的距离模式，有效减少穿透
 5. **自回归组合管线简洁高效**：仅需修改条件输入为过去几帧即可实现平滑过渡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模仍有限**：3.3K序列相比图像/视频领域仍然较小
 2. **物体种类受限**：53种物品，主要集中在餐饮和厨房场景

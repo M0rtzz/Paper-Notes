@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Models That Prove Their Own Correctness
 description: >-
@@ -96,7 +96,7 @@ $$\text{ver}_{V,\mu}(\theta) := \Pr_{x \sim \mu, y \sim P_\theta(x)} [\langle V,
 - **理论与实践的完美桥接**：将交互式证明系统这一理论计算机科学经典概念应用于 ML 模型可信度问题，定义了 Verifiability 概念并给出了可操作的训练算法。RLVF 已经成为 LLM 后训练的核心技术。
 - **从平均保证到逐输入保证的突破**：Soundness 对所有输入成立（worst-case），这让用户可以逐个输入地信任模型——通过运行验证器，而非依赖 benchmark 统计数据。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验仅在小规模 GCD 任务上验证（6.3M 参数 GPT），尚未在大规模 LLM 和复杂推理任务上全面测试
 - RLVF 的收敛理论尚未完成（依赖于策略梯度收敛的开放问题）
 - 需要预定义一个高效的验证器——对于很多实际任务，设计这样的验证器本身就很困难

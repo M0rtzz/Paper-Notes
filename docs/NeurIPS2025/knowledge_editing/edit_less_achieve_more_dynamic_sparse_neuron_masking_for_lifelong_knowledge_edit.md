@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Edit Less, Achieve More: Dynamic Sparse Neuron Masking for Lifelong Knowledge Editing in LLMs
 description: >-
@@ -104,7 +104,7 @@ tags:
 - 四种神经元选择策略的消融表明各策略都能有效保持通用能力，验证了框架的鲁棒性
 - 在 GPT2-XL 和 Qwen2.5-7B 上也进行了验证，展示跨模型迁移性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每步编辑需运行神经元归因，单步耗时 ~30s（AlphaEdit ~22s），编辑效率略低
 - 常数缩放因子 a_ge/a_sp 和偏置 b_ge/b_sp 需要手动调参
 - 实验主要在 LLaMA3-8B 和 GPT2-XL 上验证，对 70B+ 模型的可扩展性未知

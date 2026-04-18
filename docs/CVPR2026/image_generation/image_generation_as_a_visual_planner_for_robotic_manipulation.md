@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Image Generation as a Visual Planner for Robotic Manipulation
 description: >-
@@ -93,7 +93,7 @@ $$\mathbf{D} = \begin{bmatrix} D^{\text{img}_1} & D^{\text{img}_2} & D^{\text{im
 2. **极端简洁的时序建模**：完全不使用时序模块，仅通过网格布局+局部注意力实现帧间一致性
 3. **成本效益**：无需大规模视频数据集或专用视频架构，利用预训练图像生成器的组合先验，LoRA 微调即可
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 网格拼接块之间偶有色调/纹理不一致，拼接边界可能出现轻微错位
 2. 9 帧的序列长度较短，难以覆盖长时间操作任务

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Windsock is Dancing: Adaptive Multimodal Retrieval-Augmented Generation
 description: >-
@@ -124,7 +124,7 @@ tags:
 3. **"在失败处学习"的训练哲学**：DANCE选择模型最弱模态进行训练，类似课程学习的思路但方向相反（硬样本优先），实验证明这种反直觉的策略效果最好
 4. **Windsock的极轻量设计**：使用Flan-T5-Small作为骨干，仅增加1.83%推理开销就实现了显著的效率和性能提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅支持文本和图像两种模态检索，未支持表格等其他模态
 - DANCE训练在通用MLLM基准（MME）上存在性能下降，专用化和通用化之间的平衡需要进一步探索

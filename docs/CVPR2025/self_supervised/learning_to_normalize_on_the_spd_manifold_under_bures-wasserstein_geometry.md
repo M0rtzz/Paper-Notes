@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Normalize on the SPD Manifold under Bures-Wasserstein Geometry
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：Bures-Wasserstein (BW) 距离的 Fréchet 均值有闭合形式的不动点迭代解，且对 SPD 矩阵有线性而非二次依赖。通过矩阵幂变形 θ 可以连续插值于 BW 和 Log-Euclidean 之间。
 
-**核心idea一句话**：BW 距离 + 可学习度量 + 矩阵幂变形 = 高效且鲁棒的 SPD 流形归一化。
+**核心 idea**：BW 距离 + 可学习度量 + 矩阵幂变形 = 高效且鲁棒的 SPD 流形归一化。
 
 ## 方法详解
 
@@ -72,7 +72,7 @@ tags:
 - **连续插值不同黎曼度量**——矩阵幂 θ 提供了从 BW 到 LEM 的连续光谱
 - **SPD 流形上的 BN 首次实用化**——不动点迭代+GBWM 让计算可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 矩阵运算（SVD/指数）仍比欧氏操作昂贵
 - GBWM 的平行移动假设可交换性
 - 收敛率缺乏理论分析

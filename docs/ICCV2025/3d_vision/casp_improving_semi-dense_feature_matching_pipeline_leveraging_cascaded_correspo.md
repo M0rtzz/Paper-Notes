@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CasP: Improving Semi-Dense Feature Matching Pipeline Leveraging Cascaded Correspondence Priors for Guidance
 description: >-
@@ -124,7 +124,7 @@ $$L = \lambda_1 L_{1/16}^c + \lambda_2 L_{1/8}^c + \lambda_3 L_{1/1}^f + \lambda
 - **Partial Softmax 替代全局 softmax**：仅在先验区域内计算归一化，大幅减少无关计算
 - **跨域泛化的惊喜发现**：级联先验不仅加速，还成为泛化的正则化——先验约束减少了错误匹配的搜索空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - top-$k$ 值固定（$k=8$），不同场景的最优值可能不同，自适应 $k$ 是潜在改进方向
 - MegaDepth 训练的模型在 InLoc（室内）上改进幅度有限，室内场景的匹配仍有提升空间

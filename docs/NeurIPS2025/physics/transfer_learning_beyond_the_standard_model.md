@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transfer Learning Beyond the Standard Model
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：需要大量昂贵的beyond-ΛCDM模拟来训练推断模型，但预算有限。
 
-**本文要解决什么？** 验证ΛCDM预训练→beyond-ΛCDM微调的迁移学习能否减少beyond-ΛCDM模拟需求。
+**本文目标** 验证ΛCDM预训练→beyond-ΛCDM微调的迁移学习能否减少beyond-ΛCDM模拟需求。
 
 **切入角度**：类比基础模型范式——ΛCDM作为"foundation model"，beyond-ΛCDM作为"downstream task"。
 
-**核心idea一句话**：在预训练网络输出层加入dummy节点（无监督的额外潜维度），为微调阶段学习新物理参数提供表征容量，同时揭示物理简并导致的负迁移现象。
+**核心 idea**：在预训练网络输出层加入dummy节点（无监督的额外潜维度），为微调阶段学习新物理参数提供表征容量，同时揭示物理简并导致的负迁移现象。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ Quijote ΛCDM模拟(32,768个)预训练 → 冻结/微调权重 → 用少量bey
 - **负迁移作为物理信号**：负迁移的出现本身反映了参数空间中的物理简并结构，可以作为诊断工具
 - **Dummy node的巧妙设计**：概念简单但效果显著，为所有迁移学习任务提供了可借鉴的架构模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅使用简单全连接网络，更复杂架构（如normalizing flows）未测试
 - 仅用物质功率谱，真实观测量（galaxy clustering、weak lensing）未验证
 - Local fNL的失败归因于先验不匹配而非方法本身

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified View on Learning Unnormalized Distributions via Noise-Contrastive Estimation
 description: >-
@@ -26,7 +26,7 @@ tags:
 
 ## 研究背景与动机
 
-**领域现状**：非归一化分布（能量模型）$\phi_\theta(x)$ 在生成建模、密度估计和强化学习中广泛使用。由于归一化常数 $Z(\theta) = \int\phi_\theta(x)dx$ 不可计算，学界提出了NCE、score matching、MC-MLE、contrastive divergence等多种替代方法。**现有痛点**：这些方法由不同社区独立提出——NCE(机器学习)、pseudo-likelihood(统计学)、ISO(图模型)——文献缺乏系统性比较和统一理解。更严重的是，Ceylan & Gutmann (2018)声称CondNCE在小噪声极限下收敛到score matching，这一联系可能是误导性的。**核心矛盾**：看似不同的估计器实为同一原理的特例，但缺乏揭示这些联系的统一视角。**本文要解决什么**：通过NCE框架统一各方法并建立严格理论保证。**切入角度**：f-NCE基于Bregman散度的密度比估计——选择不同的生成函数 $f$ 和噪声分布 $q_n$ 得到不同估计器。**核心idea**：alpha-centering变换（alpha-依赖的归一化方式）+条件噪声对比，统一并拓展已有方法。
+**领域现状**：非归一化分布（能量模型）$\phi_\theta(x)$ 在生成建模、密度估计和强化学习中广泛使用。由于归一化常数 $Z(\theta) = \int\phi_\theta(x)dx$ 不可计算，学界提出了NCE、score matching、MC-MLE、contrastive divergence等多种替代方法。**现有痛点**：这些方法由不同社区独立提出——NCE(机器学习)、pseudo-likelihood(统计学)、ISO(图模型)——文献缺乏系统性比较和统一理解。更严重的是，Ceylan & Gutmann (2018)声称CondNCE在小噪声极限下收敛到score matching，这一联系可能是误导性的。**核心矛盾**：看似不同的估计器实为同一原理的特例，但缺乏揭示这些联系的统一视角。**本文目标**：通过NCE框架统一各方法并建立严格理论保证。**切入角度**：f-NCE基于Bregman散度的密度比估计——选择不同的生成函数 $f$ 和噪声分布 $q_n$ 得到不同估计器。**核心idea**：alpha-centering变换（alpha-依赖的归一化方式）+条件噪声对比，统一并拓展已有方法。
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ tags:
 - f-CondNCE不等于score matching是非常重要的纠正——许多工作引用Ceylan & Gutmann (2018)来为CondNCE辩护，但本文指出当你真正使用有限样本时，小噪声下估计器的方差是爆炸的，这个"细节"完全改变了方法的实用性。
 - 统一视角的实际价值：当你理解了各方法只是alpha-CentNCE的特例，就可以直接利用GlobalGISO的分析框架获得其他所有方法的有限样本保证。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 有限样本保证仅适用于有界指数族分布——深度能量模型和非参数模型未覆盖
 - 缺乏不同alpha值的最优选择理论指导（何时用MLE vs GISO？）
 - 噪声分布 $q_n$ 的选择仍依赖启发式——虽然CondNCE避免了这个问题但引入了新的样本数要求

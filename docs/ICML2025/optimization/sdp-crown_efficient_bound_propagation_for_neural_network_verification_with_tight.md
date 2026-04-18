@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SDP-CROWN: Efficient Bound Propagation for Neural Network Verification with Tightness of Semidefinite Programming
 description: >-
@@ -95,7 +95,7 @@ $$h^* = -\rho \|\min\{c-g, g, 0\}\|_2$$
 5. **对比惊艳**：在 ℓ₂ 扰动下，β-CROWN 和 BICCOS 使用复杂的分支定界与切割平面仍几乎为 0% 验证率，而 SDP-CROWN 仅通过一个参数即达到 60%+ 验证率
 6. **LipNaive 基线的启示**：简单的逐层 Lipschitz 常数乘积在 ℓ₂ 下反而优于复杂的界传播方法，说明 ℓ₂ 场景下神经元耦合的建模至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论分析限于 $\hat{x}=0$**：一般情况（$\hat{x} \neq 0$）下的紧致性需通过实验验证，缺乏解析保证
 2. **仅考虑 ReLU 激活函数**：对 GeLU、Swish 等非分段线性激活尚未讨论扩展方式

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantifying the Role of OpenFold Components in Protein Structure Prediction
 description: >-
@@ -119,7 +119,7 @@ OpenFold 的蛋白质结构预测分三个阶段：
 - 三角操作的贡献异质性（乘法更新关键但方差大，注意力几乎可忽略）颠覆了"三角操作整体重要"的简单认识。
 - 将 Transformer 可解释性研究中的方法论迁移到蛋白质预测领域。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅使用 154 个蛋白质的 CAMEO 子集，规模有限。
 2. 未分析折叠类型（fold type）对组件重要性的影响，这可能是解释异质性的关键因素。

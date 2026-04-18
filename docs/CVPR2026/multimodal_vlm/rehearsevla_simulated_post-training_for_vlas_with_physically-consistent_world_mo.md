@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] World-Env: Leveraging World Model as a Virtual Environment for VLA Post-Training
 description: >-
@@ -160,7 +160,7 @@ $$\mathcal{L} = \text{BCE}(R(\mathbf{o}_{1:t}, \mathbf{g}), y_t)$$
 4. **动态终止机制**：解决了 VLA 领域被忽视的 "post-success failure" 问题，实验证明这一设计贡献了 ~10pp 的成功率提升
 5. **极致数据效率**：每任务仅需 5 条示教即生效，且 20 步 RL 训练即超越 SFT
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **世界模型依赖**：世界模拟器和 instant reflector 都需要多样化训练数据（目前仍需模拟器采集探索数据），未完全脱离模拟器
 2. **训练效率**：策略优化速度较慢，瓶颈在于模拟器生成轨迹的计算开销（48h/8×H20）

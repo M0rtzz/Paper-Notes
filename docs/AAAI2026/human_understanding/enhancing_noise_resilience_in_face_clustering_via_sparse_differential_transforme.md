@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Noise Resilience in Face Clustering via Sparse Differential Transformer
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：如何精确确定每个节点的有效邻居范围，同时在 Top-K 边界附近可靠地判断节点关系？
 
-**本文要解决什么？** 提升 Jaccard 相似度计算的可靠性 + 处理 Top-K 边界的不确定性 + 消除 Transformer 的噪声注意力。
+**本文目标** 提升 Jaccard 相似度计算的可靠性 + 处理 Top-K 边界的不确定性 + 消除 Transformer 的噪声注意力。
 
 **切入角度**：(1) 用 Transformer 预测每个节点的最优邻居数 Top-K，仅用 Top-K 内邻居计算 Jaccard (2) 用 SDT 处理 Top-K 边界不确定性。
 
-**核心 idea 一句话**：预测驱动的 Top-K Jaccard 提纯邻居 + 稀疏差分注意力消除噪声关系判断。
+**核心 idea**：预测驱动的 Top-K Jaccard 提纯邻居 + 稀疏差分注意力消除噪声关系判断。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ tags:
 - **差分注意力+稀疏 mask 的组合**巧妙利用了聚类任务的先验信息
 - **sigmoid 距离变换**简单但有效，放大了区分度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Top-K 预测本身的准确性仍然有限
 - SDT 增加了模型复杂度
 - 仅在人脸聚类上验证，通用图聚类有待测试

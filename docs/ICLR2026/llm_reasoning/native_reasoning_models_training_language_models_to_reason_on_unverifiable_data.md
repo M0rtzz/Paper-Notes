@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Native Reasoning Models: Training Language Models to Reason on Unverifiable Data
 description: >-
@@ -115,7 +115,7 @@ $J(\theta) = \mathbb{E}_{z \sim \pi_\theta}[R(z,\theta)]$，用 GRPO + 重要性
 - **困难 token 加权的理论直觉**：-log p 加权让奖励聚焦在模型最不确定的关键 token 上，与课程学习和 hard example mining 的精神一致。这个简单的修改带来了 3.3 分的显著提升
 - **策略崩塌的诊断与解决**：清晰展示了 RLPR 的崩塌现象（推理熵→0），并通过内在奖励设计自然避免了这一问题——因为崩塌的推理无法帮助预测答案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **奖励函数手工设计**：5 种聚合方式 + 多种加权方案都是手工设定，可以探索自动学习奖励函数
 - **采样效率有限**：RL 训练需要大量采样（GRPO 需要组内多条推理链），计算成本较高
 - **仅限微调阶段**：未在预训练阶段验证，如果能在预训练就引入推理训练可能效果更好

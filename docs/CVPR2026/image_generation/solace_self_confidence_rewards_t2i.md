@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SOLACE: Improving Text-to-Image Generation with Intrinsic Self-Confidence Rewards
 description: >-
@@ -109,7 +109,7 @@ $$R_{\text{SOLACE}}(z_0^{(i)}, c) = \frac{1}{\sum_{t\in\mathcal{T}} w(t)} \sum_{
 - **稳定化设计精巧**：后缀窗口、不用CFG、在线计算三个设计缺一不可，否则崩溃或效果差
 - **潜空间操作**：奖励完全在潜空间计算，无需解码到像素空间，省去了decoder开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 与人类偏好指标相关性弱，无法单独靶向特定对齐目标（如美学）
 - 仅验证了flow matching架构（SD3.5），对autoregressive T2I模型适用性未知
 - 未来可探索：(1) 时序/多视角一致性扩展到视频和3D生成；(2) 解耦和校准内在信号以实现任务级奖励塑形

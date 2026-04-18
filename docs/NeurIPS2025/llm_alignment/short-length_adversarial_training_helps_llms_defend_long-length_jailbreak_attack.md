@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Short-length Adversarial Training Helps LLMs Defend Long-length Jailbreak Attacks
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：长后缀攻击强但昂贵 vs 短后缀训练便宜但怕不够强。对抗训练时的后缀长度与防御效果之间的关系是什么？
 
-**本文要解决什么？** 回答"对抗训练时需要多长的后缀才能防御某长度的越狱攻击？"
+**本文目标** 回答"对抗训练时需要多长的后缀才能防御某长度的越狱攻击？"
 
 **切入角度**：将 LLM 越狱场景映射到 in-context learning (ICL) 理论框架——将对抗后缀视为被扰动的 in-context 样本，分析线性自注意力模型的鲁棒泛化界。
 
-**核心idea一句话**：对抗训练长度与防御效果的关系是平方根缩放——$\Theta(\sqrt{M})$ train 防 $\Theta(M)$ attack。
+**核心 idea**：对抗训练长度与防御效果的关系是平方根缩放——$\Theta(\sqrt{M})$ train 防 $\Theta(M)$ attack。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 - **ICL 理论桥接 LLM 安全**是一个巧妙的框架选择。虽然线性自注意力模型极度简化，但核心缩放关系在真实 LLM 上完美复现，说明该关系具有不依赖模型具体架构的普适性。
 - **可迁移的思路**：这种"短训练防长攻击"的缩放律可能在其他安全场景中也成立——如 prompt injection 防御、对抗 few-shot 攻击等。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅分析后缀攻击**：word-level 攻击、prompt rewriting 攻击、many-shot 攻击等其他越狱类型未覆盖
 - **线性自注意力假设**：理论基于单层 LSA 模型的线性回归 ICL，与真实 LLM（多层、非线性、softmax attention）差距大。缩放关系在真实 LLM 上成立是实验验证的而非理论保证的
 - **GCG 攻击限制**：实验仅用 GCG 一种攻击方法，其他更强的攻击（如 AutoDAN、PAIR）下是否仍成立需验证

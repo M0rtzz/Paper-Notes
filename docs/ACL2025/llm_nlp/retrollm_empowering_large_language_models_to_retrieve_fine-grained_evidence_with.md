@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RetroLLM: Empowering Large Language Models to Retrieve Fine-grained Evidence within Generation
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L} = -\sum_{t=1}^{T_c+T_e} \log P(x_t|x_{<t}, q; \theta) - \gamma \su
 - **延迟与性能的平衡**：RetroLLM略慢于Naive RAG（582ms vs 约需估计），但显著快于复杂RAG方法（如SelfRAG 3269ms）
 - **灵活的证据数量控制**：模型自主决定检索多少证据，单跳和多跳任务自适应调整
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FM-Index的构建和维护需要额外的存储和预处理成本，特别是文档级索引
 - 当前版本依赖外部稀疏词法模型（SPLADE-v3）生成辅助线索，未完全"统一"

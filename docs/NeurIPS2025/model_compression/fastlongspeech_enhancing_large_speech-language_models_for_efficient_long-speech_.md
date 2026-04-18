@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FastLongSpeech: Enhancing Large Speech-Language Models for Efficient Long-Speech Processing
 description: >-
@@ -164,7 +164,7 @@ $$L_{dct} = -\sum_{L \sim \mathcal{U}(\mathbf{L})} \log p(\mathbf{y} \mid \mathb
 - **灵活的效率-性能权衡**：通过调节目标长度 L 可自由平衡推理效率和生成质量
 - **LongSpeech-Eval 基准**：构建了首个长语音理解评测集，填补了领域空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅基于 Qwen2-Audio**：对其他 LSLM 的通用性待验证
 2. **长语音训练数据仍然有潜力**：随长语音数据增多，直接训练可能优于压缩迁移

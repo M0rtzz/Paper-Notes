@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment (CODA)
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L}(\phi, \boldsymbol{\theta}) = \mathcal{L}_{\mathrm{dm}}(\phi, \bold
 - 仅微调 cross-attention 的 KVO 投影即可消除文本条件偏置，无需额外架构改动
 - 支持精细的组合式编辑（删除物体、交换物体），实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 3D 包围盒预测表现不佳，DINOv2 特征缺乏精细的几何细节
 - 目前仅在 SD v1.5 上验证，扩展到更大模型（SDXL、SD3）的效果未知

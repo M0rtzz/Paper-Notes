@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConceptPrism: Concept Disentanglement in Personalized Diffusion Models via Residual Token Optimization
 description: >-
@@ -140,7 +140,7 @@ ConceptPrism 在 object/style/pose 三种概念类型上均有效，说明解耦
 - **轻量级高效**：200 步 token 优化 + 120 步 LoRA 微调，总共 320 步即可完成，远少于 DreamBooth 的数百步全量微调
 - **理论支撑清晰**：排斥损失从 KL 散度推导而来，进一步简化为噪声预测匹配，推导过程完整
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Stable Diffusion v1.5 上实验，未验证在 SDXL、SD3 等更新架构上的效果
 - 排斥损失需要至少 2 张参考图像（$j \neq i$），单图场景退化为无排斥损失，解耦能力受限

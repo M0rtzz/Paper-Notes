@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L}_{geo} = \lambda_1 \mathcal{L}_{render} + \lambda_2 \mathcal{L}_{ma
 - 使用 diffuse 图像而非法线图的监督策略值得借鉴——法线方向的歧义是可微渲染中的常见问题
 - 外观和几何分离学习的策略避免了相互补偿的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 网格表示相比隐式函数容易出现自交叉（self-intersection），需要更鲁棒的防自交方法
 - 缺乏物理仿真约束，变形可能不符合物理规律

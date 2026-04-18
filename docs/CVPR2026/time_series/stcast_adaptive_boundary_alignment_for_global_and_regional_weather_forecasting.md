@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STCast: Adaptive Boundary Alignment for Global and Regional Weather Forecasting
 description: >-
@@ -97,7 +97,7 @@ AdamW优化器，学习率0.0002，100 epochs，batch size 16。在ERA5数据集
 - Great Circle距离+指数衰减初始化的先验设计非常物理直觉——它编码了"大气影响随距离衰减"的基本规律，同时留给模型学习不符合纯距离衰减的遥相关模式的空间。这种"物理先验初始化+数据驱动优化"的范式在其他地球科学应用中也很有复用价值。
 - TMoE用离散高斯分布做月份routing——相比让模型隐式学习时间模式，显式提供月份信息是一个低成本高回报的设计。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 区域预报目前仅在东亚验证，其他地理区域（如赤道、极地）的效果待验证
 - 不确定性量化仅通过Perlin噪声集合预测实现，缺乏概率校准分析

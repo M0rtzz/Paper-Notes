@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-modal Identity Mapping: Minimizing Information Loss in Modality Conversion via Reinforcement Learning
 description: >-
@@ -86,7 +86,7 @@ CIM 是一个无标注的 RL 框架，核心流程：(1) LVLM 为输入图像生
 - GRC 和 QIR 的设计直觉清晰：一个管"detail"，一个管"accuracy"，与人对 caption 质量的直觉一致
 - 在 Relation 维度的巨大提升说明现有 LVLM 在关系推理方面的信息损失最为严重，也最容易通过 RL 改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 检索库的构成和规模直接影响奖励信号的质量，对检索模型的选择敏感
 - 训练仅用 6.5K 图像，虽然效率高但可能限制了上限
 - GRC 和 QIR 的计算需要额外的检索步骤，增加了训练开销

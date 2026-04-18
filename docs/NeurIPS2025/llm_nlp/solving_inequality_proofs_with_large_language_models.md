@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Solving Inequality Proofs with Large Language Models
 description: >-
@@ -125,7 +125,7 @@ $$C^* = \sup\{C \in \mathbb{R} : f(\mathbf{x}) \geq C \cdot g(\mathbf{x}), \fora
 4. **指明改进方向**：定理引导推理和自精炼，而非简单扩展规模
 5. **评估范围全面**：29 个模型覆盖开源和闭源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **LLM-as-Judge 不完美**：数值计算 Judge F1 仅 0.80
 2. **测试集规模有限**：200 题统计显著性有限

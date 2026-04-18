@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Confidence Regularization for Multimodal Failure Detection
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{out
 - **同时提升 FD 和分类准确率**：ACL 的正则化同时改善了分类性能，这在 FD 方法中不常见
 - **广泛评估**：4 个数据集、3 种模态、多种模态组合、分布偏移、不同骨干、OOD 检测等设置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅限动作识别领域（视频+光流/音频），尚未在医学影像、遥感等其他多模态任务上验证
 - 仅测试了两三模态融合，对更多模态（≥4）的扩展性未知

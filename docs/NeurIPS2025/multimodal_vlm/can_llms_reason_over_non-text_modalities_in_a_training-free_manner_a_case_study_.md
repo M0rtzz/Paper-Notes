@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can LLMs Reason Over Non-Text Modalities in a Training-Free Manner? A Case Study with In-Context Representation Learning
 description: >-
@@ -41,7 +41,7 @@ LLM 通过测试时计算和工具集成大幅增强能力，多模态 LLM（MLL
 
 能否让纯文本 LLM **在推理时不需训练**就利用非文本基础模型的内部表征？
 
-### 4. 本文要解决什么
+### 4. 本文目标
 
 探索训练无关地将非文本 FM 表征集成到文本 LLM 的可行性，并分析其工作机制。
 
@@ -49,7 +49,7 @@ LLM 通过测试时计算和工具集成大幅增强能力，多模态 LLM（MLL
 
 将传统 ICL 中的文本-标签对 $(x_i, y_i)$ 替换为 FM 表征-标签对 $(r_i, y_i)$，利用少样本学习能力使 LLM 适应性地处理非文本表征。
 
-### 6. 核心 idea 一句话
+### 6. 核心 idea
 
 用降维后的 FM 表征替代 ICL 中的文本输入，通过最优传输将分布对齐到 LLM 嵌入空间，实现零训练的跨模态推理。
 
@@ -65,7 +65,7 @@ ICRL 框架支持两个注入层级：
 
 #### 模块1：PCA 文本层注入
 
-**做什么**：通过降维将高维 FM 表征嵌入 prompt 文本。
+**功能**：通过降维将高维 FM 表征嵌入 prompt 文本。
 
 **核心思路**：对 FM 表征 $\mathbf{H} \in \mathbb{R}^{N \times d_{FM}}$ 做 PCA 降到 $d_{Reduced} \ll d_{FM}$ 维（默认 20 维），然后将降维后的向量转为字符串 $S_{pca}$ 融入 prompt。
 
@@ -73,7 +73,7 @@ ICRL 框架支持两个注入层级：
 
 #### 模块2：最优传输对齐（OT-Embed / OT-PCA）
 
-**做什么**：将投影后的 FM 表征分布对齐到 LLM 嵌入分布。
+**功能**：将投影后的 FM 表征分布对齐到 LLM 嵌入分布。
 
 **核心思路**：使用随机初始化的线性投影器 $P: \mathbb{R}^{d_{FM}} \to \mathbb{R}^{d_{LLM}}$，然后通过最优传输对齐分布：
 
@@ -91,7 +91,7 @@ $$OT(\mathcal{D}_{proj}, \mathcal{D}_{tar}) = scale \cdot \mathbf{H}_{proj} + sh
 
 #### 模块3：线性投影器的理论保证
 
-**做什么**：证明不加非线性激活的随机线性投影器能保持几何关系。
+**功能**：证明不加非线性激活的随机线性投影器能保持几何关系。
 
 **定理 1（范数集中）**：
 $$|\|\mathbf{W}\mathbf{u} + \mathbf{b}\|^2 - (\|\mathbf{b}\|^2 + \|\mathbf{u}\|^2)| \leq \epsilon_1 (\|\mathbf{b}\|^2 + \|\mathbf{u}\|^2)$$
@@ -170,7 +170,7 @@ OT-PCA+ICL 在 ESOL 上提升 **16.6%** Pearson r。
 4. **双运行模式发现**：揭示了 ICRL 表征在有/无文本输入时扮演不同角色（信息载体 vs 暂停 token）
 5. **跨模态泛化**：初步展示了在视觉（ViT）和语音（wav2vec2）上的可行性
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. ICRL 总体性能仍显著弱于有监督微调方法（如 GPT-MolBERTa ESOL 0.477 vs ICRL 1.140）
 2. 目前主要在分子领域（SMILES）验证，文本天然具有分子结构信息；在纯视觉等模态的验证有限

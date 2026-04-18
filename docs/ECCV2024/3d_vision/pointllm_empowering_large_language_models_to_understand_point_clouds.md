@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PointLLM: Empowering Large Language Models to Understand Point Clouds
 description: >-
@@ -114,7 +114,7 @@ tags:
 - **GPT-4 辅助数据构建流程**：用 GPT-4 从 Cap3D 描述生成多样化指令数据（QA、多轮对话、详细描述），解决了 3D 指令数据稀缺问题。这个数据构建范式可泛化到任何 3D 资产
 - **评估体系设计思考深入**：指出传统 NLP 指标（BLEU/ROUGE）对开放式 3D 描述不适用（"private jet"和"airplane"得 0 分），引入 GPT-4 评估和人类评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限物体级点云**：在 Objaverse 单物体上训练和测试，无法理解场景级点云（在 ScanNet 上测试效果一般）
 - **依赖 RGB 点云**：需要带颜色的点云输入，对 ModelNet40 等仅有几何的数据集要人为赋色（设为黑色），限制了应用场景
 - **幻觉问题**：13B 模型幻觉率（0.84）高于 7B（0.66），更大 LLM 更难精确微调

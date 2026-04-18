@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EagleVision: A Dual-Stage Framework with BEV-grounding-based Chain-of-Thought for Spatial Intelligence
 description: >-
@@ -107,7 +107,7 @@ SQA3D上同样达开源VLM SOTA。
 - **纯RL训练无需CoT标注**：空间grounding奖励巧妙地从答案级监督中引导出合理的查询策略，避免了不可行的人工CoT标注
 - **后端无关设计**：SLAM可替换为任何位姿估计方法，框架的实用性不受限于特定重建系统
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖SLAM预处理提供位姿和BEV地图——无法处理完全未知场景的实时推理
 - BEV位姿查询仅检索最近真实帧——如果所需视角不在原视频中则无法获取
 - 当前在室内场景(ScanNet)为主，室外大规模场景的泛化有待验证

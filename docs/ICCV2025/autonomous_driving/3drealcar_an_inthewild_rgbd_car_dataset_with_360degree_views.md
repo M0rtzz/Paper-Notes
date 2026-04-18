@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DRealCar: An In-the-wild RGB-D Car Dataset with 360-degree Views
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **多任务适用性**：一个数据集支持10+任务，包括3D重建、NVS、3D生成、目标检测、汽车解析等
 - **为3D生成提供真实先验**：微调后的Dreamcraft3D和Zero123-XL在真实汽车上效果显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前只有汽车外部视角，缺少内部视角
 - iPhone扫描的深度精度有限，可能影响点云质量

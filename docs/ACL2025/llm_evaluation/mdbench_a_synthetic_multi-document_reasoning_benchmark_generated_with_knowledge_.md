@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MDBench: A Synthetic Multi-Document Reasoning Benchmark Generated with Knowledge Guidance
 description: >-
@@ -117,7 +117,7 @@ MDBench 的生成管线包含四个步骤：
 3. **提供了表格-文档对比视角**：同一推理问题在两种表面形式下的表现差异，揭示了 LLM 推理中"理解"和"格式适应"的纠缠。
 4. **推理类型可控**：通过 demonstrations 指定推理技能类型，未来可方便地添加新的推理挑战。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据域偏窄**：种子数据来自 Wikipedia 表格，覆盖体育、政治、科技等通用领域，未涉及法律、医学等专业领域。
 2. **只用 GPT-4o 做生成和验证**：可能引入该模型的特定偏好和局限。

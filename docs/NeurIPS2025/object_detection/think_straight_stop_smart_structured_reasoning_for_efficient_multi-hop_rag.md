@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Think Straight, Stop Smart: Structured Reasoning for Efficient Multi-Hop RAG
 description: >-
@@ -123,7 +123,7 @@ TSSS 是一个**训练无关 (training-free)** 的框架：
 3. **实用性强**：token 节省直接转化为推理成本降低，特别适合设备端部署
 4. **确定性终止**：用检索器的嵌入空间做重复检测，比依赖 LLM 的自我判断更可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 Workshop 接收**：可能实验规模和深度有待扩展
 2. **终止阈值需调参**：余弦相似度阈值 $\tau$ 对不同数据集可能需要不同设定

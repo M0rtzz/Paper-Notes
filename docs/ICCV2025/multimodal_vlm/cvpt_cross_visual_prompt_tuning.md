@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CVPT: Cross Visual Prompt Tuning
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：VPT 需要大量 prompt 来适应下游任务，但放入更多 prompt 反而破坏性能。这个矛盾的根源在于 prompt 的"部署方式"——它与 image token 共享同一个 self-attention，二者耦合在一起。
 
-**本文要解决什么**：如何在保留 prompt 灵活性的同时，消除其对 self-attention 的干扰，使 prompt 方法能够在使用大量 prompt 时仍保持高性能和高效率。
+**本文目标**：如何在保留 prompt 灵活性的同时，消除其对 self-attention 的干扰，使 prompt 方法能够在使用大量 prompt 时仍保持高性能和高效率。
 
 **切入角度**：作者观察到 prompt token 并非原始序列的固有组成部分，不携带语义信息，只是作为间接调优因子。因此，将 prompt 从 self-attention 中解耦是根本解法。
 
-**核心 idea 一句话**：用 cross-attention 替代 self-attention 中的 prompt 拼接，让 embedded token 作为 query、prompt 作为 key-value，解耦二者交互。
+**核心 idea**：用 cross-attention 替代 self-attention 中的 prompt 拼接，让 embedded token 作为 query、prompt 作为 key-value，解耦二者交互。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ CVPT 的 pipeline 与 VPT 类似：冻结预训练 ViT 主干参数，只训练 
 - **权重共享是 zero-cost lunch**：frozen CA + weight sharing 达到了 learnable CA 的性能，但参数量只有 0.09M（对比 28.4M），是一个极其高效的设计。这个 trick 可以迁移到任何需要插入新模块但又希望避免大量参数的场景
 - **推翻了"prompt 不如 adapter"的社区共识**：CVPT 在 VTAB-1K 上超过了所有 adapter 方法，证明 prompt 方法的瓶颈在于部署方式而非方法本身
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Prompt 初始化策略未探索**：作者承认没有提出新的 prompt 初始化方法，目前沿用 VPT 的随机初始化。更好的初始化可能进一步提升性能
 - **仅在 ViT-B/16 和 ViT-L 上验证**：未测试更大规模模型（如 ViT-H、ViT-G），跨模型泛化性有待确认
 - **cross-attention 位置固定**：所有层使用相同的 cross-attention 布局，未探索层级自适应的部署策略

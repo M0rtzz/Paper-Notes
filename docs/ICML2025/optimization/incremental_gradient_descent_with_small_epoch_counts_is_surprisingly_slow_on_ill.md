@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Incremental Gradient Descent with Small Epoch Counts is Surprisingly Slow on Ill-Conditioned Problems
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：现有分析需要步长 $\eta \leq \mathcal{O}(1/nL)$ 来控制单 epoch 内的累积误差，但当 $K$ 小时步长需要设为至少 $\Omega(1/K)$ 才能让迭代点接近最优解——这两个要求在 $K \ll \kappa$ 时互相矛盾，导致现有上界不紧。
 
-**本文要解决什么？** 作为理解小 epoch 体制下排列式 SGD 收敛行为的第一步，全面刻画 IGD（最简单的确定性排列 SGD）在此体制下的收敛速率下界和上界。
+**本文目标** 作为理解小 epoch 体制下排列式 SGD 收敛行为的第一步，全面刻画 IGD（最简单的确定性排列 SGD）在此体制下的收敛速率下界和上界。
 
 **切入角度**：IGD 是确定性的（固定排列 $\sigma_k =$ identity），技术上比分析随机排列更可控，可以通过精心构造目标函数来获得紧的下界。
 
-**核心idea一句话**：通过三类精巧的函数构造（相同 Hessian、强凸分量、非凸分量），揭示 IGD 在小 epoch 体制下呈现出从 $\Omega(G^2/\mu K)$ 到指数级 $\Omega((1+\kappa/2nK)^n)$ 的逐级恶化收敛行为。
+**核心 idea**：通过三类精巧的函数构造（相同 Hessian、强凸分量、非凸分量），揭示 IGD 在小 epoch 体制下呈现出从 $\Omega(G^2/\mu K)$ 到指数级 $\Omega((1+\kappa/2nK)^n)$ 的逐级恶化收敛行为。
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ tags:
 - 实验验证（附录 G）确认了理论构造的迭代行为，增强了结果的可信度
 - 论文写作结构清晰，Table 1 和 Figure 1 的概览极具参考价值，使复杂的理论结果一目了然
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 下界仅针对 IGD（固定排列），尚未推广到 RR 或其它随机排列策略——这是最重要的开放问题
 - Theorem 3.2 的上界限于 1 维，高维推广是技术挑战（虽然可直接应用于对角 Hessian 目标）

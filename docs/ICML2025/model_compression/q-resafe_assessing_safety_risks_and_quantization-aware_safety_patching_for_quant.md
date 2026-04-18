@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Q-resafe: Assessing Safety Risks and Quantization-aware Safety Patching for Quantized Large Language Models
 description: >-
@@ -168,7 +168,7 @@ $$\mathbf{A}_{t+1} = \mathbf{M}_A \odot (\mathbf{A}_t - \eta \nabla_A \mathcal{L
 4. **校准数据的安全审计意识**: 揭示了间接有害数据（角色扮演/身份转换）比直接有害数据影响更大的反直觉发现，提醒实践者必须审查校准数据
 5. **方法无关性**: Q-resafe可应用于任意量化方法（包括LLM.int8()、NF4、FP4等bitsandbytes方法），具有良好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了7B模型**: 实验限于Llama-2-7B-Chat和Gemma-7B-Instruct，未验证更大规模模型（13B/70B）或更新模型（Llama-3等）的适用性
 2. **Safety-in-mind QAT**: 作者自己指出，更好的方向是在量化过程中直接考虑安全（而非事后修补），这可能是更根本的解决方案

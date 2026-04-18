@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Capture the Key in Reasoning to Enhance CoT Distillation Generalization
 description: >-
@@ -104,7 +104,7 @@ EDIT 分三阶段：
 4. **错误类型挖掘**：发现逻辑错误比知识/计算错误更有助于推理蒸馏，为未来"错误数据工程"提供方向
 5. **OOD 泛化显著**：在 4 个 OOD 数据集上均有明显提升，说明学到的不是任务特定模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **教师模型局限**：仅使用 ChatGPT (gpt-3.5-turbo) 作为教师，未验证 GPT-4 等更强模型的效果
 2. **学生模型局限**：主要在 LLaMA2 系列上实验，未覆盖更多现代模型（如 Qwen、Phi 等）

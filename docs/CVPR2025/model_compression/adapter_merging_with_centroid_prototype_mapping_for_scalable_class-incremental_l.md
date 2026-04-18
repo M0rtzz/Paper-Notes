@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adapter Merging with Centroid Prototype Mapping for Scalable Class-Incremental Learning
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **精度-速度帕累托最优**：在Fig.1的精度-速度图上，ACMap位于帕累托前沿——比同速度的方法精度高，比同精度的方法速度快
 - **Exemplar-free设计**：不存储旧任务数据，隐私友好，适合真实场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VTAB等域差异极大的场景下，单merged adapter表达能力不足
 - Centroid prototype mapping的仿射假设在子空间变化剧烈时可能不成立（早期任务）

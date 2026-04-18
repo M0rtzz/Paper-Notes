@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration
 description: >-
@@ -138,7 +138,7 @@ HINT比Retinexformer高0.9dB，比通用恢复方案至少高1.74dB。
 - 跨层QK缓存的指数移动平均更新(α=0.9)实现了渐进式历史信息融合
 - 跨5类任务(低光增强/去雾/去雪/去噪/去雨)12个benchmark的全面评估展示了方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 维度比[1,2,2,3]和α=0.9为手动设定，自适应确定这些超参数可能进一步提升效果
 - Pearson相关性重排为静态（基于通道全局统计），动态的、依赖输入的重排可能更优
 - 编码器不使用注意力（不对称设计）会限制编码端的全局建模能力

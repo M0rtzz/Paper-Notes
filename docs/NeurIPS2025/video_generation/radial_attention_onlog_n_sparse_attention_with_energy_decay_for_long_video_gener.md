@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Radial Attention: O(n log n) Sparse Attention with Energy Decay for Long Video Generation
 description: >-
@@ -125,7 +125,7 @@ Radial Attention 是一种静态稀疏注意力机制，使用预定义的掩码
 - LoRA 微调比全参数微调效果更好的发现令人意外，说明轻量适配可以更精准地更新关键参数
 - 跨三个模型（Mochi 1/HunyuanVideo/Wan2.1）的一致表现证明了方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 衰减参数 α、β 在不同模型间可能不同，目前假设统一的衰减模式
 - Block-sparse 的 128×128 粒度可能对小分辨率视频不够精细
 - 长视频的叙事一致性和运动连贯性仍是挑战

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empowering DINO Representations for Underwater Instance Segmentation via Aligner and Prompter
 description: >-
@@ -133,7 +133,7 @@ Full Fine-tuning 效果差可能因灾难性遗忘；AquaStyle Aligner 通过显
 - **参数效率极高**：仅 390M 参数（ViT-L）超越 701M 参数的 USIS-SAM（ViT-H），且大部分参数冻结
 - 定性结果显示在阴影中鱼群分割、重叠实例区分、误分类纠正等困难场景均有明显优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 UIIS 和 USIS10K 两个数据集上验证，水下场景多样性有限
 - ObjectPrior Prompter 训练时依赖 ground truth 合并的二值掩码，推理时使用预测伪掩码，预测质量直接影响最终效果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-modal Multi-platform Person Re-Identification: Benchmark and Method
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L}_{\text{Uni-Prompt}} = \mathcal{L}_{mi2t} + \mathcal{L}_{mt2i} + \m
 - 两阶段训练策略（先学身份提示 → 再学模态/平台提示）类似于课程学习，确保模型先建立身份概念再学习跨域对齐。
 - 隐私保护措施完善：面部马赛克、原始素材删除、伦理委员会审批、公告告知。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模受限于多模态多平台采集的高成本（1930 身份 vs MSMT17 的 4101 身份）。
 - 仅在一个数据集上评估，未验证在其他数据集上的迁移性。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Fact Retrieval: Episodic Memory for RAG with Generative Semantic Workspaces
 description: >-
@@ -126,7 +126,7 @@ $$P(\mathcal{M}_n | \mathcal{C}_{0:n}) = \sum_{\mathcal{M}_{n-1}, \mathcal{W}_n}
 3. **Actor-centric 的世界模型**：以实体为中心构建记忆，比基于 chunk 的检索更符合人类认知
 4. **前瞻性问题机制**：通过生成未来可能的问题来辅助记忆索引，是一个有趣的创新设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅在 EpBench 这一合成数据集上评估，缺乏真实世界场景验证
 - Operator 和 Reconciler 依赖 GPT-4o prompting，成本和延迟可能在实际部署中成为瓶颈

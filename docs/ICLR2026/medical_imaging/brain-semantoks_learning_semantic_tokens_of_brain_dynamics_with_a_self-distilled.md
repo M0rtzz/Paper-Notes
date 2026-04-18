@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Brain-Semantoks: Learning Semantic Tokens of Brain Dynamics with a Self-Distilled Foundation Model
 description: >-
@@ -125,7 +125,7 @@ Brain-Semantoks 采用学生-教师架构。输入 fMRI 时间序列 $X \in \mat
 - **Z-scoring > Robust Scaling**：看似简单的归一化策略变化解决了跨数据集迁移时 DC offset 不一致的问题，是工程层面的重要贡献
 - **首个 fMRI scaling law 分析**：证明了 OOD 性能随预训练数据量可靠提升，增强了社区对 fMRI 基础模型的信心
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 功能网络划分依赖固定的 Yeo 7-网络分区，未来可探索从数据中学习 ROI 分组
 - 预训练仅使用静息态 fMRI（UKB），任务态数据的整合可能进一步提升表征质量

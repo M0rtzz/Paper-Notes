@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VIRES: Video Instance Repainting via Sketch and Text Guided Generation
 description: >-
@@ -23,9 +23,9 @@ tags:
 1. **领域现状**：本文研究的问题属于 NLP理解 方向。We introduce VIRES, a video instance repainting method with sketch and text guidance, enabling video instance repainting, replacement, generation, and removal. Existing approaches struggle with temporal consistency and accurate alignment with the provided sketch sequence. VIRES leverages the generative priors of text-to-video models to maintain temporal consistency and produce visually pleasing results.
 2. **现有痛点**：现有方法存在局限性——效率、精度或泛化性方面有改进空间。
 3. **核心矛盾**：需要在效果与效率/泛化性之间找到更好的平衡。
-4. **本文要解决什么？** 针对上述问题，作者提出了新方法。
+4. **本文目标** 针对上述问题，作者提出了新方法。
 5. **切入角度**：从新的技术视角或观察出发。
-6. **核心idea一句话**：We propose the Sequential ControlNet with the standardized self-scaling, which effectively extracts structure layouts and adaptively captures high-contrast sketch details. We further augment the diffu
+6. **核心 idea**：We propose the Sequential ControlNet with the standardized self-scaling, which effectively extracts structure layouts and adaptively captures high-contrast sketch details. We further augment the diffu
 
 ## 方法详解
 
@@ -78,7 +78,7 @@ We propose the Sequential ControlNet with the standardized self-scaling, which e
 - 问题定义清晰，方法针对性强
 - 核心设计思路可能可以迁移到相关场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要阅读全文才能深入分析方法细节和局限
 - 泛化性和可扩展性有待进一步验证
 

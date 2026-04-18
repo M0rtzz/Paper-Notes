@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prototype-Based Knowledge Guidance for Fine-Grained Structured Radiology Reporting
 description: >-
@@ -107,7 +107,7 @@ $$v = \alpha^\top P \in \mathbb{R}^d, \quad u = \alpha^\top A \in \mathbb{R}^{|Y
 - **安全降级**：无匹配原型时自动退回基线，不会损害已有性能
 - **LLM 作为知识提取工具**：展示了用指令微调 LLM 进行大规模临床文本结构化的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在胸部 X 光（Rad-ReStruct）上验证，未涉及 CT/MRI 等其他模态
 - 原型知识库依赖 LLM 提取质量，L3 覆盖率仅 82%，可能遗漏极罕见属性

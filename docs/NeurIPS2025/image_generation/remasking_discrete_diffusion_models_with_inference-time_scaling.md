@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Remasking Discrete Diffusion Models with Inference-Time Scaling
 description: >-
@@ -92,7 +92,7 @@ ReMDM 的 NELBO 为 MDLM 目标的一个重加权版本，仅多了 (1-σ_t) 因
 - **理论优雅**：通过保持边际分布不变，构建了与 MDLM 兼容的非马尔可夫过程，同时统一了 FB、DFM 等校正器为特例
 - **DDIM 的离散版本**：ReMDM 之于 MDLM 就像 DDIM 之于 DDPM，为离散扩散提供了更灵活的采样空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 重掩码策略（σ_t schedule、loop 参数）的超参搜索空间较大，需要针对不同任务调参
 - 重掩码增加了采样步数的有效使用，但相应地需要更多计算步来达到最佳效果
 - 目前主要验证在文本、离散化图像和分子上，更大规模语言模型和连续信号上的扩展有待探索

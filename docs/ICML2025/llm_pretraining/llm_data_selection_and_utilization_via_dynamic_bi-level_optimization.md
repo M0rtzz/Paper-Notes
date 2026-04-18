@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM Data Selection and Utilization via Dynamic Bi-level Optimization
 description: >-
@@ -85,7 +85,7 @@ DoReMi/DSIR等方法在训练前选择数据，忽略了模型在训练过程中
 4. 数据偏好演化分析提供了训练过程的新洞察。
 5. 即插即用设计与现有数据选择方法兼容。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 双层优化增加了训练计算开销（每隔N步需要额外前向/反向传播）。
 2. 验证集的选择影响DWM学到的偏好。

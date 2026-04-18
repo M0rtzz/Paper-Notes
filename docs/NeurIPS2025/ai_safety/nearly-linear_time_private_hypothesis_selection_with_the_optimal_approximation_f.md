@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Nearly-Linear Time Private Hypothesis Selection with the Optimal Approximation Factor
 description: >-
@@ -91,7 +91,7 @@ tags:
 - 指数机制替代分桶方案的思路优雅地解决了离散结构带来的高敏感度问题
 - 轮次复杂度的证明（通过跟踪指数机制归一化项的下降）是新颖的技术贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 样本复杂度为 $O(\log^3 n)$ 而非最优的 $O(\log n)$，存在 $O(\log^2 n / \sigma)$ 的额外因子
 - 置信参数 $\beta$ 的依赖为多项式 $1/\beta^2$，而非理想的 $\log(1/\beta)$

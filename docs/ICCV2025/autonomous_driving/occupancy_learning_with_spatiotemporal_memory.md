@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Occupancy Learning with Spatiotemporal Memory
 description: >-
@@ -134,7 +134,7 @@ Occ3D 基准上的 3D 占用预测结果（ResNet50 backbone）：
 - mSTCV 是一个有价值的新指标，填补了占用预测中时序一致性评估的空白
 - 方法具有很好的即插即用性：可以替换 FB-OCC 和 ViewFormer 的时序模块
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 动态建模依赖 nuScenes 标注计算占用流的真实标签，未来可将动态信息直接从时序特征中推导
 - 可扩展到基于稀疏查询的感知方法

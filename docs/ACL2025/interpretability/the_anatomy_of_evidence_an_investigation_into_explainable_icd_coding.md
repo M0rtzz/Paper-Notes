@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Anatomy of Evidence: An Investigation Into Explainable ICD Coding
 description: >-
@@ -131,7 +131,7 @@ Cheng et al. (2023) 发布的 MDACE 数据集首次提供了临床记录中 ICD 
 3. **数据驱动的策略建议**：高重叠代码可用规则系统处理、证据多样性分析可指导训练策略
 4. **跨标注方案对比**：首次深入分析 Inpatient（充分）vs Profee（完全）标注的关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验限于英语和 MIMIC-III 数据集，不同国家的编码规则和语言可能导致不同模式
 - 匹配度量中的上下文窗口 k=10 为经验设置，未进行敏感性分析

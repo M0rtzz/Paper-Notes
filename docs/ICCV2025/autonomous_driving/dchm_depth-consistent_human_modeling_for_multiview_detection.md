@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DCHM: Depth-Consistent Human Modeling for Multiview Detection
 description: >-
@@ -110,7 +110,7 @@ Wildtrack MODP 超 UMPD **31.2%**（80.3 vs 61.2），MultiviewX MODA 超 UMPD *
 - 多视角标签匹配通过 3D 高斯的 blending weight 在 3D 空间中完成，比 2D tracking 更鲁棒
 - 将 DCHM 的人体建模与有标签定位方法结合，甚至超越了有标签方法的 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理速度 1.2 FPS 限制了实时应用
 - 训练时间较长（3 轮迭代，每轮需 GS 优化每帧的伪深度）
 - 地面重建基于预定义深度范围，可能在复杂地形下失效

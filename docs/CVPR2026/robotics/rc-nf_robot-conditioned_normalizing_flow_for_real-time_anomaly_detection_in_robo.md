@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RC-NF: Robot-Conditioned Normalizing Flow for Real-Time Anomaly Detection in Robotic Manipulation
 description: >-
@@ -125,7 +125,7 @@ RCPQNet 作为仿射耦合层，包含两个核心组件：
 4. **即插即用**：不修改 VLA 架构，作为并行监控模块运行，工程落地友好
 5. **超球面任务嵌入**：将任务 prompt 映射到超球面均匀分布，确保任务间最大分离，为密度估计提供良好几何结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 SAM2 分割质量**：首帧需要 bbox prompt（仿真用图形学方法，真实用 Gemini 2.5 Pro），分割失败会影响点集质量
 2. **每任务需独立训练和校准阈值**：新任务需重新收集演示和校准，扩展性受限

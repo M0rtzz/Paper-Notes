@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CtrlFuse: Mask-Prompt Guided Controllable Infrared and Visible Image Fusion
 description: >-
@@ -115,7 +115,7 @@ $$F^p = M \cdot \text{Up}(\text{View}(\text{CrossAttn}(F_{seq}, P)))$$
 3. **对 prompt 质量鲁棒**：即使 mask 不完整或质量较低（只标注部分目标），融合结果仍能有效突出目标区域
 4. **通用 prompt 来源**：可直接使用 Grounded-SAM 从文本生成 mask prompt，无需标注数据即可在新数据集上实现可控融合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 mask prompt 输入**：需要额外的 mask 作为引导，增加了使用复杂度；自动化 prompt 生成管线（如文本到 mask）的质量直接影响最终效果
 2. **冻结 SAM 的瓶颈**：SAM image encoder 和 mask decoder 均冻结，对红外模态的适应能力有限，可考虑轻量级 adapter 微调

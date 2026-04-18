@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Laws for Native Multimodal Models
 description: >-
@@ -105,7 +105,7 @@ tags:
 - Scaling law使NMM研究从"试错"走向"预测"——用小模型实验预测大模型行为，大幅降低成本
 - Apple出品（Joshua Susskind），体现了产业界对NMM方向的重视
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 虽有457个模型，但最大规模仍受计算资源限制——超大规模（100B+）的外推可靠性未验证
 - 尚未在text-to-image/video generation任务上验证scaling law

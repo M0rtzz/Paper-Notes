@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DragAnything: Motion Control for Anything using Entity Representation
 description: >-
@@ -53,7 +53,7 @@ DragAnything基于Stable Video Diffusion (SVD)架构，核心组成：
 
 #### 1. 实体表征提取（Entity Representation Extraction）
 
-**做什么**：从首帧图像中提取每个实体的语义嵌入，用于代替简单的坐标点来表示目标对象。
+**功能**：从首帧图像中提取每个实体的语义嵌入，用于代替简单的坐标点来表示目标对象。
 
 **核心思路**：利用扩散前向过程和一步去噪U-Net推理，提取与实体mask对应的隐特征，作为该实体的开放域嵌入。
 
@@ -73,7 +73,7 @@ DragAnything基于Stable Video Diffusion (SVD)架构，核心组成：
 
 #### 2. 2D高斯表征（2D Gaussian Representation）
 
-**做什么**：提供空间位置引导，并使模型更关注实体中心区域。
+**功能**：提供空间位置引导，并使模型更关注实体中心区域。
 
 **核心思路**：以实体中心坐标为中心、内切圆半径为参数生成2D高斯分布图，中心像素权重大、边缘递减。
 
@@ -86,7 +86,7 @@ DragAnything基于Stable Video Diffusion (SVD)架构，核心组成：
 
 #### 3. 控制信号编码与注入
 
-**做什么**：将两种表征编码到与SVD兼容的隐空间中。
+**功能**：将两种表征编码到与SVD兼容的隐空间中。
 
 **编码器结构**：4个卷积块（每块2层卷积 + SiLU激活），逐级2倍下采样到1/8分辨率。
 
@@ -165,7 +165,7 @@ $$\mathcal{L}_\theta = \sum_{i=1}^L \mathbf{M} \| \epsilon - \epsilon_\theta(\bo
 4. **对比 paradigm 分析到位**：系统对比了点表征、轨迹图、2D高斯、框表示和实体表征五种范式的优劣
 5. **交互极其友好**：推理时用户只需SAM点选+画轨迹，整个流程无需专业知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **大幅度运动控制较弱**：如图10所示的bad case，控制较大运动时可能生成失真
 2. **依赖首帧实体mask**：需要SAM或手动标注的mask来提取实体表征，完全无mask的场景需要额外处理

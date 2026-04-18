@@ -1,4 +1,4 @@
-# DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image
+﻿# DeClotH: Decomposable 3D Cloth and Human Body Reconstruction from a Single Image
 
 **会议**: CVPR 2025  
 **arXiv**: [2503.19373](https://arxiv.org/abs/2503.19373)  
@@ -15,11 +15,11 @@
 
 **现有痛点**：(1) 联合重建时服装和人体几何严重耦合，无法单独编辑服装或人体；(2) 被遮挡区域（如背面、被服装遮挡的人体）无几何先验；(3) 标准 StableDiffusion 的 SDS 损失会生成混合了服装和人体的内容，而不是纯服装。
 
-**本文要解决什么？** 从单张图像分别重建高质量的 3D 服装和人体，可独立编辑。
+**本文目标** 从单张图像分别重建高质量的 3D 服装和人体，可独立编辑。
 
 **切入角度**：用 3D 模板模型（SMPLicit 服装模板、SMPL 人体模板）作为几何正则化先验处理遮挡；训练专门的 ClothDiffusion 生成纯服装图像提供更精确的 SDS 引导。
 
-**核心idea一句话**：DMTet 表示 + 3D 模板正则化处理遮挡 + ClothDiffusion 专用 SDS 损失实现可分解的单图 3D 服装+人体重建。
+**核心 idea**：DMTet 表示 + 3D 模板正则化处理遮挡 + ClothDiffusion 专用 SDS 损失实现可分解的单图 3D 服装+人体重建。
 
 ## 方法详解
 

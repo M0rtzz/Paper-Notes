@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CymbaDiff: Structured Spatial Diffusion for Sketch-based 3D Semantic Urban Scene Generation
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **DDR 分解**将 3D 卷积参数量降至原来的 $3k/k^3$ ≈ 1%~3%，适合大规模 3D 场景。
 - **草图+PSA 的条件组合**比 BEV 更容易获取（测试时只需手绘草图+卫星图），提高了实用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对小物体（行人、交通标志等）的重建较弱，因为训练数据中小类样本稀疏。
 - PSA 伪标注基于卫星图（~2025）与 GT（~2013）存在时间差，可能引入语义偏移。
 - 仅在 KITTI 家族数据上验证，未涉及 NuScenes/Waymo 等不同传感器配置的泛化。

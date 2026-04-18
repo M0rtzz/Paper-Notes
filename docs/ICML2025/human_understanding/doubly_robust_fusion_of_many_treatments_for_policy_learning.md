@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Doubly Robust Fusion of Many Treatments for Policy Learning
 description: >-
@@ -113,7 +113,7 @@ $$\min_{\boldsymbol{\zeta}} \left\{ \frac{1}{2n} \sum_{a \in \mathcal{A}} \sum_{
 3. **理论完备**：从一致性到 Oracle 性质到 Regret 界，提供了完整的理论保证链
 4. **实用性强**：方法易于实现，与现有 R 包 `policytree` 无缝集成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **极端稀疏场景**：某些治疗臂样本极少或为零时，校准加权可能不稳定
 2. **一次性融合**：当前融合只执行一次，迭代交替融合+加权估计可提升稳定性

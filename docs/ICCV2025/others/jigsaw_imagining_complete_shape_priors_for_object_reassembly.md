@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Jigsaw++: Imagining Complete Shape Priors for Object Reassembly
 description: >-
@@ -112,7 +112,7 @@ $$\mathbf{x}_0 = \alpha \hat{\mathbf{x}}_0 + \sqrt{1-\alpha^2}\xi, \quad \xi \si
 - **2D-3D 桥接**：巧妙利用坐标-颜色映射+LEAP 避免了 3D 数据稀缺问题
 - **Rectified Flow 的工程优势**：线性轨迹使得 retargeting 微调成本极低，逆采样只需 1/25 步数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **尺寸限制**：颜色映射对大尺寸物体（如路灯）失效，图像分辨率不足以表达
 - **未见类别泛化**：模型对训练集中未见的物体类型重建能力有限

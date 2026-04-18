@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Instant Adversarial Purification with Adversarial Consistency Distillation
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**: Consistency Model 的核心假设是 $f_\theta(z_t, t) = f_\theta(z_{t'}, t')$ 对所有 $t, t' \in [0,T]$ 成立，但对抗图像的 latent 分布偏移违反了这一一致性约束，导致直接用 LCM 净化无法收敛到干净图像。
 
-**本文要解决什么**: 在保持扩散净化效果的同时实现单步推理，克服对抗噪声与高斯噪声分布差异导致的一致性蒸馏困难。
+**本文目标**: 在保持扩散净化效果的同时实现单步推理，克服对抗噪声与高斯噪声分布差异导致的一致性蒸馏困难。
 
 **切入角度**: 从蒸馏目标和推理流程两方面同时解决——GAND 修改蒸馏目标适配对抗噪声，CAP 用边缘引导保持语义。
 
@@ -52,7 +52,7 @@ OSCP 由两个组件构成：
 ### 关键设计
 
 **1. Gaussian Adversarial Noise Distillation (GAND)**
-- **做什么**: 在 Latent Consistency Distillation 基础上，将对抗噪声显式引入前向过程的噪声项
+- **功能**: 在 Latent Consistency Distillation 基础上，将对抗噪声显式引入前向过程的噪声项
 - **核心思路**: 定义新的扩散前向过程
   $$z_t^* = \sqrt{\bar{\alpha}_t} z + \sqrt{1 - \bar{\alpha}_t}(\epsilon + \delta_{adv})$$
   其中 $\delta_{adv}$ 是在 latent 空间通过 PGD 攻击生成的对抗扰动。关键观察：$z_t^* \to z$ 当 $t \to 0$（收敛到干净图），$z_t^* \to \epsilon + \delta_{adv}$ 当 $t \to T$（收敛到混合噪声）。这样 LCM 的一致性约束在 $[0, t]$ 内重新成立
@@ -64,7 +64,7 @@ OSCP 由两个组件构成：
 - **设计动机**: 直接将 LCM 用于对抗净化会失败，因为对抗 latent $z_{adv}(t)$ 的分布偏移破坏了一致性函数的收敛条件；通过显式将 $\delta_{adv}$ 编入扩散前向过程，使蒸馏轨迹直接建模"从混合噪声到干净图"的映射
 
 **2. Controlled Adversarial Purification (CAP)**
-- **做什么**: 推理时用不可学习的 Canny 边缘检测算子提取对抗图的边缘图，通过 ControlNet 引导净化过程
+- **功能**: 推理时用不可学习的 Canny 边缘检测算子提取对抗图的边缘图，通过 ControlNet 引导净化过程
 - **核心思路**: 
     - 边缘图提供结构先验，防止大步长净化下输出图偏离原图的几何结构
     - 去掉 LCM 的 skip connection 项 $c_{skip}(t)z_{adv}(t)$（即设 $c_{skip} \equiv 0$），因为该项会保留对抗噪声
@@ -72,7 +72,7 @@ OSCP 由两个组件构成：
 - **设计动机**: 使用不可学习的边缘检测而非文本引导，因为文本可能被 caption 语义攻击所欺骗；去掉 skip connection 是因为它直接传递对抗噪声
 
 **3. Latent Space 对抗训练**
-- **做什么**: GAND 训练中的对抗扰动 $\delta_{adv}$ 在 latent 空间而非 pixel 空间生成
+- **功能**: GAND 训练中的对抗扰动 $\delta_{adv}$ 在 latent 空间而非 pixel 空间生成
 - **核心思路**: $\delta_{adv} = \arg\max_\delta \mathcal{L}(C(\mathcal{D}(\mathcal{E}(x) + \delta)), y)$，使用 PGD-10 攻击
 - **设计动机**: latent 空间攻击与扩散模型的工作空间一致，且避免了 pixel 空间攻击经过 VAE 编码后的分布变化
 
@@ -138,7 +138,7 @@ OSCP 由两个组件构成：
 - CAP 使用不可学习边缘检测而非神经网络条件，有效防止对抗样本"毒化"引导信号
 - 从"对抗训练+净化"的混合视角出发，结合了两种防御范式的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时的对抗扰动仅用 PGD-10 生成，面对更强/更多样的攻击策略可能需要扩展
 - ControlNet 边缘引导可能对纹理型攻击不够有效（边缘检测器不受影响但纹理信息丢失）

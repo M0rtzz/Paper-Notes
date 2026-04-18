@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Multispectral Sensors for Color Correction in Mobile Cameras
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 通过改造两种不同架构(U-Net和KAN)来展示框架通用性，增强了方法的说服力
 - 物理仿真数据集构建方法合理：利用真实高光谱数据+真实相机光谱灵敏度+真实光源SPD
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集完全基于仿真，模拟的RGB和MS虽物理驱动但与真实传感器对仍有domain gap
 - 仅评估了静态场景，未考虑视频模式下的时序一致性

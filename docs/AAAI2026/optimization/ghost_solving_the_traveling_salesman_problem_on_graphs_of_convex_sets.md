@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GHOST: Solving the Traveling Salesman Problem on Graphs of Convex Sets
 description: >-
@@ -71,7 +71,7 @@ $$\mathcal{L}(\pi^*) \leq \mathcal{L}(\pi) \leq c(\tau)$$
 
 #### 2. **路径展开算法（Algorithm 1）**: 多标签 A* 式搜索
 
-**做什么**：给定抽象路径 $\hat{\pi} = (v_1, v_2, \ldots, v_k)$（连续顶点可能不在 GCS 中相邻），枚举所有从 $\hat{\pi}$ 展开的 GCS 路径，按下界成本的非递减顺序输出。
+**功能**：给定抽象路径 $\hat{\pi} = (v_1, v_2, \ldots, v_k)$（连续顶点可能不在 GCS 中相邻），枚举所有从 $\hat{\pi}$ 展开的 GCS 路径，按下界成本的非递减顺序输出。
 
 **核心思路**：
 
@@ -185,7 +185,7 @@ $$\min_{y_{\hat{p}}} \sum_{\hat{p} \in \hat{\mathcal{P}}} b(\hat{p}) y_{\hat{p}}
 4. **理论保证完整**：最优性证明（Corollary 5）和有界次优性证明（Theorem 4）共同提供了严格的质量保证
 5. **应用多样性**：覆盖规划、巡检规划、7-DoF 机械臂任务与运动规划——展示了框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性**：虽然远优于 MICP，GHOST 在非常大规模的 GCS（数百个凸集）上的性能有待验证
 2. **单线程实现**：论文提到跨路径并行评估的收益不大，但在大规模问题上并行化可能更有价值

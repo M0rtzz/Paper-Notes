@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Steering off Course: Reliability Challenges in Steering Language Models
 description: >-
@@ -124,7 +124,7 @@ tags:
 3. **假设验证优先于方法创新**：在提出新方法之前，先验证底层假设是否成立，这种研究范式值得推广
 4. **对可解释性研究的警示**：大量可解释性研究通过博客帖子非正式发布，缺乏严格评估，本文呼吁更严谨的评估标准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 超参数搜索虽然广泛但不可能穷尽所有组合（如DoLa的bucket组合数为指数级的）
 2. 仅测试了decoder-only架构，未覆盖encoder-decoder模型

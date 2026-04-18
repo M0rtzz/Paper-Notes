@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predicate-Conditional Conformalized Answer Sets for Knowledge Graph Embeddings
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：谓词级条件覆盖需要对每个谓词单独做 conformal prediction（Mondrian CP），但 KG 中大多数谓词只有极少三元组→校准集太小→阈值不稳定→预测集过大或覆盖失败。
 
-**本文要解决什么**：在 KGE 中实现谓词条件覆盖保证，同时保持紧凑的预测集。
+**本文目标**：在 KGE 中实现谓词条件覆盖保证，同时保持紧凑的预测集。
 
 **切入角度**：合并向量表示相似的谓词扩大校准集 + 引入 rank 信息做双重校准。
 
@@ -98,7 +98,7 @@ tags:
 - **双重校准（score ∩ rank）**：两个独立维度的约束比单一阈值更有效——rank 排除了"score低但语义不相关"的噪声实体
 - **对不确定性量化在 KG 领域的推动**：将 conformal prediction 从分类扩展到 KGE 的链接预测，是一个有价值的跨领域迁移
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **i.i.d 假设**：conformal prediction 要求校准集与测试集同分布，KG 的时态演化可能违反此假设
 - **谓词合并的超参 $\phi$**：需要手动选择最小校准集大小阈值
 - **仅限 1-hop 链接预测**：未扩展到多跳查询（如 EPFO queries）

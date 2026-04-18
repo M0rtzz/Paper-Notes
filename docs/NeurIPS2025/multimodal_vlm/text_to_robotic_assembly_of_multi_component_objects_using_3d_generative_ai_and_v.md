@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Text to Robotic Assembly of Multi Component Objects using 3D Generative AI and Vision Language Models
 description: >-
@@ -100,7 +100,7 @@ tags:
 3. **渐进式推理分解**：将复杂的组件分配分解为两步VLM任务（先选部件名、再映射标签号），降低了单次推理的难度
 4. **预处理排除不可达面**：巧妙利用领域知识约束VLM的输出空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持两种预定义组件类型（结构件+面板），未扩展到铰链、把手、不同材质等
 - 评估限于5种常见物体和简单prompt，复杂/非常规物体（如雕塑、乐器）未被测试

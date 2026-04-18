@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LoRA-FAIR: Federated LoRA Fine-Tuning with Aggregation and Initialization Refinement
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 初始化策略的系统对比（Avg-Initial vs Re-Initial vs Local-Initial）为FL社区提供了实用指导
 - 正则化的双重作用设计巧妙：同一个 $\lambda\|\Delta\mathbf{B}\|$ 既限制校正幅度确保初始化稳定，又自然保留了平均信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理想全局更新 $\Delta\mathbf{W} = \sum p_k \mathbf{B}_k \mathbf{A}_k$ 需要在服务器端计算所有客户端的矩阵乘积，当客户端数量大时可能成为瓶颈
 - 只在视觉模型（ViT、MLP-Mixer）上验证，未涉及LLM等更大规模基础模型
 - 残差优化依赖SGD迭代求解，其收敛速度和精度对超参数敏感

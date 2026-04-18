@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Survey on Patent Analysis: From NLP to Multimodal AI
 description: >-
@@ -105,7 +105,7 @@ tags:
 - 维护公开 GitHub 仓库持续更新，实用价值高
 - 揭示了专利域与通用 NLP 之间的显著方法差距——当前专利分类中使用的模型远落后于最先进的 LLM
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 综述侧重学术方法，对工业界（如 USPTO、EPO）实际部署的 AI 系统覆盖不足
 - 各方法的性能缺乏统一基准对比——数据集子集、分类层级、评价指标差异使横向比较困难

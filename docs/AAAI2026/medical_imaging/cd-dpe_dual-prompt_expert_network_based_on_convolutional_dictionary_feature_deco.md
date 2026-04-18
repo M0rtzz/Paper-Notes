@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CD-DPE: Dual-Prompt Expert Network Based on Convolutional Dictionary Feature Decoupling for Multi-Contrast MRI Super-Resolution
 description: >-
@@ -160,7 +160,7 @@ CD-DPE 在未见数据集上 PSNR 提升 4.8%，SSIM 提升 11.6%，泛化能力
 3. **MoE 思想的引入**：专家网络+路由提示的组合是 MoE 在图像重建中的自然应用，增加了融合策略的灵活性
 4. **泛化能力突出**：在完全未见的 FastMRI Knee 数据集上大幅领先，说明解耦-融合范式具有内在的泛化优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **对比度差异敏感**：当参考与目标的对比度机制差异极大时性能受限，可引入 MRI 物理先验（如弛豫时间映射）
 - **迭代计算开销**：CD-FDM 的迭代展开引入额外计算，需探索更高效的解耦机制

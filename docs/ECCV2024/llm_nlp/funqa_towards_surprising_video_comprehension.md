@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FunQA: Towards Surprising Video Comprehension
 description: >-
@@ -105,7 +105,7 @@ tags:
 4. 揭示了当前 VLM 在反常识推理方面的严重不足
 5. 数据质量控制严格：900+ 小时标注、多轮共识验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 视频来源多为 YouTube，可能存在文化偏见（以西方幽默为主）
 - 312K QA 对中大量由 GPT-3.5 扩展生成，质量控制难度大

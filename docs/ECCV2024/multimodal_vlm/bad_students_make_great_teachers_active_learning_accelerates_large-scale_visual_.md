@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bad Students Make Great Teachers: Active Learning Accelerates Large-Scale Visual Understanding
 description: >-
@@ -129,7 +129,7 @@ tags:
 - **Pareto前沿的发现**：揭示了评分计算开销与训练迭代节省之间的最优权衡曲面
 - **与数据筛选方法互补**：ActiveCLIP与数据清洗（DataComp）和新训练目标（SigLIP）均互补，叠加后达到新SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅实验了50%过滤比例，更激进的过滤可能带来更大收益但也更高风险
 - 仅验证了图像分类和多模态对比学习两个任务，未扩展到语言模型、视频、生成式建模

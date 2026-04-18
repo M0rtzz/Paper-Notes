@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WavRAG: Audio-Integrated Retrieval Augmented Generation for Spoken Dialogue Models
 description: >-
@@ -104,7 +104,7 @@ WavRAG 包含四个步骤：(1) 双模态编码器为音频和文本查询创建
 - **音频知识库的新能力**：能检索和利用文本无法表达的音频信息（环境音、音乐等），拓展了 RAG 的边界
 - **CoT 处理信息过载**：当检索文档增多时性能可能下降，CoT 的结构化推理有效缓解了这一问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅关注语义层面的 RAG 增强，未涉及语音韵律、情感语调等声学层面的 RAG 增强
 - 音频编码器参数完全冻结，端到端微调可能进一步提升性能

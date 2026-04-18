@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Counterfactual Explainable AI (XAI) Method for Deep Learning-Based Multivariate Time Series Classification
 description: >-
@@ -120,7 +120,7 @@ CONFETTI 的优化是一个三目标问题（非深度学习损失）：
 - **二分搜索策略**在时间窗口长度上的应用非常巧妙，避免了穷举搜索
 - α 和 θ 两个参数为不同应用场景提供了灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 CAM 提取，仅适用于包含全局平均池化的模型架构（如 FCN、ResNet），不支持任意模型
 - 无 CAM 时退化为模型无关模式，但总体框架设计优雅地处理了这一情况

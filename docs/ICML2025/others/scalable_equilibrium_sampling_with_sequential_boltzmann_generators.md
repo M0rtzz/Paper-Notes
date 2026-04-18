@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Equilibrium Sampling with Sequential Boltzmann Generators
 description: >-
@@ -83,7 +83,7 @@ Proposition 1证明质心调整后ESS严格提升。
 4. 质心调整有严格理论证明(Proposition 1)。
 5. 代码开源。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 六肽(66原子)是极限，真实蛋白(数千原子)仍遥远。
 2. 退火计算成本远高于SNIS。

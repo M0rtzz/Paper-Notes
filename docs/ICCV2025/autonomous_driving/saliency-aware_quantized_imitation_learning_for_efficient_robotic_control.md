@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Saliency-Aware Quantized Imitation Learning for Efficient Robotic Control
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}^{\text{QRD}}(\theta) = \alpha_t \cdot \mathbb{E}_{\tau_i \sim \mat
 - **显著性评分的巧妙设计**：利用视觉扰动的动作敏感性来自动发现关键状态，无需人工标注或环境交互
 - **实际部署价值高**：在 Jetson AGX Orin 等真实边缘设备上实现 2.5× 加速和能耗降低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SIS 预计算需要全精度模型的前向推理，增加离线准备成本
 - 目前 top-20% 的阈值选择较为简单，是否存在更优的自适应阈值策略值得探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Grasp Any Region: Towards Precise, Contextual Pixel Understanding for Multimodal LLMs
 description: >-
@@ -127,7 +127,7 @@ GAR 基于标准 MLLM 架构（ViT + LLM），新增两个关键组件：
 4. **GAR-Bench 的评估维度丰富**：非实体识别、干扰 prompt 下的关系推理等场景设计新颖
 5. **零样本视频迁移**：仅用图像训练即可超越视频专用模型，证明表示能力的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **时序理解能力弱**：仅用图像训练导致在视频时序描述（TD）和未来预测任务上得分偏低
 2. **依赖外部 mask**：需要先有分割结果才能使用，未端到端集成分割能力
 3. **训练数据依赖 LLM 生成**：Round 2 数据大量使用 Qwen2.5-72B 生成，可能引入 LLM 的偏差

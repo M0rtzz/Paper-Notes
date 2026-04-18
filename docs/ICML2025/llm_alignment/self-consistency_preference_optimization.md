@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Consistency Preference Optimization
 description: >-
@@ -145,7 +145,7 @@ $$\mathcal{L}_{\text{ScPO}}(y^+, y^- | x) = \underbrace{-w(x) \log \sigma\left(\
 - **可扩展性强**：不依赖金标签意味着可以用模型自生成的问题无限扩展训练数据，突破了现有训练集的限制
 - **与推理时SC互补**：训练阶段用ScPO、推理阶段用SC可以叠加收益，但SC边际收益随训练迭代递减（因为模型已经更一致了）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖可解析的最终答案**：当前方法要求能从回答中提取离散的最终答案来计算一致性，对开放式任务（摘要、翻译等）不适用，作者建议未来用universal self-consistency扩展
 2. **基础模型能力限制**：如果种子模型在某任务上完全无法产生一致回答，ScPO就无法bootstrap——MATH的数据量远小于GSM8K就是这个原因

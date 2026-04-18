@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计 1：层间不一致性的根因分析
 
-- **做什么**：系统分析 2D 扩散先验做 3D 重建时层间不连续的根本原因。
+- **功能**：系统分析 2D 扩散先验做 3D 重建时层间不连续的根本原因。
 - **核心思路**：DDIM 采样器的 re-noising 步可分解为确定性分量和随机分量：
 
 $$x_{t-1} = \sqrt{\bar{\alpha}_{t-1}}\hat{x}_{0|t} + \underbrace{\sqrt{1-\bar{\alpha}_{t-1}-\eta^2\tilde{\beta}_t^2}\epsilon_{\theta^*}^{(t)}(x_t)}_{\text{确定性噪声}} + \underbrace{\eta\tilde{\beta}_t\epsilon}_{\text{随机噪声}}$$
@@ -58,7 +58,7 @@ $$x_{t-1} = \sqrt{\bar{\alpha}_{t-1}}\hat{x}_{0|t} + \underbrace{\sqrt{1-\bar{\a
 
 ### 关键设计 2：基于 Slerp 的层间相关噪声生成
 
-- **做什么**：用球面线性插值（Spherical Linear Interpolation, Slerp）替代独立噪声采样，生成层间平滑相关的噪声体。
+- **功能**：用球面线性插值（Spherical Linear Interpolation, Slerp）替代独立噪声采样，生成层间平滑相关的噪声体。
 - **核心思路**：对 $S$ 层的 3D 体，先采样两个锚点噪声向量 $\mathbf{z}_1, \mathbf{z}_S \sim \mathcal{N}(0, \mathbf{I})$，然后在高维超球面上沿测地线插值生成中间层的噪声：
 
 $$\epsilon_i^{\text{ISCS}} = \text{slerp}(\mathbf{z}_1, \mathbf{z}_S; \alpha_i) = \frac{\sin((1-\alpha_i)\Omega)}{\sin(\Omega)}\mathbf{z}_1 + \frac{\sin(\alpha_i\Omega)}{\sin(\Omega)}\mathbf{z}_S$$
@@ -69,13 +69,13 @@ $$\epsilon_i^{\text{ISCS}} = \text{slerp}(\mathbf{z}_1, \mathbf{z}_S; \alpha_i) 
 
 ### 关键设计 3：为何 Slerp 优于 BCS（全同噪声）
 
-- **做什么**：设计具有"近处强关联、远处弱关联"特性的噪声结构，替代 BCS 的全同噪声方案。
+- **功能**：设计具有"近处强关联、远处弱关联"特性的噪声结构，替代 BCS 的全同噪声方案。
 - **核心思路**：BCS 对所有层施加完全相同的噪声，这在视频修复（<16帧、帧间变化小）中可行，但在医学体数据（>300层、层间解剖结构显著变异）中过于刚性——抑制解剖变化，导致"复制伪影"（特征在解剖不同的层间不当复制）。ISCS 的 Slerp 噪声天然满足理想特性：(i) 相邻层噪声高度相关→局部一致性，(ii) 距离增大时相关性衰减→允许全局结构变化。
 - **设计动机**：医学体数据的本质特征是"局部连续但全局变化"，噪声的相关结构应当与此匹配，而非一刀切地全同或全独立。
 
 ### 关键设计 4：即插即用的集成方式
 
-- **做什么**：ISCS 噪声体直接替换任意扩散采样器 re-noising 步中的独立噪声。
+- **功能**：ISCS 噪声体直接替换任意扩散采样器 re-noising 步中的独立噪声。
 - **核心思路**：修改后的更新规则为：
 
 $$x_{t-1} = \sqrt{\bar{\alpha}_{t-1}}\hat{x}_{0|t} + \sqrt{1-\bar{\alpha}_{t-1}-\sigma_t^2}\cdot\epsilon_\theta(x_t) + \sigma_t \cdot \epsilon^{\text{ISCS}}$$

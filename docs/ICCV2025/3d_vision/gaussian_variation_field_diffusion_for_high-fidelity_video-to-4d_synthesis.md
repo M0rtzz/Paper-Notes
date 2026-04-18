@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaussian Variation Field Diffusion for High-fidelity Video-to-4D Synthesis
 description: >-
@@ -139,7 +139,7 @@ tags:
 - **运动感知编码设计精妙**：mesh-guided插值架桥了mesh运动和高斯运动，运动感知query大幅提升编码质量
 - **合成到真实的泛化**：仅在合成数据训练却能处理in-the-wild视频，证明了学到的运动先验的泛化性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据仅34K动画物体，数据规模受限于高质量动画资源的稀缺
 - 推理需要先通过预训练3D模型生成canonical GS，依赖第三方模型的质量

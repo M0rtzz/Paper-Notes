@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ArtFormer: Controllable Generation of Diverse 3D Articulated Objects
 description: >-
@@ -79,7 +79,7 @@ $L_{trans} = \beta_o L_o + \beta_P L_P + L_a$（终止分类 + 编码簿KL + 属
 - Gumbel-Softmax在不增计算下扩展多样性空间(4N→N⁴)
 - 树位置编码是关键创新，消融清晰证明
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅6类物体训练，部分类数量少
 - 定量条件控制（旋转角度等）困难
 - SDF多类训练泛化性下降

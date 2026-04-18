@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] T2Agent: A Tool-augmented Multimodal Misinformation Detection Agent with Monte Carlo Tree Search
 description: >-
@@ -190,7 +190,7 @@ T2Agent 的计算成本更高，但在更便宜的模型上能超越更贵模型
 3. **训练无关优势**：无需收集标注数据和训练检测模型，可直接适应新出现的伪造类型
 4. **工具集的标准化设计**：工具卡片抽象使得新工具的集成工作量最小化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销显著**：树搜索机制使得成本比基线高 3-8 倍
 2. **依赖商业 LLM API**：需要 GPT-4o 等模型的 API 访问，成本不透明

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ParaRevSNN: A Parallel Reversible Spiking Neural Network for Efficient Training and Inference
 description: >-
@@ -155,7 +155,7 @@ ParaRevSNN-ResNet采用四阶段结构：
 3. **融合可逆块的工程优化**：通过结构化融合相邻块中的共享输入计算，进一步提升硬件利用率
 4. **深度网络的规模效应**：加速优势随网络深度增加而增强，对未来深层SNN的发展具有重要意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **精度轻微下降**：深层模型中有0.12%~0.67%的精度损失，可能源于并行分支间空间信息交互减少
 2. **浅层网络收益有限**：21层网络的加速不明显，主要优势体现在深层

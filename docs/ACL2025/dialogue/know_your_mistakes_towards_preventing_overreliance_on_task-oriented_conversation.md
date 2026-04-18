@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Know Your Mistakes: Towards Preventing Overreliance on Task-Oriented Conversational AI Through Accountability Modeling
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **从人机协作角度**思考 AI 系统设计：不是简单提升准确率，而是让系统"知道自己的错误"，通过摩擦轮次引导用户批判性思考
 - 自校正算法的设计实用且高效：假阳性过滤零成本，假阴性修正平均仅影响 7.5% 的轮次
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅关注 DST 任务，未扩展到完整的端到端对话系统（如对话策略和回复生成）
 2. 自校正中假阴性修正可能引入新的假阳性，存在级联误差风险

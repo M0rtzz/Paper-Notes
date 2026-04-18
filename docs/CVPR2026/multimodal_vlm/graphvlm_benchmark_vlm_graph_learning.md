@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraphVLM: Benchmarking Vision Language Models for Multimodal Graph Learning
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：VLM天然具备跨模态对齐能力，但这种能力如何与图的关系结构结合？如何最有效地利用VLM进行多模态图学习？
 
-**本文要解决什么？** 建立一个系统性benchmark，统一评估VLM在多模态图学习中的不同角色，找到最有效的使用范式。
+**本文目标** 建立一个系统性benchmark，统一评估VLM在多模态图学习中的不同角色，找到最有效的使用范式。
 
 **切入角度**：将VLM在MMGL中的作用分为三种互补角色，分别在XZ轴探索。
 6ução idea一句话**：VLM-as-Predictor（直接微调VLM作为图学习backbone并注入结构信号）是多模态图学习最有效的范式。
@@ -102,7 +102,7 @@ tags:
 - **潜空间融合vs Prompt融合的系统对比**为多模态图学习的方法设计提供了明确方向：结构信息应该在特征层面而非文本层面注入。
 - 统一6个数据集+三大范式+多种子方法的全面对比，是这个方向最完整的benchmark。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅关注节点分类任务，未涉及链接预测、图分类等其他图学习任务
 - 数据集只包含Amazon电商和Reddit，领域覆盖有限（缺少知识图谱、分子图等）
 - VLM-as-Predictor的LoRA微调需要labeled data，并非真正的零样本方法

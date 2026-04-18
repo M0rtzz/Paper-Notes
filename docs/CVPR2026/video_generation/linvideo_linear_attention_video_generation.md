@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LinVideo: A Post-Training Framework towards O(n) Attention in Efficient Video Generation
 description: >-
@@ -75,7 +75,7 @@ CogVideoX-2B：同样无损加速1.40×（41.35→29.64s），VBench持平。
 - 15.9-20.9×的极端加速（4步蒸馏后）展示了线性注意力+蒸馏的组合威力
 - 在CogVideoX上也验证，框架不依赖特定架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前未使用专用CUDA kernel——线性注意力的实际加速受限于generic PyTorch实现
 - 与SLA（层内混合注意力）正交——二者可组合获得更大加速
 - target的选择仍需一定试错——虽然在范围内不敏感但极端值有风险

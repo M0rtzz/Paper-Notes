@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Intrinsic Lorentz Neural Network
 description: >-
@@ -93,7 +93,7 @@ Airport 96.03%, Cora 85.68%, PubMed 82.52%——均为 SOTA。
 - **$K \to 0$ 退化**性质优雅——双曲网络在平坦极限不应比欧几里得差
 - 基因组学大幅提升暗示双曲表示对生物序列特别有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅基于 ResNet-18，未验证 ViT 等现代架构
 - CIFAR 上绝对提升很小
 - 固定曲率 $K=-1$，未探索可学习曲率

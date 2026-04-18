@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RefreshKV: Updating Small KV Cache During Long-form Generation
 description: >-
@@ -113,7 +113,7 @@ RefreshKV维护两个KV缓存：
 - 消融实验非常精炼：w/o refresh vs w/o full attention 两组实验干净地分离了两个因素的贡献
 - 自适应调度策略基于query相似度而非固定步长，允许不同层不同行为，设计上更灵活
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 不减少内存占用（仍需存储全KV缓存），对显存瓶颈的场景帮助有限
 - 仍存在性能-速度权衡，无法完全恢复Vanilla性能
 - 相似度阈值 $s$ 是全局设定的，未探索逐层设定

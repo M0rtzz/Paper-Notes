@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] I²-World: Intra-Inter Tokenization for Efficient Dynamic 4D Scene Forecasting
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{gen} = \sum_{k=1}^K w_k \mathcal{L}_{mse}(\hat{B}_{t+k}', \hat{B}
 - **极致高效**：2.9 GB 显存 + 37 FPS，使基于 occupancy 的 world model 首次具备实时部署潜力
 - **可控生成**：通过变换矩阵直接操控场景演化（米/弧度精度），支持 corner case 模拟
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 变换矩阵在训练集未覆盖的模式（如倒车）上会产生不真实的生成结果
 - 连续 token（非离散 VQ token）是否限制了与 LLM 等离散生成范式的集成

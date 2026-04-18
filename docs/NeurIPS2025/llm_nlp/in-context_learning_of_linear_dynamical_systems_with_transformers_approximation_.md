@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In-Context Learning of Linear Dynamical Systems with Transformers: Approximation Bounds and Depth-Separation
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：IID 设定下单层 Transformer 就够了，非 IID 下是否也是如此？动力系统中 token 之间的时间相关性如何影响 ICL？
 
-**本文要解决什么？** (1) 量化深层 Transformer 的 ICL 近似能力上界；(2) 证明单层 Transformer 的近似下界；(3) 揭示 IID vs 非 IID 的本质区别。
+**本文目标** (1) 量化深层 Transformer 的 ICL 近似能力上界；(2) 证明单层 Transformer 的近似下界；(3) 揭示 IID vs 非 IID 的本质区别。
 
 **切入角度**：将 Transformer 构造为近似实现 Richardson 迭代算法来求解最小二乘，再利用最小二乘估计器的统计性质得到测试误差界。
 
-**核心idea一句话**：非 IID 数据下 ICL 需要深度——$O(\log T)$ 层 Transformer 可以通过展开 Richardson 迭代近似最小二乘估计器，而单层做不到。
+**核心 idea**：非 IID 数据下 ICL 需要深度——$O(\log T)$ 层 Transformer 可以通过展开 Richardson 迭代近似最小二乘估计器，而单层做不到。
 
 ## 方法详解
 
@@ -93,7 +93,7 @@ tags:
 - **"mesa-optimizer 是什么算法？"的新答案**：对于动力系统，对应的算法是 Richardson 迭代（而非梯度下降），因为需要求解依赖于数据的线性方程组
 - **Uniform-in-task loss 是更合理的度量**：这确保了 ICL 对任何下游任务都有保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅分析线性 Transformer 和线性动力系统**：softmax attention 和非线性系统未涉及
 - **单层下界有参数限制**：固定了 MLP 权重为 identity，完全自由参数化的单层下界是开放问题
 - **未分析训练过程**：仅是近似论（存在性），未证明梯度下降能找到这些好的参数

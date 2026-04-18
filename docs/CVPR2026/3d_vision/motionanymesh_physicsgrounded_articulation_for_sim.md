@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins
 description: >-
@@ -76,7 +76,7 @@ MotionAnymesh包含三个集成阶段：(1) 运动学感知零件分割——提
 - 87%的物理可执行率几乎是最强基线（46%）的两倍，证明了物理约束的重要性
 - Real-to-Sim-to-Real流水线验证了实际部署价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖P3-SAM的初始过分割质量，对极端复杂拓扑可能失效
 - SP4D需要单张渲染图作为输入，对某些视角不友好的物体可能生成不准确的运动学掩码
 - GPT-4o作为核心VLM，推理成本较高，推广到大规模资产库时效率受限

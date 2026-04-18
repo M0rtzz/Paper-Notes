@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EnerVerse: Envisioning Embodied Future Space for Robotics Manipulation
 description: >-
@@ -111,7 +111,7 @@ $$\min_{\theta} \mathbb{E}_{t, \mathbf{z}, \boldsymbol{\epsilon}} \|\boldsymbol{
 - 4DGS 数据飞轮优雅地解决了 Sim2Real 差距问题
 - 统一框架：同一 backbone 同时支持视频生成和动作预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 视频生成不可避免产生 artifact，高动态机器人场景尤为明显
 - 渲染视角目前靠启发式设定，未集成 Next-Best-View 方法

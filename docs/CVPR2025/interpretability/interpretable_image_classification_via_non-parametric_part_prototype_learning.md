@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interpretable Image Classification via Non-parametric Part Prototype Learning
 description: >-
@@ -95,7 +95,7 @@ Prototypical Part Networks（ProtoPNet）通过学习代表物体部件的原型
 - **DINO特征的开箱即用能力**：自监督ViT的patch token已经编码了丰富的部件语义，用于原型学习是自然的选择
 - **两个新指标填补评估空白**：Distinctiveness Score量化原型间重叠，Comprehensiveness Score量化前景覆盖率，使可解释性可量化比较
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖前景提取模块的质量——对背景复杂的场景可能不适用
 - 均分约束假设各部件的patch数量大致相等，对不均匀部件分布可能不optimal

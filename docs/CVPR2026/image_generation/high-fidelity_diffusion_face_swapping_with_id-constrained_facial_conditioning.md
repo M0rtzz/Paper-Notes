@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] High-Fidelity Diffusion Face Swapping with ID-Constrained Facial Conditioning
 description: >-
@@ -117,7 +117,7 @@ FID 大幅领先（3.61 vs 次优 4.26），身份检索准确率远超所有方
 - **零初始化 + 弱化身份因子**的 Stage 2 设计细节精妙，有效防止灾难性遗忘和条件失衡
 - **SimSwap 编码器的意外收益**：不仅编码表情/姿态，还隐式捕获光照条件，是值得注意的副产品
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于 SD 1.5（$512 \times 512$），受限于基础模型分辨率，未使用更现代的 DiT/FLUX 架构
 - Pose 距离（3.69）不如 DiffSwap（2.43），说明身份约束一定程度上牺牲了姿态对齐

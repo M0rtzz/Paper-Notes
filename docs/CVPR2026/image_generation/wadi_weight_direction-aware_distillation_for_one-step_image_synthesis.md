@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WaDi: Weight Direction-aware Distillation for One-step Image Synthesis
 description: >-
@@ -107,7 +107,7 @@ WaDi 基于 VSD 框架：教师 $\epsilon_\psi$（冻结的多步扩散模型）
 - **旋转而非加法**：LoRA 通过加法 $W + \Delta W$ 更新权重（同时改变范数和方向），LoRaD 通过旋转 $R_{\Theta}W$ 只改变方向——更精准、更高效
 - **参数效率**：仅 ~10% 可训练参数即超越全参数微调，在资源受限场景下极有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LoRaD 的 2D 子空间配对是固定的（奇偶行配对），可能不是最优分组策略
 - 虽然 FID 好于 DMD2，但 CLIP 分数差异不大，说明方向旋转主要提升了图像保真度而非语义对齐
 - 在 PixArt-α（DiT 架构）上的 FID 差距（18.99）仍较大，可能需要针对 DiT 架构的特殊设计

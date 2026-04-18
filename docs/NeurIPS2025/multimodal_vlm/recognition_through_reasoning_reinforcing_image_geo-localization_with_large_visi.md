@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recognition through Reasoning: Reinforcing Image Geo-localization with Large Vision-Language Models
 description: >-
@@ -100,7 +100,7 @@ $$\mathcal{L}_{\text{GRPO}}(\theta) = \mathbb{E}[\min(\rho A, \text{clip}(\rho, 
 - **方法论通用性强**：GRPO + 多维任务特定奖励的框架可直接推广到VQA、多模态CoT生成等其他推理驱动的LVLM任务
 - **可解释性优势**：GLOBE生成的推理轨迹不仅提升定位准确率，还让决策过程透明可审查
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 纯推理方法在精细坐标级定位上效果衰减——建筑风格、植被等高层语义线索无法区分相近城市
 - 未来可探索推理缩小候选区域 + 局部特征检索精确定位的混合方案
 - 与闭源系统（GPT-4.1、Doubao1.5-VL）仍有差距，受限于训练数据规模

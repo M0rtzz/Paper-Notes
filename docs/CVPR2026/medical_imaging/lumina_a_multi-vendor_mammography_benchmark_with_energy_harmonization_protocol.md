@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LUMINA: A Multi-Vendor Mammography Benchmark with Energy Harmonization Protocol
 description: >-
@@ -89,7 +89,7 @@ LUMINA 的工作流分为三步：(1) 数据收集与整理——来自 6 个厂
 - **数据集的系统性**: 完整标注（病理+BI-RADS+密度）+ 厂商/能量元数据的组合在现有数据集中独一无二
 - **临床洞察**: EfficientNet-B0 在诊断任务中以最少参数胜出，Swin-T 因全局注意力在密度预测中更适合——揭示了任务类型与模型选择的关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模仍偏小（468 例），与大规模数据集（EMBED 50 万张）相比有差距
 - 仅来自土耳其单一机构，患者人群多样性有限

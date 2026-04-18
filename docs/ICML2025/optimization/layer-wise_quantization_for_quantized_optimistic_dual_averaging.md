@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Layer-wise Quantization for Quantized Optimistic Dual Averaging
 description: >-
@@ -91,7 +91,7 @@ X_{t+1} = X_1 + η_{t+1} Y_{t+1}            [最终更新]
 3. 去除"几乎处处有界"假设使理论更适用于实际GAN训练场景。
 4. 框架跨任务通用：GAN和LM训练均受益。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论仅涵盖单调VI，非单调/Minty VI需新方法。
 2. 层类型数M需人工指定，无自动化方案。

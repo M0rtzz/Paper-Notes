@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Be Yourself: Bounded Attention for Multi-Subject Text-to-Image Generation
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}_i = 1 - \frac{\sum_{\mathbf{x} \in b_i, \mathbf{c} \in C_i} \hat{\
 3. **全时步约束**：不同于仅在初始步骤引导的方法，Bounded Denoising 可贯穿整个去噪过程控制细节
 4. **自适应掩码**：从粗粒度边界框到细粒度分割掩码的过渡设计巧妙
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要用户手动提供边界框布局，缺乏自动布局推断
 2. 超参数（$\alpha$、引导时间段、掩码更新频率）可能需要针对不同场景调优

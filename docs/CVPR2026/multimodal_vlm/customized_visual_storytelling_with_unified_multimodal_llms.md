@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Customized Visual Storytelling with Unified Multimodal LLMs
 description: >-
@@ -50,25 +50,25 @@ VstoryGen 三阶段流水线：
 
 1. **Text Prompt Consolidation (TPC)**：
 
-    - **做什么**：将同一故事的所有 prompt $P = \{p_1, \ldots, p_n\}$ 在同一 batch 中联合编码，通过 LLM 自回归生成 hidden states $H = \{h_1, \ldots, h_n\}$。
+    - **功能**：将同一故事的所有 prompt $P = \{p_1, \ldots, p_n\}$ 在同一 batch 中联合编码，通过 LLM 自回归生成 hidden states $H = \{h_1, \ldots, h_n\}$。
     - **核心思路**：利用 LLM 的上下文一致性——在同一上下文窗口中编码的不同事件描述，其 hidden states 自然保持语义和身份一致性。
     - **设计动机**：相比独立编码每个 prompt，联合编码使不同帧的文本条件在嵌入空间中保持一致，从而在生成时保持角色和场景连贯。
 
 2. **Visual Reference Memory Bank and Retrieval**：
 
-    - **做什么**：存储初始参考图（角色肖像、背景场景）和已生成的关键帧，以结构化 key-value 字典组织。每个时间步 $t$ 根据脚本中的角色/背景提及作为 query 精确检索对应视觉参考。
+    - **功能**：存储初始参考图（角色肖像、背景场景）和已生成的关键帧，以结构化 key-value 字典组织。每个时间步 $t$ 根据脚本中的角色/背景提及作为 query 精确检索对应视觉参考。
     - **核心思路**：$z_t = \text{VAE}[\mathcal{R}_t, \{\text{Scale}_\alpha(I_{t-i})\}_{i=1}^\mu]$
     - **设计动机**：不用 embedding 检索（可能模糊），而用结构化脚本标注确保精确可解释的参考选择。检索最近 $\mu$ 帧提供时间连贯性。$\alpha$ 参数平衡一致性和多样性。
 
 3. **Shot-type Prompt Tuning**：
 
-    - **做什么**：在 Condensed Movie Dataset (CMD) 上学习一组镜头类型嵌入 $E_{\text{shot}}(k_t) \in \mathbb{R}^{d \times N}$，作为 hidden state 的前缀：$h_t' = [E_{\text{shot}}(k_t); h_t]$
+    - **功能**：在 Condensed Movie Dataset (CMD) 上学习一组镜头类型嵌入 $E_{\text{shot}}(k_t) \in \mathbb{R}^{d \times N}$，作为 hidden state 的前缀：$h_t' = [E_{\text{shot}}(k_t); h_t]$
     - **核心思路**：参数高效的 prompt tuning，仅学习镜头相关的嵌入，不修改基础模型
     - **设计动机**：通用 UMLLM 不具备电影镜头语言的构图先验，通过少量可学习参数（4000 迭代）注入镜头类型知识，产生远景/近景/特写等多样化视角。
 
 4. **Keyframe-wise Autoregressive Generation**：
 
-    - **做什么**：将标准 UMLLM 的单次图像编辑扩展为关键帧级自回归生成：$I_t = \text{DiT}(h_t, z_t)$
+    - **功能**：将标准 UMLLM 的单次图像编辑扩展为关键帧级自回归生成：$I_t = \text{DiT}(h_t, z_t)$
     - **设计动机**：避免多轮对话（效率低+误差累积），通过 VAE 编码参考图直接注入 DiT 解码器保留低层视觉信息。
 
 ### 损失函数 / 训练策略
@@ -125,7 +125,7 @@ $\alpha$ 参数消融：
 - **新 Benchmark 贡献**：MSB 和 M2SB 填补了多模态故事定制的评估空白
 - **基于 UMLLM**：利用了统一多模态 LLM 的理解+生成能力，代表了故事生成的新范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 GPT-4o 做脚本生成（成本和延迟）
 - TPC 和 Retrieval 带来的一致性提升幅度较小（0.854→0.858），设计的边际效益有限
 - 多角色场景（M2SB）上优势不如单角色场景明显

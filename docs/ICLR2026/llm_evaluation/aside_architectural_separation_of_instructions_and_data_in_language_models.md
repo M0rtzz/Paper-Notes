@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ASIDE: Architectural Separation of Instructions and Data in Language Models
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：在传统 LLM 中，同一个 token 无论出现在指令还是数据中，其 embedding 完全相同——模型必须从上下文推断 token 的功能角色，这在深层网络中极难可靠实现。
 
-**本文要解决什么？** 如何在不增加参数、不重新预训练的前提下，让模型从第一层就能区分指令和数据 token？
+**本文目标** 如何在不增加参数、不重新预训练的前提下，让模型从第一层就能区分指令和数据 token？
 
 **切入角度**：token embedding 通常具有低秩结构，指令和数据可以共享同一个高维空间但驻留在不同的线性子空间中。正交旋转可以在不改变 embedding 范数和内积结构的情况下创建这种分离。
 
-**核心idea一句话**：对数据 token 的 embedding 施加固定的 $\frac{\pi}{2}$ 正交旋转，让模型从第一层起就能通过 embedding 区分指令和数据。
+**核心 idea**：对数据 token 的 embedding 施加固定的 $\frac{\pi}{2}$ 正交旋转，让模型从第一层起就能通过 embedding 区分指令和数据。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ ASIDE 的 utility（AlpacaEval、SEP Utility）与 Vanilla 基本持平。
 - **零成本安全收益**：不需要对抗训练、不需要安全数据集、不增加参数，仅靠一个固定旋转 + 标准 SFT 就获得显著的安全提升，这一结论非常有力。
 - **旋转 vs 偏移的设计洞察**：ISE 用可学习偏移在 embedding 空间创建区分，但偏移随层加深会被模型"消化"；正交旋转在几何上更持久，因为它创造了正交子空间而非仅有偏移的同一子空间。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要部署时知道每个 token 的功能角色（指令 vs 数据），限制了适用场景——通用聊天助手中用户输入既是"指令"也可能包含"数据"，角色边界模糊。
 - 未在安全微调的 Instruct 模型上实验（有意为之，但实际部署会用 Instruct 模型），ASIDE + safety tuning 的叠加效果未知。
 - StruQ-OOD 攻击上改善有限，说明 OOD 注入仍是挑战。

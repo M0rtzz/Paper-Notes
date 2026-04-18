@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DisTime: Distribution-based Time Representation for Video Large Language Models
 description: >-
@@ -120,7 +120,7 @@ DisTime由五个核心组件构成：视觉编码器+投影器、文本编码器
 - **分布 vs 点估计**：事件边界天然模糊，用分布建模比点回归更符合物理意义，这一洞察值得跨领域借鉴
 - **数据标注范式创新**：LLM提取事件 + 专用模型定位 + 相似度评分集成，每一步用最擅长的工具，比端到端方案更可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - InternVL2.5仅采样16帧，对ANet-Caption等需要细粒度时间理解的任务帧数可能不足
 - 时间token的自回归生成增加了推理延迟

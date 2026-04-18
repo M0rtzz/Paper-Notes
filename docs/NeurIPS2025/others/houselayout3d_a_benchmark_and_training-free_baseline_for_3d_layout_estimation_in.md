@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild
 description: >-
@@ -134,7 +134,7 @@ MultiFloor3D 在所有指标上大幅超越基线方法，且不需要使用 gro
 - **Scene Graph 表示**自然支持导航等下游应用（论文展示了结合 LLM 的室内导航 demo）
 - 三个几何损失函数的设计精巧：$\mathcal{L}_{\text{prox}}$ 保真、$\mathcal{L}_{\text{empty}}$ 避障、$\mathcal{L}_{\text{connect}}$ 连通、$\mathcal{L}_{\text{simple}}$ 简化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **运行时间长**：每个 HouseLayout3D 场景需 1-2 小时（NVIDIA RTX 4090），而 SceneScript/RoomFormer 只需 1-2 分钟
 2. **室外元素干扰**：通过大窗户感知到的室外元素可能引入伪影

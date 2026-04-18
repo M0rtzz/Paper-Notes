@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Small Batch Size Training for Language Models: When Vanilla SGD Works, and Why Gradient Accumulation Is Wasteful
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **实际建议**：使用最小的、能最大化硬件throughput（tokens/秒）的batch size，而非尽可能大的batch size
 - 该工作直接挑战了"大批量训练更好"和"SGD无法训练Transformer"的传统认知
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 小批量（batch=1或2）会导致MFU下降30-70%（计算利用率降低），实际应用中需要在稳定性和计算效率间平衡
 - 学习率的缩放规则不如β₂清晰，学习率在不同batch size间的最优缩放比例没有找到简洁公式
 - 未探索与batch size schedule的交互（训练中动态调整batch size）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Unknowns: Towards Effective and Efficient Open-Set Active Learning
 description: >-
@@ -122,7 +122,7 @@ E2OAL 的等效训练时间与 Random、MSP、Coreset、Uncertainty 等轻量基
 - **自适应无超参**：两阶段查询策略通过观测反馈动态调整纯度阈值，无需额外超参数调优
 - **全面实验**：覆盖三个数据集、多个 mismatch ratio、多种消融，代码开源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在图像分类上验证，未扩展到检测/分割等更复杂的视觉任务
 - 聚类依赖冻结的预训练特征（CLIP/MoCo），在预训练分布与目标域差异大时可能失效

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Curse of Depth in Large Language Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：Pre-LN 虽然解决了训练稳定性问题（vs Post-LN），但引入了新问题——残差连接使输出方差随深度指数增长，LayerNorm 的归一化效果被稀释。
 
-**本文要解决什么**：① 为什么 Pre-LN 的深层无效？② 数学上如何刻画？③ 如何用最简方案修复？
+**本文目标**：① 为什么 Pre-LN 的深层无效？② 数学上如何刻画？③ 如何用最简方案修复？
 
 **切入角度**：从方差传播和梯度流的角度分析，发现方差 $\sigma_{x_L}^2$ 从 $\Theta(L)$ 到 $\Theta(\exp(L))$ 指数增长，导致梯度范数 $\|\partial y_L / \partial x_1\| \leq M$（常数界），深层沦为恒等映射。
 
-**核心 idea 一句话**：在 LayerNorm 后乘以按层递减的因子 $1/\sqrt{\ell}$，将方差增长从指数压为多项式，让深层重新有效学习。
+**核心 idea**：在 LayerNorm 后乘以按层递减的因子 $1/\sqrt{\ell}$，将方差增长从指数压为多项式，让深层重新有效学习。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ DeepNorm/Mix-LN 在大规模时发散，LNS 始终稳定。
 - **实用性**：所有使用 Pre-LN 的 LLM（几乎所有主流模型）都可直接受益
 - **Jacobian 可视化**：深层的对角占优现象直观揭示了恒等映射行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $1/\sqrt{\ell}$ 的选择缺乏严格最优性证明，仅为启发式+实验验证
 - 与 Scaled Initialization 的冲突未深入分析
 - ViT 中 LNS 的最优位置不同（Attn/MLP 后 vs LayerNorm 后），通用性受限

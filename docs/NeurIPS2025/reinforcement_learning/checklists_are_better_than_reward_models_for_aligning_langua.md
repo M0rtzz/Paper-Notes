@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Checklists Are Better Than Reward Models For Aligning Language Models
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：RM 和 AI judge 都用一个单一标量/固定维度评估所有指令的所有方面，但用户指令的需求维度是高度动态和多样的。例如 "翻译成西班牙语" 和 "写一个包含3个逗号的论点" 需要完全不同的评估标准。
 
-**本文要解决什么**：设计一种自动、灵活、直观且通用的回复评分方式，为每条指令生成专属的多维度评估标准（checklist），替代 reward model 做 RL 训练。
+**本文目标**：设计一种自动、灵活、直观且通用的回复评分方式，为每条指令生成专属的多维度评估标准（checklist），替代 reward model 做 RL 训练。
 
 **切入角度**：将复杂的回复质量评估分解为一系列简单的 yes/no 问题（checklist），每个问题要么由 AI judge 回答，要么由生成的验证代码自动检查。这利用了"多个简单判断的组合优于一个复杂判断"的原则。
 
-**核心idea一句话**：从指令动态生成 instruction-specific 的 checklist（通过 candidate-based 方法），逐项用 AI judge + 代码验证器评分，加权汇总后用 DPO 做偏好训练。
+**核心 idea**：从指令动态生成 instruction-specific 的 checklist（通过 candidate-based 方法），逐项用 AI judge + 代码验证器评分，加权汇总后用 DPO 做偏好训练。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ RLCF 是唯一在所有 5 个 benchmark 上都有正向提升的方法。RM-base
 - **Reward Model 的悖论**：在 RewardBench 上评估更好的 RM 在实际 RLHF 中效果更差，因为 RM 学到的"好回复"模式可能不匹配特定指令的需求。Checklist 绕过了这个问题——它不学习什么是"好"，而是直接检查具体条件
 - **代码验证器的选择性使用**：不是对所有 checklist 项都生成代码，而是只在模型有 100% 信心能精确检查时才生成，其余交给 AI judge。这种自适应组合是一个实用且优雅的设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 评分成本高：130K 指令的评分需要 4 天在 8×H100 上（72B 模型 25 次采样/项），但可通过减少到 5 次采样节省 55% 时间
 - 仅探索了 DPO（off-policy），未尝试 GRPO 等 on-policy 方法，后者可能利用 checklist 反馈效果更好
 - 依赖 72B 教师模型做 judge，是 strong-to-weak generalization

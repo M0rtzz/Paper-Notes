@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Network Sparsity Unlocks the Scaling Potential of Deep Reinforcement Learning
 description: >-
@@ -92,7 +92,7 @@ tags:
 - **统一解释**：参数效率、可塑性保持、梯度干扰减少三个视角统一解释了稀疏的好处
 - **实用性极强**：一行代码的修改就能生效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 固定稀疏结构可能不是最优的——动态稀疏化是否能进一步提升？
 - 极高稀疏率下性能可能下降，最优稀疏率依赖任务
 - 理论解释仍以经验分析为主，缺乏严格证明

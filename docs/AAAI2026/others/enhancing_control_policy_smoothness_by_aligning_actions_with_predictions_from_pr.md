@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Control Policy Smoothness by Aligning Actions with Predictions from Preceding States
 description: >-
@@ -193,7 +193,7 @@ ASAP 可以与架构方法叠加使用，进一步提升效果。
 3. **推理零开销**：作为损失惩罚方法，只在训练时增加计算，推理时与基线相同，适合部署。
 4. **模块化设计**：空间项和时间项可独立使用，也可与架构方法组合。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Hopper 环境中 re 略有下降**：可能是在需要快速动作变化的区域过度平滑了，需要自适应调节平滑强度。
 2. **假设要求**：转移函数关于噪声的 Lipschitz 连续性在大多数物理场景中成立，但在某些极端场景可能不满足。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TempSamp-R1: Effective Temporal Sampling with Reinforcement Fine-Tuning for Video LLMs
 description: >-
@@ -92,7 +92,7 @@ TempSamp-R1基于GRPO框架，对每个查询采样$G$个解（$G-1$个on-policy
 - Mixed CoT是一个简单但有效的设计——让同一模型自适应选择推理深度
 - 将RL fine-tuning从数学推理推广到视频时序理解，验证了R1范式的跨领域潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Off-policy依赖GT标注——推理时无GT可用，训练时的探索策略与推理时不一致
 - 主要在时序定位任务验证，对通用视频QA的效果未知
 - 非线性变换的超参（$\tau, \alpha_1, \alpha_2$）可能需要任务特定调整

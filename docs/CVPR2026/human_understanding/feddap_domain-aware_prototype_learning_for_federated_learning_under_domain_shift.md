@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedDAP: Domain-Aware Prototype Learning for Federated Learning under Domain Shift
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \lambda_1 \mathcal{L}_{DPA} + \lambda_2 \math
 - 双重对齐策略的设计哲学值得借鉴：域内对齐保持稳定性，跨域对比增强泛化性，两者相辅相成。
 - 余弦相似度加权融合比简单平均更好，但提升比较温和（~1%），说明域特定原型的构建本身比聚合方式更关键。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设每个客户端的域标签已知（需要域标识符 $d$），在隐式域偏移场景下需要额外的域发现机制
 - 域的数量 $D$ 需要预先设定，对于域边界模糊的真实场景可能不适用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] T-Rex-Omni: Integrating Negative Visual Prompt in Generic Object Detection
 description: >-
@@ -176,7 +176,7 @@ T-Rex-Omni（Swin-L）甚至在LVIS-val上超越了文本提示方法T-Rex2 +2.0
 4. **在长尾场景的突破性表现**：51.2 APr（LVIS-minival）远超之前的方法，说明负提示对稀有类别的区分尤为关键
 5. **视觉提示超越文本提示**：在LVIS-val上，纯视觉提示的T-Rex-Omni超越了文本提示方法，这是令人振奋的结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计数任务上略有退化**：在FSC147上MAE为13.76，低于T-Rex的8.72，说明负提示可能对密集小目标计数有干扰
 2. **负提示的自动化水平**：自动建议模式依赖简单的几何变换生成负提示，更智能的负样本挖掘策略值得探索

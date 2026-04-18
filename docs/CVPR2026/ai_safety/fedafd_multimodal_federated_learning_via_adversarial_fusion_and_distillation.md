@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedAFD: Multimodal Federated Learning via Adversarial Fusion and Distillation
 description: >-
@@ -126,7 +126,7 @@ Non-IID 设置。IID 设置下优势更大：CIFAR-100 上 FedAFD 61.04% vs FedE
 3. **双向优化**：不同于仅关注全局或本地的方法，FedAFD 同时提升两端性能
 4. **表示级蒸馏**：无需参数级一致性即可跨异构模型传递知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **公共数据依赖**：框架依赖一个公共多模态数据集 $\mathcal{P}$，在数据敏感场景中获取公共数据可能受限
 2. **判别器开销**：每个客户端需额外维护两个判别器，增加了计算和通信负担

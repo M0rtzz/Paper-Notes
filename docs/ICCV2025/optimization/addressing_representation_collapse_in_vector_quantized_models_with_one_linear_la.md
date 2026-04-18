@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Addressing Representation Collapse in Vector Quantized Models with One Linear Layer
 description: >-
@@ -97,7 +97,7 @@ SimVQ的核心修改极其简洁：在标准VQ的码本$\bm{C} \in \mathbb{R}^{K
 - 二维toy实验的可视化非常直观，清楚地展示了不同优化模式下码本的行为差异
 - 完全不依赖外部预训练模型，无域限制，真正的即插即用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VQ重建质量的提升不一定直接转化为下游生成模型的性能提升（作者在Discussion中诚实地讨论了这一点）
 - 理论分析基于码本从高斯分布采样的假设，实际中的分布可能有偏差

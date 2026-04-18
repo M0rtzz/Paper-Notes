@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Coherence Trap: MLLM-Crafted Narratives Exploit Manipulated Visual Contexts
 description: >-
@@ -91,7 +91,7 @@ $\mathcal{L} = \mathcal{L}_{APE} + \mathcal{L}_{DBM} + \mathcal{L}_{IMG} + \math
 - APE的"冻结编码器+仅训练artifact token"策略巧妙保留MLLM知识
 - 伦理考虑周全：不发布生成pipeline/prompt，仅限研究访问，图像加水印
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑人脸相关篡改（换脸/属性编辑），其他物体或场景级篡改未覆盖
 - 文本篡改仅用Qwen2-VL生成——虽然验证了跨MLLM泛化，但未覆盖最新的推理型模型
 - Florence-2作为backbone规模较小，更大backbone可能进一步提升

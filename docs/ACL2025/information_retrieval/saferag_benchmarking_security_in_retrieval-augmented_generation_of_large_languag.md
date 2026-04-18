@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SafeRAG: Benchmarking Security in Retrieval-Augmented Generation of Large Language Model
 description: >-
@@ -162,7 +162,7 @@ $$RA = \frac{\text{Recall}(gc) + (1 - \text{Recall}(ac))}{2}$$
 - **"更强≠更安全"的反直觉发现**：挑战了"升级 LLM 即可提升 RAG 安全"的简单假设，指出强指令跟随能力反而可能成为攻击入口
 - **评估框架可复用**：基于多选题 + 攻击关键词的评估方法简洁高效，与人类判断高度一致，可直接应用于新的 RAG 安全评估场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据集规模偏小**：仅 100 组基础问答对，统计显著性可能不足
 - **仅中文场景**：英文及其他语言泛化性未验证

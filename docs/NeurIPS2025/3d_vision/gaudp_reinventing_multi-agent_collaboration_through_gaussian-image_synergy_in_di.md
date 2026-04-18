@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GauDP: Reinventing Multi-Agent Collaboration through Gaussian-Image Synergy in Diffusion Policies
 description: >-
@@ -131,7 +131,7 @@ GauDP 的核心流程分为四步：
 - **自监督重建**：利用训练扩散策略的相同多视角数据进行 3DGS 微调，无需额外数据
 - **推理时无需位姿/深度**：部署阶段仅需 RGB 输入
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Stack Cube 等高精度任务成功率仍很低（2%），精细操作仍有较大提升空间
 2. 3-4 臂设置下整体成功率偏低，高复杂度协作仍具挑战

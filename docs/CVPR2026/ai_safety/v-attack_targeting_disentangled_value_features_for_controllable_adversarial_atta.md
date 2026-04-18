@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] V-Attack: Targeting Disentangled Value Features for Controllable Adversarial Attacks on LVLMs
 description: >-
@@ -87,7 +87,7 @@ tags:
 - **精确可控**：实现单概念级别的精准语义替换（"狗"→"猫"）
 - **强迁移性**：白盒代理生成的扰动在黑盒 GPT-4o 上有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 CLIP 等白盒代理模型，架构差异大时迁移效果可能下降
 - 多概念同时攻击的成功率仍有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploration with Foundation Models: Capabilities, Limitations, and Hybrid Approaches
 description: >-
@@ -131,7 +131,7 @@ RL 中的探索问题在稀疏奖励环境下极具挑战性。基础模型（LL
 - **诚实的实验设计**：混合框架选择 Freeway（VLM 已知表现好的游戏）作为上界分析，明确声明不是通用解决方案
 - **实用启示**：FM 更适合作为 RL 的"语义加速器"而非端到端控制器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 混合框架仅在 Freeway 一个游戏验证，泛化性未知
 - VLM 推理成本高（每步调用 GPT-4o），与样本效率的权衡未量化

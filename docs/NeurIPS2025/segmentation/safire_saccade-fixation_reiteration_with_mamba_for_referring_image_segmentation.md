@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SaFiRe: Saccade-Fixation Reiteration with Mamba for Referring Image Segmentation
 description: >-
@@ -131,7 +131,7 @@ SaFiRe 的设计灵感来自人类视觉搜索的两阶段认知过程：
 3. **新基准贡献**：aRefCOCO填补了歧义表达RIS评估的空白
 4. **效率-性能双赢**：线性复杂度多轮迭代实现高效精确分割
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. aRefCOCO的规模和多样性可进一步扩展
 2. 极长或嵌套的复杂表达仍可能挑战模型

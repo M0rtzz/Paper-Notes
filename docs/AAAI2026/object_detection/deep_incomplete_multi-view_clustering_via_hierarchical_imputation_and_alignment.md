@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Incomplete Multi-View Clustering via Hierarchical Imputation and Alignment
 description: >-
@@ -161,7 +161,7 @@ $$\mathcal{L}_\text{CAA} = \frac{1}{2}\sum_v \sum_{v' \neq v} [\text{sim}(v,v') 
 3. **EBM 替代距离正则化**：使用能量景观而非简单的中心距离约束，提供了更灵活的簇内紧凑性建模
 4. **桥接填充与无填充范式**：综合了两类方法的优点——既做填充又通过对齐减轻填充误差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 簇原型填充是非参数的，可能导致所有缺失样本在特征空间中坍缩到簇中心附近，缺乏多样性
 - 仅在 4 个标准 benchmark 上实验，数据规模较小（最大 10,000 样本）

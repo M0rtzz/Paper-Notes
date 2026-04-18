@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In Agents We Trust, but Who Do Agents Trust? Latent Source Preferences Steer LLM Generations
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **"提示消偏无效"是重要负面结论**：表明简单的工程手段不足以解决问题，需要更深入的训练时干预
 - **跨模型一致性揭示训练数据效应**：不同模型间偏好排名的高 Kendall Tau 相关性，暗示偏好根植于共享的预训练语料库
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅涉及三个应用领域（新闻/学术/电商），高风险领域（医疗/法律）尚未探索
 - 未深入分析偏好的因果来源——预训练数据频率 vs 后训练数据 vs 模型架构的贡献比例不清

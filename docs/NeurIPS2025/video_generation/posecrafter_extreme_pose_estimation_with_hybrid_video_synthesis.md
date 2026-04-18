@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PoseCrafter: Extreme Pose Estimation with Hybrid Video Synthesis
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **两个模型耦合**而非简单串联或替代——DynamiCrafter 解决"从哪里出发"，ViewCrafter 解决"怎么到达"
 - FMS 将帧选择**对齐到下游任务目标**（特征匹配质量 ≈ 位姿估计有用性）——比统计分数更有purpose
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 DUSt3R 做中间位姿估计——DUSt3R 自身的误差会传播
 - ViewCrafter 的合成质量受限于其预训练数据和模型容量
 - 推理成本仍较高（需运行两个视频模型 + DUSt3R + 特征匹配）

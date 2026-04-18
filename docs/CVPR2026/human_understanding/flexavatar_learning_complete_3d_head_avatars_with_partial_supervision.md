@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlexAvatar: Learning Complete 3D Head Avatars with Partial Supervision
 description: >-
@@ -152,7 +152,7 @@ PSNR 提升 3.8+ dB，LPIPS 大幅领先，说明生成的 3D 头部完整度和
 4. **统一框架覆盖多场景**：单图/少样本/单目视频三种化身创建场景，用一个模型应对
 5. **在 NeRSemble 基准上**：10 分钟拟合超越了 CAP4D 的 4 小时拟合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 光照从输入图像中"烘焙"，无法显式控制——放入不同虚拟环境可能显得不自然
 - 虽然架构不依赖 3DMM，但实验都用 FLAME 表情编码，舌头等细节受限

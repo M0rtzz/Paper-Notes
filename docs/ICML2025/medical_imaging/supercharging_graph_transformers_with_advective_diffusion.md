@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Supercharging Graph Transformers with Advective Diffusion
 description: >-
@@ -120,7 +120,7 @@ $$c_{uv} = \frac{\eta(\mathbf{z}_u(0), \mathbf{z}_v(0))}{\sum_{w \in \mathcal{V}
 3. **大规模可扩展**：AdvDIFFormer-s的线性复杂度使其适用于0.2M节点的大图
 4. **统一视角**：将GNN（局部扩散）、图Transformer（非局部扩散）统一在对流扩散方程框架下
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前分析针对线性扩散方程（固定 $\mathbf{C}$），非线性时变 $\mathbf{C}(\mathbf{Z}(t))$ 的理论分析留待未来
 - $\beta$ 需要hand-tune，缺乏自适应机制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoGramBench: Benchmarking the Geometric Program Reasoning in Modern LLMs
 description: >-
@@ -111,7 +111,7 @@ tags:
 - 行为分析（RQ1-3）提供了对LLM内部几何推理机制的深入洞察
 - 假设的"多阶段内部几何表征过程"（附录H）为未来研究提供了有价值的框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖2D和简单3D几何，未涉及真实世界3D场景
 - 失败模式分析主要基于定性观察，缺乏自动化的系统性诊断工具

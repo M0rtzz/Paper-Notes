@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rectified Noise: A Generative Model Using Positive-incentive Noise
 description: >-
@@ -184,7 +184,7 @@ ImageNet-1k 256×256（无 CFG）：
 4. **π-noise 可视化**：论文展示了 π-noise 随时间步的变化，揭示了有益噪声的时空结构特征
 5. **通用性**：三个不同数据集上都有稳定提升，说明方法不依赖于特定数据分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 SiT（RF 的特定实现）上验证，未测试其他 Flow Matching 架构（如 Flux、SD3）
 - 实验仅使用 256×256 分辨率，高分辨率生成的效果未知

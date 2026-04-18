@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ColorMNet: A Memory-based Deep Spatial-Temporal Feature Propagation Network for Video Colorization
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **极致效率**: 显存仅 1.9G（BiSTNet 的 5.4%），推理速度至少 8 倍于 SOTA，对实际部署友好
 - **时间一致性**: CDC 指标最优，说明三模块协作能有效保持着色的时间一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模型参数量较大（123.61M），在边缘设备部署仍有挑战
 - 仅使用 $L_1$ loss，未引入感知损失或对抗损失，可能限制色彩丰富度
 - 参考图的选择依赖人工（使用第一帧 GT 或网络搜索），缺乏自动选择最佳参考图的机制

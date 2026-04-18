@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Regularizing INR with Diffusion Prior for Self-Supervised 3D Reconstruction of Neutron Computed Tomography Data
 description: >-
@@ -122,7 +122,7 @@ DINR 在所有稀疏度下均取得最高 PSNR。32 视图下比 DD3IP 高 0.52 
 - **ROI 尺度分析方法**：揭示了全局 PSNR/SSIM 在科学成像中的局限性——当关注微结构细节时，需要在不同空间尺度上评估。这一分析方法本身是一个方法论贡献
 - **合成到真实的迁移**：扩散模型在简单几何（椭球体）上训练，通过 SCD 权重微调即可适配复杂微结构，降低了训练数据需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **体积规模受限**：仅测试了 2×256×256 的极小体积（2 个切片），未验证大规模 3D 体积重建的可行性
 - **缺乏系统消融**：作者自认缺少对 FBP 输入、网络架构、扩散步数等的消融实验

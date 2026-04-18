@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BlazeBVD: Make Scale-Time Equalization Great Again for Blind Video Deflickering
 description: >-
@@ -100,7 +100,7 @@ BlazeBVD 分为三个阶段，核心思想是利用 STE 在光照直方图空间
 3. **极快推理速度**：2D 网络逐帧处理 + 轻量 3D 网络时序精修，实现 10× 加速且显存降低 73%
 4. **自适应掩码 warping 损失**：在时序一致性优化中对曝光区域加权，避免了 Deflicker 中普遍存在的模糊和颜色失真问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LFRM 的局部纹理恢复依赖光流精度和邻帧质量——若连续多帧均处于闪烁/曝光状态，则无法从邻帧获取有效纹理
 - 参数量略高于 Deflicker（17.77M vs 12.48M），但实际推理速度和显存大幅优于后者

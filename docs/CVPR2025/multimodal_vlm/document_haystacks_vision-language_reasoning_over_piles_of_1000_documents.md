@@ -1,4 +1,4 @@
----
+﻿---
 title: "Document Haystacks: Vision-Language Reasoning Over Piles of 1000+ Documents"
 description: "大规模文档检索与理解基准(1000+文档)及视觉中心RAG框架V-RAG"
 tags: ["document understanding", "visual question answering", "RAG", "multi-image reasoning", "benchmark"]
@@ -31,7 +31,7 @@ tags: ["document understanding", "visual question answering", "RAG", "multi-imag
 3. **LMMs 上下文长度受限**：当前 LMMs 无法直接处理数百乃至上千张高分辨率文档图像
 4. **检索方法精度不足**：单一视觉编码器难以全面捕获文档中的文字、符号、图表等多尺度信息
 
-### 本文要解决什么
+### 本文目标
 
 1. 建立每个问题对应 **1000 个文档** 的大规模文档检索基准，且保证答案唯一性
 2. 设计有效的视觉检索框架，使 LMMs 能在成百上千个文档中进行检索和推理

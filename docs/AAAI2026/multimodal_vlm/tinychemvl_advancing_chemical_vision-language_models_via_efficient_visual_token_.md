@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TinyChemVL: Advancing Chemical Vision-Language Models via Efficient Visual Token Reduction and Complex Reaction Tasks
 description: >-
@@ -48,7 +48,7 @@ TinyChemVL采用经典的ViT-MLP-LLM架构，以InternVL2.5-4B为骨干，使用
 ### 关键设计
 
 #### 1. **自适应Token合并与剪枝 (Adaptive Token Merge and Pruning)**
-- **做什么**：在ViT的每个transformer block中，根据当前视觉token分布自适应地裁剪不重要的token并合并重复的token
+- **功能**：在ViT的每个transformer block中，根据当前视觉token分布自适应地裁剪不重要的token并合并重复的token
 - **核心思路**：
     - **Token评分**：采用ATS（Adaptive Token Sampler）方法，利用注意力矩阵中CLS token对其他token的注意力权重，结合Value矩阵的范数计算重要性分数：
     $Score_i = \frac{A_{1,i+1} \times \|V_{i+1}\|}{\sum_{j=1}^{N} A_{1,j+1} \times \|V_{j+1}\|}$
@@ -58,7 +58,7 @@ TinyChemVL采用经典的ViT-MLP-LLM架构，以InternVL2.5-4B为骨干，使用
 - **设计动机**：分子图像的稀疏特性使得大部分视觉token对应空白背景，而分子结构信息密集。需要一种既能去除冗余又能保留结构信息的策略
 
 #### 2. **自适应决策策略 (Adaptive Policy)**
-- **做什么**：在实例级别和层级别自适应选择执行剪枝还是合并操作
+- **功能**：在实例级别和层级别自适应选择执行剪枝还是合并操作
 - **核心思路**：计算token得分的方差 $S_{op_i} = var(Score_i)$：
     - 方差低（$S_{op_i} \leq \tau$）→ 重要性收敛 → 大面积背景区域 → **执行剪枝**
     - 方差高（$S_{op_i} > \tau$）→ 重要性分化 → 复杂分子结构 → **执行合并**
@@ -66,7 +66,7 @@ TinyChemVL采用经典的ViT-MLP-LLM架构，以InternVL2.5-4B为骨干，使用
 - **设计动机**：不同图像、不同层的token分布差异很大，固定策略无法适应所有情况。通过方差自动判断当前是"大片背景"还是"复杂结构"的情况
 
 #### 3. **反应级别任务与代码生成范式**
-- **做什么**：将化学VLM从分子级别扩展到反应级别，并用可执行代码替代直接图像生成
+- **功能**：将化学VLM从分子级别扩展到反应级别，并用可执行代码替代直接图像生成
 - **核心思路**：
     - 构建**反应识别**任务：从反应图像解析出 reactants>>reagents.solvents>>products 格式
     - 构建**反应预测**任务：仅从反应物图像预测产物（首次定义该任务）
@@ -138,7 +138,7 @@ TinyChemVL采用经典的ViT-MLP-LLM架构，以InternVL2.5-4B为骨干，使用
 4. **代码生成替代图像生成**：避免了VQ-GAN的架构不匹配问题，生成的代码直接包含SMILES便于验证
 5. **小模型大能力**：4B模型超越13B-26B模型，证明了"效率+质量"可以兼顾
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 当前仅在化学领域验证，token压缩策略是否适用于其他科学图像（如生物、材料）有待验证
 2. 反应预测任务目前仅基于视觉信息，未结合反应条件（温度、催化剂等）文本信息
 3. 代码生成用于分子图像生成的方式虽然巧妙，但生成代码的可执行性和鲁棒性未充分讨论

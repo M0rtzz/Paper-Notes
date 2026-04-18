@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Retrieval without Self-Knowledge? Bringing Uncertainty Back Home
 description: >-
@@ -123,7 +123,7 @@ tags:
 - **多维评估视角**：首次将 QA 性能、效率和自知能力三个维度统一评测，为研究者提供全景式参考
 - **OOD 分析**：进一步分析了不确定性方法在分布外场景下的表现，增加了实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用了 LLaMA 3.1-8b-instruct 一个模型，不同模型可能有不同的最佳方法
 - 仅使用 BM25 作为检索器，更强的检索器（如密集检索）可能改变方法间的相对排名

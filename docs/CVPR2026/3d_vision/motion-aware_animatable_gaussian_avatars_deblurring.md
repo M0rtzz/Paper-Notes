@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Motion-Aware Animatable Gaussian Avatars Deblurring
 description: >-
@@ -92,7 +92,7 @@ $$\mathcal{L} = \|\hat{\mathbf{I}}^B - \mathbf{I}^B\|_1 + \mathcal{L}_{reg}$$
 - 将去模糊与3D重建无缝结合的思路非常优雅：不是先去模糊再重建，而是在3D空间中建模模糊形成过程
 - 构建了两个基准数据集：基于ZJU-MoCap的合成数据集和360度混合曝光相机系统采集的真实数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖SMPL参数的粗估计初始化，若初始化质量极差可能影响收敛
 - 仅针对人体运动模糊，未考虑相机运动模糊的联合处理

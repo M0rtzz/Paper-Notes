@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mobile-VTON: High-Fidelity On-Device Virtual Try-On
 description: >-
@@ -100,7 +100,7 @@ TryonNet: $\mathcal{L}_{\text{TryonNet}} = \mathcal{L}_{\text{Diff}} + \lambda_1
 - **无需预训练**: 通过隐变量拼接和教师监督，轻量模型直接从任务数据学习，降低训练门槛
 - **DINOv2 替代 CLIP**: 轻量且语义丰富的视觉特征提取，为移动端优化提供参考
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FID/KID 相比部分服务器端方法略高（mask-free 任务更难），分布对齐还有提升空间
 - 仅支持上半身试穿，全身/下装/配饰场景待扩展

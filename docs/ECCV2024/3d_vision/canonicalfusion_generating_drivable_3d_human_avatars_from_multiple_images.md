@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CanonicalFusion: Generating Drivable 3D Human Avatars from Multiple Images
 description: >-
@@ -114,7 +114,7 @@ P2S误差仅为SCANimate的约1/5。
 4. **SDF集成填补空洞**: 巧妙结合重建网格和模板网格
 5. **任意数量输入**: 1张到数十张均可
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **非刚性衣物变形**: 帧间变形过大可能产生模糊
 2. **手部细节**: 需借助外部手部替换模块

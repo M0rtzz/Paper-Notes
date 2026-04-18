@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Portrait4D-v2: Pseudo Multi-View Data Creates Better 4D Head Synthesizer
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **替换概率设计**：80%/10%的替换策略在真实数据保真度和几何正则化之间取得了很好的平衡
 - **结果质量优异**：用户研究中80.7%的质量偏好率远超所有竞争方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理速度（10-15 FPS）距离实时应用仍有差距
 - 3D合成器Ψ3d是在FFHQ上通过GenHead学习的，合成数据与真实数据仍存在域差异

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GaussianFlowOcc: Sparse and Weakly Supervised Occupancy Estimation using Gaussian Splatting and Temporal Flow
 description: >-
@@ -134,7 +134,7 @@ $$\vec{v}(t) = \text{MLP}_v(\mathcal{G}_f \oplus \Psi(t))$$
 - **Induced Attention 的实用性**：将 Set Transformer 思想引入 3D 场景建模，使大规模 Gaussian 处理成为可能（$\mathcal{O}(MN)$ vs $\mathcal{O}(N^2)$）
 - **推理极快**：10.2 FPS 比 GaussTR（0.2 FPS）快 50 倍，达到实用部署水平
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 2D 伪标签质量直接影响性能上限，基础模型（GroundedSAM、Metric3D）的误差会传播
 - 时序 horizon 超过 8 时训练不稳定，限制了远距离时序信息的利用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedRTS: Federated Robust Pruning via Combinatorial Thompson Sampling
 description: >-
@@ -113,7 +113,7 @@ FedRTS 采用双循环训练过程。内循环固定拓扑 $m$，每 $\Delta T$ 
 - **概率决策双重优势**：Thompson Sampling 同时解决探索-利用平衡和低方差决策
 - **通信效率的自然获得**：TSAdj 仅需 Top 梯度索引，是方法设计的自然副产物
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析简化了内循环和半观测，与实际实现存在差距
 - 独立性假设在实际中不严格成立
 - 仅在轻量模型(ResNet18/ShuffleNetV2/GPT-2-32M)上验证，缺乏大模型实验

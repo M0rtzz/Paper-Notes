@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DriveSuprim: Towards Precise Trajectory Selection for End-to-End Planning
 description: >-
@@ -143,7 +143,7 @@ $$L = L_{ori} + L_{aug} + L_{soft}$$
 - Oracle 分析清晰展示了选择式方法的巨大潜力，为后续研究提供了明确方向
 - 在不使用额外训练数据的前提下取得 SOTA（93.5 PDMS），证明方法论创新的价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 轨迹词汇表是预定义的固定集合，限制了可选轨迹的多样性和精细粒度
 - 旋转增强仅模拟 yaw 旋转，未考虑 pitch/roll 等更复杂的姿态变化

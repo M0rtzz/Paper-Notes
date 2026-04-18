@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] It's Not a Walk in the Park! Challenges of Idiom Translation in Speech-to-text Systems
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **实用建议**：当翻译内容可能包含习语时，推荐使用级联系统而非端到端 SLT
 - 人工标注方案设计精细，特别是对习语翻译类别（惯用/释义/字面）的区分有参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅覆盖德→英和俄→英两个语言对，习语使用在不同语言间差异很大
 2. 使用合成语音而非真实自然语音，虽然已有研究表明影响较小

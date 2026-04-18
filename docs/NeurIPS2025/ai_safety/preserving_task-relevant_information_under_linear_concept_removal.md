@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Preserving Task-Relevant Information Under Linear Concept Removal
 description: >-
@@ -110,7 +110,7 @@ SPLINCE是一种线性代数方法，计算一个投影矩阵 $\mathbf{P}^*_{SPL
 - SPLINCE是LEACE的自然推广：LEACE最小化失真但对任务无知，SPLINCE利用"失真最小化的自由度"来保护任务信息
 - 在Llama模型上的实验展示了一个引人入胜的应用：消除刻板印象的同时保留事实性别关联
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论上仅适用于线性概念擦除，非线性概念编码需要其他方法
 - SPLINCE优先保护协方差可能导致embedding的较大失真（在某些场景中偏离原始表示较远）
 - 目前仅适用于最后一层embedding，中间层的干预效果有限

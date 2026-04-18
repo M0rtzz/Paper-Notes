@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GACD: Mitigating Multimodal Hallucinations via Gradient-based Self-Reflection
 description: >-
@@ -73,7 +73,7 @@ LLaVA-QA90: GACD(accuracy 6.20, detail 5.13) vs VCD(4.15, 3.85) vs base(3.23, 3.
 - 共现偏差分析很有价值——31.9%共享最有影响力视觉token的发现为未来的物体解缠提供了方向
 - 信息保持性好：recall仅平均下降1.1%（对比方法平均下降3.2%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要白盒访问（梯度计算），不适用于API-only模型
 - 延时~101%增加——比V2Drop/Reallocating Attention这种<10%的方法慢很多
 - 对InternVL2等本身视觉影响比高的模型提升有限——说明偏差类型分析需更细粒度

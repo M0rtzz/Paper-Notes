@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prioritized Semantic Learning for Zero-shot Instance Navigation
 description: >-
@@ -158,7 +158,7 @@ PSL方法由三部分组成：(1) PSL Agent架构——增加CLIP语义观测编
 - **InstanceNav任务的提出有前瞻性**：相比ObjectNav（找任意一把椅子），InstanceNav（找"米色竹框双人床"）更接近真实应用需求
 - **无LLM、无地图、无额外传感器仍SOTA**：方法简洁高效，适合实际机器人部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在模拟环境HM3D中验证，未在真实机器人上验证sim-to-real迁移效果
 - InstanceNav的文本描述由CogVLM自动生成，可能存在标注噪声

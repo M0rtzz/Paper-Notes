@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Persona Following at Decoding Time via Dynamic Importance Estimation for Role-Playing Agents
 description: >-
@@ -122,7 +122,7 @@ PDD 在所有维度上实现最高平均分且方差最低（p<0.05）。
 3. **推理时方法的实用优势**：无需为每个角色微调，适合角色数量多、动态变化的社会模拟场景
 4. **心理学理论指导**：CAPS 理论对人设动态性的解释为方法设计提供了坚实的认知科学基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理开销**：每个属性需要一次额外的前向传播来计算 $\Pr(G|T_i)$，属性多时线性增长；top-2 截断是工程妥协
 2. **评估依赖 LLM 判断**：主要使用 GPT-4o 作为评判，LLM-as-Judge 的偏差可能影响结果

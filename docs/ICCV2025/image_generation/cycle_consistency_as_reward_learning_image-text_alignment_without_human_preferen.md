@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences
 description: >-
@@ -133,7 +133,7 @@ DPO结果（I2T方向，Qwen-VL-Chat）：
 - **数据效率**：CyclePrefDB规模小于VLFeedback/Pick-a-Pic，但效果相当甚至更优
 - **消融全面**：相似度度量、解码器选择、数据规模、过滤策略等都有详细分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 监督质量依赖于预训练解码器的重建质量，生成错误可能误导偏好
 - 文本长度受限于T2I模型的77 token限制，无法评估真正的长文本描述

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KITAB-Bench: A Comprehensive Multi-Domain Benchmark for Arabic OCR and Document Understanding
 description: >-
@@ -131,7 +131,7 @@ KITAB-Bench 包含三大核心组成：（1）多来源数据收集策略；（2
 - **三个新指标**（MARS、CharTeX、CODM）为阿拉伯语文档评估提供了标准化工具
 - 对 RAG 系统的文档处理管线有直接的实用指导价值：揭示了使用哪类模型处理阿拉伯语文档最可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. PDF-to-Markdown 子集仅 33 个样本，规模较小
 2. 合成数据虽经人工验证，但与真实世界文档仍有分布差异

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Coupling Generative Modeling and an Autoencoder with the Causal Bridge
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}_{\theta_Y} = \sum_{i: e_i=1} \rho_i - \log\left(\sum_{j: y_j > y_i
 - **生存分析扩展**是因果桥框架的新应用方向——在医学研究中有重要实用价值
 - **与 RCT 的对比**是因果推断论文中罕见的金标准验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **假设验证困难**：完备性假设 (A4)、代理变量的条件独立性在实际中难以检验
 - **代理变量的定义/划分**：将协变量分配到 $Z$ 和 $W$ 需要领域知识或启发式方法

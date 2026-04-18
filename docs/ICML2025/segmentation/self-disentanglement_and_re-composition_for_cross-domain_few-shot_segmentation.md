@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Disentanglement and Re-Composition for Cross-Domain Few-Shot Segmentation
 description: >-
@@ -157,7 +157,7 @@ $$L = L_{BCE} + \lambda L_{orth}$$
 4. **极致轻量**：OSD微调仅需64个参数（$W_{orth}$），AFW仅288个参数，整体FLOPs低于所有对比方法
 5. **AFW前景/背景互斥现象**：在Deepglobe和ISIC数据集上自适应学到的前景和背景权重呈互斥关系，这是一个有趣的自发涌现现象
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Chest X-ray上1-shot低于APSeg**：在胸部X光域上（82.86% vs 84.10%），APSeg的SAM-based架构仍有优势
 2. **仅在ViT架构上深入分析**：分析强依赖ViT的残差累加结构，对CNN或非标准残差结构的推广有待探索

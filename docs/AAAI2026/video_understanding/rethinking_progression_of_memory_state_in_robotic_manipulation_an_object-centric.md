@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Progression of Memory State in Robotic Manipulation: An Object-Centric Perspective
 description: >-
@@ -150,7 +150,7 @@ $$\hat{\mathbf{a}}_t \sim P_\theta(\mathbf{a}_t | \{\mathbf{r}_t^{(j)}\}, \{\mat
 4. **子目标感知评估**：超越简单成功/失败的二元评估，支持细粒度进度评估（完成了几个子目标）。
 5. **计算效率的理论分析**：SlotSSM 仅需 32 token vs OpenVLA 256 / SlotVLA 128，实现 4-8x 压缩。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Oracle 子目标依赖**：Naive E-SlotSSM 依赖预言机文本子目标嵌入（如 "bowl 1 on plate 3"），无法自主发现子目标，这是最大局限。
 2. **仍为仿真环境**：LIBERO-Mem 未扩展到真实物理环境，迁移性能未知。

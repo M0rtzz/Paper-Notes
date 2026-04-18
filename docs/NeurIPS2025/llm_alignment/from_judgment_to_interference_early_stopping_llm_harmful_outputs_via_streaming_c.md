@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Judgment to Interference: Early Stopping LLM Harmful Outputs via Streaming Content Monitoring
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **FineHarm 标注方法实用**：POS 启发式方法虽简单但经实验验证比 LLM 标注和 likelihood 差异法更可靠
 - **双重身份**：SCM 既是推理时安全护栏，又能作为训练时的伪标注器改善对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **POS 启发式标注有噪声**：并非所有有害句中的实义词都有害，可能引入假阳性
 - **模型大小限制**：SCM 基于小模型（编码器），对复杂/隐式有害内容的理解有限
 - **仅英文评估**：多语言场景未测试

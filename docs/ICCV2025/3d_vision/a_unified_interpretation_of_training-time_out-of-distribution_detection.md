@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified Interpretation of Training-Time Out-of-Distribution Detection
 description: >-
@@ -137,7 +137,7 @@ $$SIM_{near} = \frac{\| \min(\tilde{I}_{ID}(v), \tilde{I}_{near\text{-}OOD}(v)) 
 - **跨方法、跨架构、跨数据集的一致性**：4 种方法 × 3 种架构 × 5 个数据集 = 60 组实验的一致结论增强可信度
 - **实用启示**：未来设计 OOD 检测方法时，可以直接以"增加高阶交互"为目标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 ResNet 系列架构上验证，未覆盖 ViT 等现代架构
 - 仅关注训练时方法，未涉及后处理 OOD 检测方法（MSP、ODIN 等）

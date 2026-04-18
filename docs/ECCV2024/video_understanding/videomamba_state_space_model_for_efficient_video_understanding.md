@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoMamba: State Space Model for Efficient Video Understanding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：高效率与强建模能力难以兼得——处理 64 帧视频时，TimeSformer 的吞吐量和显存消耗远不可接受。
 
-**本文要解决什么**：设计一种兼具线性复杂度和强时空动态建模能力的视频理解架构。
+**本文目标**：设计一种兼具线性复杂度和强时空动态建模能力的视频理解架构。
 
 **切入角度**：利用 NLP 领域新兴的 Mamba（选择性 SSM），将其双向扩展到 3D 视频序列。
 
-**核心 idea 一句话**：以 vanilla ViT 的简洁架构为基础，用双向 Mamba block 替代自注意力层，构建纯 SSM 视频模型。
+**核心 idea**：以 vanilla ViT 的简洁架构为基础，用双向 Mamba block 替代自注意力层，构建纯 SSM 视频模型。
 
 ## 方法详解
 
@@ -123,7 +123,7 @@ VideoMamba 严格遵循 vanilla ViT 的架构设计。输入视频 $\mathbf{X}^v
 3. **效率优势惊人**：64 帧视频上比 TimeSformer 快 6×、省显存 40×，使长视频端到端训练成为可能
 4. **自蒸馏解决过拟合**：优雅地解决了 SSM 模型 scale up 时的过拟合问题，无需大规模数据集预训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 自监督模式下 VideoMamba 与 UMT 的对齐因架构不一致仍有差距（82.0% vs 85.7%），跨架构蒸馏值得深入研究
 2. 更大模型（VideoMamba-B）即使有自蒸馏仍被排除，可扩展性的上限尚不明确

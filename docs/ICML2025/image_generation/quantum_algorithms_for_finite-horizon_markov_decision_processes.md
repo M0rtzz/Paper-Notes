@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantum Algorithms for Finite-horizon Markov Decision Processes
 description: >-
@@ -108,7 +108,7 @@ $$V_h^*(s) = \max_{a \in \mathcal{A}} \left\{ r_h(s,a) + \sum_{s'} P_h(s'|s,a) V
 3. **经典新下界**：作为副产品，推导出经典设定下获取 Q 值的新下界 $\Omega(SAH^3/\epsilon^2)$
 4. **单调性技巧的推广**：将 Sidford et al. (2018) 用于无限时域的单调性技巧推广到有限时域+量子设定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **量子硬件要求高**：算法依赖容错量子计算机和 QRAM，短期内难以实际部署
 2. **$H$ 依赖的 gap**：量子上界与下界在 $H$ 上仍有差距（如 QVI-3 的 $H^3$ vs 下界 $H^{1.5}$），closing this gap 是开放问题

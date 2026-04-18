@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Contractive Diffusion Policies: Robust Action Diffusion via Contractive Score-Based Sampling with Differential Equations
 description: >-
@@ -81,7 +81,7 @@ tags:
 - **低数据优势显著**：在 10% 数据下 CDP 决定性地超越所有基线，说明收缩确实抑制了 score 匹配误差在数据稀缺时的放大
 - **真机验证**：在物理 Franka 臂上的 4 项操作任务中验证了方法的实用价值
 
-## 局限性/可改进方向
+## 局限与展望
 - 收缩损失系数 $\gamma$ 对性能敏感，调优不当会损害策略表现，缺少自适应调节机制
 - 仅基于 EDP 和 DBC 实现，未探索与 DiffusionQL、IDQL 等其他离线学习方法的组合效果
 - 图像观测空间的实验较有限，且未在真实环境中进行低维观测的实验

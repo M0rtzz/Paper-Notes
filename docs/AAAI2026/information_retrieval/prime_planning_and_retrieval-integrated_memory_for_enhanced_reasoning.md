@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PRIME: Planning and Retrieval-Integrated Memory for Enhanced Reasoning
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：深度推理有效但昂贵——需要智能地选择何时启用。
 
-**本文要解决什么？** 设计自适应触发深度推理的多Agent框架。
+**本文目标** 设计自适应触发深度推理的多Agent框架。
 
 **切入角度**：Kahneman的双系统理论——System 1快速直觉，System 2慢速分析。用反思Agent决定何时切换。
 
-**核心idea一句话**：System 1快速回答 + Reflection自评 + System 2六Agent深度推理 = 高效且准确。
+**核心 idea**：System 1快速回答 + Reflection自评 + System 2六Agent深度推理 = 高效且准确。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ tags:
 - 6 Agent的专门化分工比单Agent深度推理更可靠
 - 对推理效率有直接指导：不是所有问题都需要深思
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Reflection Agent可能误判——假阴性（难题没触发System 2）和假阳性（简单题误触发）都影响效率
 - 6 Agent的通信开销在简单问题上不划算——需进一步分析System 2的成本
 - 仅在QA任务上验证，创意写作/代码生成等场景效果未知

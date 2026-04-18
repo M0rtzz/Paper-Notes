@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoCoA-Mix: Confusion-and-Confidence-Aware Mixture Model for Context Optimization
 description: >-
@@ -170,7 +170,7 @@ Table 4 对比了不同 loss (CE, Focal, SupCon, CoA-loss) × 不同 mixing (nai
 4. **不增加推理开销**：混合发生在 logit 空间加权求和，保持 CLIP 推理效率
 5. **FSCIL 适配自然**：每个 session 增加一个新 prompt，天然匹配增量学习范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限文本 prompt tuning**：未探索视觉 prompt 或多模态 prompt 场景
 2. **Out-class 生成策略简单**：随机词汇可能无法覆盖真实域外分布，对抗生成可能更好

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FakeRadar: Probing Forgery Outliers to Detect Unknown Deepfake Videos
 description: >-
@@ -110,7 +110,7 @@ FakeRadar基于CLIP ViT-B/16冻结骨干网络，插入ST-Adapter进行参数高
 - 动态子簇的分裂/合并过程在训练中自适应调整，无需手动设定最终簇数
 - t-SNE可视化清晰展示了FakeRadar学到的更紧凑、边界更清晰的特征分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在FaceForensics++(HQ)上训练，未探讨使用更多/更新伪造类型训练数据的效果
 - 异常值采样的ε阈值为超参数，对不同数据集的敏感性未充分讨论
 - 推理时将Outlier简单合并到Fake类，未利用Outlier的置信度信息进行更精细判断

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Consistency-aware Self-Training for Iterative-based Stereo Matching
 description: >-
@@ -98,7 +98,7 @@ CST-Stereo采用教师-学生自训练框架：教师模型在无标签数据上
 - 方法不依赖代价体，首次将自训练扩展到迭代式立体匹配全家族
 - 两种一致性滤波器从空间和时序两个正交维度评估可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多分辨率预测需要三次前向传播，训练计算开销增大
 - 滤波器中的软阈值参数 $\tau_1, \tau_2$ 和缩放因子 $\varepsilon_1, \varepsilon_2$ 需要手动设定

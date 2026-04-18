@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Straighten Viscous Rectified Flow via Noise Optimization
 description: >-
@@ -151,7 +151,7 @@ CIFAR-10 上各组件贡献（FID↓）：
 - 两阶段训练（MSE→MSE+LPIPS）的策略简单有效，避免了蒸馏和对抗训练的复杂性
 - 历史速度项的引入虽然增加了少量计算，但从信息论的角度看是合理的：提供了轨迹方向的先验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 采样时需要从数据集中采样一张图像作为编码器输入，限制了完全无条件的生成场景
 - 目前仅在 CIFAR-10 和 AFHQ 上验证，尚未扩展到 ImageNet 等大规模数据集和高分辨率

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Evaluating Proactive Risk Awareness of Multimodal Language Models
 description: >-
@@ -125,7 +125,7 @@ PaSBench是纯评测benchmark，不涉及训练。
 - Best-of-N和Worst-of-N的三维评测比单一准确率更有洞察力
 - 明确指出**当前瓶颈不是知识不足，而是主动推理的不稳定性**，为改进指明方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 样本量较小（416个），每个图像样本仅2-3张子图，文本4-8段观察，可能不足以测试长序列理解
 - 未考虑风险严重程度分级和误报问题，实际部署时需平衡预警频率和用户体验

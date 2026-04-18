@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dexterous Manipulation Transfer via Progressive Kinematic-Dynamic Alignment
 description: >-
@@ -131,7 +131,7 @@ $$T_t = o_t \cdot (T_{grasp}^{-1} \cdot o_{grasp})^{-1}$$
 4. **完整端到端流水线**：从原始视频到仿真控制信号再到真实机器人部署，覆盖感知、规划、优化全链路
 5. **新评价指标 TSR**：基于 DTW 的语义级动作意图相似度度量，关注操作意图而非逐帧轨迹复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要处理稳定接触模式，对**动态多接触变化**（如指间翻转、滚动操作）尚未涉及
 - 手腕轨迹规划假设抓取后无相对滑动，限制了对需要指内操作的任务的适用性

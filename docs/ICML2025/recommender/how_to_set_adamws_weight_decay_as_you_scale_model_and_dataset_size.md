@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How to Set AdamW's Weight Decay as You Scale Model and Dataset Size
 description: >-
@@ -149,7 +149,7 @@ $$\eta = \eta_{\text{base}} / s, \quad \lambda = s \cdot \lambda_{\text{base}}$$
 3. **解释了已有现象**：统一解释了 Loshchilov & Hutter 观察到的 $\eta$ 与 $\gamma=\eta\lambda$ 解耦现象，以及 Lingle (2024) 发现的 µP 在 AdamW 上失效的问题
 4. **Theorem 1 的理论深度**：在尺度不变网络上严格证明了 $\tau_{\text{iter}}$ 是唯一的控制参数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验规模有限**：主要在小规模数据集（ImageNet 32×32、CIFAR-10）和中等模型（124M NanoGPT）上验证，虽然后续工作已在更大规模上确认
 2. **仅考虑多 epoch 训练**：LLM 预训练通常只训 1 epoch，此时 $\tau_{\text{epoch}}$ 的最优值不再恒定，而是遵循幂律（Bergsma et al., 2025a）

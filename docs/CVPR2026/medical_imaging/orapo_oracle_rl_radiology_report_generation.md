@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OraPO: Oracle-educated Reinforcement Learning for Data-efficient and Factual Radiology Report Generation
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: GRPO 在早期输出高度不确定时产生大量零奖励组, 而这些"失败"的探索被完全浪费; 需要一种方式将失败 rollout 转化为有用的学习信号.
 
-**本文要解决什么**: (a) 在极少数据 (1K 样本) 下实现 SOTA 报告生成; (b) 设计捕捉临床事实正确性的奖励; (c) 解决 GRPO 零奖励问题.
+**本文目标**: (a) 在极少数据 (1K 样本) 下实现 SOTA 报告生成; (b) 设计捕捉临床事实正确性的奖励; (c) 解决 GRPO 零奖励问题.
 
 **切入角度**: 检测 Zero-Reward Rate, 高 ZRR 时自动切换到 DPO——用 ground-truth 报告作 positive, 用失败 rollout 作 negative, 将浪费的探索转化为偏好学习信号.
 
-**核心idea一句话**: 用 EMA-smoothed ZRR 检测 GRPO 失效时刻, 动态混入 DPO 将失败 rollout 转化为偏好对, 加上原子事实级奖励捕捉临床正确性.
+**核心 idea**: 用 EMA-smoothed ZRR 检测 GRPO 失效时刻, 动态混入 DPO 将失败 rollout 转化为偏好对, 加上原子事实级奖励捕捉临床正确性.
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 - **极致数据效率**: 1K 样本超越 1.27M 样本训练的模型, 是 3 个数量级的效率提升
 - **recall-first 临床设计**: beta>1 强调 recall, 符合临床上假阴性比假阳性更危险的原则
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Precision 偏低 (0.237 vs 基线 0.377), 过度追求 recall 可能导致更多假阳性
 - FactScore 依赖 GPT-4 提取原子事实, 有额外 API 成本
 - 仅在胸部 X 光验证, 未扩展到其他影像模态 (CT, MRI 等)

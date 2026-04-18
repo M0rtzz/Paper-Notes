@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffBench Meets DiffAgent: End-to-End LLM-Driven Diffusion Acceleration Code Generation
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **多Agent分工+容错回退设计精巧** — Planning→Coding→Debugging的层级回退机制（代码失败→重生成→重规划）确保了鲁棒性，最坏情况下LLM调用次数有上界
 - **5级难度设计的benchmark构建方法论** — 从基础pipeline到组合加速再到约束优化，难度递进且用搜索确定可达性，可复用于构建其他领域的agent benchmark
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **硬件覆盖有限**: 仅在特定GPU上评估，未验证跨硬件泛化性（A100 vs 消费级GPU）
 - **加速方法库封闭**: 仅包含4种加速技术（ToMe/DeepCache/T-Gate/FP16），未覆盖知识蒸馏、量化等更复杂方法
 - **无学习机制**: 全靠prompt工程，每次任务独立处理，无法从历史任务中积累经验。可考虑加入经验记忆或微调

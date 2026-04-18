@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Infinite-Story: A Training-Free Consistent Text-to-Image Generation
 description: >-
@@ -69,7 +69,7 @@ tags:
 - **自适应插值权重**：ASI 通过余弦相似度自适应调整注入强度，避免了硬替换导致的细节丢失
 - **完全 training-free**：三个技术都只在推理时操作注意力特征，零额外训练成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖单一参考图像（anchor），如果 anchor 质量差会传播到整个 batch
 - 身份一致性主要通过注意力层操作实现，对高度结构化或精细细节的控制有限
 - 仅支持 scale-wise 自回归模型，未验证在扩散模型上的适用性

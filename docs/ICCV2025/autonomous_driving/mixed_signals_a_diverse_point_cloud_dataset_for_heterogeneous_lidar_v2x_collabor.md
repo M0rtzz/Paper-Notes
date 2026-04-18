@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mixed Signals: A Diverse Point Cloud Dataset for Heterogeneous LiDAR V2X Collaboration
 description: >-
@@ -68,7 +68,7 @@ Mixed Signals 通过三个"首次"来填补空白：
 
 #### 1. 异构传感器配置
 
-- **做什么**：使用不同安装方式的同型 LiDAR 创造传感器域差异
+- **功能**：使用不同安装方式的同型 LiDAR 创造传感器域差异
 - **具体配置**：
     - **电动车（EV）×2**：OS1-128 beam LiDAR，安装高度 1.63m，**向下倾斜 15°**
     - **城市车辆（Laser）×1**：OS1-128 beam LiDAR，安装高度 1.9m，**水平安装**
@@ -155,7 +155,7 @@ Laser 车辆性能最好，因为其 LiDAR 水平安装有完整 360° 覆盖；
 - **左行交通的贡献**：揭示了交通方向作为Domain gap来源的重要性，之前的研究完全忽略了这一点
 - **新任务定义**：RSU-enhanced单车检测任务的设定（固定 RSU 模型 + 可训练车端模型）更贴近实际场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **采集场景单一**：仅在悉尼一个十字路口采集，场景多样性有限
 - **仅 LiDAR 标注**：缺少相机图像标注和融合标注

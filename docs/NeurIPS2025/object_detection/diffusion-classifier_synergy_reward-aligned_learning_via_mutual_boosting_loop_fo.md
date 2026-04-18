@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion-Classifier Synergy: Reward-Aligned Learning via Mutual Boosting Loop for FSCIL
 description: >-
@@ -97,7 +97,7 @@ DCS 的核心思想是在扩散模型 $D$ 和 FSCIL 分类器 $\sigma$ 之间建
 - **即插即用**：不修改基线分类网络结构，仅通过生成数据增强即可提升性能
 - **PAMMD 增量计算**和**维度级方差匹配**均针对 few-shot 场景的数据稀缺特性做了务实的工程适配
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 Stable Diffusion 3.5 这样的大型预训练扩散模型，推理时生成图像的计算开销仍较大
 - DAS 的 Sequential Monte Carlo 采样引入额外开销，部署到端侧或实时系统有难度
 - 维度级方差匹配丢弃了特征维度间的相关性信息，在高维特征空间中可能有信息损失

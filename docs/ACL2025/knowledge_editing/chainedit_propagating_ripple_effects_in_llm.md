@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ChainEdit: Propagating Ripple Effects in LLM Knowledge Editing through Logical Rule-Guided Chains
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: RippleEdits benchmark 上的逻辑泛化（Logical Generalization）准确率仅约 20%，说明模型未能将编辑知识与已有推理链有机整合。
 
-**本文要解决什么**: 使 LLM 在知识编辑时能利用逻辑规则自动推导并同步更新关联知识。
+**本文目标**: 使 LLM 在知识编辑时能利用逻辑规则自动推导并同步更新关联知识。
 
 **切入角度**: 借鉴知识图谱更新机制——KG 通过逻辑规则推断关联知识，将这一思路移植到 LLM 知识编辑中。
 
-**核心idea一句话**: 从 KG 中挖掘逻辑规则并与 LLM 内在逻辑对齐，实现编辑知识的链式传播。
+**核心 idea**: 从 KG 中挖掘逻辑规则并与 LLM 内在逻辑对齐，实现编辑知识的链式传播。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ LG（逻辑泛化）指标：MEMIT 从 18.6% → 58.7%（**+40.1%**），FT 从 
 - 提出三种数据集变体（Filtered/Replaced/In-Prompt）来诊断评估偏差，方法论贡献突出
 - 指令规则模板显式处理逻辑路径歧义，比传统规则表示更灵活
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 规则挖掘依赖 Wikidata，对长尾关系或新兴领域的覆盖可能不足
 - 链式更新增加了编辑复杂度，MEMIT 在处理同主体多条知识时的 Reliability 有所下降

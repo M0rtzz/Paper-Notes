@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoIR: A Comprehensive Benchmark for Code Information Retrieval Models
 description: >-
@@ -109,7 +109,7 @@ CoIR 的设计遵循三个原则：多样性（4大任务 × 8子任务 × 10数
 - 多轮代码 QA（查询长达 4K+ token）是极具挑战的新方向，当前所有模型表现都不理想
 - 与 BEIR/MTEB 的无缝集成降低了使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 所有数据集仅覆盖英语，缺少多语言代码检索评测
 - 每个查询仅对应一个标准答案（n=1），不反映一个查询可能匹配多个相关代码的现实情况

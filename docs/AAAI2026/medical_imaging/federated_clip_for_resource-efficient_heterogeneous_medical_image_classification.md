@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Federated CLIP for Resource-Efficient Heterogeneous Medical Image Classification
 description: >-
@@ -152,7 +152,7 @@ ISIC2019 皮肤癌分类（7 个客户端按解剖部位划分，特征异构）
 4. **模型压缩零性能损失**：float16+zlib 压缩将 2.01MB 减至 1.36MB，AVG 仅降 0.08%
 5. **真正的医学领域验证**：不同于大多数 FL+CLIP 工作只在 OfficeHome 等自然图像上验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **全局泛化能力有限**：在模态级异构（如 BraTS 不同 MRI 模态）时全局 ACC 低于 FedAPT，CLIP 编码器的先验知识对医学模态差异应对不足
 2. **仍依赖标准 prompt 模板**：使用 "a picture of a {class}" 这种通用 prompt，未利用医学领域 prompt 知识

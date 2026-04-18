@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synergizing Unsupervised Episode Detection with LLMs for Large-Scale News Events
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **LLM 协同而非 LLM 依赖**：先用统计方法生成高质量候选，再用 LLM 精炼，既规避了 LLM 长上下文问题，又发挥了 LLM 的推理能力——这种 synergy 设计值得借鉴。
 - **数据集贡献**：30 个全球关键事件的 episode 级标注数据集，涵盖恐怖袭击、自然灾害、政治事件三大主题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **主题依赖性**：自然灾害类 episode 通常顺序清晰且语义差异大，而政治事件的 episode 间词项重叠较多，判别性共现效果下降。
 2. **时间分析缺失**：未利用 episode 间的时间顺序关系进行建模，纯粹基于词项统计。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Limited Preference Data? Learning Better Reward Model with Latent Space Synthesis
 description: >-
@@ -142,7 +142,7 @@ LENS 在所有增强比例和数据集上均显著领先，8× 增强在 HH-RLHF
 3. **潜在空间是偏好数据的"正确"操作空间**：绕过文本生成的思路非常优雅，值得其他数据增强任务借鉴
 4. **散度损失设计**：用 Wasserstein 距离显式分离正负样本的潜在分布，比标准 VAE 更适合偏好学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了 MLP reward head**：未与全量微调的 reward model + 潜在空间增强结合测试
 2. **种子数据质量依赖**：如果初始 1000 样本不够代表性，合成质量可能受限

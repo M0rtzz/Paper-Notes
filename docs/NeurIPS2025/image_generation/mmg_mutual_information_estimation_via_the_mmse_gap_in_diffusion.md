@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MMG: Mutual Information Estimation via the MMSE Gap in Diffusion
 description: >-
@@ -139,7 +139,7 @@ MINDE 在高 MI 场景下低估严重，原因是 score matching 需要逼近尖
 - 发现偏差-方差权衡并提供两系列变体供用户按场景选择，体现了扎实的实验洞察
 - 统一 MI 估计库的发布对社区贡献很大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 无法保证估计的方向性（不是上界也不是下界），依赖于神经网络逼近全局最优的假设
 - 正交变体在高 MI 场景的保守偏差是系统性的，目前没有自动检测和切换的机制

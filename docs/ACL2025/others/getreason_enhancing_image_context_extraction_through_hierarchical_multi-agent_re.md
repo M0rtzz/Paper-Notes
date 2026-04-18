@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GETReason: Enhancing Image Context Extraction through Hierarchical Multi-Agent Reasoning
 description: >-
@@ -114,7 +114,7 @@ GETReason 由三层架构组成：场景图生成层 → 提示生成层 → 多
 - **数据集增强**：对 TARA 数据集进行了系统性增强（TARA*），补充了事件信息、细粒度时空标注和推理链
 - **交叉验证减幻觉**：通过 Agent 间的迭代信息共享来增强事实准确性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖大型商业模型**：框架完全依赖 Gemini、GPT-4o 等闭源模型，成本高且难以复现
 2. **Ground Truth 由 VLM 生成**：TARA* 的增强标注本身由 Gemini 1.5 Pro 生成，存在循环验证风险

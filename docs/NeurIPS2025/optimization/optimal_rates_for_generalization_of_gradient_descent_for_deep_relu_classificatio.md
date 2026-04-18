@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Rates for Generalization of Gradient Descent for Deep ReLU Classification
 description: >-
@@ -88,7 +88,7 @@ tags:
 - 稀疏矩阵表示 $\hat{\mathbf{G}}_{L,0}^l$ 捕获了ReLU激活模式的变化，是比简单递推估计更精细的工具
 - 参考模型方法比NTK-Gram矩阵分析更灵活，不需要研究核或对应的Gram矩阵
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 过参数化要求 $m = \widetilde{\Omega}(L^{16}/\gamma^8)$ 仍然较大，与实际训练中使用的网络宽度有较大差距
 - 仅分析了分类任务（logistic损失），回归任务（如MSE损失）的最优泛化速率分析是自然延伸

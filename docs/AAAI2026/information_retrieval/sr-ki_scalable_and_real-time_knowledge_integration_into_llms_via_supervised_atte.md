@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SR-KI: Scalable and Real-Time Knowledge Integration into LLMs via Supervised Attention
 description: >-
@@ -145,7 +145,7 @@ SR-KI在40K规模下比Dense Retrieval高9.19个点、比BM25高43.94个点。
 - **知识溯源能力**：通过Reference ID KB同时生成答案和来源ID，支持输出的透明性和可验证性
 - **远超KBLaM的扩展性**：在10K规模下KBLaM的ID准确率降至0.87%，而SR-KI仍保持78%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **拒答能力下降**：监督注意力训练导致不可回答QA的拒绝准确率有所下降，在大规模KB下尤为明显
 - **仅支持中文知识库**：实验基于Wikidata中文子集和中文QA模板构建，多语言泛化性未验证

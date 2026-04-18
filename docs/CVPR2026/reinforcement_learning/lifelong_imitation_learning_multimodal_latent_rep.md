@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lifelong Imitation Learning with Multimodal Latent Replay and Incremental Adjustment
 description: >-
@@ -72,7 +72,7 @@ tags:
 - **语言嵌入作锚点**：巧妙利用了语言描述在冻结编码器下的稳定性作为参考点，避免了训练过程中锚点漂移
 - **存储效率**：潜在回放的内存消耗约188MB（OBJECT）/ 121MB（GOAL），远小于存储原始图像
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在LIBERO模拟基准上验证，未在真实机器人上测试
 - 预训练阶段用LoRA微调CLIP可能限制了在域外场景的泛化
 - $\alpha$ 需要按数据集调整（0.1/0.3/0.7），且最优值差异大，自动选择 $\alpha$ 是一个开放问题

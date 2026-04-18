@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In-Context Learning for Pure Exploration
 description: >-
@@ -140,7 +140,7 @@ ICPE 采用双网络架构：
 - **IDS 非最优的理论证明**（Theorem B.1）：在有 magic action 的结构化环境中，贪心信息增益策略（IDS）是次优的，因为它无法做长程规划
 - **连接认知科学**：ICPE 的双网络架构类似于认知地图（探索网络）+ 目标导向评估（推断网络）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **有限的假设空间 $\mathcal{H}$**：当前假设 $\mathcal{H}$ 是有限集，需要扩展到连续情况（主动回归）
 2. **依赖先验分布 $\mathcal{P}(\mathcal{M})$**：需要假设任务分布已知且静态

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Securing the Language of Life: Inheritable Watermarks from DNA Language Models to Proteins
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{G}_a = \{a \mid \text{translate}(b_1, b_2, b_3) = a, b_2 \in \mathcal
 - **可遗传水印设计精巧**：CentralMark 利用中心法则，通过 DNA 到蛋白质的信息传递实现水印遗传，这一概念在水印文献中独树一帜
 - **同义密码子替换兼顾功能与水印**：利用遗传密码简并性这一生物学特性，实现了真正的功能不变水印
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在编码区验证，对非编码区（UTR 等）的影响未充分探索
 - 缺乏湿实验验证（仅计算实验）

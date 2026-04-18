@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Policy-Based RL Algorithms for POMDPs
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **代数引理的通用性**：Lemma 2 对形如 $|\sum a_ib_i - \sum c_id_i|$ 的界提供了比三角不等式更紧的控制，可广泛应用
 - **分离关注点**：值函数误差被分解为函数近似误差 $\xi_{\text{FA}}$（可通过更好的特征改善）和历史近似误差 $\xi_{\text{HA}}$（可通过增大 $l$ 指数衰减），这种分解使调参有明确方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 滤波器稳定性条件（Assumption 1）要求转移和观测核具有足够混合性，在某些确定性环境下不满足
 - $O(T^{3/4}\log T)$ 的 regret 速率可能不是最优的

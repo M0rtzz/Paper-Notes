@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Situat3DChange: Situated 3D Change Understanding Dataset for Multimodal Large Language Models
 description: >-
@@ -88,7 +88,7 @@ Situat3DChange 遵循感知-行动模型：**感知**包括 121K 问答对 + 36K
 - 三个任务（QA、变化描述、重排指令）统一在感知-行动模型下，评估体系完整。
 - 数据质量控制机制（人工标注+自动交叉验证+GPT 扩展）多层保障。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 3RScan 数据集，场景规模有限（903 扫描对），室内场景为主。
 - 人工标注仅来自 7 位合作者，可能存在标注者偏差和文化背景限制。

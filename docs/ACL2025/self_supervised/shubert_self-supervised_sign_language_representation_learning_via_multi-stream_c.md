@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SHuBERT: Self-Supervised Sign Language Representation Learning via Multi-Stream Cluster Prediction
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：需要一种既能处理手语多通道特性、又能建模长程上下文、还计算高效的自监督表示学习方法。
 
-**本文要解决什么**：为手语视频学习统一的、上下文的、多通道的自监督表示。
+**本文目标**：为手语视频学习统一的、上下文的、多通道的自监督表示。
 
 **切入角度**：语音领域的 HuBERT 已成功通过 masked cluster prediction 学习上下文语音表示。手语和语音共享类似挑战（无预定义 token、变长单位、无显式边界），因此将 HuBERT 范式适配到多流手语输入。
 
@@ -106,7 +106,7 @@ tags:
 - **隐私友好的面部表示**：灰化+模糊面部但保留嘴部/眼部区域，在隐私和语言信息保留间取得平衡
 - **DINOv2 作为手语特征提取器**：对 DINOv2 做任务特定 continued pretraining（5M 手部/面部裁剪），比 keypoint 更准确
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 ASL 上验证，跨手语（DGS/BSL/CSL）泛化需探索
 - 86M 参数 base 模型，scaling up 可能进一步提升
 - 依赖 MediaPipe 手部检测（约 95% 准确率），检测失败需插值处理

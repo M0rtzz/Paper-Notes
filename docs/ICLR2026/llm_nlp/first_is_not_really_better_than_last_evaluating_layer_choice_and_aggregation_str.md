@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] First is Not Really Better Than Last: Evaluating Layer Choice and Aggregation Strategies in Language Model Data Influence Estimation
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：cancellation effect 指标 $C(W)$ 通过参数子集的 norm 聚合来衡量梯度抵消，但这种聚合会掩盖个别参数上的极端抵消，导致指标无法可靠预测层的实际 influence 性能。同时，标准的均值聚合策略也可能因对冲效应而降低判别能力。
 
-**本文要解决什么？** (RQ1) cancellation effect 是否可靠；(RQ2) 哪些层最适合 influence estimation；(RQ3) 如何更好地跨层聚合 influence 分数；(RQ4) 是否存在不需要重训练就能评估 influence 方法效果的 proxy 指标。
+**本文目标** (RQ1) cancellation effect 是否可靠；(RQ2) 哪些层最适合 influence estimation；(RQ3) 如何更好地跨层聚合 influence 分数；(RQ4) 是否存在不需要重训练就能评估 influence 方法效果的 proxy 指标。
 
 **切入角度**：从理论证明 cancellation effect 的反例出发，然后在多模型多数据集上做大规模实验，系统评估层选择和聚合策略。
 
-**核心 idea 一句话**：中间 attention 层比 embedding 层更适合影响力估计，Vote 聚合比均值聚合显著更好，NDR 可作为无需重训练的可靠 proxy 指标。
+**核心 idea**：中间 attention 层比 embedding 层更适合影响力估计，Vote 聚合比均值聚合显著更好，NDR 可作为无需重训练的可靠 proxy 指标。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ tags:
 - **NDR 作为 proxy 指标有很大实用价值**：研究者可以不做重训练就快速评估 influence 方法的效果，大幅降低实验成本。
 - 层间 influence 分数的相关性分析揭示了三个层组（early/middle/late），这个结构与知识编辑（ROME/MEMIT）的发现一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验仅在 GLUE benchmark 上测试，未涉及生成任务或 in-context learning 场景
 - Llama-3.2 1B 上 influence function 全面失效，文章未给出令人信服的解释
 - Vote 的超参 $k$ 需要搜索，且在 Cosine 方法上会降低性能

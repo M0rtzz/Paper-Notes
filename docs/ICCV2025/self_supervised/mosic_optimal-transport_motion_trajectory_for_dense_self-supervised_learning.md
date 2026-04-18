@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoSiC: Optimal-Transport Motion Trajectory for Dense Self-Supervised Learning
 description: >-
@@ -115,7 +115,7 @@ MoSiC-B14（85M 参数）进一步提升：Pascal VOC in-context (1/128) 达 65.
 3. **可见性掩码机制**：仅对可见轨迹计算损失，优雅地解决了遮挡导致的伪标签问题，这比 TimeTuning 的掩码传播更鲁棒；
 4. **即插即用**：可应用于各种视觉基础模型作为后续微调阶段。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖离线点跟踪器（CoTracker-v3），跟踪器的质量直接影响聚类传播的准确性；
 - 训练需要视频数据（YouTube-VOS），无法在纯图像场景下使用；

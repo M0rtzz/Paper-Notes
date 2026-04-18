@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BRIDGE: Bootstrapping Text to Control Time-Series Generation via Multi-Agent Iterative Optimization and Diffusion Modeling
 description: >-
@@ -146,7 +146,7 @@ $$L = \mathbb{E}_{x_0 \in D^T, \epsilon \sim \mathcal{N}(0, I), n} \left[ \| \ep
 - **评估体系完整**：同时使用保真度（MDD/KL）、可控性（J-FTSD）和人工评估（HE-Rank/HE-Mixed），多维度验证
 - **实用洞察**：文本描述的简洁性、背景知识的重要性等发现对后续文本-时序研究有指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本高**：多智能体系统需要多轮LLM调用（模板收集+评估+迭代优化），虽然是一次性的但初始成本不低
 2. **仅处理单变量时序**：采用channel-independent设定，未直接建模多变量间的相关性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DEFAME: Dynamic Evidence-based FAct-checking with Multimodal Experts
 description: >-
@@ -148,7 +148,7 @@ DEFAME 是一个**完全零样本（zero-shot）**的系统，不需要任何微
 5. **AVeriTeC Challenge 第一名**：改名 InFact 参加竞赛并获得最佳成绩，验证了系统的灵活性
 6. **透明且可解释**：生成详细的事实核查报告，包含可追溯的证据来源和超链接
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **外部证据可信度**：依赖搜索引擎可能引入不可靠信息，缺乏独立的来源可信度评估模块
 2. **系统稳定性**：网页抓取受限于访问限制和大文档大小，开源模型对提示格式敏感

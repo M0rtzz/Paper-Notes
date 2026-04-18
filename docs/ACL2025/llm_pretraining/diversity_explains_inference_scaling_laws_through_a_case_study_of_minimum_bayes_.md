@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diversity Explains Inference Scaling Laws: Through a Case Study of Minimum Bayes Risk Decoding
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：直觉上应该同时优化 bias（评估指标贴近人类）和 diversity（采样多样化），但实际中两者存在 trade-off——本文要形式化这个 trade-off。
 
-**本文要解决什么？** 为 MBR 解码和推理 scaling law 提供统一的理论框架。
+**本文目标** 为 MBR 解码和推理 scaling law 提供统一的理论框架。
 
 **切入角度**：借鉴集成学习中的 bias-diversity 分解（Krogh & Vedelsby, 1994），将 MBR 解码视为一种集成学习。
 
-**核心idea一句话**：MBR 的估计误差可分解为 Bias - Diversity，diversity 的提升是推理 scaling law 的理论根源。
+**核心 idea**：MBR 的估计误差可分解为 Bias - Diversity，diversity 的提升是推理 scaling law 的理论根源。
 
 ## 方法详解
 

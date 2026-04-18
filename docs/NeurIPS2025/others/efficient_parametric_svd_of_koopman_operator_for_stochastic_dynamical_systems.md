@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Parametric SVD of Koopman Operator for Stochastic Dynamical Systems
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L}_{\text{lora}}(\mathbf{f}, \mathbf{g}) = -2 \operatorname{tr}(\math
 4. **收敛一致性**：在所有实验中均可靠收敛，是唯一在 chignolin 高维实验中不发散的方法类
 5. **完整理论保证**：有 Eckart-Young-Mirsky 定理的全局最优性保证，以及 $O(N^{-1/2})$ 的样本复杂度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 学到的动力学质量受限于数据的时间分辨率，可能无法恢复最慢的物理过程
 2. 对高度非正规（non-normal）或混沌系统中鲁棒识别 coherent structures 仍是开放问题

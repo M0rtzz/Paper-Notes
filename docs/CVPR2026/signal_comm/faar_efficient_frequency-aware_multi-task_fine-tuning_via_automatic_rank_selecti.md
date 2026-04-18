@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FAAR: Efficient Frequency-Aware Multi-Task Fine-Tuning via Automatic Rank Selection
 description: >-
@@ -141,7 +141,7 @@ PASCAL-Context 上的组件消融：
 - **DoRA + 极低秩的协同效应**：高秩时 DoRA 不一定优于 LoRA，但当秩被 PDRS 动态压缩到极低值时，DoRA 的幅度-方向解耦变得关键
 - **全任务同时改善**：FAAR 在所有 4 个 PASCAL 任务上均优于基线，不存在某些任务以牺牲其他任务为代价的情况
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在 NYUDv2 上所有 MTL PEFT 方法均未超过单任务训练，FAAR 也未完全解决小数据集上的 MTL 困难
 2. 覆盖率参数 $\rho$ 仍需手动设定（虽然论文称 0.95 在验证集上选择，但不同数据集可能需要不同值）

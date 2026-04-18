@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E-BATS: Efficient Backpropagation-Free Test-Time Adaptation for Speech Foundation Models
 description: >-
@@ -115,7 +115,7 @@ $$\mathbf{m}_{ema} = \gamma \mathbf{m}_{ema} + (1-\gamma)\mathbf{m}_t^{(K)}$$
 3. **多尺度损失设计巧妙**——从语音级到 token 级的层次化对齐，加上自适应置信度控制，解决了伪标签不可靠的难题
 4. **显存优势随模型增大更显著**——HuBERT-Large 上节省 6.8×，实际部署价值大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理延迟**：CMA-ES 的迭代优化引入额外延迟，当前实现未充分利用 GPU 并行化，不适用实时场景
 2. **仅验证语音识别**：未扩展到说话人识别、情感检测等其他语音任务

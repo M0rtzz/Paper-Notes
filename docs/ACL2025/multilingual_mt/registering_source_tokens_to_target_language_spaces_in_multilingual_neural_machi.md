@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Registering Source Tokens to Target Language Spaces in Multilingual Neural Machine Translation
 description: >-
@@ -122,7 +122,7 @@ MITRE-913M 以 913M 参数超越 NLLB-3.3B（+1.14）和 GPT-3.5 Turbo，与 GPT
 - **实际效果震撼**：913M 参数模型达到 GPT-4o mini 级别，且 off-target 率降至近零
 - 方法论上融合了 gisting（mask-based 信息压缩）和 prefix-tuning 的思想
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Registers 的长度固定为源序列长度，对极长句子可能增加计算开销
 - Register 初始化为统一的语言标签，未探索更智能的初始化策略

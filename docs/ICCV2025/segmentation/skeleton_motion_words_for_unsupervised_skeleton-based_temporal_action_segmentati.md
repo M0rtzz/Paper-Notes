@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Skeleton Motion Words for Unsupervised Skeleton-Based Temporal Action Segmentation
 description: >-
@@ -121,7 +121,7 @@ $$L_{commit} = \sum_{\mathbf{p}_i} \|\text{sg}[\mathbf{c}_{k_i}] - \mathbf{p}_i\
 - **关节解耦设计简洁实用**：通过 reshape 操作即可让每个关节独立学习嵌入，无需复杂的图卷积网络
 - **关节间距离损失设计精巧**：不需要显式数据增强即可获得旋转/平移不变性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 动作边界只能在 patch 边界处切换，**无法精确检测动作转换点**
 - 码本大小 $K$ 需提前指定，与数据集实际动作数量一致（实际场景中动作数未知）

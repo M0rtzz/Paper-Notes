@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Refinement: Optimal Transport to Infinity and Beyond
 description: >-
@@ -88,7 +88,7 @@ tags:
 - 算法设计简洁但理论基础深厚，连接了低秩OT、聚类和分治策略
 - 可用于大规模生成模型训练中的 OT 匹配（Flow Matching等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 严格 $r$-Monge 可分条件在实际数据中可能不完全满足
 - 实际使用的低秩 OT 求解器是近似的，可能影响共聚类质量
 - 对非均匀分布的数据可能需要调整 rank schedule

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TAMMs: Change Understanding and Forecasting in Satellite Image Time Series with Temporal-Aware Multimodal Models
 description: >-
@@ -118,7 +118,7 @@ $$\text{TCS} = \text{SPS} \cdot \text{ACS}$$
 3. TAM 模块的设计很优雅——通过参数高效的方式"唤醒"冻结 MLLM 的潜在时序推理能力，而非昂贵的全模型微调。
 4. SFCI 跳过了粗粒度文本控制的瓶颈，直接将 MLLM 的多图像时序理解特征转化为 patch 级别的细粒度控制信号。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练集标签由 Qwen2.5-VL 自动生成（37K 序列），可能引入系统性偏差，测试集仅 150 个序列。
 2. SSIM 指标上 MCVD (0.2098) 高于 TAMMs (0.1831)，标准质量指标与时序一致性指标之间存在权衡。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RTGaze: Real-Time 3D-Aware Gaze Redirection from a Single Image
 description: >-
@@ -66,7 +66,7 @@ $$f = \mathcal{F}(\mathbf{I}, \mathbf{g}), \quad \mathbf{T} = \mathcal{G}(f), \q
 
 #### 1. 混合频率面部特征编码器
 
-**做什么**：从输入图像中分离提取高频（外观细节）和低频（全局几何）特征。
+**功能**：从输入图像中分离提取高频（外观细节）和低频（全局几何）特征。
 
 **核心思路**：
 - **低频编码器 $\mathcal{F}_l$**：使用 ImageNet 预训练的 DeepLabV3 提取全局语义信息 → Vision Transformer 编码器精炼全局特征 → 得到低频特征 $z_l$
@@ -76,7 +76,7 @@ $$f = \mathcal{F}(\mathbf{I}, \mathbf{g}), \quad \mathbf{T} = \mathcal{G}(f), \q
 
 #### 2. 视线 Prompt 注入模块（Gaze Prompt Injection）
 
-**做什么**：将目标视线方向注入到面部表征中。
+**功能**：将目标视线方向注入到面部表征中。
 
 **核心思路**：
 - 将视线 prompt $\mathbf{g}$（pitch + yaw）通过 MLP 嵌入，保证长度与高频特征一致
@@ -87,7 +87,7 @@ $$f = \mathcal{F}(\mathbf{I}, \mathbf{g}), \quad \mathbf{T} = \mathcal{G}(f), \q
 
 #### 3. 面部几何先验蒸馏（Face Geometric Prior Distillation）
 
-**做什么**：从预训练 3D 肖像生成模型中蒸馏面部几何知识，增强单图 3D 推理的质量。
+**功能**：从预训练 3D 肖像生成模型中蒸馏面部几何知识，增强单图 3D 推理的质量。
 
 **核心思路**：
 - 使用预训练的 3D 肖像生成器（Trevithick et al. 2023）作为 teacher
@@ -184,7 +184,7 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\mathcal{R}} + \beta \cdot \mathcal{L}
 3. **蒸馏策略精巧**：只蒸馏深度不蒸馏颜色，避免了 teacher 和 student 在外观上不一致的问题
 4. **Cross-attention 注入**：用 cross-attention 而非简单拼接/加法来注入视线 prompt，允许更灵活的特征交互
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **SSIM 略低**：在 ETH-XGaze 上 SSIM（0.715）低于 GazeNeRF（0.733），说明像素级对齐仍有提升空间
 2. **训练依赖正脸图像**：蒸馏过程需要与目标同身份同视线的正脸图像，限制了训练数据的使用方式

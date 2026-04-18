@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MyGram: Modality-aware Graph Transformer with Global Distribution for Multi-modal Entity Alignment
 description: >-
@@ -155,7 +155,7 @@ $$\mathcal{L}_{InfoNCE} = \sum_{(e_i,e_j) \in \mathcal{S}} -\log \frac{\exp(\tex
 3. **模态权重的自适应计算**：通过注意力分数的归一化来确定各模态权重，比手动设定更灵活
 4. **实验覆盖全面**：5大数据集、9组对比实验、低资源分析、案例研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **使用VGG-16作为图像编码器**相对过时，可尝试CLIP等更强的多模态编码器
 2. **4维平行体是硬编码设计**，如果模态数量变化需要重新设计

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniICL: An Efficient ICL Framework Unifying Compression, Selection, and Generation
 description: >-
@@ -124,7 +124,7 @@ UniICL 的 pipeline 分三步，全部复用同一个**冻结的** Decoder-only 
 - **PPL gain 挖掘正负例**：不依赖表面语义相似度，而是用"加入后 PPL 是否真正降低"来判断 demonstration 的实际效用，比 S-BERT 选出来的更有效。这个思路可以迁移到 RAG 中的 passage 筛选。
 - **极低训练成本**：17M 参数 + 30k 数据就能训出有效的压缩/选择能力，parameter-efficient 到了极致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限朴素 ICL**：未探索与 RAG、Chain-of-Thought 等高级 prompting 策略的结合。virtual tokens 能否保留 CoT 推理链的逻辑结构是个开放问题。
 - **模型规模受限**：实验仅在 7B 模型上验证。更大规模 LLM（13B、70B）上的表现尚不明确，特别是压缩率和信息保留的 trade-off 可能随模型能力变化。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Generate Structured Output with Schema Reinforcement Learning
 description: >-
@@ -124,7 +124,7 @@ ToS 贡献最大（+13.74%），细粒度验证器也有显著提升（+4.44%）
 - **SRL 不仅大幅提升结构化生成能力，还较好地保留了通用推理能力**（MATH-500、ARC-C 未明显下降），与 SFT 掉分形成对比
 - RL 训练效率高，约训练到一半时即可超过 SFT 基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **格式局限**：目前仅面向 JSON schema，未扩展到 YAML、XML、TOML 等其他结构化格式
 2. **效率瓶颈**：SRL 的在线采样阶段计算开销大，需要反复生成和验证

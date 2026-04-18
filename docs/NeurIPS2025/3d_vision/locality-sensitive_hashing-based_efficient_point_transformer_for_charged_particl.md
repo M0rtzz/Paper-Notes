@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Locality-Sensitive Hashing-Based Efficient Point Transformer for Charged Particle Reconstruction
 description: >-
@@ -94,7 +94,7 @@ tags:
 - **硬件友好**：28ms/event 的延迟已可接受在线触发环境（10kHz 读出速率），具有实际部署可能性。
 - **合理权衡**：接受小幅假率提升换来 30 倍速度，在物理实验的实际需求中是合理的。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假率与 GNN 差距仍是主要弱点（0.113 vs 0.002），可能需要更复杂的掩码精化
 - 当前局限于 Pixel 检测器，HL-LHC 完整系统包括 Strip 检测器（约 6 倍更多命中）

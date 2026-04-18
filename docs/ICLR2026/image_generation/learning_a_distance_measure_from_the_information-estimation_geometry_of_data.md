@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning a Distance Measure from the Information-Estimation Geometry of Data
 description: >-
@@ -86,7 +86,7 @@ $$\boldsymbol{G}(\boldsymbol{x}, \Gamma) = \int_0^\Gamma \gamma^2 \mathbb{E}\lef
 - 等距线可以不连通（高斯混合情况），反映了度量对密度全局几何的适应性
 - 为从无标注数据推导感知度量这一基本问题提供了突破性方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 计算成本高：需在多个 SNR 水平上运行去噪器并求积分，比 LPIPS 慢得多
 - 超参 $\Gamma$ 的选择缺乏系统性原则
 - 目前仅在 256×256 图像上验证

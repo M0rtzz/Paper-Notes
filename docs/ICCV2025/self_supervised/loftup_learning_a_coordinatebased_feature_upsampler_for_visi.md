@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LoftUp: Learning a Coordinate-Based Feature Upsampler for Vision Foundation Models
 description: >-
@@ -78,7 +78,7 @@ LoftUp是一个轻量级的2层cross-attention transformer（<20%的VFM参数）
 - **<20%额外参数 + bilinear级推理速度**：plug-and-play的设计极其实用
 - **VOS上的惊人提升**：+50%的提升说明高分辨率特征对temporal对应关系极为重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Stage 1依赖SAM生成mask，增加了训练时的计算依赖
 - 仅在DINOv2-S/14上做主实验，更大模型的效果未充分验证
 - 尚未在更高分辨率输入（如512/1024）上系统评估

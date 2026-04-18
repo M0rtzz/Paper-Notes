@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shoot First, Ask Questions Later? Building Rational Agents that Explore and Act Like People
 description: >-
@@ -103,7 +103,7 @@ tags:
 - 推断时缩放（inference-time scaling）的精彩示例：无需训练，仅靠采样+排序就大幅提升性能
 - 代码生成作为接地手段，将模糊的自然语言问题转化为可执行程序
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 环境相对简单（8×8 棋盘），泛化到复杂真实世界场景需进一步验证
 - Spotter 噪声 $\varepsilon$ 固定为 0.1，实际中应自适应估计
 - 贝叶斯策略依赖可高效采样的"世界模型"，对于无法手工实现的领域需要学习生成模型

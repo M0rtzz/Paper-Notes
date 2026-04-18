@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GoalLadder: Incremental Goal Discovery with Vision-Language Models
 description: >-
@@ -122,7 +122,7 @@ GoalLadder 在所有 7 个任务上接近 Oracle 性能，在 Drawer Open 任务
 3. **极高的查询效率**：利用无标签数据训练嵌入空间，仅用少量 VLM 查询识别目标，奖励自动泛化到未见状态
 4. **实验结果令人惊喜**：接近 Oracle 性能，在一个任务上甚至超越，充分验证了方法的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 假设任务目标可由单张图像表示（静态目标），无法处理需要序列判断的动态任务
 2. 依赖视觉特征相似度作为状态距离的代理，在某些环境中可能不够准确

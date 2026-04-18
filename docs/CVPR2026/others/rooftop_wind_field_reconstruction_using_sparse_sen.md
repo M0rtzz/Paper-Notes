@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods
 description: >-
@@ -113,7 +113,7 @@ MDT下DL vs Kriging：SSIM +18.2~33.5%，FAC2 +3.5~24.2%，NMSE -10.2~27.8%。
 - QR传感器优化将POD降维与信息论结合，在数据驱动的传感器布置上提供了理论有保证的方法
 - 不同方法的适用场景总结具有实用指导价值：单方向少传感器→Kriging；多方向多传感器→UNet（平衡稳定）；追求最高精度→CWGAN（计算代价高）；资源受限→ViTAE
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅2D平面风场（15×15网格），限于z/H=1.05单一高度，3D结构缺失
 - 仅三个风向角（0°/22.5°/45°），超出此范围的泛化需要额外实验数据或迁移学习

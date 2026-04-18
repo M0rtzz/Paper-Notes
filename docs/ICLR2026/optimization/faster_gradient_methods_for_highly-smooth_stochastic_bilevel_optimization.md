@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faster Gradient Methods for Highly-Smooth Stochastic Bilevel Optimization
 description: >-
@@ -89,7 +89,7 @@ $$\text{SFO 复杂度} = \tilde{\mathcal{O}}\left(p \kappa^{9+2/p} \epsilon^{-4-
 4. **更紧的已知界**：$p=1$ 时改进系数 $\kappa$，$p=2$ 时修正了先前工作的 Hessian 收敛界
 5. **假设更弱**：仅需 $\bm{y}$ 方向高阶光滑，不需联合高阶光滑或随机 Hessian 假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 当 $p$ 较小（特别是 $p=1$）时上下界仍有差距，即使 $p=1$ 的最优复杂度仍是开放问题
 2. 条件数 $\kappa$ 的依赖存在 $\Omega(\kappa^9)$ 的上下界差距
 3. 实验仅在凸下层问题上验证，非凸-非凸结构化双层优化的推广尚待研究

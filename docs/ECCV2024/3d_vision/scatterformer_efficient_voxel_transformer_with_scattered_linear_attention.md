@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ScatterFormer: Efficient Voxel Transformer with Scattered Linear Attention
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 窗口内体素数量不等导致注意力矩阵占用不规则内存空间，无法直接并行计算；而现有解决方案（padding + sorting）引入的额外开销又抵消了注意力带来的性能收益。
 
-**本文要解决什么**: 设计一种无需排序和 padding 就能在变长体素序列上高效并行计算注意力的方法。
+**本文目标**: 设计一种无需排序和 padding 就能在变长体素序列上高效并行计算注意力的方法。
 
 **切入角度**: 利用线性注意力的"递推形式"特性——隐状态矩阵 $S \in \mathbb{R}^{d \times d}$ 与序列长度无关，可以通过 chunk-wise 计算在共享内存中完成不同窗口的并行注意力。
 
-**核心 idea 一句话**: 将所有窗口的体素展平为单一序列，利用线性注意力的 KV 预计算特性进行 chunk-wise 并行计算，避免 padding 和排序的开销。
+**核心 idea**: 将所有窗口的体素展平为单一序列，利用线性注意力的 KV 预计算特性进行 chunk-wise 并行计算，避免 padding 和排序的开销。
 
 ## 方法详解
 
@@ -152,7 +152,7 @@ $$X' = \text{Concat}(X_k, X_w, X_h, X^{3c:4c})$$
 - **线性复杂度不牺牲精度**: 证明了线性注意力在 3D 检测中不仅可行且优于 softmax 注意力
 - **Cyclist 类别大幅提升**: ScatterFormer-4f 比 DSVT-4f 在 Cyclist 上提升 0.8 APH (L2)，说明对稀疏小目标的检测有特殊优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖自定义算子（Triton kernel），尚未实现为 TensorRT 插件，车载部署需额外工程工作
 - 线性注意力在过大窗口时性能下降，推测是因为线性注意力的"聚焦能力"随 token 数增加而稀释

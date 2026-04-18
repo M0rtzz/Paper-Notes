@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedFACT: A Provable Framework for Controllable Group-Fairness Calibration in Federated Learning
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 现有方法要么只关注全局公平（牺牲局部），要么只关注局部公平（牺牲全局），且大多局限于二分类问题。在多类别×多敏感属性×全局/局部双公平约束下，如何找到精度退化最小的最优分类器？
 
-**本文要解决什么**: 设计一个理论上最优、可控的联邦群体公平性校准框架，同时保证全局和局部公平性，适用于多类别分类。
+**本文目标**: 设计一个理论上最优、可控的联邦群体公平性校准框架，同时保证全局和局部公平性，适用于多类别分类。
 
 **切入角度**: 从**贝叶斯最优**的角度出发——先刻画联邦环境下公平约束下的最优分类器结构，再基于此设计实际算法。
 
-**核心idea一句话**: 联邦贝叶斯最优公平分类器可以通过逐客户端的代价敏感分类或基于plug-in的双层优化来精确逼近，其中代价矩阵 $\mathbf{M}^{\lambda,\mu}(a,k)$ 由对偶参数控制全局/局部公平程度。
+**核心 idea**: 联邦贝叶斯最优公平分类器可以通过逐客户端的代价敏感分类或基于plug-in的双层优化来精确逼近，其中代价矩阵 $\mathbf{M}^{\lambda,\mu}(a,k)$ 由对偶参数控制全局/局部公平程度。
 
 ## 方法详解
 
@@ -56,7 +56,7 @@ FedFACT包含两个互补的方法：
 
 #### 1. 联邦贝叶斯最优公平分类器的刻画（Proposition 1 & 2）
 
-- **做什么**: 在全局+局部公平约束下，找到最小化分类风险的最优分类器
+- **功能**: 在全局+局部公平约束下，找到最小化分类风险的最优分类器
 - **核心结构** (Proposition 2):
 $$h_k^*(x) = e_y, \quad y \in \arg\max_{j \in [m]} \left(\sum_{a \in \mathcal{A}} \mathbb{P}(A=a|x,k) [\mathbf{M}^{\lambda,\mu}(a,k)]^\top \eta(x,a,k)\right)_j$$
   其中 $\mathbf{M}^{\lambda,\mu}(a,k) = \mathbf{I} - \frac{1}{p_{a,k}}[\text{全局对偶项} - \text{局部对偶项}]$
@@ -64,7 +64,7 @@ $$h_k^*(x) = e_y, \quad y \in \arg\max_{j \in [m]} \left(\sum_{a \in \mathcal{A}
 
 #### 2. In-processing: 个性化代价敏感学习（Algorithm 1）
 
-- **做什么**: 将公平约束下的联邦优化转化为每个客户端的代价敏感分类问题
+- **功能**: 将公平约束下的联邦优化转化为每个客户端的代价敏感分类问题
 - **核心公式** (Proposition 3):
 $$\ell_k(y, \mathbf{s}(x), a) = -\sum_{i=1}^{m} \overline{\mathbf{M}}^{\lambda,\mu}_{y,i}(a,k) \log \frac{\exp([\mathbf{s}(x)]_i)}{\sum_j \exp([\mathbf{s}(x)]_j)}$$
   其中 $\overline{\mathbf{M}} = \mathbf{M}^{\lambda,\mu} + \kappa \mathbf{1}_{m \times m}$（保证正定性）
@@ -77,7 +77,7 @@ $$\ell_k(y, \mathbf{s}(x), a) = -\sum_{i=1}^{m} \overline{\mathbf{M}}^{\lambda,\
 
 #### 3. Post-processing: 基于Plug-in的双层优化（Algorithm 2）
 
-- **做什么**: 校准预训练联邦模型的分类概率以满足公平性
+- **功能**: 校准预训练联邦模型的分类概率以满足公平性
 - **核心公式** (Theorem 5):
 $$\min_{\lambda \in \Lambda} \left\{\hat{F}(\lambda) = \sum_k \hat{p}_k \hat{F}_k(\lambda)\right\}, \quad \hat{F}_k(\lambda) := \min_{\mu_k \in \mathcal{M}_k} \hat{H}_k(\lambda, \mu_k)$$
 - **关键设计**: 用soft-max替代hard-max保证平滑性，$\mu_k$在本地更新（局部公平），$\lambda$在服务器聚合（全局公平）
@@ -133,7 +133,7 @@ $$\min_{\lambda \in \Lambda} \left\{\hat{F}(\lambda) = \sum_k \hat{p}_k \hat{F}_
 4. **严格的收敛和泛化保证**: 不仅仅是实验有效，理论上保证逼近最优
 5. **in/post-processing互补**: 前者改变表示但开销大，后者轻量但只调输出
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **实验规模有限**: 4个数据集均为表格数据或简单图像，未在大规模视觉/NLP任务上验证
 2. **通信开销**: 需额外传输对偶参数 $\lambda$ 和混淆矩阵

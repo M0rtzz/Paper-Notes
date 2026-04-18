@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can OOD Object Detectors Learn from Foundation Models?
 description: >-
@@ -119,7 +119,7 @@ SyncOOD 包含两个核心阶段：(1) **OOD 数据合成**——利用基础模
 - **显式解耦合成与选择**：语义可分性由 LLM 保证，视觉相似性由特征过滤保证
 - **即插即用设计**：不改变原始检测器，在任意检测器上叠加 OOD 能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成质量受 Stable Diffusion 和 SAM 能力制约，某些概念可能编辑失败
 - LLM 想象的概念需排除与测试 OOD 重叠的类别，存在先验知识泄漏风险

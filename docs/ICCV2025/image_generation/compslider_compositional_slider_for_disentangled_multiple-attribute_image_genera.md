@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CompSlider: Compositional Slider for Disentangled Multiple-Attribute Image Generation
 description: >-
@@ -101,7 +101,7 @@ $$\bm{c}^{\mathcal{I}} = \text{CompSlider}(\bm{c}^{\mathcal{S}}, \bm{c}^{\mathca
 - **提出 4 个新评估指标**：Continuity、Scope、Consistency、Entanglement，比 LPIPS/CLIP 更全面衡量滑块生成质量
 - 可扩展到视频生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练属性分类器获取滑块值的 ground truth，分类器质量影响训练
 - 滑块属性集合是封闭集（16 个预定义），不支持开放域属性

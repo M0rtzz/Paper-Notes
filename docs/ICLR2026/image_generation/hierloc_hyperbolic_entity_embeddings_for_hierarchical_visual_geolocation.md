@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HierLoc: Hyperbolic Entity Embeddings for Hierarchical Visual Geolocation
 description: >-
@@ -84,7 +84,7 @@ tags:
 - GWH-InfoNCE中地理距离加权负样本的设计直觉精妙——地理上近的才是强负样本
 - 不对称跨模态注意力（仅更新图像、保持实体不变）防止过拟合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 城市级实体使用图像均值可能丢失视觉多样性信息
 - beam search宽度固定为10，自适应策略可能更好
 - 需要预先构建层次结构，对缺少行政区划数据的地区可能受限

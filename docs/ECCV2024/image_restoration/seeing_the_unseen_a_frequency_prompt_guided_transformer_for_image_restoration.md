@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration
 description: >-
@@ -160,7 +160,7 @@ FPro 仅需 Restormer 约 47% 的 FLOPs。
 - **可学习频域 prompt 组件**：$\mathbf{P}_{hi}$ 和 $\mathbf{P}_{lo}$ 作为可学习参数直接注入频率特征，简洁有效
 - **统一框架处理 5 种退化**：虽非 all-in-one 模型，但同一架构在 5 个不同复原任务上都取得最佳或接近最佳成绩
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 论文未讨论 all-in-one 设置，每个退化任务需单独训练
 - 频率分解仅使用 3×3 滤波器，可能对某些特殊频率模式的捕获不够精细

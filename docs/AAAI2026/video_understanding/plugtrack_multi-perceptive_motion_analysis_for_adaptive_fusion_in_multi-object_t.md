@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PlugTrack: Multi-Perceptive Motion Analysis for Adaptive Fusion in Multi-Object Tracking
 description: >-
@@ -150,7 +150,7 @@ $$\mathcal{L} = \mathcal{L}_{SmoothL1} + \mathcal{L}_{GIoU} + \mathcal{L}_{MCAS}
 3. **MCAS 训练策略**：巧妙解决直接优化混合因子导致的偏差坍塌问题
 4. **坐标独立的混合因子**：不同空间维度可有不同的最优融合策略，这是首次在 MOT 中验证的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅融合两种预测器（卡尔曼 + 一个数据驱动），可扩展到多种预测范式（如 OC-SORT、Hybrid-SORT）的多路融合
 2. MCAS 的搜索空间是离散的（625 个候选），连续优化可能更高效

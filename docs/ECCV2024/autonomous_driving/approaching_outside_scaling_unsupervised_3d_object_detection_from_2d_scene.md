@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Approaching Outside: Scaling Unsupervised 3D Object Detection from 2D Scene
 description: >-
@@ -133,7 +133,7 @@ $$\Theta_t = \lambda \cdot \Theta_{t-1} + (1 - \lambda) \cdot \theta_t \quad (T_
 4. **弱模型聚合**利用不同轮次模型的互补性，无需额外训练开销就能获得更强模型
 5. 远距离检测超越有监督方法，验证了 2D 信息在远距离感知中的独特价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖预训练的 2D 模型**：GroundingDINO 和 SAM 的质量直接影响图像端伪标签质量，在新领域可能需要适配
 2. **计算开销较大**：需要运行 GroundingDINO + SAM + LiDAR 管线 + 10 轮自训练，训练成本高

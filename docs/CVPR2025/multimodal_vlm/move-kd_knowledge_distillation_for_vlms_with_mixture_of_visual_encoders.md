@@ -1,4 +1,4 @@
----
+﻿---
 title: "MoVE-KD: Knowledge Distillation for VLMs with Mixture of Visual Encoders"
 description: "首个从知识蒸馏角度融合多视觉编码器到单一VLM的方法，使用MoLE和注意力引导蒸馏策略"
 tags: ["knowledge distillation", "VLM", "mixture of experts", "visual encoder", "LoRA", "CVPR2025"]
@@ -92,7 +92,7 @@ tags: ["knowledge distillation", "VLM", "mixture of experts", "visual encoder", 
 - **[CLS]注意力复用**：利用CLIP的[CLS]注意力作为蒸馏指导信号是一个巧妙的"免费午餐"
 - **即插即用**：可直接应用于LLaVA/LLaVA-NeXT等主流VLM，无需修改推理架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时仍需多个教师编码器前向传播，训练成本高（16×A800）
 - [CLS]注意力完全依赖CLIP，对CLIP关注不到的区域蒸馏可能不足

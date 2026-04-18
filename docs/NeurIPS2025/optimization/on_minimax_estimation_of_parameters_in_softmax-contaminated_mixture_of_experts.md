@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Minimax Estimation of Parameters in Softmax-Contaminated Mixture of Experts
 description: >-
@@ -102,7 +102,7 @@ $$p_{G_*}(y|x) = \frac{1}{1+\exp(\beta^{*\top}x + \tau^*)} f_0(y|h_0(x,\eta_0), 
 - 参数随样本量变化的分析框架为 MoE 理论带来了新标准
 - 理论结果为 prefix tuning 的参数效率提供了统计学解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前限于单个 prompt 专家，扩展到多 prompt 混合是重要未来方向
 - prompt 限于高斯分布族，扩展到更一般分布将增强实用性
@@ -209,7 +209,7 @@ $$p_{G_*}(y|x) = \frac{1}{1+\exp(\beta^{*\top}x + \tau^*)} f_0(y|h_0(x,\eta_0), 
 3. **理论完整性**：上下界匹配（极小极大最优），两种设置分别分析，结论互补
 4. **实际指导意义**：理论直接建议 (1) 使用 softmax 门控而非常数门控；(2) 设计 prompt 模型使其学到与预训练模型不同的专业知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑单个 prompt 模型的情况，多 prompt（多任务微调）的分析留待未来
 - prompt 限定为高斯密度族，扩展到更一般的分布族（如混合分布）有待研究

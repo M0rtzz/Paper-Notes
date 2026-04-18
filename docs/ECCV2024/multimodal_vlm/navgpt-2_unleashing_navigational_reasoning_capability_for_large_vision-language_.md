@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NavGPT-2: Unleashing Navigational Reasoning Capability for Large Vision-Language Models
 description: >-
@@ -123,7 +123,7 @@ NavGPT-2由两大组件构成：(1) 大型视觉语言模型（VLM），基于In
 - 数据效率的定量证明：50%训练数据 ≈ 专用模型100%数据的性能
 - 展示了LLM在VLN中作为"特征提取器"而非"决策器"的可行路线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM始终冻结导致无法从导航任务中进一步学习空间推理能力
 - 当前推理生成质量（1.66/3）仍有明显提升空间

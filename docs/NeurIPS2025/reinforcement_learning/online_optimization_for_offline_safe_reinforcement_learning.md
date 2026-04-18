@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Optimization for Offline Safe Reinforcement Learning
 description: >-
@@ -100,7 +100,7 @@ $$\min_{\lambda \geq 0} \max_{D \in \Delta\Pi} L(D, \lambda) = \mathbb{E}_{\pi \
 - 理论分析完整：从通用框架（Theorem 1）到实用近似（Theorem 2）都有收敛保证。
 - 实验显示 $K=2$ 就能工作，说明问题的实际有效自由度可能比想象中少——安全-奖励的权衡本身可能是低维的。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前限于离线设置，扩展到 offline-to-online 安全 RL（先离线学、再在线微调）是自然的下一步。
 - 离散化 $\lambda$ 引入了 $O(1/K)$ 的近似误差，在极端精细安全要求下可能不够。

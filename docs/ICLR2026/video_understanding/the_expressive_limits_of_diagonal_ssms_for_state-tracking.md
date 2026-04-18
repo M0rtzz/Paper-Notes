@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Expressive Limits of Diagonal SSMs for State-Tracking
 description: >-
@@ -124,7 +124,7 @@ $$\{e\} = G_0 \trianglelefteq G_1 \trianglelefteq \cdots \trianglelefteq G_k = G
 - **表达 ≠ 学习的重要区分**：理论可表达但 SGD 学不到——提醒社区不能仅看理论表达力，优化瓶颈同样关键
 - **对 Mamba 设计的直接指导**：Mamba 的非负特征值约束是根本限制；允许负值/复值特征值是解锁更强追踪能力的必要条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 结果限于对角 SSM，分块对角（如 $2 \times 2$）可能将表达力扩展到 $\mathsf{NC}^1$
 - 可学习性 gap 的根本原因未解——loss landscape 的几何结构（平坦区域/鞍点/孤立极小值）需要进一步研究

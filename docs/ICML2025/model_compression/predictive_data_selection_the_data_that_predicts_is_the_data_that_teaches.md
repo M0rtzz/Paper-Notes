@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predictive Data Selection: The Data That Predicts Is the Data That Teaches
 description: >-
@@ -104,7 +104,7 @@ $$\mathbf{S} = \sum_{1 \le i < N} \sum_{i < j \le N} \mathbb{I}\{C_i > C_j\} / Z
 4. **同族模型设计**：发现跨模型族评估噪声是关键障碍，仅用 Llama 系列有效避免此问题
 5. **文档级 vs 域级**：实验证明文档级粒度显著优于域级（PPL Correlation DD/DP），验证了细粒度选择的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型族依赖**：仅用 Llama 1/2 系列计算预测强度，可能引入该模型族的偏见，不确定换用其他模型族效果如何
 2. **基准依赖**：下游排名基于 12 个固定基准的平均分，选择不同基准组合可能导致不同的数据偏好

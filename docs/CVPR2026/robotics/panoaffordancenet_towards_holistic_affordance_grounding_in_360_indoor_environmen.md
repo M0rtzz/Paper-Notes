@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PanoAffordanceNet: Towards Holistic Affordance Grounding in 360° Indoor Environments
 description: >-
@@ -160,7 +160,7 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{BCE} + \lambda_2 \mathcal{L}_{KL}
 4. **完整的数据集贡献**：360-AGD填补了全景affordance数据的空白，Easy/Hard分设也利于系统性评估
 5. **实际部署验证**：通过头戴式Insta360 X4相机的真实场景测试，验证了方法的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持静态场景**：未考虑动态场景中的时序推理，论文自身也提及未来将探索temporal reasoning
 2. **标注策略局限**：基于关键点的标注方式可能无法精确捕获复杂affordance区域的完整边界

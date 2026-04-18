@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fixing the Loose Brake: Exponential-Tailed Stopping Time in Best Arm Identification
 description: >-
@@ -132,7 +132,7 @@ $$L_{J_m}^{(m)} \geq \max_{i \neq J_m} U_i^{(m)}$$
 4. **BrakeBooster 是通用升级器**：任何满足基本条件的 FC-BAI 算法都可"一键升级"获得指数尾保证
 5. **二维 doubling trick 设计巧妙**：同时搜索最优预算和最优试验次数，保证对数开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **样本复杂度有额外对数因子**：相比 Track-and-Stop 等渐近最优算法，FC-DSH 和 BrakeBooster 的实例依赖复杂度多了 polylog 项
 2. **重置机制影响实用性**：FC-DSH 每个 phase 独立运行 SH、BrakeBooster 重复调用子算法，均涉及重置，浪费了跨 phase 的信息
 3. **FC-DSH 的复杂度依赖 $H_2$ 而非更优的 $H_1$**：虽然 $H_2 \leq H_1 \leq \log(2K) H_2$，但仍有改进空间

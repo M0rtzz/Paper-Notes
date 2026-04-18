@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Softmax is not Enough (for Sharp Size Generalisation)
 description: >-
@@ -106,7 +106,7 @@ OOD 规模上均有统计显著提升（paired t-test），且规模越大改善
 - **视野开阔**：论文结尾系统讨论了逃避分散定理的多种架构方向（unnormalized attention、sigmoid attention、selective attention、hard/local attention、不连续 MLP 等）
 - **与 Flash Attention 兼容**：自适应温度可流式计算，不破坏高效注意力实现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **自适应温度是 ad-hoc 方法**：作者明确承认它并不逃脱理论结论，仅延缓分散
 2. **多项式拟合的泛化性存疑**：degree-4 多项式基于特定任务拟合，迁移到不同场景（如 CLRS-Text）时需要重新适配或训练时引入

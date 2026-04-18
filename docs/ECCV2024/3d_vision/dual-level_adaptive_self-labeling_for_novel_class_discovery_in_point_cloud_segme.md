@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dual-level Adaptive Self-Labeling for Novel Class Discovery in Point Cloud Segmentation
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：均匀分布约束在训练后期过强，导致伪标签趋向均匀而非反映真实的不平衡分布；点级学习缺少空间上下文，区域内的点本应有一致语义但被独立处理
 
-**本文要解决什么？** 在点云分割的NCD任务中，生成适应不平衡类别分布的高质量伪标签，同时利用区域一致性提升分割质量
+**本文目标** 在点云分割的NCD任务中，生成适应不平衡类别分布的高质量伪标签，同时利用区域一致性提升分割质量
 
 **切入角度**：将最优传输的等式约束松弛为带KL散度的惩罚项，自适应调节约束强度；利用DBSCAN聚类引入区域级表示
 
-**核心idea一句话**：通过半松弛最优传输自适应生成不平衡伪标签，结合点级和区域级双层表示学习，互补提升新类分割性能
+**核心 idea**：通过半松弛最优传输自适应生成不平衡伪标签，结合点级和区域级双层表示学习，互补提升新类分割性能
 
 ## 方法详解
 
@@ -52,7 +52,7 @@ tags:
 
 1. **半松弛最优传输的不平衡自标注(Imbalanced Self-Labeling, ISL)**:
 
-    - **做什么**：为新类生成反映真实不平衡分布的伪标签
+    - **功能**：为新类生成反映真实不平衡分布的伪标签
     - **核心思路**：将标准OT中的两个等式约束松弛为一个等式+一个KL惩罚：
     $\min_{\mathbf{Q}} \langle \mathbf{Q}, \mathbf{C} \rangle_F + \gamma \text{KL}(\mathbf{Q}^\top \mathbf{1}_M, \boldsymbol{\mu})$
     $\text{s.t. } \mathbf{Q} \in \{\mathbf{Q} \in \mathbb{R}^{M \times N} | \mathbf{Q}\mathbf{1}_N = \boldsymbol{\nu}\}$
@@ -64,7 +64,7 @@ tags:
 
 2. **自适应正则化(Adaptive Regularization, AR)**:
 
-    - **做什么**：在训练过程中动态调节KL约束的强度 $\gamma$
+    - **功能**：在训练过程中动态调节KL约束的强度 $\gamma$
     - **核心思路**：监控伪标签分布 $\frac{1}{M}\mathbf{Q}^\top \mathbf{1}_M$ 与均匀分布 $\boldsymbol{\nu}$ 之间的KL距离。当KL距离持续 $T$ 个迭代低于阈值 $\rho$ 时，减小 $\gamma$：
     $\gamma_{t+1} = \lambda \cdot \gamma_t, \quad \text{if } \text{KL}(\frac{1}{M}\mathbf{Q}^\top \mathbf{1}_M, \boldsymbol{\nu}) \leq \rho \text{ for } T \text{ iters}$
     - 其中 $\lambda < 1$ 为衰减系数
@@ -72,7 +72,7 @@ tags:
 
 3. **区域级表示学习(Region-level Learning)**:
 
-    - **做什么**：利用点云的空间上下文信息，在区域级别进行自标注学习
+    - **功能**：利用点云的空间上下文信息，在区域级别进行自标注学习
     - **核心思路**：
         - 使用DBSCAN算法将每个场景的点云聚类为若干连续区域 $\{r_k\}_{k=0}^K$
         - 对同一区域内的点特征进行平均池化得到区域表示：$\mathbf{z}_r = \text{AvgPool}(\mathbf{z}_p | r_k \text{ is same})$
@@ -141,7 +141,7 @@ $$\mathcal{L} = \mathcal{L}_s + \alpha \mathcal{L}_u^p + \beta \mathcal{L}_u^r$$
 - **双层表示+共享原型**的设计让点级和区域级形成互补：区域级提供平滑信号指导大方向，点级提供精细粒度分割
 - 通过数据增强创建两个视角进行交叉监督（点级伪标签+区域级预测），增加了标签和预测之间的信息互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 尾部类的分割精度虽然有提升但仍然较低（11.2%），说明长尾不平衡问题仍极具挑战
 - DBSCAN对epsilon参数存在一定依赖，过大导致区域太粗放（混合不同类别），过小导致上下文信息不足
 - 新类数量需要预先指定（$|C^u|$已知），实际场景中可能不知道有多少新类

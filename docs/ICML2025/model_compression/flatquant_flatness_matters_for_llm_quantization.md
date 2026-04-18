@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlatQuant: Flatness Matters for LLM Quantization
 description: >-
@@ -119,7 +119,7 @@ $$\min_{\Theta} \|\mathcal{F}_l(\mathbf{X}) - \hat{\mathcal{F}}_l(\mathbf{X}; \T
 4. **保留 LayerNorm 的选择**：不同于 QuaRot/SpinQuant 将 LayerNorm 改为 RMSNorm 以共享变换，FlatQuant 保留 LayerNorm 让各层独立学习，表达力更强。
 5. **Triton kernel 融合设计**：将 memory-bound 的仿射变换和量化合并，避免中间结果落地显存。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **校准成本**：虽然称"轻量"，但仍需逐块训练 15 epochs（LLaMA-3-8B 约 0.9 小时）。对于更大模型（如 405B），校准时间可能更长。
 2. **W4A4 是最佳甜点**：论文主要聚焦 W4A4 设置，对更激进的 W2/W3 或纯权重量化的效果未深入探讨。

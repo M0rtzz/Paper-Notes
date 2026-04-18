@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Supervised Any-Point Tracking by Contrastive Random Walks
 description: >-
@@ -133,7 +133,7 @@ GMRW 在自监督方法中全面领先，Kubric AJ 超过 FlowWalk 4.8 点，DAV
 - **全局匹配的双重优势**：(1) 高空间精度（64×64 vs 早期 7×7），(2) 每次迭代考虑大量路径，提供更丰富的梯度信号
 - 可见性检测无需额外模块，直接复用循环一致性检查
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与有监督 SOTA（TAPIR/CoTracker）差距仍然显著，特别是在遮挡处理和长时跟踪上
 - 仅使用单尺度匹配（GMFlow 原始设计支持双尺度），加入多尺度可能进一步提升

@@ -42,25 +42,25 @@ SerenQA 由三个核心组件构成：(1) RNS 度量——基于图的信息论 
 
 ### 关键设计一：RNS Serendipity 度量
 
-- **做什么**：量化答案集 $\mathcal{A}_s$ 相对于 $\mathcal{A}_e$ 的 serendipity 程度
+- **功能**：量化答案集 $\mathcal{A}_s$ 相对于 $\mathcal{A}_e$ 的 serendipity 程度
 - **核心思路**：将 serendipity 分解为三个信息论维度的加权组合 $\text{RNS}(\mathcal{A}_e, \mathcal{A}_s) = \alpha R + \beta N + \gamma S$。其中 Relevance $R$ 基于 GCN 嵌入的归一化欧氏距离衡量上下文相似性；Novelty $N = 1 - MI(\mathcal{A}_e, \mathcal{A}_s)$ 通过互信息衡量 $\mathcal{A}_s$ 相对于 $\mathcal{A}_e$ 的信息增量；Surprise $S$ 通过 Jensen-Shannon 散度衡量实体分布的不可预测性
 - **设计动机**：相比依赖人工标注或 LLM 自评的主观方法，基于图概率模型的信息论方法具有可解释性、可扩展性和可复现性。作者通过公理化分析证明 RNS 满足 scale invariance、consistency、non-monotonicity 和 independence 四项性质
 
 ### 关键设计二：3-Hop 图概率建模
 
-- **做什么**：为 RNS 计算建立高效的概率模型
+- **功能**：为 RNS 计算建立高效的概率模型
 - **核心思路**：构建 3-hop 条件概率矩阵 $P_k = \sum_{h=1}^k \alpha_h P_1^h$，其中 $P_1$ 是归一化的单跳转移概率矩阵，权重 $\alpha_h$ 随跳数增加（优先考虑更远的连接）。边际概率通过 PageRank 风格的阻尼迭代近似计算，将复杂度从 $O(V^3)$ 降至 $O(V^2 \log V)$
 - **设计动机**：实证发现 99% 的 serendipitous 答案可在 3 跳内从已知答案到达，因此 3-hop 是充分的；概率矩阵"一次计算、多次复用"，可适配不同领域图
 
 ### 关键设计三：基准数据集构建与三种分区策略
 
-- **做什么**：基于 Clinical Knowledge Graph 构建带 serendipity 标注的 ground-truth 数据集
+- **功能**：基于 Clinical Knowledge Graph 构建带 serendipity 标注的 ground-truth 数据集
 - **核心思路**：对每条查询的完整候选答案集 $\mathcal{A}_c$，采用三种互补策略进行 $(\mathcal{A}_e, \mathcal{A}_s)$ 分区——(1) LLM Ensemble：4 个 SOTA LLM 打分后取 top-20% 为 $\mathcal{A}_s$；(2) Expert Crowdsourced：6 位领域专家（3 位医生 + 1 位药学家 + 2 位标注员）精炼排序；(3) RNS Guided：通过贪心交换算法（Algorithm 1）优化 RNS 分数。三种策略的 Pearson 相关性 > 85%，专家与 RNS 引导分区相关性达 ~99%
 - **设计动机**：三种策略互相校验，确保评估稳健性；通过从 $\mathcal{G}_c$ 中删除选定边构造评估图 $\mathcal{G}$，使 $\mathcal{A}_e$ 可推导而 $\mathcal{A}_s$ 不可达，模拟真实发现场景
 
 ### 关键设计四：三阶段 LLM 评估流水线
 
-- **做什么**：系统评估 LLM 在 serendipity 发现各环节的能力
+- **功能**：系统评估 LLM 在 serendipity 发现各环节的能力
 - **核心思路**：(T1) Knowledge Retrieval——LLM 将自然语言查询转为 Cypher 查询并从 KG 检索 $\mathcal{A}_e$；(T2) Subgraph Reasoning——LLM 将检索到的子图结构化信息总结为领域感知的自然语言；(T3) Serendipity Exploration——LLM 通过 beam search（宽度 30，深度 3）从 $\mathcal{A}_e$ 出发探索 $\mathcal{A}_s$，在每步根据证据强度、交互力、生物效应方向和表达水平选择 top-w 节点
 - **设计动机**：三个任务分别评估 LLM 的"基石"能力：精确知识检索、结构化推理和创造性探索，形成完整的能力画像
 

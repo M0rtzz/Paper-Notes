@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PASS: Path-Selective State Space Model for Event-Based Recognition
 description: >-
@@ -132,7 +132,7 @@ PASS提出路径选择性事件聚合与扫描（PEAS）模块和多面选择引
 - **自建长时序数据集**：ArDVS100、TemArDVS100填补了10^9级别事件识别基准的空白
 - **频率泛化的实际意义**：在实际部署中，推理频率通常与训练频率不同，PASS的强泛化性大幅降低了部署难度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 较大规模的VideoMamba模型出现过拟合现象，需要更好的正则化策略
 - 选定帧数K是手动超参数，未能自适应确定

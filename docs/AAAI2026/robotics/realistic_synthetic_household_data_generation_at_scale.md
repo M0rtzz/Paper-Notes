@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Realistic Synthetic Household Data Generation at Scale
 description: >-
@@ -173,7 +173,7 @@ $$\text{Score} = w_2 \rho_{\text{env}}(i+1) + w_3 \gamma_{\text{act}}(i+1) + w_4
 3. **结构化输入优于自由文本**——将信息按步骤结构化提供给 LLM，比全程自由文本效果更好
 4. **面向工业应用的实用设计**——支持自然语言配置、变异生成和仿真器无关性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏可视化的 3D 环境展示**：未展示实际生成的 3D 场景质量
 2. **LLM 幻觉问题**：承认存在"不可能的活动"生成（如 LLM 生成睡觉时大声放音乐）

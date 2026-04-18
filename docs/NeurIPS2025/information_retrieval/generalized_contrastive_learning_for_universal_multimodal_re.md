@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalized Contrastive Learning for Universal Multimodal Retrieval
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：标准对比学习（InfoNCE）只在 image↔text 两对之间做对比，忽略了 fused modality（image+text）——导致 3 种模态之间的 $3 \times 3 = 9$ 种可能的检索组合中只有 2 种被学习。
 
-**本文要解决什么**：设计一种 loss 函数使检索模型能处理任意模态组合，且不需要新的标注数据。
+**本文目标**：设计一种 loss 函数使检索模型能处理任意模态组合，且不需要新的标注数据。
 
 **切入角度**：利用已有图文对数据，在 mini-batch 内自动构造所有模态组合的正负样本，通过统一的 GCL loss 覆盖所有 6 种跨模态对比方向。
 
-**核心idea一句话**：将 InfoNCE 从 2 种跨模态对扩展到 6 种（加入 fused modality），从现有数据中免费获得多模态检索能力。
+**核心 idea**：将 InfoNCE 从 2 种跨模态对扩展到 6 种（加入 fused modality），从现有数据中免费获得多模态检索能力。
 
 ## 方法详解
 
@@ -105,7 +105,7 @@ CoVR 视频检索（Recall@1）：37.32 vs CL 33.76 vs Pretrained 31.22。
 - CoVR 视频检索实验说明 fused modality 概念可以自然扩展到视频帧+文本的组合检索
 - TinyCLIP 上的效果验证了 GCL 对小模型同样有效——不依赖大模型容量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Fused embedding 用简单加法 $e_{it} = e_i + e_t$，更复杂的融合方式（如 cross-attention、gated fusion）可能进一步提升
 - Mini-batch 内 6 种对的计算量是标准 CL 的 3 倍，对大规模训练可能增加开销
 - 仅在检索任务上验证，生成、分类等下游任务的效果未测试

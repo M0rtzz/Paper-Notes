@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Domain Demo-to-Code via Neurosymbolic Counterfactual Reasoning
 description: >-
@@ -118,7 +118,7 @@ NeSyCR（Neurosymbolic Counterfactual Reasoning）将跨域适应建模为反事
 - **真实世界验证充分**：不仅在仿真中做了大规模定量实验（440 场景），还在真实机器人上验证了端到端可行性
 - **实验设计精细**：5 类跨域因素 × 3 级复杂度的系统化实验矩阵，便于分析不同维度的性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **任务复杂度差距过大时性能显著下降**：当部署任务远超示教复杂度时，反事实推理难以弥补信息缺失
 - **依赖 VLM 的 scene graph 提取质量**：符号状态翻译的准确性受限于 VLM 的感知能力

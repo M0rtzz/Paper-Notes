@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training Dynamics Underlying Language Model Scaling Laws: Loss Deceleration and Zero-Sum Learning
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：scaling law 的幂律形式暗示训练动力学是平滑的，但作者发现实际损失曲线在 log-log 空间有一个突变的斜率变化（deceleration），这意味着存在一个质变的训练动力学转折点。
 
-**本文要解决什么？** 识别并形式化 loss deceleration 现象，提出其背后的机制（zero-sum learning），并展示 scaling 如何缓解该机制——为未来"不靠规模也能改善模型"的方法奠定基础。
+**本文目标** 识别并形式化 loss deceleration 现象，提出其背后的机制（zero-sum learning），并展示 scaling 如何缓解该机制——为未来"不靠规模也能改善模型"的方法奠定基础。
 
 **切入角度**：从 per-example（per-token）梯度和损失变化的微观视角出发，分析宏观 loss 减速的根因。
 
-**核心idea一句话**：loss 减速的根因是 per-token 梯度对立（ZSL），scaling up 通过缓解 ZSL 来改善最终 loss。
+**核心 idea**：loss 减速的根因是 per-token 梯度对立（ZSL），scaling up 通过缓解 ZSL 来改善最终 loss。
 
 ## 方法详解
 

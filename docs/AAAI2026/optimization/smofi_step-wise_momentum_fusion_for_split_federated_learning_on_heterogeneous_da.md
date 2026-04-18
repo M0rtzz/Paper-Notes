@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SMoFi: Step-wise Momentum Fusion for Split Federated Learning on Heterogeneous Data
 description: >-
@@ -76,7 +76,7 @@ $$\bar{m}_s^{(n,\tau+1)} = \frac{\sum_{j \in \mathcal{J}^{(n,\tau)}} m_{s,j}^{(n
 - 提供了 $\mathcal{O}(1/N)$ 收敛保证的理论分析
 - 跨 optimizer（SGDM/NAG/Adam/AdamW）和跨架构（VGG/MobileNet/ResNet/DenseNet）均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 收敛分析基于强凸假设，实际深度网络为非凸
 - staleness factor $\alpha$ 需手动设定（默认 -0.1），自适应调节可能更优
 - 仅在图像分类任务上充分验证，NLP/语音等场景评估有限

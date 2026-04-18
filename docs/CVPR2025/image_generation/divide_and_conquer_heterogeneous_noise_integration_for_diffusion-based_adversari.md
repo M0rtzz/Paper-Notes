@@ -1,4 +1,4 @@
-# Divide and Conquer: Heterogeneous Noise Integration for Diffusion-based Adversarial Purification
+﻿# Divide and Conquer: Heterogeneous Noise Integration for Diffusion-based Adversarial Purification
 
 **会议**: CVPR 2025  
 **arXiv**: [2503.01407](https://arxiv.org/abs/2503.01407)  
@@ -19,7 +19,7 @@
 
 **切入角度**：分治——用分类器注意力图识别对抗区域，不同区域用不同噪声强度，分两阶段去噪。
 
-**核心idea一句话**：注意力掩码引导的异质噪声（对抗区域高噪声+非对抗区域低噪声）+ 两阶段去噪（修复式→标准 DDPM）+ 单步 DDIM 重采样。
+**核心 idea**：注意力掩码引导的异质噪声（对抗区域高噪声+非对抗区域低噪声）+ 两阶段去噪（修复式→标准 DDPM）+ 单步 DDIM 重采样。
 
 ## 实验关键数据（CIFAR-10, $\ell_\infty$, $\epsilon=8/255$）
 

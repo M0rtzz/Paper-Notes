@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffRefiner: Coarse to Fine Trajectory Planning via Diffusion Refinement with Semantic Interaction for End to End Autonomous Driving
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{proposal}} + \mathcal{L}_{\tex
 - **极少去噪步数**：高质量粗提案使得扩散仅需 1 步精炼，满足实时性要求（27ms）
 - **双基准 SOTA**：同时在开环（NAVSIM v2）和闭环（Bench2Drive）基准上刷新纪录，验证了方法的鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用相机输入，未融合 LiDAR；在 NAVSIM 上 Camera+LiDAR 的 GaussianFusion 在部分子指标上仍有优势
 - Bench2Drive 上与基于规则的 PDM-Lite（DS 97.0）差距仍然明显，说明学习方法在稳定性上还有提升空间

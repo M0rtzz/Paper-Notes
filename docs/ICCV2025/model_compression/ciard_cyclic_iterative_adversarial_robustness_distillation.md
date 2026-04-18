@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CIARD: Cyclic Iterative Adversarial Robustness Distillation
 description: >-
@@ -90,7 +90,7 @@ CIARD包含固定的clean teacher + 持续更新的robust teacher + push loss机
 - **教师退化问题的识别和解决**：首次明确指出并用ITT直接解决
 - **理论分析+实证验证**：清楚展示了教师退化现象
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ITT需要周期性重训练robust teacher，增加额外计算开销
 - 仅在分类任务上验证
 - Push loss权重系数需手动调节

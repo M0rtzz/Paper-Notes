@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Event Memory for Accurate and Low-latency Online Video Temporal Grounding
 description: >-
@@ -119,7 +119,7 @@ TACoS数据集上各组件的消融：
 - **未来预测分支**提供了灵活的精度-延迟权衡，用户可以根据应用需求选择是否启用
 - 动态记忆大小配置是数据驱动的设计——按正样本频率分配记忆容量，确保有限记忆被有效利用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未来预测分支启用后性能下降明显（TACoS上R0.5@1降低6.75%），低延迟和高精度难以兼得
 - 使用C3D/CLIP等预提取特征作为输入，未考虑端到端训练可能带来的提升

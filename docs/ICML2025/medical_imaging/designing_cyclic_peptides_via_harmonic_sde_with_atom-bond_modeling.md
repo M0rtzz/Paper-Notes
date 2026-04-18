@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Designing Cyclic Peptides via Harmonic SDE with Atom-Bond Modeling
 description: >-
@@ -129,7 +129,7 @@ AtomSDE 预训练后固定参数，再训练 ResRouter。
 4. **数据效率高**：小分子+线性肽数据联合训练 AtomSDE，极大缓解环肽 3D 数据稀缺问题
 5. **MD 验证充分**：两个实际药物靶点的案例研究中，设计的环肽在稳定性和亲和力上均超越真实线性肽
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅用 Rosetta 能量和短时 MD 模拟评估，缺乏湿实验验证
 - 训练数据中某些环化类型（如 S-S、C-S 键）样本少，对应环肽设计效果相对较弱

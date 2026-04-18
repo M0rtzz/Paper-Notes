@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Syllogistic Reasoning in LLMs from Formal and Natural Language Perspectives
 description: >-
@@ -132,7 +132,7 @@ $C_{\text{all}}$衡量模型在同一三段论4个变体上的完全一致比例
 - **架构>参数量**：Llama 3.2 3B偏差+46.9pp vs Gemini 2.5 Flash仅+0.9pp，训练方法远比参数规模重要
 - **LMArena排名强预测推理能力**：$\rho=-0.825, p=0.001$，指令遵循质量与形式推理高度关联
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅160个三段论，数据规模偏小，难以覆盖所有逻辑结构
 - 三段论是最基础的逻辑形式，未覆盖条件推理、模态逻辑、嵌套量词等更复杂逻辑

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Direct Behavior Optimization: Unlocking the Potential of Lightweight LLMs
 description: >-
@@ -41,7 +41,7 @@ tags:
 
 现有自动优化方法需要模型具备 LwLLM 所缺乏的高级推理能力——用弱模型去执行需要强模型才能完成的元认知优化，形成了能力悖论。
 
-### 4. 本文要解决什么
+### 4. 本文目标
 
 如何在不依赖外部 LLM API、不需要手动工程的前提下，自动优化 LwLLM 在复杂任务上的行为？
 
@@ -49,7 +49,7 @@ tags:
 
 不优化"提示文本"，而是直接优化"行为"——将 LwLLM 的执行过程分解为结构化的关键步骤计划和对应执行，用 MCTS 作为外部优化器搜索最优 demonstration。
 
-### 6. 核心 idea 一句话
+### 6. 核心 idea
 
 将 CoT Prompting 中的 demonstration 分解为"关键步骤计划+执行"的离散可量化形式，通过 MCTS 搜索最优 demonstration 来引导 LwLLM 的行为。
 
@@ -158,7 +158,7 @@ DeBoP 比 StrategyLLM 快约 61%，比 Self-Discover 快约 63%。
 - **Pareto 最优**：DeBoP 同时在准确率和推理时间两个维度上达到最优前沿
 - **6 种节点演化方法**：提供了多样化的搜索方向，避免了单一变异策略的局限
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. MCTS 搜索阶段仍有较高的计算开销（需要在开发集上反复评估）
 2. 仅在 BBH 子集（7 个任务）上验证，更多类型任务的泛化性待确认

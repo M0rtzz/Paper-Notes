@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transferable Black-Box One-Shot Forging of Watermarks via Image Preference Models
 description: >-
@@ -111,7 +111,7 @@ tags:
 - **对抗训练确保梯度可解释性**：与对抗鲁棒性文献的联系（Santurkar et al., 2019）巧妙且深刻
 - 方法同时支持水印去除和伪造，并且在去除任务上也极具竞争力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对后处理水印方法，无法伪造语义水印（如 Tree-Ring、RingID 等通过改变生成内容结构实现的水印）
 - 优化步数较多时可能模糊图像中的高频纹理区域（如水面、树木）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RayNova: Scale-Temporal Autoregressive World Modeling in Ray Space
 description: >-
@@ -116,7 +116,7 @@ $$a_{i,j} = \mathbf{q}_i^T \mathbf{R}_\Delta^{i,j} \mathbf{k}_j, \quad \mathbf{R
 - **高效生成**：1.96 img/s 吞吐量远超扩散模型 baseline（0.37-1.76）
 - **异构数据兼容**：可混合使用不同传感器配置/分辨率/帧率的训练数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 使用基于图像的 VAE，可能影响 FID/FVD 指标
 - 训练数据量（~60小时）相比一些私有数据方法仍有限

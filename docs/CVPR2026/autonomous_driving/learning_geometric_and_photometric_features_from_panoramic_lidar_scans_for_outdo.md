@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Geometric and Photometric Features from Panoramic LiDAR Scans for Outdoor Place Categorization
 description: >-
@@ -112,7 +112,7 @@ RGB相机虽然常用于场景识别，但室外环境面临**光照动态变化
 - 证明了LiDAR的反射率可作为RGB的替代提供光度信息，且对光照变化完全鲁棒
 - Grad-CAM可视化揭示了有趣的模式：模型依赖水平方向的结构特征（如建筑轮廓线）来区分Urban和Residential
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用VGG-11，未探索更现代的架构（如ViT、PointNet++），可能有很大提升空间
 - Sparse MPO分辨率很低（2166×32），丧失了大量细粒度信息

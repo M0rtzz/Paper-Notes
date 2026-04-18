@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Opt3DGS: Optimizing 3D Gaussian Splatting with Adaptive Exploration and Curvature-Aware Exploitation
 description: >-
@@ -166,7 +166,7 @@ $$L_{total} = (1-\lambda_{ssim}) \times L_1 + \lambda_{ssim} \times L_{ssim} + \
 4. **拟牛顿方向 + Adam 的巧妙结合**：LQNAdam 保留了 Adam 的鲁棒性，同时引入了曲率信息，避免了传统二阶方法的线搜索开销
 5. **在困难条件（随机初始化、高分辨率、少高斯）下优势更明显**：说明增强的探索能力在解空间复杂时价值最大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 展平系数 $\zeta$ 和能量区间仍需手动设置，不同场景可能需要微调
 - 利用阶段仅 1,000 次迭代可能不足以充分利用曲率信息

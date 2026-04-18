@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Avat3r: Large Animatable Gaussian Reconstruction Model for High-fidelity 3D Head Avatars
 description: >-
@@ -105,7 +105,7 @@ CSIM（身份相似度）从GPAvatar的0.31提升到0.59，说明Avat3r生成的
 - **"只在某一轴泛化"的设计哲学**值得借鉴：数据在身份轴不足但表情轴充足时，条件化于身份、泛化于表情
 - 强大的泛化能力：在未见过的NeRSemble数据集，甚至能动画化AI生成图像和古代雕像
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 单图推理依赖3D GAN做3D lifting，引入误差累积
 - 需要相机位姿作为输入——错误的位姿估计会导致重建偏差
 - 光照效果被烘焙到重建中，无法重光照，限制虚拟环境中的应用

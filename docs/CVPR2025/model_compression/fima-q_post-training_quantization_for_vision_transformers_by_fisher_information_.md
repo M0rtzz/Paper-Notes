@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FIMA-Q: Post-Training Quantization for Vision Transformers by Fisher Information Matrix Approximation
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：用对角+低秩（DPLR）分解 $F \approx D + UU^\top$ 来近似 FIM——对角项保留各维度独立重要性，低秩项捕捉跨维度相关性。
 
-**核心idea一句话**：用 DPLR 近似 FIM 替代纯对角近似 = 在低比特 ViT 量化中捕捉跨维度相关性，大幅提升精度。
+**核心 idea**：用 DPLR 近似 FIM 替代纯对角近似 = 在低比特 ViT 量化中捕捉跨维度相关性，大幅提升精度。
 
 ## 方法详解
 
@@ -77,7 +77,7 @@ ImageNet Top-1 准确率（W3A3 = 权重3bit/激活3bit）：
 - **理论纠正带来实践突破**——揭示 BRECQ 的数学错误不只是学术意义，直接导致了 2-3% 的精度提升
 - **DPLR 可推广**——该近似框架可用于任何需要 FIM 的场景（如持续学习的 EWC 正则化）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 低秩计算增加重建阶段的计算开销
 - 依赖校准数据质量
 - 仅在视觉任务验证，NLP/语音领域待探索

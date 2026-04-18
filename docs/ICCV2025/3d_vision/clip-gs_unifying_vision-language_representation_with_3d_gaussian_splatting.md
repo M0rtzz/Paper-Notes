@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLIP-GS: Unifying Vision-Language Representation with 3D Gaussian Splatting
 description: >-
@@ -102,7 +102,7 @@ CLIP-GS 在 Text→3D 上提升 +9.0，Image→3D 上提升 +10.5。
 - **Image Voting Loss 解决了一个实际问题**：不同视角渲染图像语义不一致是 3D-2D 对齐的固有挑战
 - **数据效率高**：仅 ~240K 样本即可训练出超越百万级训练的点云模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在对象级 3DGS（Objaverse、ModelNet）上验证，未扩展到场景级 3DGS
 - SH degree 固定为 0，丢失了视角相关的颜色变化信息

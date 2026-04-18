@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Correction Distillation for Structured Data Question Answering
 description: >-
@@ -141,7 +141,7 @@ $$\mathcal{L}_2 = -\sum_{i=1}^{n}(\mathcal{S}(q_{cor}^s) - \mathcal{S}(q_{upd}^{
 3. **两阶段蒸馏互补**：教师蒸馏解决"从零到一"的能力迁移，自蒸馏解决"自身易犯错误的针对性预防"，设计逻辑清晰
 4. **EPM的通用性**：EPM不仅帮助小模型，也让大模型（GPT4）超越了现有SOTA，说明精确的错误反馈本身就有重要价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当正确答案为"null/none"时，EPM会误报"空中间步骤"执行错误（假阴性）
 2. 对于需要"LLM函数"的复杂推理，8B模型受限于固有能力上限

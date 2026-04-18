@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Feedback Efficient Active Target Discovery in Partially Observable Environments
 description: >-
@@ -92,7 +92,7 @@ DiffATD 将主动目标发现（ATD）建模为在网格化搜索空间中的序
 - **可解释性**：相比黑盒 RL 策略，DiffATD 的每一步决策都可通过探索得分图和利用得分图解释
 - **跨领域泛化**：同一框架在遥感、生态、医学影像等迥异领域均取得显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练扩散模型的质量，在训练数据量不足或分布偏移时性能可能下降
 - 单步 Tweedie 估计的精度在高噪声水平下有限，可考虑多步估计以提升 belief 分布的准确性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] High-Resolution Live Fuel Moisture Content (LFMC) Maps for Wildfire Risk from Multimodal Earth Observation Data
 description: >-
@@ -117,7 +117,7 @@ tags:
 - **实用导向**：提供了端到端自动化管线（数据导出→推理→制图），直接服务于灾害管理和处方烧除规划
 - **2025 洛杉矶野火案例**：Palisades 和 Eaton 大火的 LFMC 预测与专家实地观测一致——2023-2024 年 LFMC 高于 2021-2022 年，反映了连续两个春季降水偏多后的植被增长，可能导致了更高的燃料负荷
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 模型仅在美国大陆（CONUS）西部数据上微调，全球泛化性未验证
 - 目前仅用于回溯分析，尚未测试 LFMC 预测/预报能力

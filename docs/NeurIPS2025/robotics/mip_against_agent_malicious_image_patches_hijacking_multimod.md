@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MIP against Agent: Malicious Image Patches Hijacking Multimodal OS Agents
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：OS Agent必须通过截屏观察环境→安全风险；攻击者只需控制屏幕上一小块区域（社交媒体图片、桌面壁纸）就可能劫持整个Agent→检测困难。
 
-**本文要解决什么？** 系统研究视觉域对OS Agent的攻击：能否通过操控屏幕上的小区域图像就劫持Agent执行任意恶意行为？这种攻击能否跨场景泛化？
+**本文目标** 系统研究视觉域对OS Agent的攻击：能否通过操控屏幕上的小区域图像就劫持Agent执行任意恶意行为？这种攻击能否跨场景泛化？
 
 **切入角度**：将传统VLM对抗攻击扩展到OS Agent的多组件pipeline,处理screen parser不可微、图像resize、离散像素等特有约束。
 
-**核心idea一句话**：MIP将完整的恶意程序指令编码在一个视觉上不可察觉的图像patch中，OS Agent截屏处理后会直接输出并执行该恶意程序——无需依赖Agent自身的推理能力来组装攻击。
+**核心 idea**：MIP将完整的恶意程序指令编码在一个视觉上不可察觉的图像patch中，OS Agent截屏处理后会直接输出并执行该恶意程序——无需依赖Agent自身的推理能力来组装攻击。
 
 ## 方法详解
 
@@ -95,7 +95,7 @@ tags:
 - 跨VLM大小的泛化(11B→90B)暗示VLM视觉处理存在共享的系统性弱点
 - 攻击检测极其困难——MIP视觉上与正常图像无异，且不依赖文本管道
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要白盒访问VLM参数（PGD需要梯度），黑盒迁移攻击未充分探索
 - $\epsilon=25/255$的扰动在放大观察时可能可见，更隐蔽的攻击有待研究
 - 仅在Windows Agent Arena上评估，其他OS Agent框架（如Claude Computer Use）未测试

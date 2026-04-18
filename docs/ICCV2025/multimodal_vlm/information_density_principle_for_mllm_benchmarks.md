@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Information Density Principle for MLLM Benchmarks
 description: >-
@@ -120,7 +120,7 @@ $$E(I) \propto (1 - D_{fal}) \cdot D_{dif} \cdot (1 - D_{red}) \cdot D_{div}$$
 - **三级评估的实用设计**：从全人工到全自动逐级降低成本，benchmark 开发者可以按需选用
 - **Redundancy 的发现很有价值**：揭示了许多 benchmark 的"图文多模态"是假的——仅凭文本就能答对
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Fallacy 维度只能靠人工标注，无法自动化，限制了大规模应用
 - 仅评估了 MCQ 格式的 benchmark，VQA 开放式回答的 benchmark 尚未覆盖

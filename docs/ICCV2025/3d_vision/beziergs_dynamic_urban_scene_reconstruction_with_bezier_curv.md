@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BézierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting
 description: >-
@@ -189,7 +189,7 @@ Waymo NVS上的消融：
 4. **效率出色**：88.7 FPS远超同类所有方法，满足实时仿真需求；训练10.7分钟，实用性强
 5. **支持场景编辑**：显式动态建模天然支持动态物体移除等编辑操作，为闭环仿真提供基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖分割模型精度**：训练中使用Grounded-SAM产生动态mask和天空mask，分割不准会引入误导
 2. **未显式建模光照变化**：无法模拟复杂光影效果和阴影变化（可用4DSH方法缓解，论文附录已展示）

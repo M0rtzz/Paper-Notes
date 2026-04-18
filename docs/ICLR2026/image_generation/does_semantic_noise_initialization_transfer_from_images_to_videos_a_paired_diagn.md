@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Does Semantic Noise Initialization Transfer from Images to Videos? A Paired Diagnostic Study
 description: >-
@@ -109,7 +109,7 @@ temporal_style 的 95% bootstrap CI 包含零，p=0.1687，不显著。
 4. **跨模型对比揭示机制**: 通过 Open-Sora2 vs VideoCrafter 的对比，揭示了采样器（DDIM vs 其他）对噪声扰动传播的关键影响
 5. **"信号存在但脆弱"的诊断**: 精确描述了问题本质——不是没有信号，而是信号的时空频率特性使其在标准evaluation下不够稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 VideoCrafter 风格 backbone 上验证，不同架构（如 DiT-based 模型）可能有不同结果
 2. VBench 指标可能无法完全捕捉人类偏好，特别是 prompt-specific 的运动伪影

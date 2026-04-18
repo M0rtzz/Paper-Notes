@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Fair Representations with Kolmogorov-Arnold Networks
 description: >-
@@ -121,7 +121,7 @@ KAN使用B样条阶数 $k=3$（三次样条），支持网格细化（grid refin
 - 自适应 $\lambda$ 设计简洁实用：基于p%-Rule与目标阈值的差距线性调整，加上clip保证稳定性，避免了昂贵的超参搜索
 - 在真实录取数据上验证而非合成数据，增强了实际意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了二分类（录取/不录取）和二值敏感属性，多类别和交叉敏感属性的场景未探索
 - 公平性定义仅考虑Demographic Parity，未涵盖Equalized Odds等条件公平定义

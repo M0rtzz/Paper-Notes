@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Identifying and Understanding Cross-Class Features in Adversarial Training
 description: >-
@@ -144,7 +144,7 @@ $$x_{E,j} \sim \begin{cases} \mathcal{N}(\mu, \sigma^2), & j=i \\ 0, & j \neq i 
 4. **Saliency Map 可视化**：通过 GradCAM 直观展示最佳检查点关注整体特征（车轮+车身），过拟合检查点仅关注局部独有特征（圆形车顶），解释力强
 5. **覆盖面广**：跨 ℓ∞/ℓ₂ 范数、CNN/Transformer 架构、多数据集、FAT(快速AT) 场景均验证假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **CAS 依赖线性层假设**：归因向量 $A_i(x) = g(x) \odot W[i]$ 仅适用于最后一层为线性层的架构，无法直接推广到更复杂的分类头
 2. **理论局限于合成模型**：三类线性模型的理论分析较简化，与实际深度网络的训练动态仍有差距

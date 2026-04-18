@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Minor First, Major Last: A Depth-Induced Implicit Bias of Sharpness-Aware Minimization
 description: >-
@@ -115,7 +115,7 @@ Sharpness-Aware Minimization (SAM) 通过最小化邻域内最坏情况损失来
 3. **深度的质变效应**：仅增加一层（$L=1\to L=2$）就能彻底改变 SAM 的行为，揭示了深度与优化算法之间的深层交互
 4. **精确的轨迹刻画**：$\ell_\infty$-SAM 的坐标独立演化性质允许精确的轨迹表征，这是一个优美的理论简化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析限于**线性对角网络**这一简化模型，与实际深度非线性网络有差距
 - 多样本数据集的分析面临额外技术困难，目前仅限于实验验证

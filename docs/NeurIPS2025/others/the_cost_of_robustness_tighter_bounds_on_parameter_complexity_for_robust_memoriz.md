@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Cost of Robustness: Tighter Bounds on Parameter Complexity for Robust Memorization in ReLU Nets
 description: >-
@@ -139,7 +139,7 @@ $$W(N, d, \rho) = \Omega\left(N \cdot d \cdot \rho^2\right) \quad \text{当} \qu
 - **理论工具的发展**: 上界构造和下界证明中使用了新的几何和信息论技术
 - **72 页详尽分析**: 严谨完整的理论工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **上下界仍有空隙**: 特别是在 $\rho$ 接近 0 和 1 的极端情况下
 2. **仅考虑 ReLU 网络**: 其他激活函数（如 GELU、Swish）的结果可能不同

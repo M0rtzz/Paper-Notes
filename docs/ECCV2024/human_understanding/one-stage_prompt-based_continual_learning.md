@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One-stage Prompt-based Continual Learning
 description: >-
@@ -135,7 +135,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \lambda \mathcal{L}_{QR}$$
 - **训练-推理解耦设计**：QR loss 仅训练时用，reference ViT 仅训练时需要，推理时完全是 one-stage，实现了精度和效率的双赢
 - **可迁移思路**：这种"用中间层表征替代额外前向传播"的思路可以推广到其他需要两阶段推理的 prompt learning 方法中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **训练成本未降低（OS-Prompt++ 版本）**：虽然推理省 50%，但训练时仍需 reference ViT 前向传播，训练 GFLOPs 与原方法相同
 - **CodaPrompt 的 soft matching 在中间层 query 下略有退化**：实验显示 hard matching（L2P/Dual 的 top-k）对中间层 query 更鲁棒

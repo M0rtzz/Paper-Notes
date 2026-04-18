@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamMover: Leveraging the Prior of Diffusion Models for Image Interpolation with Large Motion
 description: >-
@@ -147,7 +147,7 @@ $$Q = Q^\delta, \quad K = (K^0 \oplus K^1), \quad V = (V^0 \oplus V^1)$$
 3. **InterpBench 基准**：首个专门针对大运动图像插值语义一致性评估的基准数据集
 4. **轻量级方法**：基于预训练模型，无需从头训练，单 GPU 可用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 光流估计基于余弦相似度最大值匹配，在严重遮挡或对称场景下可能失效
 2. 时间一致性指标 WE 不如 Film/LDMVFI，说明逐帧生成的平滑度仍有改进空间

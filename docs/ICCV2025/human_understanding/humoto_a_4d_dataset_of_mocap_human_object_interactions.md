@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HUMOTO: A 4D Dataset of Mocap Human Object Interactions
 description: >-
@@ -108,7 +108,7 @@ tags:
 - 穿透深度指标比其他数据集低一个数量级，对手部交互建模的精度提升非常关键
 - 下游应用展示丰富：动作生成（MotionGPT 在 HUMOTO 提示上效果不佳说明挑战性）、机器人抓取（与 DexGraspNet 对比）、姿态估计（4D Humans/TRAM 均失败）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **单一表演者**：仅 1 名演员，可能引入体型和运动风格偏差，限制了跨人泛化
 - **总时长有限**：2.2 小时虽质量高但规模不算大，小于 OMOMO（10.1h）和 ParaHome（8.1h）

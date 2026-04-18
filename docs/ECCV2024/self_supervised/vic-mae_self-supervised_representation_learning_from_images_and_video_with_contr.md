@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ViC-MAE: Self-Supervised Representation Learning from Images and Video with Contrastive Masked Autoencoders
 description: >-
@@ -128,7 +128,7 @@ ViT-B/16 在 ImageNet-1K 线性评估：
 3. **数据效率惊人**：仅用约 425 万数据点就达到了 CAN（用 JFT-300M 的 3 亿数据）相近的精度，充分说明视频数据的信息密度远超图像
 4. **负样本的重要性**：实验表明使用负样本（InfoNCE）优于无负样本方法（VicReg, SimSiam），这与其他视频-图像迁移的成功方法一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **与纯视频方法的差距**：在 K400 上落后于 VideoMAEV2 0.8%（ViT-L），落后 TubeViT 2.4%（ViT-L）——可能因为 ViC-MAE 不显式建模时序 token
 2. **与 DINOv2 的差距**：在 IN1K 上落后 DINOv2 1.2%（ViT-L），后者使用了更多数据和更高级的训练策略

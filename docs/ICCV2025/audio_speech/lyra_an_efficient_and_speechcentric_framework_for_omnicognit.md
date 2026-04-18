@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lyra: An Efficient and Speech-Centric Framework for Omni-Cognition
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：在LLM中加入语音模态时，联合训练会损害已有的视觉/语言能力；直接用语音token替代文本instruction会导致显著性能下降（MM-Vet用语音指令比文本指令低8%）。
 
-**本文要解决什么**：高效构建一个真正支持image/video/speech/sound全模态理解和交互的MLLM，重点解决语音与其他模态的深度融合。
+**本文目标**：高效构建一个真正支持image/video/speech/sound全模态理解和交互的MLLM，重点解决语音与其他模态的深度融合。
 
 **切入角度**：(1) 用DTW对齐语音token和转写文本token减小模态gap；(2) 用模态专属LoRA保护已有能力；(3) 用query-aware token提取器减少长上下文开销。
 
-**核心idea一句话**：以语音为中心，通过DTW跨模态正则化+多模态LoRA+渐进式多模态token提取，用最少数据高效构建全模态MLLM。
+**核心 idea**：以语音为中心，通过DTW跨模态正则化+多模态LoRA+渐进式多模态token提取，用最少数据高效构建全模态MLLM。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ tags:
 - **MLoRA的模态组合路由**：不同模态组合用不同LoRA，既简单又有效。相比全参数SFT，用一半数据就能达到更好效果——这是一个非常实用的多模态高效训练范式。
 - **首次系统验证"长语音+视觉"的价值**：证明了长语音信息可以显著补充视觉理解（VideoMME +6.5%），且纯音频就能解决大量视频理解问题。这开辟了"音频作为视觉辅助"的新方向。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 语音生成质量依赖CTC+vocoder，无法生成情感丰富的语音。
 - Sound模态依赖ImageBind的单token编码，泛化性有限。
 - 长语音推理仍需要大量GPU内存（即使有LMME）。

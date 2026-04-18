@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniHuman-1: Rethinking the Scaling-Up of One-Stage Conditioned Human Animation Models
 description: >-
@@ -121,7 +121,7 @@ OmniHuman 基于 MMDiT 架构的 text-to-video 预训练模型，通过三阶段
 - 数据规模化策略——通过混合条件减少数据浪费——比单纯扩大数据更有效
 - 支持任意宽高比和身体比例是人体动画领域的重要里程碑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 音频与运动的弱相关性仍导致不协调或过度夸张的动作
 - 物体交互有时不够逼真，因训练数据中此类样本不足

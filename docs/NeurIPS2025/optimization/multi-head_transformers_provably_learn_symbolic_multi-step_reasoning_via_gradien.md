@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-head Transformers Provably Learn Symbolic Multi-step Reasoning via Gradient Descent
 description: >-
@@ -159,7 +159,7 @@ tags:
 3. **CoT 的理论基础**：提供了 CoT 为何有效的理论解释——它让浅层模型的计算能力等价于深层模型
 4. **对 Transformer 可理解性的贡献**：为理解 Transformer 的内部工作机制提供了数学基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务抽象性**：树路径查找是高度结构化的任务，与实际的自然语言推理有较大差距
 2. **单层限制**：仅分析单层 Transformer，多层 Transformer 的动力学更为复杂

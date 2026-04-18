@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Modal Representation Learning via Semi-Supervised Rate Reduction for Generalized Category Discovery
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L}_{\text{SSR}^2} = -R(\mathbf{Z}) + R_c^{\text{s}}(\mathbf{Z}_{\text
 - **实验分析深入**：通过相似度分布图、有效秩曲线、$R_e$ 一致性指标、t-SNE 可视化等多角度验证了核心论点
 - **RTA 设计巧妙**：规避 CLIP 长文本限制，在嵌入空间进行加权聚合，可整合更多候选信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 候选数 $c$ 增大时计算和内存开销线性增加（需多次过 CLIP 文本编码器）
 - 图像和文本模态被同等对待，缺乏自适应的模态重要性加权机制

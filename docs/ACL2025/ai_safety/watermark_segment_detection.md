@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficiently Identifying Watermarked Segments in Mixed-Source Texts
 description: >-
@@ -118,7 +118,7 @@ tags:
 4. **理论保证扎实**：Aligator 的估计误差有明确的理论上界，且在段级别具有 strong adaptivity
 5. **框架通用性强**：不依赖特定水印方案，可扩展到未来的新水印技术
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **假设水印段是连续的**：实际中可能存在多个不连续的水印段，当前框架可能需要后处理来分割
 2. **阈值 ζ 需要根据水印方案手动设定**：不同水印方案的最优阈值不同
 3. **未考虑水印被攻击（如 paraphrase）后的鲁棒性**：实际场景中水印文本可能被改写

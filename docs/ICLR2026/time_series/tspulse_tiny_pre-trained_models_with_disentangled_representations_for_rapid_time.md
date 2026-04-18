@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TSPulse: Tiny Pre-Trained Models with Disentangled Representations for Rapid Time Series
 description: >-
@@ -180,7 +180,7 @@ TSPulse 基于 TSMixer 轻量架构构建，核心流程为：
 - **CPU友好**：0.06秒的CPU推理时间使得GPU-free部署成为可能
 - **IBM Granite 系列**：开源在 HuggingFace 上，实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前未涉及预测任务（forecasting），但紧凑模型在预测上的能力已由 TTM 验证
 2. 预训练数据主要覆盖特定领域（能源、交通等），其他领域的迁移性能有待验证

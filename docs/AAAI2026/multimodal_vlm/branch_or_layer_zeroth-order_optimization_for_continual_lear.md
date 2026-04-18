@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Branch, or Layer? Zeroth-Order Optimization for Continual Learning of Vision-Language Models
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **显存优势明显**：ZO消除了反向传播，Dual ZO减少89%显存，为资源受限场景提供可行方案
 - **对PEFT优化的新视角**：揭示了FO在低维子空间容易陷入局部极小这一被忽视的问题，ZO-FO协同是一种新颖的解决思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限CLIP**：只在CLIP-ViT-B/16上验证，未测试更大模型（如ViT-L/14）或其他VLM架构（如BLIP-2、LLaVA）
 - **仅限图像-文本模态**：未探索音频、视频等其他模态，而论文自己也指出这是limitation
 - **数据集规模偏小**：CIFAR-100、Tiny-ImageNet、ImageNet-R都是相对小规模数据集，未在更大规模CL benchmark上验证

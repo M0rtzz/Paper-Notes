@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Loss Values: Robust Dynamic Pruning via Loss Trajectory Alignment
 description: >-
@@ -86,7 +86,7 @@ tags:
 - 损失轨迹的时序模式是区分干净/噪声样本的强信号，之前被数据剪枝领域忽视
 - 参考集需求极少（1%数据），实际中易获取
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要少量干净参考集（虽然量少但仍是额外假设）
 - 轨迹窗口前N个epoch无法计算DAS，早期仍依赖损失排序
 - 仅验证了分类任务，检测/分割等下游任务待探索

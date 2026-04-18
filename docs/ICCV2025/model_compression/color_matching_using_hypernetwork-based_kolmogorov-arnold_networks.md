@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Color Matching Using Hypernetwork-Based Kolmogorov-Arnold Networks (cmKAN)
 description: >-
@@ -110,7 +110,7 @@ y_hat_j = sum_i (u_ij·silu(x_i) + v_ij · sum_m c_ijm·B_ijm(x_i))
 - **新数据集**：2.5K对齐双摄图像对
 - **用户研究**：MOS分数是其他方法的2倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 单层3→3映射对极端色差可能不够
 - 无监督两阶段流程复杂
 - 推理时间1.1s对实时应用仍较长

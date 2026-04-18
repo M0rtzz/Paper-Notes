@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aligning LLMs by Predicting Preferences from User Writing Samples
 description: >-
@@ -97,7 +97,7 @@ LLM预训练的写作风格是通用的，不匹配用户个人偏好。
 4. PLUME基准修正了PRELUDE的系统性偏差。
 5. 完全不需要微调，纯推理时方法。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 迭代精炼增加推理开销（需多次LLM调用）。
 2. 写作偏好可能随时间演变，静态推断有局限。

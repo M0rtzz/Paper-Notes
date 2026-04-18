@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lightspeed Geometric Dataset Distance via Sliced Optimal Transport
 description: >-
@@ -125,7 +125,7 @@ s-OTDD 处理 10 倍数据量，速度更快，相关性更高。
 4. **Monte Carlo 近似误差 $\mathcal{O}(L^{-1/2})$**：收敛快，10K 投影已足够
 5. **s-OTDD 是合法度量**：在 $\mathcal{P}(\mathcal{X} \times \mathcal{P}(\mathcal{X}))$ 上满足度量公理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **矩阶数 $k$ 选择**：实验取 $k=5$，过高时可能出现数值溢出，缺少自适应策略
 2. **投影类型选择**：Radon 变换 vs 卷积投影的效果因数据类型而异，需人工选择

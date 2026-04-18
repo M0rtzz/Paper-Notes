@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dual-IPO: Dual-Iterative Preference Optimization for Text-to-Video Generation
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{L}_{\text{SRPO}}(\theta) = \mathbb{E}_{x,y_w,y_l}[\text{PCE}(y_w|x) \
 4. **跨架构泛化**：在 CogVideoX（cross-attention DiT）和 Wan（MMDiT）两种架构上均有效
 5. **"小模型打败大模型"**：验证了后训练策略的巨大潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练成本仍然较高（128 GPU × 两周/轮），难以快速迭代
 2. PCE 阈值的设定（0.5）缺乏理论依据，可能需要场景化调整

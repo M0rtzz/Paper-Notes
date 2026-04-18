@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DesignX: Human-Competitive Algorithm Designer for Black-Box Optimization
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：构建模块化算法空间 Modular-EC + 双智能体 RL 系统端到端联合学习
 
-**核心idea一句话**：Agent-1 自回归生成合法优化器工作流 + Agent-2 动态调控超参，通过合作训练目标在 10k 问题分布上元学习
+**核心 idea**：Agent-1 自回归生成合法优化器工作流 + Agent-2 动态调控超参，通过合作训练目标在 10k 问题分布上元学习
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ DesignX 在几乎所有测试实例上排名第一，归一化平均比最佳 Me
 - **可解释性分析有价值**：通过模块重要性因子和子模块分布分析，揭示了 DesignX 学到的非平凡设计原则，反过来为人类优化器设计提供启示
 - 合成数据大规模训练 + 真实任务零样本迁移的范式值得借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Modular-EC 目前仅支持 EC 类优化器（DE/PSO/GA/ES），不覆盖贝叶斯优化等其他 BBO 范式
 - 训练需要 6 天 CPU 计算，scaling law 实验受限于计算资源
 - 在 rank-based 比较中 DesignX 与 CMA-ES 性能接近，说明仍有提升空间

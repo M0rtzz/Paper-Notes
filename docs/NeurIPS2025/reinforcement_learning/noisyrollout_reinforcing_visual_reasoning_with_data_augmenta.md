@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NoisyRollout: Reinforcing Visual Reasoning with Data Augmentation
 description: >-
@@ -98,7 +98,7 @@ Qwen2.5-VL-7B-Instruct，仅2.1K Geometry3K样本：
 - 隐式对比学习机制精妙：干净/扰动之间的奖励差异自然约束了感知行为
 - 数据效率惊人，2.1K样本在5个域外基准上达SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 扰动类型（高斯噪声、旋转）相对简单，未探索更复杂的增强（如遮挡、风格迁移）
 - 裁剪（cropping）等策略不成功的原因未深入分析

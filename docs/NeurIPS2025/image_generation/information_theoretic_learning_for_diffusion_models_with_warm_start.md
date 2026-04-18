@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Information Theoretic Learning for Diffusion Models with Warm Start
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：Score matching（Fisher 散度）仅在 $\sigma_t^2 \to 0$ 时才精确等价于 MLE，有限噪声下存在偏差；同时 $t=0$ 附近数值不稳定。
 
-**本文要解决什么**：在不增加训练成本的前提下，得到更紧的似然界，消除训练-测试差距，同时支持非高斯噪声。
+**本文目标**：在不增加训练成本的前提下，得到更紧的似然界，消除训练-测试差距，同时支持非高斯噪声。
 
 **切入角度**：将扩散过程视为高斯信道（Gaussian Channel），利用 mismatched entropy 表达模型-数据差距，引入低方差非高斯 warm-start 噪声区间。
 
-**核心 idea 一句话**：将 score matching 与 KL 散度的关系从高斯推广到任意各向同性噪声（Theorem 1），配合 warm-start 噪声注入统一训练和评估。
+**核心 idea**：将 score matching 与 KL 散度的关系从高斯推广到任意各向同性噪声（Theorem 1），配合 warm-start 噪声注入统一训练和评估。
 
 ## 方法详解
 
@@ -56,14 +56,14 @@ tags:
 ### 关键设计
 
 #### 1. Score Matching 与 KL 散度的推广关系（Theorem 1）
-- **做什么**：证明 Fisher 散度是 KL 散度对噪声方差的一阶导数极限，对任意各向同性噪声成立。
+- **功能**：证明 Fisher 散度是 KL 散度对噪声方差的一阶导数极限，对任意各向同性噪声成立。
 - **核心公式**：
   $$\frac{d}{d\sigma_t^2} D_{\text{KL}}(p_{\sigma_t^2} \| q_{\sigma_t^2})\bigg|_{\sigma_t^2 \to 0^+} = -\frac{1}{2} I(p(\mathbf{x}) \| q(\hat{\mathbf{x}}; \theta))$$
   其中 $I(\cdot \| \cdot)$ 为 Fisher 散度（score matching 目标）。
 - **意义**：将之前仅限高斯的结果推广到 Poisson、Laplacian、均匀分布等任意噪声。
 
 #### 2. Mismatched Entropy 分解（Proposition 1）
-- **做什么**：将模型似然精确分解为 output distribution 损失 + score 逼近误差 + 不可约信息量。
+- **功能**：将模型似然精确分解为 output distribution 损失 + score 逼近误差 + 不可约信息量。
 - **核心公式**：
   $$\mathcal{H}(p(\mathbf{x}), q(\hat{\mathbf{x}};\theta)) = \mathcal{H}(p(\mathbf{y}_1), \pi) + \mathcal{J}_{\text{DSM}}(\theta) - \frac{1}{2}\int_{\sigma_0^2}^{\sigma_1^2} \mathbb{E}\|\nabla_{\mathbf{y}_t} \log p(\mathbf{y}_t|\mathbf{x})\|^2 d\sigma_t^2 + o(\sigma_0^2)$$
 - **设计动机**：提供信息论视角下的似然分解，明确每项来源。
@@ -75,7 +75,7 @@ tags:
 - **意义**：训练目标直接是逐点 NLL 上界，比 ELBO 更紧。
 
 #### 4. Warm-Start Dequantization
-- **做什么**：用任意各向同性噪声 $\Psi$ 替代传统均匀 dequantization。
+- **功能**：用任意各向同性噪声 $\Psi$ 替代传统均匀 dequantization。
 - **De Bruijn 恒等式推广**（Proposition 2）：微分熵对噪声方差的导数与噪声类型无关，仅取决于 Fisher 信息。
 - **实践**：训练和测试均添加相同 warm-up 噪声，消除 train-test gap，无需额外训练阶段。
 
@@ -138,7 +138,7 @@ tags:
 - **无extra训练的 dequantization**：warm-start 噪声替代传统变分 dequantization，消除 train-test gap 且零额外训练开销。
 - **log-SNR 参数化**：改进时间嵌入提升重要性采样效率。
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 仅关注似然估计，**不构建非高斯噪声下的生成过程**——无法用于采样/生成。
 - Dequantization 策略和方差配置的最优选择未充分探索。

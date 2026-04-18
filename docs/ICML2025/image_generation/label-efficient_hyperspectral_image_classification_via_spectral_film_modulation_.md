@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Label-Efficient Hyperspectral Image Classification via Spectral FiLM Modulation of Low-Level Pretrained Diffusion Features
 description: >-
@@ -142,7 +142,7 @@ FiLM (Feature-wise Linear Modulation) 融合机制的核心流程：
 4. **极致参数效率**：冻结整个扩散模型，仅训练轻量级 MLP 和光谱编码器，在标注极少的遥感场景下具有显著实用价值
 5. **前向过程的高效利用**：避免了扩散模型的迭代采样开销，通过一步前向计算直接提取多时间步特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **伪 RGB 信息损失**：从高光谱的数百个波段中仅选取 3 个波段构造伪 RGB 输入扩散模型，丢失了大量光谱信息，虽然 FiLM 分支做了补偿，但空间分支的输入利用率低
 2. **数据集规模有限**：仅在 Augsburg 和 Berlin 两个数据集上验证，缺乏更广泛的遥感场景（如不同地理区域）和不同传感器数据的测试

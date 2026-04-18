@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatiotemporal-Untrammelled Mixture of Experts for Multi-Person Motion Prediction
 description: >-
@@ -183,7 +183,7 @@ $$L_t = \text{MSE}(\text{Conv}(\textbf{P}_{\text{pred}}), \text{Conv}(\textbf{P}
 3. **定性分析有说服力**：通过t-SNE和门控权重可视化直观展示了不同专家捕获不同运动模式的机理（静态vs动态、空间vs时间）
 4. 框架具有通用性，可扩展到其他需要时空建模的序列预测任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持确定性预测**：当前方法输出单一确定性轨迹，未来需扩展到随机多人运动预测
 2. **场景限制**：实验数据主要是少量人的实验室环境（2-10人），密集人群场景的表现未验证

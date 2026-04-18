@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Robust Real-World Multivariate Time Series Forecasting: A Unified Framework
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：真实场景中三大挑战同时存在且相互耦合，分别解决单个挑战的方法组合起来效果不佳。
 
-**本文要解决什么？** 设计一个统一架构，同时处理通道依赖、异步采样和块缺失，无需插值预处理。
+**本文目标** 设计一个统一架构，同时处理通道依赖、异步采样和块缺失，无需插值预处理。
 
 **切入角度**：Channel token作为通道级紧凑表示，天然可以聚合不同长度的local token序列（处理异步）、在通道间交互（捕获依赖）、跳过缺失patch（处理缺失）——一个设计解决三个问题。
 
-**核心idea一句话**：将channel token从单纯的通道摘要token重新定义为异步-缺失-依赖三位一体的全局注意力锚点。
+**核心 idea**：将channel token从单纯的通道摘要token重新定义为异步-缺失-依赖三位一体的全局注意力锚点。
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ tags:
 - **工业可部署性**：真实LNG工业数据验证说明框架不只是学术基准上的改进，有实际部署潜力
 - **Mask-guided attention的优雅**：不修改标准Transformer架构，仅通过attention mask矩阵实现复杂的token交互控制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 统一attention在token总数上是$O(\mathcal{T}^2)$——对通道数很大的场景（如上千传感器）可能计算昂贵
 - Channel token数量需要per-dataset调优，缺乏自适应确定机制

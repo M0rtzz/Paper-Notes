@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMind: Towards Community-Driven Agents for Machine Learning Engineering
 description: >-
@@ -131,7 +131,7 @@ CoMind获得9枚奖牌（5金），相对此前SOTA AIDE提升125%。
 - **活跃竞赛的真实验证**：在进行中的Kaggle竞赛上提交真实成绩，大幅增强了说服力
 - **MLE-Live基准的价值**：为社区驱动的Agent研究提供了标准化评估平台
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅支持报告级别的交互，缺乏评论、提问、数据/模型共享等更精细的社区互动方式
 - 在需要大模型微调的任务（如Seq2Seq）上受限于运行时间约束
 - 仅在Kaggle风格ML竞赛上验证，未扩展到更广泛的科学发现、开放编程或机器人等领域

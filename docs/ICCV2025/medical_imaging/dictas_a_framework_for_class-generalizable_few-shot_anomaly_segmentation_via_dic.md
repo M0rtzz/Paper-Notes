@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DictAS: A Framework for Class-Generalizable Few-Shot Anomaly Segmentation via Dictionary Lookup
 description: >-
@@ -66,7 +66,7 @@ DictAS 基于 CLIP (ViT-L-14-336) 构建，包含三个核心组件：
 
 #### 1. **Dictionary Construction（字典构建）**
 
-- **做什么**：将正常参考图像的特征组织为结构化字典，包含"索引"（Key）和"内容"（Value），同时生成查询向量（Query）。
+- **功能**：将正常参考图像的特征组织为结构化字典，包含"索引"（Key）和"内容"（Value），同时生成查询向量（Query）。
 - **核心思路**：
 
   使用三个独立的 AttnBlock（自注意力 Transformer 块）分别生成 Dictionary Query、Key 和 Value：
@@ -85,7 +85,7 @@ DictAS 基于 CLIP (ViT-L-14-336) 构建，包含三个核心组件：
 
 #### 2. **Dictionary Lookup（字典查询）**
 
-- **做什么**：对查询图像的每个 patch 特征，从字典中检索最相关的正常模式。若检索失败（距离大），则判定为异常。
+- **功能**：对查询图像的每个 patch 特征，从字典中检索最相关的正常模式。若检索失败（距离大），则判定为异常。
 - **核心思路**：
 
   查询过程分两步——Query-Key 匹配计算相似度 $\mathbf{z} = \mathbf{x}_Q^l \mathbf{F}_K^{lT}$，然后加权融合 Dictionary Value 得到检索结果 $\mathbf{x}_r^l = \hat{\mathbf{w}} \mathbf{F}_V^l$。
@@ -111,7 +111,7 @@ DictAS 基于 CLIP (ViT-L-14-336) 构建，包含三个核心组件：
 
 #### 3. **Query Discrimination Regularization（查询判别正则化）**
 
-- **做什么**：增强异常区域和正常区域在检索结果上的距离差异，防止模型过度检索导致异常也被"成功检索"。
+- **功能**：增强异常区域和正常区域在检索结果上的距离差异，防止模型过度检索导致异常也被"成功检索"。
 - **核心思路**：
 
   **Contrastive Query Constraint (CQC)**：强制异常区域的查询-检索距离大于正常区域：
@@ -189,7 +189,7 @@ DictAS 基于 CLIP (ViT-L-14-336) 构建，包含三个核心组件：
 3. **稀疏查询的精妙设计**：SPM 通过凸优化自适应确定阈值，在保持检索准确性的同时天然抑制冗余
 4. **双重正则化的必要性**：t-SNE 可视化清晰展示了正则化前后残差特征的可分性差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 CLIP backbone**：对 CLIP 预训练质量有隐式依赖，尽管消融显示对 backbone 选择不太敏感
 2. **异常合成算法的影响**：使用了 DRÆM 的异常合成策略，合成异常的多样性和真实性可能限制了正则化的效果

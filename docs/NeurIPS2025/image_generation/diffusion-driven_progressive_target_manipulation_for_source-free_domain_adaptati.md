@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion-Driven Progressive Target Manipulation for Source-Free Domain Adaptation
 description: >-
@@ -151,7 +151,7 @@ DPTM 由三个核心组件构成，通过 R 次渐进迭代执行：
 3. **渐进式自我改善**：非信任集随迭代缩小的正反馈，无需额外数据即可持续优化
 4. **困难场景表现突出**：在其他方法通常失败的大域偏移场景实现最大增益（18.6%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练扩散模型（SD v1.5），计算和存储开销大
 - 阈值 E 和迭代次数 R 需要调优，不同数据集最优设置不同

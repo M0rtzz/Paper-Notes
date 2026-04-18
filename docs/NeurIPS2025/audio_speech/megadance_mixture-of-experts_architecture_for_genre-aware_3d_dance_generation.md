@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MEGADance: Mixture-of-Experts Architecture for Genre-Aware 3D Dance Generation
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**: 需要同时保持跨风格的通用舞蹈质量和风格内的特异性精度。
 
-**本文要解决什么**: 让风格成为核心语义驱动而非辅助修饰。
+**本文目标**: 让风格成为核心语义驱动而非辅助修饰。
 
 **切入角度**: 借鉴 MoE 中参数分离的思想，为每种风格分配独立专家。
 
@@ -54,7 +54,7 @@ tags:
 
 1. **有限标量量化 FSQ (Finite Scalar Quantization)**:
 
-    - **做什么**: 替代传统 VQ-VAE 的 codebook，消除 codebook 坍缩
+    - **功能**: 替代传统 VQ-VAE 的 codebook，消除 codebook 坍缩
     - **为什么**: VQ-VAE 的 argmin 选择导致异步更新和利用率低（仅 75%）
     - **怎么做**: 用可微的有界舍入 (bounded rounding) 替代离散 argmin：
     $\hat{\mathbf{z}} = f(\mathbf{z}) + \text{sg}[\text{Round}[f(\mathbf{z})] - f(\mathbf{z})]$
@@ -63,21 +63,21 @@ tags:
 
 2. **运动学-动力学双约束 (Kinematic-Dynamic Constraints)**:
 
-    - **做什么**: 在 SMPL 参数重建的基础上加入关节约束和时序约束
+    - **功能**: 在 SMPL 参数重建的基础上加入关节约束和时序约束
     - **为什么**: 直接重建 SMPL 参数对所有关节平等处理，忽略人体运动学树结构（根节点误差传播全局，手部误差仅影响局部）
     - **怎么做**: 通过前向运动学得到 3D 关节，同时约束位置、速度($\alpha_1$)和加速度($\alpha_2$)：
     $\mathcal{L}_{\text{joint}} = \|\hat{J}-J\|_1 + \alpha_1\|\hat{J}'-J'\|_1 + \alpha_2\|\hat{J}''-J''\|_1$
 
 3. **混合专家架构 (Mixture-of-Experts)**:
 
-    - **做什么**: 解耦舞蹈的通用性和风格特异性
+    - **功能**: 解耦舞蹈的通用性和风格特异性
     - **Specialized Expert**: 每种风格（Pop、Jazz、Breaking 等）独立专家，通过风格标签硬路由激活。隔离风格特有运动模式（如 Krump 的爆发性 vs Contemporary 的流畅性），引入风格感知控制先验
     - **Universal Expert**: 所有风格共享，学习节拍同步、周期性、生物力学一致性等底层通用模式。防止仅用 Specialized Expert 时的模态不匹配问题（如用 Popping Expert 处理芭蕾音乐会产生静止/重复动作）
     - **设计哲学**: 通过解耦共享和风格特异因子，各专家在不同子空间中特化
 
 4. **Mamba-Transformer 混合骨干 (Hybrid Backbone)**:
 
-    - **做什么**: 结合 Mamba 的局部依赖建模和 Transformer 的全局跨模态理解
+    - **功能**: 结合 Mamba 的局部依赖建模和 Transformer 的全局跨模态理解
     - **Transformer 部分**: 拼接音乐、上半身、下半身特征沿时间轴，使用滑动窗口注意力机制（训练-推理对齐）
     - **Mamba 部分**: 分别对音乐、上半身、下半身特征建模模态内局部依赖
     - **滑动窗口注意力**: 解决标准因果注意力在长序列推理（sliding window 方式）中训练-推理不一致的问题
@@ -151,7 +151,7 @@ HFDQ 阶段消融：
 - **训练-推理对齐**: 滑动窗口注意力机制巧妙解决了自回归长序列推理中的不一致问题
 - **FSQ 替代 VQ-VAE**: 简洁有效，codebook 100% 利用率的实现值得其他序列生成任务借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 风格标签需要手动提供，未探索自动风格识别或无标签场景
 - 未引入文本条件（作者已在 conclusion 中提出计划）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Searching Latent Program Spaces
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L}_{\text{total}}(\phi, \theta) = \mathcal{L}_{\text{rec}}(\phi, \the
 - 均值聚合的置换不变性避免了注意力的二次复杂度，使方法可扩展到更多示例
 - 训练时感知测试时搜索（train-with-search-awareness）是使方法奏效的关键归纳偏置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据分布有限——仅在 re-ARC 上训练，限制了潜在空间的表达能力
 - 梯度搜索是一阶方法，可能陷入局部最优；可探索进化策略（CMA-ES）等全局搜索

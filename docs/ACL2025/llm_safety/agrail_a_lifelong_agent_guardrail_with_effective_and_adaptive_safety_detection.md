@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AGrail: A Lifelong Agent Guardrail with Effective and Adaptive Safety Detection
 description: >-
@@ -111,7 +111,7 @@ AGrail (Claude-3.5) 保留了 95.6% 的正常动作，同时将 Prompt Injection
 3. **环境依赖型攻击的处理**：有些动作单独看无害但在特定环境下有害（如重命名导致数据覆盖），AGrail 通过实时环境分析工具来检测这类风险
 4. **Safe-OS 基准**的构建填补了在线执行环境下 OS Agent 安全评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 使用现成的 LLM 作为组件，未来可以探索训练专门的 guardrail 模型
 2. 现有工具（安全检测工具）数量有限，主要依赖推理，未来应开发更多可插拔的高级安全工具

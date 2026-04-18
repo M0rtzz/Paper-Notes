@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Look Carefully: Adaptive Visual Reinforcements in Multimodal Large Language Models for Hallucination Mitigation
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: 视觉 token 数量大（如 LLaVA 的 576 个），其中大量是背景冗余 token；全量注入引入噪声，不注入则视觉信号衰减——需要在"增强视觉信号"和"避免背景干扰"之间取得平衡。
 
-**本文要解决什么？** 设计一种选择性视觉增强机制，只将与当前生成最相关的视觉 patch 注入解码过程，既强化关键视觉线索又避免冗余干扰。
+**本文目标** 设计一种选择性视觉增强机制，只将与当前生成最相关的视觉 patch 注入解码过程，既强化关键视觉线索又避免冗余干扰。
 
 **切入角度**: 观察到隐状态与不同视觉 token 的相似度差异显著——有效目标区域相似度高、背景区域低——据此设计自适应选择策略。
 
-**核心idea一句话**: 用原型距离精简冗余视觉 token，用最优传输量化 patch 与隐状态的对齐程度，仅注入高对齐 patch。
+**核心 idea**: 用原型距离精简冗余视觉 token，用最优传输量化 patch 与隐状态的对齐程度，仅注入高对齐 patch。
 
 ## 方法详解
 
@@ -47,19 +47,19 @@ AIR 工作在 Transformer 每层的 FFN 阶段，由两个组件串联构成：(
 
 1. **Prototype-based Token Reduction**:
 
-    - **做什么**: 将 K 个视觉 token 压缩为 Q 个（Q << K），保留最有信息量的 token
+    - **功能**: 将 K 个视觉 token 压缩为 Q 个（Q << K），保留最有信息量的 token
     - **核心思路**: 计算所有视觉 token 的均值作为原型(prototype) h_p，按各 token 到原型的 L2 距离排序，保留距离最大的 Top-Q 个 token——因为距原型越远的 token 编码了越独特的视觉信息
     - **设计动机**: 全量 576 个 token 中大量是相似的背景 token；保留离群 token 可抑制冗余、降低后续 OT 计算开销
 
 2. **OT-guided Patch Reinforcement**:
 
-    - **做什么**: 将图像裁剪为 M 个 patch，用最优传输评估每个 patch 与当前隐状态的对齐程度，仅注入对齐度高（OT 距离低）的 patch
+    - **功能**: 将图像裁剪为 M 个 patch，用最优传输评估每个 patch 与当前隐状态的对齐程度，仅注入对齐度高（OT 距离低）的 patch
     - **核心思路**: 将隐状态和 patch embedding 建模为离散分布，用 Sinkhorn 算法高效求解 OT 距离 d_OT(m)；设阈值 τ 选择 d_OT(m) ≤ τ 的 patch 集合 M；将选中 patch 的 embedding 拼接后注入 FFN
     - **设计动机**: OT 距离捕捉全局几何结构，比逐点余弦相似度更敏感。论文理论证明 OT 的区分灵敏度严格高于余弦距离
 
 3. **选择性视觉接地(Selective Visual Grounding)**:
 
-    - **做什么**: 最终的 FFN 输出 = 原始 FFN 输出 + 精简隐状态与选中 patch 的交互增强项
+    - **功能**: 最终的 FFN 输出 = 原始 FFN 输出 + 精简隐状态与选中 patch 的交互增强项
     - **核心思路**: FFN(H|Z̃) = φ(HW₁)W₂ᵀ + φ(H'Z̃ᵀ)Z̃，其中 H' 是精简后的隐状态，Z̃ 是 OT 选中的 patch embeddings
     - **设计动机**: 将增强项作为残差加入，不改变模型原始行为，仅在有高对齐 patch 时提供额外视觉接地
 
@@ -109,7 +109,7 @@ AIR 工作在 Transformer 每层的 FFN 阶段，由两个组件串联构成：(
 - **"少即是多"**: 精简 token + 选择性增强比全量注入效果更好，说明视觉增强的质量比数量重要
 - 注意力热图可视化清晰展示了 AIR 将注意力聚焦在语义关键区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要将图像裁剪为 patch 并分别编码，引入额外推理计算；大分辨率图像下开销更大
 - OT 阈值 τ 和精简数 Q 需要调优，不同模型/数据可能需要不同配置
 - 目前仅在 caption 和 VQA 场景验证，在多轮对话、长文本生成等场景下效果未知

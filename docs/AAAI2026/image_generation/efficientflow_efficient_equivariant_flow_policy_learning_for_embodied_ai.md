@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EfficientFlow: Efficient Equivariant Flow Policy Learning for Embodied AI
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：(1) 理论证明等变性在 Flow Matching 中可以自然保持 (2) 提出 FABO 正则化使流轨迹更直，减少所需积分步数。
 
-**核心 idea 一句话**：等变 Flow Matching + FABO 加速正则化，统一数据效率和采样效率。
+**核心 idea**：等变 Flow Matching + FABO 加速正则化，统一数据效率和采样效率。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ $\mathcal{L} = \mathcal{L}_{CFM} + \lambda \cdot \text{FABO}$。在 MimicGen 基
 - **FABO 从边际加速度到条件加速度的上界推导**优雅地解决了实践中的可计算性问题
 - **不需要假设专家等变**比 EquiDiff 更通用——现实中的人类演示通常不完美等变
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑 SO(2) 对称性，SE(3) 等变的扩展有待探索
 - 仅在仿真环境验证，真实机器人实验缺失
 - 批量轨迹选择策略引入了额外的推理并行开销

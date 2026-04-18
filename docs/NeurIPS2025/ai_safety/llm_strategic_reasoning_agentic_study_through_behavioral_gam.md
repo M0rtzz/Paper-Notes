@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM Strategic Reasoning: Agentic Study through Behavioral Game Theory
 description: >-
@@ -106,7 +106,7 @@ GPT-o3-mini和GPT-o1在多数博弈中领先，但不同博弈类型的优势模
 - **推理风格分析有价值**：解释了为什么同一模型在不同博弈中表现迥异
 - **偏差发现的警示意义**：强推理能力不等于公平性，persona偏差在高级模型中依然存在
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅评估one-shot博弈，未涉及重复博弈和动态策略适应
 - 13个博弈的覆盖面有限，未包含拍卖、议价等更复杂形式

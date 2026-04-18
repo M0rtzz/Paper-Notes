@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantization Error Propagation: Revisiting Layer-Wise Post-Training Quantization
 description: >-
@@ -86,7 +86,7 @@ QEP 本身不引入新的训练过程。核心优化目标（式7）为：$\min_
 - $\alpha_l$ 参数设计精妙：既可防过拟合，又能控制计算量，Proposition 5.3 揭示其与正则化的等价关系
 - 正交于现有所有 PTQ 改进（非线性量化、旋转矩阵等），可叠加使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\alpha_l$ 目前采用简单的固定值策略（1/2 或 MLP 层设0），未来可开发自适应、逐层、数据感知的调节策略
 - 在 INT2 场景下，AWQ+QEP 有时未必优于原始 QuIP+QEP，说明不同 PTQ 方法与 QEP 的兼容性有差异

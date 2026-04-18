@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robot-R1: Reinforcement Learning for Enhanced Embodied Reasoning in Robotics
 description: >-
@@ -119,7 +119,7 @@ GRPO 和 RLOO 表现相当，REINFORCE++ 因为批级奖励归一化方差更大
 - **推理能力的自然迁移**：仅训练低级状态预测就获得了高级推理能力的提升
 - **RL 优于 SFT 的实证**：SFT（包括 CoT-SFT）在迁移到分布外任务时表现极差甚至崩溃，而 RL 训练的模型泛化能力显著更强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据仅来自 RLBench 的 5 个桌面操作任务，场景多样性有限
 - 规划能力略有下降，因为训练目标聚焦于下一关键帧预测而非长期规划

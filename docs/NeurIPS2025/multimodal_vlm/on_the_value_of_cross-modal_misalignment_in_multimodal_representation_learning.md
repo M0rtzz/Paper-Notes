@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Value of Cross-Modal Misalignment in Multimodal Representation Learning
 description: >-
@@ -41,7 +41,7 @@ tags:
 - **缓解派**：失配是噪声干扰，导致多模态模型"幻觉"，应被消除（如 SigLIP, BLIP 等过滤策略）
 - **利用派**：在风格相关信息上刻意引入失配（如随机文本增强），反而能增强零样本和对抗鲁棒性
 
-### 4. 本文要解决什么
+### 4. 本文目标
 
 如何从理论上调和这两种对立观点？什么条件下失配有害、什么条件下有益？给实际应用提供可操作的指导。
 
@@ -49,7 +49,7 @@ tags:
 
 构建一个显式建模跨模态失配的潜变量生成模型（LVM），对 MMCL 框架进行可辨识性（identifiability）分析，从因果推断视角给出统一理论。
 
-### 6. 核心 idea 一句话
+### 6. 核心 idea
 
 MMCL 学到的表征恰好是图文共享且不受选择偏差和扰动偏差影响的语义子集的块可辨识变换，失配自然过滤掉不稳定语义从而起到正则化作用。
 
@@ -68,7 +68,7 @@ MMCL 学到的表征恰好是图文共享且不受选择偏差和扰动偏差影
 
 #### 模块1：选择偏差（Selection Bias）$\theta$
 
-**做什么**：决定哪些语义信息被保留在文本中。
+**功能**：决定哪些语义信息被保留在文本中。
 
 **核心思路**：选择偏差 $\theta$ 映射到非空语义子集 $\mathbb{I}_\theta \in \mathcal{P}^+(\mathbb{I}_\mathbf{s})$，其补集 $\mathbb{I}_\theta^c$ 中的语义变量在文本中被完全忽略（如描述物体时省略纹理信息）。
 
@@ -76,7 +76,7 @@ MMCL 学到的表征恰好是图文共享且不受选择偏差和扰动偏差影
 
 #### 模块2：扰动偏差（Perturbation Bias）$\rho$
 
-**做什么**：在被选择的语义子集上引入错误标注。
+**功能**：在被选择的语义子集上引入错误标注。
 
 **核心思路**：定义可扰动子集 $\mathbb{I}_\rho \subseteq \mathbb{I}_\theta$，随机抽取 $A \subseteq \mathbb{I}_\rho$，将其中的语义变量替换为随机值：
 $$p_{\tilde{\mathbf{s}}_{\mathbb{I}_\theta} | \mathbf{s}, A} = \delta(\tilde{\mathbf{s}}_{\mathbb{I}_\theta \setminus A} - \mathbf{s}_{\mathbb{I}_\theta \setminus A}) \cdot p_{\tilde{\mathbf{s}}_A | \mathbf{s}_A}$$
@@ -166,7 +166,7 @@ $$\mathcal{L}_{\text{SymAlignMaxEnt}} = \mathbb{E}[\|f_x(\mathbf{x}) - f_t(\math
     - 审阅和策展文本比操作潜变量更精确可控
 4. **扰动非干预**：区分了观测层面的文本扰动与因果干预，后者会沿因果图传播而前者不会
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 理论基于渐近 MMCL 目标（SymAlignMaxEnt），与实际有限样本 InfoNCE 之间存在差距
 2. 假设生成函数为微分同胚，真实图像/文本生成可能不严格满足

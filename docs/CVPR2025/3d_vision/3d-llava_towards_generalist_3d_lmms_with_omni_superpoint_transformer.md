@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-LLaVA: Towards Generalist 3D LMMs with Omni Superpoint Transformer
 description: >-
@@ -84,7 +84,7 @@ tags:
 - **距离自适应自注意力**的设计简洁有效：仅增加一个基于欧几里得距离的偏置项即可增强局部空间交互，计算开销可忽略
 - **指令微调数据组织**：将6个数据集统一为question-answer格式，分割任务通过特殊[SEG] token触发，实现了真正的多任务统一训练而非多阶段分别训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在ScanNet室内场景验证，室外/大规模场景效果未知
 - Box-level grounding（Acc@0.5=40.6%）弱于Chat-Scene（50.2%），因为方法为掩码优化非bbox优化，转换为bbox时丢失了精度
 - 3D数据仍是瓶颈，仅295K条指令数据。作者指出数据收集是下一步重点，2D LLaVA用了665K条即显著更强，3D数据的稀缺性是主要制约

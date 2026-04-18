@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Advancing Sequential Numerical Prediction in Autoregressive Models
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：自回归模型需要逐token生成数值，但传统CE损失完全忽略了数字token之间的ordinal关系和跨token的数值完整性，导致数值预测精度受限。
 
-**本文要解决什么？** 设计一种能同时在token级别保持数值有序性、在序列级别保持数值完整性的训练损失函数，提升自回归模型在所有涉及数值输出的任务上的精度。
+**本文目标** 设计一种能同时在token级别保持数值有序性、在序列级别保持数值完整性的训练损失函数，提升自回归模型在所有涉及数值输出的任务上的精度。
 
 **切入角度**：将Earth Mover's Distance (EMD)引入自回归模型训练（首次），并结合可微数值构造实现跨token的序列级数值优化。
 
-**核心idea一句话**：用EMD替代CE解决token级ordinal忽视问题，用可微数值重建解决序列级全局数值偏差问题，两层联合优化。
+**核心 idea**：用EMD替代CE解决token级ordinal忽视问题，用可微数值重建解决序列级全局数值偏差问题，两层联合优化。
 
 ## 方法详解
 
@@ -126,7 +126,7 @@ $$\mathcal{L} = \mathbf{W_{exp}} \cdot \text{EMD} + \alpha \cdot \mathcal{L}_{re
 - **Gumbel-softmax桥接离散与连续**：巧妙解决了从离散token预测到连续数值重建的可微性问题
 - **双度量互补**：相对偏差处理scale-invariant误差，量级偏差处理order-of-magnitude误差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅处理十进制整数和简单浮点数，对更复杂的数值格式（科学计数法、分数等）的适用性未验证
 - 序列级损失依赖Gumbel-softmax的温度参数，可能引入额外调参成本

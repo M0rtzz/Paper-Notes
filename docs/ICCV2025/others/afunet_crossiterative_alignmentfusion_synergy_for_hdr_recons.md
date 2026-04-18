@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm
 description: >-
@@ -81,7 +81,7 @@ tags:
 - **窗口交叉注意力用于对齐**: 局部窗口比全局attention更适合空间对齐（对齐主要涉及局部结构和高频细节）
 - **深度展开的实用价值**: 将迭代算法展开为固定阶段的神经网络，既有理论解释性又能端到端训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了3曝光输入，更多曝光的扩展性待验证
 - SAM基于窗口attention，可能在大运动区域的对齐能力有限
 - Kalantari数据集仅15个测试样本，评估规模偏小

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] V2Drop: Variation-aware Vision Token Dropping for Faster Large Vision-Language Models
 description: >-
@@ -71,7 +71,7 @@ V2Drop是training-free的即插即用方案。在LLM推理的prefilling阶段，
 - 理论分析（Variation-Impact Theorem）将变化量与输出影响严格关联，不是事后解释而是先验推导
 - 代码开源，实现极简（仅需一行L2距离计算+TopK选择）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 三阶段剪除的层选择和压缩比调度仍需手动设定，自适应策略可能更优
 - 理论分析假设Jacobian范数有下界，对接近0的token分析不够细致
 - 仅测试了7B规模模型，更大模型（70B+）的效果待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WMCopier: Forging Invisible Image Watermarks on Arbitrary Images
 description: >-
@@ -117,7 +117,7 @@ WMCopier 包含三个阶段：
 - 攻击了真实部署的 Amazon 系统并负责任地报告（附有 Amazon 官方声明），体现了负责任的安全研究态度
 - 提出的多消息防御策略简单有效，为工业界提供了实用的对策
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要收集 5000 张水印图像训练扩散模型，获取成本可能不低
 - 假设静态水印方案（服务商不更换算法），动态更新的方案可能更难攻破

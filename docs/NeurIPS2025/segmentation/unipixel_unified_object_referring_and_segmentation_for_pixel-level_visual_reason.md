@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniPixel: Unified Object Referring and Segmentation for Pixel-Level Visual Reasoning
 description: >-
@@ -100,7 +100,7 @@ UniPixel 基于 Qwen2.5-VL 框架构建，包含 LLM 骨干和支持动态分辨
 - **对象级测试时扩展**：可以被视为一种 object-centric test-time scaling 方法——先分割关键对象再编码以辅助推理
 - **记忆库的解耦设计**：解决了因果自注意力限制下 `<SEG>` token 无法获取完整上下文的根本问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 7B 版本在 PixelQA 分割质量上反而低于 3B（𝒥&ℱ 44.6 vs 60.9），可能存在大模型下分割能力退化的问题
 - 推理分割数据 (ReasonSeg) 仅 239 样本，容易被大规模数据淹没

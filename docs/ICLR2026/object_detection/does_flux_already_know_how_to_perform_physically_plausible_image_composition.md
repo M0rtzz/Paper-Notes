@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Does FLUX Already Know How to Perform Physically Plausible Image Composition?
 description: >-
@@ -112,7 +112,7 @@ $$\bm{v}_t^{\text{dsg}} = \bm{v}_t + \eta(\bm{v}_t - \bm{v}_{\bm{\theta}+\Delta\
 3. **全面的模型无关性**：在 FLUX、SDXL、SD3.5、PixArt 上均可运行，仅依赖标准模型功能
 4. **ComplexCompo 基准贡献**：填补了复杂光照条件下图像合成评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 当 inpainting 提示指定错误颜色时，最终结果会继承该错误颜色
 2. 插入物体与参考物体的相似度取决于定制化 adapter 的质量，LoRA 需要逐概念测试时微调
 3. MSA 优化需要多次前向传播（$k$ 步梯度下降），计算开销较大

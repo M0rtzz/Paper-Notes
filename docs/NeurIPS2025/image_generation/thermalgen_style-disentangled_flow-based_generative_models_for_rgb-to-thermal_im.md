@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ThermalGen: Style-Disentangled Flow-Based Generative Models for RGB-to-Thermal Image Translation
 description: >-
@@ -127,7 +127,7 @@ ThermalGen 基于 SiT（Scalable Interpolant Transformer）架构，在潜空间
 - 三个新数据集（DJI-day、Bosonplus-day、Bosonplus-night）扩展了 RGB-T 研究的数据基础
 - CFG scale 作为推理时调节手段可有效缓解特定数据集的性能问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 Boson-night（低对比度）、LLVIP（分布偏移）和 FLIR（极端光照）上表现欠佳
 - 模型假设 RGB 和热图像空间分辨率一致，未处理分辨率不匹配场景

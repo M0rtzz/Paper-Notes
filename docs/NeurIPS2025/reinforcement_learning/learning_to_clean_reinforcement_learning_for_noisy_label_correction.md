@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Clean: Reinforcement Learning for Noisy Label Correction
 description: >-
@@ -117,7 +117,7 @@ RLNLC 将问题定义为 MDP $\mathcal{M} = (\mathcal{S}, \mathcal{A}, P, \mathc
 - 策略函数的设计巧妙地将 k 近邻的预测不一致性转化为纠正概率，既有可解释性（不一致性越大越可能是噪声）又可微分（通过特征网络 $f_\theta$）。
 - Critic 的分箱编码方案简洁高效——将 $N$ 维输入压缩到 $N_b$ 维（默认 100），同时保留了状态分布的全局信息。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 计算成本较高：需要预训练特征网络 + RL 策略学习 500 epochs + 策略部署 25 步 + 微调 100 epochs，整体流程较复杂。
 - k 近邻计算在大规模数据集上可能成为瓶颈（需每步重新计算特征距离）。

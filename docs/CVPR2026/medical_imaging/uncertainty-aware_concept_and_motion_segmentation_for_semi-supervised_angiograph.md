@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty-Aware Concept and Motion Segmentation for Semi-Supervised Angiography Videos
 description: >-
@@ -105,7 +105,7 @@ SMART 采用两阶段训练：
 - 双流光流设计（前向+后向）缓解了单向光流的确认偏差
 - 极少标注下的惊人性能：16 个视频标注+每个仅 1-2 帧，就能达到远超监督方法的效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - XCA 视频帧数有限，长序列场景下时序建模能力未知
 - SAM3 本身的计算开销较大，实时性可能无法满足术中需求

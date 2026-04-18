@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Resp-Agent: An Agent-Based System for Multimodal Respiratory Sound Generation and Disease Diagnosis
 description: >-
@@ -106,7 +106,7 @@ Thinker-A2CA 在全部指标上最优，将 Macro-F1 从基线 0.212 提升至 0
 4. **Resp-229k 基准**：229k 规模、16 类、跨域划分、配有 LLM 蒸馏临床叙述，填补了呼吸音领域大规模多模态基准的空白。
 5. **极高的样本效率**：Thinker-A2CA 在仅 10k 合成样本时就实现了总增益的 ~52%，大幅优于类先验和随机采样。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **控制器依赖闭源 LLM**：Thinker-A2CA 使用 DeepSeek-V3.2-Exp 作为规划器，部署成本较高且不可完全复现，可探索更轻量的规划策略。
 2. **生成质量上限**：CFM 解码仍基于梅尔频谱图中间表示，对某些极细粒度的声学瞬态（如微弱爆裂音）可能重建不够精准。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hyperbolic Busemann Neural Networks
 description: >-
@@ -71,7 +71,7 @@ tags:
 
 #### 设计一：Busemann MLR（BMLR）
 
-**做什么**：将多类分类的 logit 计算从欧式空间提升到双曲空间。
+**功能**：将多类分类的 logit 计算从欧式空间提升到双曲空间。
 
 **核心思路**：欧式 MLR 的 logit $u_k(x) = \alpha_k \langle v_k, x \rangle + b_k$ 中，$\langle v_k, x \rangle$ 是内积。根据 Busemann 函数与内积的对应关系（$B^v(x) = -\langle x, v \rangle$ 在欧式空间），定义双曲 logit：
 
@@ -87,7 +87,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
 #### 设计二：点到极球面距离解释
 
-**做什么**：为 BMLR 的 logit 提供几何意义。
+**功能**：为 BMLR 的 logit 提供几何意义。
 
 **核心思路**：在 Hadamard 空间（含欧式和双曲空间的更广义度量空间）中，Busemann 函数的等值面（horophere）间距恒定：$d(H_{\tau_1}^\gamma, H_{\tau_2}^\gamma) = |\tau_2 - \tau_1|$。因此点到 horophere 的距离为 $d(x, H_\tau^v) = |B^v(x) - \tau|$，BMLR 的 logit 正是有符号的点到 horophere 距离乘以 $\alpha_k$。
 
@@ -95,7 +95,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 
 #### 设计三：Busemann FC（BFC）层
 
-**做什么**：将全连接层从欧式空间提升到双曲空间。
+**功能**：将全连接层从欧式空间提升到双曲空间。
 
 **核心思路**：欧式 FC 可写成 $\bar{d}(y, H_{e_k, 0}) = \langle a_k, x \rangle + b_k$，即输出的第 $k$ 维是到坐标超平面的有符号距离。将右端替换为 Busemann logit，左端用双曲点到超平面距离，得到隐式方程 $\bar{d}(y, H_{e_k, e}) = u_k(x)$，然后求解 $y$。
 
@@ -169,7 +169,7 @@ $$u_k(x) = -\alpha_k B^{v_k}(x) + b_k$$
 - **实用性强**：BMLR-L 的 FLOPs 为 $C(2n+12)$，接近欧式 MLR 的 $C(2n)$，几乎零额外开销
 - **跨领域验证**：四类任务（视觉、基因组、图节点分类、图链接预测）覆盖面广，说明方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅覆盖 MLR 和 FC**：注意力、归一化、残差等其他网络组件未用 Busemann 函数重构，是否能构建完整的 Busemann 网络？
 2. **曲率固定或手工选择**：虽提到可学习曲率，但实验中主要通过交叉验证选取，自适应曲率学习有待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Algorithms with Sharp Convergence Rates for Stochastic Hierarchical Optimization
 description: >-
@@ -87,7 +87,7 @@ Ada-Minimax适用于 min_x max_y f(x,y)（f对y强凹），Ada-BiO适用于 min_
 - 超参数鲁棒：四个主要超参数在数量级范围内变化对性能影响极小，极大降低了调参负担
 - 实用变体设计：将理论算法中的双采样差分替换为相邻迭代梯度差（计算更省），不影响实际效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要随机梯度噪声具有非零下界的假设（Assumption 3.2(ii)），noiseless情况虽也覆盖但该假设在某些场景不自然
 - 仅考虑非凸-强凹/强凸设定，更一般的非凸-非凸情况待探索
 - 主要是理论贡献，深度学习实验规模有限（单个数据集+简单模型）

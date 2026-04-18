@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Collapse in Cumulative Link Models for Ordinal Regression: An Analysis with Unconstrained Feature Model
 description: >-
@@ -111,7 +111,7 @@ Neural Collapse (NC)是深度分类网络中发现的一个关键现象：经过
 - **实践价值**：发现固定阈值策略不仅是理论分析的需要，更在不平衡数据上带来显著的分类精度提升和少数类保护
 - **定量ONC指标设计**：提出四个可测量的ONC指标（ONC1/ONC2-1/ONC2-2/ONC3），为实证验证提供了系统化工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **固定阈值假设**：理论证明依赖阈值固定的假设，虽然实验表明ONC1-2在可学习阈值下也涌现，但缺乏理论保证
 - **两相假设未严格证明**：Theorem 4.3中假设了w*关于正则化参数的连续性和单调性，尚未严格证明系统仅存在两个相

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ∞-Brush: Controllable Large Image Synthesis with Diffusion Models in Infinite Dimensions
 description: >-
@@ -110,7 +110,7 @@ $$\theta^* = \arg\min_\theta \mathbb{E}_{\mathbf{u}_0 \sim \mathbb{Q}_{\text{dat
 3. **分辨率无关性**：同一模型可在任意分辨率推理（256² 到 4096²），真正意义上的"无限维"生成
 4. **CANO 设计巧妙**：通过改变注意力计算顺序实现线性复杂度，并将坐标嵌入作为隐式位置编码
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **局部细节不足**：Crop FID 系统性劣于 patch-based 方法和 SDXL，全局结构好但精细纹理不够
 2. **参数量受限**：78M 参数远小于竞品（SDXL 2.6B），模型容量不足

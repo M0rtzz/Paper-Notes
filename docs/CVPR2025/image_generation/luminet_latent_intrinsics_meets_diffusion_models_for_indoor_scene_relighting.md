@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LumiNet: Latent Intrinsics Meets Diffusion Models for Indoor Scene Relighting
 description: >-
@@ -47,14 +47,14 @@ tags:
 ### 关键设计
 
 **1. Variational-StyLitGAN 数据策略**
-- **做什么**: 解决训练数据稀缺问题 — 真实场景的不同光照配对极难获取。
+- **功能**: 解决训练数据稀缺问题 — 真实场景的不同光照配对极难获取。
 - **核心机制**: 用 ConvNeXt 变分编码器将真实 LSUN 卧室图像映射到 StyLitGAN 潜在空间，在冻结的预训练生成器上产生每场景 7 种光照变化：
   $$\mathcal{L} = \underbrace{\text{MSE}(\mathbf{x}, \hat{\mathbf{x}}) + \text{LPIPS}(\mathbf{x}, \hat{\mathbf{x}})}_{\mathcal{L}_{rec}} + \underbrace{D_{KL}(q_\phi(\mathbf{z}|\mathbf{x}) \| \mathcal{N}(0,I))}_{\mathcal{L}_{KL}}$$
 - **CLIP 过滤**: 用"photo-realistic"、"good lighting"、"illumination"等关键词筛选 ~1K 高质量样本。
 - **设计动机**: 原始 StyLitGAN 随机采样会 mode collapse（每 10-20 次迭代输出几乎相同），变分映射引入真实图像多样性打破此问题。FID 从 47.99 降至 35.81。
 
 **2. 潜在内在 ControlNet（Latent Intrinsic Control）**
-- **做什么**: 改造 ControlNet 使其在潜在空间而非图像空间操作，处理来自**两张不同图像**的表征。
+- **功能**: 改造 ControlNet 使其在潜在空间而非图像空间操作，处理来自**两张不同图像**的表征。
 - **核心机制**:
     - 从源图提取潜在内在特征 $\mathcal{A}_o \in \mathbb{R}^{H \times W \times 128}$（albedo-like，光照不变）
     - 从目标图提取光照外在码 $\mathcal{I}_{L_t} \in \mathbb{R}^{16}$
@@ -62,7 +62,7 @@ tags:
 - **vs 传统 ControlNet**: 传统 ControlNet 处理单场景的条件图；LumiNet 处理两张不同场景的潜在表征 — 保留源图几何/albedo、迁移目标图光照。
 
 **3. 光照适配器网络（Lighting Adaptor）**
-- **做什么**: 将低维目标光照码注入预训练扩散模型的交叉注意力层。
+- **功能**: 将低维目标光照码注入预训练扩散模型的交叉注意力层。
 - **核心机制**: MLP (3072→4096→4096→4096→3072) 将光照码映射为 $\mathcal{I}_{E_t} \in \mathbb{R}^{3 \times 1024}$，替代文本 embedding 送入交叉注意力。训练时不使用任何文本 prompt。
 - **设计动机**: 交叉注意力提供了对扩散模型全局行为的控制通路，光照码通过此通路影响二阶效果（如桌面反射、间接照明）。
 
@@ -124,7 +124,7 @@ LumiNet 作为通用模型（训练在多样数据上），接近专用 MIIW 模
 3. **两图输入的 ControlNet 改造**: 标准 ControlNet 处理同场景条件，LumiNet 首次处理跨场景的"源几何+目标光照"组合。
 4. **从同场景训练到跨场景泛化**: 泛化能力来源于潜在空间的抽象性 — 在预训练的 intrinsic 空间中，光照和内容已被显式解耦。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 无法识别过小或背对相机的光源（Figure 7 失败案例）。
 2. 无法迁移极端色温变化（如 KTV 室的彩色灯光）。

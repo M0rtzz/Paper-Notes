@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LycheeDecode: Accelerating Long-Context LLM Inference via Hybrid-Head Sparse Decoding
 description: >-
@@ -94,7 +94,7 @@ LycheeDecode 是一个头级稀疏解码框架，包含两个核心组件：
 - 训练开销极低（单 A100 几小时），非常实用
 - 用 TileLang 实现的 hybrid-head block-sparse kernel 做到了真正的端到端加速
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Retrieval head 数量固定为 32，未探索自动确定最优数量的方法
 - 在 HotpotQA 短答案场景下识别效果略差，稀疏监督信号场景有待优化
 - 仅评估了 7B-8B 规模模型，更大规模（70B+）的效果未知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VaMP: Variational Multi-Modal Prompt Learning for Vision-Language Models
 description: >-
@@ -120,7 +120,7 @@ VaMP在Novel类上超过MMRL **1.51%**，调和均值提升 **1.17%**。
 - 推理时蒙特卡罗采样实现了不确定性感知的集成，提升了鲁棒性
 - 框架具有通用性，可适配到MaPLe和MMRL两种不同的多模态提示基线上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时需要10次采样，带来一定计算开销；可用均值近似替代以加速
 - 类感知先验在测试时退化为标准高斯，未充分利用测试时的类别信息

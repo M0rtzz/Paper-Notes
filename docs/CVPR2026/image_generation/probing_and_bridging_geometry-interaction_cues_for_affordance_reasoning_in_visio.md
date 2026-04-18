@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probing and Bridging Geometry–Interaction Cues for Affordance Reasoning in Vision Foundation Models
 description: >-
@@ -96,7 +96,7 @@ tags:
 - DINO 的"语义同化"现象（Observation 1.3）的精妙实验设计——用同/异语境下的余弦相似度对比，巧妙分离了几何 vs 语义贡献
 - 该方法是**模型无关的组合范式**：任何强几何模型 + 任何编码交互先验的生成模型可互换组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **原语质量受限**：名词条件化注意力图较嘈杂，生成输出不稳定，影响交互先验的提取质量
 - **融合策略较浅**：当前仅用 NSS 选择+线性融合，是 open-loop 信号组合，没有闭环优化或迭代精炼
 - 依赖 Flux Kontext 的可控图像编辑能力，对于某些抽象动词（如"思考"、"欣赏"）或非接触式交互效果可能退化

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OceanSplat: Object-aware Gaussian Splatting with Trinocular View Consistency for Underwater Scene Reconstruction
 description: >-
@@ -166,7 +166,7 @@ $$L_{total} = L_{photo} + \lambda_{tri} L_{tri} + \lambda_{epi} L_{epi} + \lambd
 3. **物体-介质解耦**：通过有效的几何约束促进 3D 高斯与散射介质的分离，既改善了重建质量，也支持了场景恢复（去水/去雾）
 4. **早期透明度调整的"预防式"策略**：不是等伪影出现再修复，而是在训练初期就抑制可能产生问题的 3D 高斯
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每次迭代需要额外的光栅化（虚拟视点渲染）和最小二乘求解，训练时间略长于 WaterSplatting（19min vs 10min）
 - 虚拟视点基线长度 $b_h, b_v$ 为经验值，可能对不同场景尺度敏感

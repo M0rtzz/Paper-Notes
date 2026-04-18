@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DISCO: Embodied Navigation and Interaction via Differentiable Scene Semantics and Dual-Level Control
 description: >-
@@ -115,7 +115,7 @@ $$p_{i,j} = \sigma(s_i^T q_j)$$
 3. **无需逐步指令即超越 SOTA**：证明了方法的鲁棒性和规划能力，减少对细粒度人类标注的依赖
 4. **Affordance 融合自然**：将 openable 等属性自动融入决策，避免手写规则
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖模拟器真值训练感知模块**：深度、分割、affordance 均用 AI2THOR 真值训练，向真实世界迁移时感知质量可能大幅下降
 2. **Affordance 类别固定**：7 类交互 affordance 由模拟器定义，缺乏开放词汇泛化能力

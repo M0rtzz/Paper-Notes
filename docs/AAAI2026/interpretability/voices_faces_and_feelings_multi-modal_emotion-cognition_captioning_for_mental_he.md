@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Voices, Faces, and Feelings: Multi-modal Emotion-Cognition Captioning for Mental Health Understanding
 description: >-
@@ -161,7 +161,7 @@ $$\bm{u} = \mathcal{F}_{llm}(\text{concat}(\text{<BOS>}, \bm{h}_e, \bm{h}_c, \te
 4. **实验评估维度丰富**：同时进行客观指标（BLEU/ROUGE等）和主观评估（心理学专家评分），增强说服力
 5. **端到端可用**：从多模态输入到辅助诊断的完整流程，具有实际应用前景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 情感和认知描述的标注依赖LLM自动生成+人工修正，可能引入偏差
 2. 仅在MMDA单一数据集上评估，泛化性有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E-RayZer: Self-supervised 3D Reconstruction as Spatial Visual Pre-training
 description: >-
@@ -138,7 +138,7 @@ E-RayZer在frozen-backbone设置下大幅领先所有基线，深度估计AbsRel
 - 自监督E-RayZer在严格指标（RPA@5°）上超越部分有监督模型，说明大规模自监督本身就能产生几何接地的3D理解——数据多样性和质量才是可扩展性的真正驱动力
 - gsplat修改支持对内参K的梯度反传是一个关键工程贡献，使得整个pipeline端到端可微
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持静态场景，限制了可用训练数据规模——扩展到动态场景以利用通用视频是最重要的未来方向
 - 课程策略假设连续视频帧有较均匀的相机运动，对稀疏图像或剧烈视角变化可能效果下降

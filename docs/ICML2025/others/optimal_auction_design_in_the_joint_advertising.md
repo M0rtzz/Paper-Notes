@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Auction Design in the Joint Advertising
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L}_\rho(w;\mu) = -\text{rev}(w) + \sum_{e \in E}\mu_e \cdot \widehat{
 3. **网络设计贴合问题结构**：利用二部图的边/节点对应关系设计Graph Feature Fusion，分配网络用双随机矩阵保证可行性，支付网络用Sigmoid结构性保证IR
 4. **实验验证闭环**：单槽位可与理论最优对比验证方法正确性，多槽位展示实际优越性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **正则分布假设**：单槽位最优结果依赖分布的正则性条件（虚拟价值单调递增），非正则分布下需要ironing处理
 2. **仅考虑单参数出价者**：每个出价者只有一个私有价值，未扩展到多物品/多参数设定

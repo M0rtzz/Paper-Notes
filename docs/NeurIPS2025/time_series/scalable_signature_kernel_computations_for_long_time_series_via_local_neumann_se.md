@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Signature Kernel Computations for Long Time Series via Local Neumann Series Expansions
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 签名核理论性质极好 → 但计算上无法扩展到长序列和粗糙时间序列。
 
-**本文要解决什么**: 在保持精度的前提下，将签名核计算扩展到 $10^6$+ 长度的时间序列。
+**本文目标**: 在保持精度的前提下，将签名核计算扩展到 $10^6$+ 长度的时间序列。
 
 **切入角度**: 利用分段线性时间序列的几何结构，将 Goursat PDE 的全局求解转化为逐tile的局部 Neumann 级数展开，只需存储局部级数系数而非全局 $\ell \times \ell$ 网格。
 
-**核心idea一句话**: 将签名核定义 PDE 重写为 Volterra 积分方程，在每个 tile 上做 Neumann 级数展开，用递归边界传播连接相邻 tiles，实现内存线性于序列长度的计算。
+**核心 idea**: 将签名核定义 PDE 重写为 Volterra 积分方程，在每个 tile 上做 Neumann 级数展开，用递归边界传播连接相邻 tiles，实现内存线性于序列长度的计算。
 
 ## 方法详解
 
@@ -58,7 +58,7 @@ $$\frac{\partial^2 K(s,t)}{\partial s \partial t} = \rho_{\boldsymbol{x},\boldsy
 
 #### 1. Tile 分解与局部解
 
-**做什么**: 将 $[0,1]^2$ 按时间序列数据点分为 $(\ell-1)^2$ 个 tiles $T_{k,l}$，在每个 tile 上局部求解。
+**功能**: 将 $[0,1]^2$ 按时间序列数据点分为 $(\ell-1)^2$ 个 tiles $T_{k,l}$，在每个 tile 上局部求解。
 
 **核心思路**: 在 tile $T_{k,l}$ 上，$\rho$ 是常数 $\rho_{k,l} = \Delta_k \boldsymbol{x} \cdot \Delta_l \boldsymbol{y}$。利用 Volterra 形式的 Neumann 级数：
 
@@ -70,7 +70,7 @@ $$\kappa_{k,l} = \sum_{n=0}^{\infty} \boldsymbol{T}_{k,l}^n \big(\kappa_{k-1,l}(
 
 #### 2. Tile 中心幂级数展开（Proposition 2.8）
 
-**做什么**: 将每个 tile 的解表示为以 tile 角点为中心的幂级数。
+**功能**: 将每个 tile 的解表示为以 tile 角点为中心的幂级数。
 
 **核心公式**: 
 
@@ -85,7 +85,7 @@ $$\kappa_{k,l}(s,t) = \sum_{i,j=0}^{\infty} \tilde{c}_{i,j}^{(k,l)} (s - \sigma_
 
 #### 3. 自适应截断策略
 
-**做什么**: 根据每个 tile 上 $|\rho_{k,l}|$ 的大小自适应决定截断阶数。
+**功能**: 根据每个 tile 上 $|\rho_{k,l}|$ 的大小自适应决定截断阶数。
 
 **核心思路**: 截断误差衰减为 $O((n!)^{-2})$，$|\rho_{k,l}|$ 小的 tile 用低阶即可，$|\rho_{k,l}|$ 大的 tile 需更高阶。默认截断阶数 7 即可覆盖绝大多数情况。
 
@@ -156,7 +156,7 @@ Hurst 指数越低（越粗糙），PowerSig 的优势越大。
 - **数值稳定**: PDE 方法在粗糙路径上误差爆炸，PowerSig 利用局部展开避免了这一问题
 - **谱半径为零保证**: Lemma 2.3 确保 Neumann 级数对任意 $\rho$ 值都收敛，不需要收缩映射
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 保持了 $O(\ell^2 d)$ 的时间复杂度，未改善运行时间
 2. 目前仅支持分段线性插值，高阶插值或可学习插值尚未探索

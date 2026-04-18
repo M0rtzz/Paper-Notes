@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Competitive Distillation: A Simple Learning Strategy for Improving Visual Classification
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **随机扰动的精巧设计**：利用竞争选择机制自动过滤负面扰动、保留正面扰动，无需手动设计扰动策略
 - **方法的通用性强**：适用于CNN/Transformer/Mamba，适用于分类/ReID/检测，且支持同构/异构网络组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要同时训练多个网络，GPU显存和计算开销是独立训练的n倍
 - 训练完成后仅使用一个网络推理，其余网络训练资源被"浪费"

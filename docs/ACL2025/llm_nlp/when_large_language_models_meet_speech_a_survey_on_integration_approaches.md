@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Large Language Models Meet Speech: A Survey on Integration Approaches
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：语音是连续信号，LLM 天然处理离散 token；如何弥合这一模态差距是所有方法的核心挑战，且不同集成策略在精度、延迟、可解释性间存在不同权衡。
 
-**本文要解决什么？** 提供一个清晰的分类框架，帮助研究者理解三种集成范式（文本级/隐表示级/音频token级）的机制、适用场景和优缺点。
+**本文目标** 提供一个清晰的分类框架，帮助研究者理解三种集成范式（文本级/隐表示级/音频token级）的机制、适用场景和优缺点。
 
 **切入角度**：从"集成方法"而非"应用任务"出发组织文献，并在统一框架下对比各方法在 ASR、S2TT、S2ST、TTS 等任务上的性能。
 
-**核心idea一句话**：token化方法影响 LLM 性能，语音-LLM 的集成方式不应局限于离散 token 化，三种范式各有其适用场景和发展空间。
+**核心 idea**：token化方法影响 LLM 性能，语音-LLM 的集成方式不应局限于离散 token 化，三种范式各有其适用场景和发展空间。
 
 ## 方法详解
 
@@ -45,7 +45,7 @@ tags:
 将 Speech-LLM 集成方法分为三大类：(a) 文本级集成——LLM 处理文本，配合 ASR/TTS 管道；(b) 隐表示级集成——语音编码器输出的连续向量直接送入 LLM；(c) 音频token级集成——语音被离散化为语义/声学 token 作为 LLM 的输入/输出。每类下进一步细分具体策略。
 
 ### 关键设计 1：文本级集成（Text-based Integration）
-- **做什么**：将语音先转为文本再交给 LLM 处理，包括级联集成、LLM 重打分（Rescoring）和生成式纠错（GER）三种子方法。
+- **功能**：将语音先转为文本再交给 LLM 处理，包括级联集成、LLM 重打分（Rescoring）和生成式纠错（GER）三种子方法。
 - **核心思路**：级联方式最直接（ASR→LLM→TTS）；重打分用 LLM 语言概率对 N-best 假设列表重新排序，公式为 $Y^* = \arg\max_{Y_i} [(1-\lambda)\log p_{AM}(Y_i|X) + \lambda \log p_{LLM}(Y_i)]$；GER 更进一步，让 LLM 根据 N-best 假设直接生成更好的转录结果（H2T 范式）。
 - **设计动机**：保留 LLM 原生文本处理能力，实现简单、可解释性强。
   但存在误差传播和信息丢失（韵律、情感等非文本信息丢失）的固有缺陷。
@@ -53,7 +53,7 @@ tags:
   Lin et al. (2024) 进一步引入 MoE 架构让不同专家处理不同类型的生成错误。
 
 ### 关键设计 2：隐表示级集成（Latent-representation-based Integration）
-- **做什么**：用语音编码器（HuBERT、Whisper encoder 等）提取连续隐表示，经模态适配模块后直接灌入 LLM 的嵌入空间，绕过文本中间步。
+- **功能**：用语音编码器（HuBERT、Whisper encoder 等）提取连续隐表示，经模态适配模块后直接灌入 LLM 的嵌入空间，绕过文本中间步。
 - **核心思路**：关键在模态适配（Modality Adaptation）——解决语音帧率（50-100 fps）远高于文本 token 序列长度的问题。三种主流适配策略：① 卷积下采样（简单堆叠/卷积压缩）；② CTC 压缩（基于 CTC 预测去除空白帧或合并重复帧）；③ Q-Former（可学习的固定长度查询向量，通过交叉注意力提取信息）。对比实验显示 Q-Former > 卷积下采样 > CTC 压缩。
 - **设计动机**：避免文本中间表示的信息损失，实现更深度的模态融合。
   但代价是丧失可解释性，且训练成本更高（需同时处理编码器和 LLM）。
@@ -61,7 +61,7 @@ tags:
   Wu et al. (2023) 提出两阶段训练，先训练编码器再启动 PEFT，确保更稳定的梯度流。
 
 ### 关键设计 3：音频token级集成（Audio-token-based Integration）
-- **做什么**：将语音离散化为 token 序列，与文本 token 统一处理。分为语义 token（S3M + k-means 聚类）、声学 token（神经音频编解码器如 EnCodec）和两者结合三种子方法。
+- **功能**：将语音离散化为 token 序列，与文本 token 统一处理。分为语义 token（S3M + k-means 聚类）、声学 token（神经音频编解码器如 EnCodec）和两者结合三种子方法。
 - **核心思路**：语义 token 捕获语音的语言内容，声学 token 保留高保真音频质量。先预测语义 token 再预测声学 token 的两阶段架构（AudioLM）是典型范式。Moshi 引入 Temporal Transformer + Depth Transformer 的层级自回归架构，实现全双工语音对话。
 - **设计动机**：音频 token 让语音和文本在 token 层面统一，LLM 可以自然地生成语音输出（而隐表示方法通常只能输入语音，不能输出）；但语义 token 缺乏音质，声学 token 缺乏语义信息，如何结合两者仍是开放问题。
 

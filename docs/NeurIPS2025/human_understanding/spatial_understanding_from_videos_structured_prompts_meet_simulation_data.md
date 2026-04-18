@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spatial Understanding from Videos: Structured Prompts Meet Simulation Data
 description: >-
@@ -116,7 +116,7 @@ tags:
 - 合成数据管线可扩展性好，避免了真实场景数据获取的高成本
 - 人类与VLM各有所长：人类在定性任务（如外观排序100%准确率）上表现优异，VLM在精确定量估计上反超人类，两者互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 场景分解依赖VLM自身的位姿估计能力，视角变化剧烈时误差可能累积
 - 仿真数据与真实世界仍存在域差距

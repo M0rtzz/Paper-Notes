@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provably Data-Driven Projection Method for Quadratic Programming
 description: >-
@@ -133,7 +133,7 @@ $$\hat{\boldsymbol{P}}_S \in \arg\min_{\boldsymbol{P} \in \mathcal{P}} \frac{1}{
 
 3. **GJ 框架的活用**：将主动集方法"展开"为 GJ 算法，巧妙地将组合优化问题的计算与学习理论工具桥接起来。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **纯理论工作，缺乏实验验证**：没有在真实的大规模 QP 实例上验证数据驱动投影的实际效果，无法评估理论上界的松紧。
 2. **上下界之间仍有 gap**：$\Omega(nk)$ vs $\mathcal{O}(nk \min(m, k\log m))$，能否进一步缩小。
@@ -208,7 +208,7 @@ $$\mathbb{E}[\ell_{\hat{P}}(\boldsymbol{\pi})] \leq \inf_{\boldsymbol{P}} \mathb
 - **Unrolled Active Set 作为 GJ 算法**：将经典的 active set 方法"展开"为有限步骤的条件分支程序，使其可纳入 GJ 框架分析伪维度——这是一个新的技术工具
 - **结果严格推广 LP 的界**：当 $\boldsymbol{Q}=0$ 时退化为 LP 情况，且本文的界更紧
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 纯理论工作，缺少经验验证（如在投资组合优化等实际 QP 问题上的效果）
 - 伪维度上界中的 $\min(2^m, (em/k)^k)$ 项在约束数 $m$ 很大时仍然很大
 - 上下界之间存在差距（$\Omega(nk)$ vs $O(nk \log(...))$），紧致性有待改进

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SenseFlow: Scaling Distribution Matching for Flow-based Text-to-Image Distillation
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：DMD 的 min-max 博弈框架要求 fake distribution 精确追踪 generator distribution（内部最优响应），但在大模型上这一条件极难满足，导致训练振荡不收敛。
 
-**本文要解决什么？**：如何将 DMD 框架可靠地扩展到 8B-12B 参数量的 flow-based 文生图模型？
+**本文目标**：如何将 DMD 框架可靠地扩展到 8B-12B 参数量的 flow-based 文生图模型？
 
 **切入角度**：从 DMD 的 min-max 优化分析入手，发现内部最优响应需要 $p_f = p_g$，设计近端更新（IDA）来近似维持这一条件；用 ISG 重新配置时间步的去噪重要性；引入基于 VFM 的更强判别器。
 
-**核心idea一句话**：通过隐式分布对齐维持 fake model 与 generator 的一致性，配合段内引导重分配时间步重要性，实现 DMD 在大 flow 模型上的稳定收敛。
+**核心 idea**：通过隐式分布对齐维持 fake model 与 generator 的一致性，配合段内引导重分配时间步重要性，实现 DMD 在大 flow 模型上的稳定收敛。
 
 ## 方法详解
 
@@ -48,17 +48,17 @@ tags:
 ### 关键设计
 
 **设计1：隐式分布对齐（IDA）**
-- **做什么**：在每次 generator 更新后，对 fake model 参数做近端更新 $\phi \leftarrow \lambda\phi + (1-\lambda)\theta$
+- **功能**：在每次 generator 更新后，对 fake model 参数做近端更新 $\phi \leftarrow \lambda\phi + (1-\lambda)\theta$
 - **核心思路**：DMD 的内部最优响应要求 $p_f(X_t) = p_g(X_t)$。通过 EMA 式参数对齐，维持 fake model 与 generator 的 ε-best response，即 $E_t D_{KL}(p_g(X_t) \| p_f(X_t)) \leq \varepsilon$
 - **设计动机**：单靠增大 TTUR 比例在大模型上既昂贵又不稳定。IDA 以极低成本（仅一次参数插值）维持 fake-generator 一致性，使 DMD 在 SD 3.5 Large 上收敛。λ 接近 1 即可
 
 **设计2：段内引导（ISG）**
-- **做什么**：在每个粗时间步的"段"内采样中间时间点，利用教师模型构建引导轨迹
+- **功能**：在每个粗时间步的"段"内采样中间时间点，利用教师模型构建引导轨迹
 - **核心思路**：对粗时间步 $\tau_i$，采样中间点 $t_{mid} \in (\tau_{i-1}, \tau_i)$。教师从 $\tau_i$ 去噪到 $t_{mid}$，generator 从 $t_{mid}$ 继续到 $\tau_{i-1}$，得到目标 $x_{tar}$。同时 generator 直接从 $\tau_i$ 到 $\tau_{i-1}$，用 L2 损失对齐两者
 - **设计动机**：教师模型各时间步的重建误差 $\xi(t)$ 非单调且存在局部振荡，均匀时间步采样造成信息浪费。ISG 将段内的细粒度去噪信息聚合到锚点上，使 generator 更好地近似复杂的段内转换
 
 **设计3：基于 VFM 的判别器**
-- **做什么**：使用冻结的视觉基础模型（DINOv2 + CLIP）作为判别器骨干
+- **功能**：使用冻结的视觉基础模型（DINOv2 + CLIP）作为判别器骨干
 - **核心思路**：VFM 提取多层语义特征，配合可训练的 head blocks 预测 real/fake logits。使用 hinge loss 训练判别器，generator 的对抗损失按时间步信号功率 $\omega(t) = (1-\sigma_t)^2$ 加权
 - **设计动机**：预训练 VFM 引入丰富的语义先验，比朴素判别器更擅长捕获图像质量和细粒度结构。时间步加权确保在高噪声步骤更依赖 DMD 梯度，低噪声步骤更依赖 GAN 反馈
 
@@ -120,7 +120,7 @@ IDA 是 SD 3.5 收敛的关键；ISG 是 FLUX 收敛的额外必要条件。
 - **4步超越教师**：在人类偏好指标上 4 步蒸馏模型可以超过 80 步教师，说明蒸馏可以"去其糟粕取其精华"
 - **VFM 判别器的时间步加权**：低噪声时强调 GAN 信号、高噪声时强调 DMD 信号的设计很有道理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本**：需要同时维护 generator、fake model、teacher model 和判别器，显存开销大
 2. **IDA 的 λ 选择**：虽然 λ 接近 1 通常足够，但最优值可能因模型而异

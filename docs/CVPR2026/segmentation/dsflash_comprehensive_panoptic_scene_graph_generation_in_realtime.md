@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DSFlash: Comprehensive Panoptic Scene Graph Generation in Realtime
 description: >-
@@ -98,7 +98,7 @@ DSFlash 采用两阶段架构：第一阶段用冻结的 EoMT backbone 做全景
 - **一致性损失的洞察**：发现训练集中正/反向标签分布不均会导致 shortcut learning，用一致性约束优雅解决
 - **可部署性强**：单卡 GTX 1080 训练 24h，RTX 3090 上 56 FPS 推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - mR@50 高度依赖分割质量，若分割模型对某些类别表现差则场景图也差
 - PSG 数据集仅 56 类谓词，真实场景关系更丰富

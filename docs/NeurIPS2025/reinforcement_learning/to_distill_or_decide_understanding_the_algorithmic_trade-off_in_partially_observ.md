@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] To Distill or Decide? Understanding the Algorithmic Trade-off in Partially Observable Reinforcement Learning
 description: >-
@@ -147,7 +147,7 @@ tags:
 4. **连接理论与实践**：可解码性和置信收缩为经验观察提供了严格的理论解释
 5. **开创性问题定义**：首次系统研究这一基本权衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验环境有限**：仅在模拟运动控制任务上验证，真实机器人实验待补
 2. **perturbed Block MDP 较理想化**：真实问题的部分可观测性更复杂

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Effective Federated Graph Foundation Model via Mitigating Knowledge Entanglement
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L}_{pretrain} = \mathcal{L}_{feat} + \mathcal{L}_{topo} + \text{codeb
 3. **双视角解决方案**：全局（初始化）+ 局部（提示）的双管齐下策略设计合理
 4. **理论支撑**：证明了域原型在随机初始化下仍可区分（Theorem B.1），以及初始化策略提供结构化归纳偏置（Theorem B.2）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **隐私风险**：原型和提示的交换可能暴露部分语义信息，需要正式的隐私分析
 2. 当前实验中每个数据集分给3个客户端，真实场景的客户端数量和异构性可能更大

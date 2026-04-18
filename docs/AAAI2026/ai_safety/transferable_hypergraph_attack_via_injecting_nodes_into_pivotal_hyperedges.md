@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transferable Hypergraph Attack via Injecting Nodes into Pivotal Hyperedges
 description: >-
@@ -170,7 +170,7 @@ TH-Attack 的攻击效果远超所有基线，Accuracy 下降幅度通常为 **3
 - **攻击简洁高效**：不需要梯度信息、不需要代理模型、不需要知道目标架构——纯粹基于超图结构和节点特征的黑盒攻击
 - **攻击效果惊人**：在 5% 注入预算下将 SOTA HGNNs 的分类准确率打到接近随机猜测水平
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅针对节点分类任务**：未验证在超图link prediction、社区检测等其他任务上的效果
 2. **防御视角缺失**：未讨论可能的防御策略，如检测异常度高的注入节点、加权聚合中降低中枢超边权重等

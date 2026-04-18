@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How to Build a Consistency Model: Learning Flow Maps via Self-Distillation
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{L}_{\text{LSD}} = \int_0^1 \int_0^t \mathbb{E}\left[|\partial_t \hat{
 4. **理论与实践一致**：LSD 有更紧的 Wasserstein 界，实验上也确实更优；PSD 无法获得理论保证，实验上也确实更弱
 5. **即插即用**：框架可直接扩展到条件生成和 CFG 引导
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **计算开销未充分探索**：由于计算资源限制，未能对所有设计选择（参数化、架构、stop-gradient 方案）进行系统消融
 2. **仅做了无条件生成**：未在 class-conditional 或 text-to-image 场景下验证，CFG 引导留给了未来工作
 3. **分辨率有限**：实验最高仅到 64×64，未在 256/512 分辨率或 latent space 上验证

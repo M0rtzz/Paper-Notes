@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Select and Distill: Selective Dual-Teacher Knowledge Transfer for Continual Learning on Vision-Language Models
 description: >-
@@ -117,7 +117,7 @@ tags:
 - **评估更严格**：K个循环序列的评估方案比以往只选1-2个序列更可靠
 - **无需额外参数**：不像MoE-Adapters需要新增adapter模块，SND仅通过蒸馏损失的加权实现，不增加模型参数
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **参考数据集依赖**：如果参考数据集与先前微调任务差异过大（如医学图像），$g_{k-1}$ 很少被选为教师，灾难性遗忘可能无法有效缓解
 - **超参数 $\delta$ 和 $\gamma$**：选择评分函数的归一化参数需要针对具体场景调整
 - **仅在图像编码器端操作**：未探索文本编码器的持续学习

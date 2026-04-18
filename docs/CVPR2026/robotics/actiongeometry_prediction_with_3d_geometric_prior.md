@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Action–Geometry Prediction with 3D Geometric Prior for Bimanual Manipulation
 description: >-
@@ -66,7 +66,7 @@ $\mathcal{L} = \|a - \hat{a}\|_1 + \lambda\|\mathbf{f}_{t+N} - \hat{\mathbf{f}}_
 - 32个RoboTwin任务+4个真实任务的评估规模在双臂操作领域罕见
 - 数据效率优势明显：预训练特征让低数据区间性能远超从头训练的2D方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅预测单步3D（N步后的Pointmap），缺乏多步3D轨迹预测和持久3D记忆
 - 依赖π3的预训练质量，对π3未见过的场景可能退化
 - 真实实验仅50条演示训练，规模有限

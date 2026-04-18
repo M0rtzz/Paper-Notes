@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spend Wisely: Maximizing Post-Training Gains in Iterative Synthetic Data Bootstrapping
 description: >-
@@ -125,7 +125,7 @@ $$r^* - r(\theta_{\pi_{\text{exp}}^*}^{(T)}) = \mathcal{O}((1+\zeta)^{-2T})$$
 - **严格理论保证**：指数策略不仅收敛速度最快（指数收敛率），在最坏情况分析下的计算成本也不超过任何多项式策略
 - **优雅的理论直觉**：早期更新的误差对最终性能的影响随迭代指数衰减，因此后期需要指数级更多样本的结论具有直观说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **理论假设较强**：需要损失函数的正则性假设（Assumptions B.1-B.3）和奖励与损失的关联假设，实际场景可能不完全满足
 - **仅考虑SFT框架**：未涉及RLHF/DPO等强化学习后训练范式，作者在结论中提到这是未来方向

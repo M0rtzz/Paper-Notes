@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] R1-Onevision: Advancing Generalized Multimodal Reasoning through Cross-Modal Formalization
 description: >-
@@ -128,7 +128,7 @@ R1-Onevision 框架包含三个部分：(1) 跨模态推理管线构建数据集
 - **SFT + RL 的互补性**：SFT 建立推理格式和基础能力，RL 进一步增强泛化性
 - **R1-Onevision-Bench 的教育级别设计**：按初中→高中→大学→社会考试分级，提供了直观的能力评估维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理过程生成依赖 GPT-4o 和 DeepSeek R1 等闭源模型，数据构建成本高
 - RL 阶段仅在 CLEVR 数据集（10K）上训练，规模有限

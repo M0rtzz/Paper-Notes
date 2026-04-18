@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bi-Level Contextual Bandits for Individualized Resource Allocation under Delayed Feedback
 description: >-
@@ -141,7 +141,7 @@ $$\sum_{s=t}^{t+c^r} z_{i,r}(s) \leq 1$$
 2. **双层解耦思想**：将公平性（元层）与个性化（基层）优雅分离，在不牺牲个体最优的前提下保证群体公平
 3. **公平性理论保证**（Lemma 1）：证明 MetaCUB 的子群分配差异严格小于单层赌博机，差距 $\delta(T_m, f)$ 随元层轮数和预测精度递增
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 延迟核参数 $(\alpha^r, \beta^r)$ 需要预先指定，未实现在线学习/自适应估计
 2. 元层使用基于模拟的 UCB 代替 GP，理论遗憾界不如经典贝叶斯优化紧凑

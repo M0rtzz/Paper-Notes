@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CHEEM: Continual Learning by Reuse, New, Adapt and Skip -- A Hierarchical Exploration-Exploitation Approach
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：现有方法将计算固定或递增，无论任务难度如何——没有 Skip（简化模型处理简单任务）和 New（引入全新层处理极不相似任务）操作。
 
-**本文要解决什么**：学习任务感知的动态模型结构，自动在层间分配 Reuse/Adapt/New/Skip 操作。
+**本文目标**：学习任务感知的动态模型结构，自动在层间分配 Reuse/Adapt/New/Skip 操作。
 
 **切入角度**：将持续学习视为持续记忆学习问题，由内部参数记忆（NAS 驱动的动态骨干）和外部质心记忆（任务 ID 推断）组成。
 
@@ -109,7 +109,7 @@ $$\text{FoM}(m,n) = \frac{A\mathbb{A}^{UB} - A\mathbb{A}^n}{A\mathbb{A}^{UB} - A
 - HEE 采样巧妙利用 CLS token 相似度作为任务相似性代理。
 - FoM 指标为持续学习社区提供了综合评价工具。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - NAS 搜索增加训练时间，虽然单次任务开销可控但多任务累积不可忽视。
 - 外部任务质心记忆（任务 ID 推断）沿用前人工作，与内部记忆的联合优化未深入。

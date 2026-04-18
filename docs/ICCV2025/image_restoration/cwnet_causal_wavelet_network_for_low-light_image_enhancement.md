@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CWNet: Causal Wavelet Network for Low-Light Image Enhancement
 description: >-
@@ -91,7 +91,7 @@ $$\mathcal{L}_{total} = \lambda_1\mathcal{L}_2 + \lambda_2\mathcal{L}_{ssim} + \
 - HF-Mamba的方向对齐扫描策略与小波高频分量的物理含义天然匹配（水平/垂直/对角），设计优雅
 - 模型极其轻量（1.23M参数），在性能和效率之间取得了极好的平衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 面对复合退化（如低光+模糊+雾霾）时恢复质量欠佳
 - 因果干预策略依赖于特定的退化模型假设，可能不完全覆盖真实世界的退化类型

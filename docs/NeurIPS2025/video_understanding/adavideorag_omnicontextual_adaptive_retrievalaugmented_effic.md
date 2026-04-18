@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaVideoRAG: Omni-Contextual Adaptive Retrieval-Augmented Efficient Long Video Understanding
 description: >-
@@ -95,7 +95,7 @@ HiVU 基准：在 L3（困难推理）上 Overall Winner 77.13% vs baseline 22.8
 - 提出 HiVU 基准：首个分层难度的长视频理解评估集（L1/L2/L3），120 个视频 60 小时
 - 7B 模型加上 AdaVideoRAG 可超越 72B 模型甚至媲美 GPT-4o
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试了三级路由，实际应用可能需要更细粒度的难度划分
 - 知识库构建耗时较长（L3 约 412s），虽然可并行加速但仍是部署瓶颈
 - 意图分类器的准确率 0.81 存在误分类风险，L2 误分为 L1 会导致信息不足

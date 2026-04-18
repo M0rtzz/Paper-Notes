@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Accelerating Image Super-Resolution Networks with Pixel-Level Classification
 description: >-
@@ -94,7 +94,7 @@ PCSR模型由三部分组成：**骨干网络(Backbone)** + **像素级分类器
 - **LIIF的巧妙复用**：将隐式图像函数框架从任意尺度SR扩展为计算分配的载体，一石二鸟地获得了多尺度SR能力
 - **极简Refinement**：仅用邻域均值替换就能消除artifacts，不需要额外网络推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **骨干网络是FLOPs下界**：分类器基于骨干特征工作，即使全部像素都分给最轻上采样器，骨干的计算量也无法省去。对于大面积平坦图像这部分计算仍是浪费
 - **作者提出的改进方向**：让分类器在骨干的早期层工作，或对极简单像素直接用查找表做双线性插值，绕过神经网络
 - **LIIF上采样器的性能上限**：在大模型（如SRResNet）上LIIF不一定比原始PixelShuffle上采样器强，说明像素级MLP上采样器的表达能力有天花板

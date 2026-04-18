@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KBVQ-MoE: KLT-guided SVD with Bias-Corrected Vector Quantization for MoE Large Language Models
 description: >-
@@ -102,7 +102,7 @@ $W \xrightarrow[\text{KLT+SVD}]{\text{IDRE}} \underbrace{W_{\text{share}}}_{\tex
 - BCOS的闭式解简单实用，仅需校准数据统计，无需额外训练
 - 在极低比特（2-bit）下仍保持可用性能，说明方法的压缩极限较高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 共享结构以全精度保留增加了存储，截断秩 $k$ 的choice可能需要per-layer调优
 - KLT假设输入分布是平稳的，动态输入可能导致KLT基不够好
 - 仅在推理（PTQ）设置下评估，与QAT结合可能进一步提升

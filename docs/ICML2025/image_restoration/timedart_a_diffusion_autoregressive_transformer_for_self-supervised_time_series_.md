@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TimeDART: A Diffusion Autoregressive Transformer for Self-Supervised Time Series Representation
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L}_{diff} = \sum_{j=1}^{N} \mathbb{E}_{\epsilon, q(x_j^0)} \left[ \| 
 4. **跨领域迁移能力强**：混合多域预训练后微调效果超越大部分域内预训练方法
 5. **骨干网络通用性**：用 TCN 替代 Transformer 编码器仍然有效，验证框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理时不使用扩散过程**：预训练的去噪解码器在下游被丢弃，学到的局部模式建模能力未在推理时直接利用
 2. **Channel-Independent 策略**：未建模多变量间的相关性，可能在强耦合多变量场景受限

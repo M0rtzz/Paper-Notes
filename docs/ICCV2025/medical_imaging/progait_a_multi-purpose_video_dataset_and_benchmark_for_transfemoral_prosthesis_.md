@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProGait: A Multi-Purpose Video Dataset and Benchmark for Transfemoral Prosthesis Users
 description: >-
@@ -108,7 +108,7 @@ ProGait是一个多用途视频数据集，支持三项核心任务：
 - **临床洞察**: 矢状面优于正面、下肢关键点足够等发现与临床步态分析实践一致
 - **IRB审批+隐私保护**: 完整的伦理流程使数据集具有更高的学术可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅4位受试者，样本量受限（高度专业化的弱势群体，招募和测试成本高）
 - 步态类别分布不均衡（最多41样本，最少4样本），影响分类泛化性

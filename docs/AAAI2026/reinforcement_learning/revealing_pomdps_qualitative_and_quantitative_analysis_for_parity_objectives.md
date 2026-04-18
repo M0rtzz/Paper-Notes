@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revealing POMDPs: Qualitative and Quantitative Analysis for Parity Objectives
 description: >-
@@ -173,7 +173,7 @@ $$\text{Belief-Reach}(\mathcal{X}) := \{\rho \in \Omega : \exists t \geq 0, B_t(
 4. **鞅论证的优雅应用**：可靠动作保持值为鞅，停止策略保证有限停止，两者结合的证明思路简洁有力
 5. **突破有限记忆瓶颈**：在一般POMDPs中，即使限制为有限记忆策略，limit-sure和定量分析仍不可判定。揭示性提供了一个更结构化的突破口
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **EXPTIME在实际中的可行性**：虽然理论上可判定，但EXPTIME算法的实际运行时间可能极大，尤其当状态空间和动作空间较大时
 2. **揭示性假设的限制**：要求每个状态都有正概率被揭示，这在某些应用场景中可能过强

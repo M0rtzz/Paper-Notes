@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AStar: Boosting Multimodal Reasoning with Automated Structured Thinking
 description: >-
@@ -72,7 +72,7 @@ MLLM在复杂视觉推理任务上表现不佳。现有增强方法分两类：(
 - **plug-and-play** — 可以和SFT/GRPO训练后的模型再叠加使用，说明捕获了互补的推理模式
 - **weak-to-strong泛化** — Qwen2-VL-7B构建的thought cards甚至能提升GPT-4o的推理表现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Thought card构建仍依赖MCTS搜索种子样本的推理路径，初始搜索质量影响card质量
 - 6种推理动作是预定义的，可能无法覆盖所有推理场景
 - 检索机制基于PC和TIS两个简单指标，可能不够精细

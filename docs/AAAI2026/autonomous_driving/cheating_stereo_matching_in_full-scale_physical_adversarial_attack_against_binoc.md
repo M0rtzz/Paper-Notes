@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cheating Stereo Matching in Full-Scale: Physical Adversarial Attack against Binocular Depth Estimation
 description: >-
@@ -146,7 +146,7 @@ SAR是有效攻击SM的基础（无SAR则 $\mathcal{E}_{cover}$ 极低），Merg
 2. **融合攻击概念**：从"隐藏"升级到"融合"，通过分区域深度对齐消除物体轮廓，比简单推远深度更具隐蔽性
 3. **实验完备性**：数字仿真（CARLA）+ 物理真实（3D打印）+ 系统级（Apollo）三层评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 物理实验使用1:30缩放模型，实际车辆尺寸的纹理印刷精度和耐候性需进一步验证
 2. 当前评估以静态场景为主，动态行驶中的时序一致性未充分验证

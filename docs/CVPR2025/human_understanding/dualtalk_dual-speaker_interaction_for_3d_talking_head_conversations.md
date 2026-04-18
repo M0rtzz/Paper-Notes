@@ -1,4 +1,4 @@
----
+﻿---
 title: "DualTalk: Dual-Speaker Interaction for 3D Talking Head Conversations"
 description: "双人交互3D说话人头生成统一框架，支持说话与倾听角色的多轮无缝切换"
 tags: ["talking head", "3D face animation", "dual-speaker interaction", "non-verbal feedback", "conversation"]
@@ -31,7 +31,7 @@ tags: ["talking head", "3D face animation", "dual-speaker interaction", "non-ver
 3. **短时反应 vs 连续对话**：倾听者模型通常只生成简短、孤立的反应（几秒钟），不支持多轮连续对话中的长时间交互
 4. **缺乏双人交互数据集**：现有 3D 人脸数据集（VOCASET、BIWI 等）不包含交互信息，L2L 数据集虽有交互但不支持多轮对话
 
-### 本文要解决什么
+### 本文目标
 
 定义**多轮双人交互 3D 说话人头生成**新任务：给定双方音频和 Speaker-A 的面部运动，生成 Speaker-B 在整个多轮对话过程中的面部运动（包括说话和倾听两种状态）。
 

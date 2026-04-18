@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Thinking on the Fly: Test-Time Reasoning Enhancement via Latent Thought Policy Optimization
 description: >-
@@ -130,7 +130,7 @@ $$\max_{\mathbf{z}} \mathbb{E}[R(\mathbf{z})]$$
 
 4. **连接RL与LLM推理**：将RL中的策略优化思想自然地引入LLM推理过程，为两个领域的交叉研究提供了新视角。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **测试时计算开销**：虽然比CoT高效，但每个问题都需要多步优化，延迟显著高于标准单次前向传播。对于延迟敏感的应用场景可能不适用。
 

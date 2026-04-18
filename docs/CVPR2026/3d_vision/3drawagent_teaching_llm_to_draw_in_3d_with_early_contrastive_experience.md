@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **实用性强**：仅需 LLM API + 单GPU，门槛极低
 - 200次rollout的统计分析揭示了LLM生成3D内容的行为模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 经验在2-3 epoch后因"过度推理"出现性能下降，如何持续提升？
 - 生成质量受限于 LLM 本身的空间推理能力上限
 - Bezier曲线表示能力有限，复杂拓扑难以表达

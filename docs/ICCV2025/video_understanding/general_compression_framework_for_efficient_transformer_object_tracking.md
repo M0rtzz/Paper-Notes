@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] General Compression Framework for Efficient Transformer Object Tracking
 description: >-
@@ -147,7 +147,7 @@ $$L = \lambda_{track} L_{track} + \lambda_{pred} L_{pred} + \lambda_{feat} L_{fe
 - 渐进式替换消除了多阶段训练，实现了端到端优化
 - CT-SUTrack 在 LaSOT 上 72.2% AUC，这一压缩后的性能甚至超过了许多未压缩的跟踪器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 学生层数仍需人工选择，可考虑自动搜索最优架构
 - 特征模仿仅用 L2 距离，更高级的分布匹配方法可能带来提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parallel In-context Learning for Large Vision Language Models
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：准确率与推理效率之间存在严重的 trade-off：性能需要更多 demonstration，但推理速度要求更短的上下文。
 
-**本文要解决什么**：在推理时高效近似长上下文 MM-ICL，无需额外训练或数据集。
+**本文目标**：在推理时高效近似长上下文 MM-ICL，无需额外训练或数据集。
 
 **切入角度**：各个 demonstration 之间是独立的，不需要必须作为一个长序列处理。可以分块并行处理后再集成结果。
 
@@ -99,7 +99,7 @@ tags:
 - **意外发现**：分块并行在某些场景下优于完整上下文，暗示了长上下文 MM-ICL 存在信息损失问题，为未来研究提供了新视角
 - 与通用推理加速方法（token pruning、KV cache 压缩）正交，可以组合使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - PoE 假设各 chunk 预测近似条件独立，当 demonstration 之间有强依赖时可能不成立
 - 聚类需要额外的 CLIP 特征提取，增加少量预处理开销
 - 对生成式长文本任务（如 image captioning）的效果不如判别式任务（如 VQA）稳定

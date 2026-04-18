@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Think, Speak, Decide: Language-Augmented Multi-Agent Reinforcement Learning for Economic Decision-Making
 description: >-
@@ -142,7 +142,7 @@ Decide 模块将语言嵌入与数值观测融合到 RL 策略中：
 3. **经验池设计兼顾性能与可解释性**：既能复用成功策略，又保留推理轨迹作为可审计的知识库
 4. **消融实验揭示了效率与性能的解耦**：Speak 模块的主要贡献在于提升效率而非绝对性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本高**：每步都需要调用 LLM（Qwen2.5-72B），实际部署受限
 2. **仅在 TaxAI 环境验证**：更广泛的经济场景（如金融市场、供应链）的泛化性未知

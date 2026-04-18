@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MotionDiff: Training-Free Zero-Shot Interactive Motion Editing via Flow-Assisted Multi-View Diffusion
 description: >-
@@ -136,7 +136,7 @@ MotionDiff 是**完全免训练**的推理方法。引导策略基于 classifier
 3. **运动模式丰富**：首个同时支持平移、旋转、缩放、拉伸四种运动模式的编辑方法
 4. **解耦表示设计巧妙**：将运动编辑问题分解为背景保持、物体变换和遮挡补全三个子问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要 3D 点云作为输入**：依赖预先重建的静态场景，限制了对任意图像的适用性
 2. **刚体运动假设**：PKM 四种运动模式本质上都是刚体变换，不适用于非刚体变形（如人体姿态变化）

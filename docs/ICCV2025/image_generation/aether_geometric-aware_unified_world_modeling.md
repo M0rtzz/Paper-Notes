@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aether: Geometric-Aware Unified World Modeling
 description: >-
@@ -130,7 +130,7 @@ Aether 基于 CogVideoX-5b-I2V 进行后训练（post-training）。模型的目
 3. **Raymap 表示**：将相机轨迹转为与视频帧对齐的 6 通道表示，优雅解决异构模态融合问题
 4. **4D 标注流水线**具有独立的工程应用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅支持相机轨迹作为动作空间，不直接支持机器人关节动作等模态
 2. 生成的相机轨迹有噪声，需 Kalman 滤波后处理

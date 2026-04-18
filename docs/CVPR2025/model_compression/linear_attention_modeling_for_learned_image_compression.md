@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LALIC: Linear Attention Modeling for Learned Image Compression
 description: >-
@@ -50,17 +50,17 @@ tags:
 ### 关键设计
 
 **1. Bi-RWKV 变换块**
-- **做什么**: 作为 $g_a$、$g_s$、$h_a$、$h_s$ 中的基础特征提取模块，每个块包含 Spatial Mix 和 Channel Mix 两个分支。
+- **功能**: 作为 $g_a$、$g_s$、$h_a$、$h_s$ 中的基础特征提取模块，每个块包含 Spatial Mix 和 Channel Mix 两个分支。
 - **核心思路**: Spatial Mix 通过 BiWKV 注意力捕获全局空间依赖（线性复杂度），Channel Mix 通过 squared ReLU 隐式构建 MLP 实现通道融合；使用 Omni-Shift（重参数化 5×5 深度卷积）捕获 2D 局部上下文。
 - **设计动机**: BiWKV 引入通道级衰减参数 $w$ 和当前 token 增强参数 $u$，根据距离自动平衡局部与全局依赖；ERF 可视化证实 RWKV 块实现了真正的全局感受野（优于 TCM 的窗口模式和 FAT 的局部增强模式）。
 
 **2. RWKV 时空通道上下文熵模型（RWKV-SCCTX）**
-- **做什么**: 联合建模隐表示 $y$ 在空间和通道维度上的冗余。
+- **功能**: 联合建模隐表示 $y$ 在空间和通道维度上的冗余。
 - **核心思路**: 空间维度采用 checkerboard 掩码卷积分 anchor/non-anchor 两组；通道维度将 320 通道分为 5 个 chunk（16, 16, 32, 64, 剩余），用 Bi-RWKV 块建模已解码 chunk 与当前 chunk 的通道上下文；通道上下文使用不含 Omni-Shift 的 Channel Mix 模块保持 1×1 感受野以满足因果解码。
 - **设计动机**: 前几个 chunk 通道数少但被后续 chunk 频繁引用，承载大部分关键信息；RWKV 的全局建模能力使其在通道上下文建模中优于纯卷积方案。
 
 **3. BiWKV 注意力机制**
-- **做什么**: 在 AFT（Attention-Free Transformer）的 KV 线性注意力基础上，添加双向距离衰减和当前 token 增强。
+- **功能**: 在 AFT（Attention-Free Transformer）的 KV 线性注意力基础上，添加双向距离衰减和当前 token 增强。
 - **核心思路**: $wkv_t = \frac{\sum_{i \neq t} e^{-(|t-i|-1)/T \cdot w + k_i} v_i + e^{u+k_t} v_t}{\sum_{i \neq t} e^{-(|t-i|-1)/T \cdot w + k_i} + e^{u+k_t}}$，最终输出经 sigmoid 门控的 receptance 调制。
 - **设计动机**: 双向处理适应 2D 图像的非因果特性；距离衰减让近邻 token 获得更高权重，兼顾局部精度和全局建模。
 
@@ -115,7 +115,7 @@ tags:
 - 熵模型中巧妙地移除 Omni-Shift 以保持因果性，体现了对解码过程的理解
 - 编解码延迟在 SOTA 方法中具有竞争力，实际可部署性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 编码时间（274ms）相对较长，可探索更轻量的分析变换
 - 仅探索了 RWKV 一种线性注意力，未与 Mamba、RetNet 等做系统对比

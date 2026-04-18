@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Ground-Truth: Leveraging Image Quality Priors for Real-World Image Restoration
 description: >-
@@ -102,7 +102,7 @@ WebPhoto-Test和WIDER-Test上同样全面领先。
 - **质量条件化的plug-and-play特性**：IQP可以作为独立模块插入任何修复架构，无需结构修改
 - **离散空间质量优化**：巧妙利用了VQ-VAE的离散性来避免连续空间中IQA奖励过度优化的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - NR-IQA模型自身也有偏差（某些模型可能偏好特定风格），虽然用集成缓解但不能完全消除
 - $S_{thr}$ 阈值和 $\alpha$ 权重需要手动调整
 - 当GT质量极低时，HQ+ Codebook能学到的内容有限

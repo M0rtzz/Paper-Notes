@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data
 description: >-
@@ -127,7 +127,7 @@ $\mathbf{D} \in \mathbb{R}^{s \times r}$ 在所有超像素间共享，类似字
 - **个性+共性**的架构设计本质上是局部-全局信息的平衡——专属MLP捕获局部特征，共享字典捕获全局结构
 - 注意力机制的引入增强了特征维度间的交互，特别是对多光谱图像等高维数据有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个超像素需要一个独立MLP，当 $K$ 较大时参数量显著增加
 - GSSA是预处理步骤，对含噪/不完整的观测数据的超像素分割质量存疑

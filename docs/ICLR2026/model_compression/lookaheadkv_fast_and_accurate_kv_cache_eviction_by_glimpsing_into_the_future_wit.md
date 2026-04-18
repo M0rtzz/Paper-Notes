@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LookaheadKV: Fast and Accurate KV Cache Eviction by Glimpsing into the Future without Generation
 description: >-
@@ -98,7 +98,7 @@ LookaheadKV 在预填充阶段追加可学习的前瞻token，它们的注意力
 - 额外参数极少（<0.5%），几乎不影响模型大小
 - 得益于与FlashAttention兼容的实现，实际部署友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要离线训练前瞻模块，对每个模型需单独训练
 - 训练数据的多样性可能影响特定领域的淘汰质量
 - 固定32个前瞻token的设定可能不适合所有场景

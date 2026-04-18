@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tri-Subspaces Disentanglement for Multimodal Sentiment Analysis
 description: >-
@@ -97,7 +97,7 @@ $$\mathcal{L}_{sup} = -\frac{1}{M}\sum_m [\log D_{com}(\mathbf{c}_m) + \sum_{n \
 2. SACA 的层次化融合设计——每个子空间都能"看到"其他子空间的信息再决定融合权重
 3. 解耦监督器是对抗训练的自然应用，比 MISA 的模态判别器更精细
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 三模态时成对子空间数量为 3，扩展到更多模态时组合爆炸（$C_n^2$）
 2. 所有损失的权重 $\lambda_{1-4}$ 需要仔细调优

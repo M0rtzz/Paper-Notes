@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SHARE: An SLM-based Hierarchical Action CorREction Assistant for Text-to-SQL
 description: >-
@@ -140,7 +140,7 @@ SHARE-8B 相比基线提升 14.80% (BIRD) 和 11.41% (SPIDER)。
 4. **数据效率高**：50% 训练数据即可超越 SOTA 基线 MAGIC
 5. **跨方言泛化**：学习的是底层推理路径纠正，不依赖特定 SQL 方言
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前仅在 SQLite、MySQL、PostgreSQL 上验证，更多 SQL 方言（如 Oracle、SQL Server）未测试
 2. 动作轨迹的设计基于 pandas-like API，可能无法完全覆盖所有 SQL 操作类型

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizable End-to-End Tool-Use RL with Synthetic CodeGym
 description: >-
@@ -121,7 +121,7 @@ tags:
 4. **规模化支撑**：13k 环境、80k+ 任务配置，远超现有 agent 训练工作
 5. **定性分析有说服力**：训练后 agent 在行动前展现出更强的多步规划能力（ALFWorld 示例）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **环境多样性受限于编程题**：尽管代码逻辑丰富，但缺乏涉及视觉、物理交互等非文本模态的环境
 2. **Long-CoT 推理略有退化**：QwQ-32B 在 ZebraLogic 上下降 3.3 点，说明工具使用训练与推理能力之间可能存在冲突，需要联合优化

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimizing Distributional Geometry Alignment with Optimal Transport for Generative Dataset Distillation
 description: >-
@@ -99,7 +99,7 @@ $$W(\mu_{\text{true}}, \nu_{\text{new}}) \leq \underbrace{E_y[W(\mu_{\text{true}
 - OT引导采样的设计具有累积性：生成第n个样本时考虑前n-1个已生成样本与真实数据的OT距离，真正实现了"全局最优"的分布匹配
 - IPC自适应的软标签策略基于分布容量匹配的洞察，简单但有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前使用 $\ell_1$ 范数作为OT代价矩阵，可探索更具语义感知的代价函数
 - Sinkhorn算法的熵正则化参数需要调节，对不同数据集可能需要不同设置

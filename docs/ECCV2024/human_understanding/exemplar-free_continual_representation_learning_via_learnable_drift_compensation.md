@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exemplar-Free Continual Representation Learning via Learnable Drift Compensation
 description: >-
@@ -113,7 +113,7 @@ $$y^* = \arg\min_{y=1,...,Y^t} \|f_\theta^t(x) - P_t^y\|$$
 - 统一框架：同一个LDC方法可无缝应用于监督、自监督和半监督CL
 - 首个无样本半监督持续学习方法，打开了新的研究方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 投影器仅在当前任务数据上训练，可能因数据偏差导致部分旧类原型更新不精确（corrected与oracle之间仍有差距）
 - 随着任务增多，原型经过多次投影的累积误差可能逐渐增大

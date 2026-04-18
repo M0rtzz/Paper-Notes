@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DISTA-Net: Dynamic Closely-Spaced Infrared Small Target Unmixing
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{discrepancy}} + \gamma \mathcal{L}_{\text{con
 - 动态展开的思想简洁有效：将ISTA-Net的静态权重改为输入条件化，符合物理直觉
 - CSO-mAP指标设计合理，使用多个亚像素距离阈值（0.05~0.25像素）评估定位精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 计算量随网格比增大急剧增加（$c=3$时35.1G FLOPs，$c=7$时142.3G FLOPs）
 - 仅在合成数据上验证，真实红外场景的泛化性有待考察
 - 假设目标为点源（高斯PSF），实际目标可能有更复杂的形状

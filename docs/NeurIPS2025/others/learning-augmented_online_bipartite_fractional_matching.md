@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning-Augmented Online Bipartite Fractional Matching
 description: >-
@@ -100,7 +100,7 @@ tags:
 - **两个算法互补**：LAB 用于加权设定，PAW 解决了无权设定下 LAB 分析困难的问题
 - **理论与实验一致性强**：实验结果精确验证了理论预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LAB 和 PAW 只适用于分数匹配，整数匹配的扩展需要额外的取整技术
 - 上界与算法保证之间仍有差距，最优权衡曲线尚未完全确定

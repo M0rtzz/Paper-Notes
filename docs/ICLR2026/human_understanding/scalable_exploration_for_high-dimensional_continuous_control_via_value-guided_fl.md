@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Exploration for High-Dimensional Continuous Control via Value-Guided Flow
 description: >-
@@ -90,7 +90,7 @@ $$a \leftarrow a + v_\theta(a, s, t) \cdot dt$$
 - **生物启发**：人类肌骨控制→大脑通过value-like信号引导探索→Qflex的流与此类似。
 
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - In this paper, we introduce Qflex, a scalable online RL method for efficient exploration in high-dimensional continuous control.
 

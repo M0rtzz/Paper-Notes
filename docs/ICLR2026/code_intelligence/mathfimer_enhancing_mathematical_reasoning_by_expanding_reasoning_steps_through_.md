@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MathFimer: Enhancing Mathematical Reasoning by Expanding Reasoning Steps through Fill-in-the-Middle Task
 description: >-
@@ -108,7 +108,7 @@ MathFimer 框架分为两个阶段：(1) 训练 FIM 模型；(2) 使用训练好
 - **实用性强**：无需外部更强模型，一个 7B 模型即可完成扩展
 - **数据资产**：开源了 NuminaMath-FIM 数据集（2.5M 样本）和 MathFimer-7B 模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **领域泛化性未知**：目前仅验证了数学推理，是否适用于代码推理、逻辑推演、常识推理等领域尚不清楚
 2. **生成可靠性**：缺乏对插入步骤的逻辑一致性和数学正确性的自动验证机制，多轮迭代可能导致错误累积

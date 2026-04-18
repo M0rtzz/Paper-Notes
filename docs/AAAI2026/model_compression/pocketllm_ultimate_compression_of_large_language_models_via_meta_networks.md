@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PocketLLM: Ultimate Compression of Large Language Models via Meta Networks
 description: >-
@@ -111,7 +111,7 @@ PocketLLM的核心创新在于**不在原始空间直接量化/剪枝权重**，
 4. **RLN设计精巧**：通过"拼回行向量→归一化→切回子向量"的操作，在不增加参数的情况下显著提升效果
 5. **管线简洁**：压缩后只需一次标准LoRA微调即可恢复精度，无需复杂的逐层迭代
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理延迟未讨论**：压缩后推理时需要通过解码器网络将码字映射回权重空间，这会引入额外计算开销，论文未分析推理速度
 2. **困惑度指标稍弱**：在WikiText-2/C4困惑度上PocketLLM略逊于AQLM/QTIP，作者归因于微调不充分

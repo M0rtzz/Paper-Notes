@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data
 description: >-
@@ -140,7 +140,7 @@ $$Total = 0.6 \times Bio + 0.4 \times Batch$$
 4. **多模态集成的空白**：论文明确指出当前缺乏有效的单细胞多模态集成框架，这是一个重要的未来研究方向
 5. **标准化评估平台的贡献**：19 种方法 × 9 个数据集 × 3 个任务的系统评估，提供了社区急需的公平比较基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **多模态数据集仅 2 个**：PBMC-M 和 BMMC 都是 CITE-seq 数据，缺少 10x Multiome（RNA+ATAC）等其他多模态技术的评估，结论的泛化性有限
 2. **增强策略搜索不够深入**：仅评估了 CLEAR 和 CLAIRE 提出的增强，未探索更多可能性（如基于 GAN 的增强、mixup 等）

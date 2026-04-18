@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Recipe for Causal Graph Regression: Confounding Effects Revisited
 description: >-
@@ -146,7 +146,7 @@ $$L = L_c + \alpha \cdot L_{\text{reg}} + \beta \cdot L_s + \lambda \cdot L_{\te
 - **理论优雅**：通过变分近似将增强 GIB 目标简化为两个 MSE 损失 + 一个 $\ell_2$ 正则，实现简洁且有理论支撑
 - **通用性**：框架与具体 GNN backbone 无关，可嵌入任意图神经网络架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **超参数较多**：$\alpha, \beta, \lambda$ 三个权重需要调节，sensitivity 分析的成本较高
 2. **常数方差假设**：$p(Y|H_c)$ 假设 $\sigma^2 = 1$ 是为简化，异方差建模可能进一步提升

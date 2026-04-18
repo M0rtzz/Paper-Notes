@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Energy Loss Functions for Physical Systems
 description: >-
@@ -181,7 +181,7 @@ $$E(\hat{y}, y) = \sum_i h_i^{LF}(y)\hat{y}_i, \quad h_i^{LF}(y) = \sum_j (J_{ij
 - **MSE 的物理病理性被形式化**：Figure 1 的三幅对比图极其直观——旋转后正确配置被 MSE 错误惩罚
 - **刚性理论的巧妙运用**：利用图刚性实现 $O(n^2) \to O(n)$ 缩放
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Score 恢复理论仅在小噪声下精确，高噪声需显式修正
 2. 弹簧系数选择仍需启发式调优，缺乏自动选择机制
@@ -286,7 +286,7 @@ $$E(\hat{\mathbf{y}}, \mathbf{y}) = \sum_{i} h_i^{\text{LF}}(\mathbf{y}) \hat{\m
 4. **理论保证**：证明了扩散模型中能量损失能正确估计 score function，且方差更低
 5. 大分子场景（GEOM-Drugs）的改进从 0.8% → 24.6%，定量上令人印象深刻
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 用于扩散模型时，正确 score 的恢复仅在**低噪声水平**下精确；高噪声下需要显式校正
 2. 能量函数的选择仍有一定的 ad hoc 性，系数 $k_{ij}$ 需要在新任务上消融

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mol-LLaMA: Towards General Understanding of Molecules in Large Molecular Language Models
 description: >-
@@ -137,7 +137,7 @@ Mol-LLaMA 由四个组件组成：
 - **实用的"LLM-as-judge"质量控制**：用 GPT-4o 过滤自己生成的数据中的事实错误，保证数据质量
 - **2D-3D 互补的精彩案例**：消融中展示了 2D 编码器漏掉原子、3D 编码器搞错键型、简单拼接搞错连接性的具体例子
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 指令数据由 GPT-4o 生成，可能引入 GPT-4o 的偏见和知识界限
 - 评估也主要依赖 GPT-4o-as-judge，存在评估者与数据生成者同源的问题

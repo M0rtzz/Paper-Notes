@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ControlNet++: Improving Conditional Controls with Efficient Consistency Feedback
 description: >-
@@ -139,7 +139,7 @@ ControlNet++ 在所有条件控制下显著优于现有方法。
 3. **统一框架**：同一套方法适用于分割掩码、边缘、深度等多种条件
 4. **生成-判别闭环**：判别模型作为 reward 信号反哺生成模型，形成良性循环
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖高质量可微分判别模型，部分条件（如骨架、草图）尚缺可微分提取器
 2. Reward model 本身的能力上限制约了可控性天花板

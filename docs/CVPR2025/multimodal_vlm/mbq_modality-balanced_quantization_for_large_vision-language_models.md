@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MBQ: Modality-Balanced Quantization for Large Vision-Language Models
 description: >-
@@ -38,13 +38,13 @@ tags:
 **核心矛盾**：
 现有PTQ方法在最小化量化重建误差时，对视觉token和语言token一视同仁，但语言token的敏感度远高于视觉token，导致优化方向偏向保护不敏感的视觉token，反而损害了关键的语言token精度。
 
-**本文要解决什么？**
+**本文目标**
 设计一种感知模态敏感度差异的量化方法，让校准过程重点保护敏感的语言token。
 
 **切入角度**：
 通过SFT损失函数对token特征的梯度来量化不同模态的敏感度，将梯度大小作为权重引入重建误差的优化目标。
 
-**核心idea一句话**：
+**核心 idea**：
 用梯度衡量各模态token的敏感度，在量化校准的重建误差中按敏感度加权，让优化更多关注语言token。
 
 ## 方法详解

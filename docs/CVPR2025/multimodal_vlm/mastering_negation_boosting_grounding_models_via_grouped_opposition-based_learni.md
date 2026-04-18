@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mastering Negation: Boosting Grounding Models via Grouped Opposition-Based Learning
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 人类日常表达中否定逻辑广泛存在，但训练数据集（LVIS、Objects365、Flickr30K 等）几乎不包含否定描述，导致模型缺乏否定理解能力。
 
-**本文要解决什么**: 如何高效地增强现有 grounding 模型对否定语义和复杂修饰语的理解能力。
+**本文目标**: 如何高效地增强现有 grounding 模型对否定语义和复杂修饰语的理解能力。
 
 **切入角度**: 构建包含正负语义对比的数据集，利用对立学习（opposition-based learning）原理设计针对 fusion module 的高效微调策略。
 
-**核心 idea 一句话**: 通过正负语义对立训练，在仅微调不到 10% 参数的条件下，同时提升模型对否定语义和肯定语义的理解。
+**核心 idea**: 通过正负语义对立训练，在仅微调不到 10% 参数的条件下，同时提升模型对否定语义和肯定语义的理解。
 
 ## 方法详解
 
@@ -51,19 +51,19 @@ tags:
 ### 关键设计
 
 **1. D-Negation 数据集构建**
-- **做什么**: 对每个物体生成 4 类 × 3 属性（color/position/state）= 12 条描述：P+（正确正语义）、P-（错误正语义/hard negative）、N+（正确负语义）、N-（错误负语义/hard negative）。
+- **功能**: 对每个物体生成 4 类 × 3 属性（color/position/state）= 12 条描述：P+（正确正语义）、P-（错误正语义/hard negative）、N+（正确负语义）、N-（错误负语义/hard negative）。
 - **核心思路**: 先过滤 COCO 中仅有单标注的图像（避免 MLLM 混淆），可视化 bbox 后送入 GPT-4V 按严格字典模板生成描述。
 - **设计动机**: P+ 与 N- 对立、P- 与 N+ 对立，形成语义上完整的对立关系网络，共 6 对反义组用于训练。
 
 **2. GOBL 微调机制——PNC 损失**
-- **做什么**: Positive-Negation Constraint 损失，在 fusion module 输出空间中约束正负语义的区分。
+- **功能**: Positive-Negation Constraint 损失，在 fusion module 输出空间中约束正负语义的区分。
 - **核心思路**: 对同一图像区域特征 $f_q$，分别计算与正/负语义文本特征 $f_{t_P}$, $f_{t_N}$ 的余弦相似度，经 softmax 归一化后以 focal loss 或匹配损失优化：
   $$\bar{S}_{\text{cls}} = \frac{e^{\sigma s_1}}{e^{\sigma s_1} + e^{\sigma s_2}}$$
   其中 $\sigma=5$ 控制对语义差异的敏感度。
 - **设计动机**: 直接在跨模态融合层面强制模型区分对立 prompt，解决 fusion module 混淆正负特征的根本问题。
 
 **3. GOBL 微调机制——TSO 损失**
-- **做什么**: Text Semantic-Opposite 损失，在文本特征空间中推远正负语义向量。
+- **功能**: Text Semantic-Opposite 损失，在文本特征空间中推远正负语义向量。
 - **核心思路**: $L_{\text{TSO}} = \frac{1}{N}(2 - \sum_{i=1}^{N} \|f_p - f_n\|_2^2)$，最大化正负语义特征的 L2 距离。
 - **设计动机**: CLIPN 等工作发现正负 prompt 的特征向量高度相似是模型失败的重要原因，TSO 从特征空间层面解决这一问题。
 
@@ -122,7 +122,7 @@ D-Negation 测试集（mAP）:
 - 对立学习的 insight 非常优雅：增强否定理解也带动了肯定理解的提升
 - 极高的训练效率（13K 数据、1 epoch、<10% 参数）使方法非常实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - D-Negation 仅覆盖 color/position/state 三种属性，未涵盖更复杂的否定逻辑（如条件否定、双重否定）
 - 依赖 GPT-4V 生成标注，可能引入对特定 MLLM 偏好的偏差

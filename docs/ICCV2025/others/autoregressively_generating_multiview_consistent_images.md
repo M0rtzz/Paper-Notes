@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Auto-Regressively Generating Multi-View Consistent Images (MV-AR)
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L}_{ar} = -\frac{1}{T}\sum_{t=1}^{T}\log p(q_t|q_{<t})$$
 3. **统一多模态框架**：单一模型同时支持文本/图像/形状三种条件的任意组合，是首个实现X-to-multi-view统一的多视角生成模型
 4. **IWC的设计哲学**：用低层VQVAE特征而非高层CLIP/DINO特征做图像条件，更好地保留了颜色和纹理一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **2D VQVAE的局限**：作者有意不使用3D VAE（因编码时视角间信息交换违背AR动机），但2D VQVAE可能限制了3D几何理解能力；作者提出未来可探索因果3D VAE
 2. **LPIPS指标不佳**：在i2mv任务中LPIPS排名第三（0.084 vs Wonder3D 0.062），说明模型过于严格地约束了低层特征一致性，可能牺牲了感知质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MeanFuser: Fast One-Step Multi-Modal Trajectory Generation and Adaptive Reconstruction via MeanFlow for End-to-End Autonomous Driving
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：如何在不依赖固定离散词汇表的前提下，有效建模多模态驾驶行为，同时保持高推理效率？
 
-**本文要解决什么？** (1) 消除对离散轨迹词汇表的依赖；(2) 实现one-step高质量采样；(3) 处理所有采样proposal都不够好的情况。
+**本文目标** (1) 消除对离散轨迹词汇表的依赖；(2) 实现one-step高质量采样；(3) 处理所有采样proposal都不够好的情况。
 
 **切入角度**：将MeanFlow Identity引入端到端规划——MeanFlow直接建模噪声分布和轨迹分布之间的平均速度场而非瞬时速度场，使得单步采样精确无误差。同时用高斯混合模型作为先验分布，每个高斯成分捕获一种驾驶模式。
 
-**核心idea一句话**：用高斯混合噪声替代锚点、MeanFlow替代多步ODE、自适应重建模块替代评分选择，三管齐下实现快速鲁棒的多模态轨迹规划。
+**核心 idea**：用高斯混合噪声替代锚点、MeanFlow替代多步ODE、自适应重建模块替代评分选择，三管齐下实现快速鲁棒的多模态轨迹规划。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ $\mathcal{L} = \lambda_1 \mathcal{L}_\tau + \lambda_2 \mathcal{L}_{\text{flow}} 
 - **MeanFlow Identity在规划中的首次应用**消除了flow matching的两大痛点：多步采样慢和数值误差。Plan FPS从GoalFlow的11提升到434（39x加速），使flow-based方法首次在实时性上与MLP直接回归竞争
 - **ARM的"不选则构"设计**解决了一个长期被忽视的问题：如果所有候选都不好怎么办？传统选择器只能选最不差的，ARM能综合所有proposal重构新轨迹。这个设计可迁移到任何多候选选择场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - GMN的高斯成分数K=8和混合系数$\pi_k=1$是预定义的，自适应确定K和利用场景上下文预测自适应混合系数可能进一步提升
 - ARM通过交叉注意力隐式完成选择/重构，缺乏可解释性——不知道模型是"选了哪个"还是"重构了什么"
 - 仅在NAVSIM上评测（非反应式模拟），在更真实的反应式模拟（如nuPlan）和实车上的效果有待验证

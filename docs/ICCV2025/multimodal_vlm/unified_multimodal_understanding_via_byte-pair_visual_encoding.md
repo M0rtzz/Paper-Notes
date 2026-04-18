@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unified Multimodal Understanding via Byte-Pair Visual Encoding
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：NLP 中 BPE token 化已被证明能显著提升 Transformer 的学习效率，因为它将频繁共现的字符合并为语义丰富的 token。先前工作 (Being-VL-0) 已将 BPE 应用于视觉数据的理论框架，但从理论到实践的落地面临三个挑战：(1) 如何设计超越简单频率的编码策略；(2) 如何构建匹配 BPE 层次性的数据混合策略；(3) 如何设计多阶段训练流程。
 
-**本文要解决什么**：将 BPE 视觉 token 化从理论概念推进到实用化的多模态大模型，缩小离散 token 方法与连续 embedding 方法之间的性能差距。
+**本文目标**：将 BPE 视觉 token 化从理论概念推进到实用化的多模态大模型，缩小离散 token 方法与连续 embedding 方法之间的性能差距。
 
 **切入角度**：BPE 视觉 token 天然具有层次结构（底层 token 对应简单图像块，高层 token 编码越来越复杂的视觉模式），因此训练策略也应该是层次化/课程式的。
 
-**核心 idea 一句话**：优先级引导的 BPE 词表构建（频率 + 空间一致性）+ 课程式数据混合 + 渐进式参数解冻 = 实用化离散视觉 token MLLM。
+**核心 idea**：优先级引导的 BPE 词表构建（频率 + 空间一致性）+ 课程式数据混合 + 渐进式参数解冻 = 实用化离散视觉 token MLLM。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **空间一致性是视觉 BPE 的 key insight**：文本 BPE 只需考虑频率，但视觉数据的二维空间结构要求 token 对在不同图像中保持一致的空间关系。这个 insight 使视觉 BPE 不再是文本 BPE 的简单照搬
 - **Embedding 可视化揭示统一表示空间**：Figure 3 的 embedding 权重分布图清晰地展示了 BPE token 如何弥合视觉与文本 token 之间的表示差距，这是理解离散 token 方法工作原理的重要窗口
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅 8B 模型规模**：受限于计算资源，未在更大模型上验证。scaling 分析暗示更大词表 + 更多数据可能进一步提升
 - **仅做理解任务**：离散 token 天然支持生成任务（可以像生成文本 token 一样生成视觉 token），但本文未涉及图像生成
 - **VQ-GAN 是瓶颈**：词表构建依赖 VQ-GAN 的量化质量，如果 VQ-GAN codebook 质量不高，后续 BPE 也难以补救

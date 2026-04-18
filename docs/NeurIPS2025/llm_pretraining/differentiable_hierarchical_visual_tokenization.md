@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Differentiable Hierarchical Visual Tokenization
 description: >-
@@ -171,7 +171,7 @@ BIC 的惩罚项最好地平衡了 token 数量和表示质量。
 - **一石多鸟**：分类精度提升 + token 效率改善 + 免费矢量图转换
 - **NeurIPS Spotlight** 体现了该方向的重要性和方法的完成度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分词器额外计算**：可微分超像素生成本身有计算开销，需要在 token 减少带来的加速和分词开销间平衡
 2. **可变 token 数处理**：batch 内 token 数不同需要特殊处理（填充或分桶），影响训练效率

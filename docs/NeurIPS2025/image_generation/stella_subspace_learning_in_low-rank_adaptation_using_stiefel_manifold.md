@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold
 description: >-
@@ -107,7 +107,7 @@ FID最大降低达12个点。
 - **批量SVD加速**：将瓶颈操作（极分解）通过跨层批处理加速15-20倍，解决了实际部署的效率问题
 - 梯度缩放策略虽然简单，但针对FFN层的非对称维度提供了有效的学习速率平衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 三因子分解和回缩操作引入了额外计算开销（虽然通过批量SVD缓解）
 - 未与AdaLoRA等自适应rank方法结合（可将 $S$ 约束为对角矩阵实现）

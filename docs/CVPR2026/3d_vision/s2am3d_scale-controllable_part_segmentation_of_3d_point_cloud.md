@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] S2AM3D: Scale-controllable Part Segmentation of 3D Point Clouds
 description: >-
@@ -169,7 +169,7 @@ $$\mathcal{L}_{\text{seg}} = \lambda_{\text{bce}} \mathrm{BCE}_{\text{dyn}}(\hat
 - 自动化数据流水线（标注→过滤→细化）具有可扩展性，构建了目前最大规模的3D部件分割数据集之一
 - 同一框架统一了交互式分割和全分割两种任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持点提示和尺度信号交互，未来可引入文本指令实现更直观的语义交互
 - 依赖PartField预训练参数初始化编码器，编码器本身的创新有限

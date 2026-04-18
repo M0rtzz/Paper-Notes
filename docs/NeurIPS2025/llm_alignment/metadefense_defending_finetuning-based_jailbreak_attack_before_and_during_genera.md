@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MetaDefense: Defending Finetuning-based Jailbreak Attack Before and During Generation
 description: >-
@@ -156,7 +156,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{safety}} + \lambda \mathcal{L}_{\text{utility
 - **对嵌入空间的洞察**：发现 LLM 已经能在嵌入空间中区分有害内容，但需要显式训练来激活这一能力
 - **工程实用性强**：LoRA 微调 + 无外部依赖，部署门槛低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对抗性攻击**：如果攻击者知道 MetaDefense 的机制，可能设计规避诊断 prompt 的攻击
 2. **延迟开销**：Mid-Generation 检查会增加推理延迟（每 γ 个 token 多一次前向传播）

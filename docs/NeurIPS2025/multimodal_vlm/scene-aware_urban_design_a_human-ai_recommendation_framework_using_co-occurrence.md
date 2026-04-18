@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scene-Aware Urban Design: A Human-AI Recommendation Framework Using Co-Occurrence Embeddings and Vision-Language Models
 description: >-
@@ -86,7 +86,7 @@ tags:
 - 全流程（检测→共现→推荐→3D生成→AR预览）的完整性令人印象深刻，展示了从研究到原型的可行路径。
 - 以"人群密度>5"作为社交活跃空间的代理虽然简单，但为后续工作建立了合理的基线。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 共现估计基于2D图像的像素距离，无法捕捉真实3D空间关系，降低了场地特定干预的精确度。
 - ADE20K数据集偏向特定地理和文化背景（主要是北美/欧洲），限制了系统在其他地区的泛化能力。

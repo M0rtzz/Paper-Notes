@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multimodal Protein Language Models for Enzyme Kinetic Parameters: From Substrate Recognition to Conformational Adaptation
 description: >-
@@ -90,7 +90,7 @@ ERBA的pipeline模拟真实催化机制的两个阶段：
 - **G-MoE的几何路由**：用3D口袋结构来决定路由，让不同形态的活性位点由不同专家处理，符合酶催化的生物学直觉
 - **OOD泛化显著**：在EITLEM测试集上R²提升近一倍（0.25→0.50），说明条件化PLM比被动使用PLM泛化能力强得多
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅处理野生型酶，未系统评估突变体（虽然OOD集包含突变体）
 - 3D结构依赖AlphaFold2/ESMFold预测，真实结构可能不同
 - 未考虑辅因子（cofactor）、pH、温度等环境变量的影响

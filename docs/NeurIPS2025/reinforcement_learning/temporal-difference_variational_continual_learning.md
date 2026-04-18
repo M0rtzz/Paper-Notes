@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Temporal-Difference Variational Continual Learning
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{VCL}^t = \mathbb{E}[\log p(\mathcal{D}_t|\boldsymbol{\theta})] - 
 - TD-VCL构成了从VCL（$\lambda \to 0$）到n-Step KL（$\lambda = 1$）的连续谱，提供了灵活的偏差-方差权衡机制
 - 与神经科学中TD学习的联系为该方法提供了额外的动机和解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要存储多个过去后验估计，内存开销随 $n$ 增加
 - 需要存储或回放旧任务数据以估计似然项（但这在目标函数中是自然的而非启发式的）

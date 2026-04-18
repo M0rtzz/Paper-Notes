@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiFICL: High-Fidelity In-Context Learning for Multimodal Tasks
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：线性 shift 假设 vs ICL 的非线性本质。机制可解释性研究表明 ICL 由 induction heads 等专用电路实现，是高度非线性的过程。线性近似成为性能瓶颈。
 
-**本文要解决什么？** 如何更忠实地模拟 ICL 的内在机制，而非粗略近似其外在效果？
+**本文目标** 如何更忠实地模拟 ICL 的内在机制，而非粗略近似其外在效果？
 
 **切入角度**：回到 attention 公式本身做精确数学分解，发现 ICL 效果的精确形式已经嵌入在原始方程中——问题从"近似效果"转变为"参数化来源"。
 
-**核心 idea 一句话**：ICL 的 shift effect 不是需要近似的目标，而是 attention 公式的直接解析推论；直接参数化其来源（KD, VD）比近似其结果更合理。
+**核心 idea**：ICL 的 shift effect 不是需要近似的目标，而是 attention 公式的直接解析推论；直接参数化其来源（KD, VD）比近似其结果更合理。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ tags:
 - **"参数化来源而非近似效果"**这个 reframing 非常优雅。类比：以前是在函数空间里拟合曲线（近似 shift），现在是直接学参数空间中的基（学 KV 对），后者更 principled。
 - **作为 Dynamic PEFT 的视角**：HiFICL 可以被理解为 ICL 和 LoRA 的统一——LoRA 是静态的 weight-space 适配，ICL 是动态的 inference-time 适配，HiFICL 是把 ICL 的动态适配"烧入"可训练参数。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **只在 VQA/Captioning 上测试**：未验证更复杂的任务如 visual grounding、视频理解等
 - **n=8 虚拟对的解释性**：这 8 个虚拟 KV 对分别学到了什么？文中没有可视化分析

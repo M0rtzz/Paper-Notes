@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography
 description: >-
@@ -64,7 +64,7 @@ JDM-HDRNet 由两个阶段组成：
 
 #### 1. **联合 RGB-光谱分解模型（Joint Decomposition Model）**
 
-**做什么**：利用 RGB（高空间分辨率、低光谱分辨率）和 Lr-MSI（低空间分辨率 $16 \times 16$、高光谱分辨率 10 通道）的互补性，预测 $S$、$R$、$M$。
+**功能**：利用 RGB（高空间分辨率、低光谱分辨率）和 Lr-MSI（低空间分辨率 $16 \times 16$、高光谱分辨率 10 通道）的互补性，预测 $S$、$R$、$M$。
 
 **核心思路**：采用双独立编码器-解码器架构（基于 FCN）。将 Lr-MSI resize 到与 RGB 相同空间分辨率后，分别提取特征 $\mathcal{F}_{rgb}$ 和 $\mathcal{F}_{spec}$，拼接后通过独立解码器预测材质分割 $M$ 和 shading $S$：
 
@@ -78,7 +78,7 @@ shading 预测从回归问题转化为分类问题（分为 8 个亮度等级）
 
 #### 2. **Shading 先验：局部亮度自适应（Localized Brightness Adaptation）**
 
-**做什么**：将 shading 分量从 RGB 空间中分离，转换到 reflectance 空间以简化色彩映射学习。
+**功能**：将 shading 分量从 RGB 空间中分离，转换到 reflectance 空间以简化色彩映射学习。
 
 **核心思路**：将 shading $S$ 通过轻量模块（2 层卷积+反卷积）转换为亮度表示 $\hat{S}$，然后将 16-bit 输入图像和 Lr-MSI 分别除以 $\hat{S}$ 得到 reflectance 图像：
 
@@ -88,7 +88,7 @@ $$R_{rgb} = I_{rgb} / \hat{S}, \quad R_{msi} = I_{msi} / \hat{S}$$
 
 #### 3. **Reflectance 先验：光谱感知自注意力（SPSA）**
 
-**做什么**：利用 Lr-MSI 的 reflectance $R_{msi}$ 的细粒度光谱通道增强双边网格系数预测的色彩感知能力。
+**功能**：利用 Lr-MSI 的 reflectance $R_{msi}$ 的细粒度光谱通道增强双边网格系数预测的色彩感知能力。
 
 **核心思路**：将 $R_{msi}$ 和 $R_{rgb}$ 的特征拼接后生成 $Q, K, V$，通过通道维度的自注意力生成**光谱感知图** $A \in \mathbb{R}^{C \times C}$，建模不同光谱通道间的互信息：
 
@@ -100,7 +100,7 @@ SPSA 作为残差学习模块，通过自适应加权融合跨光谱特征。
 
 #### 4. **材质语义先验：语义网格专家混合（Mixture of Semantic Grid Experts）**
 
-**做什么**：为不同材质类别（天空、建筑、植物、树干、道路）分别学习专门的双边网格系数。
+**功能**：为不同材质类别（天空、建筑、植物、树干、道路）分别学习专门的双边网格系数。
 
 **核心思路**：每个类别 $M_i$ 通过映射函数转化为概率图 $\Psi_i$，学习仿射变换参数 $(\alpha, \beta)$ 调制 $Q, K$：
 
@@ -180,7 +180,7 @@ $$\Phi(x,y) = \sum_{i=1}^{N} w_i \Phi_i(x,y)$$
 - **构建了首个 RGB-高光谱配对的移动摄影数据集 Mobile-Spec**，包含 200 组场景、176 通道高光谱、精细材质分割标注
 - 设计的各模块（亮度自适应、SPSA、语义网格专家）分别对应三种先验，机制明确、物理可解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **16×16 空间分辨率的 Lr-MSI 在商用手机上尚不可实现**（当前手机光谱传感器多为单像素），需要硬件发展支撑
 - Mobile-Spec 仅 200 组场景，规模有限，仅覆盖户外场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Agentic Context Engineering: Evolving Contexts for Self-Improving Language Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：agent 和知识密集应用需要**全面详尽的**领域知识，但现有方法却在压缩知识。LLM 与人不同——人受益于简洁概括，LLM 反而在详尽 context 下表现更好。
 
-**本文要解决什么？** 如何构建一种 context 适配方法，既能持续积累知识又不会坍塌退化？
+**本文目标** 如何构建一种 context 适配方法，既能持续积累知识又不会坍塌退化？
 
 **切入角度**：将 context 视为"evolving playbook"而非"optimized prompt"，用结构化的增量更新替代整体重写。
 
-**核心idea一句话**：context 应该是持续增长和精炼的策略手册，而非压缩后的简洁指令。
+**核心 idea**：context 应该是持续增长和精炼的策略手册，而非压缩后的简洁指令。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ ACE 由三个角色组成：Generator（生成推理轨迹）→ Reflector（从
 - **无监督自改进能力**：仅靠执行反馈就能构建有效 context，为真正的 self-improving agent 铺平道路
 - **三角色分工模式可复用**：Generator-Reflector-Curator 的模式可以迁移到其他需要从经验中学习的 LLM 系统
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 随着 bullet 数量增长，context 可能超出 context window，需要更智能的检索或压缩策略
 - 去重依赖语义嵌入的质量，相似但不完全重复的 bullet 可能积累
 - Generator/Reflector/Curator 强制使用同一模型，限制了利用不同大小模型优化成本的灵活性

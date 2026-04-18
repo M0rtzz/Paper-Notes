@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CleanSight: Test-Time Attention Purification for Backdoored Large Vision Language Models
 description: >-
@@ -31,11 +31,11 @@ CleanSight 发现 LVLM 后门攻击的机制不在像素层面而在注意力层
 
 **核心矛盾**：与从头训练的 CLIP 不同，LVLM 的后门关联不绑定在低层视觉特征上，而是隐藏在跨模态注意力交互模式中——像素扰动碰不到注意力层面的异常。
 
-**本文要解决什么？** 如何在不修改模型参数的情况下，在 test time 检测并中和 LVLM 后门？
+**本文目标** 如何在不修改模型参数的情况下，在 test time 检测并中和 LVLM 后门？
 
 **切入角度**：作者发现关键现象——后门激活的机理是"attention stealing"：中毒输入的视觉 token 在 LVLM 中间层异常抢夺文本 token 的注意力权重，压制指令遵循能力。
 
-**核心idea一句话**：后门在注意力而非像素 → 检测注意力比例异常 + 剪枝高注意力视觉 token = 免训练 test-time 防御。
+**核心 idea**：后门在注意力而非像素 → 检测注意力比例异常 + 剪枝高注意力视觉 token = 免训练 test-time 防御。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ Clean Utility（VQAv2 准确率）在 CleanSight 下保持 62-68%，与无防御
 - **意外联系**：视觉 token pruning 原本用于加速推理（FastV, LLaVA-PruMerge），本文发现它还能增强后门安全性——加速和安全可以同时实现
 - **可迁移思路**：attention ratio 分析可以用于检测其他类型的 LVLM 异常行为（对抗样本、输入污染等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要少量干净样本估计参考分布——虽然数量极少（~100），但在零样本场景下仍需探索
 - 检测阈值的设定需要调优，不同模型/攻击可能需要不同阈值
 - 仅在 LLaVA 系列验证，其他 LVLM 架构（如 Qwen-VL、InternVL）的泛化性待测

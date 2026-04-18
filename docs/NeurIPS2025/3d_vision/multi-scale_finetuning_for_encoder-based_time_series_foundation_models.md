@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Scale Finetuning for Encoder-based Time Series Foundation Models
 description: >-
@@ -93,7 +93,7 @@ MSFT 在 3 个 TSFM backbone（Moirai、Moment、UniTS）上均一致性超越 n
 - 框架设计简洁通用，可适配不同的 encoder-based TSFM 架构
 - 冻结预训练参数 + 轻量适配器的设计，参数效率高且避免灾难性遗忘
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅针对 encoder-based TSFM，未探索 decoder-only（如 TimesFM）或 encoder-decoder（如 Chronos）架构
 - 多尺度数量 K 需要手动选择，未提供自适应机制
 - 下采样策略固定为平均池化，可以探索更多下采样方式（如小波变换）

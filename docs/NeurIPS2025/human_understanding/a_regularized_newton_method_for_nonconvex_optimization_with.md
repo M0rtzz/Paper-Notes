@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Regularized Newton Method for Nonconvex Optimization with Global and Local Complexity Guarantees
 description: >-
@@ -114,7 +114,7 @@ tags:
 - **实用性**：无需Hessian Lipschitz常数的先验知识，无需最小特征值计算，每次CG迭代仅需一次Hessian向量积，大规模问题下内存效率远优于基于矩阵分解的方法（6GB vs 74GB）
 - **$\omega_k^f=\epsilon_k$的选择**消除了$\log\log(1/\epsilon)$对数因子，其关键在于$\epsilon_k$的单调性使得$V_k$的控制更精细
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **实验规模有限**：仅在CUTEst benchmark上测试，虽有PINN实验但深度学习中的大规模应用仍待验证
 - **Hölder连续Hessian推广**：论文指出技术可推广到Hölder连续Hessian的情形，但由于Hölder指数未知需要额外估计，尚未完成
 - **凸情形**：是否适用于Doikov & Nesterov (2021)等研究的凸设置仍是开放问题

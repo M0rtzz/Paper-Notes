@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GSAlign: Geometric and Semantic Alignment Network for Aerial-Ground Person Re-Identification
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L}_{\text{total}} = (\mathcal{L}_{\text{id}} + \mathcal{L}_{\text{tri
 4. **推理零开销**：DAM 仅在训练阶段使用，不增加推理计算成本
 5. **A↔G 场景大幅领先**：在最具挑战性的空地跨视图设置上实现压倒性优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在合成数据集上大幅领先**：CARGO 是基于仿真引擎构建的合成数据集，在真实数据集 (AG-ReID, AG-ReID v2) 上提升相对温和 (+0.5~2%)，泛化能力有待进一步验证
 2. **DAM 提升有限**：消融实验显示 DAM 的贡献主要集中在 mINP (+2.3%)，对 Rank-1 和 mAP 提升较小，模块的效果还可优化

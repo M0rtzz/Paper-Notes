@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VPHO: Joint Visual-Physical Cue Learning and Aggregation for Hand-Object Pose Estimation
 description: >-
@@ -189,7 +189,7 @@ $$\mathcal{L}_{phy} = \lambda_F \mathcal{L}_{mse}(F', \tilde{F}') + \lambda_c \m
 3. **摩擦锥 + MANO 联合建模**：将经典力学的摩擦锥模型与 MANO 手模型的骨架结构无缝结合，物理建模严谨
 4. **候选数量分析充分**：100 个候选提供了精度-效率的良好平衡（50 个稍差，200 个提升微弱但开销翻倍）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **静态平衡假设**：假设手-物体处于静态平衡状态，无法处理动态抓取过程中的加速度
 2. **缺乏时序信息**：仅使用单帧图像，未利用视频中的时序线索

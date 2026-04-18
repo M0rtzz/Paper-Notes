@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GLYPH-SR: Can We Achieve Both High-Quality Image Super-Resolution and High-Fidelity Text Recovery via VLM-Guided Latent Diffusion Model?
 description: >-
@@ -83,7 +83,7 @@ GLYPH-SR基于预训练LDM（Juggernaut-XL），在其上添加Text-SR融合Cont
 - 4分区合成数据设计巧妙：通过正交扰动字形和图像质量解耦学习
 - Ping-pong调度器简单有效，比复杂的连续噪声级调度更优
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖OCR模块提取文本位置，OCR模块本身可能在低分辨率下失败
 - 合成训练数据可能不完全代表实际退化
 - 仅验证了4×和8×，更高倍率的效果未知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ParetoHqD: Fast Offline Multiobjective Alignment of Large Language Models Using Pareto High-Quality Data
 description: >-
@@ -102,7 +102,7 @@ ParetoHqD 分两阶段：Stage 1 从原始数据集的 Pareto 前沿选取匹配
 - **"少而精"的数据选择策略**：LIMA 假说的多目标扩展——对齐不需要大量数据，关键是选对数据。Pareto 前沿附近的数据天然具有高质量
 - **极低的训练成本**：55 小时 GPU 时间完成 11 个偏好的双目标对齐，使个性化多目标对齐变得实际可部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基座模型仅用 Llama-2 7B 验证，更大模型上的效果未知
 - 两阶段 SFT 无法进一步做偏好对齐的精细调整（如 DPO / RLHF 可能提供的细粒度优化）

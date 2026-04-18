@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provably Explaining Neural Additive Models
 description: >-
@@ -130,7 +130,7 @@ tags:
 4. **对 NAM 价值的新理解**：NAM 不仅在视觉上可解释（可以画出每个特征的贡献曲线），还在计算意义上具有更好的可解释性
 5. **安全关键应用的筹码**：可证明解释对 AI 法规合规（如 EU AI Act 的可解释性要求）具有重要意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅适用于 NAMs**：算法严重依赖加性结构，无法直接推广到一般神经网络或包含特征交互的模型（如 Neural Additive Models with Interactions, NAM-I）
 2. **NAMs 的表达能力限制**：NAMs 无法建模特征交互，这在某些任务上限制了模型性能。使用 NAM 是否值得，取决于可解释性需求与性能需求的权衡

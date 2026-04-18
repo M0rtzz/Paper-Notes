@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Normalizing Flows are Capable Generative Models
 description: >-
@@ -165,7 +165,7 @@ $$\tilde{\mu}_i^t = (1+w)\mu_i^t(\cdot; 1) - w \cdot \mu_i^t(\cdot; \tau)$$
 3. **损失与 FID 的正相关**：训练损失（似然）下降直接带来 FID 改善，这是 NF 相对于其他生成模型的独特优势
 4. **Guidance 与 NF 的兼容性**：首次证明 CFG 和无条件 guidance 可以直接应用于 NF 模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **采样速度慢**：逆变换必须对序列维度逐步自回归，虽然使用了 KV-cache 但仍远慢于扩散模型的并行去噪
 2. **FID 仍有差距**：条件 ImageNet 64×64 上 FID 5.7 vs EDM 的 1.55，差距约 3-4 倍

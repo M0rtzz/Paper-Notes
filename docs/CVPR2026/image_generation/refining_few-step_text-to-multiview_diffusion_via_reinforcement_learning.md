@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Refining Few-Step Text-to-Multiview Diffusion via Reinforcement Learning
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{R}_{\text{mvc}} = \frac{R(\mathbf{x}_0^v, \mathbf{c}) + \lambda \cdot
 - Lagrangian 对偶 + 自步调课程消除了手动调权重/阈值的需求，工程友好度高。
 - 消融实验系统完善，每个设计决策都有量化验证。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 MV-Adapter + LCM-SDXL 上验证，是否适用于其他多视图架构（如 Zero123++、Era3D）待考察。
 - 联合视图奖励依赖 HyperScore，该评估器本身对 T2MV 生成的评估是否足够鲁棒值得探讨。

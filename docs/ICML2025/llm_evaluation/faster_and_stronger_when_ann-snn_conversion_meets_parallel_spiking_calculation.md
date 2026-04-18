@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faster and Stronger: When ANN-SNN Conversion Meets Parallel Spiking Calculation
 description: >-
@@ -110,7 +110,7 @@ $$\mathbf{r}_{\text{DA}}^{l,\tilde{T}} = \frac{\theta^l + \phi_{\text{DA}}^l}{\t
 4. **实用加速**：二分搜索 + Hadamard 乘积优化使推理开销从 $O(T^2)$ 降至 $O(T)$ 充电 + $O(\log T)$ 发放
 5. **4 步超越 STBP**：ImageNet ResNet-34 仅用 4 步就达到 72.90%，超过 6 步 STBP 方法（Dspike 68.19%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证分类任务**：所有实验限于图像分类（CIFAR/ImageNet），未在检测、分割等下游任务验证
 2. **网络结构限制**：仅测试 VGG 和 ResNet，未涉及 Transformer、MobileNet 等现代架构

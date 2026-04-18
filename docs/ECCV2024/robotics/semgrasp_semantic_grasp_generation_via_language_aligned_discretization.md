@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SemGrasp: Semantic Grasp Generation via Language Aligned Discretization
 description: >-
@@ -156,7 +156,7 @@ SemGrasp在语义一致性指标GPT-4评分上达到74.5分（满分100），显
 3. **可控且可解释**：与cVAE等连续潜空间方法不同，离散token具有明确的语义含义，使抓取生成过程透明可控
 4. **端到端应用验证**：在D-grasp（AR/VR）和UniDexGrasp（机器人）两个下游任务中验证了生成抓取的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持单手静态抓取**：未涉及双手协作操作，需要大量双手运动捕捉数据
 2. **动态抓取需RL辅助**：需结合D-grasp等额外RL策略才能生成动态抓取序列，非端到端

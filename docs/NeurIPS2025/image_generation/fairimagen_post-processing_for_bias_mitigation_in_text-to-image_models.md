@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FairImagen: Post-Processing for Bias Mitigation in Text-to-Image Models
 description: >-
@@ -119,7 +119,7 @@ $\epsilon$ 为可调噪声缩放参数。
 - 经验噪声注入有效避免了过度中性化（如生成女性化的男性）
 - 在历史性别确定的 prompt（如"中世纪铁匠"）上保持语义一致性，不盲目"校正"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Accuracy 和 MUSIQ 有一定下降（Accuracy 从 0.785 降至 0.771），存在公平-保真 trade-off
 - FairPCA 假设偏见是线性可分的，非线性偏见可能残留在高维空间

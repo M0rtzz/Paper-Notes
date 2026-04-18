@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Remember Me: Bridging the Long-Range Gap in LVLMs with Three-Step Inference-Only Decay Resilience Strategies
 description: >-
@@ -170,7 +170,7 @@ POPE 数据集消融（F1-score）：
 4. **跨架构通用性**：在 LLaVA、InterVL、Qwen 三个差异很大的 LVLM 上都有效
 5. **可视化说服力强**：从错误答案（彩鹳）到正确答案（红袋鼠）的注意力变化清晰展示了方法的作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **绝对提升幅度有限**：最大提升 1.3%（ScienceQA），在已有强 baseline（如 InterVL 96.6%）上提升更小（0.7%）
 2. **超参数需要针对数据集微调**：$\lambda_{re}$ 在 ScienceQA 和 POPE 上分别为 0.8 和 1.0

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PLOT: Text-based Person Search with Part Slot Attention for Corresponding Part Discovery
 description: >-
@@ -139,7 +139,7 @@ Slot attention 在 R@1 上超越 TIPCB 2.05%、PAT 2.52%，验证了竞争式部
 - **TDPA 查询自适应**：不同查询关注不同部件的思路简单有效，MLP 预测权重 + 端到端学习
 - **可解释性**：每个 slot 的 attention map 可视化清晰展示了模型关注的人体区域，增强了检索的可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 作者坦诚：slots 会覆盖整个图像和文本，部分 slot 可能绑定到无关区域（背景）。TDPA 部分缓解此问题，但更显式的解决方案（如前景约束）会更好
 - Slot 数量 $K=8$ 固定，未探索自适应 slot 数量
 - 仅在 CLIP-ViT-B/16 上验证，未测试更大 backbone（ViT-L/14 等）

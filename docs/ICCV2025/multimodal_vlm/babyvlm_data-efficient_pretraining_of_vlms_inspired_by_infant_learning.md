@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BabyVLM: Data-Efficient Pretraining of VLMs Inspired by Infant Learning
 description: >-
@@ -104,7 +104,7 @@ BabyLLaVA沿用LLaVA的标准训练流程，在编译的发展数据上训练。
 - 组合推理分析发现模型在名词差异上表现最好，与语言发展文献中"婴儿名词使用频率是动词两倍"的发现一致
 - 证明了"精心策划的小数据 + 紧凑模型"可以学到有意义的表征，为资源受限的模型训练提供了新范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 生成式字幕任务表现仍然不佳，所有模型的METEOR分数都很低
 - 在Baby Winoground上baby模型表现远低于上界模型，组合推理能力仍有巨大提升空间
 - 合成数据仍然依赖GPT-4o和大规模源数据集，"发展合理性"存在争议

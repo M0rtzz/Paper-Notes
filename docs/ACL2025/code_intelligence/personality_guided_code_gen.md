@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Personality-Guided Code Generation Using Large Language Models
 description: >-
@@ -115,7 +115,7 @@ tags:
 - 方法极其轻量：零训练，仅在 prompt 前加一段人格描述，可即插即用
 - CoT + Personality 组合策略展示了 prompt engineering 各维度正交互补的可能性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 人格生成依赖 GPT-4o，引入额外 API 调用成本，每个任务增加一次 LLM 调用
 - MBTI 在心理学界有争议，不是公认最科学的人格框架

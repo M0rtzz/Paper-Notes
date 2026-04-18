@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Entity-centric Reinforcement Learning with Factored Subgoal Diffusion
 description: >-
@@ -84,7 +84,7 @@ tags:
 - 实体中心扩散的归纳偏置自然产生稀疏子目标，无需显式约束
 - Transformer选择性复制输入实体到输出的机理洞察深刻
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 价值阈值 $\hat{R}$ 需要手动设置，自适应方案有待探索
 - DLP表示偶尔在子目标中重复同一实体
 - 物体数量增多时泛化性能下降，可能通过课程学习或在线微调改善

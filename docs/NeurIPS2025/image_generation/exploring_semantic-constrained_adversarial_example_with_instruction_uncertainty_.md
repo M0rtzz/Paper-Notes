@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring Semantic-constrained Adversarial Example with Instruction Uncertainty Reduction
 description: >-
@@ -113,7 +113,7 @@ $$A_{\text{Text}} = \{\text{label}_{\text{Adv}} \mid \text{AbstractedLabel} \not
 - 系统性地将指令不确定性分解为三个维度并逐一突破
 - 在语义保持（低 LPIPS）和攻击效果（高 ASR）之间取得优秀的 Pareto 前沿
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\epsilon$ 参数需手动调节，不同场景可能需要不同值
 - 3D 生成依赖 Trellis 框架，换用其他 3D 生成模型的泛化性未验证

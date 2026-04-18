@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Provably Improves the Convergence of Gradient Descent
 description: >-
@@ -113,7 +113,7 @@ $$F(W^k) \leq \left(1 - 4\eta \frac{\beta_0^2}{\beta^2} \delta_4 \alpha_0^2\righ
 - **NTK理论的新应用**：将NTK从标准ReLU网络扩展到具有循环结构和Sigmoid输出的Math-L2O架构，宽度需求仅$\mathcal{O}(Nd)$
 - **理论-实验一致性强**：消融实验精确验证了$e$-$\eta$反比关系、学习率上界存在性等理论预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限二次规划**：理论分析局限于$\frac{1}{2}\|\mathbf{M}x - y\|_2^2$形式的目标函数，未扩展到一般凸或非凸问题
 - **合成数据验证**：实验仅在随机生成的高斯数据上进行，缺乏真实优化问题（如LASSO、压缩感知、信号恢复）的验证

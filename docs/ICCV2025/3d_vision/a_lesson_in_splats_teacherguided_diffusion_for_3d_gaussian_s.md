@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Lesson in Splats: Teacher-Guided Diffusion for 3D Gaussian Splats Generation with 2D Supervision
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **小模型超越大模型**: 只用295MB的中等模型就超越了646MB大模型的教师，说明扩散框架本身的表示能力优于确定性框架
 - **多步去噪训练**: 在训练时展开多步推理并反传梯度，虽然内存开销大，但通过两阶段策略控制计算成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖像素对齐的3DGS表示，Gaussian分布集中在可见区域，遮挡区域覆盖不足导致新视角过度平滑
 - Stage 2多步去噪的batch size从100降到10，计算成本仍然不低
 - 仅验证了3DGS表示，未拓展到其他3D表示（mesh, NeRF等）

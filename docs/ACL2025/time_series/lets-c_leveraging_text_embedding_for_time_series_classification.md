@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LETS-C: Leveraging Text Embedding for Time Series Classification
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：能否利用语言模型在序列建模上的成功，但避免微调 LLM 的高成本？
 
-**本文要解决什么**：用 text embedding 模型（而非 LLM 微调）编码时间序列，配合轻量分类头实现高效分类。
+**本文目标**：用 text embedding 模型（而非 LLM 微调）编码时间序列，配合轻量分类头实现高效分类。
 
 **切入角度**：text embedding 模型已在 MTEB 上展示强大的序列表示能力，且推理是一次性的（可预计算存储），比 LLM 微调高效得多。
 
@@ -110,7 +110,7 @@ tags:
 - **一次性预计算 embedding**：无需 GPU 训练 embedding，API 调用后存储复用——部署极简
 - **挑战"LLM 微调必要性"**：不需要接入 Transformer 内部，只用 embedding 接口就够了
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖商业 API**：OpenAI text-embedding-3-large 是付费 API，成本和可控性受限
 - **仅多变量分类**：未扩展到预测（forecasting）、异常检测等其他时间序列任务
 - **无验证集**：benchmark 设置与先前工作一致（train/test only），报告的是 upper bound

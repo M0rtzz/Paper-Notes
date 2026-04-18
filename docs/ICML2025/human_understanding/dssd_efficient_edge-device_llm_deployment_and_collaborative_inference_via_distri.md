@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DSSD: Efficient Edge-Device LLM Deployment and Collaborative Inference via Distributed Split Speculative Decoding
 description: >-
@@ -123,7 +123,7 @@ DSSD与草稿长度$\gamma$的优化是正交的。可以进一步结合Zhao et 
 - **框架的通用性**：DSSD可以与现有的草稿长度优化、自适应推测解码等策略正交组合使用
 - **实用性强**：方案不需要修改SLM或LLM的模型结构，仅改变通信协议和验证计算的分配
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **设备端验证计算开销**：将部分验证移到设备端增加了设备的计算负担，对于极度资源受限的终端设备（如IoT传感器）可能不适用
 - **单次下行传输的假设**：论文假设仅需传输一个LLM分布即可完成验证，实际上对于某些验证策略可能需要额外信息交换

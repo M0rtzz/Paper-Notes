@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fine-tuning with RAG for Improving LLM Learning of New Skills
 description: >-
@@ -147,7 +147,7 @@ k=3 在两个环境中均衡最优；k=9 时 hint 过多反而有害。
 4. **效率分析很全面**: 不只看准确率，还系统分析了 token 开销、步数等效率指标
 5. **跨 agent 架构验证**: 在 ReAct 和 StateAct 两种不同架构上都有效，说明方法具有通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Hint 生成依赖 GPT-4o**: 在大规模环境中 API 调用成本不可忽视
 2. **仅 t=0 一次性检索**: 无法适应 episode 中途出现的意外情况

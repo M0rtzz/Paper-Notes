@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoExplorer: Active Geo-Localization with Curiosity-Driven Exploration
 description: >-
@@ -126,7 +126,7 @@ GeoExplorer 的训练分为三个阶段：
 - 提出新的 SwissView 基准，特别是 SwissViewMonuments 子集评估未见目标泛化
 - 好奇心奖励的可视化分析非常直观：语义跳变（如森林→城市）获得高奖励
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 搜索空间为离散网格（5×5），未来需扩展到连续状态和动作空间
 - 未考虑 UAV 的自我位姿噪声和观测变形等真实部署问题

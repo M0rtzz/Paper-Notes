@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Forecasting Epileptic Seizures from Contactless Camera via Cross-Species Transfer Learning
 description: >-
@@ -90,7 +90,7 @@ tags:
 - 低 masking ratio (0.3) 的发现揭示了医疗视频与自然视频在信息密度上的根本差异
 - 仅使用癫痫样本预训练反而性能下降的发现表明正常行为作为对比基线的重要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估数据集仅 40 个视频序列，统计效力有限
 - 固定 5 秒预测窗口，未探索不同预测时程的可行性

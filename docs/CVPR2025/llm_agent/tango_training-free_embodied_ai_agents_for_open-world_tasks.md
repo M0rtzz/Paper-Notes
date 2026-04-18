@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TANGO: Training-free Embodied AI Agents for Open-world Tasks
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：需要一个统一框架在不额外训练的情况下处理多种开放世界具身任务，但具身任务的多样性似乎要求任务特定的训练。
 
-**本文要解决什么？** 利用 LLM 的程序组合能力，将简单的导航原语自动组合成解决复杂具身任务的程序。
+**本文目标** 利用 LLM 的程序组合能力，将简单的导航原语自动组合成解决复杂具身任务的程序。
 
 **切入角度**：将 LLM 在 2D 图像上的程序组合能力扩展到 3D 具身环境，仅用 few-shot 示例教 LLM 如何编排导航原语。
 
-**核心idea一句话**：PointGoal 导航 + 记忆探索作为基础原语，LLM 通过 in-context learning 编排它们。类似于用“前进”和“转弯”两个基本指令组合出复杂的导航路径。
+**核心 idea**：PointGoal 导航 + 记忆探索作为基础原语，LLM 通过 in-context learning 编排它们。类似于用“前进”和“转弯”两个基本指令组合出复杂的导航路径。
 
 ### 损失函数 / 训练策略
 Training-free 框架不涉及任何任务级训练。PointGoal 导航模型是预训练的（在 Habitat 环境中用 RL 训练），但不针对任何下游任务做微调。LLM 仅通过 few-shot prompting 学习原语组合方式。
@@ -107,7 +107,7 @@ TANGO 在 GOAT-Bench 上 +2.6% 超越之前 SOTA
 - **从图像推理到具身环境的程序合成扩展**自然且有效——VisProg/ViperGPT 在 2D 图像上验证了 LLM 程序合成的能力，TANGO 将其推广到 3D 具身环境
 - **Training-free 的实用价值**：无需为每个新环境/任务收集数据和训练，大幅降低部署门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 - PointGoal 导航模型仍需预训练——不是完全 training-free，只是任务级不需要训练
 - 精确操作任务（如抓取、开门）可能不足——当前的原语只支持导航类操作
 - 探索效率受 memory-based exploration 策略限制，在大规模开放环境中可能不够高效

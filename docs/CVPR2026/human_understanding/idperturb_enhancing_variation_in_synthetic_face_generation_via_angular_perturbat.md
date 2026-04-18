@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IDperturb: Enhancing Variation in Synthetic Face Generation via Angular Perturbations
 description: >-
@@ -100,7 +100,7 @@ CFG 强度消融（lb=0.6）：$\omega=2$ 达到最优（93.63%），过大的 $
 2. **数学优雅**：利用超球面几何保证范数不变和角度精确控制，身份重叠避免的角度取半策略也有严格几何解释
 3. **通用性强**：可即插即用于任何身份条件扩散模型，已在 FFHQ 和 C-WF 两个基线上验证有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. lb 较低时（如 0.4），部分样本身份一致性明显下降，EER 显著升高
 2. 目前仅在 IDiff-Face 上验证，未测试 Arc2Face 等更强基线

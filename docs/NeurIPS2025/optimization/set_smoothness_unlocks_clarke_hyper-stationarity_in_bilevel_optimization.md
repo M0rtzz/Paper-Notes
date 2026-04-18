@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Set Smoothness Unlocks Clarke Hyper-stationarity in Bilevel Optimization
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 乐观设定下（弱凹情形）没有现成的Moreau envelope方法，作者发展了基于Brøndsted-Rockafellar型近似的新收敛分析
 - 统一了乐观和悲观BLO的分析框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零阶方法的复杂度中有 $\sqrt{m}$ 因子（$m$ 为上层维度），对高维问题不够理想
 - 下层约束情形（$\mathbf{y} \in \mathcal{Y}$）下弱凸性可能失效，需要新的结构条件

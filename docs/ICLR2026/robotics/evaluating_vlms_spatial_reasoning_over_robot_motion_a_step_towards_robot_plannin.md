@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating VLMs' Spatial Reasoning Over Robot Motion: A Step Towards Robot Planning with Motion Preferences
 description: >-
@@ -125,7 +125,7 @@ tags:
 3. **实用发现**：最简单的 single-image 方法在效果和计算成本上双赢，为实际部署提供清晰指导
 4. **微调潜力大**：少量样本微调即可大幅提升小模型性能，降低部署门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **VLM 幻觉问题**：模型偶尔选择不存在的颜色路径（如选了"红色"但没有红色路径）
 2. **最短/最长路径识别差**：这类问题恰好是经典最优规划器（RRT*, PRM*）的强项，应融合使用

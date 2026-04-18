@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Is Artificial Intelligence Generated Image Detection a Solved Problem?
 description: >-
@@ -159,7 +159,7 @@ tags:
 4. **真实世界数据引入**：SocialRF 和 CommunityAI 填补了社交传播场景的评估空白
 5. **预处理的模态不对称性分析**：对 Crop/Resize 的深层机理给出了清晰解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **训练设置有限**：仅使用 ProGAN 和 SD-v1.4 训练，未探索多源联合训练或大规模数据集训练
 - **检测方法可扩展**：11 个检测器虽已覆盖代表性方法，但可进一步纳入最新的多模态和基础模型方法

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReliabilityRAG: Effective and Provably Robust Defense for RAG-based Web-Search
 description: >-
@@ -115,7 +115,7 @@ ReliabilityRAG 的完整流程分三阶段：
 - **隔离回答的策略**：对每个文档单独查询 LLM，避免了文档间的交叉污染，使矛盾检测更精确
 - **可证明鲁棒性**：在合理假设下提供指数级衰减的风险界，不只是经验性防御
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 隔离回答需要对每个文档单独调用 LLM，k=10 时需 10 次额外 LLM 调用，延迟成本高
 - NLI 模型（DeBERTa-v3-large）本身可能被对抗性攻击绕过

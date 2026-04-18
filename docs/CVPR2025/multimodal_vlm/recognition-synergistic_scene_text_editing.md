@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recognition-Synergistic Scene Text Editing
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L}^{cyc} = \lambda_4 \mathcal{L}_{mse}^{cyc} + \lambda_5 \mathcal{L}_
 - **循环微调策略**：巧妙利用编辑的可逆性构造自监督信号，解决了STE领域长期存在的"无配对真实数据"难题
 - **下游应用价值**：编辑结果可直接作为困难样本增强文字识别模型，形成"编辑→识别"正反馈循环
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 图像分辨率固定为 $32 \times 128$，无法处理大尺寸或非水平文字
 - 基于 minGPT（22.5M参数）的 Transformer 解码器容量有限，可能限制复杂场景下的编辑质量

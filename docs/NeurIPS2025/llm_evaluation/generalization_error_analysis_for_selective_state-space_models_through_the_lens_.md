@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalization Error Analysis for Selective State-Space Models Through the Lens of Attention
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：将选择性 SSM 递归展开为类注意力形式，构建两层覆盖——状态矩阵用 RNN 工具覆盖，输入投影用 Transformer 工具覆盖
 
-**核心idea一句话**：连续时间状态矩阵的频谱横断面 $s_A$ 决定了泛化界是否与序列长度无关
+**核心 idea**：连续时间状态矩阵的频谱横断面 $s_A$ 决定了泛化界是否与序列长度无关
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **实践指导明确**：$s_A$ 必须保持负值 → 直接指导 Mamba 初始化和正则化策略
 - **Gelfand 公式的巧妙使用**：用频谱半径替代算子范数，比 RNN 理论中的 $\|A\|_2$ 更紧
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅分析单层 SSM block，多层/深度 SSM 的泛化分析是自然扩展
 - 上下界之间仍有 $O(T)$ gap，可能通过更精细的覆盖构造缩小
 - 实验在相对简单的任务上验证（合成 Majority、IMDb 二分类），更复杂的生成任务需验证

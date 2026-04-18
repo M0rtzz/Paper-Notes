@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Set-Valued Predictions for Robust Domain Generalization
 description: >-
@@ -122,7 +122,7 @@ $$L_y(\theta, C) = \sum_{i \notin G_y} \max\{0, 1+h_y^\theta(X_i)\} + \sum_{e} \
 3. **实用性强**：SET-COVER 算法通过拉格朗日对偶优化，可与标准神经网络架构无缝结合，无需额外校准数据。
 4. **集大小优势显著**：相比 Robust Conformal 这一强基线，SET-COVER 在 4 个 WILDS 数据集上一致保持更小的预测集。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **理论-实践差距**：定理 3.7 仅对线性预测器在条件高斯域上严格成立，实验中用神经网络缺乏理论保证。
 - **标签数量扩展性**：当 $|\mathcal{Y}|$ 很大时（如 ImageNet 级别），每标签独立训练二分类器的方案计算开销大。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Focus: Prioritizing Informative Histories with Structured Attention Mechanisms in Partially Observable Reinforcement Learning
 description: >-
@@ -106,7 +106,7 @@ Atari 100k基准，26个游戏，5个随机种子，与UniZero和MuZero对比：
 - 光滑的分布式先验比离散的记忆窗口更适合RL中不规则的时间依赖结构——这是一个有价值的设计准则
 - 增加的参数量极少（仅每头2-3个标量），却带来显著性能提升，体现了归纳偏置的强大力量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在Atari环境中验证，未扩展到连续控制或多任务设置
 - 自适应注意力跨度需要正则化来避免退化到极端值（全部关注或不关注）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unifying Attention Heads and Task Vectors via Hidden State Geometry in In-Context Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：组件（注意力头）逐层变换隐状态，隐状态最终决定输出——二者是同一过程的不同视角，不应割裂分析。
 
-**本文要解决什么**：构建统一框架，将注意力头和任务向量的作用归结为对查询隐状态几何属性的影响。
+**本文目标**：构建统一框架，将注意力头和任务向量的作用归结为对查询隐状态几何属性的影响。
 
 **切入角度**：LLM分类本质上是将隐状态通过unembedding矩阵映射到标签空间。分类准确率取决于两个几何因素：隐状态是否可分，以及分离方向是否与标签unembedding向量对齐。
 
-**核心idea一句话**：ICL accuracy ≤ 最大可分离性 $S^*$，等号在分离方向与标签unembedding差方向对齐时成立。
+**核心 idea**：ICL accuracy ≤ 最大可分离性 $S^*$，等号在分离方向与标签unembedding差方向对齐时成立。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **"对齐才是瓶颈"的发现**：zero-shot隐状态已足够可分离，只是分离方向与标签unembedding方向不对齐。Task vector本质上在做"方向校正"
 - **IH作为task vector的机制解释**：IH将示例标签embedding复制到查询位置，使隐状态"推向"标签unembedding方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分析聚焦于分类任务，对生成任务仅做初步验证
 - 仅分析推理时行为，未探讨训练过程中两阶段模式的形成
 - 度量依赖已知标签空间，对开放域任务不直接适用

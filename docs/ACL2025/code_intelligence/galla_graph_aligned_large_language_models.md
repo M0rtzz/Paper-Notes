@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GALLa: Graph Aligned Large Language Models for Improved Source Code Understanding
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：受 VLM 领域（LLaVA 等）用轻量 adapter 桥接视觉和语言模态的启发，用外部 GNN + adapter 处理图信息，LLM 架构完全不变。
 
-**核心 idea 一句话**：图信息通过 GNN+adapter 在训练时注入 LLM 理解，推理时丢弃——训练时有图，推理时零开销。
+**核心 idea**：图信息通过 GNN+adapter 在训练时注入 LLM 理解，推理时丢弃——训练时有图，推理时零开销。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ tags:
 - **GNN 作为"图 tokenizer"的类比**：Stage 1 相当于训练一个图 tokenizer（类似 VLM 中的视觉 tokenizer），使 LLM 能"读懂"图信息。
 - **图对齐数据与下游任务数据分离**：不要求下游任务数据有图结构标注，大幅降低了使用门槛。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AST/DFG 提取需要语法正确的完整代码，对代码片段或有语法错误的代码不适用。
 - 仅测试了 Python 和 Java 的图对齐数据，更多语言的效果有待验证。
 - GNN 处理大型代码文件的图可能面临可扩展性问题。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RDFace: A Benchmark Dataset for Rare Disease Facial Image Analysis under Extreme Data Scarcity and Phenotype-Aware Synthetic Generation
 description: >-
@@ -106,7 +106,7 @@ DreamBooth 缩放效应（DenseNet Top-1）：
 - **反直觉发现**：无条件 GAN 生成反而伤害分类性能，强调了类别条件约束的关键性
 - **地标伪标签策略**：巧妙利用面部地标相似度为 FastGAN 的无标签输出分配伪类别
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模仍有限（456 张图像 / 103 类），部分类仅 1 个样本
 - 图像来源异构（网络搜索），部分人口统计学元数据缺失

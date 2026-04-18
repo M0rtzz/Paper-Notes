@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StructFlowBench: A Structured Flow Benchmark for Multi-turn Instruction Following
 description: >-
@@ -131,7 +131,7 @@ StructFlowBench 包含两个核心组件：
 4. **Golden Context 评估策略**：使用标准化的对话历史消除了上下文累积误差
 5. **可扩展的生成范式**：14 种结构流模板可组合生成多样化的评估对话
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数据规模较小（155 个对话），可能不足以覆盖所有结构模式组合
 2. 结构流模板由人工设计，可能遗漏了某些真实对话中的结构模式

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E-SAM: Training-Free Segment Every Entity Model
 description: >-
@@ -126,7 +126,7 @@ $\text{输入图像} \xrightarrow{AMG} \text{多粒度掩码} \xrightarrow{MMG} 
 - **多源 prompt 的互补性**：USR 同时利用超像素中心、part 中心和 subpart 中心作为 prompt，三种来源在空间尺度上互补，最大化覆盖遗漏区域。
 - **强泛化性**：训练免调的最大优势在于不受训练数据分布限制，E-SAM 在未见数据集上的强表现验证了这一点。
 
-## 局限性/可改进方向
+## 局限与展望
 
 - **推理效率较低**：三个级联模块都需要多次调用 SAM 的编码器和解码器（特别是 EMR 中的 mask gallery 构建和 USR 中的额外 prompt 生成），推理时间远高于单次 AMG 或训练好的端到端方法
 - **超参数敏感性**：多个阈值（NMS 阈值、面积分级、相似度合并阈值等）需要手动调优，不同数据集可能需要不同设置
@@ -136,7 +136,7 @@ $\text{输入图像} \xrightarrow{AMG} \text{多粒度掩码} \xrightarrow{MMG} 
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Struct2D: A Perception-Guided Framework for Spatial Reasoning in MLLMs
 description: >-
@@ -111,7 +111,7 @@ $$\mathbf{T}^{\text{out}} = \mathcal{F}(\text{Struct2D}(\phi_{\text{percept}}(\m
 - 过滤对象标记是个简单但有效的设计，根据问题只显示相关对象，减少视觉噪声
 - 数据构建管线完全自动化，可扩展性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预处理仍依赖3D感知模块（点云重建、3D检测），在延迟敏感场景可能受限
 - 数据集聚焦室内场景，对户外或开放世界场景的泛化尚未探索

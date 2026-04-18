@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AVION: Aerial Vision-Language Instruction from Offline Teacher to Prompt-Tuned Network
 description: >-
@@ -106,7 +106,7 @@ AVION 采用教师-学生蒸馏架构：冻结的大型教师模型（GeoRSCLIP 
 - 三方面蒸馏的分步消融清晰，每个组件贡献有量化证据
 - 跨模态检索中用更少可训练参数超过全参数微调
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 教师模型离线预计算仍有开销，类别极多时可能不够高效
 - LLM 生成描述质量依赖提示设计，不同 LLM 效果差异未探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] READoc: A Unified Benchmark for Realistic Document Structured Extraction
 description: >-
@@ -133,7 +133,7 @@ READoc 包含两大部分：
 - **首次揭示多页挑战**：单页图像到标记语言的范式存在本质局限，多页处理是未来方向
 - **对 RAG 系统直接有用**：Markdown 输出可直接用于 LLM 消费、分块和索引
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自动构建的 PDF-Markdown 配对存在噪声，难以完全消除
 - 标准化模块无法覆盖所有格式差异场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CaesarNeRF: Calibrated Semantic Representation for Few-Shot Generalizable Neural Rendering
 description: >-
@@ -109,7 +109,7 @@ $\mathcal{L} = \mathcal{L}_{MSE} + \lambda_1 \mathcal{L}_{central} + \lambda_2 \
 - **插件式设计**：不改变基线架构核心，只在特征层增加一个全局语义通道，易于集成到任何基于特征匹配的可泛化 NeRF 中
 - **Central Loss 的正则化效果**：一个简单的 L1 一致性约束就能有效引导校准学习，避免退化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仍依赖参考视图覆盖**：与生成式方法不同，CaesarNeRF 无法渲染参考视图完全未覆盖的区域（如物体背面）
 - **旋转对齐假设**：假设旋转矩阵足以对齐语义特征，对于包含大量遮挡或透视变换的场景可能不够
 - **消融不够充分**：主要在单场景（orchid）上做消融，跨场景有效性分析不足

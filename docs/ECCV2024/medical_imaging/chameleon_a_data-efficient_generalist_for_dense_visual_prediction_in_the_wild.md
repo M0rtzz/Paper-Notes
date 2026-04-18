@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Chameleon: A Data-Efficient Generalist for Dense Visual Prediction in the Wild
 description: >-
@@ -105,7 +105,7 @@ $$F_\mathcal{T} = \Lambda_\mathcal{T} \hat{F}_\mathcal{T}$$
 - **实验设计全面**：六个差异极大的下游任务覆盖了域外、结构外、多模态等多种挑战场景
 - 消融实验发现元训练数据多样性的间接提升效果（如加入无人机合成数据提升动物姿态估计）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 视频目标分割未利用时序信息，面对外观相似的干扰物容易出错
 - 元训练和微调的计算开销较大（BEiTv2-Large + ViT-Large）

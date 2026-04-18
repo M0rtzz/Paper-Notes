@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When One Moment Isn't Enough: Multi-Moment Retrieval with Cross-Moment Interactions
 description: >-
@@ -145,7 +145,7 @@ $$\mathcal{L}_{\text{PV}} = \|\mathbf{p} - \hat{\mathbf{IoU}}\|_2^2 + \mathcal{L
 3. **数据集质量高**：全人工标注+严格质量控制，每查询2.9个时刻，比现有数据集更具挑战性
 4. **方法设计简洁有效**：后验证模块仅需一个GRU网络，参数量小但效果显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 后验证模块较初级，可探索强化学习或对比学习进行更精细的时刻判别
 - QV-M2规模有限（2212查询），随模型发展可能需要更大规模标注

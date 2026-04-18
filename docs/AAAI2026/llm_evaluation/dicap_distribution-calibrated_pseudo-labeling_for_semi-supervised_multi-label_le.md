@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiCaP: Distribution-Calibrated Pseudo-labeling for Semi-Supervised Multi-Label Learning
 description: >-
@@ -184,7 +184,7 @@ $$\mathcal{L}_{ft} = \frac{1}{|\mathcal{D}_{est}|}\sum_{(x,y)\in\mathcal{D}_{est
 - **双阈值 + 对比学习**：优雅地处理了"模糊地带"问题，避免了非此即彼的硬边界
 - **极少标签下优势更大**：5% 标注时提升 4.27%（VOC），证明方法在标签极度稀缺时最有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **估计集划分比例固定**：20% 作为估计集可能不是所有场景的最优选择
 2. **Bin 数量 K=20 是固定的**：更精细或自适应的分箱策略可能进一步提升

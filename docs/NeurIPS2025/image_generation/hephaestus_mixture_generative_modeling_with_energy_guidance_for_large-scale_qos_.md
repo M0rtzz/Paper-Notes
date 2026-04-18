@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hephaestus: Mixture Generative Modeling with Energy Guidance for Large-scale QoS Degradation
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：需要同时处理 (a) 非线性边权函数（如二次凸函数、对数凹函数）；(b) 大规模图结构（如 RoadCA：约 200 万节点、Skitter）；(c) 全局路径约束耦合。
 
-**本文要解决什么**：设计一个端到端、可扩展的生成框架，在线性和非线性边权函数下高效求解大规模 QoSD 问题。
+**本文目标**：设计一个端到端、可扩展的生成框架，在线性和非线性边权函数下高效求解大规模 QoSD 问题。
 
 **切入角度**：将问题分解为三阶段：(1) 生成可行解集合；(2) 用生成模型学习解的分布；(3) 在潜在空间用 RL 优化解的质量，并迭代增强。
 
-**核心 idea 一句话**：将组合优化问题转化为条件生成建模问题，通过 EBM 引导的混合 CVAE 捕获解分布，再用 RL 在连续潜在空间中高效搜索更优解。
+**核心 idea**：将组合优化问题转化为条件生成建模问题，通过 EBM 引导的混合 CVAE 捕获解分布，再用 RL 在连续潜在空间中高效搜索更优解。
 
 ## 方法详解
 
@@ -52,7 +52,7 @@ tags:
 
 **1. Forge: 预测路径加压算法 (PPS)**
 
-- **做什么**：为每个图实例生成多样的可行扰动向量 $\mathbf{x}$
+- **功能**：为每个图实例生成多样的可行扰动向量 $\mathbf{x}$
 - **核心思路**：训练 SPAGAN $\mathfrak{F}_\theta$ 预测最短路径代价，用其引导贪心搜索——每步选择边 $e^*$ 和增量 $\Delta^*$ 最大化预测收益-代价比：
 $$
 (e^*, \Delta^*) = \arg\max_{e, \Delta} \frac{\mathcal{C}(P, \mathbf{x} + \Delta \cdot \mathbf{1}_e) - \mathcal{C}(P, \mathbf{x})}{\Delta}
@@ -62,7 +62,7 @@ $$
 
 **2. Morph: 能量引导的混合 CVAE**
 
-- **做什么**：学习条件解分布 $p(\mathbf{x} \mid [G, \mathcal{K}, T])$
+- **功能**：学习条件解分布 $p(\mathbf{x} \mid [G, \mathcal{K}, T])$
 - **核心思路**：
     - 训练 EBM $q(\mathbf{x}) = \frac{1}{Z}\exp(-E(\mathbf{x})/\tau)$ 作为真实分布的代理
     - 训练 Mix-CVAE $\Omega = [\Omega_0, ..., \Omega_N]$ 逼近 EBM 分布
@@ -77,7 +77,7 @@ $$\min_{q \in \mathcal{Q}} \max_{\Omega \in \mathfrak{E}} \{\text{KL}(p \| q) - 
 
 **3. Refine: 潜在空间 RL 优化**
 
-- **做什么**：在 Mix-CVAE 的潜在空间中用 RL 搜索更优解
+- **功能**：在 Mix-CVAE 的潜在空间中用 RL 搜索更优解
 - **核心思路**：定义 MDP——状态为 $(z_i, \mathbf{c})$，动作为潜在向量修改 $(\mu_i, \sigma_i)$，奖励为可微的可行性-代价平衡：
 
 $$\mathcal{R}(\mathbf{x}_{i+1}) = \digamma(G, \mathcal{K}, \hat{\mathbf{x}}_{i+1}) - \varkappa \cdot \log(1 + \|\bar{\mathbf{x}}_{i+1}\|_1)$$
@@ -134,7 +134,7 @@ UMAP 潜在空间可视化显示不同阈值 $T$ 形成清晰聚类。
 3. **自增强闭环**：RL 优化的新解反馈到数据集，自动改进生成模型，形成正向循环
 4. **泛化能力**：训练在合成图上完成，可迁移到未见的真实网络
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 依赖初始解质量——若 PPS 近似算法退化，整个框架受限
 2. SPAGAN 在结构差异大的未知图上泛化能力不确定

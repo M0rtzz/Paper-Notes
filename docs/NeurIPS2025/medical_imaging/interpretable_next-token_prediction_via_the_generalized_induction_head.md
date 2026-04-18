@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interpretable Next-token Prediction via the Generalized Induction Head
 description: >-
@@ -139,7 +139,7 @@ $$P_{\text{induction(fuzzy)}}(w_i | x) = \frac{c_{\text{fuzzy}}(w_{i-k-1:i-1} w_
 3. **跨领域泛化**：同一框架从语言建模无缝迁移到fMRI脑响应预测，展示了方法的通用性
 4. **可解释 + 高效**：模糊匹配模型仅需 3-4 层Transformer，推测解码即使比LLM草稿模型更快
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **短上下文受限**：当输入上下文较短或信息量不足时，归纳头改进有限
 2. **推理能力不足**：依赖 n-gram 级别的推理，难以处理需要深层推理的任务（类似 kNN-LM 的局限）

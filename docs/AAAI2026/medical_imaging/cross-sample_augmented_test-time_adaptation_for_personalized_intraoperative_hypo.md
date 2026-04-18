@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Sample Augmented Test-Time Adaptation for Personalized Intraoperative Hypotension Prediction
 description: >-
@@ -174,7 +174,7 @@ Recall +9.56%，F1 +7.70%
 3. **即插即用**：可与任意时间序列基础模型（TimesFM、UniTS）结合，零样本和微调均有效
 4. **临床意义**：Recall 的提升直接减少了低血压事件的漏诊率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零样本 Precision 有时下降（如 UniTS 在 VitalDB 30S 的 Precision -4.58%），召回提升以部分精度为代价
 - 跨样本库需要足够大的历史数据支撑，对新建科室可能不适用

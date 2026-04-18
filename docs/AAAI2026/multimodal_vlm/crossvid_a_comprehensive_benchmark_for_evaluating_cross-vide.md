@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CrossVid: A Comprehensive Benchmark for Evaluating Cross-Video Reasoning in Multimodal Large Language Models
 description: >-
@@ -115,7 +115,7 @@ CrossVid是一个**评估基准**而非训练方法，核心设计包括：
 5. **实验覆盖全面**：22个模型（闭源+开源，7B~78B+MoE），附带详细的帧数/CoT消融和四类错误分析
 6. **揭示核心瓶颈**：明确指出当前MLLM的主要弱点在于"跨视频证据聚合与对比"而非单视频理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅评估不提供解决方案**：作为基准论文，没有提出任何改进CVR能力的训练方法、架构或数据增强策略
 2. **视频来源受限**：6个公开数据集大多集中在烹饪(YouCook2)、电影(MovieChat-1K)、无人机(VisDrone)等特定领域，缺少医疗、教育、工业等更多实际应用场景
 3. **开放题评估依赖GPT-4.1**：CCQA的评分完全依赖GPT-4.1的judge能力，引入了评估器本身的偏差

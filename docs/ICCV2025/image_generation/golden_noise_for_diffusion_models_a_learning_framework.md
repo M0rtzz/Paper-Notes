@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Golden Noise for Diffusion Models: A Learning Framework
 description: >-
@@ -129,7 +129,7 @@ tags:
 3. **工程落地性强**：3% 时间开销 + plug-and-play + 跨模型泛化 = 极高的实用价值
 4. **Re-denoise Sampling 的理论理解**：CFG 尺度不一致性注入语义信息的机制有理论支撑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 提升幅度在某些指标上不大（如 PickScore ~0.1 的提升）
 - 依赖特定的 HPSv2 等人类偏好模型进行数据筛选，可能引入偏差

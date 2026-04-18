@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IMPACT: Iterative Mask-based Parallel Decoding for Text-to-Audio Generation with Diffusion Modeling
 description: >-
@@ -132,7 +132,7 @@ IMPACT 在 FD 和 FAD 两个关键指标上取得 SOTA，分别较 Tango2 提升
 - **受 MAR 启发的跨模态迁移**：MAR 在图像生成中验证了连续表示 + 掩码并行解码 + 扩散头的范式，IMPACT 首次将此范式成功迁移到音频生成领域，展现了该方案的通用性
 - **Pareto 最优**：在质量-速度 Pareto 前沿上取得新的最优解，既不像扩散模型那样牺牲速度，也不像 MAGNET 那样牺牲质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **评估局限**：主要在 AudioCaps 单一数据集上评估，未验证在更多样化的音频生成场景（如音乐生成、语音合成、环境音效）中的泛化能力
 - **无条件预训练依赖大规模数据**：无条件预训练阶段需要大量无标注音频数据，对数据获取和存储有一定要求

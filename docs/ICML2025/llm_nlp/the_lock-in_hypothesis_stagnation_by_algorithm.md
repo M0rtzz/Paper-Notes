@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Lock-in Hypothesis: Stagnation by Algorithm
 description: >-
@@ -157,7 +157,7 @@ $$D_{\text{lineage}}(\mathcal{C}; \mathcal{T}) = \frac{\log|\mathcal{T}| - \log 
 - **回归拐点设计（RKD）**：巧妙利用 GPT 版本切换这一外生事件作为自然实验，部分解决因果推断难题
 - **连接推荐系统与 LLM alignment 文献**：指出推荐系统的回音室研究是个性化层面的，而 LLM 的锁定效应是集体层面的，这是一个重要的概念区分
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **无随机对照实验（RCT）**：WildChat 分析未能排除所有时间序列混杂因素，需要与 AI 实验室合作做真正的 RCT
 2. **仿真过于简化**：100 个 agent 由同一个 LLM 模拟，与真实人类信念更新机制有差距；未考虑新经验证据的引入

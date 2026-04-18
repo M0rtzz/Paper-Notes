@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards a Golden Classifier-Free Guidance Path via Foresight Fixed Point Iterations
 description: >-
@@ -162,7 +162,7 @@ FSG是纯推理时方法，无需训练。核心决策：
 - **推理时scaling的新维度**：不迭代次数可以作为test-time compute的旋钮，与增加推理步数是不同的scaling方向
 - **实验覆盖面极广**：4个数据集 × 3种模型(SDXL/SD2.1/Hunyuan-DiT) × 2种采样器(DDIM/DDPM)
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 前瞻区间和迭代次数的分配策略（3:2:1比例）是经验性的，缺乏自适应机制
 - 长区间的单步DDIM求解存在截断误差，可能限制非常长区间的有效性

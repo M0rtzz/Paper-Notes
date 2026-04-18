@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiTFastAttnV2: Head-wise Attention Compression for Multi-Modality Diffusion Transformers
 description: >-
@@ -122,7 +122,7 @@ DiTFastAttnV2是一个训练后压缩框架，包含三个组件：Head-wise Arr
 3. **搜索效率提升两个数量级**：单层RSE指标+head级优化使分钟级搜索成为可能
 4. **实际部署价值高**：通过融合核实现了真实的1.5倍加速，而非仅停留在FLOPs减少
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在SD3和FLUX两个模型上验证，对其他MMDiT架构（如CogVideoX、HunyuanVideo等视频模型）的适用性未验证
 - Arrow Attention的窗口大小是通过搜索确定的，缺乏自适应机制

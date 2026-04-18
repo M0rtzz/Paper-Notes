@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvaLearn: Quantifying the Learning Capability and Efficiency of LLMs via Sequential Problem Solving
 description: >-
@@ -113,7 +113,7 @@ EvaLearn 采用**序列化评估范式**：
 - **揭示重要现象**：证明了"静态能力强 ≠ 学习能力强"，为模型开发提供新视角
 - 反馈学习中，评判模型的 rubric 反馈比直接提供标准答案更有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据规模有限（648 问题 / 182 序列），每序列仅 7 个问题，可能不足以充分展示学习曲线
 - 任务覆盖面可进一步扩展（如代码、多模态等）

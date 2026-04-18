@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Perturb a Model, Not an Image: Towards Robust Privacy Protection via Anti-Personalized Diffusion Models
 description: >-
@@ -134,7 +134,7 @@ APDM的DINO仅为0.1167（vs 最优基线0.4411），即使所有输入图像均
 - L2P的双路径优化思路优雅地将对抗博弈"内化"到训练过程中，类似meta-learning的思想
 - 保护与保留能力的平衡做得很好：阻止特定主体个性化的同时，模型的通用生成和其他主体个性化能力几乎不受影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 保护过程需要约9 GPU小时，成本较高
 - 每个待保护主体需要独立执行保护流程

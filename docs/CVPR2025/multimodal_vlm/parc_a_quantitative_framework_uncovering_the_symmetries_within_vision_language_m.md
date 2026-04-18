@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PARC: A Quantitative Framework Uncovering the Symmetries within Vision Language Models
 description: >-
@@ -92,7 +92,7 @@ $$s_{\text{calib}} = \begin{cases} \frac{s - s_{\text{rand}}}{1 - s_{\text{rand}
 - **校准的价值**：揭示了未校准分数导致的误判——如MMBench上模型看似在否定问题上表现更好，实际是因为否定后有更多正确答案
 - **可靠性评分的优雅**：$\mathit{rel} = (2 \cdot \mathit{acc} - 1) \cdot \mathit{cert}$ 简单公式同时编码准确性和置信度，且自带两个保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅支持白盒VLM（需要softmax分数计算确定性），无法分析API-only模型
 - 报告MC-VQA结果，生成式任务需要额外LLM验证答案，引入噪声
 - 视觉语义变化种类少于其他类型（制作成本高），可能影响结论泛化性

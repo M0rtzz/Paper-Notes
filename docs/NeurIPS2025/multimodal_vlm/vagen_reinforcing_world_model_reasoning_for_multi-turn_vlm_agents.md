@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VAGEN: Reinforcing World Model Reasoning for Multi-Turn VLM Agents
 description: >-
@@ -118,7 +118,7 @@ tags:
 - 小模型超越大模型的结果非常有说服力，展示了正确的训练范式比模型规模更重要
 - Bi-Level GAE解决了多轮RL的关键痛点（稀疏奖励的信用分配），具有通用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM-as-a-Judge的奖励信号可能不够精确，存在奖励黑客风险（论文中观察到响应收敛和过优化现象）
 - 需要环境提供ground-truth状态信息来计算WorldModeling Reward，限制了应用范围

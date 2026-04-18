@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Sparsification of Bipartite-Like Clusters in Graphs
 description: >-
@@ -184,7 +184,7 @@ $$1 - \frac{1}{1-c} \cdot \rho_{H^*}(k) \le \bar{\rho}_{\overrightarrow{G^*}}(k)
 4. **在线特性**：算法只需 degree oracle，可以边探索图边稀疏化，天然适合与局部算法结合
 5. **实现简洁**：相比依赖 Laplacian 求解器的稀疏化方法，本文仅用随机采样，工程友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要知道 $\lambda_{n-k}$**：采样概率依赖特征值 $(2-\lambda_{n-k})$，实际中通常以 $O(\log^c n)$ 近似，但精确估计可能影响效果
 2. **$k$ 需预先给定**：算法假设 $k$ 已知，自动确定 $k$ 是开放问题

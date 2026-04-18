@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Logit-based Knowledge Distillation of Deep Spiking Neural Networks for Full-Range Timestep Deployment
 description: >-
@@ -155,7 +155,7 @@ $$\mathcal{L}_{\text{final}} = \mathcal{L}_{\text{TWCE}} + \alpha \mathcal{L}_{\
 3. **理论-实践一致性**：Proposition 3 预测训练大时间步可保证小时间步子模型收敛，Table 7 的实验完美验证了这一点。
 4. **部署价值**：单模型覆盖全范围时间步的能力在实际神经形态硬件部署中意义重大——可根据实时算力动态调整推理时间步。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 logit 蒸馏**：论文明确只关注 logit 蒸馏，未结合特征级蒸馏。将时间解耦思想扩展到特征蒸馏可能带来更大提升。
 2. **架构范围有限**：实验主要基于 ResNet 系列，未在 Transformer-based SNN 或更大规模模型上验证。

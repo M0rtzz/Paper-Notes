@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SplitFlow: Flow Decomposition for Inversion-Free Text-to-Image Editing
 description: >-
@@ -113,7 +113,7 @@ SplitFlow 包含两个阶段：
 - **无训练、零样本的方法设计**：使用 LLM 做 prompt 分解是优缺兼备的巧妙选择——无需数据但引入了对 LLM 的依赖
 - **分解-聚合框架高度模块化**：分解阶段和聚合阶段可独立调整，增强方法灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时间较基线增加约 45%（83 vs 57 分钟），加上 LLM 分解的 20 分钟
 - prompt 分解质量依赖 LLM 的能力和 prompt 工程

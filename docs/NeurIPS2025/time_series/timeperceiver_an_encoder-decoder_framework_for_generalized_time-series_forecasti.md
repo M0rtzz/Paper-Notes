@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TimePerceiver: An Encoder-Decoder Framework for Generalized Time-Series Forecasting
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L} = \frac{1}{|\mathcal{J}|C} \sum_{j \in \mathcal{J}} \|\hat{\mathbf
 - **广义公式的优雅性**：通过随机采样输入-目标分割，将预训练和预测训练统一为一个过程，消除了两阶段训练的复杂性
 - **瓶颈机制的双重作用**：既降低计算成本又起了类似正则化的作用，提升泛化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 广义公式的随机采样策略可能需要更多训练 epoch 收敛
 2. 查询解码器增加了额外的交叉注意力计算，比纯线性投影慢

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis
 description: >-
@@ -90,7 +90,7 @@ tags:
 - Cake小波 vs Ridge的互补性发现具有实用指导价值：结构类用Cake，纹理类用Ridge
 - 角度配准应用简单有效，可作为更复杂配准pipeline的初始化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅处理单分辨率分析，多分辨率扩展（ridgelet、curvelet、shearlet）的等变性留待未来
 - 角度估计无法区分 $\theta$ 和 $\theta + 180°$（需Hilbert变换等额外处理）
 - 实验中真实图像只测了2张，缺乏大规模定量评估

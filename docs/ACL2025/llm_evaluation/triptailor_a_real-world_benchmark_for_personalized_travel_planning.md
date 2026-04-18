@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TripTailor: A Real-World Benchmark for Personalized Travel Planning
 description: >-
@@ -122,7 +122,7 @@ TripTailor 包含三个部分：
 - **人类 baseline 的引入**使得评估有了明确的参照物，而非仅比较 LLM 之间的相对排名
 - 发现 LLM 在长程规划（Hard）中性能急剧下降，揭示了当前 LLM 在复杂约束优化中的局限
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖中国 40 个城市，国际旅行场景未涉及
 - 个性化评估主要依赖 LLM 评分和奖励模型，缺少真实用户的满意度反馈

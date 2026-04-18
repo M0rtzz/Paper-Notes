@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PEOAT: Personalization-Guided Evolutionary Question Assembly for One-Shot Adaptive Testing
 description: >-
@@ -79,7 +79,7 @@ PEOAT 由三个核心模块组成：
 
 #### 1. **个性化感知种群初始化**：基于能力-难度匹配的多策略采样
 
-**做什么**：根据学生能力向量 $\boldsymbol{\theta}_i$ 和题目难度向量 $\boldsymbol{\alpha}_j$ 之间的距离，自适应构建信息丰富且多样的初始种群。
+**功能**：根据学生能力向量 $\boldsymbol{\theta}_i$ 和题目难度向量 $\boldsymbol{\alpha}_j$ 之间的距离，自适应构建信息丰富且多样的初始种群。
 
 **编码方案**：每个个体是长度为 $L$ 的题目索引序列 $\mathcal{X}_i^{(j)} = [x_1, x_2, \ldots, x_L]$，各索引不重复。
 
@@ -200,7 +200,7 @@ $$P(x_j \in \mathcal{Z}) = \frac{\mathbf{I}_j}{\sum_{k \in \mathcal{Z}} \mathbf{
 3. **Fisher 信息驱动的变异**：巧妙结合项目反应理论 (IRT) 和进化计算，使变异算子具备教育心理学依据
 4. **实用价值高**：OAT 直接服务于大规模考试、心理评估、离线测试等刚需场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 每个学生都需要独立运行进化搜索（20 个体 × 15 代），计算成本随考生数量线性增长
 2. 依赖预训练的认知诊断模型（MIRT/NCD）的质量，诊断模型的误差会传播到选题

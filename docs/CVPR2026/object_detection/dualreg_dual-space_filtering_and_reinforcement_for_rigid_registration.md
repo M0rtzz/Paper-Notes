@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DualReg: Dual-Space Filtering and Reinforcement for Rigid Registration
 description: >-
@@ -132,7 +132,7 @@ DualReg提出双空间配准范式，先用轻量级1-point RANSAC + 3-point RAN
 3. **几何代理点集的设计**：锚点邻域提取是连接特征匹配和几何对齐的桥梁，简洁有效地解决了ICP在低重叠下的核心问题
 4. **纯CPU实现达到GPU方法水平**：C++实现的DualReg在CPU上的速度和精度可与需要GPU的学习方法竞争
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对特征描述符质量有一定依赖——如果初始描述符极差，过滤后可能保留不到足够内点
 - 几何代理的邻域半径 $\beta$ 需要根据点云密度调整

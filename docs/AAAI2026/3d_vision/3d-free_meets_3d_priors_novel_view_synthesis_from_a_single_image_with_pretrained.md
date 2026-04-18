@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-Free Meets 3D Priors: Novel View Synthesis from a Single Image with Pretrained Diffusion Guidance
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **数据高效**：完全不需要 3D 数据集、多视图数据或额外训练，只用现成的预训练模型
 - **复杂场景处理出色**：包含背景、多物体的真实场景中显著优于 Zero123++
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理极慢**：每张图需要 4 步优化（总计约 2250 次迭代），远不如 Zero123++ 的单次前向推理
 - **依赖 SD 2.1 + Zero123++**：如果 Zero123++ 在某些场景完全失效，弱引导图质量太差可能影响最终结果

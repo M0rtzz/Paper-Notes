@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] O3SLM: Open Weight, Open Data, and Open Vocabulary Sketch-Language Model
 description: >-
@@ -157,7 +157,7 @@ $$\arg\min_\theta -\sum_{i=1}^N [y_i \log(p_\theta(\texttt{<yes>}|X_i)) + (1-y_i
 4. **涌现的细粒度理解**：通过VQA辅助监督，模型自动学会了利用文本描述补充草图难以表达的属性（颜色、纹理等）
 5. **几乎不损失原有能力**：图像任务性能仅下降<5%，说明草图训练与图像能力互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. Photo2Sketch生成的草图可能不完全模拟真实手绘草图的多样性和噪声
 2. 基于LLaVA-1.5架构，CLIP ViT-L/336分辨率对细粒度草图可能不够
 3. 训练仅1个epoch，更多epoch是否能进一步提升？

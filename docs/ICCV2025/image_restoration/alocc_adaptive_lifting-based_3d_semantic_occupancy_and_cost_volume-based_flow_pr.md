@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ALOcc: Adaptive Lifting-Based 3D Semantic Occupancy and Cost Volume-Based Flow Predictions
 description: >-
@@ -116,7 +116,7 @@ ALOcc采用经典的"2D特征提取→视图变换→3D编码→任务解码"范
 - BEV代价体积复用前帧缓存特征，几乎无额外计算量
 - 提供从实时到高精度的完整模型族，展示了框架的实用灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对地面真值深度的依赖程度较高（使用GT深度时性能大幅提升），纯视觉模式仍有提升空间
 - BEV代价体积在Z轴方向的运动建模有限（仅关注X-Y平面运动）
 - 长尾类别虽有改善但仍存在挑战，特别是极度稀有的类别

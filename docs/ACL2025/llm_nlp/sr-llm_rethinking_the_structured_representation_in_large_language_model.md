@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SR-LLM: Rethinking the Structured Representation in Large Language Model
 description: >-
@@ -102,7 +102,7 @@ SR-LLM 包含两种配置：(1) Training-Free：通过 SR-to-NLD 模块将结构
 - **弱模型受益更多**：结构化信息对缺乏自身推理能力的模型是有效补充，对强模型则边际效用递减
 - **混合训练的重要性**：纯结构数据不如混合数据，模型需要同时维持对文本和结构的理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SR 生成依赖外部工具（AMR parser / GPT-4o），引入额外计算开销和潜在错误
 - NLD 转换中使用 GPT-4o Mini 精炼可能引入成本和不确定性

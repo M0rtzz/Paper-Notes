@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cycle Consistency as Reward: Learning Image-Text Alignment without Human Preferences
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：长描述性caption越来越重要（ShareGPT4V、LLaVA等生成的详细描述），但缺乏能有效评估它们的alignment metric。直接比较图文很难，但把文本映射回图像空间后，图图比较就容易得多。
 
-**本文要解决什么**：用cycle consistency构建无需人工标注的偏好数据集和奖励模型，特别针对长描述性caption的对齐评估。
+**本文目标**：用cycle consistency构建无需人工标注的偏好数据集和奖励模型，特别针对长描述性caption的对齐评估。
 
 **切入角度**：经典的cycle consistency思想——$x \xrightarrow{F} y \xrightarrow{G} x'$，如果caption $y$越准确，重建图像$x' = G(y)$就越接近原图$x$。把这个相似度作为偏好信号而非直接作为metric。
 
-**核心idea一句话**：用cycle consistency score排序caption/image候选，构建偏好数据集训练奖励模型，实现无人工标注的图文对齐学习。
+**核心 idea**：用cycle consistency score排序caption/image候选，构建偏好数据集训练奖励模型，实现无人工标注的图文对齐学习。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ I2T DPO (Qwen-VL-Chat):
 - **理论连接到PMI**：cycle consistency score在理论上等价于log p(x,y) + PMI(x,y)，即同时度量了pair的似然和互信息。这提供了为什么cycle consistency作为对齐信号有效的理论基础。
 - **"training-free data annotation at scale"范式**：不用人工、不用GPT-4V，只用开源模型的cycle consistency就能自动标注百万级偏好数据。这对降低RLHF/DPO的数据获取成本有重要意义。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖T2I/I2T模型的质量——重建质量差时会产生错误偏好。
 - Stable Diffusion 3的77-token限制制约了更长文本的评估。
 - 在text-to-image generation上VQAScore (11B)仍然更强——CycleReward更擅长captioning评估。

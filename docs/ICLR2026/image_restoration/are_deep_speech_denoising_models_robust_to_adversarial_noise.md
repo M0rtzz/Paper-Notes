@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are Deep Speech Denoising Models Robust to Adversarial Noise?
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：借鉴 MP3 编码中的心理声学模型来约束对抗扰动的不可感知性，系统评估 4 款代表性 DNS 架构在多种声学条件（SNR、混响、OTA）下的脆弱程度。
 
-**核心 idea 一句话**：用心理声学掩蔽约束的 PGD 攻击生成人耳不可感知但能让 SOTA DNS 模型输出 gibberish 的对抗噪声，并通过人类评估确认攻击效果。
+**核心 idea**：用心理声学掩蔽约束的 PGD 攻击生成人耳不可感知但能让 SOTA DNS 模型输出 gibberish 的对抗噪声，并通过人类评估确认攻击效果。
 
 ## 方法详解
 

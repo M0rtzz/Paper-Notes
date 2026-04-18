@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pathology-knowledge Enhanced Multi-instance Prompt Learning for Few-shot Whole Slide Image Classification
 description: >-
@@ -137,7 +137,7 @@ PEMP 基于冻结的 CLIP 模型，包含三个学习过程：
 - **高可解释性**：通过可视化 patch/slide 样例的匹配结果，可以看到模型学到了正确的病理模式（如血管侵犯、坏死等）
 - **可迁移的思路**：这种"引入领域专家知识作为 prompt"的范式可以推广到其他需要专业知识但数据稀缺的领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖病理专家提供样例和描述**：需要人工构建每个任务的视觉和文本先验，扩展新任务时有额外成本
 - **样例数量和质量的敏感性**未充分分析：不同数量/质量的样例对性能影响如何？

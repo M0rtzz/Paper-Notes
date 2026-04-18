@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Binary Hypothesis Testing for Softmax Models and Leverage Score Models
 description: >-
@@ -110,7 +110,7 @@ $$H^2(P, Q) = O(\epsilon^2), \quad \text{TV}(P, Q) = O(\epsilon)$$
 4. **为LLM能力域划分提供理论基础**：结果表明，区分模型的不同"能力区域"确实需要一定量的采样
 5. **证明技术的创新**：将经典假设检验理论推广到结构化的参数化分布族
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **Leverage Score下界不紧**：下界是 $\epsilon^{-1}$，上界是 $\epsilon^{-2}$，缩小这个gap是开放问题
 2. **纯局部结果**：上下界仅在 $\epsilon$ 足够小时成立，大扰动情况未覆盖

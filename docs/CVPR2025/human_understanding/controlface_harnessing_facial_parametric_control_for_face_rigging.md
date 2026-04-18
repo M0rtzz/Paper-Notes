@@ -1,4 +1,4 @@
----
+﻿---
 title: "ControlFace: Harnessing Facial Parametric Control for Face Rigging"
 description: "基于3DMM参数化控制的人脸操控方法，使用双分支U-Net和参考控制引导实现高保真身份保持与精确控制"
 tags: ["face rigging", "3DMM", "diffusion model", "identity preservation", "face editing"]
@@ -30,7 +30,7 @@ tags: ["face rigging", "3DMM", "diffusion model", "identity preservation", "face
 2. **需要个体特定微调**：对于每个新身份，需要额外的微调数据和训练，实用性差。
 3. **控制精度与身份保持的矛盾**：编码参考图信息过多则忽视控制信号，编码过少则丢失身份细节。
 
-### 本文要解决什么
+### 本文目标
 
 如何在**不需要微调**的前提下，同时实现**精细身份保持**（包括发型、背景等）和**精确的参数化控制**（姿态、表情、光照）？
 

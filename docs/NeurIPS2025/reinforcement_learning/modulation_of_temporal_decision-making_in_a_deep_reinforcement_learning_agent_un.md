@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modulation of Temporal Decision-Making in a Deep Reinforcement Learning Agent under the Dual-Task Paradigm
 description: >-
@@ -90,7 +90,7 @@ tags:
 - LSTM是时间处理的必要组件（无LSTM版本不展现计时行为），但其内部机制不同于之前研究中发现的简单计数器模式
 - 暗示时间感知可能不需要专门的神经回路，而是分布在处理其他认知任务的神经元中——与神经科学中"时间由参与其他认知功能的神经元编码"的观点一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 奖励结构可优化：双任务中使用了即时奖励（数字比较），与人类实验中通常使用的延迟奖励不完全对应
 - 仅测试了4个目标时长（7-10步），范围较窄，更广泛的时长范围可增强发现的可信度

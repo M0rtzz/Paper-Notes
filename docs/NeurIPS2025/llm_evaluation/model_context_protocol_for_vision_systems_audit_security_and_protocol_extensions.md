@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model Context Protocol for Vision Systems: Audit, Security, and Protocol Extensions
 description: >-
@@ -128,7 +128,7 @@ Model Context Protocol (MCP) 是一种用于Agent-工具交互的schema绑定执
 - **实用的安全威胁分类**：8类威胁向量及其防御策略对部署实践有指导意义
 - **编排模式分类法**有助于理解不同部署策略的权衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析公开可访问的服务器，排除了企业级和专有部署，研究原型过度代表
 - 协议扩展仅作为参考原型在受控测试床中实现，未在异构生产环境中验证

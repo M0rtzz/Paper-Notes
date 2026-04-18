@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GnnXemplar: Exemplars to Explanations -- Natural Language Rules for Global GNN Interpretability
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：如何在大规模、高维属性图上提供既忠实于模型决策（高保真度）又可被人理解的全局解释？
 
-**本文要解决什么**：为大规模图上的节点分类GNN提供全局解释，要求可扩展、高保真、人类可理解。
+**本文目标**：为大规模图上的节点分类GNN提供全局解释，要求可扩展、高保真、人类可理解。
 
 **切入角度**：从认知科学的样例理论出发——人类通过与记忆中的代表性样例比较来分类新事物。
 
-**核心idea一句话**：在GNN嵌入空间中找representative exemplar，用LLM自我精炼生成每个exemplar的自然语言布尔规则作为解释。
+**核心 idea**：在GNN嵌入空间中找representative exemplar，用LLM自我精炼生成每个exemplar的自然语言布尔规则作为解释。
 
 ## 方法详解
 
@@ -55,7 +55,7 @@ GnnXemplar由两大步骤组成：
 
 1. **Reverse k-NN与代表性度量**：
 
-    - **做什么**：量化每个节点在嵌入空间中的代表性
+    - **功能**：量化每个节点在嵌入空间中的代表性
     - **为什么**：如果一个节点频繁出现在其他同类节点的k近邻集合中，说明它位于嵌入空间的密集区域，是好的exemplar候选
     - **怎么做**：定义reverse k-NN：$\text{Rev-}k\text{-NN}(v) = \{u \in \mathcal{V}_{tr} \mid v \in k\text{-NN}(u), \Phi(v)=\Phi(u)\}$，代表性定义为：
     $\Pi(v) = \frac{|\text{Rev-}k\text{-NN}(v)|}{|\{u \in \mathcal{V}_{tr} \mid \Phi(v)=\Phi(u)\}|}$
@@ -63,14 +63,14 @@ GnnXemplar由两大步骤组成：
 
 2. **覆盖最大化（Coverage Maximization）**：
 
-    - **做什么**：在预算$b$内选取exemplar集合，最大化对训练集的覆盖
+    - **功能**：在预算$b$内选取exemplar集合，最大化对训练集的覆盖
     - **为什么**：需要少量exemplar就能涵盖大量同类节点的行为模式
     - **怎么做**：目标函数 $\Pi(\mathbb{A}) = |\bigcup_{v \in \mathbb{A}} \text{Rev-}k\text{-NN}(v)| / |\mathcal{V}_{tr}|$，证明该问题NP-hard但目标函数单调子模，使用贪心算法获得 $(1-1/e)$ 近似比保证
     - **区别**：不同于motif-based方法依赖子图同构，本方法在嵌入空间中操作，天然处理连续属性
 
 3. **LLM自我精炼的签名发现**：
 
-    - **做什么**：为每个exemplar生成可解释的布尔规则（自然语言形式）
+    - **功能**：为每个exemplar生成可解释的布尔规则（自然语言形式）
     - **为什么**：传统子图可视化在大图上不可行，自然语言更符合人类认知
     - **怎么做**：采用self-refine范式：
       1. 从Rev-k-NN中采样正例（同类节点）和负例
@@ -126,7 +126,7 @@ NA=不适用（需离散属性），NF=无法生成公式，OOM=内存溢出
 - **可扩展性**：采样近似Rev-k-NN使计算复杂度线性化，成功处理17万节点的ogbn-arxiv
 - **诊断价值**：不仅解释正确预测，还能发现模型的系统性错误
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅能访问GNN嵌入空间，无法深入模型内部层的特征-拓扑交互机制
 - LLM生成规则的质量依赖于提供的节点摘要信息的设计

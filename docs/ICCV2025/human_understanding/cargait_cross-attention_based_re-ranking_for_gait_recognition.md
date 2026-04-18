@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CarGait: Cross-Attention based Re-ranking for Gait Recognition
 description: >-
@@ -115,7 +115,7 @@ CarGait是一个两阶段方法：（1）用预训练步态模型做全局排序
 - 交叉注意力的双向设计很关键——不仅修改probe表示，也修改候选表示，使得重新计算的距离更准确反映匹配关系
 - β=0.1的降权设计巧妙：已正确排序的triplet无需过度优化，将梯度集中在hard cases上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅重排top-10，对初始排名>10的正样本无能为力——可考虑更大K值或级联重排
 - 针对每个预训练模型需独立训练一个re-ranker，增加了部署复杂度

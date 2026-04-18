@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Theory of Mind in Large Language Models: Assessment and Enhancement
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：2023-2024 年涌现了大量 ToM 评测基准和增强方法，但缺乏统一的综述将其系统梳理。之前的综述（Ma et al. 2023b）仅覆盖到 2023 年的基准，且未涵盖增强策略。
 
-**本文要解决什么**：(1) 系统梳理近两年的 story-based ToM 基准及多模态基准；(2) 分类总结提升 LLM ToM 能力的策略；(3) 指出未来发展方向。
+**本文目标**：(1) 系统梳理近两年的 story-based ToM 基准及多模态基准；(2) 分类总结提升 LLM ToM 能力的策略；(3) 指出未来发展方向。
 
 **切入角度**：基于 ATOMS 框架（7 种心理状态：beliefs, intentions, desires, emotions, knowledge, percepts, non-literal communication）对基准和方法进行统一对比分析。
 
-**核心 idea 一句话**：首个系统覆盖 LLM ToM 评估和增强两方面的综述，揭示当前研究偏重于 belief 推理，其他心理状态研究严重不足。
+**核心 idea**：首个系统覆盖 LLM ToM 评估和增强两方面的综述，揭示当前研究偏重于 belief 推理，其他心理状态研究严重不足。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ tags:
 - **"高阶推理→一阶推理"的转化思路**（TimeToM）非常巧妙：通过时间信念交集，将 n 阶推理分解为多个 1 阶推理的组合，是可复用的 trick。
 - **被动 vs 主动评测**的区分很有价值：当前所有基准都是被动的（LLM 当观察者），但真正的 ToM 需要 LLM 作为主动代理在社交场景中做决策。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 综述未包含实验对比各增强方法在统一基准上的性能（因为各方法使用不同基准和模型）
 - 对 belief 以外的心理状态（如 emotions、intentions）的增强策略讨论较少
 - 多模态 ToM 目前仅限于 VirtualHome 合成视频，与现实场景差距大

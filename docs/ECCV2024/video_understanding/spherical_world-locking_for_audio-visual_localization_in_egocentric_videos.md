@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spherical World-Locking for Audio-Visual Localization in Egocentric Videos
 description: >-
@@ -133,7 +133,7 @@ MuST 超越先前最优 3.6 个百分点，接近使用近场麦克风的 Oracle
 - **四元数旋转的巧妙应用**：用旋转四元数编码球面上两点间的空间关系，既数学自洽又计算高效
 - **灵活的解码设计**：Multi-CLS + 多种解码策略（稀疏/稠密/水平）可灵活适配不同任务需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅考虑旋转而忽略平移，对移动场景有局限
 2. 时间窗口较短（<1秒），长时间依赖关系未被建模

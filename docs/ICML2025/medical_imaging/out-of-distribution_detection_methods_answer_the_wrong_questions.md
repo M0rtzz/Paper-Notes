@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Out-of-Distribution Detection Methods Answer the Wrong Questions
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L} = \mathbb{E}_{(x,y)\sim\mathcal{D}_{in}} \ell_{CE}(f(x), y) + \alp
 4. **反直觉发现**：更好的生成模型反而导致更差的OOD检测（$p(x)$ 与 $p(\text{OOD}|x)$ 的根本区别），挑战了常见假设
 5. **实验覆盖广泛**：涉及54个模型、9种架构、6种预训练策略、多个数据集（ImageNet, CIFAR, CelebA等），增强说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏建设性解决方案**：论文主要是批判性分析，虽在第6节给出了方向性建议，但未提出具体的替代方法
 2. **主要聚焦视觉领域**：虽简要涉及NLP（Multi-NLI/SNLI），但绝大部分实验基于图像分类

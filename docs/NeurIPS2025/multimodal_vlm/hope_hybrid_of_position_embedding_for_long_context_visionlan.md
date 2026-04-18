@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HoPE: Hybrid of Position Embedding for Long Context Vision-Language Models
 description: >-
@@ -96,7 +96,7 @@ Qwen2-7B-Video模型，32k上下文长度：
 - 语义偏好性质（Definition 3.1）提供了分析框架，可推广到更多位置编码设计
 - 双向缩放是学习多尺度时间关系的自然方式，推理灵活性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅到7B规模，更大模型和更多训练数据可能进一步放大优势
 - 64k外推性能仍大幅下降，极端长度泛化仍是开放问题

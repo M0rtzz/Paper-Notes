@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Do LLMs Acquire New Knowledge? A Knowledge Circuits Perspective on Continual Pre-Training
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **电路弹性(Circuit Elasticity)**：即使行为上"遗忘"了知识，电路仍保持重新激活的潜力
 - **practical insights**：数据课程设计应优先安排与已有知识相关的内容；长尾知识可通过数据增强(而非更大模型)来改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在decoder-only Transformer上实验，未覆盖encoder-decoder架构
 - 模型规模限于1.3B以内，更大模型(>7B)的行为未验证

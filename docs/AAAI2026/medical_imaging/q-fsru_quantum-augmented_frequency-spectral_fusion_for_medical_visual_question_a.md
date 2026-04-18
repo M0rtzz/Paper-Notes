@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Q-FSRU: Quantum-Augmented Frequency-Spectral Fusion for Medical Visual Question Answering
 description: >-
@@ -158,7 +158,7 @@ Q-FSRU 模型由四个核心模块组成（见图1）：
 
 3. **问题定义清晰**：将医学 VQA 形式化为分类问题，数学表述完整。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏与现有方法的直接对比**：论文承认"缺少直接可比的模型"，仅使用自身 5 折验证作为基线。没有与 MEVF、BAN、SAN 等经典医学 VQA 方法对比，说服力不足。
 

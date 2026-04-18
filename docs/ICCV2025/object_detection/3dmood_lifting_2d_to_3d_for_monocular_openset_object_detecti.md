@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection
 description: >-
@@ -106,7 +106,7 @@ Pipeline:
 - **ODS评估指标**：用归一化距离而非IoU做匹配，对小/薄物体更公平；加入TP误差（ATE/ASE/AOE）综合评价，比单纯AP更全面
 - **端到端联合训练的优势**：OVM3D-Det使用pipeline方式（G-DINO+SAM+UniDepth+LLM生成伪GT），无法端到端优化，效果明显不如3D-MOOD
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **推理速度较慢**：3D-MOOD (Swin-T) 17 FPS vs Cube R-CNN (DLA-34) 68 FPS，重型backbone+多个head的代价
 - **辅助深度头对开集泛化帮助有限**：深度数据不够多样（仅Omni3D），若引入更多深度训练数据（如MiDAS/UniDepth预训练）可能进一步提升
 - **深度估计精度仍有差距**：KITTI Eigen-split上绝对相对误差9.1%，远逊于UniDepth(4.21%)和Metric3Dv2(4.4%)

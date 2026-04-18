@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAP: Retrieval-Augmented Personalization for Multimodal Large Language Models
 description: >-
@@ -101,7 +101,7 @@ RAP 由三个阶段组成：**(a) Remember**：构建键值数据库存储每个
 - **RAG+个性化的首次结合**：将RAG思路引入MLLM个性化，是检索增强与用户个性化交叉的开创性工作
 - **数据构建流水线**：系统性设计了包含定位、指令跟随、负样本三类数据的构建流程，可复用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 检索器的准确度是系统瓶颈：在完美检索条件下 F1 可达98.04%，说明检索仍有~3%的提升空间
 - 受限于LLM上下文长度，RAP-LLaVA仅能检索2个概念（RAP-Phi3-V为3个），限制了多概念场景

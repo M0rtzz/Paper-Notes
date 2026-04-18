@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PinPoint: Focus, Don't Prune — Identifying Instruction-Relevant Regions for Information-Rich Image Understanding
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**：需要高分辨率以捕获细粒度信息 vs 计算效率；逐 token 裁剪的粗暴方式无法保持语义完整性。
 
-**本文要解决什么**：如何在保持精度的同时大幅减少视觉 token 数量？
+**本文目标**：如何在保持精度的同时大幅减少视觉 token 数量？
 
 **切入角度**：模拟人类视觉策略——先全局扫描定位相关区域，再聚焦细节。区域级而非 token 级的选择更符合语义结构。
 
@@ -115,7 +115,7 @@ PinPoint 包含两个阶段：
 - 跨模型泛化：在 LLaVA-NeXT 和 Qwen2-VL 上均有效
 - 提供了 InfoVQA/SPDocVQA/MPDocVQA 的新标注数据集——包含多个支撑证据的 bbox
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 滑动窗口粒度固定，可能不适应所有分辨率
 - 对自然图像（GQA）的提升不如文档/信息图显著

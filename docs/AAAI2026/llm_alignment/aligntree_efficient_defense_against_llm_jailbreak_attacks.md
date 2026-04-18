@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AlignTree: Efficient Defense Against LLM Jailbreak Attacks
 description: >-
@@ -101,7 +101,7 @@ $$F_\beta = \frac{(1+\beta^2) \cdot \text{Precision} \cdot \text{Recall}}{\beta^
 - **低误拒率**：在4个常识推理数据集上几乎零误拒，实用性强
 - **广泛评估**：9个 LLM（3个家族 × 3个规模）+ 多个攻击基准 + 白盒自适应攻击，实验覆盖面非常全
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要为每个模型**单独训练一个分类器**，无法跨模型复用
 - 在弱对齐模型上，refusal direction 信号几乎失效，完全依赖 SVM 信号

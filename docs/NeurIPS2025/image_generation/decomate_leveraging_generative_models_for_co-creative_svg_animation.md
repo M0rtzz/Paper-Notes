@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decomate: Leveraging Generative Models for Co-Creative SVG Animation
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **需求来源充分**：11 人访谈 → 系统设计 → 6 人用户研究的闭环验证
 - **实际可用**：HuggingFace 上有 live demo，输出是可部署的 HTML/CSS/JS
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Prompt 表达困难**：用户不确定如何措辞动画 prompt——需要模板/示例/自动补全机制
 - **精细控制不足**：纯自然语言难以精确描述微妙的运动参数（如 easing 曲线、具体时长）——需要结合 slider/toggle 等结构化控件

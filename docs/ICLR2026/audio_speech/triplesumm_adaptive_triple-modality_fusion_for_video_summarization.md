@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TripleSumm: Adaptive Triple-Modality Fusion for Video Summarization
 description: >-
@@ -101,7 +101,7 @@ L2 回归损失：$\mathcal{L} = \|S - \hat{S}\|_2^2$，预测帧级重要性分
 - 三模态的加入不仅提升了性能，更提升了鲁棒性——缺失任何单一模态时性能退化可控
 - MoSu 的 "Most Replayed" 标注方案是务实的选择——利用集体观看行为作为帧重要性的免费代理标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MoSu 基于 YouTube "Most Replayed"，可能偏向娱乐性内容，教育/专业视频的覆盖不足
 - 融合 token 的初始化使用简单平均聚合，更复杂的初始化（如门控）可能进一步提升
 - 仅使用预训练编码器的冻结特征，端到端微调编码器可能释放更多潜力

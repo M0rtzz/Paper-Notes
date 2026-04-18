@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AgentSwift: Efficient LLM Agent Design via Value-guided Hierarchical Search
 description: >-
@@ -34,14 +34,14 @@ tags:
 
 **核心矛盾**：设计空间的组合爆炸性（workflow × memory × tool × planning）与单次评估的高成本之间的根本矛盾，使得穷举式搜索不可行，而局部搜索又容易遗漏优质设计
 
-**本文要解决什么？**
+**本文目标**
    - 如何构建一个同时包含workflow和功能组件的统一搜索空间？
    - 如何用低成本替代昂贵的真实评估？
    - 如何高效地在巨大搜索空间中导航？
 
 **切入角度**：借鉴NAS（神经架构搜索）中performance predictor的思路——在NAS中，训练一个性能预测模型来替代完整训练评估已被证明非常有效，agent设计问题与NAS高度类似
 
-**核心idea一句话**：将agent设计形式化为workflow+功能组件的层次搜索问题，用轻量value model做低成本评估，用不确定性引导的MCTS做高效搜索
+**核心 idea**：将agent设计形式化为workflow+功能组件的层次搜索问题，用轻量value model做低成本评估，用不确定性引导的MCTS做高效搜索
 
 ## 方法详解
 
@@ -128,7 +128,7 @@ Value model预测质量对比（Spearman相关系数）：
 - **Balanced Bayesian Sampling数据集构建**：同时采样高性能和低性能区域的策略很聪明，保证value model既能识别好agent也能区分坏agent，比只采样高性能区域的数据集更有判别力
 - **三级expansion操作（recombination→mutation→refinement）**形成了从粗到细的搜索策略，recombination做大步跳跃、mutation做中等创新、refinement做细粒度调优，层次分明
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **搜索空间仍然有限**：memory/tool/planning三个功能组件的定义比较固定，没有涵盖RAG、multi-agent协作、self-play等更复杂的agent capability
 - **评估仅用GPT-4o-mini**：主实验基于一个模型，虽然做了跨模型迁移实验，但搜索过程本身是否在不同backbone上都有效未充分验证
 - **value model的220样本训练数据**：对新任务需要few-shot adaptation，如果目标任务与训练任务差异很大（如跨模态），迁移效果可能受限

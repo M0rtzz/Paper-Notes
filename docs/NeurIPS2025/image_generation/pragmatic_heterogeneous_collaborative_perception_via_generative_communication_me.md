@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pragmatic Heterogeneous Collaborative Perception via Generative Communication Mechanism
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_{gen} = \sum_{j \in \mathcal{G}_i} \|\hat{\mathcal{F}}_j - \mathca
 - **通信效率**：传输压缩后的空间消息而非完整中间特征，降低带宽需求
 - **扩散模型的巧妙应用**：用条件扩散模型在ego端"想象"出协作者的特征，是扩散模型在协作感知中的新颖应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 条件扩散模型的推理速度可能成为实时系统的瓶颈，需要探索加速策略
 - 当前仅在3D目标检测任务上验证，可扩展至语义分割等其他下游任务

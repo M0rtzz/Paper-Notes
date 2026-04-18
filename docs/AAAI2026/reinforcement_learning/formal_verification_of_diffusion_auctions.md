@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Formal Verification of Diffusion Auctions
 description: >-
@@ -136,7 +136,7 @@ $$M, a \models \langle\![\mathsf{C}]\!\rangle \varphi \iff \exists \overline{\be
 3. **复杂度结果工整**：$\mathcal{L}^n$ 在 P 中，策略存在 NP-complete，$\mathcal{SL}^n$ PSPACE-complete——每一层增加一级复杂度，直觉清晰
 4. **NP-hardness 证明构造精巧**：将 3-SAT 映射到层次化的社交网络结构（子句→买家→文字→原子→真值），赋值对应激励路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏实际实验**：无实现、无基准测试、无真实拍卖数据验证
 2. **未处理不完全信息**：买家真实估值未知、贝叶斯分析场景未覆盖

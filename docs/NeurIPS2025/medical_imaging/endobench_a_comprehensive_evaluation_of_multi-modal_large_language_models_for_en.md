@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis
 description: >-
@@ -129,7 +129,7 @@ EndoBench 的构建分为三个步骤：
 - ⭐⭐⭐ **大规模训练集**：附带 446K EndoVQA-Instruct 指令调优数据集，可直接用于模型训练
 - ⭐⭐⭐ **严格质控**：DINO-V2 聚类 + GPT-4o-mini 改写 + 医生审核的三重质控管线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **评估局限**：仅使用精确匹配（exact match）作为评估指标，对开放式生成评估能力有限
 2. **场景偏斜**：手术内镜样本占比近 40%，场景分布不均衡

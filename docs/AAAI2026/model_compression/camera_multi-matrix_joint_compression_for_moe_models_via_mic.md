@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CAMERA: Multi-Matrix Joint Compression for MoE Models via Micro-Expert Redundancy Analysis
 description: >-
@@ -75,7 +75,7 @@ Camera-Q（2.25-bit平均）在Deepseek-MoE-16B上均分56.56 vs GPTQ 53.45 vs M
 - 理论有保证：pruning误差与最优SVD的差距可控($O(k)$-delta)
 - 可扩展到dense模型的FFN剪枝，且与Wanda等单矩阵方法互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在expert数较少的older MoE模型（Mixtral-8x7B、Phi3.5-MoE）上优势不明显
 - 能量排序是静态的，未考虑不同输入样本可能需要不同的微专家组合
 - Camera-P剪枝后不做fine-tuning恢复，高剪枝率下可能有空间

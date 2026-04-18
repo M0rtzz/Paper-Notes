@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MaterialMVP: Illumination-Invariant Material Generation via Multi-view PBR Diffusion
 description: >-
@@ -109,7 +109,7 @@ MaterialMVP是一个端到端的多视图PBR纹理生成模型，通过一致性
 - MCAA避免了在distribution gap较大的albedo/MR间强行做交叉注意力，改用残差连接隐式对齐——实用且不增加参数
 - 端到端一步生成全套PBR材质（含metallic/roughness），实用性远超需要分钟级优化的SDS方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 定量评估仅176个物体，规模较小；消融实验仅为定性展示
 - 训练成本高（180 GPU天），推理时间未报告

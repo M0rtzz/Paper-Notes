@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression
 description: >-
@@ -125,7 +125,7 @@ $$\text{SSR}_q < 1 \quad \text{且} \quad \text{SNR}_q(1 - \text{SSR}_q) > \frac
 - **自适应集成WTM**：基于CV的informative source检测+逆CV loss加权，在所有设定下一致最优
 - **对比pooled-MNI的显著优势**：TM的late-fusion架构对分布偏移天然鲁棒，而pooled-MNI在偏移下崩溃
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **WTM理论保证缺失**：CV检测informative source的一致性尚未证明（$\mathcal{I} = \hat{\mathcal{I}}$的高概率保证为开放问题）
 - **方差膨胀上界较松**：非同时对角化时，上界含$(\lambda_p^{(q)})^{-1}$项可能较大，需更精细的协方差结构分析

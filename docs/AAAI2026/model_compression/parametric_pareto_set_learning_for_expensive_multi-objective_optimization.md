@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parametric Pareto Set Learning for Expensive Multi-Objective Optimization
 description: >-
@@ -43,7 +43,7 @@ Pareto 集学习（PSL）近年取得显著进展，能学习从偏好向量到 
 
 PMO 问题需要在**评估预算有限**的情况下，学习跨越整个参数空间的 Pareto 集，同时要求对未见参数值具有泛化能力。
 
-### 本文要解决什么
+### 本文目标
 
 设计一个统一框架，仅需一次训练就能即时推断任意参数值下的完整 Pareto 集，大幅减少昂贵评估次数。
 
@@ -51,7 +51,7 @@ PMO 问题需要在**评估预算有限**的情况下，学习跨越整个参数
 
 将 PMO 建模为学习映射 $(\boldsymbol{\lambda}, \boldsymbol{t}) \mapsto \boldsymbol{x}^\star$，其中 $\boldsymbol{\lambda}$ 是偏好向量，$\boldsymbol{t}$ 是外在参数。利用超网络生成参数特定的 PS 模型，同时集成贝叶斯优化进行高效数据采集。
 
-### 核心idea一句话
+### 核心 idea
 
 **用超网络 + LoRA 学习跨参数空间共享的 Pareto 集结构，将"每个参数独立优化"转化为"统一学习+即时推断"**。
 
@@ -68,7 +68,7 @@ PPSL-MOBO 包含三个紧密耦合的组件：
 
 ### 关键设计一：超网络 + LoRA 架构
 
-**做什么**：高效地将 PS 模型适配到不同参数值。
+**功能**：高效地将 PS 模型适配到不同参数值。
 
 **核心思路**：对 PS 模型的每一层 $l$，将权重分解为共享基础权重和低秩适配：
 $$\boldsymbol{\theta}_{\text{ps}}^l(\boldsymbol{t}) = \boldsymbol{\theta}_0^l + \boldsymbol{B}^l(\boldsymbol{t}) \boldsymbol{A}^l(\boldsymbol{t})$$
@@ -80,7 +80,7 @@ $$\boldsymbol{\theta}_{\text{lora}}(\boldsymbol{t}) = g_{\boldsymbol{\theta}_{\t
 
 ### 关键设计二：增强空间高斯过程代理
 
-**做什么**：构建参数感知的代理模型，替代昂贵的目标函数评估。
+**功能**：构建参数感知的代理模型，替代昂贵的目标函数评估。
 
 **核心思路**：定义增强输入空间 $\mathcal{Z} = \mathcal{X} \times \mathcal{T}$，其中 $\boldsymbol{z} = [\boldsymbol{x}, \boldsymbol{t}]$。对每个目标函数建立独立 GP：
 $$f_i(\boldsymbol{z}) \sim \mathcal{GP}(\mu_i(\boldsymbol{z}), k_i(\boldsymbol{z}, \boldsymbol{z}'))$$
@@ -92,7 +92,7 @@ $$\hat{\boldsymbol{f}}(\boldsymbol{x}; \boldsymbol{t}) = \hat{\boldsymbol{\mu}}(
 
 ### 关键设计三：基于平滑 Tchebycheff 的代理训练
 
-**做什么**：用 GP 代理模型端到端地训练超网络和基础权重。
+**功能**：用 GP 代理模型端到端地训练超网络和基础权重。
 
 **核心思路**：最小化代理 STCH 损失的期望：
 $$\hat{\mathcal{L}}(\boldsymbol{\theta}_{\text{hn}}, \boldsymbol{\theta}_0) = \mathbb{E}_{\boldsymbol{t} \sim P_{\boldsymbol{t}}, \boldsymbol{\lambda} \sim P_{\boldsymbol{\lambda}}} \left[ \hat{l}_{\text{stch}}(h_{\boldsymbol{\theta}_{\text{ps}}(\boldsymbol{t})}(\boldsymbol{\lambda}) \mid \boldsymbol{\lambda}, \boldsymbol{t}) \right]$$
@@ -104,7 +104,7 @@ $$l_{\text{stch}}(\boldsymbol{x} | \boldsymbol{\lambda}, \nu) = \nu \log\left(\s
 
 ### 关键设计四：超体积改进数据采集
 
-**做什么**：在参数空间中智能选择新评估点。
+**功能**：在参数空间中智能选择新评估点。
 
 **核心思路**：
 1. 从训练好的模型生成候选池 $\mathcal{C} = \{(\boldsymbol{x}_p, \boldsymbol{t}_p)\}$
@@ -154,7 +154,7 @@ $$\text{HVI}(\hat{\mathcal{Y}}_+, \mathcal{Y}) = \text{HV}(\hat{\mathcal{Y}}_+ \
 4. **统一框架**：一个模型处理整个参数空间，彻底改变了"逐实例优化"的传统范式
 5. **理论基础扎实**：基于 STCH 的完整 PS 恢复保证（定理 1, 2）
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. GP 代理模型在高维输入空间（$\boldsymbol{x}$ 和 $\boldsymbol{t}$ 拼接）下可能效率下降
 2. 目前只处理无约束多目标优化，约束优化扩展有待完成

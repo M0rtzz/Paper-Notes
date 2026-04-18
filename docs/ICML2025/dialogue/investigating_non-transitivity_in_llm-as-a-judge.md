@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Investigating Non-Transitivity in LLM-as-a-Judge
 description: >-
@@ -130,7 +130,7 @@ $$\hat{\boldsymbol{\beta}} = \arg\max_{\boldsymbol{\beta}} \sum_i \sum_{j \neq i
 - **Swim 算法实用性强**：将新模型加入排行榜的成本从线性降至对数级，使得锦标赛方法在大规模排行榜上可行。
 - **位置交换+软标签的组合**：软标签（连续胜率）比硬标签（0/1）在 BT 模型估计中更准确，位置交换对强 Judge 有效但对弱 Judge 可能适得其反。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集覆盖有限**：仅在 AlpacaEval 数据集上验证，可能不完全代表真实的开放式任务分布。
 2. **Judge 模型范围窄**：只测试了 GPT-4-Turbo 和 GPT-3.5-Turbo，未扩展到 Claude、Gemini 等其他 Judge。

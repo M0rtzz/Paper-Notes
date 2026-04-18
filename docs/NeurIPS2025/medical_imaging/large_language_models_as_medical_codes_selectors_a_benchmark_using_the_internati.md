@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large Language Models as Medical Codes Selectors: A Benchmark Using the International Classification of Primary Care
 description: >-
@@ -94,7 +94,7 @@ tags:
 - **幻觉抑制**：通过检索约束输出空间，LLM 几乎不会生成不存在的代码。
 - **多语言潜力**：在巴西葡语上测试，大多数 LLM 跨语言表现良好。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估数据集仅 437 条，规模有限
 - 仅评估 select 步骤，端到端（从临床笔记到编码）的评估缺失

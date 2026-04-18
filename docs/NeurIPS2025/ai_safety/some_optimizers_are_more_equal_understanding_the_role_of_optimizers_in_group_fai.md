@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Some Optimizers are More Equal: Understanding the Role of Optimizers in Group Fairness
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **理论扎实**: SDE分析给出了闭式解，Fokker-Planck方程的推导过程严谨，两个后续定理进一步扩展到一般情况
 - **实验设计全面**: 10次重复实验+Wilcoxon检验确保统计显著性，多个骨干网络/数据集/敏感属性组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析在简单二次损失下进行，虽然模拟和实验验证了一般性，但理论推广到高维仍有困难
 - 仅关注群体公平性，未讨论个体公平性

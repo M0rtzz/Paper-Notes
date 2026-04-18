@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MUG: Pseudo Labeling Augmented Audio-Visual Mamba Network for Audio-Visual Video Parsing
 description: >-
@@ -105,7 +105,7 @@ CMRC贡献最大（移除后Event@AV下降2.5%），MFE次之。
 - **参数共享策略精妙**：AMF中仅共享状态转移矩阵B而保持A、C独立，在跨模态信息共享和单模态独立性间取得平衡
 - **Mamba-Transformer混合架构**：Mamba处理时序因果关系，HAN的Transformer补充空间全局依赖，实现互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖LLP数据集（仅25类，标注噪声多），数据集规模偏小
 - 伪标签仍存在质量问题，人工标注空标签的方式扩展性有限

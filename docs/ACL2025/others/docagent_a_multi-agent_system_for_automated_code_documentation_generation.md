@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DocAgent: A Multi-Agent System for Automated Code Documentation Generation
 description: >-
@@ -139,7 +139,7 @@ DocAgent 分两阶段：Navigator 模块确定依赖感知的处理顺序，Mult
 - 三维评估框架（Completeness/Helpfulness/Truthfulness）比传统 BLEU/ROUGE 更全面，可复用于其他代码生成任务
 - 外部知识检索的设计很实际：LLM 知识截止前的新算法需要从互联网获取文档
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 极大代码库仍可能超出 LLM 上下文限制
 - 仅依赖静态分析，无法理解动态行为

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GS-Occ3D: Scaling Vision-only Occupancy Reconstruction with Gaussian Splatting
 description: >-
@@ -132,7 +132,7 @@ $$L = L_{rgb} + \lambda_{geo}L_{geo} + \lambda_{obj}L_{obj} + \lambda_{road}L_{r
 - **重建完整 Waymo 数据集**：首次用纯视觉方法完成，展示真正的工程可扩展性
 - **优于 LiDAR 的四个方面**：更广覆盖范围、更强零样本泛化、更廉价丰富语义、恶劣天气潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 相机仅提供前方和侧方视角，后方信息缺失不可避免
 - 夜间和曝光问题导致有效视觉范围减小

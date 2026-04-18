@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaffold Diffusion: Sparse Multi-Category Voxel Structure Generation with Discrete Diffusion
 description: >-
@@ -92,7 +92,7 @@ Scaffold Diffusion的pipeline分为两步：给定一个布尔占用图O ∈ Z^{
 - 在极端稀疏数据（98.3%背景）上仍能生成高质量结构
 - 提供交互式在线demo供读者自行评估，这一做法值得推广
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预先给定布尔占用图作为条件，完全端到端生成（先生成占用图再填充类别）留作未来工作
 - 受限于离散扩散模型的序列长度限制(L=1024)，无法生成非常大的结构

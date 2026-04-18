@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Clean First, Align Later: Benchmarking Preference Data Cleaning for Reliable LLM Alignment
 description: >-
@@ -153,7 +153,7 @@ PrefCleanBench 的评估 pipeline 分为四个阶段：
 - **实践指导价值**：为从业者选择合适的清洗方法提供了实证依据
 - **强调数据预处理在负责任 AI 中的角色**：这一视角在当前以算法创新为主导的研究中较为稀缺
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅评估了开源模型（最大 8B 参数），更大模型（70B+）的表现可能不同
 - 评估指标（win-tie rate 和 gold reward）可能不能完全捕捉对齐质量的所有维度（如安全性、事实性）

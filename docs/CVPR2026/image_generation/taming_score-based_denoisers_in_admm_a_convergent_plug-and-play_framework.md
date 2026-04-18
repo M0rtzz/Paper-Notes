@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework
 description: >-
@@ -71,13 +71,13 @@ ADMM 三步迭代：
 
 #### 设计 1：Auto-Correction（AC）——高斯加噪粗校正
 
-- **做什么**：给 ADMM 迭代 $\tilde{\bm{z}}^{(k)}$ 加高斯噪声
+- **功能**：给 ADMM 迭代 $\tilde{\bm{z}}^{(k)}$ 加高斯噪声
 - **核心思路**：$\bm{z}_{\text{ac}}^{(k)} = \tilde{\bm{z}}^{(k)} + \sigma^{(k)} \bm{n}$，其中 $\bm{n} \sim \mathcal{N}(\bm{0}, \bm{I})$
 - **设计动机**：ADMM 迭代的噪声分布未知且受对偶变量影响，加高斯噪声可以让其"淹没"在高斯噪声中，向某个 $\mathcal{M}_{\sigma(t)}$ 靠拢。但仅有 AC 不足以保证流形对齐。
 
 #### 设计 2：Directional Correction（DC）——条件 Langevin 精校正
 
-- **做什么**：从 $\bm{z}_{\text{ac}}^{(k)}$ 出发，运行 $J$ 步条件 Langevin dynamics
+- **功能**：从 $\bm{z}_{\text{ac}}^{(k)}$ 出发，运行 $J$ 步条件 Langevin dynamics
 - **核心思路**：目标分布为 $p(\bm{z}_{\sigma^{(k)}} | \bm{z}_{\text{ac}}^{(k)})$，其支撑集 $\subseteq \mathcal{M}_{\sigma^{(k)}}$，因此采样结果天然在 score 训练流形上。条件 score 分解为 unconditional score $\bm{s}_\theta$ + 近似高斯似然梯度。
 - **设计动机**：AC 只是粗对齐，DC 利用 score function 本身做方向性修正，在保留观测信息的同时精确对齐到 $\mathcal{M}_{\sigma^{(k)}}$。每步更新：
 
@@ -85,7 +85,7 @@ $$\bm{w}^{(k,j+1)} = \bm{w}^{(k,j)} + \eta^{(k)}\left(\frac{1}{\sigma_{\bm{s}^{(
 
 #### 设计 3：Score-based Denoising——最终去噪
 
-- **做什么**：对 DC 输出用 Tweedie 公式或 ODE 求解器去噪
+- **功能**：对 DC 输出用 Tweedie 公式或 ODE 求解器去噪
 - **核心思路**：Tweedie: $\bm{z}_{\text{tw}}^{(k)} = \bm{z}_{\text{dc}}^{(k)} + (\sigma^{(k)})^2 \bm{s}_\theta(\bm{z}_{\text{dc}}^{(k)}, \sigma^{(k)})$；ODE: 从 $\sigma^{(k)}$ 积分到 0
 - **设计动机**：经过 AC+DC 后，输入已落在 $\mathcal{M}_{\sigma^{(k)}}$ 上，此时 score function 的去噪效果最佳。论文提供 Tweedie（快/单步）和 ODE（慢/多步/更精确）两种变体。
 
@@ -156,7 +156,7 @@ $$\bm{w}^{(k,j+1)} = \bm{w}^{(k,j)} + \eta^{(k)}\left(\frac{1}{\sigma_{\bm{s}^{(
     - Theorem 3：去掉强凸假设，自适应步长也收敛
 4. **通用性强**：AC-DC 去噪器不仅限于 ADMM，可嵌入任何基于近端算子的优化框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销大**：每次 ADMM 迭代需要多次 score 评估（AC 1次 + DC $J$次 + Tweedie/ODE），NFE 较高
 2. **噪声调度依赖经验**：$\sigma^{(k)}$、$\sigma_{\bm{s}^{(k)}}$ 的调度策略是人工设定的线性衰减，缺乏自适应机制

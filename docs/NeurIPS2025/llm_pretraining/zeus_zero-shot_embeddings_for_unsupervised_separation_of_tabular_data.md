@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ZEUS: Zero-shot Embeddings for Unsupervised Separation of Tabular Data
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L} = \mathcal{L}_{prob} + \lambda_{cp}\mathcal{L}_{cp} + \lambda_{sep
 - **实用性强**：即插即用、单次前向传播、无须调参，真正解决了深度聚类方法易用性差的痛点
 - 巧妙利用了预训练阶段的已知标签来估计中心和先验，规避了无监督场景的调参困难
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 继承 TabPFN 的限制：输入特征数上限 30（超过需 PCA），样本数上限 2000
 - 聚类质量强依赖合成数据先验的设计，当真实数据分布与先验差距大时可能退化

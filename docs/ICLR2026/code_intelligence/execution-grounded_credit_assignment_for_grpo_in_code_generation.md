@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Execution-Grounded Credit Assignment for GRPO in Code Generation
 description: >-
@@ -139,7 +139,7 @@ EGCA 相比 GRPO 提升 +3.1 / +1.5，相比 StepCoder +3.4 / +1.9，相比 Code
 4. **实验设计严谨**：三重教师泄漏控制实验令人信服地排除了蒸馏假说
 5. **即插即用**：仅 18% 开销，可作为任何 GRPO 训练的后期精炼技术
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖参考解**：限于竞赛编程和有测试的函数合成，开放式生成无法使用
 2. **结构比较局限**：多种结构不同的正确方案可能被 comparability gate 排除

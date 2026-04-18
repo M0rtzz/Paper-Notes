@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Real-World Adverse Weather Image Restoration via Dual-Level Reinforcement Learning with High-Quality Cold Start
 description: >-
@@ -77,7 +77,7 @@ tags:
 3. **闭环学习生态**：局部模型通过真实反馈持续改进，全局控制器动态优化协调
 4. **无需配对GT的强化学习**：突破了图像复原领域对成对训练数据的依赖
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多智能体系统的推理效率较低，需要多轮迭代评估
 - 奖励函数依赖现有IQA模型的准确性，可能在某些极端场景下失效
 - PIQO的参数扰动范围需要精心调节，过大会导致图像退化

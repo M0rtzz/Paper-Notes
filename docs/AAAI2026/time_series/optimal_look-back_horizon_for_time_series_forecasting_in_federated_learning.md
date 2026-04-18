@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Look-back Horizon for Time Series Forecasting in Federated Learning
 description: >-
@@ -140,7 +140,7 @@ $$H_k^*(\delta) = \max\{\ell_{\mathrm{AR},k}, T_k^{(\tau)}\}$$
 - **可解读的最优窗口公式**：$H_k^* = \max\{\ell_{\mathrm{AR},k}, T_k^{(\tau)}\}$ 直接由信号参数（AR 记忆、季节周期）确定
 - **严格的单峰性证明**：为窗口选择提供了理论保证，无需暴力搜索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 纯理论工作，缺乏大规模真实数据集上的实验验证
 - SDG 假设加性结构（AR + 季节 + 趋势 + 高斯噪声），不覆盖非线性交互、regime 切换等复杂模式

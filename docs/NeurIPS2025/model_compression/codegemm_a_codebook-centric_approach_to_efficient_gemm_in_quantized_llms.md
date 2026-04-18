@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CodeGEMM: A Codebook-Centric Approach to Efficient GEMM in Quantized LLMs
 description: >-
@@ -32,7 +32,7 @@ tags:
 - **领域现状**：weight-only quantization 是 LLM 推理中缓解内存瓶颈的主流方案；codebook-based 量化（如 AQLM、GPTVQ、QuIP#）在极低比特（如 2-bit）下能保持较好精度，已成为前沿方向
 - **现有痛点**：codebook 量化的推理 kernel 依赖 dequantization 流程——需将完整 codebook 加载到片上可编程缓存（shared memory），再逐元素查找 centroid 并重建权重，导致：(1) codebook 可能超出 shared memory 容量（如 AQLM 1×16 配置需 1MB，远超 A100 的 164KB）; (2) 每次 GEMM 都重复计算相同 centroid 与 input 的乘积，存在大量冗余
 - **核心矛盾**：codebook 量化在精度上优于 uniform 量化，但其推理效率反而可能更差——AQLM 1×16 的 kernel 延迟甚至高于 FP16 baseline，完全抵消了压缩带来的内存优势
-- **本文要解决什么**：设计一个高效的 codebook-centric GEMM kernel，同时降低计算复杂度和片上存储需求，使 codebook 量化在极低比特下既保精度又提速
+- **本文目标**：设计一个高效的 codebook-centric GEMM kernel，同时降低计算复杂度和片上存储需求，使 codebook 量化在极低比特下既保精度又提速
 - **切入角度**：观察到 codebook 中 centroid 数量有限（$2^b$ 个），而权重矩阵行数 $M$ 远大于 $2^b$，因此大量 code 指向相同 centroid，导致与 input 的内积被重复计算。将这些内积预计算并缓存即可消除冗余
 - **核心 idea**：用 Psumbook（预计算的 partial sum 查找表）替代 codebook 本身缓存到 shared memory，推理时直接按 code 索引取出预计算结果做累加，跳过 dequantization 步骤
 
@@ -44,25 +44,25 @@ CodeGEMM 将传统 codebook GEMM 的"加载 codebook → 反量化 → 矩阵乘
 
 ### 关键设计一：Psumbook 预计算与缓存
 
-- **做什么**：对每段 input $\mathbf{x}^j$，预计算其与所有 centroid 的内积 $p_i^j = \sum_{k=0}^{v-1} c_k^i \times x_k^j$，将这些标量结果存入 Psumbook
+- **功能**：对每段 input $\mathbf{x}^j$，预计算其与所有 centroid 的内积 $p_i^j = \sum_{k=0}^{v-1} c_k^i \times x_k^j$，将这些标量结果存入 Psumbook
 - **核心思路**：codebook 存储的是 $v$ 维向量（centroid），而 Psumbook 存储的是标量（内积结果），空间复杂度从 $\mathcal{O}(m \cdot 2^b \cdot v)$ 降至 $\mathcal{O}(m \cdot 2^b \cdot t_w/v)$，与向量长度 $v$ 成反比
 - **设计动机**：传统方法需要将整个 codebook 放入 shared memory，大 codebook（如 $2^{16}$ 个 centroid）直接超出容量限制；Psumbook 仅存标量结果，显著降低片上存储需求，使得各类 codebook 配置都能在 shared memory 中运行
 
 ### 关键设计二：计算复杂度缩减
 
-- **做什么**：CodeGEMM 的计算复杂度为 $\mathcal{O}(MNK \cdot m/v)$，相比标准 GEMM 的 $\mathcal{O}(MNK)$ 降低了 $v/m$ 倍
+- **功能**：CodeGEMM 的计算复杂度为 $\mathcal{O}(MNK \cdot m/v)$，相比标准 GEMM 的 $\mathcal{O}(MNK)$ 降低了 $v/m$ 倍
 - **核心思路**：Psumbook 构建阶段 $C_{build} = \mathcal{O}(m \cdot 2^b \cdot K \cdot N)$ 在 $M \gg 2^b$ 时可忽略；读取阶段每个 code 仅需一次查表（而非 $v$ 次乘加），故 $C_{read} = \mathcal{O}(m \cdot M \cdot K/v \cdot N)$
 - **设计动机**：dequantization-based kernel 只优化了数据搬运效率，计算量与 FP16 GEMM 完全相同；CodeGEMM 同时优化数据搬运和计算量，是真正的计算效率提升
 
 ### 关键设计三：统一 kernel 支持灵活超参数探索
 
-- **做什么**：单一 kernel 实现支持 codebook 数量 $m$、向量长度 $v$、bits per code $b$、group size $g$ 等超参数的任意组合
+- **功能**：单一 kernel 实现支持 codebook 数量 $m$、向量长度 $v$、bits per code $b$、group size $g$ 等超参数的任意组合
 - **核心思路**：不同超参数组合可在相同的平均 bit 数下产生截然不同的 latency-accuracy 权衡（如 $(v=4,m=1,b=8,g=128)$ 与 $(v=16,m=3,b=8,g=32)$ 均约 2-bit，但性能差异显著）
 - **设计动机**：现有 codebook kernel 通常仅针对固定配置优化；统一 kernel 允许用户系统性地探索 latency–memory–accuracy 三角权衡，找到特定场景下的最优配置
 
 ### 关键设计四：细粒度 group normalization
 
-- **做什么**：在量化前对权重按 group size $g$ 做归一化，$g$ 越小归一化越精细（$g=v$ 为 per-vector，$g=-1$ 为 per-row）
+- **功能**：在量化前对权重按 group size $g$ 做归一化，$g$ 越小归一化越精细（$g=v$ 为 per-vector，$g=-1$ 为 per-row）
 - **核心思路**：细粒度归一化降低量化误差，以少量额外 memory（存储 scale factor）换取精度提升
 - **设计动机**：在 70B 模型上，细粒度归一化使 CodeGEMM 的精度追平 AQLM 1×16（后者使用 $2^{16}$ codebook），但 throughput 高出 8.93×
 

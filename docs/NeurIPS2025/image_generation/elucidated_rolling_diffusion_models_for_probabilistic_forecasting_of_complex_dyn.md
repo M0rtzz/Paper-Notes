@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Elucidated Rolling Diffusion Models for Probabilistic Forecasting of Complex Dynamics
 description: >-
@@ -121,7 +121,7 @@ ERDM 的 NFE 减少 5×，总推理时间反而略快，但内存占用翻倍。
 3. 训练仅需 **4 GPU × 5 天**，远低于 NeuralGCM（128 TPU × 10 天），但中长期预测性能相当
 4. 物理真实性（功率谱）达到数值模型 IFS ENS 的水平，这对 ML 天气模型极为罕见
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 3D 去噪器架构的 **GPU 内存需求翻倍**（49GB vs 21GB），限制了向更高分辨率扩展
 2. 短期天气预报（<2 天）性能不如 IFS ENS，受制于 EDM 初始化策略和架构非针对天气优化

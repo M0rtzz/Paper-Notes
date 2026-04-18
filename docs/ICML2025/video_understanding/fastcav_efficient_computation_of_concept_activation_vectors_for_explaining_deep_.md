@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FastCAV: Efficient Computation of Concept Activation Vectors for Explaining Deep Neural Networks
 description: >-
@@ -130,7 +130,7 @@ FastCAV 只需要一次均值计算和归一化，无需迭代优化。
 3. **鲁棒性更好**：SVM 对随机集的选择敏感（similarity 仅 0.338），FastCAV 更稳定（0.795），这是一个意外但重要的优势
 4. **解锁新分析**：概念在训练过程中的演化追踪是此前不可行的应用，展示了加速带来的实际研究价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论假设较强**：等价性依赖"类内协方差各向同性"和"高斯分布"假设，实际激活空间未必严格满足，论文承认这是一个简化
 2. **领域分类有误**：本文属于可解释性/XAI 方向，与 video understanding 无关（原 stub 领域分类错误）

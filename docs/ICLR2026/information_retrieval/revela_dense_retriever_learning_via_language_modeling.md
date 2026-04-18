@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revela: Dense Retriever Learning via Language Modeling
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：将检索类比为"序列级 NTP"——NTP 找最相关的上文 token，检索找最相关的文档。
 
-**核心idea一句话**：在 Transformer 块中引入 in-batch attention，让 NTP 同时依赖序列内上下文和批内其他序列，检索器提供跨序列权重。
+**核心 idea**：在 Transformer 块中引入 in-batch attention，让 NTP 同时依赖序列内上下文和批内其他序列，检索器提供跨序列权重。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ tags:
 - **数据效率惊人**：~1000× 少的数据 + 10× 少的计算达到 BEIR 无监督 SOTA——说明方法设计比数据堆叠更重要
 - **跨域泛化**：比传统对比学习方法更强，因为 NTP 目标捕获的是更通用的"语义依赖"而非表面共现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - batch size 对性能影响大，需要足够大的 batch（16+）——在资源受限时可能成为瓶颈
 - in-batch attention 增加了训练时的计算开销——每个序列需要 attend 到 batch 内所有其他序列
 - 仅验证了文本和代码检索，图像、音频等多模态检索未探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rewis3d: Reconstruction Improves Weakly-Supervised Semantic Segmentation
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L}_{\text{Total}} = \sum_{m \in \{2D, 3D\}} (\mathcal{L}_S^m + \mathc
 - **通用框架**：不绑定特定分割架构（验证了 SegFormer 和 EoMT），不绑定特定标注类型（点/涂鸦/粗糙标签均有效），不绑定特定场景（室外/室内均有效）
 - **实验覆盖全面**：4 个数据集（Waymo、KITTI-360、Cityscapes、NYUv2）、3 种标注类型、消融极为详尽
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **动态场景重建噪声**：3D 重建模型（MapAnything）未针对动态内容优化，驾驶场景中移动物体引入几何噪声和深度不确定性
 2. **重建计算开销**：虽然推理时无额外开销，但训练时的 3D 重建预处理（200+ 图像→60M+ 点云）计算量不小

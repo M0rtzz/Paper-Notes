@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Near-Exponential Savings for Mean Estimation with Active Learning
 description: >-
@@ -97,7 +97,7 @@ PartiBandits 是一个两阶段算法：
 - **理论严谨**: 上下界匹配的极小化极大最优结果非常漂亮。
 - **实用性强**: 提供了 R 包实现，模拟展示了真实数据上的效果。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设 1（指数节省条件）的满足取决于假设类 $\mathcal{C}$ 的选择和数据分布，需要先验知识。
 - 阶段一使用一半标签预算可能在标签极度稀缺时浪费；自适应的阶段划分可能更优。

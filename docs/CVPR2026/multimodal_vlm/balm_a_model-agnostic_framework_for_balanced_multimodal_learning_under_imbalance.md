@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BALM: A Model-Agnostic Framework for Balanced Multimodal Learning under Imbalanced Missing Rates
 description: >-
@@ -116,7 +116,7 @@ BALM 由两个互补模块组成，插入到骨干网络的编码和优化过程
 - **双维度再平衡**（表征+优化）从问题的两个根源同时着手
 - 全局上下文校准取代缺失模态重建的思路更简洁——不试图"生成"缺失信息，而是"修正"现有信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验主要集中在多模态情感识别（MER），对其他多模态任务（如 VQA、视频理解）的泛化需验证
 - FCM 的全局描述子是 batch 级统计量，batch 较小时可能不稳定
 - GRM 的分布驱动调模依赖多模态预测作为参考，若多模态融合本身有偏，参考不可靠

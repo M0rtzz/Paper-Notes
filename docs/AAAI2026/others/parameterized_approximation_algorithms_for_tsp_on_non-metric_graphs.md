@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parameterized Approximation Algorithms for TSP on Non-Metric Graphs
 description: >-
@@ -113,7 +113,7 @@ tags:
 4. **归约到 $\Phi$-TSP**：ALG.3展示了参数化TSP与最新的度量TSP算法之间的优雅联系
 5. **统一框架**：本文技术对两个参数 $p$ 和 $q$ 都适用，且可能推广到其他相关问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对于参数 $q$，FPT框架下能否将近似比从3进一步改进到1.5？这是一个重要的开放问题
 - $q$ 的计算本身是NP-hard的，需要 $O(3^q n^3)$ 的时间，这在 $q$ 较大时可能成为瓶颈

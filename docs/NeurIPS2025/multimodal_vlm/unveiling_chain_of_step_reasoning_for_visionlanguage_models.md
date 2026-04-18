@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unveiling Chain of Step Reasoning for Vision-Language Models with Fine-grained Rewards
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：LLM领域的PRM（如Math-Shepherd、Let's Verify Step by Step）已证明步骤级reward的价值，但在VLM领域面临两个非平凡的挑战——如何定义"步骤"（将推理链分解为逻辑连贯的渐进步骤）以及如何评估"步骤"（提供精细的步骤级reward信号）。
 
-**本文要解决什么**：为VLM建立一套完整的步骤级推理框架：从结构化推理格式的定义、SFT数据构建、过程奖励模型训练，到基于精细reward的RL训练和推理时scaling。
+**本文目标**：为VLM建立一套完整的步骤级推理框架：从结构化推理格式的定义、SFT数据构建、过程奖励模型训练，到基于精细reward的RL训练和推理时scaling。
 
 **切入角度**：从推理链的结构化设计入手，用特殊token划分步骤边界，每步引入Reflection组件连接视觉内容以缓解幻觉，使得步骤拆分稳定可解析，从而为PRM训练和RL提供坚实基础。
 
-**核心idea一句话**：通过将VLM推理链结构化为可评估的离散步骤，并训练PRM提供步骤级精细奖励，使RL训练和inference-time scaling都能从中间步骤质量中获益。
+**核心 idea**：通过将VLM推理链结构化为可评估的离散步骤，并训练PRM提供步骤级精细奖励，使RL训练和inference-time scaling都能从中间步骤质量中获益。
 
 ## 方法详解
 
@@ -131,7 +131,7 @@ tags:
 - **全面的failure analysis**：诚实报告了Step-wise DPO的失败案例，揭示了preference learning中正负样本差异性的重要性
 - **框架的透明性和可复现性**：数据集、PRM、代码全部开源，是VLM细粒度推理的solid baseline
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据构建依赖闭源模型**：ShareGPT-Step-300K和GPT-4o-as-Judge标注都依赖GPT-4o，增加成本和不确定性
 - **模型规模验证有限**：仅在8B模型上全面验证，更大模型（如72B）上的效果和推理长度变化规律尚不明确

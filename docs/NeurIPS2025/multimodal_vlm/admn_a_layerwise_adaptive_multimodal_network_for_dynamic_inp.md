@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ADMN: A Layer-Wise Adaptive Multimodal Network for Dynamic Input Noise and Compute Resources
 description: >-
@@ -95,7 +95,7 @@ GDTM(Blur, 8层)：ADMN定位误差~11cm，接近上界(9.4cm)，而减少75% FL
 - 控制器仅占总FLOPs ~1%，额外开销极小
 - 6 seeds × 3数据集 × 3/4层预算 × 3-4种corruption = 大规模消融实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每个层预算需单独训练控制器（通用控制器初步结果可行但待完善）
 - 批推理不兼容（不同样本有不同层配置，难以batch）
 - 可与Early Exit结合进一步提效

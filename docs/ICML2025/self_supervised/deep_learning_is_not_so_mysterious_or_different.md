@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Learning is Not So Mysterious or Different
 description: >-
@@ -103,7 +103,7 @@ tags:
 - "期望风险 ≤ 经验风险 + 可压缩性" 的公式化理解简洁有力
 - Residual Pathway Priors 的讨论很有启发：将硬架构约束转为软归纳偏置
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为 position paper，没有提出新方法或新实验，主要是综合已有工作
 - 对"为什么更大模型有更强压缩偏置"这一核心问题仅给出了直觉而非严格回答

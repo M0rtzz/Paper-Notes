@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLaVA-CoT: Let Vision Language Models Reason Step-by-Step
 description: >-
@@ -74,7 +74,7 @@ LLaVA-CoT基于Llama-3.2-11B-Vision-Instruct进行微调。输入为图像和问
 - **SWIRES是一种通用的test-time scaling方法**：在推理阶段粒度的搜索比token级别更高效，且可以灵活调控推理时间和精度的trade-off
 - **数据集构建方法可复用**：用GPT-4o生成结构化推理标注的pipeline可以迁移到其他推理任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖GPT-4o生成训练数据，数据质量受限于GPT-4o的能力上限
 - 四阶段的划分是固定的，某些简单问题不需要全部阶段（计算浪费）
 - 目前仅在Llama-3.2-Vision上验证，其他VLM架构（如Qwen-VL、InternVL）的兼容性未探索

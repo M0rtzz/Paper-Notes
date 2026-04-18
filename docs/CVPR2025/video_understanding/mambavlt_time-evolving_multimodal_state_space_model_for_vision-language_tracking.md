@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaVLT: Time-Evolving Multimodal State Space Model for Vision-Language Tracking
 description: >-
@@ -100,7 +100,7 @@ $$\mathcal{L} = \lambda_{bbox}\mathcal{L}_{bbox} + \lambda_{tgt}\mathcal{L}_{tgt
 - **模态引导双向扫描** 巧妙利用了 Mamba 中不同扫描顺序对特征影响不同的特性，用共享参数 + 不同状态转移门实现高效双向建模
 - **SRF 实验范式** 为评估跟踪器的时序记忆能力提供了新视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 LaSOT 数据集上表现不如 UVLTrack，可能因为 Mamba 在极长序列上的注意力衰减
 - 视觉编码器使用 Vmamba-tiny，模型容量有限；使用更大视觉 backbone 可能进一步提升

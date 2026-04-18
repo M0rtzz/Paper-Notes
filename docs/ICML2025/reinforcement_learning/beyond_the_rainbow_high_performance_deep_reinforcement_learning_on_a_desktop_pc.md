@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond The Rainbow: High Performance Deep Reinforcement Learning on a Desktop PC
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：高性能与计算可及性的矛盾。
 
-**本文要解决什么**：设计一个在桌面 PC 上就能快速训练的高性能 RL 算法。
+**本文目标**：设计一个在桌面 PC 上就能快速训练的高性能 RL 算法。
 
 **切入角度**：延续 Rainbow DQN 的方法论——精选独立改进组件并组合。
 
@@ -105,7 +105,7 @@ Atari-60 benchmark（200M frames）：
 - 组件选择的原则值得借鉴：不选复杂的（世界模型/搜索），选简单高效的
 - 3D 游戏的成功说明方法的泛化性，不局限于 Atari
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅适用于离散动作空间（DQN 家族限制）
 - 未测试持续学习/多任务设置
 - 3D 游戏结果仍是初步的（单环境、单关卡）

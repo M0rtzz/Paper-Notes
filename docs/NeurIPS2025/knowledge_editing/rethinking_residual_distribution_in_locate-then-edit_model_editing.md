@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Residual Distribution in Locate-then-Edit Model Editing
 description: >-
@@ -153,7 +153,7 @@ $$\|\Delta^{l^*} - \Delta^l\|_2 \leq \left(\|\mathbf{R}^{l^*} - \mathbf{R}^L\|_2
 4. **广泛适用性**：BLUE 是一个通用增强策略，可直接应用于 MEMIT、RECT、PRUNE、AlphaEdit 四种方法
 5. **实验发现"两层就够"**：从优化步数分析中发现只需两层更新就足够，为方案设计提供了坚实依据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析使用的是误差上界而非精确界，上界增长不必然导致实际误差增长（尽管实验支持该趋势）
 - 为每层单独计算残差的计算开销略高于直接分配（但因为只更新两层所以实际更高效）

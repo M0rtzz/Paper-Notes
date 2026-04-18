@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IRT-Router: Effective and Interpretable Multi-LLM Routing via Item Response Theory
 description: >-
@@ -30,7 +30,7 @@ IRT-Router 借鉴心理测量学的项目反应理论（IRT），将 LLM 视为"
 
 **核心矛盾**：需要同时解决可解释性、cold-start（新 query 如何路由）、性能-成本权衡三个问题
 
-**核心idea一句话**：IRT 天然建模"能力-难度"关系，将其迁移到 LLM 路由可同时获得可解释性和效果
+**核心 idea**：IRT 天然建模"能力-难度"关系，将其迁移到 LLM 路由可同时获得可解释性和效果
 
 ## 方法详解
 
@@ -68,7 +68,7 @@ IRT-Router 借鉴心理测量学的项目反应理论（IRT），将 LLM 视为"
 - **IRT→LLM 路由的跨领域迁移**很优雅：心理测量学的成熟理论直接适用于 LLM 能力评估
 - **可解释性是核心卖点**：不仅路由效果好，还能解释每个 LLM 擅长什么、每个 query 难在哪里
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Top-1 路由准确率较低（2-3%），因为多个模型能力相似
 - 对全新 LLM（训练时未见过的模型）泛化有限
 - 路由器对成本参数变化不够敏感

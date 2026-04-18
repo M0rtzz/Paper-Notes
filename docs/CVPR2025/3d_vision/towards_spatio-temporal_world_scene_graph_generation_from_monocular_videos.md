@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Spatio-Temporal World Scene Graph Generation from Monocular Videos
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：具身代理需要维持对所有环境中物体的持续认知（包括不可见的），但现有数据集和任务都缺少（1）3D 世界坐标系定位、（2）跨帧物体一致性追踪、（3）不可见物体的关系标注。
 
-**本文要解决什么？** 如何从单目视频构建时间持续的、世界锚定的场景图，涵盖所有交互物体（可见+不可见）？
+**本文目标** 如何从单目视频构建时间持续的、世界锚定的场景图，涵盖所有交互物体（可见+不可见）？
 
 **切入角度**：将认知科学中的"物体永恒性"引入场景图生成——物体即使不可见也继续存在于世界状态中，需要推理其关系。
 
-**核心idea一句话**：场景图从 frame-centric 2D upgrade 到 world-centric 4D，核心挑战在于不可见物体的表征与关系推理。
+**核心 idea**：场景图从 frame-centric 2D upgrade 到 world-centric 4D，核心挑战在于不可见物体的表征与关系推理。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **ActionGenome4D 数据集**：将 Action Genome 升级为 4D 场景，foundation model 驱动的标注流水线（$\pi^3$ + GDINO + SAM2 + VLM）可复用于其他数据集
 - **可迁移思路**：world-centric 场景图可以直接服务于具身 AI 的规划和推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ActionGenome4D 基于 Action Genome 的室内场景，场景多样性有限（主要是家庭活动场景）
 - 3D 重建依赖 $\pi^3$ 的质量——在纹理不良或快速运动场景下可能退化，影响 OBB 精度
 - 不可见物体的关系伪标注依赖 VLM，即使经人工修正仍可能有偏——特别是长时间不可见的物体

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RcAE: Recursive Reconstruction Framework for Unsupervised Industrial Anomaly Detection
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L}_{\text{CRD}} = \|\mathbf{M}_A - \mathbf{M}_P\|_2 + \|\mathbf{M}_A'
 3. **模块化三阶段训练**：将异常抑制（RcAE）、细节恢复（DPN）、异常检测（CRD）解耦为独立训练阶段，避免多目标优化冲突，增强稳定性。
 4. **完全从头训练**：在不使用任何预训练模型（DINO、ImageNet等）的条件下达到与使用预训练的扩散方法可比的性能，说明递归机制本身的强大表达力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语义级异常检测不足**：当前设计主要针对外观级缺陷（纹理、结构），对需要语义推理的逻辑异常（如零件装错位置但外观正常）效果有限。
 2. **递归深度固定**：虽然训练时随机采样递归深度，但测试时固定为$N=5$，未能根据样本难度自适应调整。

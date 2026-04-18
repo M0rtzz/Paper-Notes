@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Transformers Learn Regular Language Recognition: A Theoretical Study on Training Dynamics and Implicit Bias
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}(u,W) = \sum_{L=1}^{L_{\max}} \frac{1}{|I_L|} \sum_{n \in I_L} \log
 4. **隐式偏置 → 最大间隔**：将分类任务中经典的隐式偏置理论扩展到具有独特结构的语言识别任务
 5. **缩放因子的关键角色**：$\lambda$ 不仅稳定训练，更是控制两阶段转换的核心机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析了**一层 Transformer**，多层情况未涉及
 - 序列最大长度 $L_{\max}=6$ 的实验规模较小，未验证对长序列的扩展性

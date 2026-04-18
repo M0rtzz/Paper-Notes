@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Objective Fine-tuning: How LLMs' Prior Knowledge Causes Potential Poor Calibration?
 description: >-
@@ -119,7 +119,7 @@ OOD泛化（OBQA训练→MMLU测试）：
 - **NLL复用巧妙**：训练过程中NLL本就会被计算，用其作为知识偏差指标几乎零额外成本。
 - **校准方法的通用接口**：CogCalib不是一种新的校准方法，而是将现有校准正则项进行认知感知化的框架，灵活且可扩展。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 风格适应步骤的长度和策略可能因任务而异，缺乏自动化调优机制。
 - 在开放式QA任务上NLL的知识偏差判别准确率（~83%）低于多选题（~99%），开放式场景仍有提升空间。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReGal: A First Look at PPO-based Legal AI for Judgment Prediction and Summarization in India
 description: >-
@@ -161,7 +161,7 @@ $$\mathcal{L}_{PPO}(\theta) = \mathbb{E}_{x \sim D, y \sim \pi_\theta(x)} \left[
 3. **系统性失败原因分析**：从目标不匹配、RM局限、法律复杂性、数据约束、超参选择等8个维度深入分析
 4. **幻觉案例展示**：通过实例对比展示法律AI幻觉的危害性（如编造隐私权条款引用）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **RM需要更强的法律对齐**：需构建捕获法律推理细微差别的高质量奖励模型
 2. **引入人工反馈（RLHF）**：RLAIF不足以指导法律文本生成，需法律专家参与

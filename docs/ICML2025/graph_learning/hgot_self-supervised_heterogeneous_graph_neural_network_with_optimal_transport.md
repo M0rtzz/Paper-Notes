@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HGOT: Self-supervised Heterogeneous Graph Neural Network with Optimal Transport
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{D}_g(\mathcal{G}_p, \mathcal{G}_{\text{agg}}) = \min_{\pi} \;\sigma \
 3. **融合 Gromov-Wasserstein**：同时利用节点特征和边结构信息计算传输距离，比单独使用任一信息更完整。
 4. **无需数据增强**：避免了离散图结构下增强带来的标签一致性问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算复杂度**：Gromov-Wasserstein 距离涉及四阶张量，即使使用 Sinkhorn 近似，在大规模图上仍可能成为瓶颈。论文未给出时间/内存开销的详细对比。
 2. **元路径依赖**：方法仍然依赖人工定义的元路径，对于元路径不易定义的异质图场景（如 schema 复杂或动态变化的图），适用性存疑。

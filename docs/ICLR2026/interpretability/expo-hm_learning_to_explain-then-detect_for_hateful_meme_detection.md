@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ExPO-HM: Learning to Explain-then-Detect for Hateful Meme Detection
 description: >-
@@ -135,7 +135,7 @@ ExPO-HM 首次让 Explain-then-Detect 系统全面超越直接检测的 SOTA（R
 4. **三数据集一致性**：方法在不同仇恨内容类型上泛化良好
 5. **实验极其全面**：消融、预热策略比较、CDE 分析、校准分析、人工评估一应俱全
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：仇恨 Meme 标注数据（尤其是带解释的）非常稀缺
 2. **单轮交互**：仅评估单轮推理，未考虑多轮审核对话场景

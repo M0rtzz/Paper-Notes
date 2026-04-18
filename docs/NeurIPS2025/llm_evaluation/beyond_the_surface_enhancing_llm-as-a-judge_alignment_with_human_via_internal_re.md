@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Surface: Enhancing LLM-as-a-Judge Alignment with Human via Internal Representations
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：利用所有层的score logits加权聚合得到更好的评分分布，再取期望得到连续细粒度评分。权重通过小规模验证集轻量训练（仅L+1个参数），模型完全冻结。
 
-**核心idea一句话**：跨层logits加权聚合 + 概率分布期望 = 比只看最终层argmax更好的评判分数，且即插即用。
+**核心 idea**：跨层logits加权聚合 + 概率分布期望 = 比只看最终层argmax更好的评判分数，且即插即用。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ LLM生成评判时，在score token位置提取所有L+1层（embedding层到最
 - **极简设计**：仅33个可训练参数（对8B模型），完全即插即用，不改变推理流程——这可能是目前改善LLM-as-a-Judge最轻量的方法
 - **期望分数 vs argmax**的改进看似微小但意义重大：它将离散评分转为连续评分，捕捉了模型的"犹豫"信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要访问中间层隐层表征——对API-only模型不适用（虽然退化为E-Score仍有效）
 - 权重在验证集上训练——如果验证集与测试分布差异大，可能不最优
 - 只关注point-wise评估——pairwise比较场景未探索

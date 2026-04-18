@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VIRTUE: Visual-Interactive Text-Image Universal Embedder
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **兼顾通用性**：无视觉提示时自动采样点策略保证了在传统任务上的竞争力
 - **实用性强**：SAM2 冻结 + LoRA 微调，训练成本可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SAM2 增加推理计算开销（额外的分割前向传播）
 - SCaR 仅评估 I2T 检索，未覆盖 I2I 视觉交互场景

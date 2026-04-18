@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Back on Track: Bundle Adjustment for Dynamic Scene Reconstruction
 description: >-
@@ -143,7 +143,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{3D} + w_1 \mathcal{L}_{vis} + w_2 \mathcal{
 - **混合方案**的典范：将传统优化（BA）与学习先验（3D 追踪器）有机结合
 - 全局精炼用轻量尺度网格而非神经网络，参数少且高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 深度精炼使用简单的尺度网格，更复杂的变形模型（如神经网络）可能进一步提升
 - 依赖单目深度先验的质量（ZoeDepth/UniDepth）

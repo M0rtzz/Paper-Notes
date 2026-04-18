@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Policy Diversity in Ensemble Policy Gradient in Large-Scale Reinforcement Learning
 description: >-
@@ -85,7 +85,7 @@ CPO基于SAPG的leader-follower架构，引入两个关键机制：（1）follow
 - **方法简洁实用**：仅在SAPG基础上添加KL约束和对抗奖励，实现显著改进
 - **对比分析深入**：揭示SAPG的策略错位问题——部分follower策略严重偏离leader
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - KL约束强度 $\lambda_f$ 虽然鲁棒但仍需设定，自适应调节方案值得探索
 - 简单任务（如Locomotion）中改进幅度有限

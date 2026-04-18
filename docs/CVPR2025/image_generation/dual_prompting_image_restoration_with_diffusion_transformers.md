@@ -1,4 +1,4 @@
----
+﻿---
 title: "Dual Prompting Image Restoration with Diffusion Transformers"
 conference: "CVPR 2025"
 arxiv: "2504.17825"
@@ -99,7 +99,7 @@ VAE 微调损失：$\|\mathcal{D}(\mathcal{E}_{dr}(x_{\text{LQ}})) - x_{\text{HQ
 2. **全局-局部分层设计**：解决了高分辨率修复中局部 patch 缺乏全局语义的问题，巧妙对接预训练 DiT 中文本嵌入的功能角色
 3. **DiT 适配方法论**：为如何将 DiT 用于生成以外的任务提供了系统性方案——轻量条件分支 + 提示替换
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **PSNR 指标较低**：生成式修复的固有问题，过于追求感知质量可能牺牲像素级别的保真度
 2. **推理速度**：DiT + 迭代去噪的推理成本高于 Real-ESRGAN 等单步方法

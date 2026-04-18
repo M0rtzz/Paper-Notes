@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust Neural Rendering in the Wild with Asymmetric Dual 3D Gaussian Splatting
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \mathcal{L}_{r1}^{\mathbf{M}_h} + \mathcal{L}_{r2}^{\mathbf{M}_s
 - **Dynamic EMA的3DGS适配**：标准EMA假设参数数量固定，而3DGS有克隆/分裂/剪枝操作，动态EMA机制是实用的工程创新
 - **高效性**：EMA-GS在PhotoTourism上从之前SOTA的2.9h减少到同等级训练时间，同时质量更好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 双模型版本(GS-GS)训练开销仍然较大，虽然EMA-GS显著缓解
 - 多种线索融合的硬掩码依赖SAM和COLMAP等外部工具

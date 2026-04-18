@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] R-AVST: Empowering Video-LLMs with Fine-Grained Spatio-Temporal Reasoning in Complex Audio-Visual Scenarios
 description: >-
@@ -141,7 +141,7 @@ $$R_{\text{spatial}} = \frac{1}{N} \sum_{t=T_{\text{start}}}^{T_{\text{end}}} \t
 3. **物体属性分析的创新思路**：通过 LLM 分析字幕中物体的"可听/可见"属性，为音视频场景理解提供了新的标注范式。
 4. **自动化标注流水线**：LLM 分析 + Grounded-SAM2 自动标注 + 程序化 QA 生成，大幅降低标注成本。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 空间推理的绝对性能仍较低（AP@0.5 在空间任务中最高仅 2.17%），说明音视频场景下的精细空间定位仍极具挑战。
 2. 数据集基于 UnAV-100 构建，视频来源相对单一，可扩展到更多领域（如自动驾驶、工业检测）。

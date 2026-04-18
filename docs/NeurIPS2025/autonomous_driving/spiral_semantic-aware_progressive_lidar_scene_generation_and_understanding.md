@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPIRAL: Semantic-Aware Progressive LiDAR Scene Generation and Understanding
 description: >-
@@ -102,7 +102,7 @@ Spiral 采用 4 层 Efficient U-Net 作为骨干网络，基于连续时间 DDPM
 - **统一训练而非两阶段**：避免了生成模型和分割模型的训练割裂，大幅减少参数量
 - **提出了语义感知评估指标**：填补了带标签 LiDAR 场景生成质量评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - range-view 表示在高分辨率下可能丢失远距离物体的细节
 - 闭环推理增加了推理步数和时间（需要交替执行两种步骤）

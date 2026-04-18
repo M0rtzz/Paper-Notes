@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Propose, Assess, Search: Harnessing LLMs for Goal-Oriented Planning in Instructional Videos
 description: >-
@@ -141,7 +141,7 @@ VidAssist是零/少样本框架，**不需要训练**。核心是prompt设计和
 - **统一框架**：用同一套方法处理VPA和PP两种不同的任务设置，展示了框架的通用性
 - **少样本 > 全监督**：仅用3-10个示例就超越全监督方法，说明LLM的内在过程知识比小规模标注数据更有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 搜索过程需要多次LLM推理（K次采样 × T步 + $V_P$评估），推理成本较高
 - 视觉理解完全依赖外部模型（VideoCLIP、BLIP），视觉感知误差是主要瓶颈（ground-truth实验证实）

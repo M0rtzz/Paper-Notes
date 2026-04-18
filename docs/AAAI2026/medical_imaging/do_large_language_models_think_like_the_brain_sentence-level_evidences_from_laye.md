@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do Large Language Models Think Like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI
 description: >-
@@ -94,7 +94,7 @@ Instruct版本始终优于对应Base版本，模型间差距超过28分。
 - 半球偏侧化分析将宏观认知神经科学的经典理论与LLM的计算特性联系起来
 - fMRI的全脑空间覆盖弥补了此前EEG/MEG研究的空间分辨率不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在一个自然叙事语料（《小王子》）上实验，结果的泛化性有限，不同text genre可能得到不同结论
 - 被试数量34人，统计功效需更大样本验证，个体差异的影响未充分分析
 - 所有LLM参数范围集中在6.7B-9B，无法判断scaling law在更大/更小模型上是否成立

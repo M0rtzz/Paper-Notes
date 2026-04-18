@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeepShield: Fortifying Deepfake Video Detection with Local and Global Forgery Analysis
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L}^{\text{overall}} = \omega \mathcal{L}_{\text{LPG}} + \mathcal{L}_{
 - **分布级特征增强优于线性插值**：DFG 的 AdaIN 混合和 BFG 的标准差缩放比简单线性插值产生更丰富的非线性增强
 - 在 CLIP-ViT 微调基础上的设计，保持了预训练模型的泛化优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FF++ 内部测试（in-domain）性能略低于部分方法，说明局部-全局策略在过拟合场景下有一定代价
 - BFG 的缩放系数 $\alpha=1.1$ 是经验值，不同数据集可能需要调整

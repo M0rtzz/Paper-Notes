@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Symmetry-Robust 3D Orientation Estimation
 description: >-
@@ -109,7 +109,7 @@ $$\min_{p_\phi} \mathbb{E}_{Q \sim U(\mathcal{O})} \left[ \text{CE}(p_\phi(QS), 
 4. **保形预测的工程应用**：将统计学中的保形预测引入3D几何任务，输出自适应预测集让人类解决歧义——实用性强。
 5. **大幅度SOTA提升**：上轴准确率从69.5%→89.2%，全朝向Chamfer Distance减少84%。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖ShapeNet规范朝向标注**：需要大规模人工标注的规范朝向数据，且ShapeNet标注质量参差不齐。
 2. **八面体群选择的局限**：对于不属于八面体子群的对称性（如5次旋转对称的正十二面体），理论保证可能不完全成立。

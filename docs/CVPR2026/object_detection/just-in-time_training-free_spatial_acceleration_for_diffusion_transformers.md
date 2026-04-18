@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Just-in-Time: Training-Free Spatial Acceleration for Diffusion Transformers
 description: >-
@@ -120,7 +120,7 @@ $$\mathbf{I}(t) = \mathbb{E}_\mathcal{W}[\boldsymbol{u}_\theta \odot \boldsymbol
 - **动态资源分配**：ITA 基于速度场方差的 content-aware 策略，比固定模式更高效
 - **极端加速下仍保持质量**：7× 加速时仍能正确渲染文字等高频细节，优势在极限场景更突出
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 FLUX.1-dev 一个模型上验证，未展示对其他 DiT（SD3、PixArt 等）的泛化性
 - 阶段调度（$\{T_k, m_k\}$）需要手动设计，缺乏自适应调度机制

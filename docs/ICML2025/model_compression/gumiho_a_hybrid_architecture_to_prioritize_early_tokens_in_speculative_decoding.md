@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gumiho: A Hybrid Architecture to Prioritize Early Tokens in Speculative Decoding
 description: >-
@@ -107,7 +107,7 @@ tags:
 - FTA 利用并行 heads 的独立性是巧妙的"免费午餐"——不增加 QKV 计算
 - 与 Eagle-2 的 dynamic tree 无缝兼容，可视为 Eagle-2 的直接升级版
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 串行部分固定为 2 层 Transformer，最优配置可能因模型/任务而异
 - 串行-并行的分界点（前 2 个 vs 前 3 个）的选择缺乏自适应机制

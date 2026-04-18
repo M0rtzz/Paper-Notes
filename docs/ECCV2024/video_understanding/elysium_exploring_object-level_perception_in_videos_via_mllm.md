@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Elysium: Exploring Object-level Perception in Videos via MLLM
 description: >-
@@ -121,7 +121,7 @@ Elysium 的整体架构由三部分组成：CLIP-ViT-L 视觉编码器、T-Selec
 - **选择优于融合**：T-Selector 的门控选择策略证明，在视觉 token 压缩中保留关键 token 比融合所有 token 更有效。
 - **统一框架**：单个 MLLM 同时处理 Image Grounding、VideoQA、SOT、RSOT 和 Video-REG，展示了 MLLM 的通用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在小目标场景（如 UAV123 数据集）上性能下降，受限于 336×336 的输入分辨率。
 - 尚未探索 MOT、VOS、RVOS 等更复杂的目标级任务。
@@ -275,7 +275,7 @@ Elysium 仅用 108 个视觉 Token 即超越使用 256-608 Token 的基线方法
 - **Token 选择优于 Token 融合**：对比拼接/交叉注意力等融合方式，按重要性选择 Token 的策略更好地保留了空间信息
 - **坐标格式的 Token 效率**：整数坐标表示比浮点表示节省一半 Token，在长视频场景下收益显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 小目标跟踪效果不够理想，需要引入高分辨率视觉编码器
 - 仅探索了 SOT 相关任务，未涉及 MOT、VOS、RVOS 等更复杂的目标级任务

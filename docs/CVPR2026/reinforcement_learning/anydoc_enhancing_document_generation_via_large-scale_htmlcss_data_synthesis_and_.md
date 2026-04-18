@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnyDoc: Enhancing Document Generation via Large-Scale HTML/CSS Data Synthesis and Height-Aware Reinforcement Optimization
 description: >-
@@ -65,7 +65,7 @@ AnyDoc 提出了一个基于统一 HTML/CSS 表示的通用文档生成框架，
 
 3. **高度感知强化学习（HARL）**：
 
-    - **做什么**：解决 SFT 后生成文档的内容溢出问题。
+    - **功能**：解决 SFT 后生成文档的内容溢出问题。
     - **核心思路**：基于 GRPO，对每个输入采样一组候选输出，用 Playwright 渲染获得实际高度 $\hat{h}$，计算奖励：
     $r = \max\left(0, \begin{cases} 1, & 1-\gamma \leq \rho \leq 1 \\ \gamma + \rho, & \rho < 1-\gamma \\ 1 - \alpha(\rho - 1), & \rho > 1 \end{cases}\right)$
       其中 $\rho = \hat{h}/h$ 是高度偏比
@@ -107,7 +107,7 @@ AnyDoc 提出了一个基于统一 HTML/CSS 表示的通用文档生成框架，
 - HARL 是精巧的解决方案：将渲染反馈引入 RL 奖励，让模型学会遵守尺寸约束
 - 三个任务共享同一框架和数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 7B 模型在 DD 任务的 Height 控制上仍不如 GPT-4o（模型规模的限制）
 - HARL 需要 Playwright 渲染计算奖励，训练效率较低
 - 生成的文档美观度仍依赖底层代码生成模型的能力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modeling and Driving Human Body Soundfields through Acoustic Primitives
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L}_{total} = \lambda_{amp}\mathcal{L}_{amp} + \lambda_{ri}\mathcal{L}
 - **倒逼声源分离**：系统隐式学会了将混合音频信号分解到不同身体部位的声源，无需显式声源分离标注
 - **实时渲染能力**：0.24s处理1秒48kHz音频，已接近实时，为AR/VR应用奠定基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **球谐阶数受限**：PyTorch仅支持2阶球面波函数实现，更高阶可能进一步提升精度
 2. **需要大规模麦克风阵列训练数据**：345个麦克风的消声室录制设备昂贵，难以规模化

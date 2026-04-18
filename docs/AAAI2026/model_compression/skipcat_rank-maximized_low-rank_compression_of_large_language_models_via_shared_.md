@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SkipCat: Rank-Maximized Low-Rank Compression of Large Language Models via Shared Projection and Block Skipping
 description: >-
@@ -127,7 +127,7 @@ SkipCat由两个核心技术组成：
 3. **无训练强性能**：20%压缩率下仅2.2%准确率下降，这在无训练设置中极为出色
 4. **与量化正交兼容**：参数级压缩+精度级量化可叠加使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. Skip技术需要 $A_1$ 可逆，虽然列置换缓解了这个问题，但极端情况下仍可能受限
 2. Cat要求矩阵共享相同输入，对于不同架构的适用性需要case-by-case分析
 3. 高压缩率（>60%）下性能下降仍然显著

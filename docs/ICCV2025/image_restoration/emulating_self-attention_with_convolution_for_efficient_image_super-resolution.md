@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Emulating Self-Attention with Convolution for Efficient Image Super-Resolution
 description: >-
@@ -54,7 +54,7 @@ ESC 网络的整体结构包含四个主要部分：
 
 1. **ConvAttn 模块（卷积注意力）**:
 
-    - **做什么**：用卷积模拟自注意力的两大优势——远程依赖建模和实例依赖加权。
+    - **功能**：用卷积模拟自注意力的两大优势——远程依赖建模和实例依赖加权。
     - **核心思路**：将特征按通道分为两部分：$F^{att} \in \mathbb{R}^{H \times W \times 16}$（前 16 个通道）和 $F^{idt} \in \mathbb{R}^{H \times W \times (C-16)}$（剩余通道）。仅对 $F^{att}$ 应用两种卷积：
         - **共享大核 $LK \in \mathbb{R}^{13 \times 13 \times 16 \times 16}$**：在整个网络中共享，捕捉长程交互（模拟注意力的远程依赖）
         - **动态核 $DK \in \mathbb{R}^{3 \times 3 \times 1 \times 16}$**：通过 GAP + MLP 从输入生成，实现实例依赖加权（模拟注意力的自适应性）
@@ -64,7 +64,7 @@ ESC 网络的整体结构包含四个主要部分：
 
 2. **ESCBlock 结构**:
 
-    - **做什么**：每个 block 中仅使用一层自注意力，其余 $M$ 层使用 ConvAttn。
+    - **功能**：每个 block 中仅使用一层自注意力，其余 $M$ 层使用 ConvAttn。
     - **核心思路**：
     $F_{i,0} = F_i^{in} + \text{SelfAttn}(\text{LN}(F_i^{in}))$
     $F_{i,j} = F_{i,j-1} + \text{ConvAttn}_j(\text{ConvFFN}_j(F_{i,j-1}), LK), \quad j=1,...,M$
@@ -73,13 +73,13 @@ ESC 网络的整体结构包含四个主要部分：
 
 3. **Flash Attention 集成**:
 
-    - **做什么**：首次在轻量级 SR 任务中成功引入 Flash Attention，将窗口大小扩展到 $32 \times 32$。
+    - **功能**：首次在轻量级 SR 任务中成功引入 Flash Attention，将窗口大小扩展到 $32 \times 32$。
     - **核心思路**：Flash Attention 通过避免物化完整的 score 矩阵来减少内存占用。在 $32 \times 32$ 窗口下，相比普通实现可达 **16倍** 延迟降低和 **12.2倍** 内存节省。
     - **设计动机**：大窗口虽然只增加少量 FLOPs，却能显著提升性能。但传统实现中大窗口导致的 score 矩阵过大，Flash Attention 完美解决了这一问题。由于大部分自注意力已被 ConvAttn 替代，剩余的一层自注意力使用大窗口的开销可控。
 
 4. **ESC-FP 变体（FLOPs 优先）**:
 
-    - **做什么**：在需要压缩 FLOPs 和参数量的场景下，对大核进行深度可分离分解。
+    - **功能**：在需要压缩 FLOPs 和参数量的场景下，对大核进行深度可分离分解。
     - **核心思路**：将 $LK$ 分解为逐点核 $LK^c \in \mathbb{R}^{1 \times 1 \times 16 \times 16}$ 和深度核 $LK^s \in \mathbb{R}^{13 \times 13 \times 1 \times 16}$，动态核可通过零填充与 $LK^s$ 合并：
     $F^{res} = (F^{att} \circledast LK^c) \circledast (ZP(DK) + LK^s)$
 
@@ -133,7 +133,7 @@ ESC 在 Urban100×4 上超越 ATD-light 0.1 dB PSNR，同时快 **8.7倍**。
 - **共享大核**：全网络共享一个大核是一种优雅的参数高效设计，类似于全局的"通用远程交互模板"
 - **Flash Attention 的首次 SR 应用**：突破了轻量级 SR 中窗口大小的瓶颈
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Flash Attention 目前需要 CUDA 优化，对仅有 CPU 的设备不友好
 - 共享大核的 $13 \times 13$ 尺寸对不同任务可能不是最优的

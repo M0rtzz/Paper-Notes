@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MM1: Methods, Analysis & Insights from Multimodal LLM Pre-training
 description: >-
@@ -178,7 +178,7 @@ MoE 模型在几乎所有 benchmark 上均优于对应 dense 模型，展现 MoE
 - **MoE 的高效扩展**：3B-MoE（64B 总参数）在仅激活少量参数的情况下接近甚至超越 7B dense 模型，为 MLLM 的高效部署提供了方向
 - **混合分辨率 few-shot**：子图分解在 few-shot 场景下 token 开销巨大，提出的混合分辨率策略（仅最后 N 个样本高分辨率）是实用的工程创新
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **消融规模受限**：架构消融使用 1.2B/2.9B LLM，数据消融 200k 步——更大规模下准则是否仍然成立存疑
 2. **编码器对比不完全公平**：AIM 的训练数据量不到 CLIP 的一半，结论需谨慎解读

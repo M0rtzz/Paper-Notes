@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Long-Range Interactions in Graph Neural Simulators via Hamiltonian Dynamics
 description: >-
@@ -87,7 +87,7 @@ IGNS 接收初始节点状态 $\bar{\mathbf{X}}$，首先执行 $l$ 步 **warmup
 - **warmup 设计简洁有效**: 用最简单的方式（多轮消息传递不推进时间）解决了 GNS 的初始全局上下文缺失问题
 - **参数效率极高**: IGNS 约 216K 参数 vs MGN 的 1.8M 参数，少一个数量级但性能更好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前只支持开环 (open-loop) 前向仿真，不支持闭环控制
 - warmup 步数 $l$ 需要手动选择，且对不同任务最优值不同
 - 对于全局性非常强的系统（如周期性边界条件），warmup 的局部信息扩散仍有限

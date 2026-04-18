@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LightMover: Generative Light Movement with Color and Intensity Controls
 description: >-
@@ -108,7 +108,7 @@ LightMover基于5B参数的视频扩散Transformer，将所有输入编码为伪
 - 将光照编辑统一到物体移动框架中的思路很自然，控制token的设计使一个模型同时支持物体和光源编辑
 - 物理解耦渲染管线是数据工程的典范：通过分离ambient和direct light，在后处理中生成无穷变体
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅支持可见光源的操控，对于不可见光源（如来自窗外的自然光）的控制能力有限
 - 合成数据仅使用25个室内场景，场景多样性可进一步提升

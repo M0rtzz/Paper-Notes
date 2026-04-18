@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Drive is a Free Gift: Large-Scale Label-Free Autonomy Pretraining from Unposed In-The-Wild Videos
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{current}} + \lambda_{\text{fut
 - **next-token prediction在驾驶场景中的应用**：将几何和运动的未来预测转化为token序列预测，与NLP中的范式统一
 - 实验证明**短期未来预测**是驾驶规划的关键特征——移除自回归头后10%数据性能从81.4降至77.7
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅预测**短期未来**（3-6帧），长期推理能力有限，可扩展到多尺度时间horizon
 - 仅使用**单前视相机**——虽然这是YouTube视频的特性，但多视角训练（如新的PhysicalAI数据集）可能进一步提升

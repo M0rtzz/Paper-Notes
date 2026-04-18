@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prioritizing Perception-Guided Self-Supervision: A New Paradigm for Causal Modeling in End-to-End Autonomous Driving
 description: >-
@@ -103,7 +103,7 @@ $$L'_{total} = L_{total} + w_{MTPS} L_{MTPS} + w_{STPS} L_{STPS} + w_{NTPS} L_{N
 - **最小化架构改动**：不需要复杂网络，仅需改变训练方式就能大幅提升，体现了方法的优雅性。
 - **闭环 vs 开环的差异**：虽然开环 L2 error 反而略高于一些方法，但闭环 Driving Score 大幅领先，这对自动驾驶研究的评估方法选择有重要启示。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Lane centerline 的可用性假设：仅当高精地图可用且感知准确时 STPS 才有效
 - 闭环评估仍在模拟器中，真实场景的表现需进一步验证

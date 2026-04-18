@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimizer Choice Matters for the Emergence of Neural Collapse
 description: >-
@@ -112,7 +112,7 @@ ResNet9 在 FashionMNIST 上的最终 NC 指标（越低越好）：
 - **NC 不一定意味着更好的泛化**：所有优化器都能达到相似的验证准确率，但 NC 强度差异显著——这限制了用 NC 来理解泛化
 - **规模宏大的实验**：3,900+ 训练运行，系统性地控制变量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论分析限于简化设定**：Theorem 3.3/3.4 基于 UFM（无约束特征模型）中的 SignGD，未完全捕捉深度网络和自适应优化器的复杂性
 2. **仅分析 NC0**：完整理解 NC1-NC3 在现实优化动力学下的行为仍是开放问题

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAFE: Finding Sparse and Flat Minima to Improve Pruning
 description: >-
@@ -122,7 +122,7 @@ Safe 在标签噪声下比 ADMM 高出 **+10% ~ +30%** 准确率。同时在 CIF
 4. **鲁棒性突出**：对标签噪声、图像腐蚀、对抗攻击均展现出超越基线的鲁棒性
 5. **效率优势**：比 ALPS（同为 ADMM-based）快 2.54 倍；图像分类无需重训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **图像分类仅在小模型验证**：CIFAR-10/100 + VGG/ResNet，未在 ImageNet 或更大规模模型上测试训练中剪枝
 2. **LLM 实验局限**：Safe⁺ 的 LLM 剪枝依赖逐层重构误差最小化，未端到端优化

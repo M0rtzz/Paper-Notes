@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exo-Plore: Exploring Exoskeleton Control Space through Human-Aligned Simulation
 description: >-
@@ -113,7 +113,7 @@ $$r_{\text{HEI}} = 1 + \frac{1}{\kappa} \sum_{k \in \{L,R\}} \min(0, P_k)$$
 - **病理步态泛化**：展示了病理严重程度与最优辅助的线性关系，具有直接的临床意义
 - **代理网络方案实用**：用 MLP + LHS + 梯度惩罚替代 GP，在数据充裕场景下更高效且可扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **缺乏真人验证**：仿真优化的控制参数尚未在真实人类（尤其是患者群体）上验证
 - **奖励模型简化**：HEI 奖励基于单一假设，可能无法捕获人类适应行为的全部复杂性

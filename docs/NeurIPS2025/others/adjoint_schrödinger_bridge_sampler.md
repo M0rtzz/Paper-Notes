@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adjoint Schrödinger Bridge Sampler
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：memoryless 条件排除了高斯先验、谐波先验等有用的源分布选择。已知非 memoryless 过程可以提升传输效率，但现有方法要么需要 memoryless，要么需要昂贵的非 matching 方法。
 
-**本文要解决什么？** 如何在不需要 memoryless 条件、不需要重要性权重的前提下，用可扩展的 matching 目标学习扩散采样器？
+**本文目标** 如何在不需要 memoryless 条件、不需要重要性权重的前提下，用可扩展的 matching 目标学习扩散采样器？
 
 **切入角度**：将 Schrödinger Bridge 问题的最优性条件重新解释为一个 SOC 问题，引入 corrector 函数 $\nabla \log \hat{\varphi}_1$ 来消除非 memoryless 引起的初始值函数偏差。
 
-**核心idea一句话**：通过交替优化 Adjoint Matching（学漂移 $u$）和 Corrector Matching（学去偏 corrector $h$），等价于 IPF 算法，收敛到 Schrödinger Bridge 全局最优解。
+**核心 idea**：通过交替优化 Adjoint Matching（学漂移 $u$）和 Corrector Matching（学去偏 corrector $h$），等价于 IPF 算法，收敛到 Schrödinger Bridge 全局最优解。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ ASBS 学习一个 SDE $dX_t = [f_t(X_t) + \sigma_t u_t^\theta(X_t)] dt + \sigma_
 - **交替优化 = IPF 的证明为收敛性提供了理论保障**：不同于大多数深度学习方法的经验收敛，ASBS 有严格的全局收敛证明（前提是每阶段达到 critical point）
 - **谐波先验的使用展示了领域知识整合的价值**：先前被 memoryless 条件排除的分子模拟领域标准先验现在可以自然融入扩散采样框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **每个 SB stage 需要 AM + CM 两步全训练**：虽然理论上保证收敛，实际中 stage 数和每 stage 训练步数需要调参
 - **高维问题提升有限**：LJ-55 (d=165) 上仅比 AS 提升 1%，说明维度增大后非 memoryless 的优势减弱
 - **corrector 网络增加了内存和计算开销**：虽然理论上可忽略，实际部署时额外网络的维护是工程负担

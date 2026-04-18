@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DropAnSH-GS: Dropping Anchor and Spherical Harmonics for Sparse-view Gaussian Splatting
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{L1}}(\hat{C}, C_{gt}) + \lambda \mathcal{L}_{
 - **训练后压缩**：SH Dropout 带来的副产品——无需重训练即可截断高阶 SH，在性能和模型大小之间灵活权衡
 - 从"为什么 Dropout 在 3DGS 中效果弱"出发做研究，问题驱动型，思路值得学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - kNN 搜索在 Gaussian 数量极大时可能成为瓶颈，尽管已用 CUDA 加速
 - 锚点采样率 $p_a$ 和邻域大小 $k$ 需要调参，超参敏感性分析显示性能对 $p_a$ 较敏感（0.04 时 PSNR 骤降至 19.97）

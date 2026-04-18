@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Verbosity-Aware Rationale Reduction: Effective Reduction of Redundant Rationale
 description: >-
@@ -94,7 +94,7 @@ VARR 包含三个阶段：（1）预热阶段用完整推理路径正常 CoT 微
 - 冗余度概念的形式化（KL 散度差→似然比）优雅且可解释。
 - 突破了已有方法仅在简单算术任务上验证的局限，覆盖了数学推理、常识推理、阅读理解等多种任务。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在 7B 模型和较小 batch size (单张 A100 GPU) 上进行。
 - 未在长序列推理任务上测试。

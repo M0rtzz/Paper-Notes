@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ExLM: Rethinking the Impact of [MASK] Tokens in Masked Language Models
 description: >-
@@ -152,7 +152,7 @@ ExLM 在 7 个数据集中 5 个最优，平均 76.1 显著超越同架构 SMILE
 - **跨领域验证**：在文本（GLUE/SQuAD）和分子（SMILES/MoleculeNet）两个差异很大的领域都验证了有效性，说明方法的通用性
 - **Case study 直观有效**：DAG 可视化清楚展示了 ExLM 如何用不同状态捕获不同语义可能性及其依赖关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练成本增加**：扩展状态导致序列变长，k=4 时训练时间接近 2 倍，难以直接 scale 到更大模型
 2. **仅验证 BERT-scale**：未在更大规模模型（如 BERT-Large 以上）或更多预训练数据上验证

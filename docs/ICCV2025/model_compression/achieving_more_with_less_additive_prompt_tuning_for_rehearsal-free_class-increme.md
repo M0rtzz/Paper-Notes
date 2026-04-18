@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Achieving More with Less: Additive Prompt Tuning for Rehearsal-Free Class-Incremental Learning
 description: >-
@@ -145,7 +145,7 @@ PPF 策略和 KV 加法设计的消融：
 3. **通用 PEFT 潜力**：不仅在 CIL 上表现好，在通用识别任务上也超越 VPT-deep 和完全微调，说明加法提示范式具有普适性
 4. **注意力可视化清晰聚焦**：APT 的注意力热图比其他方法更集中、更准确地关注目标区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **$\alpha$ 的选择仍需手动设定**：虽然鲁棒性好，但不同数据集用不同值（0.7 vs 0.8），能否自适应学习？
 2. **仅在 ViT 上验证**：是否可扩展到其他架构（如 Swin Transformer、ConvNeXt）？

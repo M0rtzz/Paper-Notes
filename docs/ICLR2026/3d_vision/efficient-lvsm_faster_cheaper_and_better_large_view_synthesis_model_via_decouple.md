@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient-LVSM: Faster, Cheaper, and Better Large View Synthesis Model via Decoupled Co-Refinement Attention
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L}_{REPA} = \frac{1}{N}\sum_{i=1}^{N}\text{sim}(f(\mathbf{I}), h_\phi
 4. **效率与质量双赢**：在所有 benchmark 上超越 LVSM 的同时大幅降低训练和推理成本
 5. **REPA 蒸馏的条件性发现**：揭示了蒸馏效果与注意力架构的耦合关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 输入编码器的 intra-view attention 不包含跨视图交互，场景理解能力完全依赖解码器的 cross-attention，对遮挡严重的场景可能不足
 2. 未探索更大规模模型或更高分辨率下的 scaling 行为

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hardware-Rasterized Ray-Based Gaussian Splatting
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 3. **核心矛盾**：标准3DGS的support在图像平面上是椭圆，容易用硬件光栅化。但RayGS的support可能是半双曲线，无法简单在图像平面用四边形包围。
 
-4. **本文要解决什么？** 如何将RayGS映射到标准硬件光栅化管线（vertex shader + fragment shader），同时保持渲染质量？
+4. **本文目标** 如何将RayGS映射到标准硬件光栅化管线（vertex shader + fragment shader），同时保持渲染质量？
 
 5. **切入角度**：放弃在图像平面求解包围四边形，转而在3D空间中寻找包围RayGS primitive support的四边形。证明了support边界上的最大密度点集构成一个3D空间中的2D椭圆，与单位圆同构。
 
-6. **核心idea一句话**：通过证明RayGS primitive的support边界在3D空间中形成椭圆，建立与单位圆的同构映射，从而在3D空间高效计算最小包围四边形并映射到硬件光栅化管线。
+6. **核心 idea**：通过证明RayGS primitive的support边界在3D空间中形成椭圆，建立与单位圆的同构映射，从而在3D空间高效计算最小包围四边形并映射到硬件光栅化管线。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ tags:
 - **工程价值极高**：40×加速且保持质量，直接解锁VR/MR场景中使用RayGS，实用性非常突出
 - **MIP方案的理论正确性**：相比MIP-Splatting的启发式方案，本文从边缘化3D高斯分布出发推导，理论上更严谨
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前方案需要禁用近裁剪面，某些极端场景可能产生渲染问题
 - 依赖Vulkan API，虽然理论上可移植到OpenGL，但跨平台兼容性仍需验证
 - MIP方案中将像素依赖项近似为常数，对于极薄但很长的高斯原语精度可能下降

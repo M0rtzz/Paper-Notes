@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] New Synthetic Goldmine: Hand Joint Angle-Driven EMG Data Generation Framework for Micro-Gesture Recognition
 description: >-
@@ -172,7 +172,7 @@ SeqEMG-GAN 在所有指标上最优，且是唯一支持未知手势生成的方
 - **评估指标设计**：FFT MSE + DTW + EECC 三维评估体系替代图像领域指标，更适合 EMG 时序数据
 - **应用前景广阔**：神经机械手控制、AI/AR 眼镜、手势游戏等
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 消融实验表格中的数值趋势需要更清晰的解释（完整模型 DTW 最大但声称最优）
 2. 仅测试了 6 种微手势，未验证更复杂或更多类别手势的生成效果

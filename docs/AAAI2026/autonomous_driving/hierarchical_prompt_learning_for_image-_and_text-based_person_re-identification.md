@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical Prompt Learning for Image- and Text-Based Person Re-Identification
 description: >-
@@ -188,7 +188,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{base} + \mathcal{L}_{cic} + \lambda_1 \math
 3. **层次化提示设计合理**：身份级提供稳定锚点，实例级提供细粒度自适应，组合覆盖了 ReID 的核心需求
 4. **跨模态正则化是关键胶水**：CMPR 将 HPL 从"并行的双任务"提升为"协同的统一框架"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要同时有 I2I 和 T2I 数据集进行联合训练，数据准备成本较高
 2. 逆向网络使用 4 层 Transformer，在轻量级部署场景中可能需要精简

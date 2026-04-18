@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Connecting Thompson Sampling and UCB: Towards More Efficient Trade-offs Between Privacy and Regret
 description: >-
@@ -91,7 +91,7 @@ DP-TS-UCB 是一个两阶段算法：
 | DP-TS-UCB ($\alpha=0$) | $O(\sqrt{KT\ln T})$ | $\tilde{O}(T^{0.25})$ |
 | DP-TS-UCB ($\alpha=1$) | $O(\sqrt{KT}\ln T)$ | $O(1)$ |
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑随机多臂老虎机，未推广到线性/上下文老虎机或对抗环境。
 - 未提供新的下界结果，现有上界与已知下界之间可能仍有间隙。

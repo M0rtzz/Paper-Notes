@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FilmWeaver: Weaving Consistent Multi-Shot Videos with Cache-Guided Autoregressive Diffusion
 description: >-
@@ -131,7 +131,7 @@ FilmWeaver 在一致性和角色文本对齐指标上取得 SOTA，同时 Incept
 3. **架构无关**：通过 in-context injection 注入缓存，不修改模型结构，可兼容各种预训练 T2V 模型
 4. **实用的数据构建管道**：Group Captioning 策略解决了跨镜头标注一致性问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 视觉质量仍有提升空间，可通过更好的数据策划和训练策略改善
 2. 缓存大小（K=3）可能在极复杂场景中不足

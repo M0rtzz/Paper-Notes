@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Typed-RAG: Type-Aware Decomposition of Non-Factoid Questions for Retrieval-Augmented Generation
 description: >-
@@ -118,7 +118,7 @@ Typed-RAG 的处理流程：
 - **Wiki-NFQA 数据集**填补了 NFQA 缺乏统一评估基准的空白
 - **标准 RAG 在 NFQA 上表现不佳**这一发现说明检索增强在特定场景下需要更精细的设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 类型分类器的准确率直接影响后续处理，分类错误会导致策略不匹配
 - Wiki-NFQA 的规模较小（945题），各类型分布极不平衡（Evidence-based 占 59%）

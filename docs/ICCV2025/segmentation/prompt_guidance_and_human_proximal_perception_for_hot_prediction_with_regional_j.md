@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prompt Guidance and Human Proximal Perception for HOT Prediction with Regional Joint Loss
 description: >-
@@ -145,7 +145,7 @@ $$\mathcal{L} = \text{CE}(\mathbf{O}, \mathbf{GT}) + \alpha \mathcal{L}^L + \bet
 - **可学习深度阈值 $\tau$**：通过 ReLU 化替代硬阈值实现可微分，巧妙解决深度范围自适应问题
 - **文本引导首次引入 HOT**：为后续多模态 HOT 研究奠定基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ResNet-50 backbone 较老，可尝试更强的视觉编码器（ViT, Swin）
 - SAM 和 ZoeDepth 作为外部模块增加推理开销，可探索轻量化替代

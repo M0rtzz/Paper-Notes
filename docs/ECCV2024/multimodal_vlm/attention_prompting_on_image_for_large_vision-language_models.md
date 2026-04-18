@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attention Prompting on Image for Large Vision-Language Models
 description: >-
@@ -128,7 +128,7 @@ tags:
 - **视觉自反思新范式**：用视觉（而非文本）作为自反思的中介，开辟了LVLM自改进的新方向
 - **通用性强**：适用于开源模型和闭源API（GPT-4V、Gemini），无需访问模型内部
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要额外的前向传播来生成热力图，增加了推理成本（约2倍）
 - 均值滤波的kernel size需要per-dataset调整，最优值不统一

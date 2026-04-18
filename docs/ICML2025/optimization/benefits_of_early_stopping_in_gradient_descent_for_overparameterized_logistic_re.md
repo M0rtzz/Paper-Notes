@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Benefits of Early Stopping in Gradient Descent for Overparameterized Logistic Regression
 description: >-
@@ -92,7 +92,7 @@ $$\frac{\|\mathbf{w}_t - \mathbf{u}\|^2}{2\eta t} + \hat{\mathcal{L}}(\mathbf{w}
 4. **Lemma 3.3 的优雅性**：一个简单不等式统一解释了早停的隐式正则化效果，并直接推导出与 $\ell_2$ 正则化的全局联系。
 5. **Theorem 5.2 vs 5.3 的相变**：支持向量条件决定了 GD 路径与正则化路径是渐近重合还是发散——揭示了隐式正则化的脆弱性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **停止时间依赖 Oracle 信息**：Theorems 3.1/3.2 中的最优停止时间依赖于真实参数 $\mathbf{w}^*$，不是实际可计算的算法。交叉验证等实际方法的理论保证尚未建立。
 2. **偏差-方差 trade-off 不够精确**：两个上界分别由偏差或方差主导，未能刻画真正的偏差-方差最优平衡（不像线性回归中已有精确结果）。
 3. **仅限 well-specified 模型**：主要结果假设数据由逻辑模型生成（Assumption 1），misspecified 情形仅有部分推广（仅 logistic risk 上界，无校准/0-1 error 保证）。

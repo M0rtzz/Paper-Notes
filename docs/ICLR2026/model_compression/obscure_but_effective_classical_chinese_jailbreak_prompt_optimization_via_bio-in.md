@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Obscure but Effective: Classical Chinese Jailbreak Prompt Optimization via Bio-Inspired Search
 description: >-
@@ -109,7 +109,7 @@ CC-BOS 包含三个核心组件：(1) 八维策略空间定义越狱提示的生
 - 果蝇优化算法的嗅觉+视觉+柯西变异三阶段搜索策略高效平衡了探索与利用
 - 极低的查询次数表明文言文上下文本身就具有很强的绕过能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 文言文攻击依赖模型对文言文的理解能力，对文言文训练数据极少的模型可能效果减弱
 - 八维策略空间的维度选择依赖人工经验

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MixerCSeg: An Efficient Mixer Architecture for Crack Segmentation via Decoupled Mamba Attention
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 极致轻量：2.05 GFLOPs + 2.54M 参数，比大多数方法小一到两个数量级，但性能最优
 - SRF 通过高分辨率特征引导融合而非简单拼接，计算成本不增加
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在裂缝分割任务上验证，是否适用于通用语义分割（如 Cityscapes）需要验证
 - DEGConv 的空间块划分策略可能导致块边界处的不连续，虽然后接了一层 EdgeConv 缓解

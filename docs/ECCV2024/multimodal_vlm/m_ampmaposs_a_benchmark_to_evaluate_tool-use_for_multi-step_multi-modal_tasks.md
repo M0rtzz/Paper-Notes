@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] m&m's: A Benchmark to Evaluate Tool-Use for Multi-step Multi-modal Tasks
 description: >-
@@ -155,7 +155,7 @@ m&m's 包含三个核心组件：
 - **替代计划机制**：承认同一任务可有多种正确解法，使评估更公平
 - **对工具图的形式化定义**：为后续工具使用研究提供了规范的问题建模
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑顺序计划，未支持动态/条件分支计划（如"如果图像分类结果是A则执行步骤X，否则执行步骤Y"）
 - 未探索更复杂的prompt策略（如Tree-of-Thoughts），仅用直接和ReACT风格

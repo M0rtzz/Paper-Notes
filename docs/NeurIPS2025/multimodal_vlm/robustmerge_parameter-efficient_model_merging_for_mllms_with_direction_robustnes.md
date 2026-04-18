@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RobustMerge: Parameter-Efficient Model Merging for MLLMs with Direction Robustness
 description: >-
@@ -104,7 +104,7 @@ RobustMerge是**免训练**方法，所有操作都是后处理：
 - **方法优雅高效**：无需显式SVD分解，利用A/B矩阵的不对称性直接在原始矩阵上操作，计算开销极小
 - **未见任务泛化强**：这是第一个在无需额外数据/存储的条件下，在未见任务上也能稳定超越多任务学习的合并方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 未在更多PEFT结构（如Adapter、Prompt Tuning）上验证
 - 理论分析限于简化的两模型合并场景，多模型复杂交互的形式化有待深入
 - 未设计直接在分解矩阵上操作的专用算法（出于效率考虑），这可能是进一步提升的方向

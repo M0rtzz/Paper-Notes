@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Paper2Code: Automating Code Generation from Scientific Papers in Machine Learning
 description: >-
@@ -119,7 +119,7 @@ $$c_i = \text{LLM}(\mathcal{T}_{\text{code}}(R, P, f_i, a_i, \{c_1, ..., c_{i-1}
 3. 评估框架全面：reference-based + reference-free + 论文一作人类评估三位一体，且验证了 model-based 与 human evaluation 的高相关性（r=0.79）。
 4. Self-Refine 实验表明早期规划输出的精炼可传导至下游编码质量提升（Config File 提升幅度最大 +1.00）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 强依赖骨干 LLM 能力——开源模型（DS-Coder、Qwen-Coder）性能显著低于 o3-mini-high，实用性受限于 API 成本。
 2. 数据处理覆盖率最低——论文通常对数据格式、预处理步骤描述不足，是生成错误的主要来源。

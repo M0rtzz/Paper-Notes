@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learn2Synth: Learning Optimal Data Synthesis Using Hypergradients for Brain Image Segmentation
 description: >-
@@ -131,7 +131,7 @@ Learn2Synth交替执行两个pass：
 - **实验设计出色**：合成实验验证参数恢复能力，真实实验验证实用价值，跨对比度实验验证泛化能力
 - 适用于所有基于合成数据训练的场景，不限于医学影像
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 超梯度计算需要通过更新步骤反向传播，计算成本较高（需要二阶梯度）
 - 目前仅在2D脑图像分割上验证，3D体积分割和其他器官尚待验证
 - 参数化模型需要预先知道增强类型（噪声、INU），对未知伪影类型需要非参数模型

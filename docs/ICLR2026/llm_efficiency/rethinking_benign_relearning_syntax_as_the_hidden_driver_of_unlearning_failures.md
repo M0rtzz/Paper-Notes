@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Benign Relearning: Syntax as the Hidden Driver of Unlearning Failures
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 句法多样化方案极其简洁（只需 GPT-4o 改写查询），却同时改善遗忘效果、鲁棒性和模型效用
 - 对 BLUR 基准的方法论批评（步数不一致、单点评估）很有示范意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 主要在 TOFU 合成数据集验证，真实场景（如版权数据遗忘）的适用性需进一步测试
 - 句法多样化依赖 GPT-4o 生成改写，引入了额外成本和对外部模型的依赖
 - Levenshtein 距离作为句法度量可能过于粗糙，未来可探索句法树距离等更精确的度量

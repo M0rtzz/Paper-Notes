@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CalibraEval: Calibrating Prediction Distribution to Mitigate Selection Bias in LLMs-as-Judges
 description: >-
@@ -122,7 +122,7 @@ Qwen-72B 上的效果：
 3. **无标签设计的实用性**：在实际场景中，获取标签的成本正是使用 LLM 评判器的动机，因此无标签方法具有更高的实用价值
 4. **softmax 保序映射的设计**：累积 softmax 表达式天然满足保序约束，且可微分便于梯度优化，设计精巧
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要对每个样本做四种排列组合的推理（增加了推理成本约3倍），虽然比多轮讨论方法高效，但仍有额外开销
 - 保序假设可能在极端偏差情况下不完全成立

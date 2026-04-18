@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Simultaneous Motion And Noise Estimation with Event Cameras
 description: >-
@@ -167,7 +167,7 @@ DND21 去噪基准（AUC↑）：
 - **计算高效**：仅比原始 CMax 多一个排序操作的计算开销。
 - **开源**：提供了完整的开源实现。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要先验知识或估计噪声比例 $\eta$，不同场景下最优 $\eta$ 可能不同。
 - 不处理闪烁或主动光源导致的非 BA 噪声。

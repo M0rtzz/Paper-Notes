@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning with Exploration: An Entropy Perspective
 description: >-
@@ -173,7 +173,7 @@ Qwen2.5-Math-Base-7B + GRPO：
 - **与熵正则化的正交性**：不是"更好的熵正则化"，而是从优势函数角度提供完全不同的探索机制
 - **Pass@K的新视角**：将Pass@K视为推理能力的上界估计器，提供了评估RL方法"探索能力"的新维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在Qwen系列上验证**：尝试了Llama但因其缺乏推理行为而放弃，限制了结论的通用性
 2. **$\alpha$ 对算法敏感**：GRPO和PPO需要不同的$\alpha$（0.4 vs 0.1），缺乏自适应选择机制

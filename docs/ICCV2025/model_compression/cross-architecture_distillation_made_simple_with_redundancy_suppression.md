@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Architecture Distillation Made Simple with Redundancy Suppression
 description: >-
@@ -115,7 +115,7 @@ RSD作为logit蒸馏器：
 - 选择倒数第二层嵌入而非中间特征是一个聪明的设计决策，彻底规避了异构特征对齐难题
 - AAD的"保留学生独有能力"设计体现了对蒸馏本质的深入理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在ImageNet上优势不如CIFAR-100显著（+2.34% vs +10.69%），大规模数据集上还有提升空间
 - 仅使用1D嵌入，无法利用2D特征图的丰富空间信息，限制了向检测等空间敏感任务的扩展
 - 超参数λ和κ有一定敏感性，需要调优

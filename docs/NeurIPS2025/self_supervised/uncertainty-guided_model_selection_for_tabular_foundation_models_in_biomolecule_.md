@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty-Guided Model Selection for Tabular Foundation Models in Biomolecule Efficacy Prediction
 description: >-
@@ -107,7 +107,7 @@ OligoICP方法流程：
 - 为处理超出ICL单次前馈限制的大规模上下文数据提供了自然解决方案
 - 额外计算量可接受（各模型仅处理有限数据，推理可并行化）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MAE上改进不明显，主要改进体现在相关系数
 - Target1(B)对所有方法都具有挑战性，OligoICP未能改善

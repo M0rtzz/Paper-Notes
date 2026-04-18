@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PROSPERO: Active Learning for Robust Protein Design Beyond Wild-Type Neighborhood
 description: >-
@@ -84,7 +84,7 @@ ProSpero 遵循主动学习循环：每轮 (1) 在当前数据集上训练代理
 - SMC 中用困惑度修正约束采样偏差的技巧值得借鉴
 - 针对性掩码（受丙氨酸扫描启发）巧妙地将实验生物学技术转化为计算策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 电荷分组较粗糙，可探索更精细的氨基酸理化性质分组（如体积、极性）
 - 单残基逐步解码的 SMC 计算开销较大，可探索并行解码策略

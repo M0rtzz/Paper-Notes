@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRIM: Scalable 3D Gaussian Diffusion Inference with Temporal and Spatial Trimming
 description: >-
@@ -108,7 +108,7 @@ Selector架构消融表明单层CNN+两层MLP即为最优（pairwise accuracy 74
 - 渐进式mask扩展避免了早期硬裁剪的伪影，是一个实用的工程设计
 - 后处理阶段用mask置零背景Gaussian不透明度，简单但有效地解决了无训练插入带来的伪影
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前3D扩散pipeline严重依赖repurposed 2D backbone，导致空间裁剪只能在去噪transformer block中应用，无法延伸至完整生成pipeline
 - Selector需要在合成数据上训练，对于新backbone需要重新合成数据和训练

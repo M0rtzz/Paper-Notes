@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A protocol for evaluating robustness to H&E staining variation in computational pathology models
 description: >-
@@ -76,7 +76,7 @@ tags:
 - **性能高≠鲁棒** (r=-0.28) — 这个发现非常实用，意味着clinical deployment不能只看AUC排名
 - **聚合器可以"拯救"弱foundation model** — Wagner2023用CTransPath但鲁棒性进top 3
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **PLISM参考库覆盖不足**: SurGen数据集的染色角度范围已超出PLISM的高/低相似度参考，需要更多实验室的数据
 - **只测了4个离散条件**: 没有探索连续或非线性效应，无法画出"性能-染色强度"的完整curve
 - **只测了MSI分类任务**: 不清楚对分割、检测等其他下游任务结论是否一致

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UMAMI: Unifying Masked Autoregressive Models and Deterministic Rendering for View Synthesis
 description: >-
@@ -115,7 +115,7 @@ tags:
 - MAR+扩散损失的巧妙组合：MAR 提供高效的预训练框架，扩散损失提供高质量的像素级条件生成
 - 置信度预测实现了两种头的自动分工——无需手动指定哪些区域该生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍需每个目标视角独立生成——不支持一次性渲染多目标视角的一致3D场景
 - 极端外推（输入和目标视角差异很大）时确定性头的覆盖率很低，退化为几乎全生成
 - 当前的 Token 大小为 8×8 patch，限制了细节分辨率

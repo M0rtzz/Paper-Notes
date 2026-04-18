@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Who Can Withstand Chat-Audio Attacks? An Evaluation Benchmark for Large Audio-Language Models
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **深度分析**: 从模型架构角度解释鲁棒性差异——转录模块 (SpeechGPT) 是薄弱环节；含噪声训练数据 (Qwen2-Audio, LLama-Omni) 提升鲁棒性
 - **发现隐式噪声影响**: 次声波和超声波（人耳不可听）竟然影响部分模型输出，揭示模型与人类听觉的差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基准基于受控对话场景，可能无法覆盖高度动态的真实环境
 - 缺少音频越狱攻击 (jailbreak) 的探索，该领域开源工作极少

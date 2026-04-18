@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Effective Policy Learning for Multi-Agent Online Coordination Beyond Submodular Objectives
 description: >-
@@ -87,7 +87,7 @@ tags:
 - **首次处理弱次模的在线多智能体设定**：之前即使在单智能体在线设定中也未被研究
 - **无参数版本 MA-MPL 的实用性**：不需要知道目标函数的次模性参数，适用于黑箱优化场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **通信开销**：MA-MPL 的遗憾与通信图直径相关，大规模稀疏图上可能效率受限
 - **离散动作空间假设**：连续动作空间需要离散化，可能损失精度
 - **静态通信图**：未考虑时变通信拓扑

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforcing Structured Chain-of-Thought for Video Understanding
 description: >-
@@ -150,7 +150,7 @@ CVK 和 DVR 模块在 EventFlowQA 上的消融：
 - **对齐与探索的平衡**：CVK 负责一致性/对齐，DVR 负责多样性/探索，两者通过 token 级权重在同一目标函数中统一
 - **自监督一致性的意外发现**：大模型自监督效果反超 GT 监督，暗示过强的监督信号可能约束表达能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前仅在 16 帧设置下实验，对于更长视频（如 64 帧或分钟级）的扩展性未知
 2. Summary 段生成本身可能引入额外开销，对实时应用的影响需评估

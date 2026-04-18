@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are We in the AI-Generated Text World Already? Quantifying and Monitoring AIGT on Social Media
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：AIGT 的增长速度可能远超检测能力的提升，但没有数据支持这一判断。
 
-**本文要解决什么？** 建立 AIGT 在社交媒体上的量化监测体系——构建检测器和数据集，追踪 AIGT 的纵向变化。
+**本文目标** 建立 AIGT 在社交媒体上的量化监测体系——构建检测器和数据集，追踪 AIGT 的纵向变化。
 
 **切入角度**：大规模数据收集(240万帖子) + 多源检测基准(12个LLM) + 纵向追踪(2022-2024)。
 
-**核心idea一句话**：Medium/Quora上约1/3内容已是AI生成，但Reddit增长缓慢——平台文化影响AIGT渗透。
+**核心 idea**：Medium/Quora上约1/3内容已是AI生成，但Reddit增长缓慢——平台文化影响AIGT渗透。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ tags:
 - AIGT 互动水平更低的发现暗示平台算法可能已隐式降权AI内容。
 - 关于AIGT的话题分布偏好（技术/科学为主）为内容审核提供了方向。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - OSM-Det 的准确率不可能100%——大规模应用时的假阳/假阴率影响 AAR 估计
 - 仅覆盖三个英语平台——X/Twitter、YouTube等大平台未包含
 - AAR变化可能部分受平台政策变化影响（如Medium的审核政策）

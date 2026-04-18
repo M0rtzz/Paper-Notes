@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Active Membership Inference Test (aMINT): Enhancing Model Auditability with Multi-Task Learning
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L}_{\text{Multi-task}} = \lambda_1 \frac{\mathcal{L}_{\text{Audited}}
 - **共享层深度的insight**：Entry Setup > Output Setup的结论揭示了一个有趣的规律——当两个任务矛盾时，共享层越少越好，这与通常多任务学习中"共享更多层有利于效率"的直觉相反。
 - **部署可行性讨论**：论文讨论了Docker容器hash验证、数字签名日志、多方计算（MPC）等实际部署策略，增强了工作的实用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅验证了图像分类任务**：作者使用图像识别作为唯一的审计任务类型，尚未在目标检测、分割、生成模型、NLP等更多任务上验证。
 - **数据集50/50划分的假设较强**：实验中将训练集一分为二，50%作为训练数据$\mathcal{D}$，50%作为外部数据$\mathcal{E}$。实际场景中这个比例可能差异很大。
 - **开发者信任问题未完全解决**：虽然论文讨论了Docker验证等策略，但如果开发者恶意不配合或篡改训练流程，Active MINT的前提就不成立了。

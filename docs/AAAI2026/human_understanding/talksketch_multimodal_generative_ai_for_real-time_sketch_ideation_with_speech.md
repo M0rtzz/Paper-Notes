@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TalkSketch: Multimodal Generative AI for Real-time Sketch Ideation with Speech
 description: >-
@@ -156,7 +156,7 @@ TalkSketch由三个核心模块组成：
 4. **信息可编辑性**：用户可以编辑语音转录文本并重新生成AI洞察，平衡了自动化与可控性
 5. 从"Command-based"到"Conversation-based"的交互范式转变具有普遍意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语音转录错误**：背景噪音、发音不清可能导致转录错误，影响AI对意图的理解
 2. **沉默用户场景**：部分用户不习惯边画边说，此时系统退化为仅依赖草图+文字提示

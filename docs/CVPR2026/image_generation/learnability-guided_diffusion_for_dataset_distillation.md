@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learnability-Guided Diffusion for Dataset Distillation
 description: >-
@@ -94,7 +94,7 @@ tags:
 - **"可学习的知识缺口"概念精妙**：high loss for current model + low loss for reference model = 不是噪声也不是太难，而是恰好在学习边界上
 - **实证发现有价值**：80-90%冗余率这个数字令人震惊，揭示了现有方法的根本瓶颈
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ImageNet-1K上LGD(60.1%)与MGD3(60.2%)基本持平，大规模数据集上增量策略的优势不明显
 - 需要预训练参考模型 $\theta^*$（在全量数据训练），增加了准备开销
 - 每阶段生成需要模型推理计算可学习性分数和梯度引导，比一次性生成更慢

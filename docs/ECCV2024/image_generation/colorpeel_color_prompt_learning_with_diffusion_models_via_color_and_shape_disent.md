@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ColorPeel: Color Prompt Learning with Diffusion Models via Color and Shape Disentanglement
 description: >-
@@ -115,7 +115,7 @@ ColorPeel在所有指标上均远超现有方法，$\Delta E$ 误差降低约55%
 - 完全不需要真实世界图像采集，训练数据由Blender的几何形状自动合成，零标注成本
 - 泛化到纹理/材质学习展示了方法的普适性，颜色只是"抽象属性学习"的一个实例
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于SD v1.4，生成分辨率受限（512×512），可探索更新骨干如SDXL
 - 目前仅学习单一颜色token，多颜色组合（如渐变色）的精确控制尚未充分探索

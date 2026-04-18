@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchical and Collaborative LLM-Based Control for Multi-UAV Motion and Communication in Integrated Terrestrial and Non-Terrestrial Networks
 description: >-
@@ -160,7 +160,7 @@ $$r_t^{j, tele} = w_4 \cdot WR_{i^*, j, t} \cdot (1 - \min(1, \xi_t^j))$$
 3. **层次化解耦**：将全局网络管理（慢时间尺度）与局部运动控制（快时间尺度）分离到两个独立 LLM，降低了单个模型的决策复杂度
 4. **通信-交通联合建模**：加权数据速率公式巧妙地将负载均衡和切换惩罚统一到一个指标中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性存疑**：实验仅在 5-40 个 UAV 的规模下验证，大规模（数百 UAV）场景下的 LLM 推理延迟和 prompt 长度可能成为瓶颈
 2. **LLM 推理成本**：虽然使用 Ollama 本地部署，但每个 UAV 每步都需调用一次 LLM 推理，实际部署中的算力和延迟需进一步评估

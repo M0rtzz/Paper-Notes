@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diff4Splat: Repurposing Video Diffusion Models for Dynamic Scene Generation
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L} = \mathcal{L}_{FM} + \lambda_{photo}\mathcal{L}_{photo} + \lambda_
 - **多功能性**：一个模型同时支持视频生成、新视角合成、深度提取和实时交互
 - **生物学类比**：空间关系头的工作机制类似于胚胎发育中的分子梯度引导细胞分化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练代价仍然较高（32×A100，7天），难以快速迭代
 2. 依赖CogVideoX的潜在空间设计，对更高分辨率或更长序列的扩展性有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EF-3DGS: Event-Aided Free-Trajectory 3D Gaussian Splatting
 description: >-
@@ -101,7 +101,7 @@ EF-3DGS 在所有帧率下 ATE 均为最低，高速场景降幅约 40%。在新
 - Fixed-GS 两阶段训练策略巧妙分离结构和颜色优化，解决事件流无颜色信息的核心矛盾
 - 高速场景（1FPS）PSNR 提升 3dB 以上，实用意义显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要事件+帧同步的硬件（DAVIS 相机），实际部署成本较高
 - 事件噪声模型较简化（固定对比度阈值 C），真实场景噪声更复杂

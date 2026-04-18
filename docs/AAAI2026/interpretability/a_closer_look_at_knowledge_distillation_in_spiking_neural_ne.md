@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Closer Look at Knowledge Distillation in Spiking Neural Network Training
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{CE} + \beta \cdot \mathcal{L}_{SAMD} + \gam
 - **架构无关性**：SAM生成方式不依赖梯度和特定架构，既适用于Spiking CNN也适用于Spiking Transformer，泛化性好。
 - 在精度和能效之间取得了更好的平衡：以更少时间步即可超越之前方法的全时间步性能。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅验证了图像分类任务**：SNN在NLP、多模态等任务上的KD效果未探索，方法的跨任务泛化性有待验证。
 - **CAM的精度依赖教师质量**：当教师ANN的CAM本身有误差时（如在困难样本上），可能误导学生的SAM学习。虽然论文发现NLD可以部分缓解此问题，但根本上仍受限于教师的质量。

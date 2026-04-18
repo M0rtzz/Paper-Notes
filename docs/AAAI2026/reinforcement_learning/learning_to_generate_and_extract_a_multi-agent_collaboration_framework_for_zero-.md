@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Generate and Extract: A Multi-Agent Collaboration Framework for Zero-shot Document-level Event Arguments Extraction
 description: >-
@@ -183,7 +183,7 @@ $$\nabla_{\mathcal{E}} \mathbb{E}[\alpha] = \mathbb{E}[\alpha_i \nabla_{\mathcal
 4. **小模型胜过大模型**：8B 模型通过多智能体协作框架显著超越 70B LLaMA、GPT-4o、DeepSeek R1
 5. **多样性分析深入**：从词汇、语义、逻辑、句法四维分析合成数据多样性随轮次的变化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **多样性衰减**：更多交互轮次导致词汇/语义/句法多样性下降，模型收敛到高似然模式
 2. **单一评估维度**：评估智能体仅基于对数似然评分，缺乏对事实准确性、逻辑一致性的显式评估

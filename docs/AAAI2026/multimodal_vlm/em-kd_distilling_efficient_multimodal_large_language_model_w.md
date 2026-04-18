@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EM-KD: Distilling Efficient Multimodal Large Language Model with Unbalanced Vision Tokens
 description: >-
@@ -66,7 +66,7 @@ EM-KD以LLaVA-OneVision-SI为teacher，以自适应平均池化压缩视觉token
 - 模型压缩+蒸馏的"双赢"——比vanilla模型少4倍token但性能更好(+1.0)，且推理速度提升近2倍
 - VLAD的设计思路可以迁移到其他需要增强vision-language对齐的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Hungarian算法的计算复杂度为$O(n^3)$，虽然在GPU上运行且no gradient，但当token数量很大时可能成为瓶颈
 - 仅在LLaVA系列模型上验证，未覆盖InternVL、Qwen-VL等架构
 - 只探索了最终层的vision logits，中间层的信息可能也有价值

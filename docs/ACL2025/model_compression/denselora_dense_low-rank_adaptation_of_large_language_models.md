@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DenseLoRA: Dense Low-Rank Adaptation of Large Language Models
 description: >-
@@ -112,7 +112,7 @@ DenseLoRA的适配过程分为三阶段流水线：(1) Encoder压缩隐藏表示
 - 在低资源场景下（10%数据）仍然表现出色，说明DenseLoRA的泛化能力更强
 - MLP层适配比注意力层更重要的发现与直觉不完全一致，值得进一步研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验主要集中在常识推理和数学推理，缺少NLG任务（如摘要、翻译等）的验证
 - 跨层共享Encoder-Decoder可能在层间差异大的深层模型上不够灵活
 - Decoder的零初始化意味着训练初期适配信号很弱，可能影响收敛速度

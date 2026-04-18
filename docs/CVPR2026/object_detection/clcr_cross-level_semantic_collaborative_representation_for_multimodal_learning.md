@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLCR: Cross-Level Semantic Collaborative Representation for Multimodal Learning
 description: >-
@@ -151,7 +151,7 @@ $$\mathcal{L}_{all} = \mathcal{L}_{task} + \lambda_{inter} \mathcal{L}_{Inter} +
 3. **共享-私有的双重保护**：正交投影（结构约束）+ 白化互相关正则化（统计约束）双管齐下
 4. **六个基准全面验证**：覆盖情感识别、事件定位、情感分析、动作识别四大任务类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 三层层级是硬编码设计，不同任务可能需要不同层数
 2. 计算开销分析不足——白化操作和 Stiefel 参数化的实际训练时间未报告

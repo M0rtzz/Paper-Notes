@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adjustment for Confounding using Pre-Trained Representations
 description: >-
@@ -173,7 +173,7 @@ $$\min_{(s,p) \in \mathcal{P}_g \cup (s_\psi, d_\mathcal{M})} \frac{s}{p} \times
 3. **实际指导意义**：在预训练表示上做因果推断时，应优先使用神经网络（而非 Lasso/树方法）作为 nuisance 估计器
 4. **HCM + 流形假设**的提出具有普适性，不仅适用于 ATE 估计，可推广到其他半参数推断任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一模态假设**：仅考虑单一非表格数据源的混杂，未讨论多模态融合场景（如图像+文本同时作为混杂）
 2. **仅限 ATE**：未涉及 ATT（处理组平均处理效应）或 CATE（条件平均处理效应）的推断

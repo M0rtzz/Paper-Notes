@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STEP: A Unified Spiking Transformer Evaluation Platform for Fair and Reproducible Benchmarking
 description: >-
@@ -98,7 +98,7 @@ STEP 是一个模块化的基准测试框架，而非一种新模型。其架构
 - **平台价值**：为 STs 社区提供了急需的统一评估标准和可复现环境
 - **对未来的启示**：推动社区从"注意力增强"转向"脉冲原生架构创新"，如树突处理、多隔室细胞等
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分割和检测基准仅覆盖了有限模型（分割仅评估 Spikformer/SDT，检测仅 SDTv2）
 - 大规模 ImageNet 实验限于 Spikformer 和 QKFormer 两个端点

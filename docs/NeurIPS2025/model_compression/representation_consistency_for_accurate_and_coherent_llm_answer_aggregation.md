@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Representation Consistency for Accurate and Coherent LLM Answer Aggregation
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **零额外查询成本**——仅利用已缓存的激活，是对 SC 的纯增量改进
 - 方法可以增强任何产生多候选回复的 test-time scaling 策略——不限于 SC
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\lambda$ 和层的选择需要在验证集上调优——跨任务泛化性有待提高
 - 仅在多选题上验证——开放式生成的答案分组更困难
 - SAE 的可用性受限（目前仅 Gemma 和 Llama 有公开的高质量 SAE）

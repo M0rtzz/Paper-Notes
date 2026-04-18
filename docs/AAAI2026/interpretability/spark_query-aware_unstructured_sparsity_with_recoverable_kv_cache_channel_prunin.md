@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SparK: Query-Aware Unstructured Sparsity with Recoverable KV Cache Channel Pruning
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：通道重要性高度token-specific（CV>1.1），但现有方法用固定mask做structuredpruning，无法捕捉这种动态性
 
-**本文要解决什么？** 在KV cache的通道维度做fine-grained、token-aware的非结构化稀疏，同时保持/恢复被剪枝通道的信息
+**本文目标** 在KV cache的通道维度做fine-grained、token-aware的非结构化稀疏，同时保持/恢复被剪枝通道的信息
 
 **切入角度**：两个关键观察——(1) 通道重要性在不同token间差异巨大，非结构化剪枝远优于结构化；(2) 用小常数替代被剪枝通道（而非直接置零）能大幅减少信息损失
 
-**核心idea一句话**：对KV cache做token-wise的非结构化通道剪枝（保留最重要通道）+轻量recovery函数恢复被剪通道贡献
+**核心 idea**：对KV cache做token-wise的非结构化通道剪枝（保留最重要通道）+轻量recovery函数恢复被剪通道贡献
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ SparK在80%剪枝下Avg=31.16 vs ThinK的16.97，差距巨大！
 - **Recovery机制设计精巧**：不只是简单剪枝，而是剪+恢复。观察到常数替代就能大幅减少信息损失是一个反直觉但有力的发现，启发了distribution-based recovery
 - **从问题形式化到贪心解的推导很清晰**：将通道剪枝形式化为max-saliency选择问题，利用通道间近似不相关的性质简化为可贪心求解的线性问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Observation window的选择**：用window内mean query近似all queries会引入误差，尤其在长上下文中不同位置的query pattern差异大
 - **Recovery函数的设计空间还没充分探索**：目前用分布采样，但更复杂的recovery（如小网络预测）可能效果更好
 - **Value cache的剪枝只用了简单的norm-based heuristic**：Key cache有详细的理论推导，Value cache的剪枝策略可以进一步优化

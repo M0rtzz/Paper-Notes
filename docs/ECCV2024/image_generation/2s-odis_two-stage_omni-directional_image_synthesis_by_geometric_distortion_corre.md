@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 2S-ODIS: Two-Stage Omni-Directional Image Synthesis by Geometric Distortion Correction
 description: >-
@@ -77,7 +77,7 @@ tags:
 - **MaskGIT并行采样**比自回归快25倍，在保持质量的前提下大幅提升推理效率
 - 两阶段(coarse-to-fine)框架是图像生成的经典范式，本文灵活地将每个阶段适配到不同的图像空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 26个NFoV图像之间可能存在不连续性（虽有全局coarse图引导，但缺乏显式一致性约束）
 - VQGAN encoder转码全景数据集需1-2天（可通过模型蒸馏加速）
 - 固定为26方向+60° FOV，未探索最优配置

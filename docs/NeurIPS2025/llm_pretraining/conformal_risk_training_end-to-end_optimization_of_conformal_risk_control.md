@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Conformal Risk Training: End-to-End Optimization of Conformal Risk Control
 description: >-
@@ -156,7 +156,7 @@ subject to $\rho(\ell(f_\theta(x), y; \hat{\lambda}(\theta))) \leq \alpha$ on ca
 - **可微校准的核心洞察**：认识到 CRC 的阈值选择是可微的，这一洞见为后续工作开辟了方向
 - **跨领域应用**：从分类到金融风险控制，展示了方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练中需要在每个 batch 上分割训练集和校准集，减少了有效训练数据量
 - 隐函数微分计算增加了训练开销

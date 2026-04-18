@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MixA-Q: Revisiting Activation Sparsity for Vision Transformers from a Mixed-Precision Quantization Perspective
 description: >-
@@ -132,7 +132,7 @@ MixA-Q 替换 Swin Transformer 中的标准 Swin Block 为 **Two-Branch Swin Blo
 - **Uniform-sum 采样**：简单但有效地解决了随机采样导致的 Irwin-Hall 分布偏差问题
 - **安全关键场景的适用性**：在自动驾驶等安全关键场景中，OOD 鲁棒性比平均精度更重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Swin Transformer（窗口注意力）上验证，对非窗口架构的适用性未知
 - 窗口重要性仅用 L2 范数，更复杂的重要性度量可能改善选择质量

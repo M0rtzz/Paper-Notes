@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Trust but Verify: Adaptive Conditioning for Reference-Based Diffusion Super-Resolution
 description: >-
@@ -151,7 +151,7 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{rec} + \lambda_2 \mathcal{L}_{per
 - **可学习摘要token的语义聚类**：自组织形成语义有意义的聚类中心
 - **30倍加速**：单步扩散设计使推理速度远超多步方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 模型参数量约为 S3Diff 的两倍（2679M vs 1327M），来自 ReferenceNet
 2. 对极端不相关参考的处理仍有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Flow Density Control: Generative Optimization Beyond Entropy-Regularized Fine-Tuning
 description: >-
@@ -128,7 +128,7 @@ FDC 将通用生成优化形式化为：最大化 $\mathcal{F}(p_1^\pi) - \alpha
 4. **表达力分级**：Linear/Convex/General GO
 5. **理论+实践**：收敛保证+真实任务验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 非凹时仅保证稳定点
 2. 每步需完整控制求解器

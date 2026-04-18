@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generating Multi-Image Synthetic Data for Text-to-Image Customization
 description: >-
@@ -136,7 +136,7 @@ tags:
 - **推理引导归一化的通用性**：该技巧不仅适用于本方法，也可直接改善 IP-Adapter 等现有方法的文本对齐度。
 - **从数据集生成到模型设计的统一**：数据集生成和模型训练使用相同的共享注意力机制，设计上高度一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅关注单对象图像，未扩展到多对象场景
 - Objaverse 资产的多样性有限，可能影响某些类别的质量

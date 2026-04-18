@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PlanarGS: High-Fidelity Indoor 3D Gaussian Splatting Guided by Vision-Language Planar Priors
 description: >-
@@ -113,7 +113,7 @@ $\lambda_1=0.05, \lambda_2=0.5, \lambda_3=0.05, \lambda_4=0.2$。训练30K步，
 2. 文本提示的灵活性：教室加"blackboard"即可检测黑板，无需重训练
 3. 共面约束的"整体性"约束思路值得借鉴——不是逐像素约束法线，而是拟合整个平面后约束深度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖DUSt3R和GroundedSAM两个大模型做预处理，部署复杂度高
 - 文本提示需要人工设定（虽然通用性较好）

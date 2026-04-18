@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Visual Language Models as Zero-Shot Deepfake Detectors
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：真实部署需要概率输出来调节阈值（平衡误报率和漏报率），但 VLM 的 argmax 输出只能给 0/1。
 
-**本文要解决什么？** 如何从 VLM 的 token 分布中提取有意义的分类置信度？
+**本文目标** 如何从 VLM 的 token 分布中提取有意义的分类置信度？
 
 **切入角度**：利用 VLM 在"Is this photo real?"回答时 "yes"/"no" token 的概率比作为置信度。
 
-**核心idea一句话**：将 yes/no token 概率归一化为 $\tilde{P}_{\text{fake}} = P_{\text{no}} / (P_{\text{no}} + P_{\text{yes}})$，得到可用于 ROC 分析的连续置信度。
+**核心 idea**：将 yes/no token 概率归一化为 $\tilde{P}_{\text{fake}} = P_{\text{no}} / (P_{\text{no}} + P_{\text{yes}})$，得到可用于 ROC 分析的连续置信度。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **vs SBI (SOTA)**: SBI 通过自混合数据增强训练高泛化性分类器；本文的 VLM 方案完全零样本，虽 AUC 略低但无需任何 deepfake 训练数据
 - 该 token 概率归一化框架可直接复用于任何需要从 VLM 获取分类置信度的场景（如医学影像分析、内容审核）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试了人脸 swap 型 deepfake，未涵盖全脸生成（StyleGAN）、表情操纵（Face2Face）等类型
 - GPT-4o 无法获取 token 概率，仅能做 binary 评估，限制了闭源模型的应用
 - VLM 推理速度远慢于轻量级分类器（如 EfficientNet），实际部署需考虑延迟

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A High-Dimensional Statistical Method for Optimizing Transfer Quantities in Multi-Source Transfer Learning
 description: >-
@@ -86,7 +86,7 @@ tags:
 - **架构无关性(Architecture-agnostic)**: 同一框架适用于ViT全量训练和LoRA参数高效训练，不需要针对架构做调整
 - **可解释的领域偏好**: 最优迁移量的分析可以揭示哪些源域对目标域最有用，提供了可解释的迁移学习决策依据
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **采样策略简单**: 目前仅用随机采样，作者也承认更智能的采样策略（如主动采样）可能进一步提升性能
 - **仅优化数量不优化权重**: 当前框架只确定"用多少"样本，但不给样本赋权，未来可联合优化样本权重和迁移量
 - **理论依赖负对数似然**: 理论分析建立在交叉熵损失假设上，对MSE等其他损失函数没有直接保证

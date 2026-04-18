@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reward-Augmented Data Enhances Direct Preference Alignment of LLMs
 description: >-
@@ -111,7 +111,7 @@ $$\min_{\pi} \mathbb{E}_{g, x \sim \mathcal{D}_N, y \sim \pi(\cdot|x,g)} \left[(
 4. **兼容无奖励分数数据**：可用DPO隐式奖励做重标注，适用于仅有二元偏好的数据集
 5. **理论严谨**：提供了全局收敛到最优策略的理论证明，优于先前目标条件化RL的局部保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖奖励分数质量**：方法效果取决于judge模型打分的准确性，如果奖励分数噪声大，增强效果可能下降
 2. **系统提示实现较粗糙**：用文本提示实现奖励条件化可能不如嵌入层条件化高效，存在优化空间

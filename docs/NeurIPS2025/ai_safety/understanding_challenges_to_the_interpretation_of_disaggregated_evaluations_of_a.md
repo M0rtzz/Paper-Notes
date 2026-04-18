@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Challenges to the Interpretation of Disaggregated Evaluations of AI
 description: >-
@@ -110,7 +110,7 @@ tags:
 - Table 2 的综合分析提供了极有价值的实践参考：告诉从业者在什么因果假设下可以使用什么控制变量
 - 强调公平不是模型属性而是部署政策的效果属性，这一视角对政策制定者尤为重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析主要在 Bayes 最优假设下，实际模型性能差异可能同时包含估计误差和分布差异两个来源
 - 因果图选择本身需要领域知识，而实际中因果结构往往未知

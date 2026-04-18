@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EVLF: Early Vision-Language Fusion for Generative Dataset Distillation
 description: >-
@@ -107,7 +107,7 @@ $$z_{\text{fused}} = \psi(\text{LN}(\tilde{z} + \text{softmax}(\frac{QK^\top}{\s
 3. **实验全面**：覆盖 CIFAR-10/100、Tiny-ImageNet、ImageNet-1K 及其子集，多种 IPC 设置和架构
 4. **概念上的启发**：早期融合 vs 晚期融合的比较揭示了条件生成中语义注入时机的重要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前仅支持类级别条件，不支持实例级或多标签场景
 2. EVLF 在 ImageNet-1K 大规模设置上的提升相对较小（~0.5-1.6%）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Analysis of Datasets, Metrics and Models in Keyphrase Generation
 description: >-
@@ -112,7 +112,7 @@ tags:
 - 发布可复现的PLM基线模型，降低该领域的入门门槛
 - 作为一篇GEM²类型的分析论文，其方法论可以迁移到其他NLP任务的系统性分析中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分析主要聚焦英文KG研究，多语言场景覆盖不足
 - 虽然揭示了问题，但未提出具体的新数据集来解决领域单一性问题

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving the Straight-Through Estimator with Zeroth-Order Information
 description: >-
@@ -129,7 +129,7 @@ $$h_{\text{smooth}}(x) = \mathbb{E}_{u \sim \bar{p}(u)}[h(x + \bar{\epsilon} u)]
 - **自适应抑制机制**：当 STE 给出错误方向时，有限差分自然将其贡献压缩为零；正确时则保留——无需额外检测机制
 - **广泛适用**：与 Identity/tanh/ApproxSign 等各种 STE、LSQ/QuEST 等 SOTA 量化方法均可组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **理论保证较弱**：主要依赖启发式推导（一阶 Taylor + 零均值假设），缺乏收敛性严格证明
 - **$\beta_{\min}$ 需要调**：虽然接近 1 的范围较窄，但仍需要少量搜索
 - **仅测试到 300M 参数**：是否在 billion 级模型上仍有收益需验证

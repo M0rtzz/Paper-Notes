@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Domain Learning for Video Anomaly Detection with Limited Supervision
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}_{\text{ext}} = \mathbb{E}[S \cdot \mathcal{L}_{\text{bce}} - \lamb
 - **自适应伪标签精炼**：不确定性分数作为自动阈值动态加权损失，避免手动调参，且与伪标签质量有强负相关性
 - **测试集重标注**：发现 UCF-Crime 测试集标注噪声严重（异常帧占比从 7.58% 提升到 16.55%），提供了更准确的 UCF-R 标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 I3D 和 CLIP 两个 backbone，训练开销较大（推理仅用 CLIP）
 - 在 XDV 作为源域时，XDV 上的域内性能（78.61%）低于域内 SOTA（80.67%），可能因架构简单导致域内欠拟合

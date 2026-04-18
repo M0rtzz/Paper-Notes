@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation
 description: >-
@@ -128,7 +128,7 @@ ImageNet 512×512：
 3. **可定制的采样调度**：掩码步数在不同尺度可独立调整且无需重训练，为质量 vs 速度的权衡提供极大灵活性
 4. **自定义 IO-aware GPU 核**：工程贡献同样重要——Triton 实现的块稀疏注意力核使论文的理论稀疏优势在实践中兑现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 参数量比对应 VAR 模型大约 30-50%（HMAR-d16 465M vs VAR-d16 310M），因为增加了掩码预测头
 - 目前仅在 ImageNet 类别条件生成上验证，缺少文本条件生成（text-to-image）实验

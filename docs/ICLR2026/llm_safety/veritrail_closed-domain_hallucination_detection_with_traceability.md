@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VeriTrail: Closed-Domain Hallucination Detection with Traceability
 description: >-
@@ -113,7 +113,7 @@ VeriTrail 对最终输出提取的每个 claim 独立执行以下迭代过程，
 - **证据 ID 的工程巧思**：通过 programmatic ID 分配 + LLM 返回 ID 匹配，巧妙地消除了"用 LLM 验证 LLM"中的二次幻觉风险
 - **q 参数提供灵活性**：用户可根据场景（高召回 vs 高精度）调整检测行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估了两种 MGS 过程（层次化摘要 + GraphRAG），通用性有待在更多场景验证
 - 依赖 LLM 作为 evaluator，本身可能引入系统性偏差
 - 对 Inconclusive 判定的处理较粗糙（实验中直接排除）

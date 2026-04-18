@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FALCON: Resolving Visual Redundancy and Fragmentation in High-resolution Multimodal Large Language Models via Visual Registers
 description: >-
@@ -125,7 +125,7 @@ ReAtten 在所有指标上最优，且有效减少幻觉（POPE 87.3）。
 - 数据效率优势显著：与需要上亿样本预训练的 QFormer/Abstractor 相比，仅需 <3M 样本适配
 - 四阶段渐进训练设计合理，确保寄存器从低分辨率到高分辨率平滑过渡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 64 寄存器的固定数量可能不适应所有场景——简单图像分配过多、复杂图像分配不足
 - 未探索动态寄存器数量分配（如根据图像复杂度调整）

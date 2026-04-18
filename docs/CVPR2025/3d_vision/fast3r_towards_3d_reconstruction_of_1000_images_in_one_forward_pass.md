@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fast3R: Towards 3D Reconstruction of 1000+ Images in One Forward Pass
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: DUSt3R 证明了端到端 pointmap 回归的有效性，但其配对假设造成了可扩展性瓶颈——无论是计算复杂度还是信息利用效率。
 
-**本文要解决什么**: 实现一个能在单次前向传播中处理 1000+ 张无序图像的 3D 重建模型。
+**本文目标**: 实现一个能在单次前向传播中处理 1000+ 张无序图像的 3D 重建模型。
 
 **切入角度**: 用 Transformer 的 all-to-all self-attention 替代配对处理，让所有视图同时互相关注，一次性输出全局坐标系下的 pointmap。
 
-**核心 idea 一句话**: 将 DUSt3R 的"配对回归 + 全局对齐"简化为"多视图一次性回归"，用 Transformer 的并行注意力机制实现全局一致的 3D 重建。
+**核心 idea**: 将 DUSt3R 的"配对回归 + 全局对齐"简化为"多视图一次性回归"，用 Transformer 的并行注意力机制实现全局一致的 3D 重建。
 
 ## 方法详解
 
@@ -53,17 +53,17 @@ tags:
 ### 关键设计
 
 **1. Image Index Positional Embedding + Position Interpolation**
-- **做什么**: 为每张图像的 patch tokens 添加一维索引位置编码，帮助 Transformer 区分不同图像；训练时从 $N'=1000$ 的池中随机采样 $N=20$ 个索引。
+- **功能**: 为每张图像的 patch tokens 添加一维索引位置编码，帮助 Transformer 区分不同图像；训练时从 $N'=1000$ 的池中随机采样 $N=20$ 个索引。
 - **核心思路**: 借鉴 LLM 中的 Position Interpolation——训练时用 20 个视图但从 1000 个候选位置中随机采样索引（等价于 image masking），推理时可直接扩展到 1000 张图像。第一张图像始终使用 $p_1$（定义全局坐标系）。
 - **设计动机**: 朴素的连续索引编码在测试时视图数超出训练范围时性能急剧下降。随机采样策略让模型在训练时就"见过"稀疏的索引分布，实现了从 20 到 1000+ 的无缝泛化。
 
 **2. 双 Pointmap + Confidence-Weighted Loss**
-- **做什么**: 预测 local pointmap（各自相机坐标系）和 global pointmap（第一相机坐标系），分别配有 confidence map。
+- **功能**: 预测 local pointmap（各自相机坐标系）和 global pointmap（第一相机坐标系），分别配有 confidence map。
 - **核心思路**: 总损失 $\mathcal{L}_{total} = \mathcal{L}_{\mathbf{X}_G} + \mathcal{L}_{\mathbf{X}_L}$，每个损失使用归一化 3D 回归 + confidence 加权：$\mathcal{L}_\mathbf{X} = \frac{1}{|\mathbf{X}|}\sum \hat{\Sigma}_+ \cdot \ell_{regr} + \alpha \log(\hat{\Sigma}_+)$。
 - **设计动机**: Confidence 加权帮助模型处理标签噪声（如激光扫描中玻璃、薄结构的误差），$\Sigma_+ = 1 + \exp(\hat{\Sigma})$ 确保正值。
 
 **3. 内存高效推理（Tensor Parallelism）**
-- **做什么**: 推理时将 DPT head 复制到多个 GPU，ViT encoder 和 fusion transformer 在 GPU 0 上运行完后，将输出分散到 K 个 GPU 并行解码。
+- **功能**: 推理时将 DPT head 复制到多个 GPU，ViT encoder 和 fusion transformer 在 GPU 0 上运行完后，将输出分散到 K 个 GPU 并行解码。
 - **核心思路**: 分析发现 DPT head 消耗 >60% 的推理 VRAM（需要将 1024 token 上采样到 512×512 图像），是内存瓶颈。
 - **设计动机**: 训练时也使用 DeepSpeed ZeRO stage 2 + FlashAttention，使得 batch size 128、$N=20$ 的训练可在 128 A100 GPU 上完成。
 
@@ -118,7 +118,7 @@ tags:
 - 利用标准 Transformer 基础设施（FlashAttention, DeepSpeed），持续受益于系统级优化
 - 在仅用 DUSt3R 6/9 数据集的情况下就取得了可比或更优的精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DPT head 是推理内存瓶颈，每张图像需上采样到高分辨率
 - 虽然可处理 1000+ 视图，但 all-to-all attention 的二次复杂度仍然是长期瓶颈

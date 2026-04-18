@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Causal Masking on Spatial Data: An Information-Theoretic Case for Learning Spatial Datasets with Unimodal Language Models
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：因果掩蔽天然假设1D序列，但空间数据是2D/3D的——如何在保留因果掩蔽训练范式的同时利用空间结构？
 
-**本文要解决什么**：比较空间编码（FEN棋盘状态）vs 序列编码（PGN棋步）在因果/双向掩蔽下的表现。
+**本文目标**：比较空间编码（FEN棋盘状态）vs 序列编码（PGN棋步）在因果/双向掩蔽下的表现。
 
 **切入角度**：用国际象棋作为controlled testbed——FEN编码保留空间棋盘结构，PGN编码是传统的线性化序列。ChessBench提供150亿Stockfish标注位置。
 
-**核心idea一句话**：空间编码（FEN）+ 因果掩蔽优于序列编码（PGN）+ 因果掩蔽，说明保留空间结构比选择掩蔽策略更重要。
+**核心 idea**：空间编码（FEN）+ 因果掩蔽优于序列编码（PGN）+ 因果掩蔽，说明保留空间结构比选择掩蔽策略更重要。
 
 ## 方法详解
 
@@ -61,13 +61,13 @@ tags:
 
 3. **字符级分词与Prompt工程**：
 
-    - **做什么**：为FEN数据设计专用的字符级tokenizer和结构化prompt模板
+    - **功能**：为FEN数据设计专用的字符级tokenizer和结构化prompt模板
     - **核心思路**：默认LLM tokenizer会将字符序列合并（如"pk"→pawn+king变成单token），破坏FEN的逐字符空间语义。强制字符级分词确保每个棋子和空格有独立token表示；prompt中嵌入FEN状态、合法着法列表和目标最佳着法
     - **设计动机**：实验发现Pythia和Llama在默认tokenizer下均无法收敛，字符级分词是FEN上成功训练的关键前提条件
 
 4. **掩蔽交叉熵目标函数**：
 
-    - **做什么**：仅在最佳着法token上计算损失，其余prompt token全部掩蔽
+    - **功能**：仅在最佳着法token上计算损失，其余prompt token全部掩蔽
     - **核心思路**：构建binary掩蔽向量 $\mathbf{w}$，仅当token属于最佳着法 $m^*$ 时 $w_t=1$，损失为 $\mathcal{L}_{\text{masked}} = -\sum_t w_t \log p_\theta(m_t^*|X_{0:t-1})$。采用完全teacher forcing，预测时可条件化于包含目标token在内的前文所有token
     - **设计动机**：FEN prompt很长（棋盘状态+合法着法列表），若在所有token上计算损失会引入大量无关梯度噪声；掩蔽使模型专注于着法预测
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PartSTAD: 2D-to-3D Part Segmentation Task Adaptation
 description: >-
@@ -135,7 +135,7 @@ GLIP 和 SAM 均冻结，仅训练权重预测网络（per category，few-shot 8
 - **mRIoU 作为目标函数的巧妙处理**：绕过了 IoU 对离散参数不可微的问题，通过预测权重而非位置实现端到端优化
 - **SAM 与 GLIP 的互补组合**：GLIP 负责语义检测（告诉每个框是什么），SAM 负责精确分割（把框紧凑到前景边界）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 权重预测网络 per-category 训练，不同类别之间不共享，扩展性受限
 - 仅在 PartNet-Mobility（合成 CAD 模型）上实验，对真实扫描 3D 数据的泛化性未充分验证

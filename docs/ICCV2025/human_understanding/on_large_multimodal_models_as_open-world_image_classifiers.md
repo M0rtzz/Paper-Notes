@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Large Multimodal Models as Open-World Image Classifiers
 description: >-
@@ -126,7 +126,7 @@ tags:
 - 粒度-性能的断崖关系揭示 LMM 视觉感知的根本瓶颈——不是"不认识"而是"说不出准确名字"
 - 对标注歧义的分析诚实且有价值，提醒社区不要过度解读开放世界评估中的"错误"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 缺少最新的 LMM（如 GPT-4o、Gemini 2），结论在更强模型上是否成立需要验证
 - 评估 prompt 统一使用"What type of object"，对非物体数据集（DTD 纹理、UCF101 动作）不够自然

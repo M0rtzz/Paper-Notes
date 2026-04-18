@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM Enhancers for GNNs: An Analysis from the Perspective of Causal Mechanism Identification
 description: >-
@@ -105,7 +105,7 @@ $$\mathcal{L}_{\text{II}} = \frac{1}{|\mathcal{G}|^2} \sum_{G^{\text{orig}}} \su
 4. **即插即用**：AT模块无需修改LLM或GNN架构，直接插入两者之间即可生效
 5. **关键洞察**：LLM增强器的价值在于提供节点原始语义，而非建模高阶图关系——这澄清了社区对该范式的认知
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅分析固定参数LLM**：未涉及可微调LLM的情况，而fine-tune LLM可能改变其在框架中的角色
 2. **合成数据 vs 真实数据**：核心分析基于合成CCSG数据集，真实场景的因果关系更复杂、不可控

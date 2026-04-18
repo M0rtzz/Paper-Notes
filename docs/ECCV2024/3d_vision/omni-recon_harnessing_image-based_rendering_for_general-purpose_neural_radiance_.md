@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Omni-Recon: Harnessing Image-Based Rendering for General-Purpose Neural Radiance Fields
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L} = \mathcal{L}_{color} + \beta \mathcal{L}_{depth}$$
 - **IBR潜力被低估**：论文揭示了IBR管线在构建通用3D管线中的核心价值，这一视角具有启发性
 - **blending权重复用**：用颜色混合权重直接泛化到语义/边缘/关键点等任务，不需额外训练，既优雅又实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验以DTU/ScanNet等室内场景为主，对复杂户外场景的泛化效果有待验证
 - 零样本理解质量依赖2D先验模型的预测准确度

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sapiens: Foundation for Human Vision Models
 description: >-
@@ -92,7 +92,7 @@ Sapiens 采用 pretrain-then-finetune 范式：
 - **高分辨率原生支持**: 1K 分辨率预训练是直觉但少有人做的选择（FLOPs代价巨大），但对人体细节感知至关重要
 - **合成数据的惊喜**: 深度/法线任务仅用合成数据微调，就实现了顶级in-the-wild性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 预训练数据集 Humans-300M 为私有数据，不公开，可复现性受限
 - 2B 模型的推理 FLOPs 高达 8.7T，实际部署受限
 - 只做了4个人体任务，未探索体型估计 (body shape)、手势识别等其他人体任务

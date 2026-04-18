@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provably Improving Generalization of Few-Shot Models with Synthetic Data
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L} = \lambda F(\boldsymbol{S}, h) + F(\boldsymbol{G}, h) + \lambda_1 
 3. **轻量版极具实用性**：不需微调生成器、仅用64张合成图/类即可达到SOTA水平，大幅降低计算成本
 4. **"模型感知"视角新颖**：Corollary 3.5 揭示即使真实与合成分布客观上差距较大，只要模型感知它们相似则仍可保证泛化，这突破了传统认知
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **界的紧致性**：上界为 $O(\sqrt{K})$，当类别/簇数 $K$ 较大时不够紧；极端单样本情况下局部行为无法被捕捉
 2. **聚类与训练解耦**：K-means 聚类在数据空间上一次性完成后固定，未随模型训练动态更新，可能非最优

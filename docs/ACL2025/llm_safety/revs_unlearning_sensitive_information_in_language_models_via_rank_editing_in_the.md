@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] REVS: Unlearning Sensitive Information in Language Models via Rank Editing in the Vocabulary Space
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：Transformer MLP 的 FF2 层相当于"记忆存储"（Geva et al., 2021），其每一列（神经元）投影到词汇空间后对应具体 token 的 logit 贡献。如果能精准找到促进敏感 token 的神经元，直接在词汇空间降低排名，就无需梯度计算。
 
-**核心 idea 一句话**：不优化损失函数，而是在词汇空间中直接操作 token 排名——把敏感 token 从 rank 1 降到指定低排名。
+**核心 idea**：不优化损失函数，而是在词汇空间中直接操作 token 排名——把敏感 token 从 rank 1 降到指定低排名。
 
 ## 方法详解
 
@@ -147,7 +147,7 @@ REVS 完全无梯度。在每个实验中，先对所有敏感序列执行遗忘
 - **"遗忘 2 个 token 即可消除整条序列"**：关键洞察是信息恢复需要完整序列，因此只需破坏最难猜测的 2 个稀有 token。这大幅减少了对模型的修改量，是 specificity 高的根本原因
 - **自然记忆数据集的构建方法**：利用 Pile 的 extraction benchmark 子集 + Presidio PII 检测 + 模型生成验证，构建了真实记忆的 Email/URL 数据集。这个流程本身对后续 PII 遗忘研究有参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **规模有限**：仅在 6B/8B 模型验证，未测试 70B+ 模型。大模型中信息可能更分布式
 - **数据类型有限**：主要测邮箱、URL 和 SSN（数字），对电话号码、地址等未验证

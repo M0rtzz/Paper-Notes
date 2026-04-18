@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models
 description: >-
@@ -97,7 +97,7 @@ SegLinear 在敏感层上大幅降低量化误差。
 - **语义分段自动化**：Q-Diffusion 需要手工为 UNet skip-connection 编写规则，SegLinear 通过图分析自动发现所有需要分段的层
 - **DualScale 硬件原生**：利用 BatchedGEMM 将两次 GEMM 融合为一次 kernel launch，避免自定义数据格式或非标准 kernel
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **校准成本**：超参搜索（α 步长 0.1）需 ~25 小时，虽然是一次性开销但仍较高
 - **FLUX 内存限制**：48GB GPU 需要 swap-in/swap-out 策略进行校准
 - **未涉及视频扩散模型**：虽然方法理论上通用，但未在视频生成模型上验证

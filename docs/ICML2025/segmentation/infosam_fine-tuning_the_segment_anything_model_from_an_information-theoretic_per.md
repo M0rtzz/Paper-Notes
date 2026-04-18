@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective
 description: >-
@@ -95,7 +95,7 @@ $$\mathcal{L} = \mathcal{L}_{ce} + \lambda_1 \mathcal{L}_r + \lambda_2 \mathcal{
 - **伪不变信息过滤**: 通过信息瓶颈压缩掉颜色等域特定信息，只保留几何结构等域不变信息
 - **Rényi α=2 简化计算**: 用 Frobenius 范数替代特征值分解，降低计算开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 提升幅度有限：在部分数据集（如 LoRA+Ours vs LoRA）改进约 0.5-1%，域不变关系的收益可能有天花板
 - 当教师模型在目标域表现极差时（如 Road IoU 仅 7.2%），蒸馏仍能正向迁移，但幅度受限
 - 仅验证了 box/point prompt 场景，未探索 text prompt 或全自动分割

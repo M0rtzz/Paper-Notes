@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models
 description: >-
@@ -178,7 +178,7 @@ PathMind仅需1次LLM调用和216个输入token，在性能和效率之间取得
 3. **DPO的路径级应用**：不是对答案做偏好对齐，而是对推理路径做偏好对齐——优选路径vs剩余候选路径
 4. **可解释推理的case study**：图5展示了PathMind如何正确识别两跳推理路径并在有噪声路径时做出准确推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **子图检索瓶颈**：3-hop邻域可能遗漏关键信息（Case 3展示了因缺失路径导致的错误预测）
 2. **静态路径优先级**：学习到的优先级函数在推理时是固定的，无法根据中间推理结果动态调整

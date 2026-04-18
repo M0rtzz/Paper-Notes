@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniCode: Learning a Unified Codebook for Multimodal Large Language Models
 description: >-
@@ -130,7 +130,7 @@ UniCode是同时具备理解和生成能力的模型，用更少参数（104M vi
 - **Image decompression作为预训练任务**：将视觉token的解压重构转化为LLM的in-context learning任务，巧妙地让LLM学习"看懂"压缩的视觉表示
 - **框架的可扩展性**：兼容VQ-GAN、RQ-VAE、HQ-VAE等多种视觉量化方案，升级tokenizer即可提升整体性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VQA性能与LLaVA-1.5差距较大（POPE: 71.8 vs 86.4），主要受限于visual tokenizer的质量和训练数据规模
 - Visual tokenizer仅用558K图像训练，远少于CLIP的400M——扩大数据量有巨大提升空间

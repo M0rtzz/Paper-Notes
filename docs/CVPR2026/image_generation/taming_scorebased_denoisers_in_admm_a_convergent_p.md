@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Taming Score-Based Denoisers in ADMM: A Convergent Plug-and-Play Framework
 description: >-
@@ -79,7 +79,7 @@ tags:
 - **ADMM灵活性**：示范了加入LPIPS等额外正则化的可能——这是纯扩散采样方法无法做到的
 - 7种逆问题（含非线性去模糊、相位恢复等高难度任务）的一致优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 收敛结果均为固定点收敛（非稳定点收敛），理论强度受限——作者自己承认这是PnP方向的公开难题
 - 噪声调度$\sigma^{(k)}$和DC步数$J$等超参依赖经验启发式，缺乏理论最优设计
 - 每次AC-DC去噪需11次分数函数评估(Tweedie)或20次(ODE)，计算开销大

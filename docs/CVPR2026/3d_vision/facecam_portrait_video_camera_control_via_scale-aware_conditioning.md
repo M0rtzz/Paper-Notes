@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FaceCam: Portrait Video Camera Control via Scale-Aware Conditioning
 description: >-
@@ -140,7 +140,7 @@ $$\mathbf{u}_k' = \mathcal{N}(\mathbf{K}(\mathbf{R}\mathbf{x}_k' + \mathbf{t}'))
 3. **数据效率**：仅用~9.1K视频和3K训练步即达SOTA，远少于通常所需
 4. **多镜头拼接的意外泛化**：离散位姿变化到连续轨迹的泛化是重要经验发现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖面部地标检测的鲁棒性，极端侧脸或严重遮挡场景可能受限
 2. 通用代理头部模型忽略了输入视频中实际头部形状的差异

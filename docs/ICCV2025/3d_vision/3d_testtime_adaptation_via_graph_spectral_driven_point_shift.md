@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Test-time Adaptation via Graph Spectral Driven Point Shift
 description: >-
@@ -144,7 +144,7 @@ L_MA = L_pl + β₃(L_ent + L_div)
 4. **Outlier-aware设计**：通过度阈值自然地剔除异常点，对Background corruption极其有效（+14%）
 5. **通用性强**：在三种不同backbone（DGCNN、CurveNet、PointNeXt）上均一致提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性**：全局图谱操作（特征分解）计算复杂度为O(N³)，限制了对大规模点云的应用。作者提出未来用无监督分割+多尺度局部谱分析来缓解
 2. **基础噪声处理较弱**：在Uniform、Gaussian、Impulse等基础噪声上，CloudFixer（利用扩散模型去噪能力）平均高8.35%，谱域方法在点级去噪上不如专门的生成模型

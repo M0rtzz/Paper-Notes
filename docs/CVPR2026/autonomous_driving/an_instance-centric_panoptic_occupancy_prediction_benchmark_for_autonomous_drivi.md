@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Instance-Centric Panoptic Occupancy Prediction Benchmark for Autonomous Driving
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **骨骼运动分析器**：为非刚性物体(行人)的精确重建提供了优雅方案——预处理动画相位+运行时测地线匹配
 - **质量评估指标**：首次定义了空间连续性和时间一致性的定量标准来评估占据数据集质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 合成数据的sim-to-real gap——在CarlaOcc上训练的模型能否迁移到真实驾驶场景？
 - ADMesh资产主要来自CARLA，多样性仍受仿真平台限制
 - 0.05m分辨率的体素量巨大，模型训练和推理的内存/计算开销需要考虑

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ChartEditor: A Reinforcement Learning Framework for Robust Chart Editing
 description: >-
@@ -104,7 +104,7 @@ tags:
 3. **小模型大能力**：3B 参数模型超越 72B 和部分闭源模型，证明了领域特化 + RL 的有效性
 4. **评估指标可靠**：RARM 在三个基准上与人类评分高度相关，解决了现有指标的幻觉和粗粒度问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基准仅覆盖 Python matplotlib 风格图表，未涉及 D3.js、ECharts 等其他可视化框架
 2. 图表编辑任务定义为 image + instruction → code，未考虑交互式多轮编辑场景

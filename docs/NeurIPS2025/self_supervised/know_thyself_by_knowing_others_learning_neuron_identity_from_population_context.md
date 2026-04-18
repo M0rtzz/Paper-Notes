@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Know Thyself by Knowing Others: Learning Neuron Identity from Population Context
 description: >-
@@ -79,7 +79,7 @@ tags:
 3. **首个缩放分析**：证明更多无标签数据（动物数）持续提升性能
 4. **跨模态适用**：同一框架适用于电生理和钙成像数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 抑制性神经元子类型解码（5类）的F1仅0.39（inductive），仍有提升空间
 2. 空间注意力在大群体上计算量为 $O(N^2)$，可能限制超大规模记录
 3. 目前仅验证在小鼠数据上，人脑/灵长类数据的泛化待验证

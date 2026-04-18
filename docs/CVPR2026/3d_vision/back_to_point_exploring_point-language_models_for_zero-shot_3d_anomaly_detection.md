@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Back to Point: Exploring Point-Language Models for Zero-Shot 3D Anomaly Detection
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \mathcal{L}_{local} + \lambda_1 \mathcal{L}_{global} + \lambda_2
 - GFCM 用可学习网络替代 FPFH 并与之对齐的设计——既保留手工特征的物理直觉，又获得端到端优化能力
 - 零样本设定下的强性能说明 PLM 学到了可迁移的 3D 结构先验
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 物体级 AUROC（61.4%）明显弱于 PointAD（74.8%），全局判别能力不足
 - ULIP 编码器是固定的，如果解冻并微调可能进一步提升
 - 目前训练仍需辅助点云数据（虽然不需要目标类别数据），离"真正零样本"有距离

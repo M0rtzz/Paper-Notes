@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MutDet: Mutually Optimizing Pre-training for Remote Sensing Object Detection
 description: >-
@@ -53,7 +53,7 @@ MutDet 的核心动机是：**不是简单地让检测器去拟合 object embedd
 
 #### 1. **互增强模块（Mutual Enhancement Module）**
 
-**做什么**：双向融合 object embeddings $O \in \mathbb{R}^{M \times C}$ 和 encoder 特征 $F \in \mathbb{R}^{K \times C}$，缓解两者之间的特征差异。
+**功能**：双向融合 object embeddings $O \in \mathbb{R}^{M \times C}$ 和 encoder 特征 $F \in \mathbb{R}^{K \times C}$，缓解两者之间的特征差异。
 
 **核心思路**：使用 3 层增强层，每层包含双向交叉注意力：
 
@@ -66,7 +66,7 @@ $$O_{i+1} = \text{LN}(\text{MLP}(O'') + O''), \quad F_{i+1} = \text{LN}(\text{MH
 
 #### 2. **对比对齐损失（Contrastive Alignment Loss）**
 
-**做什么**：对增强后的 embeddings $O_{enh}$ 与预测 embeddings 进行对齐。
+**功能**：对增强后的 embeddings $O_{enh}$ 与预测 embeddings 进行对齐。
 
 **核心思路**：采用双向对比学习损失：
 
@@ -80,7 +80,7 @@ $$\mathcal{L}_{ca}^{det} = \mathcal{L}_{ca}(\hat{Z}_{enc}^+, O_{enh}) + \mathcal
 
 #### 3. **辅助孪生头（Auxiliary Siamese Head）**
 
-**做什么**：缓解互增强模块引入的预训练与微调之间的任务差距（task gap）。
+**功能**：缓解互增强模块引入的预训练与微调之间的任务差距（task gap）。
 
 **核心思路**：引入一个与 DETR decoder 共享参数的辅助头，接收原始未增强的 encoder 特征 $F$（而非增强后的 $F_{enh}$）作为输入，使用伪标签直接监督其输出：
 
@@ -156,7 +156,7 @@ $$\mathcal{L}_{det}^{aux} = \mathcal{L}_{ca}^{aux} + \mathcal{L}_{cls}^{aux} + \
 - 利用 SAM 生成高质量遥感伪标签（旋转框），替代传统的 Selective Search
 - 辅助孪生头的设计简洁但有效，通过共享参数隐式约束原始特征向增强特征靠近
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预训练阶段仍依赖较大的计算资源（4 GPU、36 epochs），缩短预训练时间是值得探索的方向
 - 仅在 ARS-DETR 上验证，是否适用于其他 DETR 变体（如 RT-DETR）或非 DETR 检测器有待验证

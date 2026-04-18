@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimizing Language Models for Inference Time Objectives using Reinforcement Learning
 description: >-
@@ -166,7 +166,7 @@ $$A_{(k)} = r_{(k)} - r_{(k-1)}$$
 
 5. **代码生成场景的强适配性**：在 CodeContests 等验证器天然可用、解出率极低的场景下，pass@k 优化的实际价值尤为突出
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限简单推理策略**：只考虑了 pass@k 和 majority voting，未涉及更复杂的推理时策略如 best-of-k（需辅助奖励模型）、MCTS、beam search 等
 

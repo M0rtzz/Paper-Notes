@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Outlier-Aware Post-Training Quantization for Image Super-Resolution
 description: >-
@@ -132,7 +132,7 @@ PLQ 单独贡献最大（Set5 +3.67 dB），SAFT 优于普通微调（VFT）。
 - **无需 GT 数据**：PTQ 仅需低分辨率校准图像，极大降低了使用门槛
 - **75× 加速**对比 QAT 方法极具实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 断点 $bp$ 的位置选择（99 百分位）可能不是最优，可尝试自适应确定
 - 仅在 EDSR、RDN、SRResNet 等较为经典的 SR 网络上验证，缺少对 Transformer-based SR（如 SwinIR）的实验

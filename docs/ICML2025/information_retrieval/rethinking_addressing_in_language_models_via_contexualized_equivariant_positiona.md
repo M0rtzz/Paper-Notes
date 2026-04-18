@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Addressing in Language Models via Contextualized Equivariant Positional Encoding
 description: >-
@@ -87,7 +87,7 @@ tags:
 - 理论证明（可模拟更广泛的算法类）为方法提供了可解释的优势基础
 - 长上下文泛化能力是亮点——不需要长序列训练数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 - TAPE 模块每层增加额外计算，推理速度有一定影响
 - 在超大模型（>70B）上的效果和开销比未验证
 - 等变性约束可能过于保守，适当放松可能获得更好性能

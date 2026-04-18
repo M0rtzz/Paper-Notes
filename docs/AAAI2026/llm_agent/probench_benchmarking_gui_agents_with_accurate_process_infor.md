@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProBench: Benchmarking GUI Agents with Accurate Process Information
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：GUI 任务本质是多步链式操作，不是所有关键信息都展示在最后几个页面上。少数尝试引入过程评估的工作（SPA-BENCH、A3）要么需要手工标注中间状态（不可扩展），要么依赖 LLM 分解（不够准确）。
 
-**本文要解决什么**：如何自动、准确地捕获操作过程信息，使 GUI Agent 评估既考虑最终结果又考虑关键中间步骤？
+**本文目标**：如何自动、准确地捕获操作过程信息，使 GUI Agent 评估既考虑最终结果又考虑关键中间步骤？
 
 **切入角度**：设计 Process Provider 自动提供过程信息，两种可选方案——(a) 解析页面层级结构 获取操作描述；(b) 用 MLLM 比较操作前后截图识别操作变化。
 
-**核心 idea 一句话**：区分 State-related Task（仅看最终状态）和 Process-related Task（需要检查关键中间操作），用 Process Provider 自动提供精确过程信息。
+**核心 idea**：区分 State-related Task（仅看最终状态）和 Process-related Task（需要检查关键中间操作），用 Process Provider 自动提供精确过程信息。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ ProBench 包含三个模块：(1) Task Curation（任务构建）；(2) Dynamic 
 - **中文 App 的包含**填补了现有 benchmark 的重要空白——大部分 benchmark 只有英文 App
 - **真实在线环境**（而非模拟/离线 App）更能反映实际使用场景中的挑战（网络延迟、内容动态变化、反自动化机制）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 评估是二值的（成功/失败），缺少对"部分完成"的度量
 - 200+ 任务规模相对有限，且高度依赖中国市场 App（微信、支付宝等）
 - Process Provider 的准确性（89.7%-94.1%）仍有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can3Tok: Canonical 3D Tokenization and Latent Modeling of Scene-Level 3D Gaussians
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L} = \text{Dist}(GS_{output}, GS_{input}) + \lambda \mathcal{L}_{KL}(
 - **潜空间与SD兼容**：$64 \times 64 \times 4$ 的潜空间形状与Stable Diffusion完全一致，可直接使用现有扩散架构（UNet/DiT）做条件生成
 - **从数据到模型的完整方案**：不仅设计了模型架构，还提出了3DGS预处理管线（归一化+过滤+增强），对社区有参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅限于3DGS表示，无法直接应用于NeRF、mesh等其他3D表示
 - 2.5%的失败率主要来自训练数据中质量较差的3DGS重建（运动模糊、远近视角不平衡）

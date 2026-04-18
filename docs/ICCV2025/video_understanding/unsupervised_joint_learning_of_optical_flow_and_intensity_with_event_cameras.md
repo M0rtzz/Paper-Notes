@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unsupervised Joint Learning of Optical Flow and Intensity with Event Cameras
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L}_{\text{total}} = \lambda_1 \mathcal{L}_{\text{PhE}} + \lambda_2 \m
 - PhE 不存在事件塌缩问题，这是对 CMax 框架的重要补充。
 - TC 损失的设计精妙：用预测的光流 warp 前一时刻的亮度，与直接预测的后一时刻亮度比较，形成自监督信号。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 亮度重建在全参考指标（MSE、SSIM）上仍落后于最先进的监督方法（如 E2VID、HyperE2VID）。
 - 对比度阈值 $C$ 固定为 0.2，实际事件相机的 $C$ 值因设备而异。

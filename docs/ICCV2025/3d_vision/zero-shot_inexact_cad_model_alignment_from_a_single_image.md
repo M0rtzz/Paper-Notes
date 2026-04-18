@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Zero-Shot Inexact CAD Model Alignment from a Single Image
 description: >-
@@ -125,7 +125,7 @@ tags:
 - **极强泛化能力**：仅用9类训练即可泛化到20个全新类别，超越需要类别先验的有监督方法
 - 引入SUN2CAD新基准填补了未见类别9-DoF对齐评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对大面积遮挡/裁剪的物体（如桌子、浴缸、床）粗对齐不够鲁棒，缩放和旋转估计受影响
 - 依赖SAM的分割质量和DepthAnything的深度质量

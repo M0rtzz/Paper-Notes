@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Near-Optimal Online Deployment and Routing for Streaming LLMs
 description: >-
@@ -86,7 +86,7 @@ StageRoute 是一个两层分层算法，镜像问题的层级结构：
 - **匹配下界**证实了 $\tilde{\mathcal{O}}(T^{2/3})$ 的不可改进性——这是问题本身的固有难度，非算法缺陷
 - DeployOPT 的解仅用于选模型而非做路由概率，将部署与路由执行解耦——允许 stage 内的快速查询级适应
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设每个模型的性能分布是固定的（均值 $\mu_m$ 不变），未建模模型退化或查询分布漂移
 - 路由是无上下文的（非 contextual bandit），未利用查询特征信息——加入 contextual estimator 可能进一步提升
 - 吞吐量约束通过概率 $p_t(m) \leq \alpha_m$ 建模，假设瞬时负载共享，实际中可能需考虑排队延迟

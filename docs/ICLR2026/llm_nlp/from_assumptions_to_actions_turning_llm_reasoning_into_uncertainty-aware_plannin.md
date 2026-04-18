@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Assumptions to Actions: Turning LLM Reasoning into Uncertainty-Aware Planning
 description: >-
@@ -138,7 +138,7 @@ PCE 是纯推理时框架，无需训练。默认超参数：$D=3, \alpha=1, \be
 3. **与 ToT/CoTS 的本质区别**：ToT 在推理步骤空间搜索，CoTS 在联合推理-行动空间用通信搜索，PCE 在**假设空间**搜索——不同的树代表不同的东西
 4. **三方面验证一致**：定量（两个benchmark）+ 定性（案例分析）+ 用户研究均支持核心claims
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设由 LLM 生成**：假设的质量和覆盖率依赖于 LLM 的常识推理能力，可能遗漏关键假设
 2. **评分依赖 LLM 估计**：似然度和增益均由 LLM 估计而非真实概率，可能存在系统性偏差

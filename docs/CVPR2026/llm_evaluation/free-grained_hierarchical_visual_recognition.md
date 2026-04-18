@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Free-Grained Hierarchical Visual Recognition
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 两种方法的互补性是深刻的洞察：当标签稀缺时用外部语义知识（文本）弥补，当标签适中时用结构化 SSL 利用层级一致性。这为实际应用中选择策略提供了指导。
 - Consistency-based inference 是一个优雅的无参数推理策略。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 类级别和层级级别的不平衡未被显式处理
 - 标签剪枝依赖 CLIP，可能引入偏差，更好的剪枝方法（如基于多模型集成）有待探索

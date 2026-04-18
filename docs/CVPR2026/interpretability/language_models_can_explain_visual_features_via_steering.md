@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Language Models Can Explain Visual Features via Steering
 description: >-
@@ -105,7 +105,7 @@ SAE训练使用标准TopK目标，在ImageNet上训练。干预强度α在500个
 - 语言模型规模效应暗示未来更强的LM将进一步提升自动可解释性
 - 混合方法的设计思路优雅：在Top-k的图像上下文中同时注入因果信号，两种信息互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 纯Steering在高级语义特征上弱于Top-k，因为空白图像缺乏上下文
 - 干预强度α对结果敏感，需要在验证集上调优

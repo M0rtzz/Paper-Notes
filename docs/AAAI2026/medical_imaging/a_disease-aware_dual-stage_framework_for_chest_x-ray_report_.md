@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation
 description: >-
@@ -103,7 +103,7 @@ tags:
 - **使用VMamba作为视觉编码器**：线性复杂度O(N)对比Transformer的O(N²)，在处理高分辨率医学图像时更高效
 - **CheXpert Plus上的CIDEr提升高达63.3%**，说明生成的报告在术语使用的精确性和独特性上有很大进步
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **14个DAST固定对应CheXpert本体**：这个设计和CheXpert的14类标签绑定，无法覆盖更多疾病类别或适应其他标注体系，泛化能力存疑
 - **MIMIC-CXR上提升有限**：在MIMIC-CXR这个最大最难的数据集上，BLEU-4甚至略低于MambaXray，CIDEr也偏低，作者解释是MIMIC-CXR报告风格多样，但这也可能暴露了方法在处理多样化写作风格时的不足

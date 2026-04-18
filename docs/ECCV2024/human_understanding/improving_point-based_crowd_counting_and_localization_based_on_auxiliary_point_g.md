@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Point-based Crowd Counting and Localization Based on Auxiliary Point Guidance
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{overall} = \mathcal{L}_{point} + \lambda_5 \mathcal{L}_{APG}$$
 - **训练/推理解耦**：APG 仅训练时起作用，推理时无额外开销，工程友好
 - IFI 提供了一种通用的任意位置特征提取方案，可迁移至其他需要非网格位置特征的任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 辅助点的随机范围 $(n_{pos}, n_{neg})$ 需要根据数据集调参
 - stride 固定为8，无自适应多尺度 stride 机制

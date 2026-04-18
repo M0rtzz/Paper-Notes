@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Sequential to Recursive: Enhancing Decision-Focused Learning with Bidirectional Feedback
 description: >-
@@ -108,7 +108,7 @@ R-DFL 相比 S-DFL 在报童问题上 RMSE 降低约 26-28%，在匹配问题上
 - 将 Deep Equilibrium Model（DEQ）的思想引入运筹优化中的 DFL 领域，形成了跨领域的方法论迁移
 - 实验设计考虑了不同问题规模和不同预测模型，验证了框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅支持凸优化问题（目标函数可微凸、约束为线性），难以直接处理整数规划、组合优化等离散优化问题
 - 不动点收敛假设（PL 条件、谱半径 < 1）在实践中可能不总是满足
 - 实验规模仍然偏小（最大 900 决策变量），大规模工业级问题上的表现有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AGFT: Alignment-Guided Fine-Tuning for Zero-Shot Adversarial Robustness of Vision-Language Models
 description: >-
@@ -45,13 +45,13 @@ AGFT 提出了一种对齐引导的微调框架，通过文本引导的对抗训
 ### 关键设计
 1. **文本引导的对抗训练（Text-Guided Adversarial Training）**：
 
-    - **做什么**：用预训练 CLIP 的软概率分布（而非硬标签）作为对抗训练目标。
+    - **功能**：用预训练 CLIP 的软概率分布（而非硬标签）作为对抗训练目标。
     - **核心思路**：$p_{orig}^{i,j} = \frac{\exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^j)) / \tau)}{\sum_k \exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^k)) / \tau)}$，对抗训练损失用 KL 散度形式：$L = -\mathbb{E}_{i,j}[p_{rob}^{i,j} \log \frac{\exp(\cos(f_\theta(x_{adv}^i), f_\phi(t^j))/\tau)}{\sum_k ...}]$
     - **设计动机**：硬标签只关注正确类别，忽视了图像与其他文本之间的相对相似度关系。软分布保留了这些关系，使微调后的特征空间保持与原始 CLIP 一致的语义结构。
 
 2. **分布一致性校准（Distribution Consistency Calibration）**：
 
-    - **做什么**：通过温度缩放调整目标分布，消除置信度尺度与语义结构的纠缠。
+    - **功能**：通过温度缩放调整目标分布，消除置信度尺度与语义结构的纠缠。
     - **核心思路**：$p_{rob}^{i,j} = \frac{\exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^j)) / (\tau/\gamma))}{\sum_k \exp(\cos(f_{\theta_{orig}}(x^i), f_\phi(t^k)) / (\tau/\gamma))}$，其中 $\gamma \in (0,1]$，增大有效温度使分布更平滑。
     - **设计动机**：直接使用 $p_{orig}$ 作为目标会强制鲁棒模型继承预训练模型的置信度尺度（logits 的绝对大小），而这个尺度可能与鲁棒特征空间不匹配。温度缩放分离了"相对语义关系"和"置信度尺度"，只保留前者作为监督信号。
 
@@ -94,7 +94,7 @@ AGFT 提出了一种对齐引导的微调框架，通过文本引导的对抗训
 - 温度校准的分析角度新颖——将"语义结构"和"置信度尺度"解耦
 - 方法极为简洁：本质上只是改变了对抗训练的目标分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅使用 ViT-B/32 验证，更大架构（ViT-L）效果待验证
 - 温度参数 $\gamma$ 需要调参，对不同域可能需要调整
 - 在 EuroSAT 等域特定数据集上，鲁棒准确率仍较低（16.25%）

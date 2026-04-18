@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Switchable Token-Specific Codebook Quantization for Face Image Compression
 description: >-
@@ -124,7 +124,7 @@ tags:
 3. **从MoE借鉴路由机制**：路由网络设计受混合专家启发，三个辅助损失有效防止码本坍缩
 4. **比特分配的乘性vs加性洞察**：多码本的路由开销是加性的 $(\log_2 M)$，但每token的比特节省是乘性的 $(n \times s)$，因此总比特永远是净减少
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 性能高度依赖基线自编码器的质量，未对编码器/解码器做特殊改进
 - 仅在人脸图像上验证，不确定是否适用于一般图像压缩

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Test-time Ego-Exo-centric Adaptation for Action Anticipation via Multi-Label Prototype Growing and Dual-Clue Consistency
 description: >-
@@ -113,7 +113,7 @@ ML-PGM 几乎零额外计算量，narrator 极其轻量。
 4. **新基准 EgoMe-anti**：基于 EgoMe 数据集构建了适合该任务的新 benchmark
 5. **性能提升显著**：在 EgoExoLearn 上 Noun 指标超越次优 9.91%，实验充分且分析深入
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **narrator 依赖额外训练数据**：narrator 需用开源视频-文本对预训练，增加了方法的前置依赖
 2. **K 值需手动调整**：不同数据集最优 K 值不同（3 vs. 5），缺乏自适应选择机制

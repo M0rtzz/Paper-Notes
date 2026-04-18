@@ -47,25 +47,25 @@ xCPD 包含三个核心模块：(A) Spectral Channel-Patch Embedding（谱通道
 
 ### 关键设计1：谱通道-patch嵌入（Spectral Channel-Patch Embedding）
 
-- **做什么**：将基础模型输出分 patch、线性嵌入后构建通道-patch 图，通过共享图傅里叶基将节点嵌入投影到谱域。
+- **功能**：将基础模型输出分 patch、线性嵌入后构建通道-patch 图，通过共享图傅里叶基将节点嵌入投影到谱域。
 - **核心思路**：将预测输出 $\hat{X}^{\text{model}}$ 分成 $N = \lceil T'/P \rceil$ 个不重叠 patch，线性映射到 $d$ 维嵌入 $X^{\text{emb}} \in \mathbb{R}^{n \times d}$（其中 $n = C \times N$）。用余弦相似度构建邻接矩阵 $A_{ij}^t = \cos(X_i^{\text{emb},t}, X_j^{\text{emb},t})$，计算归一化图拉普拉斯 $L = I - D^{-1/2}AD^{-1/2}$，特征分解得共享傅里叶基 $U$，谱嵌入为 $X^{\text{spc}} = U^\top X^{\text{emb}}$。
 - **设计动机**：(1) 用余弦相似度构建图→对变量尺度不变，适合多变量场景；(2) 直接对每批做特征分解会导致不同批次傅里叶基不一致→无法比较，因此引入**共享图傅里叶基**（Theorem 4.1）从平均拉普拉斯学习，保证所有时间步映射到一致谱域。理论保证 $\|U^t - UR^t\|_F \leq C\|L^t - L_{\text{avg}}\|_F$，即共享基与各批次基线性近似。
 
 ### 关键设计2：谱通道-patch分组（Spectral Channel-Patch Grouping）
 
-- **做什么**：根据每个节点在低/中/高频段的谱能量响应强度，将通道-patch 节点分为三个频率组，并构建 ego-graph 子图实现频率感知的消息传递。
+- **功能**：根据每个节点在低/中/高频段的谱能量响应强度，将通道-patch 节点分为三个频率组，并构建 ego-graph 子图实现频率感知的消息传递。
 - **核心思路**：可学习边界 $\tau_1, \tau_2$ 定义三段频率，用 sigmoid 软分区计算每个频率 $j$ 属于低/中/高频的权重 $\alpha_j^{\text{low/mid/high}}$。定义谱能量响应 $S_{i,j} = \|U_{i,j} \cdot X_{j,:}^{\text{spc}}\|_2^2$（Theorem 4.2 保证能量守恒 $\sum_j S_{i,j} = \|X_{i,:}^{\text{emb}}\|_2^2$），再通过 softmax 将节点分到最大能量的频段组。最后对每个节点构建 ego-graph，用 $k$-NN 选邻居，组内按频率标签构建子图。
 - **设计动机**：(1) 频率边界可学习→自适应不同数据的频率结构；(2) 谱能量响应直接量化节点对各频率的响应强度→精准分组；(3) ego-graph 减少噪声→仅保留中心节点相关的依赖；(4) 频率子图使同频段节点间消息传递→避免趋势节点和噪声节点混合交互。
 
 ### 关键设计3：动态MoE路由（Spectral Channel-Patch Routing with DyMoE）
 
-- **做什么**：为每个 ego-graph 动态选择可变数量的频率特定滤波专家（低频/中频/高频 filter），生成稀疏邻接矩阵后做图学习。
+- **功能**：为每个 ego-graph 动态选择可变数量的频率特定滤波专家（低频/中频/高频 filter），生成稀疏邻接矩阵后做图学习。
 - **核心思路**：三个频率 filter 分别从低/中/高频谱分量构建邻接矩阵。路由网络计算 $\psi(x_i) = \text{Linear}_c(x_i) + \epsilon \cdot \text{Softplus}(\text{Linear}_n(x_i))$（包含确定性和随机噪声分量），按累积概率阈值 $\tau$ 选择最少数量的专家使累积概率 $\geq \tau$（式7），不同于固定 top-K。选定专家后按式(8) 合并各 filter 输出的边集构建稀疏邻接矩阵，再通过 $L$ 层图学习（式9-10）聚合邻域信息。最终通过**门控双路残差修正**输出：$\hat{X}^{\text{predict}} = \hat{X}^{\text{model}} + \sigma(g_{\text{GNN}}) \odot \delta_{\text{GNN}} + \sigma(g_{\text{Lin}}) \odot \delta_{\text{Lin}}$。
 - **设计动机**：(1) 三个频率专家分别捕获平滑趋势（低频）、局部波动（中频）、突变/异常（高频）→频率解耦建模；(2) DyMoE 动态分配专家数→不同输入获得不同组合，比固定 top-K 灵活；(3) 门控残差设计→门值趋近零时退化为原始 backbone 预测，安全无损；(4) 训练目标添加熵损失 $\mathcal{L}_{\text{Entropy}}$ 和平衡损失 $\mathcal{L}_{\text{Balance}}$ 防止专家坍缩。
 
 ### 关键设计4：门控双路残差修正与优化
 
-- **做什么**：结合 GNN 路径（跨通道谱依赖）和 Linear 路径（CI 精修），通过可学习门控决定各路径贡献。
+- **功能**：结合 GNN 路径（跨通道谱依赖）和 Linear 路径（CI 精修），通过可学习门控决定各路径贡献。
 - **核心思路**：$\delta_{\text{GNN}} = W_{\text{proj}} H^{(L)}$ 捕获跨变量谱依赖，$\delta_{\text{Lin}} = f_{\text{lin}}(\hat{X}^{\text{model}})$ 保留通道独立精修。门控参数 $g_{\text{GNN}}, g_{\text{Lin}} \in \mathbb{R}^C$ 逐通道控制。总损失 $\mathcal{L} = \mathcal{L}_{\text{MSE}} + \mu\mathcal{L}_{\text{Entropy}} + \beta\mathcal{L}_{\text{Balance}}$。
 - **设计动机**：双路设计同时利用 CD（GNN 路径）和 CI（Linear 路径）的优势→自适应平衡；逐通道门控允许不同变量选择不同依赖程度。
 

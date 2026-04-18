@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ArgoTweak: Towards Self-Updating HD Maps through Structured Priors
 description: >-
@@ -130,7 +130,7 @@ ArgoTweak 训练模型的 sim2real 差距降低了 10 倍以上。
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

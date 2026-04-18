@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Entity Framing and Role Portrayal in the News
 description: >-
@@ -118,7 +118,7 @@ tags:
 - **角色共现和转换分析**：发现 peacemaker 常与 guardian 共现，scapegoat 常与 exploited 共现——这反映了真实叙事的复杂性
 - **零样本 vs 微调的互补性**：零样本处理稀有类别更好，微调处理常见类别更好，暗示两者结合可能是最优方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **领域受限**：仅覆盖俄乌战争和气候变化两个领域
 2. **标注主观性**：虽有详细指南，但实体框架标注本质上主观味浓

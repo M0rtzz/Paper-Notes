@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KELPS: A Framework for Verified Multi-Language Autoformalization via Semantic-Syntactic Alignment
 description: >-
@@ -111,7 +111,7 @@ $$C_{\text{KE}} \mapsto C_{\text{TL}}, \quad O_{\text{KE}} \mapsto O_{\text{TL}}
 4. **可控数据合成**：基于概念-算子本体的模板合成策略，可在原子级别精确控制生成问题的类型与难度。
 5. **完整的验证流水线**：句法验证(编译器) + 语义验证(LLM judge + 多数投票) 双重保障数据质量。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **本体覆盖有限**：当前仅涵盖 K12 和部分本科数学，对高等数学（如代数拓扑、范畴论）尚不支持。
 2. **模板合成的天花板**：合成数据受模板多样性制约，对竞赛级复杂问题（如 FormalMATH）的提升有限。

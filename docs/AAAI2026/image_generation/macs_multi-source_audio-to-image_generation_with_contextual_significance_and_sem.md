@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MACS: Multi-source Audio-to-Image Generation with Contextual Significance and Semantic Alignment
 description: >-
@@ -163,7 +163,7 @@ MACS 在 21 个评估指标中的 **17 个**取得最佳，全面超越 SOTA。
 - **排序损失的创新**：用 Spearman 秩相关系数度量上下文重要性，解决了分离输出无序的问题
 - **强大的通用性**：MSS 模块可即插即用到其他音频到图像方法中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模有限（LLP-multi 仅 6595 帧），更大规模验证待完成
 - 默认设置 $M=6$ 个分离通道，对音源数量变化的鲁棒性分析不够

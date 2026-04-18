@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unifying View of Coverage in Linear Off-Policy Evaluation
 description: >-
@@ -106,7 +106,7 @@ $$\text{评估误差} \leq \text{poly}(C^\pi, d, 1/n, \log(1/\delta))$$
 - **最小假设下的理解**：在仅要求线性可实化的最小假设下给出了紧的分析，此前这个设定下的理解非常有限
 - **概念性贡献**：feature-dynamics coverage 的"诱导动态系统"解释非常有启发性——它暗示了 OPE 的难度不仅取决于数据分布，还取决于环境动态如何"放大"覆盖的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **纯理论工作**：缺少在真实 RL 任务上的实验验证
 - **集中于线性设定**：现代 RL 更多使用非线性函数逼近（如神经网络），理论框架能否扩展需要进一步研究
 - **关注 OPE 而非 OPL**：离策略评估（evaluation）与离策略学习（learning）在技术上有本质区别，本文的覆盖性概念是否适用于后者

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ultrametric Cluster Hierarchies: I Want 'em All!
 description: >-
@@ -123,7 +123,7 @@ $$\min_{\mathcal{P} \in \text{Cuts}(T)} \sum_{C \in \mathcal{P}} \text{cost}(C)$
 - **通用性**: 适用于所有中心型聚类目标，不限于 k-means
 - **新视角**: 将层次聚类从"构建一棵树"转变为"从一棵树中提取多棵树"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 初始层次树的质量仍然影响最终结果，"垃圾进垃圾出"问题存在
 2. 大规模数据上构建初始层次树仍是瓶颈（$O(n^2)$ 或更高）

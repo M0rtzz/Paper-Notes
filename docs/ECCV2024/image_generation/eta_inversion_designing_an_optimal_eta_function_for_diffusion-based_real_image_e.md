@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Eta Inversion: Designing an Optimal Eta Function for Diffusion-based Real Image Editing
 description: >-
@@ -96,7 +96,7 @@ Eta Inversion是一种无需训练的（training-free）推理时方法。核心
 - 对η的时间和空间两个维度的分析具有很好的互补性
 - 为扩散模型的可控生成提供了新的视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - η函数的具体形式仍需一定的手工设计或启发式选择
 - 对于需要大幅度结构性编辑的场景（如姿态变化），方法的效果可能有限

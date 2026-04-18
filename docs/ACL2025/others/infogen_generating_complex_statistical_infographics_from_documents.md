@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Infogen: Generating Complex Statistical Infographics from Documents
 description: >-
@@ -111,7 +111,7 @@ Infogen 包含两个主要模块：
 - **Feedback模块的迭代精化**：借鉴了代码调试的思想，类似于最近很火的LLM agent自我修正范式
 - **数据集构建方法论**：半自动化的合成数据管线（GPT-4o生成+人工验证）值得参考
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Infodat数据集规模有限（3,463个样本），可能影响领域泛化能力
 2. 子图对齐仍有改进空间，错位可能导致关键数据结构细节丢失

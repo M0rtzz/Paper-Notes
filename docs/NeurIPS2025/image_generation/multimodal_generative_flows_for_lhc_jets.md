@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multimodal Generative Flows for LHC Jets
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{MMF}} = \mathbb{E}\left[\frac{\|u_t^\theta - u_t\|^2}{2(\si
 - **时间自适应损失加权**：比固定权重更好地平衡两种模态的训练
 - 首次在真实 CMS 数据上联合生成粒子运动学和 flavor
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 稀有粒子类别（轻子）生成质量不佳，可能需要后处理校准或过采样策略
 - $p_T$ 峰值的不规则形状两种方法都难以完美捕获

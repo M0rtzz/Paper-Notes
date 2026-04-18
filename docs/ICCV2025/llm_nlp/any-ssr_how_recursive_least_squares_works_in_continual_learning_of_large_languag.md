@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Any-SSR: How Recursive Least Squares Works in Continual Learning of Large Language Models
 description: >-
@@ -173,7 +173,7 @@ Any-SSR在无需回放的情况下，通用能力损失仅-1.26，接近使用1%
 3. **代价极低的路由更新**：递归更新仅需存储自相关矩阵，对CPU即可完成，无需GPU
 4. **理论与实践的统一**：不仅有理论证明零遗忘特性，实验也完美验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. NumGLUE-sm和NumGLUE-ds之间存在少量路由失败，原因是共享prompt（如"Solve the math problem"）导致路由模糊
 2. 随着任务数量增长，LoRA Bank的存储需求线性增加

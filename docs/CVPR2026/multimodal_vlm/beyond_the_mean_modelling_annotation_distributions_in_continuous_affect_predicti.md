@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Mean: Modelling Annotation Distributions in Continuous Affect Prediction
 description: >-
@@ -102,7 +102,7 @@ tags:
 - 仅需预测两个标量就能恢复完整的分布描述，计算负担极低
 - 建立了"情感作为概率信号处理的基准"的研究框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Beta分布假设有限（标注可能是多峰的，Beta只能建模单峰）
 - 轻量ANN模型可能限制了特征学习能力，深度模型（LSTM/Transformer）值得探索
 - RECOLA仅6名标注者、SEWA仅3名——标注者数量偏少限制了分布估计精度

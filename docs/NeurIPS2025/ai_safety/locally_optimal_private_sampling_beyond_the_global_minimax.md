@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Locally Optimal Private Sampling: Beyond the Global Minimax
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 全局minimax最优采样器为所有输入分布使用同一变换，无法利用"数据分布接近某个已知参考分布"这一实际先验信息，导致隐私-效用权衡次优。
 
-**本文要解决什么**: 建立**局部minimax**框架——当我们知道数据分布 $P$ 在某个已知公共分布 $P_0$ 附近时，能否设计更好的隐私采样器？
+**本文目标**: 建立**局部minimax**框架——当我们知道数据分布 $P$ 在某个已知公共分布 $P_0$ 附近时，能否设计更好的隐私采样器？
 
 **切入角度**: 用 $E_\gamma$-散度（hockey-stick divergence）定义分布邻域 $N_\gamma(P_0) = \{P: E_\gamma(P\|P_0) = E_\gamma(P_0\|P) = 0\}$，在此约束下求解minimax最优。关键发现：**局部minimax风险等于将分布类限制到邻域后的全局minimax风险**。
 
-**核心idea一句话**: 将全局minimax框架从pure LDP推广到functional LDP，然后证明局部minimax最优采样器就是将全局最优采样器限制到 $P_0$ 邻域，进而推导出不依赖 $f$-散度选择的闭式解。
+**核心 idea**: 将全局minimax框架从pure LDP推广到functional LDP，然后证明局部minimax最优采样器就是将全局最优采样器限制到 $P_0$ 邻域，进而推导出不依赖 $f$-散度选择的闭式解。
 
 ## 方法详解
 
@@ -51,7 +51,7 @@ tags:
 
 #### 1. 全局minimax最优采样器（Theorem 3.4）
 
-- **做什么**: 对分布类 $\tilde{\mathcal{P}}_{c_1,c_2,h}$ 和任意 $f$-散度，找到满足 $g$-FLDP 的minimax最优采样器
+- **功能**: 对分布类 $\tilde{\mathcal{P}}_{c_1,c_2,h}$ 和任意 $f$-散度，找到满足 $g$-FLDP 的minimax最优采样器
 - **核心公式**: 
 $$q_g^\star(P)(x) = \lambda^\star p(x) + (1 - \lambda^\star) h(x)$$
   其中 $\lambda^\star_{c_1,c_2,g} = \inf_{\beta \geq 0} \frac{e^\beta + \frac{c_2 - c_1}{1-c_1}(1 + g^*(-e^\beta)) - 1}{(1-c_1)e^\beta + c_2 - 1}$
@@ -59,14 +59,14 @@ $$q_g^\star(P)(x) = \lambda^\star p(x) + (1 - \lambda^\star) h(x)$$
 
 #### 2. 局部minimax最优采样器 — functional LDP版（Theorem 4.1）
 
-- **做什么**: 在 $N_\gamma(P_0)$ 邻域上求解minimax最优采样器
+- **功能**: 在 $N_\gamma(P_0)$ 邻域上求解minimax最优采样器
 - **核心思路**: 证明局部minimax风险等于设定 $c_1 = 1/\gamma$, $c_2 = \gamma$, $h = p_0$ 时的全局minimax风险
 - **公式**: 直接将全局结果代入 $c_1, c_2, h$ 即得局部解
 - **设计动机**: 邻域 $N_\gamma(P_0)$ 约束了密度比 $p(x)/p_0(x) \in [1/\gamma, \gamma]$，这自然对应全局框架中的分布类参数
 
 #### 3. 局部minimax最优采样器 — pure LDP版（Theorem 5.1）
 
-- **做什么**: 在pure $\varepsilon$-LDP下给出更强的逐点最优采样器
+- **功能**: 在pure $\varepsilon$-LDP下给出更强的逐点最优采样器
 - **核心公式**:
 $$q(x) = \text{clip}\left(\frac{1}{r_P} p(x); \frac{\gamma+1}{\gamma+e^\varepsilon} p_0(x), \frac{(\gamma+1)e^\varepsilon}{\gamma+e^\varepsilon} p_0(x)\right)$$
 - **关键优势**: 这是**非线性采样器**，通过clipping操作逐点适应每个输入分布 $P$，比线性采样器（Theorem 4.1）严格更优（Proposition 5.2）
@@ -119,7 +119,7 @@ $$q(x) = \text{clip}\left(\frac{1}{r_P} p(x); \frac{\gamma+1}{\gamma+e^\varepsil
 4. **公共数据的充分利用**: 与Zamanlooy et al.不同，这里公共数据**确实降低了minimax风险**
 5. **从全局最悲观到局部现实**: 理论上证明了利用先验信息可以大幅改善隐私-效用权衡
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **仅在合成数据上验证**: 缺乏高维真实数据集的实验
 2. **计算复杂度**: clipping采样器在高维时计算成本高（涉及归一化常数 $r_P$）

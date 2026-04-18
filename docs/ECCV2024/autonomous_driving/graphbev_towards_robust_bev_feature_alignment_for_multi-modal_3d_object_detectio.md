@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraphBEV: Towards Robust BEV Feature Alignment for Multi-Modal 3D Object Detection
 description: >-
@@ -52,7 +52,7 @@ GraphBEV基于BEVFusion框架，分为LiDAR分支和Camera分支：
 
 #### 1. LocalAlign模块：基于图匹配的局部对齐
 
-**做什么**：解决LiDAR-to-camera投影深度不准确导致的camera-to-BEV局部错位问题。
+**功能**：解决LiDAR-to-camera投影深度不准确导致的camera-to-BEV局部错位问题。
 
 **核心思路**：对于每个LiDAR投影到相机的像素，不仅使用其投影深度，还利用KD-Tree算法找到其 $K_{graph}$ 个最近邻像素的深度信息，构建邻域感知的深度特征。
 
@@ -68,7 +68,7 @@ GraphBEV基于BEVFusion框架，分为LiDAR分支和Camera分支：
 
 #### 2. GlobalAlign模块：基于可学习偏移的全局对齐
 
-**做什么**：解决LiDAR BEV和相机BEV特征在空间上的全局偏移问题。
+**功能**：解决LiDAR BEV和相机BEV特征在空间上的全局偏移问题。
 
 **核心思路**：训练时向相机BEV特征添加随机偏移噪声模拟全局错位，然后学习一个offset预测器来恢复对齐。
 
@@ -152,7 +152,7 @@ $$L_{Align} = \frac{1}{N_B} \sum_{i=1}^{N_B} (\hat{F_B}_i - {F_B^D}_i)^2$$
 4. **不改变BEVFusion范式**：作为即插即用模块嵌入现有框架，实用性强
 5. **对实际部署有价值**：真实驾驶场景中标定误差不可避免，GraphBEV直接针对这一工程痛点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. KD-Tree邻域搜索在大规模点云上可能有效率瓶颈，可探索更高效的邻域构建方式
 2. GlobalAlign的随机偏移噪声是均匀分布，实际标定误差可能有特定分布模式，可建模更真实的误差分布

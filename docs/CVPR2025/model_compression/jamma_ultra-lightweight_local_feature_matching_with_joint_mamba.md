@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JamMa: Ultra-lightweight Local Feature Matching with Joint Mamba
 description: >-
@@ -32,11 +32,11 @@ JamMa提出了基于Joint Mamba的超轻量级半密集特征匹配器，通过J
 
 3. **核心矛盾**：长距离依赖建模能力（对匹配至关重要）与计算效率之间的trade-off。
 
-4. **本文要解决什么？** 利用Mamba的线性复杂度 $O(N)$ 替代Transformer，构建超轻量级半密集匹配器。但Mamba是单序列因果模型，用于双图像特征匹配面临三个挑战：(1)缺乏互交互；(2)单向性；(3)因果性导致感受野不均衡。
+4. **本文目标** 利用Mamba的线性复杂度 $O(N)$ 替代Transformer，构建超轻量级半密集匹配器。但Mamba是单序列因果模型，用于双图像特征匹配面临三个挑战：(1)缺乏互交互；(2)单向性；(3)因果性导致感受野不均衡。
 
 5. **切入角度**：针对Mamba的三个挑战设计全新的扫描策略——联合扫描实现跨视角交互，跳步扫描+四方向保持效率和全方向性，局部聚合器补偿感受野不均衡。
 
-6. **核心idea一句话**：Joint Mamba通过JEGO策略（Joint联合扫描+Efficient高效跳步+Global全局感受野+Omnidirectional全方向）在线性复杂度下实现类Transformer的特征匹配能力。
+6. **核心 idea**：Joint Mamba通过JEGO策略（Joint联合扫描+Efficient高效跳步+Global全局感受野+Omnidirectional全方向）在线性复杂度下实现类Transformer的特征匹配能力。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ JamMa提出了基于Joint Mamba的超轻量级半密集特征匹配器，通过J
 - **平衡感受野+简单聚合器=全局全方向**：精心安排四个方向的起止点使得感受野在空间上互补，然后仅用一个3×3 Conv就能让每个特征获得全局信息。相比VMamba的4×序列长度和Vim的2×，JEGO保持总序列长度 $N$ 不变
 - **Mamba在视觉匹配中的首次成功**：证明线性复杂度的SSM可以替代二次复杂度的Transformer用于特征匹配，且性能更好。为其他计算密集型视觉任务提供了轻量化路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在MegaDepth一个数据集上训练，未在其他任务上微调，泛化性可能受限
 - 密集匹配器（DKM、RoMa）在纯精度上仍然领先，JamMa的优势主要在效率端
 - Mamba的因果性虽然通过四方向扫描+聚合器缓解，但仍不如真正的全局注意力灵活

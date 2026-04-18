@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Concertormer for Image Deblurring and Beyond
 description: >-
@@ -45,7 +45,7 @@ Concertormer 采用多尺度 U-Net 架构。输入图像通过双线性下采样
 
 1. **Concerto Self-Attention (CSA)**:
 
-    - **做什么**：将自注意力分解为全局共享的 Concertino 和局部特有的 Ripieno 两个分量，同时在空间和通道两个维度进行计算。
+    - **功能**：将自注意力分解为全局共享的 Concertino 和局部特有的 Ripieno 两个分量，同时在空间和通道两个维度进行计算。
     - **核心思路**：将 Q, K, V 划分为 $k \times k$ 的块后，Concertino 分量 $C$ 对所有块的注意力进行**求和/平均**，捕捉一般性的全局空间关系：
     $C = \text{softmax}\left(\sum_i Q_i^c K_i^{c\top} / \beta\right)$
       Ripieno 分量 $R_i$ 则计算每个块相对于平均值的**差异**，补偿信息损失：
@@ -55,7 +55,7 @@ Concertormer 采用多尺度 U-Net 架构。输入图像通过双线性下采样
 
 2. **跨维度通信 (Cross-Dimensional Communication, CDC)**:
 
-    - **做什么**：在 CSA 引入的额外维度上建立连接，增强注意力图的表达力。
+    - **功能**：在 CSA 引入的额外维度上建立连接，增强注意力图的表达力。
     - **核心思路**：对 Ripieno 张量，将其 reshape 为 $t \times h/k \times w/k \times k^4$ 形式后，使用 $3 \times 3 \times 1$ 卷积 $\mathbf{W}^{r_s}$ 在块间维度上做线性组合：
     $\mathbf{R}^s = \text{softmax}\left(\mathbf{W}^{r_s}(\mathbf{Q}^{r_s} \times \mathbf{K}^{r_s\top})\right)$
       对 Concertino 张量，使用全连接层 $\mathbf{W}_p^{c_s}$ 在其常数维度上做线性投影。这样做还有一个副作用：卷积操作将全局均值替换为**局部均值**（卷积核覆盖的邻域平均），更适合局部细节建模。
@@ -63,13 +63,13 @@ Concertormer 采用多尺度 U-Net 架构。输入图像通过双线性下采样
 
 3. **通道 CSA (Channel CSA)**:
 
-    - **做什么**：将 Concerto Self-Attention 扩展到通道维度。
+    - **功能**：将 Concerto Self-Attention 扩展到通道维度。
     - **核心思路**：与空间 CSA 对称地，在通道维度上也分解为 Ripieno $\mathbf{R}^c$ 和 Concertino $\mathbf{C}^c$。由于位置信息分别编码在 $\mathbf{R}^c$ 的 $n$ 维度和 $\mathbf{C}^c$ 的 $k^2$ 维度中，通道 CSA 能够感知空间位置，克服了原始转置自注意力的局限。
     - **设计动机**：转置 SA 效率高但缺乏空间感知，通过在通道维度引入 Concerto 分解，保留效率的同时解决了空间不变性问题。
 
 4. **门控深度卷积 MLP (gdMLP)**:
 
-    - **做什么**：替代传统 Transformer 的两阶段设计（SA + FFN），将自注意力和 FFN 合并到单阶段。
+    - **功能**：替代传统 Transformer 的两阶段设计（SA + FFN），将自注意力和 FFN 合并到单阶段。
     - **核心思路**：
     $\text{gdMLP}(\mathbf{X}) = \mathbf{W}_p^g\left((\text{SCA}(\mathbf{X}^A) + \mathbf{U}) \odot \mathbf{Z}\right)$
       其中 $\mathbf{U} = \mathbf{W}_d^u(\mathbf{W}_p^u(\mathbf{X}))$ 通过深度卷积提取特征，$\mathbf{Z} = \mathbf{W}_p^z \mathbf{X}$ 作为门控信号，$\mathbf{X}^A$ 为 CSA 输出经过简化通道注意力 (SCA) 加权后的结果。深度卷积还能补偿不重叠分块导致的边界不连续。
@@ -121,7 +121,7 @@ Concertormer 采用多尺度 U-Net 架构。输入图像通过双线性下采样
 - **单阶段设计**：质疑了 FFN 在视觉 Transformer 中的必要性，证明门控 MLP 可以更好地承担这一角色
 - **即插即用**：CSA 可以作为模块替换现有方法的自注意力机制（如 Restormer），具有良好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分块大小 $k=8$ 是固定的，可以探索自适应分块策略
 - Concertino 的全局平均操作可能对极端非均匀退化不够灵活

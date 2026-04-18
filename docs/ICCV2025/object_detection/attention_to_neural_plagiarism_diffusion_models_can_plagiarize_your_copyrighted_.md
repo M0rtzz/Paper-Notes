@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attention to Neural Plagiarism: Diffusion Models Can Plagiarize Your Copyrighted Images!
 description: >-
@@ -134,7 +134,7 @@ tags:
 - 清晰揭示了现有版权保护的脆弱性，为防御研究提供了重要的攻击基线
 - 时间步选择提供了coarse-to-fine的语义控制能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 无法去除Tree-Ring水印（傅里叶域局部模式对隐变量全局偏移免疫）
 - 早期启动模式下FID较高，语义变化过大时图像质量下降
 - 未结合ControlNet、额外图像编码器、负面提示词等增强手段（论文明确指出留作future work）

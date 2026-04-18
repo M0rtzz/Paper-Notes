@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Outdoor Monocular SLAM with Global Scale-Consistent 3D Gaussian Pointmaps
 description: >-
@@ -128,7 +128,7 @@ NVS 在所有数据集上 PSNR 提升 +2.73/+4.42/+4.98；跟踪在 KITTI、DL3D
 - **即插即用**: 该思路可推广到其他需要融合外部几何先验的 3DGS SLAM 系统
 - **极低迭代收敛**: 5 次迭代即达稳定精度，对实时系统非常友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未引入回环检测（Loop Closure），长序列漂移仍可能累积
 - 依赖预训练 pointmap 模型的推理速度，可能限制实时性

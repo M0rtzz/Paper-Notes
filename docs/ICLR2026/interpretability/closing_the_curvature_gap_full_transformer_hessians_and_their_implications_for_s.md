@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Closing the Curvature Gap: Full Transformer Hessians and Their Implications for Scaling Laws
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：LayerNorm 和 FFN 的非线性使得二阶导数推导非常复杂，此前的理论工作只能分析 self-attention，留下了"曲率空白"。
 
-**本文要解决什么**：推导包含 LayerNorm 和 FFN 的完整 Transformer block 的 Jacobian 和 Hessian，建立损失面收敛的理论界。
+**本文目标**：推导包含 LayerNorm 和 FFN 的完整 Transformer block 的 Jacobian 和 Hessian，建立损失面收敛的理论界。
 
 **切入角度**：使用行向量化 $\text{vec}_r(\cdot)$ 框架和 Gauss-Newton 分解，将 Hessian 系统地分解为各子层的贡献，逐层推导。
 
-**核心 idea 一句话**：通过显式推导 LayerNorm 和 FFN 的 Hessian 来补全 Transformer 的二阶理论，并用 Taylor 展开分析损失面随数据量的收敛行为。
+**核心 idea**：通过显式推导 LayerNorm 和 FFN 的 Hessian 来补全 Transformer 的二阶理论，并用 Taylor 展开分析损失面随数据量的收敛行为。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ Hessian 结构验证（MNIST, 1 Transformer block）：
 - **Block 异质性 Hessian 的实践意义**：不同参数 block 的曲率差异巨大（Value >> Query），这从理论上支持了 per-block learning rate（不同参数用不同学习率）和 curvature-aware preconditioning 的必要性。
 - **$O(1/k)$ 收敛为数据预算提供依据**：当曲率趋于平稳时，增加数据的边际收益递减，理论上可以在此拐点从数据扩展切换到模型扩展。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **局部分析**：Taylor 展开和 Assumption 1（共享最小值）仅在局部成立，对全局优化地形的描述有限。
 - **单 block 分析**：理论推导针对单个 Transformer block，未扩展到多层堆叠（层间 Hessian 传播未分析）。
 - **post-norm + MSE only**：理论基于 post-norm（现代 LLM 多用 pre-norm）和 MSE loss（实际用 cross-entropy）。虽然论文声称可扩展到 CE loss，但未在理论中给出。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling
 description: >-
@@ -139,7 +139,7 @@ $$E(\beta^s, \beta^f, \beta^k, \theta) = E_{data} + E_{\theta_{body}} + E_{\thet
 - **稀疏非线性校正**的设计精巧：测地距离初始化 + L1 正则保证稀疏性，MLP 邻居编码保证非线性表达力
 - 解耦拟合管线（骨骼用关键点、形状用轮廓）的设计合理，避免了关键点拟合导致的软组织幻觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 1.5 万受试者仍无法覆盖人类体型的全部变异
 - 高分辨率扫描采集和处理成本高昂，难以进一步扩展

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Plain-Det: A Plain Multi-Dataset Object Detector
 description: >-
@@ -121,7 +121,7 @@ Plain-Det 基于任意 query-based 检测器（如 Deformable-DETR、Sparse R-CN
 - **真正的"Plain"设计**：不需要手工构建统一分类体系、不需要额外的对齐模块，直接利用 CLIP 语义空间 + 数据集特定头
 - **训练效率高**：使用更少的 COCO 数据（36 epoch vs ScaleDet 的 192 epoch）达到更高性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 语义空间依赖 CLIP 模型，可能继承 CLIP 训练数据中的偏见
 - NULL 校准方法的理论基础不够充分，缺乏为什么 NULL 嵌入恰好捕获频率偏差的深入分析

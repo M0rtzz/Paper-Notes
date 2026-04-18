@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark
 description: >-
@@ -159,7 +159,7 @@ $$\mathcal{L} = \sum_{t \in \mathcal{T}} \left( \underbrace{\mathcal{H}_\delta(\
 3. **ICG 荧光标记获取 GT**：巧妙利用手术中已有的 ICG 标记技术获取高精度 ground truth，贴合临床实际
 4. **稀疏标注训练**：不需要密集合成数据，直接在真实手术数据上训练，降低了部署门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **手术类型有限**：仅覆盖胃肠道手术（达芬奇 Xi 系统），需扩展到其他手术领域
 - **推理速度不足**：9.72 fps 尚未达到临床实时要求（通常需要 ≥25 fps）

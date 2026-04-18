@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Sensor Data: Foundation Models of Behavioral Data from Wearables Improve Health Predictions
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：大规模无标签行为数据（15.14M 周）vs 有限标注的下游任务——天然适合基础模型范式，但行为数据的不规则性和异质性使得现有时序基础模型方法无法直接适用。
 
-**本文要解决什么？** (1) 如何为不规则采样的多变量行为数据设计最优 tokenizer？(2) 什么架构最适合编码行为时序？(3) 行为数据基础模型能否在广泛健康检测任务上超越手工特征和传感器模型？
+**本文目标** (1) 如何为不规则采样的多变量行为数据设计最优 tokenizer？(2) 什么架构最适合编码行为时序？(3) 行为数据基础模型能否在广泛健康检测任务上超越手工特征和传感器模型？
 
 **切入角度**：不假设已有最优方案，而是对所有候选 tokenizer（TST/mTAN/Tuple）× 架构（Self-Attention Transformer/Rotary Transformer/Mamba-2）的 3×3=9 种组合做系统消融，用年龄预测作为代理任务筛选最优模型。
 
-**核心 idea 一句话**：行为数据是可穿戴健康 AI 的被忽视金矿，需要专门设计的基础模型来释放其潜力。
+**核心 idea**：行为数据是可穿戴健康 AI 的被忽视金矿，需要专门设计的基础模型来释放其潜力。
 
 ## 方法详解
 

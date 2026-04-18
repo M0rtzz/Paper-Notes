@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SldprtNet: A Large-Scale Multimodal Dataset for CAD Generation in Language-Driven 3D Design
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：现代多模态模型（如 CLIP、Flamingo、BLIP-2）已经证明跨模态对齐学习对泛化和迁移至关重要，但 CAD 领域缺少一个真正对齐多种模态的大规模数据集来支撑这些方法。
 
-**本文要解决什么？** 构建一个支持多模态、双向转换、语义标注、可编辑且人类可读的大规模 CAD 数据集。
+**本文目标** 构建一个支持多模态、双向转换、语义标注、可编辑且人类可读的大规模 CAD 数据集。
 
 **切入角度**：作者利用 SolidWorks API 开发编码器/解码器工具，将原生 .sldprt 文件转换为结构化文本，同时渲染多视角图像并用多模态 LLM 生成自然语言描述，实现四种模态的完全对齐。
 
-**核心idea一句话**：用SolidWorks API构建一套闭环工具链，从24万+工业零件中提取对齐的3D模型、图像、参数化脚本和自然语言描述，形成支持 Text-to-CAD 的多模态数据集。
+**核心 idea**：用SolidWorks API构建一套闭环工具链，从24万+工业零件中提取对齐的3D模型、图像、参数化脚本和自然语言描述，形成支持 Text-to-CAD 的多模态数据集。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ SldprtNet 的构建 pipeline 包含四个阶段：(1) 从 GrabCAD、McMaster-Car
 - **七视图合成为单图**的策略既减少了输入 token 长度又保留了完整几何信息，适合多模态模型推理
 - 支持13种 CAD 操作的参数化表示是对 DeepCAD（仅2种）的重大升级，使数据集能覆盖真实工业零件的复杂度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 论文发表在 ICRA 而非典型的 CAD/Vision 顶会，数据集的实际 CAD 生成效果的评估还比较初步（仅做了简单 baseline 对比）
 - 编码器/解码器依赖 SolidWorks 商业软件的 API，难以复现和扩展到开源 CAD 平台
 - Baseline 实验使用的数据子集仅5万条（占总量约20%），未展示全量训练效果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FRIEDA: Benchmarking Multi-Step Cartographic Reasoning in Vision-Language Models
 description: >-
@@ -122,7 +122,7 @@ FRIEDA 围绕四个核心维度设计问题：
 - **严格质量控制**：专家策划 + 11 名博士标注 + ≥2/3 共识过滤，确保题目质量
 - **双模式评测**：direct 和 contextual 两种设置分离了推理能力与检索能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集仅包含拉丁字符文档，未覆盖中文、阿拉伯文等其他语言的地图
 - 500 道题的规模相对有限，各空间关系子类的样本量不够均衡

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gated Integration of Low-Rank Adaptation for Continual Learning of Large Language Models
 description: >-
@@ -117,7 +117,7 @@ GainLoRA 与现有 CL 方法（O-LoRA、InfLoRA）兼容——它不限制新 Lo
 - **即插即用**：可与 O-LoRA、InfLoRA、C-LoRA 等现有方法组合使用，一致提升性能
 - **门控模块设计巧妙**：$f(0)=0$ 的选择使得正交初始化后自然实现零输出
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 每个新任务引入一个门控模块，任务数量很多时参数和推理开销线性增长
 2. 依赖 GPM 方法估计子空间正交基，当子空间维度过大时可能丢失信息

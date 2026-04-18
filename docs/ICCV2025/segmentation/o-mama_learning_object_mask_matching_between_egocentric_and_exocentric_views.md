@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] O-MaMa: Learning Object Mask Matching between Egocentric and Exocentric Views
 description: >-
@@ -144,7 +144,7 @@ DINOv2 mask 池化特征远优于 CLIP 和其他池化策略。
 3. **Delaunay 三角剖分硬负例挖掘**：巧妙利用空间邻近关系增强对比学习的区分能力，比随机负采样更有效
 4. **参数效率极高**：11.6M 训练参数 vs ObjectRelator 的 1587.3M，说明 foundation model 的特征质量已经足够好，只需极少的任务适配
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FastSAM 可能产生不完整的分割（只覆盖物体的一部分），导致匹配正确但 IoU 不够高
 - 极小物体的 mask 描述子信息不足，是当前的主要瓶颈

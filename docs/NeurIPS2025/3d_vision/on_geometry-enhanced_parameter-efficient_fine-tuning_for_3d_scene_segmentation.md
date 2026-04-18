@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Geometry-Enhanced Parameter-Efficient Fine-Tuning for 3D Scene Segmentation
 description: >-
@@ -90,7 +90,7 @@ GEM仅用1.6%参数(1.8M)即在多数数据集上匹配全量微调(108.5M, 100%
 - Context Adapter中latent token的跨层残差更新是一个巧妙设计，将静态prompt变为动态的场景感知上下文
 - 实验覆盖面广：室内外场景、自监督/监督预训练、有无解码器、数据效率等多维度验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 室内预训练模型迁移到室外（SemanticKITTI）仍有较大性能差距，跨域PEFT是未来方向
 - Context Adapter的latent token数量固定(m=4)，对于非常大的场景可能不够

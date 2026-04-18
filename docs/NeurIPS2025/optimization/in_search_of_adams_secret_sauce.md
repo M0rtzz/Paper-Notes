@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In Search of Adam's Secret Sauce
 description: >-
@@ -133,7 +133,7 @@ $$d_k = \frac{\text{sign}(m_k)}{\sqrt{1 + \sigma_k^2 / m_k^2}}$$
 - **固定 $\epsilon$ 不能替代自适应方差**：实验和二次函数示例都表明，Signum + 常数 mollifier 达不到 Adam 的效果，必须是数据驱动的自适应方差项
 - **$\beta_1 = \beta_2 = 0.95$ 可作为 LM 训练默认**：已被 Zhao et al., Shah et al. 等独立采用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限 160M 和 410M 规模**：虽然数量惊人（1500+ runs），但未在 1B+ 模型上验证
 - **超参数网格固定**：虽然展示了在网格内均处于最优而非边界，但不同网格可能导致不同结论
 - **小 batch size 下 $\beta_1 = \beta_2$ 可能稍有偏移**：Figure 3 在 batch size 128 时暗示了这一点

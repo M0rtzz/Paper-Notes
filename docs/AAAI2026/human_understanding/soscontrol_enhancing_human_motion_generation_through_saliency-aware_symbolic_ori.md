@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SOSControl: Enhancing Human Motion Generation through Saliency-Aware Symbolic Orientation and Timing Control
 description: >-
@@ -129,7 +129,7 @@ Test-time优化贡献最大，diffusion-time优化效果有限（其调整可能
 - **SMS数据增强的关键贡献**：随机采样显著性阈值使模型适应各种稀疏度的SOS输入，去掉后FID暴涨3.5倍
 - **ACTOR-PAE解码器的稳定性保证**：周期潜空间的正则化特性使稀疏引导自然传播到相邻帧，避免了OmniControl中test-time优化仅影响单帧导致的运动不一致问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **26个方向符号的表达力有限**：离散化不可避免丢失精细朝向信息，对要求高精度方向控制的应用（如手术机器人运动规划）可能不够
 - **推理速度较慢**：100步扩散推理 + 100步test-time迭代优化导致总推理时间约17秒/batch，其中前向运动学计算是主要瓶颈

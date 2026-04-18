@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Set of Generalized Components to Achieve Effective Poison-only Clean-label Backdoor Attacks with Collaborative Sample Selection and Triggers
 description: >-
@@ -147,7 +147,7 @@ tags:
 
 5. **极低毒化率下的有效性**：Narcissus + Component A 仅毒化 22 张图像即可达到 96% ASR，展示了方法的实战威胁。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Component A 和 B 的集成方式较为简单**：目前是先 A 后 B 的流水线式组合，缺乏联合优化。A&B&C 全部叠加时 ASR 反而低于 A&C（如 Badnets-C 从 86.15% 降至 77.67%），说明 B 对 ASR 有一定负面影响，组件间存在冲突需要更优的融合方案。
 

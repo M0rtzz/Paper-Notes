@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Epistemic Perspective on Agent Awareness
 description: >-
@@ -121,7 +121,7 @@ tags:
 4. **λ-assured 集合的引入**：巧妙处理了 frame 构建中"添加新世界导致 awareness 丢失"的技术困难
 5. **完备性证明的 matrix 技术创新**：在已有技术基础上增加了 awareness 关系和行标签，解决了 2D 语义学中世界与智能体的"解耦"问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏计算复杂度分析**：论文未讨论模态满足问题或模型检测的复杂度
 2. **静态逻辑**：未考虑动态更新（如信息获取/遗忘导致 awareness 变化的动态逻辑扩展）

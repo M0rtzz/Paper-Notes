@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CrossScore: Towards Multi-View Image Evaluation and Scoring
 description: >-
@@ -151,7 +151,7 @@ CrossScore 与 SSIM/PSNR 排序一致，可用于方法间比较。
 4. **DINOv2 + Cross-attention**：简洁但有效的架构选择，证明了预训练视觉 Transformer 在 3D 任务中的适用性
 5. **实用价值大**：使得无 GT 的新轨迹渲染评估成为可能，对 NVS 评估方法论有重要推动
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅预测 SSIM 一种指标，可扩展到 LPIPS 等感知指标
 2. 训练数据生成依赖特定 NVS 方法（GS、Nerfacto、TensoRF），扩展更多方法可增加伪影多样性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Re-coding for Uncertainties: Edge-awareness Semantic Concordance for Resilient Event-RGB Segmentation
 description: >-
@@ -106,7 +106,7 @@ $L_{total} = L_{seg} + L_{edge} + L_{dict}$，其中 $L_{edge} = -\sum q(\mathca
 - **离散潜空间建模**：用 VQ-VAE 的字典机制创建共享空间，比连续对齐更稳定。
 - **数据集贡献**：构建了 DERS-XS（合成）、DERS-XR（真实）和 DSEC-Xtrm 三个极端条件数据集，填补了评估空白。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 边缘字典依赖语义 mask GT 训练，实际部署时 GT 不可用
 - 字典大小 $K$ 的选择对性能敏感

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generation from Noisy Examples
 description: >-
@@ -98,7 +98,7 @@ $$\langle x_{1:d} \rangle_{\mathcal{H},n} := \bigcap_{h \in \mathcal{H}(x_{1:d};
 
 **Cor 3.4**：有限类 $|\mathcal{H}| = q$ 时，$\mathrm{NC}_n(\mathcal{H}) < nq + d + 1 < \infty$，通过鸽巢原理和子集支撑交集的有限性获得上界。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **非均匀噪声依赖可生成的完整刻画仍是开放问题**：充分和必要条件不匹配
 - **噪声极限可生成的完整刻画未解决**（继承自 Li et al. 2024 的开放问题）

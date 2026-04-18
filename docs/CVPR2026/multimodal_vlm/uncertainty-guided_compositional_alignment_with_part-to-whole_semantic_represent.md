@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty-guided Compositional Alignment with Part-to-Whole Semantic Representativeness in Hyperbolic Vision-Language Models
 description: >-
@@ -91,7 +91,7 @@ $L = \mathcal{L}_{con}^{un} + \lambda_{ent}\mathcal{L}_{ent}^{un}$
 - Leaky-ReLU式松弛的蒸含损失解决了压入锥体后梯度为零的问题
 - 可视化分析直观展示了不确定性与语义代表性的对应关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 双曲空间的计算复杂度限制了向更大规模模型的扩展
 - 部分图像通过随机裁剪生成，未q探索更智能的部分分割策略
 - 仅在ViT-S/16和ViT-B/16上验证，更大视觉编码器待验证

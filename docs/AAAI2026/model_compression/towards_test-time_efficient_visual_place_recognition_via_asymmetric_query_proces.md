@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Test-time Efficient Visual Place Recognition via Asymmetric Query Processing
 description: >-
@@ -145,7 +145,7 @@ tags:
 - **协方差建模的正则化效果**：高方差方向受更强惩罚 → 查询模型自动学习忽略视角/光照变化，聚焦位置特征
 - **训练效率的巨大提升**：预计算时间从 23 小时降到 16 秒，真正实现了大规模 VPR 的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在两种轻量骨干（MobileViTv2, EfficientViT-B2）上验证，更极端的压缩场景（如 TinyNet）未探索
 - 协方差矩阵使用对角线近似可能损失跨维度相关性信息

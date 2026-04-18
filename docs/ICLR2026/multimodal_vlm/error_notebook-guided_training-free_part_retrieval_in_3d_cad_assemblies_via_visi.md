@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Error Notebook-Guided, Training-Free Part Retrieval in 3D CAD Assemblies via Vision-Language Models
 description: >-
@@ -103,7 +103,7 @@ tags:
 - 两阶段VLM策略巧妙解决了CAD数据过长的问题，将结构化技术数据转为可处理的自然语言描述
 - 跨模型Error Notebook展示了一种新型的无训练知识转移范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Error Notebook质量依赖于初始推理和纠正的模型能力，弱模型可能生成低质量纠正
 - 当前仅在零件检索任务上验证，框架在更多工程任务（如设计验证、装配规划）上的适用性待探索
 - 数据集规模（752个装配体）相对有限，更大规模的验证有价值

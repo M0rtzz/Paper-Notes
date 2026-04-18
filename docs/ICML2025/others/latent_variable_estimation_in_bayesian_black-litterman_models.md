@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Variable Estimation in Bayesian Black-Litterman Models
 description: >-
@@ -122,7 +122,7 @@ $$p(\theta | F, \Omega^F) = N\!\left(\theta;\; (G^F)^{-1}[\Sigma_0^{-1}\theta_0 
 3. **两种配置的互补设计**：SLP-BL 处理资产特定特征，FIV-BL 处理宏观/非资产特定特征（如利率、CPI），实践中可组合使用
 4. **完全消除主观输入**：首次在 BL 框架中实现从特征数据端到端推断，不需人工指定观点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **特征选择有限**：仅使用 9 个基于价格/成交量的通用技术指标，未涉及基本面、宏观经济或替代数据
 2. **FIV-BL 未做实验**：论文实验仅验证了 SLP-BL，FIV-BL 需要数值近似方法（MCMC 等），计算成本和实用性未讨论

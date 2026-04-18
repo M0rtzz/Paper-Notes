@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvaGaussians: Event Stream Assisted Gaussian Splatting from Blurry Images
 description: >-
@@ -147,7 +147,7 @@ EvaGaussians将事件流无缝集成到3D-GS的初始化和优化两个阶段：
 3. **渐进式训练策略**：低分辨率起步→全分辨率，配合延迟引入事件损失，训练更稳定
 4. **贡献新数据集**：合成+真实两个数据集填补了事件+RGB联合基准的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 对极端纹理复杂的场景在严重模糊下仍有困难
 2. EDI模型的事件阈值$c$需要针对合成/真实数据手动调节

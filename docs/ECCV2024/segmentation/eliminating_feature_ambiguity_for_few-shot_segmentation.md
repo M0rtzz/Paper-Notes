@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Eliminating Feature Ambiguity for Few-Shot Segmentation
 description: >-
@@ -148,7 +148,7 @@ AE中减法操作的重要性：
 - 作为插件网络的设计使其易于集成到多种baseline中，实用性强
 - AE中 $\alpha$ 加权融合query和support FG原型的设计巧妙——根据两者的一致性动态调整权重
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当FG物体极小时（占图像比例<5%），判别性区域可能不足以提供有效的修正信号
 - PG依赖原型级别的FG/BG计算，当support中存在多个实例时可能不够精细

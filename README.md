@@ -1,8 +1,14 @@
 # 📚 AI Paper Notes
+[![Stars](https://img.shields.io/github/stars/zhaoyang97/Paper-Notes?style=social)](https://github.com/zhaoyang97/Paper-Notes/stargazers)
+[![Notes](https://img.shields.io/badge/笔记-13%2C040%20篇-blue)](https://zhaoyang97.github.io/Paper-Notes/)
+[![Conferences](https://img.shields.io/badge/学术会议-9%20个-orange)](#-会议覆盖)
+[![Site](https://img.shields.io/badge/在线阅读-Paper--Notes-brightgreen)](https://zhaoyang97.github.io/Paper-Notes/)
+[![Last Commit](https://img.shields.io/github/last-commit/zhaoyang97/Paper-Notes?label=最近更新)](https://github.com/zhaoyang97/Paper-Notes/commits)
 
+> **5 分钟读懂一篇顶会论文，一个仓库读懂最新 AI 进展。**
 - 📖 **13,000+** 篇 AI · LLM · NLP · CV 顶会论文解读
-- 🏛️ 覆盖 ICLR · CVPR · ACL · NeurIPS · ICML · AAAI · ICCV · ECCV 等顶会
-- 🔬 横跨 LLM Reasoning · VLM · Agent · RLHF · RAG · AIGC · 代码智能 · 强化学习 · 模型压缩 · 3D视觉 · 机器人 · 自动驾驶等46个研究方向
+- 🏛️ 覆盖 ICLR · CVPR · ACL · NeurIPS · ICML · AAAI · ICCV · ECCV 等会议
+- 🔬 横跨 LLM Reasoning · VLM · Agent · RLHF · RAG · AIGC · Robotics · Autonomous Driving 等46个研究方向
 - 🔄 持续更新中
 
 ## 🌐 在线阅读
@@ -13,7 +19,7 @@
 
 ## 🎉 版本发布
 
-- **v1.0.0**（2026-04-18）：首个正式版本，累计 13,000 篇论文解读，覆盖 ICLR 2026、CVPR 2026、ACL 2025、NeurIPS 2025、ICML 2025、AAAI 2026、ICCV 2025、CVPR 2025、ECCV 2024 共 9 大顶会 46 个研究方向
+- **v1.0.0**（2026-04-18）：首个正式版本，累计 13,000 篇论文解读，覆盖 ICLR 2026、CVPR 2026、ACL 2025、NeurIPS 2025、ICML 2025、AAAI 2026、ICCV 2025、CVPR 2025、ECCV 2024共9个会议
 
 ## 📊 会议覆盖
 
@@ -28,6 +34,19 @@
 | ICCV 2025 | 1,313 |
 | CVPR 2025 | 1,184 |
 | ECCV 2024 | 875 |
+
+## 🗓️ 更新路线图
+
+| 公布时间 | 会议 |
+|----------|--------------|
+| 2026-04 | [ACL 2026](https://2026.aclweb.org/program/accepted_papers/) |
+| 2026-05 | ICML 2026 |
+| 2026-07 | ECCV 2026 |
+| 2026-09 | NeurIPS 2026 |
+| 2026-10 | EMNLP 2026 |
+| 2026-12 | AAAI 2027 |
+| 2027-01 | ICLR 2027 |
+| 2027-02 | CVPR 2027 |
 
 ## 🔍 研究领域
 

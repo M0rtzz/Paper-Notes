@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EVT: Efficient View Transformation for Multi-Modal 3D Object Detection
 description: >-
@@ -129,7 +129,7 @@ ASAP相比vanilla VT提升1.4% NDS和2.0% mAP，仅增加3ms延迟。
 - **效率优势明显**：ResNet-50骨干下8.3 FPS，V2-99下4.9 FPS，具备实时部署潜力
 - **几何感知注意力的可迁移性**：可直接应用到其他检测器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在nuScenes评估，缺少其他数据集（如Waymo）的验证
 - 当前仅使用单帧数据，未利用时序信息（FusionFormer用了时序融合）

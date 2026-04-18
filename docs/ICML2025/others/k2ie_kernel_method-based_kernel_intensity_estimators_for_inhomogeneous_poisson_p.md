@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] K²IE: Kernel Method-based Kernel Intensity Estimators for Inhomogeneous Poisson Processes
 description: >-
@@ -104,7 +104,7 @@ K²IE 的最小二乘交叉验证仅需计算 $\int_{\mathcal{X}}[\sum_n h(\math
 4. **交叉验证高效**：最小二乘损失使得超参数选择可完全解析地进行，无需蒙特卡洛积分
 5. **灵活域支持**：框架可处理超矩形区域的并集，适用于不连通或不规则观测域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **非负性不保证**：K²IE 直接建模 $\lambda\in\mathcal{H}_k$ 而非 $\lambda=f^2$，估计值可能为负（尤其在无数据区域）；作者采用截断 $\max(u,0)$ 作为缓解措施
 2. **仅做合成数据实验**：主文仅展示合成数据结果，真实数据集放在附录，说服力稍弱

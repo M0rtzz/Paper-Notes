@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VQ-Seg: Vector-Quantized Token Perturbation for Semi-Supervised Medical Image Segmentation
 description: >-
@@ -114,7 +114,7 @@ QPM 贡献最大（+2.58% Dice），三个模块协同效果最优。
 - **双分支设计巧妙应对量化信息损失**：重建分支不仅保留视觉信息，还为 VQ 编码器提供自监督信号
 - **新数据集贡献**：828 例肺癌 CT 是有价值的临床数据集，填补中央型肺癌分割数据空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 2D 切片上实验，未验证 3D 情况下 VQ 的表现
 - 码本学习的稳定性和效率可能在更复杂任务中成为瓶颈

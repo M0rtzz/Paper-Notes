@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Incremental Maintenance of DatalogMTL Materialisations
 description: >-
@@ -83,7 +83,7 @@ tags:
 - 增量周期识别的思路优雅——仅在"差异"中寻找周期结构
 - 基于 MeTeoR 实现，具有实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持有界区间的 DatalogMTL，无界情况未涉及
 - DRed 本身的过度删除问题在 MTL 设置下可能被放大

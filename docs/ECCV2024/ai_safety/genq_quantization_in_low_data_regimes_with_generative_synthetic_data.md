@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Event Trojan: Asynchronous Event-based Backdoor Attacks
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}_T = \lambda_1 \frac{T_\xi(\mathbf{t}) \cdot \mathbf{t}}{\|T_\xi(\m
 4. **实验规模大**：22 个分类器（CNN+Transformer）× 2 数据集的全面评估
 5. **对防御方法的鲁棒性**：即使面对 Neural Polarizer 等防御仍保持较高攻击成功率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模依赖**：在小规模、高噪声数据集（N-Caltech101）上部分模型攻击成功率不理想，如 ViT-S 仅 87.73%，Inception-V3 表现更差
 2. **防御方法有限**：仅测试了 Neural Polarizer 一种防御，未测试 Spectral Signatures、Fine-Pruning、STRIP 等经典防御

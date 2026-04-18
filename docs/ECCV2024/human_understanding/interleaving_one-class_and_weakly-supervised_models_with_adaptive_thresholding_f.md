@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interleaving One-Class and Weakly-Supervised Models with Adaptive Thresholding for Unsupervised Video Anomaly Detection
 description: >-
@@ -127,7 +127,7 @@ tags:
 - **自适应阈值的数学保证**：交集操作保证单调递减，不依赖特定异常分数范围
 - **收敛性分析**：给出了为什么从随机初始化开始 wOCC 仍能学到有意义表示的分析——正常数据远多于异常数据这一先验足够启动学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - R% 参数虽然不敏感但仍需根据数据集粗略设置
 - 在 UBnormal 上 WS 模型的 AUC (63.10%) 低于 wOCC (74.76%)，对异常比例高的数据适应性有限

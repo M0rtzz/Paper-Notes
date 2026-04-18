@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PASTA: Part-Aware Sketch-to-3D Shape Generation with Text-Aligned Prior
 description: >-
@@ -97,7 +97,7 @@ $\mathcal{L} = \lambda_{align}\mathcal{L}_{align} + \lambda_{indiv}\mathcal{L}_{
 - **IndivGCN + PartGCN的层次图建模**：类似从像素到区域的层次推理，既保留细节又保证全局结构
 - **支持部件级编辑**：基于GMM的部件分解允许添加、删除、变换部件
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖SPAGHETTI预训练解码器，受限于其支持的物体类别（椅子、飞机、台灯）
 - VLM对复杂草图的理解能力有限
 - 仅支持单视角草图输入
@@ -197,7 +197,7 @@ $\mathcal{L} = \lambda_{align}\mathcal{L}_{align} + \lambda_{indiv}\mathcal{L}_{
 - **双粒度GCN设计精巧**：IndivGCN负责细节、PartGCN负责结构，两者互补覆盖了不同尺度的几何关系
 - **支持零件级编辑**：基于GMM表示天然支持添加/删除/变换零件
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在ShapeNet的椅子/飞机/台灯上训练和评估，类别有限
 - 依赖SPAGHETTI预训练形状解码器，受限于解码器的表示能力
 - VLM对草图的描述质量可能不稳定

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MesaTask: Towards Task-Driven Tabletop Scene Generation via 3D Spatial Reasoning
 description: >-
@@ -99,7 +99,7 @@ SFT 阶段：标准语言模型 loss；DPO 阶段：$\mathcal{L}_{DPO} = -\log\s
 - **数据集贡献**：10K+ 人工标注场景，包含堆叠/嵌套等复杂关系，填补了该领域数据空白。
 - **DPO 在 3D 中的应用**：首次将 DPO 用于物理碰撞消除，效果显著。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 人工标注成本高（10-20 分钟/场景），扩展困难
 - 3D 资产库虽大（12K+）但仍有覆盖盲区

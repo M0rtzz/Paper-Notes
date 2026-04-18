@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Hardness of Conditional Independence Testing In Practice
 description: >-
@@ -104,7 +104,7 @@ $$\mathbb{E}[\widehat{\text{KCI}}_n] = \mathbb{E}\left[k_C(C,C')\langle\Delta_{A
 - **解析与实证结合**：在合成问题上推导出KCI的闭式解，精确展示$\ell_C$如何控制检验行为，理论预测与实验高度一致
 - **揭示根本张力**：选择好的$k_C$对功效至关重要，但功效最大化会系统性地选中回归误差导致Type-I膨胀的区域——这是CI检验的结构性困境
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **未提出解决方案**：主要是诊断性工作，揭示了问题但未给出有效缓解Type-I错误膨胀的实用方法
 - **核选择的两难**：提出的SNR最大化核选择策略虽然提升功效，但可能加剧假阳性，实践中如何平衡仍未解决

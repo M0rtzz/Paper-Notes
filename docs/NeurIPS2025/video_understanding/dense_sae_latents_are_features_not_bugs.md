@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dense SAE Latents Are Features, Not Bugs
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：dense latents到底是SAE训练过程的副产品（应被消除），还是模型残差流中确实存在固有密集信号的反映（应被理解）？
 
-**本文要解决什么？** (a) dense latents的来源——训练伪影还是内在属性？(b) dense latents的几何结构是什么？(c) dense latents承担了哪些语义/功能角色？
+**本文目标** (a) dense latents的来源——训练伪影还是内在属性？(b) dense latents的几何结构是什么？(c) dense latents承担了哪些语义/功能角色？
 
 **切入角度**：作者通过消融dense latent子空间后重新训练SAE来验证内在性假设，并在Gemma 2 2B全层SAE上做系统分类。
 
-**核心idea一句话**：Dense latents反映了语言模型残差流中本质性的密集计算方向，它们在位置追踪、上下文绑定、熵调节等方面有明确的机制功能。
+**核心 idea**：Dense latents反映了语言模型残差流中本质性的密集计算方向，它们在位置追踪、上下文绑定、熵调节等方面有明确的机制功能。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **"寄存器"假说**：上下文绑定latent可能充当残差流中追踪当前语义焦点的可复用寄存器——挑战了SAE latent必须全局单义的假设
 - **可迁移思路**：零空间latent与RMSNorm的交互分析可迁移到其他归一化层研究；反极性分数可作为诊断SAE训练质量的通用指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅解释了不到一半的dense latents，其余可能是多个稀疏特征的噪声聚合
 - 分析集中在Gemma 2 2B的JumpReLU SAE上，单一字典大小和稀疏约束
 - 反极对的因果作用尚未通过电路分析充分验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AgentiQL: An Agent-Inspired Multi-Expert Framework for Text-to-SQL Generation
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：大模型性能好但成本高，小模型成本低但对复杂查询能力不足。
 
-**本文要解决什么？** 用小模型（14B 参数）通过多 expert 协作达到大模型级别的 NL2SQL 性能，同时保持可解释性和效率。
+**本文目标** 用小模型（14B 参数）通过多 expert 协作达到大模型级别的 NL2SQL 性能，同时保持可解释性和效率。
 
 **切入角度**：将 SQL 生成分解为推理（问题分解）、编码（子查询生成）、精炼（列选择校正）三个专业组件，用 adaptive router 按查询复杂度选择路径。
 
-**核心 idea 一句话**：通过 Divide-and-Merge 将复杂 SQL 生成分解为子问题-子查询对，结合 Column Selection 精炼和 Adaptive Routing，让 14B 开源模型接近 GPT-4 水平。
+**核心 idea**：通过 Divide-and-Merge 将复杂 SQL 生成分解为子问题-子查询对，结合 Column Selection 精炼和 Adaptive Routing，让 14B 开源模型接近 GPT-4 水平。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - **Adaptive Routing 的思路**很实用：不是所有查询都需要复杂 pipeline，按需分配计算资源。
 - **可扩展到并行执行**：子查询生成可以并行，提升吞吐量。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在 Spider 上评估**：需要在 BIRD、SQL-Eval 等更多 benchmark 上验证。
 - **大模型代价过高**：235B 模型在 4 个 A100 上每个问题需要约 60 分钟。
 - **分解失败是主要失败模式**：如果推理 agent 分解问题不当，后续步骤都会失败。

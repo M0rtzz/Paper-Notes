@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FineVAU: A Novel Human-Aligned Benchmark for Fine-Grained Video Anomaly Understanding
 description: >-
@@ -120,7 +120,7 @@ FineVAU 包含三个核心贡献：
 - **揭示LVLM盲点**：当前模型在理解细粒度时空事件上存在根本性缺陷，这不是通过简单scaling就能解决的
 - **全自动标注管线**：可扩展到更多数据集，为VAU数据构建提供了可复用方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集来源于CCTV监控视频，场景多样性有限
 - 评估依赖单一LLM (Gemini-2.5-Flash)，可能存在评判偏差
 - 目前仅评估开源7-9B模型，未涵盖更大规模或闭源模型

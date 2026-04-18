@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] gQIR: Generative Quanta Image Reconstruction
 description: >-
@@ -150,7 +150,7 @@ tags:
 - **三阶段解耦设计各有侧重**：S1 解决域适配（结构+色彩）、S2 增强感知（高频细节）、S3 利用时域信息（稳定性+保真度），职责清晰且可独立优化
 - **在重建域而非噪声域做光流估计**的 pre-denoising 策略绕过了 SPAD 数据上光流估计失败的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 固定 PPP=3.5 训练，在极低光照（PPP≤1）下鲁棒性受限——将 PPP 作为 conditioning signal 显式建模可能提升泛化性
 - 预训练 VAE decoder 8-bit 输出限制了 SPAD 原生的 HDR 能力，开发 HDR-capable decoder 是重要方向

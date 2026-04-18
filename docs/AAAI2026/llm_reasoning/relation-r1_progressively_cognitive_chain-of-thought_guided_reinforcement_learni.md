@@ -53,7 +53,7 @@ Relation-R1 是两阶段统一关系理解框架，基于 Qwen2.5-VL-3B：
 
 ### 关键设计 1：渐进式认知 CoT 引导（SFT 阶段）
 
-- **做什么**：在 SFT 阶段为模型注入两种认知 CoT，先模板后 MLLM 生成，渐进式引导多步推理
+- **功能**：在 SFT 阶段为模型注入两种认知 CoT，先模板后 MLLM 生成，渐进式引导多步推理
 - **核心思路**：
     - **模板 CoT（特定→规范）**：设计固定步骤模板，二元关系为 Object Existence → Object Localization → Relation Existence；N 元关系为 Activity Recognition → Entities & Roles Recognition → Entity Localization。CoT 封装在 `<think>` 标签中
     - **MLLM 生成 CoT（通用→灵活）**：用 Qwen2.5-VL-72B 作为教师模型，基于任务定义 + GT 场景图 + CoT 生成指令，自动产生多样化推理路径
@@ -62,7 +62,7 @@ Relation-R1 是两阶段统一关系理解框架，基于 Qwen2.5-VL-3B：
 
 ### 关键设计 2：GRPO 多奖励优化（RL 阶段）
 
-- **做什么**：采用 Group Relative Policy Optimization 对 SFT 后的模型进行强化学习，通过三种规则奖励引导策略优化
+- **功能**：采用 Group Relative Policy Optimization 对 SFT 后的模型进行强化学习，通过三种规则奖励引导策略优化
 - **核心思路**：
     - **格式奖励** $r_{\text{form}}$：输出必须包含 `<think>...</think><answer>...</answer>` 结构，满足得 1 分否则 0 分，确保推理过程的显式表达
     - **二元关系奖励** $r_{\text{binary}} = \alpha \cdot R + (1-\alpha) \cdot mR$：$R$ 为样本级三元组召回率，$mR$ 为各谓词类别的平均召回率；三元组正确需主语/谓语/宾语类别都匹配 + bbox IoU ≥ 0.5
@@ -72,7 +72,7 @@ Relation-R1 是两阶段统一关系理解框架，基于 Qwen2.5-VL-3B：
 
 ### 关键设计 3：统一二元与 N 元关系表示
 
-- **做什么**：将二元关系和 N 元关系统一到同一个模型中，共享推理流程和训练管线
+- **功能**：将二元关系和 N 元关系统一到同一个模型中，共享推理流程和训练管线
 - **核心思路**：
     - 二元关系输出场景图描述：`<ref>person</ref><box>[[x1,y1,x2,y2]]</box> <pred>drinking</pred> <ref>glass</ref><box>[[...]]</box>`
     - N 元关系输出 grounded situation frame：`drinking → <agent>child</agent><box>[...]</box> <liquid>milk</liquid><box>[...]</box>`

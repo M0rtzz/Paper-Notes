@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SymRTLO: Enhancing RTL Code Optimization with LLMs and Neuron-Inspired Symbolic Reasoning
 description: >-
@@ -136,7 +136,7 @@ Wire/Cell对比（11个基准，Yosys）：
 - 目标导向的冲突解决机制有实际工程价值（功耗vs延迟vs面积的权衡是芯片设计的核心难题）
 - 97.5%的首次通过率大幅减少了综合迭代次数，直接缩短设计周期
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖GPT-4o API，成本和延迟较高
 - 验证流水线在异步复位、CDC路径等复杂场景中可能需要更强的工具支持

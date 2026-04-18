@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Risk-Averse Constrained Reinforcement Learning with Optimized Certainty Equivalents
 description: >-
@@ -61,7 +61,7 @@ $$\sup_{\pi,t_0} \mathbb{E}[\sum \gamma^\tau r_0'(s_\tau, a_\tau, t_0)] \quad \t
 
 #### 1. 参数化强对偶性与部分拉格朗日松弛
 
-**做什么**: 证明约束问题可以通过部分拉格朗日松弛精确求解。
+**功能**: 证明约束问题可以通过部分拉格朗日松弛精确求解。
 
 **核心思路**: 
 - 固定 $t \in \mathcal{T}$ 后，问题变为标准约束RL → 满足Slater条件时强对偶性成立(Proposition 3.3)
@@ -74,7 +74,7 @@ $$D_\theta^* = \sup_{t \in \mathcal{T}} \inf_{\lambda \in \Lambda} \underbrace{\
 
 #### 2. 模块化算法设计（Algorithm 1）
 
-**做什么**: 将问题分离为内层RL子问题 + 外层 $(t, \lambda)$ 更新。
+**功能**: 将问题分离为内层RL子问题 + 外层 $(t, \lambda)$ 更新。
 
 对于固定的 $(t, \lambda)$，内层问题是标准RL（修改后的奖励函数），可以用任何RL算法（如PPO）求解。外层通过SGDA更新：
 
@@ -138,7 +138,7 @@ MARS在所有环境中实现**零约束违反**，是唯一做到这点的PPO-ba
 3. **实用性极强**: 黑盒包装器设计意味着可以直接用PPO/SAC/TD3等任何RL算法，降低实现门槛
 4. **灵活性**: 可以混搭风险中性目标+风险规避约束（如实验中的配置），非常符合实际需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **完全强对偶性未证明**: Assumption 3.4是否无条件成立仍是开放问题
 2. **计算成本高**: 每次 $(t,\lambda)$ 更新都需要近似求解一个策略优化子问题，比风险中性方法慢

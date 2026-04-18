@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revitalizing Canonical Pre-Alignment for Irregular Multivariate Time Series Forecasting
 description: >-
@@ -159,7 +159,7 @@ KAFNet 实现 7.2× 参数减少和 8.4× 训练推理加速。
 - **极致轻量**：仅 5K 参数就超越了数十倍规模的图模型，证明了"对的归纳偏置 > 更多参数"
 - **Pre-Conv 和 T-Norm 可迁移**：这两个架构无关的设计可被其他 IMTS 模型直接采用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限预测任务**：未评估分类、插值、异常检测等其他 IMTS 下游任务
 2. **数据集领域有限**：4 个数据集覆盖医疗、生物力学、气候，缺少交通和能源等更大规模场景

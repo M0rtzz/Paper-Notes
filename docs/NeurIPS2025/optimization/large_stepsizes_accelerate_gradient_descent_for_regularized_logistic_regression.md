@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large Stepsizes Accelerate Gradient Descent for Regularized Logistic Regression
 description: >-
@@ -121,7 +121,7 @@ Sharpness（Hessian 最大特征值）在 EoS 阶段振荡在 $2/\eta$ 附近，
 3. 阶段式分析（EoS → 稳定）框架清晰，可推广到其他问题
 4. 统计场景下的加速结果弥合了纯优化理论与学习理论的鸿沟
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. Theorem 1 仅适用于小正则化 $\lambda \lesssim 1/(n\ln n)$，Theorem 4 虽放宽但未匹配 $\sqrt{\kappa}$
 2. 严格依赖线性可分假设，非可分数据 Meng et al. (2024) 已构造反例
 3. 临界步长结论仅限 1D，高维推广是开放问题

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LoA-Trans: Enhancing Visual Grounding by Location-Aware Transformers
 description: >-
@@ -187,7 +187,7 @@ RES结果（oIoU）：
 
 3. **位置信息的显式建模**：在Transformer架构中，位置信息往往被隐式编码在attention中。LoA-Trans通过显式的位置感知查询选择，将位置推理从隐式变为显式，提高了模型的可解释性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **查询选择的额外计算开销**：Top-K选择需要对整个特征图进行分类和排序，对于高分辨率特征图可能带来不可忽视的计算开销。
 

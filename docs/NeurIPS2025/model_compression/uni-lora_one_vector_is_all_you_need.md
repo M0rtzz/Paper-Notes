@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uni-LoRA: One Vector is All You Need
 description: >-
@@ -123,7 +123,7 @@ $$\theta_D = \text{Concat}(\text{vec}(B^1), \text{vec}(A^1), \cdots, \text{vec}(
 - 等距性的证明简洁优雅：$P^\top P = I_d$ 直接保证距离保持
 - 参数效率到达新高度：0.0061% 的基线参数即可达到 LoRA 级性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 随机分组意味着不同重要性的参数被平等对待，自适应分组可能更优
 - 等距性保证的是优化landscape的几何不被扭曲，但不保证子空间是最优的

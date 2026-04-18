@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Utilities from Demonstrations in Markov Decision Processes
 description: >-
@@ -88,7 +88,7 @@ tags:
 - **理论严谨**: 提供了可辨识性分析和样本复杂度保证
 - **连接经济学与 RL**: 将期望效用理论引入 MDP/IRL 框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验为 proof-of-concept 级别，缺乏大规模/实际场景验证
 - 效用函数假设为已知参数族，非参数设置更具挑战性
 - 未讨论时变风险态度（人的风险偏好可能随上下文变化）

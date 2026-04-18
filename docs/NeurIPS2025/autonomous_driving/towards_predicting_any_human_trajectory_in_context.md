@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Predicting Any Human Trajectory in Context
 description: >-
@@ -101,7 +101,7 @@ RCPE+SRPE 的消融：联合使用在跨域数据集上提升最显著（WildTra
 - **免训练适应超越微调**：在 4/6 数据集上 minFDE 超越全微调，挑战了"微调是最佳适应策略"的假设
 - 定性分析显示 TrajICL 能感知 3D 结构（如电梯）、遵守地图约束（不穿越围栏）、捕捉行为趋势（走人行道）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 增加上下文示例数量会线性增加推理计算成本
 - 世界坐标数据集（JRDB-World、JTA）上的提升相对较小

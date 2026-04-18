@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PartField: Learning 3D Feature Fields for Part Segmentation and Beyond
 description: >-
@@ -147,7 +147,7 @@ PartField 以 79.18% mIoU 大幅超越第二名 SAMesh（56.86%），提升 22.3
 3. 跨形状一致性是"意外收获"（emergent property），这暗示对比学习在大规模 3D 数据上的 representation learning 潜力巨大
 4. Triplane 表示使得特征场可以在任意位置连续查询，支持分层聚类直接提取层级结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PVCNN + triplane 架构是外在的（extrinsic），特征与 3D 位置弱相关，跨形状应用要求形状方向一致
 - 目前仅在物体尺度评估，未扩展到大场景级别

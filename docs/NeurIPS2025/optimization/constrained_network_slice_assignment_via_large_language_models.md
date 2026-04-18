@@ -47,25 +47,25 @@ tags:
 
 ### 关键设计 1：权重空间的半环结构
 
-- **做什么**：在不同宽度 $q$ 的两层网络权重集合 $\mathcal{Z} = \bigcup_{q \geq 0} \mathcal{Z}_q$ 上定义加法和乘法运算
+- **功能**：在不同宽度 $q$ 的两层网络权重集合 $\mathcal{Z} = \bigcup_{q \geq 0} \mathcal{Z}_q$ 上定义加法和乘法运算
 - **核心思路**：加法定义为隐藏节点维度的拼接 (concatenation)，乘法定义为 Khatri-Rao 积（Kronecker 积沿隐藏维），两者满足交换律和分配律，构成交换半环 $\langle \mathcal{Z}, +, * \rangle$
 - **设计动机**：将不同宽度的网络统一在同一代数框架中，是后续所有组合构造的基石；传统工作只分析固定宽度网络，错失了跨宽度的丰富结构
 
 ### 关键设计 2：Sum Potentials 作为环同态
 
-- **做什么**：证明 $L_2$ 损失中的核心项——sum potentials $r(\mathbf{z}) = \sum_j \prod_{p,k} z_{pkj}$——是从权重半环 $\mathcal{Z}$ 到复数域 $\mathbb{C}$ 的环同态映射
+- **功能**：证明 $L_2$ 损失中的核心项——sum potentials $r(\mathbf{z}) = \sum_j \prod_{p,k} z_{pkj}$——是从权重半环 $\mathcal{Z}$ 到复数域 $\mathbb{C}$ 的环同态映射
 - **核心思路**：环同态满足 $r(\mathbf{z}_1 + \mathbf{z}_2) = r(\mathbf{z}_1) + r(\mathbf{z}_2)$ 和 $r(\mathbf{z}_1 * \mathbf{z}_2) = r(\mathbf{z}_1) \cdot r(\mathbf{z}_2)$。这意味着若部分解 $\mathbf{z}_1$ 使某些 SP 为 0、$\mathbf{z}_2$ 使另一些 SP 为 0，则环乘 $\mathbf{z}_1 * \mathbf{z}_2$ 可使两者的并集为 0
 - **设计动机**：将高度非线性的全局优化问题转化为在代数结构上的组合问题，避免直接求解复杂非凸优化
 
 ### 关键设计 3：多项式构造低阶全局解
 
-- **做什么**：在半环 $\mathcal{Z}$ 上构造多项式 $\mathbf{z} = \mathbf{u}^L + \mathbf{c}_1 * \mathbf{u}^{L-1} + \cdots + \mathbf{c}_L$，从单频生成元 $\mathbf{u}$ 系统产生部分解，再组合为全局解
+- **功能**：在半环 $\mathcal{Z}$ 上构造多项式 $\mathbf{z} = \mathbf{u}^L + \mathbf{c}_1 * \mathbf{u}^{L-1} + \cdots + \mathbf{c}_L$，从单频生成元 $\mathbf{u}$ 系统产生部分解，再组合为全局解
 - **核心思路**：选取对称性好的 order-1 生成元（如使用 3 次或 4 次单位根 $\omega_3, \omega_4$），使其在 SP 上产生大量重复值（非 1），从而以低次多项式覆盖更多约束。最终构造出 order-6 Fourier 解 $\mathbf{z}_{F6}$（每频率 6 个隐藏节点）和 order-4/6 混合解 $\mathbf{z}_{F4/6}$（总阶更低）
 - **设计动机**：追求低阶解（少隐藏节点），因为梯度动力学在 weight decay 下天然偏好低阶——代数连接的解在拓扑上也连通（Theorem 5），高阶的完美记忆解 ($d^2$ 阶) 不被动力学青睐
 
 ### 关键设计 4：梯度动力学与过参数化分析
 
-- **做什么**：分析为何训练偏好 Fourier 解而非完美记忆解，以及过参数化的作用
+- **功能**：分析为何训练偏好 Fourier 解而非完美记忆解，以及过参数化的作用
 - **核心思路**：(1) Theorem 5 证明若全局解 $\mathbf{z} = \mathbf{y} * \mathbf{z}'$，则 $\mathbf{z}$ 与更低阶的 $\mathbf{z}'$ 之间存在零损失路径，weight decay 自然推向低阶端；(2) Theorem 6 证明宽度趋于无穷时 SP 的动态解耦，解释过参数化改善训练的原因
 - **设计动机**：弥补静态解结构分析与实际训练动态之间的鸿沟，为 grokking 等现象提供部分解释
 

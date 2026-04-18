@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PolyConf: Unlocking Polymer Conformation Generation through Hierarchical Generative Models
 description: >-
@@ -191,7 +191,7 @@ $$\mathcal{L}_{\text{phase-2}} = \frac{1}{N_u}\sum_{i=1}^{N_u}\|\hat{R}_i^{(0)} 
 4. **SO(3) 扩散的巧妙应用**：利用重叠原子约束，将 SE(3) 变换简化为仅需生成旋转，降低了问题复杂度
 5. **完整的基准贡献**：不仅提出方法，还投入大量资源构建了首个聚合物构象数据集和标准化评估协议
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限线性均聚物**：当前工作仅关注由相同单体组成的线性聚合物，未涉及共聚物、混合物等更复杂体系
 2. **未考虑 2D 拓扑结构**：如交叉链接、分支等聚合物结构暂未建模

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoBGS: Motion Deblurring Dynamic 3D Gaussian Splatting for Blurry Monocular Video
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}_{\text{total}} = \lambda_{\text{rgb}} \mathcal{L}_{\text{rgb}} + \
 - **优雅的曝光时间估计**：LCEE 方法利用全局相机运动与局部物体运动共享曝光区间的物理先验，通过 2D 投影位移比值估计曝光时长，无需额外可学习参数
 - **全面的性能提升**：在 Stereo Blur 数据集上，MoBGS 在 LPIPS 上达到 0.050（比 MoBluRF 的 0.078 提升 36%），PSNR 达到 28.80dB（提升 3.1dB），同时渲染速度达到 ~480 FPS（比 MoBluRF 快 4800×）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Per-scene 优化范式**：每个新场景都需要重新从头训练，无法泛化到未见过的场景。作者指出，未来可将去模糊模块集成到 feed-forward 可泛化 3DGS 方法中
 - **深度监督依赖**：依赖预训练的单目深度估计模型（UniDepth）提供深度 GT，深度质量可能影响重建精度

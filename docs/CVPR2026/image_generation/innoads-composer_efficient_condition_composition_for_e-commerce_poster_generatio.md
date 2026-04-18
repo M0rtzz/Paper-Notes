@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InnoAds-Composer: Efficient Condition Composition for E-Commerce Poster Generation
 description: >-
@@ -120,7 +120,7 @@ InnoComposer-Bench 评测（300样本）：
 - **解耦注意力+条件缓存**：条件分支不依赖时间步，可预计算并缓存，推理开销仅增加主流 attention
 - **配套数据集 InnoComposer-80K**：首个包含主体+文字+风格联合标注的电商海报数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据由合成管线构建，背景风格的多样性可能受限于生成模型质量
 - 重要性分析基于全条件预训练模型的固定 attention pattern，是否可学习动态路由值得探索

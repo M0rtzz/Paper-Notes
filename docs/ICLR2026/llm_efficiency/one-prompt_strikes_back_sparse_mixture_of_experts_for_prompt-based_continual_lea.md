@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One-Prompt Strikes Back: Sparse Mixture of Experts for Prompt-based Continual Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：OVOR 等方法用单个共享 prompt 来解决效率问题，但因所有 prompt 参数被持续更新，导致严重的知识干扰（knowledge interference），性能不如 task-specific 方法。效率与性能之间存在根本冲突。
 
-**本文要解决什么？** 如何在保持单 prompt 的参数效率优势的同时，避免共享 prompt 带来的知识干扰？具体包括：(a) 如何在多门控 MoE 的 attention head 中做稀疏选择；(b) 如何平衡 expert 利用率；(c) 如何在没有旧数据的情况下保持 expert 的专门化。
+**本文目标** 如何在保持单 prompt 的参数效率优势的同时，避免共享 prompt 带来的知识干扰？具体包括：(a) 如何在多门控 MoE 的 attention head 中做稀疏选择；(b) 如何平衡 expert 利用率；(c) 如何在没有旧数据的情况下保持 expert 的专门化。
 
 **切入角度**：基于 Le et al. (2024a) 的洞察——每个 attention head 可以视为多个 MoE 模型的组合，prefix tuning 本质上是往这些 MoE 中添加新的 prompt expert。既然已经是 MoE，那就自然可以引入稀疏选择。
 
-**核心 idea 一句话**：将共享 prompt 中的每个 prefix token 视为独立 expert，通过 prompt-attention score aggregation 计算统一代理分数实现 Top-K 稀疏激活，从而在单 prompt 上获得隐式参数分区效果。
+**核心 idea**：将共享 prompt 中的每个 prefix token 视为独立 expert，通过 prompt-attention score aggregation 计算统一代理分数实现 Top-K 稀疏激活，从而在单 prompt 上获得隐式参数分区效果。
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ SMoPE 的输入是 ViT 的 patch token 序列 $\mathbf{X} \in \mathbb{R}^{N \tim
 - **Adaptive Noise 比传统 load balancing loss 更适合 CL**：传统 MoE 的 auxiliary loss 会强制平衡，可能破坏已学知识；adaptive noise 只惩罚高频 expert 且只在训练时生效，更温和可控。
 - **Prefix Key as Prototype** 的思路可迁移到 NLP 的 prefix tuning 场景，用于任何需要在无旧数据时保持路由一致性的增量学习任务。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验仅在 ViT-B/16 上验证，未测试更大规模模型或 NLP 任务，泛化性有待验证
 - Top-K 是硬选择，可能不如 learnable soft routing 灵活；可以尝试 Gumbel-Softmax 等可微分选择
 - Adaptive noise 的 $\epsilon$ 需要手动调，跨数据集可能需要重新搜索

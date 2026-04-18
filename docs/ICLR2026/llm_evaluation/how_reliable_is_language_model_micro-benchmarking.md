@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Reliable is Language Model Micro-Benchmarking?
 description: >-
@@ -128,7 +128,7 @@ MDAD 越低越好：MDAD = 2 意味着该 micro-benchmark 能可靠区分完整 
 - **"奥卡姆剃刀"结论**：当评估预算允许 250+ 样本时，无需复杂的 micro-benchmark 构建方法，简单随机采样即可——省去了训练 IRT 模型或计算 source model confidence 的开销。
 - **MDAD 解释了 top-model 排名稳定的现象**：排名靠前的模型与大多数模型差距大（> MDAD），因此即使小 micro-benchmark 也能正确识别 top models；但中间模型因彼此差距小而排名不稳定。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 classification/accuracy 任务**：实验只涉及多选题准确率，未覆盖 open-ended generation、preference-based evaluation 等场景（作者在 Discussion 中提及可扩展但未实验验证）。
 2. **MDAD 的 0.8 阈值是人为选择**：虽然附录显示不同阈值下结论定性一致，但最优阈值可能因应用场景而异。

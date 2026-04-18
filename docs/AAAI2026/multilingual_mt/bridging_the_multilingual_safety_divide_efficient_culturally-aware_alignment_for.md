@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging the Multilingual Safety Divide: Efficient, Culturally-Aware Alignment for Global South Languages
 description: >-
@@ -127,7 +127,7 @@ tags:
 - **社区参与式对齐**理念：让目标社区自己定义什么是"有害"，而非依赖英语中心的标准
 - **系统性综合**：将安全基准、文化评估、代码混合防御、知识编辑审计整合为可操作蓝图
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 本文更偏综述/position paper，各方法的实验细节分散在四篇子论文中
 2. 功能头识别方法的自动化程度和跨模型泛化性有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Symmetrical Flow Matching: Unified Image Generation, Segmentation, and Classification with Score-Based Generative Models
 description: >-
@@ -164,7 +164,7 @@ SymmFlow仅用25步即超越Diffusion Classifier在CIFAR-10上的表现，而后
 3. **计算效率突出**：25步推理远优于扩散模型的数百步，分类仅需1步
 4. **玩具实验的教学价值**：螺旋数据集清晰展示了正向/反向流的语义分离能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分割分辨率瓶颈**：在64×64×4的潜空间操作，对小面积类别（耳环、眉毛）分割质量受限
 2. **模型体积大**：依赖Stable Diffusion U-Net，虽然步数少但单步计算量大

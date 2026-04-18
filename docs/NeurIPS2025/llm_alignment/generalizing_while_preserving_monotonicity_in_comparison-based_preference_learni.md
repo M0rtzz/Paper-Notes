@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizing while Preserving Monotonicity in Comparison-based Preference Learning Models
 description: >-
@@ -116,7 +116,7 @@ $$\frac{d\theta_{\lambda a}^*}{d\lambda}\bigg|_{\lambda=\mu} = (r-s) \cdot e_a^T
 - 明确指出 RLHF/DPO 等主流方法缺乏单调性保证，有助于引发社区对这一问题的重视
 - 一个简单的修复方案：将嵌入与单位矩阵拼接即可大幅提升 goodness 概率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论保证**仅限于 diffusion embedding**，更一般的嵌入类（如神经网络生成的）无法保证
 - 仅考虑**线性模型**，而实际 RLHF/DPO 使用非线性模型（Transformer）

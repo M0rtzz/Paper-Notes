@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion Adaptive Text Embedding for Text-to-Image Diffusion Models
 description: >-
@@ -91,7 +91,7 @@ COCO 验证集 5000 张图，SD v1.5 + DDIM 50 步：
 - 即插即用特性极强：不修改模型、兼容任意骨干和采样器、支持多评估函数
 - 多概念生成（AnE 数据集）和文本引导图像编辑（DDPM Inversion）两个下游任务一致验证了有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每步更新需额外 score network 前向传播+梯度计算，10% 更新时时间增加约 39%
 - GPU 显存消耗显著增加（24GB → 61.5GB），FP16 可缓解但仍高于基线

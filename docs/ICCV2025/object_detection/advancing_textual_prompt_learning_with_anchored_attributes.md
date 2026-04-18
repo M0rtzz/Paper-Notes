@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Advancing Textual Prompt Learning with Anchored Attributes
 description: >-
@@ -99,7 +99,7 @@ ATPrompt 将传统的"软 prompt + 类别 token"格式改造为"属性软 prompt
 - **通用属性 vs 类内属性**：通用属性不需要为新类别重新获取，一次搜索即可复用，比类内属性更实用
 - **可微搜索**：DARTS 思想用在属性选择上是新颖且高效的
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在文本分支上改进，未涉及视觉 prompt（如 VPT）或多模态联合 prompt
 - 对于已有额外可学习模块的最新方法（如 PromptKD），改进幅度有所减小
 - 属性空间仍受 LLM 生成质量限制，且每个任务需独立搜索

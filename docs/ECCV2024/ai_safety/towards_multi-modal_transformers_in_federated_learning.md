@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Multi-modal Transformers in Federated Learning
 description: >-
@@ -118,7 +118,7 @@ FedCola 在默认设置下比最强基线 FedIoT 提升约 6.5/6.7 个点。
 4. **层级分析有洞察力**：区分 Self-attention（通用知识）和 MLP（任务特定知识）的聚合策略，有理论依据且实验验证有效
 5. **全面的鲁棒性评估**：在不同异质性程度、参与率、域差距、客户端比例下均保持一致优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 域差距较大时性能仍有下降，论文承认未完全解决大域差距问题
 - 仅在 ViT-Small 上验证，未探索更大规模模型（如 ViT-Large、多模态预训练模型）

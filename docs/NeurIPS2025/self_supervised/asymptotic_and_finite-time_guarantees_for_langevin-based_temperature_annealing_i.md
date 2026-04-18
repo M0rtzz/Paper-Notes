@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Asymptotic and Finite-Time Guarantees for Langevin-Based Temperature Annealing in InfoNCE
 description: >-
@@ -124,7 +124,7 @@ $$\lim_{t \to \infty} P(z_t \in \mathcal{M}^* \setminus B_\delta) = 0, \quad \fo
 - **黎曼流形视角**：将嵌入空间视为流形而非欧氏空间，更符合对比学习中 $\ell_2$ 归一化的实际操作
 - **对"该论文的温度参数是什么"这一实践问题给出了理论回答**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Workshop 论文篇幅有限**：分析的完整性受限，一些技术细节推迟到未来工作
 2. **对数退火实际不可行**：收敛时间随能量壁垒指数增长，实际训练中无法使用如此缓慢的调度

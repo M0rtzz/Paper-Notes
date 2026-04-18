@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When would Vision-Proprioception Policies Fail in Robotic Manipulation?
 description: >-
@@ -131,7 +131,7 @@ GAP算法的pipeline如下：
 - **消融极其充分**：运动检测方法、LSTM vs替代方案、超参数α/β/λ/训练阶段数全部消融
 - **反直觉发现**：本体感觉本应帮助机器人，但在深度学习优化中反而抑制了视觉学习——揭示了多模态学习中一个被忽视的陷阱
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 所有实验均在单一具身（single embodiment）上进行，未在跨具身数据集上验证
 - CPD的运动一致性距离依赖手工设计的度量（余弦相似度+符号函数），可能不适用于所有类型的操作任务
 - LSTM的训练依赖CPD提供的标签，如果CPD分割有系统性偏差，LSTM也会受到影响

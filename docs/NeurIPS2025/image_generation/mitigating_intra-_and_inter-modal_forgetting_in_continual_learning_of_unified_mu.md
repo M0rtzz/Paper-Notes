@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Intra- and Inter-modal Forgetting in Continual Learning of Unified Multimodal Models
 description: >-
@@ -118,7 +118,7 @@ MoDE在冻结的UMGM线性层上集成两类轻量级适配器：处理文本tok
 - MoDE的解耦设计可证明地将干扰降低一个量级（$\mathcal{O}(\eta) \to \mathcal{O}(\eta^2)$）
 - 方法轻量且即插即用，适用于各种基于Transformer的UMGM架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前验证的任务序列相对较短（5个任务），更长序列下的表现待验证
 - V-Adapter使用单个LoRA，在大量图像相关任务持续增加时可能也会遗忘

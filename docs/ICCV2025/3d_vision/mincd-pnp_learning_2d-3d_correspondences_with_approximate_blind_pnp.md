@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MinCD-PnP: Learning 2D-3D Correspondences with Approximate Blind PnP
 description: >-
@@ -125,7 +125,7 @@ MinCD-PnP 由两部分组成：(1) 理论层面的三重近似（Triple Approxim
 - 关键点引导策略巧妙地利用成熟的 2D 检测器解决了联合学习的难题
 - 使用 Chamfer 距离替代精确 PnP 求解，天然对噪声和离群点具有鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 2D 关键点依赖预训练检测器（Shi-Tomasi），在纹理极度匮乏场景下可能不够理想，可考虑学习型关键点检测
 - 三重近似的理论界是上界而非紧界，最优性有待进一步分析

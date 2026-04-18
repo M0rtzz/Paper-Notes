@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Combining Generative and Geometry Priors for Wide-Angle Portrait Correction
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{\text{LineCNet}} = \|\Phi_{bg} - \Phi^{gt}_{bg}\|_2^2 + \lambda_3
 3. **分而治之的框架设计**：人脸和背景分开处理再融合，避免了统一处理时两者目标冲突的问题
 4. **代码开源**，便于复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对大角度侧脸的矫正效果有限，因为 StyleGAN 主要在正面/小角度人脸上训练
 - 人体其他部位（如脚部）的畸变未处理，结果中可能出现不自然的身体比例
 - 后处理依赖图像修复模型（LaMa），融合质量受限于修复模型性能

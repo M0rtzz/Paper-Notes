@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cost Efficient Fairness Audit Under Partial Feedback
 description: >-
@@ -121,7 +121,7 @@ $$\text{cost} \leq \widetilde{O}\left(\sum_{a \in \mathcal{A}} \left(\frac{c_{fe
 5. **指数族 MAP oracle 泛化**：将球面高斯的 MAP oracle 结果推广到一般指数族，具有独立理论价值
 6. **算法对分类器类型无关**：适用于任意分类器的审计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **混合模型假设较强**：要求已知指数族类型（$h, T, W$ 已知），以及结构和分离条件
 2. **仅考虑二元群体标签和二元分类**：多分类和连续敏感属性的扩展未讨论

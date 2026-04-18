@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Diffusion Models Memorize: Inductive Biases in Probability Flow of Minimum-Norm Shallow Neural Nets
 description: >-
@@ -103,7 +103,7 @@ $$\mathcal{A} = \left\{\sum_{n \in \mathcal{I}} \mathbf{x}_n \mid \mathcal{I} \s
 4. 理论分析虽限于浅层网络+正交数据，但洞见（组合记忆、时间调度器影响泛化）具有普遍性
 5. 用 Augmented Lagrangian 训练确保精确插值是巧妙的实验设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅分析浅层 ReLU 网络**，与实际深层 U-Net 架构差异巨大，理论结论能否直接推广存疑
 2. **正交数据假设**虽在高维空间近似成立，但实际数据分布更复杂
 3. **低噪声区域的近似误差**未定量分析

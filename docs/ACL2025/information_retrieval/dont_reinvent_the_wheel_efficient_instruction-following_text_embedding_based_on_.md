@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Don't Reinvent the Wheel: Efficient Instruction-Following Text Embedding based on Guided Space Transformation
 description: >-
@@ -130,7 +130,7 @@ GSTransform 实时延迟仅 77-87 秒，比 InBedder-Llama2 快 **6~300 倍**。
 - 对比式标签生成策略确保标签质量，比直接 LLM 生成标签高 24 分
 - 编码器-解码器用单层线性层就够了，FDA 等传统降维方法不如此
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 随机采样对数据不均衡敏感，coreset 选择可能更好
 - 单层线性变换可能不足以捕获复杂非线性关系

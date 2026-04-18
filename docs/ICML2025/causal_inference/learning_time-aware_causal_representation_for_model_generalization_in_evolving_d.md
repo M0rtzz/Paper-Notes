@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Time-Aware Causal Representation for Model Generalization in Evolving Domains
 description: >-
@@ -143,7 +143,7 @@ $$\mathcal{L}_{SYNC} = \mathcal{L}_{evolve} + \alpha_1 \mathcal{L}_{MI} + \alpha
 3. **理论完备性**：证明了方法可获得每个时域的最优因果预测器（Theorem 2）
 4. **elegant 的因果因子提取方式**：利用 Gumbel-Softmax mask + 对比学习的组合，避免了传统因果干预的困难
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **域数量假设**：需要足够多的时序源域来学习演化模式，少域场景效果不明
 2. **线性时序假设**：LSTM 建模的先验隐含"近期域更相关"假设，对非单调或周期性分布漂移的适用性存疑

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoVieDrive: Urban Scene Synthesis with Multi-Modal Multi-View Video Diffusion Transformer
 description: >-
@@ -120,7 +120,7 @@ MoVieDrive 提出统一的多模态多视图视频扩散 Transformer，通过 mo
 - **条件设计的工程质量高**：三种层次的条件输入（全局文本、中粒度布局、初始帧参考）+ 统一布局编码器，使生成既可控又灵活
 - **支持场景风格编辑**：通过修改文本 prompt 可生成不同时间/天气条件下的驾驶场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **深度和语义伪标签质量有限**：训练用的深度图来自 Depth-Anything-V2，语义图来自 Mask2Former，并非 GT。如有真实多模态标注，性能应更好
 - **远距离区域生成质量差**：长视频生成时远距离区域出现噪声区域，可能因 3D VAE 的时序压缩丢失细节

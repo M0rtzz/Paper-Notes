@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Event-Aware Sentiment Factors from LLM-Augmented Financial Tweets: A Transparent Framework for Interpretable Quant Trading
 description: >-
@@ -148,7 +148,7 @@ tags:
 4. **可复现的研究范式**：全部代码和方法论开源，降低了量化交易研究的门槛
 5. **模块化设计**：情感评分和事件标注解耦，可独立替换和升级各组件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据时效性**：研究使用的推文数据集年份较早（2017年），市场结构和社交媒体生态已发生显著变化，因子表现在当前市场的泛化性需验证
 2. **LLM依赖与成本**：大规模推文标注依赖商业级LLM，API调用成本和延迟可能限制实时交易应用

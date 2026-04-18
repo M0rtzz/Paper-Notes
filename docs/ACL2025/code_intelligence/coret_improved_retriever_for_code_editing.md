@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoRet: Improved Retriever for Code Editing
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L}(\theta) = \frac{1}{N} \sum_i^N \frac{1}{|\mathcal{C}_i^*|} \sum_{c
 - **消融实验设计出色**：每个设计选择都有对应的消融——调用图 vs 同文件随机 chunk、文件路径有无、负样本类型和数量——说服力强。
 - **模型轻量但高效**：基于 CodeSage Small（小模型），通过训练策略而非模型规模取胜。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持 Python**：chunking 和调用图提取策略针对 Python，扩展到其他语言需要额外工程（但 SWE-PolyBench 已发布）。
 2. **SWE-bench 多为单文件编辑**：文件级别 recall 可以很高，LCA 多文件编辑场景才是更好的 benchmark。

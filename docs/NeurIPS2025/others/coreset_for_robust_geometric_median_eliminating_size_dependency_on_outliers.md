@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Coreset for Robust Geometric Median: Eliminating Size Dependency on Outliers
 description: >-
@@ -96,7 +96,7 @@ Assumption 1.4 的条件 2（$\max_p \text{dist}(p, C^*)^z \leq 4k \cdot \text{a
 | [42] Jiang et al. | $O(m\varepsilon^{-1}) + \text{Vanilla size}$ | 否 |
 | **本文 (Thm 1.3)** | $\tilde{O}(\varepsilon^{-2}\min\{\varepsilon^{-2}, d\})$ | 是 |
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 高维情形 $\tilde{O}(\varepsilon^{-2}\min\{\varepsilon^{-2}, d\})$ 与一维最优 $\tilde{O}(\varepsilon^{-1/2} + \frac{m}{n}\varepsilon^{-1})$ 之间有大的 gap，高维最优 coreset 大小仍开放
 - Assumption 1.4 的条件 1（$\min_i |P_i^*| \geq 4m$）在不同簇大小悬殊时可能不满足
 - 仅考虑欧氏空间和 $\ell_2$ 距离，更一般度量空间的推广虽提及但未详细分析

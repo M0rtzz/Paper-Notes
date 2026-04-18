@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DRAWER: Digital Reconstruction and Articulation with Environment Realism
 description: >-
@@ -40,7 +40,7 @@ tags:
 
 **切入角度**：双场景表示——SDF 负责几何精度，Gaussian splatting 负责渲染质量；将场景分解为可交互组件，自动推理铰接类型和铰链位置。
 
-**核心 idea 一句话**：SDF + Gaussian 双表示（几何+外观） + 铰接推理 + amodal 形状补全 = 完整可交互数字孪生。
+**核心 idea**：SDF + Gaussian 双表示（几何+外观） + 铰接推理 + amodal 形状补全 = 完整可交互数字孪生。
 
 ## 方法详解
 

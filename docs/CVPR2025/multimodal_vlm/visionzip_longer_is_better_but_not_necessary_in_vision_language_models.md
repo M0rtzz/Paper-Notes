@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VisionZip: Longer is Better but Not Necessary in Vision Language Models
 description: >-
@@ -109,7 +109,7 @@ VisionZip本身是training-free的，不涉及新的损失函数。可选的Effi
 - **13B反超7B**：VisionZip使LLaVA-NeXT 13B推理比原生7B更快且精度更高，是一个极有实际价值的发现
 - **极简设计哲学**：不需要任何额外模块，仅用注意力选择+相似度合并就大幅超越需要LLM前向传播的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主导Token的选择仅依赖视觉编码器的最后几层注意力，可能错过在浅层才有信息量的细节
 - 上下文Token合并策略(均匀分割+平均合并)较为粗糙，可探索更精细的合并方案

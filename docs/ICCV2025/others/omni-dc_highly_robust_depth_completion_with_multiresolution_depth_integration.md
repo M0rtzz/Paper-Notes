@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration
 description: >-
@@ -112,7 +112,7 @@ $$L_{Lap} = \log(2b) + |\mathbf{D}^{gt} - \hat{\mathbf{D}}| / b$$
 - **尺度等变性的巧妙保证**：仅归一化网络输入，DDI 中保留原始尺度，理论上保证输出尺度与输入一致
 - **合成数据训练的意外成功**：挑战了"必须用真实数据"的常见假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成训练数据可能无法覆盖所有真实世界场景的多样性
 - 在室内极密集输入（NYU 500 点）上与专用训练模型仍有差距

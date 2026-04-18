@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement
 description: >-
@@ -173,7 +173,7 @@ DRD 目标函数消融：
 - **深度的先验来源分析**：通过精心设计的实验（PNMI、RFS、MRS 三个指标）揭示音韵先验根本源于掩码预测目标培养的上下文推理能力
 - **实用性极强**：计算量仅 21.42 G MACs/s，远低于 StoRM（317.76×30）和 FlowSE（36.79×32），同时性能最优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 DNS1 with-reverb 子集上 UTMOS 偏低，可能存在混响训练/测试域差异
 - 依赖 WavLM-Large 作为骨干，模型参数量（382M）仍较大，边缘部署有挑战

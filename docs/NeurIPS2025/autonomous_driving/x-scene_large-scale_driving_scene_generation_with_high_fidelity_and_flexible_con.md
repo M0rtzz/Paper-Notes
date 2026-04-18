@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] X-Scene: Large-Scale Driving Scene Generation with High Fidelity and Flexible Controllability
 description: >-
@@ -125,7 +125,7 @@ Occupancy 生成：
 - Triplane 可变形注意力在保持编码效率的同时大幅提升重建精度
 - 一致性感知外推优雅地将局部生成扩展到大规模场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 渐进式外推在超大规模场景中可能累积误差
 - 场景图到布局的扩散生成依赖训练数据多样性

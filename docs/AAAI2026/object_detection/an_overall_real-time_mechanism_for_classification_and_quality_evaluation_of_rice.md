@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Overall Real-Time Mechanism for Classification and Quality Evaluation of Rice
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **注意力机制选择合理**：SimAM 无额外参数、ECA 聚焦通道注意力，两种轻量级注意力均适配实时检测场景
 - **K-means 设 K=1 的巧妙设计**：利用垩白区域的空间聚集特性简化聚类问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **品种覆盖有限**：仅涉及6种中国大米品种，未验证对国际品种（如泰国香米、印度 Basmati）的泛化能力
 - **检测模型较旧**：基于 YOLO-v5，未与 YOLO-v7/v8/v9 等更新版本对比

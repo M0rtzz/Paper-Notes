@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Weakly Supervised 3D Object Detection via Multi-Level Visual Guidance
 description: >-
@@ -110,7 +110,7 @@ VG-W3D 由两个分支构成：
 3. **伪标签过滤的 2D-3D 一致性约束**：利用 2D 检测置信度过滤假阳性，有效抑制自训练中的噪声累积
 4. **实用性强**：支持跨域 2D 检测器（COCO 预训练），降低了实际应用的数据标注需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 KITTI（单目/单相机）上验证，未在多相机数据集（如 nuScenes）上测试
 2. 初始伪标签依赖 FGR 的 frustum 几何方法，当点云极度稀疏时可能失效

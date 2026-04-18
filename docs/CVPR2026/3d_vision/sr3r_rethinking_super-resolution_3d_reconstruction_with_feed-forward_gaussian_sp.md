@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SR3R: Rethinking Super-Resolution 3D Reconstruction With Feed-Forward Gaussian Splatting
 description: >-
@@ -182,7 +182,7 @@ SR3R不仅超越所有前馈基线，还**超越了需要逐场景优化的SRGS/
 - 🎯 **零样本泛化**: 在未见场景上超越逐场景优化方法，且速度快2个数量级
 - ⚡ **高效实用**: 从仅2张LR视图即可完成HR 3D重建
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时间(1.69s)虽远快于优化方法(300+s)，但相比基础前馈模型(0.01s)仍慢约100倍，实时应用受限
 - 仅验证了4×超分，更高倍率(8×/16×)的效果未知

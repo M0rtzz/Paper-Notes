@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Planning and MBRL with Temporally-Extended Actions
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：小 $\delta_t$ 保证精度但搜索空间大；大 frame-skip 减少搜索但不灵活。
 
-**本文要解决什么？** 让 planner 每步同时优化动作和持续时间 $\delta t_k \in [\delta t_{\min}, \delta t_{\max}]$。
+**本文目标** 让 planner 每步同时优化动作和持续时间 $\delta t_k \in [\delta t_{\min}, \delta t_{\max}]$。
 
 **切入角度**：$\delta t$ 作为连续优化变量 + MAB 自动选择 $\delta t_{\max}$。
 
-**核心idea一句话**：动作持续时间作为 planner 优化变量 + 学习的 TE 动力学模型 + MAB 自动范围选择。
+**核心 idea**：动作持续时间作为 planner 优化变量 + 学习的 TE 动力学模型 + MAB 自动范围选择。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ CEM 每决策步输出 $(a_k, \delta t_k)$。回报：$J_2 = \sum_k \gamma^{e_{<
 - **搜索空间分析**：$2^H$ vs $2^{H/m}$ 直观
 - 可迁移到"时间分辨率 vs 搜索深度" trade-off 的任何系统
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\hat{F}_{\text{TE}}$ 对长持续时间动作的预测精度有挑战——预测从 $s$ 经过 $e_k$ 步到达的状态比单步预测本质上更难
 - 独立维护多个模型（每个 $\delta t_{\max}$ 候选）增加了内存和训练时间开销
 - 仅在 shooting-based planners（CEM）上验证，未在 gradient-based 方法或 tree-search（MCTS）中测试

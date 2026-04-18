@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoToRec: Sparse-Regularized Multimodal Tokenization for Cold-Start Recommendation
 description: >-
@@ -163,7 +163,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{BPR}} + \lambda_{cl} \mathcal{L}_{\text{CL}} 
 3. **三通道解耦传播**：避免过早的模态干扰，分别保留视觉偏好、文本属性和纯协同信号的语义纯度
 4. **效率可接受**：训练时间11.33s/epoch，仅比LightGCN多74%开销，推理端效率与其他高性能模型相当
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **冷启动阈值 τ=10 是硬设定**，不同数据集可能需要不同阈值，缺乏自适应调节机制
 2. **只处理物品冷启动**，未涉及用户冷启动问题

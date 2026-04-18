@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Invariant Causal Mechanism from Vision-Language Models
 description: >-
@@ -67,7 +67,7 @@ $$P_{inv}(c|\mathbf{x}) = \frac{\exp(S(A_{inv}f_I(\mathbf{x}), A_{inv}f_T(\mathb
 - **两种干预数据收集方式**：图像增强+文本编辑，灵活适配不同场景
 - **OOD 风险理论保证**：不仅是经验有效，还有严格的理论下界
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 线性变换假设（Proposition 5.3）对所有 CLIP 模型是否成立需进一步验证
 - 干预数据的质量直接影响 $A_{inv}$ 的估计精度
 - 图像增强作为干预可能无法完全保持 $Z_{inv}$ 不变

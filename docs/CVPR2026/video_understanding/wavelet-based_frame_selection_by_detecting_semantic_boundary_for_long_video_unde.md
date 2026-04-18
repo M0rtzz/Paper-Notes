@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Wavelet-based Frame Selection by Detecting Semantic Boundary for Long Video Understanding
 description: >-
@@ -109,7 +109,7 @@ WFS-SB 是一个免训练的三阶段帧选择框架：(1) 基于小波变换的
 - **统一超参数**：所有实验使用相同默认参数，无需针对不同模型/数据集/帧预算调参，实用性极强。
 - **效果显著**：在帧预算紧张（K=8）时提升尤为突出（MLVU +9.5%），证明语义边界感知在资源受限时价值最大。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **ITM 计算瓶颈**：BLIP-2 ITM 信号提取占总时间 79%（19.4s），对实时应用仍有压力，可通过批处理、量化或蒸馏加速。
 - **依赖外部 VLM**：语义信号质量受 ITM 模型能力限制，不同 VLM scorer 表现有差异（CLIP-VIT-B 比 BLIP 系列弱）。

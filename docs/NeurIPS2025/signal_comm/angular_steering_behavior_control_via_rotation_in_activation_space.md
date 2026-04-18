@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Angular Steering: Behavior Control via Rotation in Activation Space
 description: >-
@@ -104,7 +104,7 @@ tags:
 - 提供了4类行为的连续谱（refusal→indirect→direct→redirect），让行为控制不再是非此即彼的开关，而是连续可调的旋钮
 - Adaptive variant的设计简洁有效——一个符号掩码就大幅提升了小模型上的稳定性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖对比数据集提取特征方向，不同特征（如事实性、创造性等）需要不同的对比数据
 - 启发式选择steering平面（PCA前两个主成分），不保证在所有行为和架构上最优

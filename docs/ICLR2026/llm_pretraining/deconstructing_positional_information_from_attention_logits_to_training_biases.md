@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deconstructing Positional Information: From Attention Logits to Training Biases
 description: >-
@@ -79,7 +79,7 @@ tags:
 - **从现象到机制的完整链条**：合成任务发现 → 消融验证 → 数学证明，三步闭环
 - **对 MLA 的理论验证**：首次从位置编码角度解释了为什么 DeepSeek-V3 的 MLA 设计有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 沉积模式与长度外推能力之间的因果关系仅为假设，未直接验证
 - 合成任务过于简化，在复杂NLP任务（如序列反转、Dyck语言）上的适用性未知
 - 仅分析 6 层小模型，大规模模型中沉积模式是否持续存在尚不清楚

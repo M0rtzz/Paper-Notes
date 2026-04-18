@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation
 description: >-
@@ -168,7 +168,7 @@ NoSE 分数 —— CVSS-C 数据集：
 4. **EMMA 的深入分析**（附录）：作者详细记录了复现 EMMA 的失败经历（内存爆炸、数值不稳定、层/头选择不明），为社区提供了宝贵经验
 5. **开源优先的研究理念**：强调全部使用开源数据训练，旨在弥合工业界大数据和学术界小规模之间的差距
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 策略阈值 $\alpha$ 需要通过试错法确定，缺乏自动选择机制
 2. 仅覆盖 en↔{de, fr, es} 语言对，低资源语言未测试

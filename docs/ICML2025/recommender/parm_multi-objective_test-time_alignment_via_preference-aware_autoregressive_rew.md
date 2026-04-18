@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PARM: Multi-Objective Test-Time Alignment via Preference-Aware Autoregressive Reward Model
 description: >-
@@ -91,7 +91,7 @@ tags:
 4. 保持LLM冻结——不改变原模型。
 5. 与现有对齐方法正交——可与RLHF/DPO等结合。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. PBLoRA的低秩维度是新超参。
 2. 偏好维度增多时PBLoRA的表达力是否足够。

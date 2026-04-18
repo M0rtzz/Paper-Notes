@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Compact Latent Space for Representing Neural Signed Distance Functions with High-fidelity Geometry Details
 description: >-
@@ -135,7 +135,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{gen}} + \mathcal{L}_{\text{ovf}} + \lambda_1 
 - 共享feature grid上不同形状的采样不平衡问题被识别并通过带宽限制+泛化分支补偿巧妙解决
 - 在shape interpolation实验中，本方法比DeepSDF有更显著的插值变化，比HyperDiffusion更紧凑（256维 vs 整个MLP参数）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 方法需要watertight mesh作为输入，无法直接处理点云或带噪声的扫描数据
 - $128^3$ 的feature grid内存开销随类别数增加线性增长

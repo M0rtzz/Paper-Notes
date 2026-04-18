@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LightGTS: A Lightweight General Time Series Forecasting Model
 description: >-
@@ -187,7 +187,7 @@ Last token 由于与周期性最对齐且与预测任务最相关，效果最佳
 3. **跨尺度一致性**：在不同采样粒度（如10分钟/30分钟/1小时）下，LightGTS 保持稳定性能，而 Timer 和 Time-MoE 波动很大（Fig. 4）
 4. **可作为插件**：Periodical Tokenization 可直接应用到其他 TSFM（如 Timer），无需重训练即获 19.23% 的 MSE 提升（Table 11）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖周期性假设**：对于缺乏明显周期性的数据（如 Exchange 汇率数据），周期分词的增益有限，FFT 检测到的周期可能不准确
 2. **周期长度需先验知识或足够数据**：当无先验且数据量不足时，FFT 检测的周期长度可能偏离真实值，影响 Periodical Patching 效果

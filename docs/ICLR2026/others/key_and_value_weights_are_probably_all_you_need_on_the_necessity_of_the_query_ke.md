@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Key and Value Weights Are Probably All You Need: On the Necessity of the Query, Key, and Value Weight Triplet in Self-Attention
 description: >-
@@ -79,7 +79,7 @@ tags:
 - **优化简化**：$W_Q=I$后注意力logits从$XW_QW_K^TX^T$（关于学习权重二次）变为$XW_K^TX^T$（线性）→可能解释了训练稳定性提升。
 - **结构表达力边界**：Theorem 8.4精确表征了何时ReLU MLP可以/不可以吸收残差连接——这是一个独立的理论贡献。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在117-124M规模验证→需要在更大模型(7B+)上确认
 - 只测了$W_Q$消除，$W_K$或$W_V$消除的实验留作未来工作
 - LayerNorm的存在引入额外近似→理论保证从精确变为近似

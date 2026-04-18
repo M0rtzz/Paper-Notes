@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging 2D Priors and SDF Guidance for Dynamic Urban Scene Rendering
 description: >-
@@ -118,7 +118,7 @@ SDF 损失包含 RGB 渲染损失 $\mathcal{L}_{rgb}$、深度损失 $\mathcal{L
 - **对非刚性物体的鲁棒建模**：通过拓扑感知网络和运动基轨迹，能处理骑行者、行人等复杂运动物体
 - 首次在动态城市场景中将 SDF 和 3DGS 结合用于单个动态物体建模
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 CoTracker 的 2D 跟踪质量敏感，跟踪失败会影响运动估计
 - SDF 网络的表达能力不及 SMPL 模板，行人类别上仍略逊于 OmniRe

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bring Your Rear Cameras for Egocentric 3D Human Pose Estimation
 description: >-
@@ -125,7 +125,7 @@ tags:
 - **数据集贡献重大**：Ego4View-Syn/RW是首个包含后置相机的大规模自中心数据集
 - **实验设计周到**：包含宽松衣物（长裙、和服等），比现有数据集更具挑战性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - HMD原型体积较大（头盔+外置相机），距产品化还有距离
 - 后置相机增加了硬件成本和重量，需评估实际部署的可行性

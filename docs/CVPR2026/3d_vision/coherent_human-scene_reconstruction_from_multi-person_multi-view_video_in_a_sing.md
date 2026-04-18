@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Coherent Human-Scene Reconstruction from Multi-Person Multi-View Video in a Single Pass
 description: >-
@@ -108,7 +108,7 @@ tags:
 - **不做早期融合的决策**：反直觉但有效——保护预训练模型的输入分布比强行融合更重要
 - **几何vs外观的ReID洞察**：3D位置+姿态比外观特征更鲁棒
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 重度依赖head token，头部严重遮挡时性能下降
 - 编码器完全冻结，限制了模型对新场景的适应能力
 - 基于几何关联需至少部分帧重叠可见

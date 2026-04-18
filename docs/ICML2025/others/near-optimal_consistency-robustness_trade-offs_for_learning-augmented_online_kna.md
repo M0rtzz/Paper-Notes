@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Near-Optimal Consistency-Robustness Trade-Offs for Learning-Augmented Online Knapsack Problems
 description: >-
@@ -120,7 +120,7 @@ $$x_i = \lambda \hat{x}_i + (1 - \lambda) \tilde{x}_i, \quad \lambda \in (0,1)$$
 - **通用的分数-整数转换**：Fr2Int打破了现有整数背包算法必须基于阈值设计的限制，具有更广泛的适用性
 - **在对抗模型下的鲁棒性**：所有结果均在自适应对手模型下成立，是最强的在线算法分析框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - OFKP的算法允许部分接受物品，实际应用中往往需要整数决策；Fr2Int转换需要**小重量假设** $w_i \ll 1$
 - consistency-robustness权衡的下界与上界之间存在常数级gap，对 $U/L \to \infty$ 时渐近匹配但有限情形下尚有改进空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MacPrompt: Maraconic-guided Jailbreak against Text-to-Image Models
 description: >-
@@ -169,7 +169,7 @@ $$\nabla_{\beta_r}\mathcal{L} \approx \frac{\mathcal{L}(\beta_r + \delta) - \mat
 - **揭示系统性安全缺陷**：当前所有 T2I 安全机制（从简单关键词匹配到SOTA概念移除）都无法有效应对多语言对抗
 - **通心粉词的可视化分析**很有说服力：文本空间分离但图像空间聚集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要对 79 种语言候选进行大量图像生成，计算成本较高
 - ZOO 优化的迭代次数固定为 100，对不同难度的敏感词可能需要自适应

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adapting Speech Language Model to Singing Voice Synthesis
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：大规模 SLM 的泛化潜力 vs SVS 数据稀缺
 
-**本文要解决什么？** 探索 TTS 预训练 SLM 能否低成本适配到 SVS
+**本文目标** 探索 TTS 预训练 SLM 能否低成本适配到 SVS
 
 **切入角度**：将乐谱条件 tokenize 后加入 SLM 词表，微调后用 flow matching 精修
 
-**核心idea一句话**：用 TTS 预训练 SLM + flow matching 精修解决歌声合成的低资源问题
+**核心 idea**：用 TTS 预训练 SLM + flow matching 精修解决歌声合成的低资源问题
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ SingMOS (感知质量) 与最佳专用系统 TokSing 持平
 - **Flow matching 作为解码桥梁**：优雅解决了预训练 codec 解码器领域不匹配问题，是一个通用的"domain gap bridging"策略
 - **两阶段的互补设计**：LM 负责序列建模（时间结构），Flow 负责声学质量（频谱细节），分工明确
 
-## 局限性 / 可改进方向
+## 局限与展望
 - PER 偏高（0.36 vs TokSing 0.19），歌词发音清晰度不够
 - F0 相关指标偏低（0.60 vs 0.67），音高追踪精度还需提升
 - 仅在中文歌声（Opencpop）上测试，多语言泛化待验证

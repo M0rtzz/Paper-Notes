@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Accurate KV Cache Quantization with Outlier Tokens Tracing
 description: >-
@@ -140,7 +140,7 @@ KIVI 在 LLaMA-3-8B 的 LCC 任务上出现显著性能下降（56.58→44.42）
 3. **硬件友好**：使用 CUDA fused kernel，实际推理中 outlier 处理的开销微乎其微
 4. **互补性强**：可与权重量化、token eviction 等方法组合使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当序列很短（< group size）且 batch size 很大时，压缩比下降
 2. 在某些困难数据集上 2-bit 量化仍有微小损失，长生成时误差可能累积

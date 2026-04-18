@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding
 description: >-
@@ -105,7 +105,7 @@ VGEnt 是无训练 (training-free) 的框架，不涉及额外微调或损失函
 - 结构化推理的"分治验证"策略非常巧妙：将复杂问题拆解为简单的 yes/no 子问题，让模型按片段逐一回答，降低了 LVLM 的推理难度
 - 框架的模块化设计使其可即插即用到任何开源 LVLM，且图构建是一次性的离线成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 图构建依赖 LVLM 提取实体和描述，对 LVLM 本身的视觉理解能力有要求
 - 实体合并使用固定相似度阈值，可能导致同义不同词的实体未被合并

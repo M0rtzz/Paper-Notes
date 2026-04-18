@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Benchmarking Large Language Models for Zero-Shot and Few-Shot Phishing URL Detection
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **低标注成本方案**：仅需 1-6 个标注示例即可获得显著性能提升，展示了 LLM 在标注数据匮乏的安全场景中的实用价值。
 - **可复现性**：开源代码和标准化数据集使得结果可复现。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **模型覆盖有限**：仅评估三个商用模型，未包含开源 LLM（如 Llama-3、Mistral），无法评估开源替代方案的性价比。
 - **数据集单一**：仅使用 PhiUSIIL 数据集，未在多个钓鱼数据集上验证泛化性，不同数据源的 URL 分布可能影响结论。

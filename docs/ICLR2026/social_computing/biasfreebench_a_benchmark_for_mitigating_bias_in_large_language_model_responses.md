@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiasFreeBench: a Benchmark for Mitigating Bias in Large Language Model Responses
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：概率级评估 vs. 响应级评估的差距。StereoSet、CrowS-Pairs 等经典基准衡量的是 token 概率偏差，但用户真正关心的是"模型回答是否公平安全"。现有研究缺乏统一、面向响应的去偏评估平台。
 
-**本文要解决什么？** (a) 建立统一基准，公平比较 prompting 和 training 去偏方法；(b) 设计响应级指标直接衡量输出偏差；(c) 分析模型大小、偏差类型、方法范式等维度的影响。
+**本文目标** (a) 建立统一基准，公平比较 prompting 和 training 去偏方法；(b) 设计响应级指标直接衡量输出偏差；(c) 分析模型大小、偏差类型、方法范式等维度的影响。
 
 **切入角度**：将现有偏差数据集重组为 query-response 格式（与真实 LLM 使用对齐），统一所有方法的测试条件。
 
-**核心 idea 一句话**：构建统一的 query-response 框架 + Bias-Free Score 指标，系统比较 8 种去偏技术在响应层面的效果。
+**核心 idea**：构建统一的 query-response 框架 + Bias-Free Score 指标，系统比较 8 种去偏技术在响应层面的效果。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ BiasFreeBench 的设计包含三个核心组件：(1) 8 种去偏技术的统一
 - **Self-Awareness 的效率-效果平衡**：零额外计算成本就能获得稳定的去偏效果，对生产部署非常实用
 - **Task Vector 的"偏差减法"思路虽可行但过于粗暴**：说明偏差并非独立于有用知识的可分离成分
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **训练数据来源单一**：仅用 StereoSet 训练 SFT/DPO/Task Vector，数据覆盖的偏差类型和表达模式有限
 - **评估偏差类型有限**：主要覆盖 9 种社会偏见（性别、年龄、种族等），未涉及文化偏见、政治偏见等
 - **BFS 依赖 LLM 判官**：GPT-4o-mini 作为判官本身可能存在偏差，尽管人工验证显示一致性高

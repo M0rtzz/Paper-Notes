@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semi-supervised Video Desnowing Network via Temporal Decoupling Experts and Distribution-Driven Contrastive Regularization
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{un} = 2 \cdot \mathcal{L}'_{pixel} + 0.1 \cdot \mathcal{L}_{cl} +
 - 收集并开源了 Realsnow85 真实雪景视频数据集，为后续研究提供了宝贵资源
 - 在 15 个 SOTA 方法上全面超越，且兼顾效率与性能的 trade-off
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 真实数据集规模较小（仅 85 段视频），可能不足以覆盖所有雪景场景
 - 帧数固定为 3 帧，对于长时序依赖的场景可能不够充分

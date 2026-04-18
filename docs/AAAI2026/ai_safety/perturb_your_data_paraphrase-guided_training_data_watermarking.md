@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Perturb Your Data: Paraphrase-Guided Training Data Watermarking
 description: >-
@@ -145,7 +145,7 @@ Min-K%++在500M tokens训练时表现最优（AUC 0.72-0.85），但在5B tokens
 - **精巧的采样策略**：通过全局side-balance和指数衰减权重，既保持评分分布不变又保留训练后的可检测性
 - **跨架构有效**：PeS2o实验中scoring model（OLMo-1b）与target model（Pythia 410m）架构不同仍有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅验证continued pretraining**：因计算资源限制，未在from-scratch训练场景下验证，实际部署中需要更大规模的验证
 - **需要grey-box访问**：闭源商业模型通常不提供token log probabilities，需要第三方仲裁机制

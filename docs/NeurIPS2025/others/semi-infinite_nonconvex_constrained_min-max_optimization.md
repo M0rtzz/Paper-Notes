@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semi-infinite Nonconvex Constrained Min-Max Optimization
 description: >-
@@ -134,7 +134,7 @@ $$[\psi(x, w)]_+^{2\theta} \leq \mu \|\nabla_x \psi(x, w) [\psi(x, w)]_+\|, \qua
 - QP 子问题有闭式解，每步计算开销低，适用于大规模问题。
 - 收敛保证依赖于 Łojasiewicz 指数 $\theta$，为实际问题提供了灵活的理论框架（不同 $\theta$ 对应不同收敛速率）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **ReLU 等非光滑激活函数不满足 Łojasiewicz 条件**，需要使用 softplus 等光滑替代——这在实际深度学习中是一个限制。
 - 实验仅在小规模网络（单隐层 + tanh）上验证，未展示在现代深度网络上的可扩展性。

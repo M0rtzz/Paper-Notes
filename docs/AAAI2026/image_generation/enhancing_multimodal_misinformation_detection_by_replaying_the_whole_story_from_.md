@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Multimodal Misinformation Detection by Replaying the Whole Story from Image Modality Perspective
 description: >-
@@ -120,7 +120,7 @@ RetSimd 包含四个核心模块：
 - 三种图关系（中心/时序/语义）的设计合理，抓住了图像间的核心联系
 - 贡献度指标的提出为理解多模态系统提供了分析工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 生成器基于 Stable Diffusion，推理开销大（每条样本需生成 $K$ 张图像）
 - 图像生成质量受限于 SD 的零样本能力，对新闻特定场景可能不够准确
 - 仅关注了二分类（真/假），未考虑更细粒度的虚假类型

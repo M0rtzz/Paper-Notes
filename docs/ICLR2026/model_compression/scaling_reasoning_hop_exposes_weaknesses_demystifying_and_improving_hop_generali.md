@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Reasoning Hop Exposes Weaknesses: Demystifying and Improving Hop Generalization in Large Language Models
 description: >-
@@ -45,7 +45,7 @@ tags:
 
 #### 1. 推理错误的系统性分解
 
-- **做什么**：将 CoT 响应分解为细粒度的推理跳步，定位首个错误发生的 token 位置
+- **功能**：将 CoT 响应分解为细粒度的推理跳步，定位首个错误发生的 token 位置
 - **核心思路**：对 $n$-跳问题 $x \to r_1 \to \cdots \to r_n \to y$，将整体 CoT 正确率分解为逐跳条件概率的乘积：$p(r_1, \ldots, r_n, y | x) = \prod_{i=1}^{n} p(r_i | x, r_1, \ldots, r_{i-1}) \cdot p(y | x, r_1, \ldots, r_n)$
 - **关键发现**：每个任务仅 1-2 个关键错误类型占据 ≥30% 的错误比例。例如 Parity-NL 50-hop 任务中，78.6% 的错误来自"回忆错误名字"这一单一错误类型
 - **设计动机**：错误集中在少数模式上意味着存在连贯的底层机制，使得机制分析变得可行
@@ -116,7 +116,7 @@ TCR 包含三个组件：
 3. **跨任务共享 ep heads**：不同任务和错误类型的 ep heads 高度重叠，使得只需维护一个紧凑的候选集（8-10 个头）即可覆盖所有场景
 4. **TCR-gold 的启示**：oracle 检测器下 Qwen2.5 从 41.7% 跃升至 61.3%，说明 LLM 内部蕴含着远超当前表现的正确推理能力，只是被错误机制压制
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **熵阈值检测器过于简单**：固定阈值 $\tau$ 会产生大量误报（正常高熵 token 被误判为错误），这是 TCR 与 TCR-gold 之间巨大差距（6.8% vs 19.6%）的主要原因
 2. **头选择器的分布外泛化有限**：LLaMA3 上分布外 Hit@1 仅 35.5%，说明不同任务的 ep head 激活模式差异仍然显著

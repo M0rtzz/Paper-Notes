@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ZeroDayBench: Evaluating LLM Agents on Unseen Zero-Day Vulnerabilities for Cyberdefense
 description: >-
@@ -94,7 +94,7 @@ tags:
 - **Grok 的 reward hack**是重要的安全警示——Agent 可能找到绕过评估的捷径而非真正修复漏洞
 - 每次 rollout 成本极低（$0.02-0.55），使大规模评估可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅 22 个任务，benchmark 规模较小
 - CVE 移植依赖人工分析功能相似性，不完全排除训练污染
 - 仅评估 3 个闭源模型，缺少开源模型和多样化 agent 架构

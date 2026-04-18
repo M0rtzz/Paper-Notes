@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CGHair: Compact Gaussian Hair Reconstruction with Card Clustering
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：高保真度要求大量独立参数 vs 实际部署需要紧凑表示。
 
-**本文要解决什么**：利用头发的内在结构相似性，设计紧凑的高斯头发表示。
+**本文目标**：利用头发的内在结构相似性，设计紧凑的高斯头发表示。
 
 **切入角度**：借鉴游戏和影视工业中广泛使用的"发片（hair card）"概念——将相似发丝聚类为发片并共享纹理。
 
@@ -103,7 +103,7 @@ $$\mathcal{L} = \mathcal{L}_p + \mathcal{L}_a + \mathcal{L}_o$$
 - 可插拔设计：CGHair 模块可直接叠加到 GaussianHair 的重建发丝上，作为后处理压缩模块。
 - Gumbel-Softmax 软索引设计允许端到端训练，避免了 VQ 中常见的 codebook collapse。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 聚类数量 $N_c, N_T$ 为手动设定，可考虑自适应确定。
 - 当前仅支持静态头发，未处理动态/运动场景。

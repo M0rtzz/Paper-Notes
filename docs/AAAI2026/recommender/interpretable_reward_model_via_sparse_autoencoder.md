@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interpretable Reward Model via Sparse Autoencoder
 description: >-
@@ -180,7 +180,7 @@ RewardBench 2 上的性能对比（Overall 分数越高越好）：
 3. **丢弃后半层的大胆设计**：直接在中间层接入 SAE 并丢弃后续层，说明 RM 的有用信息集中在中间层
 4. **因果可控性**：不仅是事后解释，还能通过修改权重进行因果干预，这是多维 RM 无法做到的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **dead latents 问题**：部分 SAE 特征很少被激活，导致可解释的特征数量小于 $M$
 2. **依赖 GPT-4o 做特征解释**：自动解释的质量受限于 GPT-4o 的能力，且存在成本

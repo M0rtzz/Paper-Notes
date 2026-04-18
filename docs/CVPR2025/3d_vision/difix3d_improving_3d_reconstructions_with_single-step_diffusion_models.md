@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Difix3D+: Improving 3D Reconstructions with Single-Step Diffusion Models
 description: >-
@@ -97,7 +97,7 @@ Difix3D+ 管线分三步：(1) Difix 模型：微调 SD-Turbo 去除渲染图像
 - 训练 + 推理双阶段使用 Difix：训练阶段改善 3D 一致性，推理阶段修复残留不完美——设计理念清晰
 - 计算效率高：微调数小时，无需每步查询扩散模型（比 IN2N 等快 10 倍以上）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 后处理步骤可能引入帧间微小不一致（尽管渐进更新已大幅缓解）
 - 当前数据构造策略需要为不同数据集类型设计不同方案，自动化程度有待提升

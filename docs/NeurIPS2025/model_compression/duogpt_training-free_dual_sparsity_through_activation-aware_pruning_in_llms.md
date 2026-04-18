@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DuoGPT: Training-free Dual Sparsity through Activation-aware Pruning in LLMs
 description: >-
@@ -93,7 +93,7 @@ DuoGPT 在相近加速比下比最优结构化剪枝方法 ShortGPT 高出 **9.1
 3. **高效实现**：70B 参数模型在单张 A100 80GB GPU 上仅需约 2.3 小时完成校准
 4. **理论支撑**：提供了 DuoGPT 相对 SparseGPT 的损失改进下界，预测与实验趋势一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅聚焦解码阶段**：主要针对单 batch 解码的 GEMV 操作，对 prefill 阶段（GEMM）和大 batch 推理场景未做优化
 2. **统一稀疏度**：对所有 Transformer 层使用相同的激活稀疏度 $p^x$，未探索逐层自适应稀疏策略

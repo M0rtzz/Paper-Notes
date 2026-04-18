@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Transformers for Generalizable First-Order Logical Entailment
 description: >-
@@ -41,7 +41,7 @@ tags:
    - 现有研究未充分理解 Transformer 在一阶逻辑蕴涵中的设计空间
    - RPE 明显优于 APE，但已有的架构改进都针对 APE，在 RPE 下无效果
 
-**本文要解决什么？**
+**本文目标**
    - 建立全面基准来评估 Transformer 在一阶逻辑蕴涵中的泛化能力
    - 系统研究查询语法、嵌入、架构等设计选择对推理的影响
    - 在 RPE 设定下提出有效的归纳偏置
@@ -50,7 +50,7 @@ tags:
    - 将 KGQA 视为一阶逻辑蕴涵的实例，将 OOD 泛化分解为知识维度（concept shift）和查询类型维度（covariate shift）
    - 通过大规模消融实验确定最优设计选择，再针对性提出架构改进
 
-**核心idea一句话**:
+**核心 idea**:
    - 通过系统实验揭示 RPE 在逻辑推理中的优势，提出 TEGA 架构在 RPE 下引入逻辑感知引导注意力来提升泛化能力
 
 ## 方法详解
@@ -135,7 +135,7 @@ FB15k 上的 MRR(%) 结果：
 - **发现现有归纳偏置在 RPE 下无效**: 指出了一个被忽视的设计盲区
 - **基准数据集贡献**: 32 种 unseen query types + 两种 OOD 维度的评估框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅研究了 KGQA 场景，一阶逻辑蕴涵的其他形式（如自然语言逻辑推理）未覆盖
 2. TEGA 的具体架构细节和性能提升幅度在文中描述不够充分

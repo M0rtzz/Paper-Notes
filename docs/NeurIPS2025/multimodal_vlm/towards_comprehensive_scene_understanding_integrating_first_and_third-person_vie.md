@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Comprehensive Scene Understanding: Integrating First and Third-Person Views for LVLMs
 description: >-
@@ -172,7 +172,7 @@ M3CoT 各组件的贡献（GPT-4o）：
 4. **实际应用价值**：直接适用于 AR/VR 场景中的智能助手
 5. **揭示 LVLM 局限**：系统评估揭示了现有 LVLM 在多视角推理上的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：4K QA 对相对较小，可能不足以覆盖所有场景类型
 2. **场景图提取质量**：M3CoT 的效果依赖于场景图的准确性

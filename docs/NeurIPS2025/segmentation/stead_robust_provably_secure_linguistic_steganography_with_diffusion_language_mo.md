@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STEAD: Robust Provably Secure Linguistic Steganography with Diffusion Language Model
 description: >-
@@ -94,7 +94,7 @@ STEAD的嵌入容量比同类安全鲁棒方法PSARS高出约6倍。
 - 重复编码虽然简单，但配合DLM的并行独立采样恰好适配，体现了方法论的"简洁之美"
 - 邻域搜索策略的窗口自适应设计巧妙，能根据攻击强度动态调整
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 重复编码牺牲了嵌入容量换取鲁棒性，更高效的纠错码（如Turbo码）可能提升容量
 - 实验仅基于Dream一个DLM模型，其他DLM（如MDLM、SEDD）的效果未知

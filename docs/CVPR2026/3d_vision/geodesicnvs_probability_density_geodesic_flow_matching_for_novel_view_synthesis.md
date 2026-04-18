@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeodesicNVS: Probability Density Geodesic Flow Matching for Novel View Synthesis
 description: >-
@@ -99,7 +99,7 @@ Geodesic FM vs Linear FM:
 - **Data-to-Data 范式**：消除噪声先验，直接在结构化数据对间建立确定性流，少步推理时优势显著
 - **AOFM 作为新评估指标**：PPL 低可能对应简单混合，AOFM 更能反映真实的视角变换质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验局限于单物体 NVS（Objaverse/GSO），未在场景级多视图数据上验证
 - GeodesicNet 蒸馏需要预训练扩散模型的 score function，增加了训练复杂度和依赖

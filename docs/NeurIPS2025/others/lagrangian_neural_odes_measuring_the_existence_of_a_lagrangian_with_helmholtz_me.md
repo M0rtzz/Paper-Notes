@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lagrangian neural ODEs: Measuring the existence of a Lagrangian with Helmholtz metrics
 description: >-
@@ -97,7 +97,7 @@ Neural ODE 是从数据学习动力学系统的强大工具，可以学到 $\dot
 - **物理诊断能力**：不仅能改善学习，还能判断系统是否物理——阻尼系统在时间无关设置下 Helmholtz metric 无法收敛，正确反映了阻尼的非基本性
 - **理论根基扎实**：基于 Douglas 的经典 Helmholtz 条件理论（1939/1941），将百年数学工具与现代深度学习结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在低维（2D）toy 系统上验证，高维和复杂系统的扩展性尚未测试
 - 未与 LNN、Hamiltonian Neural Networks 进行系统的定量对比

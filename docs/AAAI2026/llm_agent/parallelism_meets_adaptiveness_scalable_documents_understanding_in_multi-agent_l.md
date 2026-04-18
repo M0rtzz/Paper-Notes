@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parallelism Meets Adaptiveness: Scalable Documents Understanding in Multi-Agent LLM Systems
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **评估器的三维评分设计**：以事实性为主的评分策略精准匹配了金融合规场景的高精度需求
 - **可审计性设计**：未被选中的并行输出保留在记忆中，确保决策过程可追溯
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 实验仅在 5 份 10-K 文件上评估，数据规模有限，统计显著性待加强
 - 并行评估的评分函数依赖人工设定权重，缺乏自动权重学习机制

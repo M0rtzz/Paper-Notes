@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LongStream: Long-Sequence Streaming Autoregressive Visual Geometry
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = \mathcal{L}_{geom} + \mathcal{L}_{depth} + \mathcal{L}_{pose} + 
 - **周期性缓存刷新**：借鉴SLAM中的状态边缘化思想，与关键帧相对坐标系完美配合
 - **实用性突出**：18 FPS + 公里级稳定 + 度量尺度，真正可用于自动驾驶等场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 关键帧选择策略未详细讨论，对于快速运动或纹理贫乏场景可能需要自适应关键帧
 - 尺度头仅在有度量标定数据上训练，非标定数据的尺度质量取决于训练数据分布

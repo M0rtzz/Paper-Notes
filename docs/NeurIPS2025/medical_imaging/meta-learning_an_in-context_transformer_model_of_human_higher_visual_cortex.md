@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex
 description: >-
@@ -109,7 +109,7 @@ $$\alpha_{\text{scaled}} = \frac{\log(l) \cdot q \cdot k}{\sqrt{d_k}}$$
 - **语言驱动的皮层映射**：CLIP特征 + BraInCoRL实现了从自然语言查询到体素选择性的零样本映射，这对理解视觉皮层的语义组织非常强大
 - **三阶段训练策略**的巧妙设计：先在合成数据上学习元学习能力，再适应真实数据，有效解决了大规模fMRI数据稀缺的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅处理静态自然图像，扩展到动态刺激（视频）需要重新设计编码器骨干
 - 训练主要依赖NSD——当前最大的7T fMRI数据集，数据集多样性仍可能不足

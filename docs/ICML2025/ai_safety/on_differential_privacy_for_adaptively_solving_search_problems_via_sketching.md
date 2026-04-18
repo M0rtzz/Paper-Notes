@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Differential Privacy for Adaptively Solving Search Problems via Sketching
 description: >-
@@ -113,7 +113,7 @@ tags:
 3. **$\ell_\infty$ 保证的新应用**：SRHT sketch的 $\ell_\infty$ 保证此前鲜有应用场景，本文发现它是坐标逐维私有中位数的天然搭配
 4. **应用驱动**：直接得到在线加权匹配和终端嵌入的改进结果
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **稀疏邻域假设的必要性**：ANN结果依赖于参数 $s$（近似近邻的上界），当 $s$ 接近 $\sqrt{T}$ 时优势消失
 2. **条件数依赖**：回归结果（Theorem 1.8）对条件数有二次依赖，尽管Theorem 1.10给出了对数依赖的替代方案

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Abstain Mask Retain Core: Time Series Prediction by Adaptive Masking Loss with Representation Consistency
 description: >-
@@ -96,7 +96,7 @@ AMRC由两个核心组件组成：
 - **模型无关的框架**：作为训练时的plug-in，可以应用于任何时间序列预测模型
 - **表征一致性约束新颖**：通过约束预测和标签的成对距离分布一致，间接改善了模型的泛化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 最优掩码长度的搜索增加了训练开销（需要对每个batch尝试多个掩码长度）
 - 冗余特征的定义依赖于MSE改善，可能对不同的预测目标有不同表现
 - 仅在时间序列预测上验证，信息冗余抑制的思路可能适用于更广泛的序列建模任务

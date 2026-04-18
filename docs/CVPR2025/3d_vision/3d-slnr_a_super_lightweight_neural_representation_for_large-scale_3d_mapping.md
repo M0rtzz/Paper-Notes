@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-SLNR: A Super Lightweight Neural Representation for Large-scale 3D Mapping
 description: >-
@@ -80,7 +80,7 @@ tags:
 - **自适应几何变换**：位置/旋转/缩放三个可学习属性使共享MLP能"一网多用"，设计巧妙
 - **实时更新**：并行查找算法使训练过程中可实时更新局部SDF状态
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 无arXiv链接和代码发布，复现性受限
 - 仅使用SDF做几何重建，未涉及颜色/纹理渲染
 - 支撑点采样策略对初始点云质量有依赖

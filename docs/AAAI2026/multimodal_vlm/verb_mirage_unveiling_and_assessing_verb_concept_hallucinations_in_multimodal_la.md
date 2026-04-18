@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Verb Mirage: Unveiling and Assessing Verb Concept Hallucinations in Multimodal Large Language Models
 description: >-
@@ -144,7 +144,7 @@ tags:
 4. **mAP与accuracy的对比分析**揭示了幻觉的真正来源是校准问题，为未来研究指明了方向
 5. **Pangea微调实验**证明丰富动词知识可以缓解幻觉，且不严重影响其他能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 提出的缓解方法是baseline水平，性能远未令人满意（MC verb-only acc仅60.79%）
 2. 是否存在有效的training-free动词幻觉方法仍是开放问题

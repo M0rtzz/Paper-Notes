@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Mismatch within Reference-based Preference Optimization
 description: >-
@@ -110,7 +110,7 @@ DPO 损失中的 $\Delta_\theta - \Delta_{ref}$ → 替换为 $\Delta_\theta - \
 - **统一两个对立方向**：不是"要不要 reference"的二元选择，而是"何时用 reference"的条件性策略。这个视角比之前的工作更有洞察力
 - **与其他改进正交**：HyPO 只修改 reference margin 的处理，可以与 SquaredPO、TR-DPO 等其他改进自由组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析主要是直觉性的（梯度权重衰减分析），未提供收敛性或最优性的形式化证明
 - 阈值 $\gamma=0$ 固定，可能不是所有场景的最优选择（某些弱悲观 pair 可能仍需 reference 信号）
 - 仅在 off-policy 设置下验证，on-policy RLHF（如 PPO）中的类似问题未探讨

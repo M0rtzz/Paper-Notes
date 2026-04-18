@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Detect All-Type Deepfake Audio: Wavelet Prompt Tuning for Enhanced Auditory Perception
 description: >-
@@ -151,7 +151,7 @@ WPT 以仅 0.69M 参数（FT 的 1/458）实现 3.58% 平均 EER，超越 315.89
 4. **HH 频带的类型不变性发现**：注意力图清晰显示 WPT 聚焦于 HH Token，为频域深伪检测提供新认识
 5. 实验设计系统全面：单类型到跨类型到联合训练的递进分析非常清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基准数据集均为相对干净的环境，未考虑噪声、部分伪造等更复杂真实场景
 2. 所有音频截断到约 4 秒，对长音频的适用性未验证

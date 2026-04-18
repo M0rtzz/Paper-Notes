@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Network for Simulating Radio Emission from Extensive Air Showers
 description: >-
@@ -114,7 +114,7 @@ tags:
 - **可微分性红利**：神经网络代理模型天然可微，可与信息场论（IFT）等框架结合
 - **迁移学习可行性**：在一个实验上训练的模型可以用少量数据微调到另一个实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 弱脉冲（低信噪比区域）的模拟精度较差，但作者认为这些区域在实际中被噪声淹没
 - 当前仅在 AERA 频段（30-80 MHz）和大气条件下训练验证

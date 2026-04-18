@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Kαlos finds Consensus: A Meta-Algorithm for Evaluating Inter-Annotator Agreement in Complex Vision Tasks
 description: >-
@@ -100,7 +100,7 @@ $$\alpha = 1 - \frac{D_o}{D_e} = \frac{(n-1)\sum_c o_{cc} - \sum_c n_c(n_c - 1)}
 - 提出了一个重要论断：目标检测基准的瓶颈不是模型架构而是标签质量
 - 数据驱动校准使框架天然可扩展到实例分割、3D体积分割、姿态估计等任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要多标注者元数据，无法对传统单标注者数据集进行事后质量评估
 - 解耦架构在空间受限任务（如实验室姿态估计）中需要狭窄的阈值校准

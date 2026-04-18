@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HAMLET: A Hierarchical and Adaptive Multi-Agent Framework for Live Embodied Theatre
 description: >-
@@ -150,7 +150,7 @@ HAMLET 框架解耦为两个主要阶段：
 4. **Beat 驱动的多轨迹即兴**：两个叙事节点之间允许多条轨迹，在结构化叙事和自由即兴之间取得平衡
 5. **物理环境交互**：叙述者裁决系统使戏剧不再是纯对话，增加了具身性和沉浸感
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估主要依赖 LLM-as-Judge（GPT-4o 和 HAMLETJudge），缺乏大规模人类评估
 - 100 个案例的评估数据集规模有限

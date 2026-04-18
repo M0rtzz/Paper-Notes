@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sketch-Augmented Features Improve Learning Long-Range Dependencies in Graph Neural Networks
 description: >-
@@ -133,7 +133,7 @@ SRF满足五个关键性质，数学上证明其缓解GNN三大限制：
 3. **即插即用**：与GNN架构无关，可叠加到GIN、GINE、GAT等任何消息传递GNN
 4. **低开销**：一次预计算，比学习型编码（PEARL）大幅节省训练时间和内存
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在无节点特征或特征退化的图上，SRF退化为纯随机特征
 - 当 $D \ll N$ 时核近似有偏差，特征维度与节点数的比值影响效果

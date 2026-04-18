@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Intractable Multimodal Policies with Reparameterization and Diversity Regularization
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L}_\alpha = \mathbb{E}_{s \sim \mathcal{D}}[\alpha(\tilde{D}_\theta(s
 - 用几何均值替代算术均值来度量多样性，这个看似微小的选择在实验中产生了重要影响。
 - 为amortized actor正名——在合理的训练算法下，这种简单的模型在多模态RL中表现出令人惊讶的强大能力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 扩散actor可能需要更深的网络、更多扩散步数和更精细的超参调优才能充分发挥潜力。
 - 基于距离的多样性度量可以探索更多的距离函数和聚合方式。

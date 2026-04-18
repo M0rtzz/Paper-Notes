@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MSRL: Scaling Generative Multimodal Reward Modeling via Multi-Stage Reinforcement Learning
 description: >-
@@ -105,7 +105,7 @@ VL-RewardBench: +9.3, Multimodal RewardBench: +4.3, GenAI-Bench: +5.5。
 - **CMKD的"投票+过滤+选择"策略**：从采样推理中提取最佳→比直接蒸馏更鲁棒
 - **统一的视觉理解+生成奖励模型**：同一模型既可评估VQA答案质量也可评估生成图像质量——高度通用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 文本偏好数据的质量和覆盖度影响Stage 1的基础能力
 - Caption作为视觉的代理仍有信息损失——能否用更丰富的文本描述缩小差距？
 - 当前CMKD的投票需要n次采样→增加Stage 2的训练成本

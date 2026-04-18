@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Regularized Latent Dynamics Prediction is a Strong Baseline for Behavioral Foundation Models
 description: >-
@@ -103,7 +103,7 @@ RLDP 相对于 SOTA 方法的关键优势在低数据覆盖率场景中更为突
 - **实用性突出**: 方法简单到可以直接一行代码实现正交正则化（$\|\Phi^T\Phi - I\|$），无需额外的网络结构或训练流程
 - **低覆盖率优势**: 在实际应用中离线数据集的覆盖率往往有限，RLDP 在这些更现实的场景中依然表现良好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前基于 successor features 的线性框架，对于需要非线性奖励解码的任务可能表现不佳
 - 正交正则化在特征维度很高时可能引入过强的约束
 - 仅在连续控制的 MuJoCo 等环境中验证，未涉及视觉观测或高维输入

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling with Collapse: Efficient and Predictable Training of LLM Families
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **早停超参调优**：外推最终 loss 的可靠性使得大规模超参搜索成本大幅降低
 - **$\tau$ 的统一作用**：AdamW 的 EMA 时间尺度 $\tau = 1/(\eta\lambda)$ 是一个被忽视但极其重要的超参——它统一了学习率和权重衰减的效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 崩塞条件要求所有模型 TPP 相同——实际中不同模型可能有不同最优 TPP（如 Chinchilla 的 20 vs 其他估计）
 - 仅验证了预训练 loss——下游任务性能的崩塞未探索（loss 崩塞不保证下游 accuracy 也崩塞）
 - 早停外推依赖参数化崩塌曲线模型的准确性——对于非常不同的训练配方可能需要重新拟合

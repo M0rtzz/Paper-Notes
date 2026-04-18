@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Analyzing Finetuning Representation Shift for Multimodal LLMs Steering
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 将可解释性与可控性统一在同一框架中：先理解（分析偏移），后操控（应用偏移向量）。
 - 方法零训练成本、即插即用，可扩展到多种 MLLM（LLaVA、Idefics2、Qwen2-VL）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖线性表征假设，对非线性编码的特征可能失效。
 - 概念匹配使用余弦相似度 + 最优传输，更复杂的匹配算法可能改善结果。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Equivariant Spatio-Temporal Self-Supervision for LiDAR Object Detection
 description: >-
@@ -149,7 +149,7 @@ $$\mathcal{L} = \lambda_{pnce}\mathcal{L}_{pnce} + \lambda_{ce}\mathcal{L}_{ce} 
 - **通用预训练框架**：同一预训练骨干可用于 SECOND 和 VoxelRCNN 等多种检测器
 - **等变性 vs 不变性的核心矛盾**：标准 SSL 鼓励不变性，但下游回归任务需要等变性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Car 类（简单/样本多）预训练提升有限
 - 不总是优于 ALSO（生成式方法），两者互补可能更好
@@ -248,7 +248,7 @@ $$\mathcal{L} = \lambda_{pnce}\mathcal{L}_{pnce} + \lambda_{ce}\mathcal{L}_{ce} 
 3. **变换-损失匹配的实验发现**：旋转适合分类损失、平移/缩放适合对比损失，这一实验结论对后续工作有实用参考价值
 4. **数据效率优异**：20% 数据即可达到全量训练水平，对标注成本高的自动驾驶场景意义重大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Car 类别提升有限**：Car 在 KITTI 中样本充足且相对容易检测，预训练收益不明显
 2. **未始终超越 ALSO**：与基于占用预测的生成式方法 ALSO 互有胜负，未形成压倒性优势

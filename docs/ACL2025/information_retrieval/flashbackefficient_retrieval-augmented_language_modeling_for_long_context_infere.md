@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlashBack: Efficient Retrieval-Augmented Language Modeling for Fast Inference
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：检索内容需要频繁更新以保证相关性，但 prepending 模式下每次更新都导致全量 KV cache 重算，效率和质量难以两全。
 
-**本文要解决什么？** 设计一种 RALM 上下文模式，使检索内容变化时无需重算输入的 KV cache，从而大幅加速推理。
+**本文目标** 设计一种 RALM 上下文模式，使检索内容变化时无需重算输入的 KV cache，从而大幅加速推理。
 
 **切入角度**：将检索内容从输入前改为输入后(appending)，这样输入的 KV cache 不受检索更新影响。但直接 append 会破坏语义连贯性导致性能下降，故引入 Marking Token 和 LoRA 微调来弥补。
 
-**核心 idea 一句话**：把检索内容从 prepend 改为 append 以复用 KV cache，用 Marking Token + LoRA 弥补上下文模式切换的性能损失。
+**核心 idea**：把检索内容从 prepend 改为 append 以复用 KV cache，用 Marking Token + LoRA 弥补上下文模式切换的性能损失。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ FlashBack 的 PPL 接近 prepending 上限（差距 <0.5），但推理速度提
 - **Marking Token 简单有效**：仅 2 个额外 token 就能让模型适应全新的上下文模式，是一种轻量级的上下文格式对齐方法，可迁移到其他需要标记上下文段落类型的场景
 - **模块化设计**：FlashBack 对检索器无要求（BM25、DPR 等即插即用），对 LLM 仅需轻量 LoRA 微调，实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Appending 模式的信息流方向限制**：在因果注意力机制下，append 的检索内容只能被后续 token 看到，不能影响前面的 token，这从根本上限制了检索内容对输入理解的帮助
 - **PPL 仍有差距**：FlashBack (8.59) vs Prepend+LoRA+MT (8.24)，说明 appending 模式的信息利用效率确实不如 prepending
 - **仅评估 perplexity**：缺少下游任务（如 QA、摘要）的端到端评估

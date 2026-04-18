@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaussian Process Upper Confidence Bound Achieves Nearly-Optimal Regret in Noise-Free Gaussian Process Bandits
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 3. **核心矛盾**: GP-UCB在实践中性能优异，但理论遗憾界为 $O(\sqrt{T\ln^d T})$（SE核），远弱于下界 $O(1)$ 和近最优非自适应算法的 $O(\ln T)$。
 
-4. **本文要解决什么？**: 建立GP-UCB的近最优遗憾界，弥合理论与实验的差距。
+4. **本文目标**: 建立GP-UCB的近最优遗憾界，弥合理论与实验的差距。
 
 5. **切入角度**: 提出新的与算法无关的后验标准差上界（Lemmas 3-5），将噪声环境下的信息增益分析桥接到无噪声设定。
 
-6. **核心idea一句话**: 通过更精细的后验标准差分析，证明GP-UCB在无噪声设定下的累积遗憾可达$O(1)$（SE核）和$\tilde{O}(T^{(d-\nu)/d})$（Matérn核），匹配已知下界。
+6. **核心 idea**: 通过更精细的后验标准差分析，证明GP-UCB在无噪声设定下的累积遗憾可达$O(1)$（SE核）和$\tilde{O}(T^{(d-\nu)/d})$（Matérn核），匹配已知下界。
 
 ## 方法详解
 
@@ -105,7 +105,7 @@ GP-UCB在每步选择使 $\mu(\bm{x}; \mathbf{X}_{t-1}) + \beta^{1/2}\sigma(\bm{
 - **简洁的算法**: GP-UCB本身极其简单，仅需设 $\beta^{1/2} = B$，无需额外技巧
 - **SE核下常数遗憾**: 意味着GP-UCB在足够多步后"几乎不犯错"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $d = \nu$ 情况下与下界有对数因子的gap（$O(\ln^2 T)$ vs $\Omega(\ln T)$）
 - 依赖MIG上界的已知结果，特征函数一致有界假设在一般紧域上存在争议

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multimodal Bayesian Network for Robust Assessment of Casualties in Autonomous Triage
 description: >-
@@ -170,7 +170,7 @@ tags:
 - **超轻量级**：模型<100MB，推理时间<1ms（甚至在Raspberry Pi 3上）
 - **模块化架构**：可即插即用新的感知算法，无需修改核心架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CPT参数基于启发式设定，虽然有医学专家指导，但具体概率值的最优性未经验证
 - 仅在2个场景20个伤亡案例上评估，样本量较小

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning-enabled Polynomial Lyapunov Function Synthesis via High-Accuracy Counterexample-Guided Framework
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：灵活性与可验证性的权衡 — 神经网络方法灵活但不可验证，传统 SOS 方法可验证但不够灵活。
 
-**本文要解决什么？** 如何在保持多项式 Lyapunov 函数数学严格性的同时，利用机器学习自动发现合适的多项式形式。
+**本文目标** 如何在保持多项式 Lyapunov 函数数学严格性的同时，利用机器学习自动发现合适的多项式形式。
 
 **切入角度**：将问题分解为"学习引导搜索方向"和"形式验证确保正确性"两个互补阶段，并通过高精度反例作为桥梁连接两者。
 
-**核心idea一句话**：数据驱动的 ML 模型负责提出候选 Lyapunov 函数，高精度反例引导框架负责验证和迭代修正，实现 learning-enabled + formally-verified 的统一。
+**核心 idea**：数据驱动的 ML 模型负责提出候选 Lyapunov 函数，高精度反例引导框架负责验证和迭代修正，实现 learning-enabled + formally-verified 的统一。
 
 ## 方法详解
 
@@ -80,7 +80,7 @@ tags:
 - **高精度反例的关键作用**：反例质量直接决定了迭代效率，这一洞察对其他 counterexample-guided 方法也有启发
 - **多项式形式的自动发现**：去除了人工模板选择的环节，降低了使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多项式 Lyapunov 函数本身的表达力有限，对某些非线性系统可能不存在多项式形式的 Lyapunov 函数
 - 形式验证阶段（SOS/SMT）随系统维度增长计算量急剧增大
 - 目前主要针对自治系统的稳定性分析，受控系统和切换系统的扩展有待探索

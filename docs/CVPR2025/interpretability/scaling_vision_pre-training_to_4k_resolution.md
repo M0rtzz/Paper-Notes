@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Vision Pre-Training to 4K Resolution
 description: >-
@@ -99,7 +99,7 @@ VILA-HD-4K比GPT-4o高16.1%，比Qwen2.5-VL高7.5%且速度快1.67倍。
 - **top-down选择机制**：受人类视觉启发，让MLLM像人一样"先扫一眼全图，再聚焦相关区域"
 - **4KPro benchmark**：揭示了现有benchmark的"虚假高分辨率"问题——图像分辨率高但问题不需要高分辨率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PS3预训练需要75M高分辨率图像+282M局部caption，数据收集依赖MLLM captioner（Qwen2-VL），并非完全自建
 - 高分辨率微调数据的"贴图到4K背景"策略是一种简陋的权宜之计，可能引入分布偏移

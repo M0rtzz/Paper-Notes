@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis
 description: >-
@@ -127,7 +127,7 @@ FreeMotion在单人和双人生成上全面超越InterGen*，FID分别降低44.6
 - 交互模块使用ControlNet式的零初始化线性层连接，保证训练初期不破坏已训练好的生成模块
 - 利用LLM自动将多人描述拆分为单人描述，解决了数据标注不足的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM拆分文本可能导致单人描述与运动不完全匹配
 - 仅在双人数据上训练，生成大量个体时可能出现人体穿模

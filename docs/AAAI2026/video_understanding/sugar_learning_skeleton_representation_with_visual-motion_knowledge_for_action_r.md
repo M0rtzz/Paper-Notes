@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SUGAR: Learning Skeleton Representation with Visual-Motion Knowledge for Action Recognition
 description: >-
@@ -163,7 +163,7 @@ $$\mathcal{L}_{LoRA} = \text{CrossEntropy}(f_{LLM}(\hat{\mathbf{s}}), y)$$
 4. **TQP 的串联查询设计**：既压缩了序列长度又保持了时间连续性，比独立 Q-Former 和线性投射更有效。
 5. **零样本能力**：展示了 LLM-based 方法相比线性分类器在开放集场景下的天然优势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅使用 Joint 输入**：未利用 Bone 和 Motion 流，多流融合可能带来更大提升。
 2. **GPT 生成的描述质量未验证**：依赖 GPT-3.5/4V 的生成质量，可能包含噪声或错误描述。

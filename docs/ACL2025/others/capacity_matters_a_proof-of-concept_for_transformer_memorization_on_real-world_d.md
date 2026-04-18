@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Capacity Matters: A Proof-of-Concept for Transformer Memorization on Real-World Data
 description: >-
@@ -123,7 +123,7 @@ tags:
 - 数据结构本身编码了有助于记忆的关系模式（序列优于三元组）
 - 实用建议：医疗可穿戴设备上的小型Transformer应采用1-2层 + 大嵌入维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未分析未学习样本的模式（可用curriculum learning或loss re-weighting改善）
 - 未在更长序列和更大规模数据上验证

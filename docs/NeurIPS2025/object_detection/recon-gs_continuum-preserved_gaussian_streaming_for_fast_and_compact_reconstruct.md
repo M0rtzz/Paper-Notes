@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction
 description: >-
@@ -95,7 +95,7 @@ $\mathcal{L} = \mathcal{L}_{photo} + \lambda_{reg}\mathcal{L}_{continuity} + \la
 - **连续性保持**：解决了增量 3DGS 的核心难题——灾难性遗忘。正则化约束简单有效。
 - **实用性强**：支持在线数据采集和实时重建，适合机器人和 AR 场景。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 重叠区域的检测依赖视角估计精度
 - 动态场景未涉及

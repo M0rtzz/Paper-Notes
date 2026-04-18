@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DAGSM: Disentangled Avatar Generation with GS-enhanced Mesh
 description: >-
@@ -99,7 +99,7 @@ tags:
 - 顺序生成（先身体后衣物）的设计简洁有效，衣物以身体为条件自然避免穿模
 - 使用 RFDS loss 替代 SDS，利用 SD3 等 rectified-flow 模型的更强先验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 衣物网格提取依赖 TSDF 算法，对复杂拓扑可能不够精确
 - 生成速度受限于多阶段优化过程

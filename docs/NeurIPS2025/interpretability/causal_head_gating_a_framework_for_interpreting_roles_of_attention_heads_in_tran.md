@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Causal Head Gating: A Framework for Interpreting Roles of Attention Heads in Transformers
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：如何在不依赖人工模板和标签的前提下，大规模地发现 LLM 中具有因果效应的注意力头？
 
-**本文要解决什么？** 设计一种可扩展的方法来识别和分类 attention head 的因果角色，适用于任意任务和数据集。
+**本文目标** 设计一种可扩展的方法来识别和分类 attention head 的因果角色，适用于任意任务和数据集。
 
 **切入角度**：利用 next-token prediction 目标训练门控参数（每个 head 仅 1 个参数），通过正/负正则化产生变异，从而区分促进、干扰和无关 head。
 
-**核心 idea 一句话**：用正/负 L1 正则化各拟合一次 head 门控值，促进 head 两次都保持高值，干扰 head 两次都被压低，无关 head 在两次间分化——由此建立三元因果分类。
+**核心 idea**：用正/负 L1 正则化各拟合一次 head 门控值，促进 head 两次都保持高值，干扰 head 两次都被压低，无关 head 在两次间分化——由此建立三元因果分类。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ NLL + L1 正则化。先用 $\lambda=0$ 拟合初始化 $G$，再分别用 $\lam
 - **"Multiple sufficient sub-circuits"** 的发现很深刻：模型不是用固定电路做任务，而是有多个功能等价的子电路。这解释了为什么 head 剪枝通常损失不大——剩余子电路可以补偿。
 - **Contrastive CHG 分离 ICL vs 指令遵循**是新颖的应用：第一次证明这两种能力在 head 层面是可分离的。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **只分析 attention head，未涉及 MLP 层**：MLP 也存储和处理重要信息，未来可扩展到 MLP 神经元。
 - **不能解释 head 具体做什么**：CHG 发现哪些 head 重要，但不说明它们执行什么计算。需要与 CMA 等方法结合使用。
 - **依赖 NTP 目标**：如果任务不能很好地用 next-token prediction 衡量，CHG 可能不适用。

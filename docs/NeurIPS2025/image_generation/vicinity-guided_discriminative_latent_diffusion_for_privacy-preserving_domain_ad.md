@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vicinity-Guided Discriminative Latent Diffusion for Privacy-Preserving Domain Adaptation
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L}_{\text{adapt}} = \mathcal{L}_{\text{InfoNCE}}(f_T(x_T), g_\theta(z
 - **多用途**: 同一扩散模块可用于 SFDA、域泛化、源域增强等多个场景
 - **接近有监督性能**: 无源数据情况下达到接近 oracle 的效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要在源域上额外训练扩散模块，增加源域训练成本
 2. 扩散模块虽不暴露原始数据，但理论上可能泄露部分分布信息

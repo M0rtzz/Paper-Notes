@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniSAM: Omnidirectional Segment Anything Model for UDA in Panoramic Semantic Segmentation
 description: >-
@@ -125,7 +125,7 @@ OmniSAM 框架包含以下关键组件：
 - 动态伪标签更新中的双向序列处理和覆盖图投票策略增强了伪标签可靠性
 - LoRA 微调保持了优秀的参数效率（<3MB 可训练参数用于编码器）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Large 和 Base 变体的模型尺寸（209.2M / 72.0M）较大，可能限制实时应用
 - 推理速度较慢（需要处理 9 帧序列），可探索更高效的序列处理策略

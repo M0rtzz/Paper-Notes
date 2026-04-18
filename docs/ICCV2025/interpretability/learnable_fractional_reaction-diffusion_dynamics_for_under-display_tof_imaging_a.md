@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learnable Fractional Reaction-Diffusion Dynamics for Under-Display ToF Imaging and Beyond
 description: >-
@@ -149,7 +149,7 @@ LFRD² 包含两个阶段：
 - 连续卷积的高效实现（系数预测 + 重复微分）比 MLP-based Neural Field 更实用
 - **跨任务适用性好**：同一框架不修改即可用于不同深度恢复任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练策略需要仔细设置以避免数值不稳定（NaN 值），鲁棒性有待提升
 - 当前使用显式数值格式，隐式格式可能更稳定高效

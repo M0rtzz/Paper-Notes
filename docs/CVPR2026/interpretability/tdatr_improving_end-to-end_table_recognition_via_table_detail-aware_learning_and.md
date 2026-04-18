@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TDATR: Improving End-to-End Table Recognition via Table Detail-Aware Learning and Cell-Level Visual Alignment
 description: >-
@@ -98,7 +98,7 @@ TDATR采用视觉编码器(Swin Transformer) + 多模态语言解码器 + 结构
 - SGCL模块设计精巧，利用TR解码过程的隐状态作为DAB-DETR的锚点初始化，避免了匈牙利匹配的训练不稳定问题
 - 新数据集iFLYTAB-full填补了中文真实场景表格识别评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在PubTabNet等数字表格上TSR略逊于最佳专家模型，因为完整TR序列长度约为TSR的两倍，加大了生成难度
 - 模型参数量600M，相比大型OCR VLM(Qwen2.5-VL-72B)虽小但仍较大
 - 未探索与LLM backbone的集成，可能限制了对复杂文档上下文的理解

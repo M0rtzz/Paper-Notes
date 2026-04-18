@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large Language Models Meet Extreme Multi-label Classification: Scaling and Multi-modal Framework
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：LLM 在通用文本 embedding 基准上表现优异，但在 XMC 中如何有效利用、如何在保持计算可行性的同时获得性能提升，仍是开放问题。同时，XMC 中序列长度敏感，直接使用 VLM 的数百个视觉 token 会导致计算爆炸。
 
-**本文要解决什么？** (1) 如何有效适配解码器型 LLM 用于 XMC 的 Siamese 学习？(2) 如何在不显著增加计算开销的前提下，高效融合视觉元数据？
+**本文目标** (1) 如何有效适配解码器型 LLM 用于 XMC 的 Siamese 学习？(2) 如何在不显著增加计算开销的前提下，高效融合视觉元数据？
 
 **切入角度**：作者提出两条互补路径——scaling 路径（用结构化提示和双解码器学习适配 LLM）和 efficiency 路径（用单图像 embedding 的视觉融合保持低开销），二者可以组合使用。
 
-**核心idea一句话**：用结构化提示模板将解码器LLM适配为XMC的双编码器，同时用冻结视觉模型的单 embedding 早期融合来注入视觉元数据。
+**核心 idea**：用结构化提示模板将解码器LLM适配为XMC的双编码器，同时用冻结视觉模型的单 embedding 早期融合来注入视觉元数据。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ ViXML 是一个通用的多模态 XMC 框架，支持 encoder 和 decoder 架构
 - **attention sink 观察的应用**：作者发现 LLM 预训练使第一个 token 形成 attention sink，将图像 token 放在序列开头会导致性能崩溃，放在文本后才有效。这是对 LLM 内部机制的实用性理解
 - 扩展了三个现有文本数据集加入视觉元数据，为多模态 XMC 研究贡献了新基准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用了线性投影层适配视觉 embedding，更复杂的适配方式可能进一步提升效果
 - 视觉元数据在推理时也需要可用，限制了在纯文本场景下的部署

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Second-Order Optimization Under Heavy-Tailed Noise: Hessian Clipping and Sample Complexity
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **理论上证明了二阶方法在重尾噪声下的优势不会消失**：$1/\varepsilon$ 的改进是本质性的
 - Hessian-向量积裁剪的公式 $\gamma \cdot \text{clip}(\gamma^{-1} \nabla^2 f \cdot v, \bar{\lambda}_h)$ 设计巧妙，使裁剪阈值 $\lambda$ 和 $\bar{\lambda}_h$ 在同一量级，便于实际调参
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在合成问题上验证，缺乏真实机器学习任务的实证
 - 算法需要多个超参数（步长 $\gamma$、动量 $\alpha$、两个裁剪阈值），实用性有待进一步简化

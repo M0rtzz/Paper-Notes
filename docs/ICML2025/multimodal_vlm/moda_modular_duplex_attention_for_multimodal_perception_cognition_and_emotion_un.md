@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MODA: MOdular Duplex Attention for Multimodal Perception, Cognition, and Emotion Understanding
 description: >-
@@ -139,7 +139,7 @@ MODA在高级理解任务上相比基线有质的提升：
 - **即插即用设计**：MODA注意力模块可替换现有MLLM的注意力层，工程友好度高
 - **Spotlight接收**：ICML 2025 Top 2.6%，学术认可度很高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算开销**：双工注意力在自模态和跨模态分别计算，理论上比标准注意力增加计算量，效率-性能权衡待评估
 - **模态扩展性**：当前设计针对视觉-语言双模态，扩展到音频、视频等更多模态时，双工空间的构建方式需要重新设计

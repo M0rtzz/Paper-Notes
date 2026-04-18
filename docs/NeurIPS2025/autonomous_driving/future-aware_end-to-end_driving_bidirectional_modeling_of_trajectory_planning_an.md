@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Future-Aware End-to-End Driving: Bidirectional Modeling of Trajectory Planning and Scene Evolution
 description: >-
@@ -103,7 +103,7 @@ SeerDrive 包含两个核心模块在闭环中迭代协作：
 4. **训练代价低**：8 张 RTX 3090 仅需 ~5 小时（NAVSIM），具有较好的可复现性
 5. **仅预测终帧 BEV**：消融表明预测中间帧序列（1s-2s-3s-4s）并不比仅预测最终帧更好，设计简洁高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅在非反应式/开环评估**：NAVSIM 是非反应式仿真，nuScenes 是开环回放，缺少 CARLA 等全闭环验证
 2. **BEV 语义地图的表达能力有限**：仅预测 BEV 语义地图，无法建模 3D 高度信息和遮挡关系
 3. **迭代次数有上限**：3 次迭代时性能已开始下降，说明当前迭代机制可能存在信息退化问题

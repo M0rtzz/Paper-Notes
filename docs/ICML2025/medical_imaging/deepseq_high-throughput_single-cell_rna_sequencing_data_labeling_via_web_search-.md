@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeepSeq: High-Throughput Single-Cell RNA Sequencing Data Labeling via Web Search-Augmented Agentic Generative AI Foundation Models
 description: >-
@@ -156,7 +156,7 @@ $$\text{原始数据} \xrightarrow{\text{过滤}} \text{清洗后数据} \xright
 
 5. **Web Search 作为知识增强**的有效性被量化验证 — 这为 Agentic AI 在科学领域的应用提供了数据支持。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集单一**：仅在一个 scRNA-seq 数据集上验证，缺乏跨组织、跨物种的泛化性测试。82.5% 的准确率在不同数据集上是否稳定需要更多实验。
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Isolated Causal Effects of Natural Language
 description: >-
@@ -122,7 +122,7 @@ OVB 上界：$|\tau_{DR_s} - \tau^*|^2 \leq \sigma^2 \nu^2 C_Y^2 C_D^2$
 4. **双重稳健估计器**在语言因果推断中的应用，理论保证强且实用
 5. **SenteCon 表示**无需针对特定任务设计即可达到与精心设计的 LLM prompting 相当的鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅处理文本内混淆**：假设所有混淆因素包含在文本中，不考虑外部混淆（如标注者信息）
 2. **焦点属性 $a(\cdot)$ 假设已知**：若需估计 $a(\cdot)$，估计误差会引入额外偏差

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BACON: Improving Clarity of Image Captions via Bag-of-Concept Graphs
 description: >-
@@ -82,7 +82,7 @@ LLaVA微调采用标准的自回归语言建模损失。GPT-4V标注阶段通过
 - 100K标注数据足以通过蒸馏训练出可用的BACON描述器，数据效率高
 - 方法的零样本泛化能力令人印象深刻——无需重训练即可直接提升多种任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖GPT-4V的高质量标注生成训练数据，初始标注成本不低
 - JSON格式的结构化程度固定，可能无法适应所有下游任务的需求
 - 描述的语义维度（objects/relations/style/theme）的划分可能对某些场景不够细粒度

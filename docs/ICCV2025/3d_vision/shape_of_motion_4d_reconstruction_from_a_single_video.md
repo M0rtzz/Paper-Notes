@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shape of Motion: 4D Reconstruction from a Single Video
 description: >-
@@ -145,7 +145,7 @@ Kubric 数据集 3D 跟踪:
 - **低维运动假设的力量**: $B=10$ 个 SE(3) 基就能表达复杂场景，且自然提供了运动分割能力
 - **实时渲染**: 140 fps 的渲染速度使其适用于交互式应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要前景 mask 的人工标注（虽然只需几次点击）
 - 初始化的含噪 3D 跟踪依赖 TAPIR 和 Depth Anything 的质量

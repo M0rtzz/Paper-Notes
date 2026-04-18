@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Residual Matrix Transformers: Scaling the Size of the Residual Stream
 description: >-
@@ -107,7 +107,7 @@ $$\text{MHA}(\mathbf{X}) = \sum_{h=1}^{R} \mathbf{w}_O^{(h)} \otimes \text{SHA}(
 3. **FFN 保留不变的设计洞察**：基于 FFN 存储事实知识（Geva et al., 2021; Meng et al., 2022）的认知，选择性地保留 FFN 权重而非全部替换，体现了对 Transformer 内部机制的深入理解。
 4. **理论与实验双重验证**：既有方差传播的闭式分析（Table 1-2），又有实际训练效率的实证结果。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验规模偏小**：理论分析基于 GPT2-medium（~350M），尚未在 7B+ 规模验证扩展性是否仍然成立。
 2. **仅验证了语言模型**：缺少多模态、视觉等其他模态上的实验。

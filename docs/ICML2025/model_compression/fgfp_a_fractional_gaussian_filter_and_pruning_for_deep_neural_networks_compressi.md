@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FGFP: A Fractional Gaussian Filter and Pruning for Deep Neural Networks Compression
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **数学基础扎实**：基于 Grünwald-Letnikov 分数阶导数理论，有清晰的数学推导
 - **混合策略的实用性**：FGF + AUP 的组合覆盖了不同类型的层
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 缓存截断在方法部分后段，完整消融数据未获取
 - 仅在 CNN（ResNet）上验证，对 Transformer 架构的适用性未探讨

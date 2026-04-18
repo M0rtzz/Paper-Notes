@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The COTe Score: A Decomposable Framework for Evaluating Document Layout Analysis Models
 description: >-
@@ -113,7 +113,7 @@ $$\text{COTe} = \mathcal{C} - \mathcal{O} - \mathcal{T}$$
 - **诊断能力强**: 单一 COTe 分数可分解为 Coverage/Overlap/Trespass，直接定位模型的具体失败模式
 - **开源配套**: 发布 cotescore Python 库 + SSU 标注数据集 + PAGE 格式自动标注器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **松散标注敏感**: 当 GT 区域内存在大量空白（如诗歌、低密度文本）时，Coverage 会被人为压低
 - **类别评估未深入**: 虽然定义了多类别扩展和混淆矩阵，但实验中仅使用单类别评估

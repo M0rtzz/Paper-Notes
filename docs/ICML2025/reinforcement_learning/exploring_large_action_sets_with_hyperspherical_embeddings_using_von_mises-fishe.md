@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring Large Action Sets with Hyperspherical Embeddings using von Mises-Fisher Sampling
 description: >-
@@ -145,7 +145,7 @@ $$P_0(a | n, d, V, \kappa) = \frac{f_{\text{vMF}}(A | V, \kappa) \cdot \mathcal{
 4. **工业验证**：从理论到蒙特卡洛到真实数据再到生产部署的完整验证链路
 5. **与 Thompson Sampling 的联系**：vMF-exp 与 Thompson Sampling 存在有趣的结构相似性（在后验分布上采样再做贪心选择）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论保证仅限均匀分布假设**：实际嵌入通常不满足 i.i.d. 均匀假设（如聚类结构），虽然实验显示理论近似依然有效，但缺乏严格保证
 2. **高维收敛较慢**：$d$ 增大时，vMF-exp 逼近 B-exp 需要更大的 $n$，二阶误差项衰减速率为 $\mathcal{O}(1/n^{2/(d-1)})$

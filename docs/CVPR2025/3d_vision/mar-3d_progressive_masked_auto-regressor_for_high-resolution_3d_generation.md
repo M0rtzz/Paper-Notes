@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAR-3D: Progressive Masked Auto-regressor for High-Resolution 3D Generation
 description: >-
@@ -50,17 +50,17 @@ MAR-3D 由 Pyramid VAE 和 Cascaded MAR 两部分组成：
 ### 关键设计
 
 **1. 金字塔 VAE (Pyramid VAE)**
-- **做什么**: 将输入点云下采样为 $K$ 个层级（16384/4096/1024 点），每个层级通过独立的交叉注意力层与可学习查询 $\mathbf{S}$ 交互，粗层级捕捉结构特征，细层级提取几何细节，然后相加并经自注意力得到 latent token $\mathbf{X}$。
+- **功能**: 将输入点云下采样为 $K$ 个层级（16384/4096/1024 点），每个层级通过独立的交叉注意力层与可学习查询 $\mathbf{S}$ 交互，粗层级捕捉结构特征，细层级提取几何细节，然后相加并经自注意力得到 latent token $\mathbf{X}$。
 - **核心思路**: $\mathbf{X} = \text{SelfAttn}\left(\sum_{k=1}^{K}\text{CrossAttn}^k(\mathbf{S}, \hat{\mathbf{P}}^k)\right)$。训练目标为 BCE 损失（占用预测）+ KL 散度（latent 正则化）。
 - **设计动机**: 对比单层级 VAE，1024 token 的 Pyramid VAE 重建质量超过 2048 token 的单层级 VAE，实现了高效的 token 压缩。
 
 **2. 级联 MAR 生成 (Cascaded MAR)**
-- **做什么**: MAR-LR 和 MAR-HR 共享相同架构（MAE encoder-decoder + MLP 去噪网络），差异在于 MAR-HR 额外接受低分辨率 token 作为输入。训练时用随机遮罩（比例 0.7-1.0），推理时按随机顺序并行解码多个 token。
+- **功能**: MAR-LR 和 MAR-HR 共享相同架构（MAE encoder-decoder + MLP 去噪网络），差异在于 MAR-HR 额外接受低分辨率 token 作为输入。训练时用随机遮罩（比例 0.7-1.0），推理时按随机顺序并行解码多个 token。
 - **核心思路**: 将联合分布分解为时域（扩散）和空间（自回归）两个组件。每个 token 用 diffusion loss 而非 Cross Entropy 进行监督，因为 latent token 处于连续空间。推理时用余弦调度控制每步生成的 token 数量（初期少、后期多）。
 - **设计动机**: 3D latent token 无固有顺序，随机遮罩 + 随机顺序解码天然适配无序特性。级联策略避免直接训练 1024 token 时的收敛困难。
 
 **3. 条件增强 (Condition Augmentation)**
-- **做什么**: 在 MAR-HR 训练时，对输入的低分辨率 token 加高斯噪声：$x_l' = t\epsilon + (1-t)x_l$，$t \sim \mathcal{U}(0.4, 0.6)$，推理时固定 $t=0.5$。
+- **功能**: 在 MAR-HR 训练时，对输入的低分辨率 token 加高斯噪声：$x_l' = t\epsilon + (1-t)x_l$，$t \sim \mathcal{U}(0.4, 0.6)$，推理时固定 $t=0.5$。
 - **核心思路**: 训练时 MAR-HR 接受 VAE 编码的"干净"低分辨率 token，但推理时接受 MAR-LR 生成的"有噪声"token，造成 train-test gap。加噪声缩小这个差距。
 - **设计动机**: 受级联扩散模型启发，有效减少累计误差。消融实验表明不用条件增强时 F-Score 从 0.944 降至 0.902。
 
@@ -110,7 +110,7 @@ CD 较 InstantMesh 降低 15.4%。
 - **Pyramid VAE 设计精巧**: 多分辨率交叉注意力 + 共享查询的设计既保留细节又控制 token 数
 - **in-the-wild 泛化能力**: 定性结果展示了对复杂拓扑（孔洞、细结构）的良好处理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 CLIP + DINOv2 提取图像特征，受限于这些模型对 3D 感知的理解
 - 仅生成几何（mesh），未涉及纹理/材质生成

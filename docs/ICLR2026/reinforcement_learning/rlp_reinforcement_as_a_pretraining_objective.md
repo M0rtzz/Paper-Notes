@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RLP: Reinforcement as a Pretraining Objective
 description: >-
@@ -94,7 +94,7 @@ RLP**不包含标准NTP损失**，仅优化信息增益目标：$\max_\theta J(\
 - **信息增益的理论保证**：Proposition 1和2建立了奖励与交叉熵下降、边际化思维的关系
 - **与后训练正交复合**：RLP建立的推理基础在SFT/RLVR后不仅保持且放大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个文档仅选1个位置应用RLP，全位置应用的效果和成本值得探索
 - CoT长度对效果的影响需要更系统的分析

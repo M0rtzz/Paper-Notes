@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Masking Meets Supervision: A Strong Learning Alliance
 description: >-
@@ -125,7 +125,7 @@ MaskSub 在标准监督训练基础上增加一个子分支：主分支 $f_\thet
 - **自动难度控制的深度洞察**：MaskSub 本质上实现了 sample-wise、epoch-wise 的自适应正则化强度——早期放松、后期加强，与课程学习的精神一致
 - **跨架构普适性**：从 ViT 到 ResNet 到 Swin，从监督预训练到 MAE/BEiT/CLIP 微调到 BERT——这种广泛的适用性证明了框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对层次架构（ResNet/Swin）不适用 MAE-style token 移除，需填充零值/mask-token，导致计算量翻倍
 - 50% 统一 mask 比例虽然简洁但可能非最优——不同任务/模型/训练阶段的最优比例可能不同

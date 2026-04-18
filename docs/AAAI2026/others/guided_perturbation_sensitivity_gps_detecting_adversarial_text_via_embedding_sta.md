@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Guided Perturbation Sensitivity (GPS): Detecting Adversarial Text via Embedding Stability and Word Importance
 description: >-
@@ -125,7 +125,7 @@ K=5 即可达到峰值性能的 98%，性能随 K 增大变化极小（<0.015 F1
 - K=5 即可达到 98% 的检测性能，意味着每条文本只需 5 次前向传播即可完成检测，实际部署成本很低
 - 揭示了词级攻击与字符级攻击的检测机制本质不同，为未来的统一检测框架设计提供了方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要白盒模型访问（梯度计算），在纯黑盒场景下需要替代方案（如代理模型的显著性）
 - BiLSTM 检测器需要标注训练数据，在全新攻击类型上可能需要少量标签

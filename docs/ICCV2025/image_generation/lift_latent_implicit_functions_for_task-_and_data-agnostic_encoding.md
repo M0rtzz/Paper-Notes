@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LIFT: Latent Implicit Functions for Task- and Data-Agnostic Encoding
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}_\text{Smoothness}(Z_m^\alpha) = \frac{1}{K} \sum_{k=1}^{K} \|Z_m^\
 3. **极致的效率**：0.915M 参数、54.52M FLOPs 就超越了拥有百万级参数的竞争方法
 4. **潜空间插值质量高**：2D 和 3D 的插值实验展示了流形的平滑性和结构合理性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖于规则的网格划分，对于不规则或稀疏信号可能不够灵活
 - 元学习的两阶段训练可能增加整体训练复杂度

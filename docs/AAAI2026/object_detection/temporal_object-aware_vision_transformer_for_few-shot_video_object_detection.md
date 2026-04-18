@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Temporal Object-Aware Vision Transformer for Few-Shot Video Object Detection
 description: >-
@@ -194,7 +194,7 @@ $$\mathcal{L} = \sum_{t=1}^{T} \left[\sum_{m=1}^{M_t} \lambda_{cls} \cdot \mathc
 4. **在所有shot设置下一致有效**：从1-shot到10-shot均有显著提升，证明方法的鲁棒性
 5. **效率与精度兼顾**：14 FPS的处理速度对实际视频应用友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅传播前一帧信息**：当前设计只利用了前一帧的检测，更长时间跨度的记忆可能进一步提升性能
 2. **阈值τ是固定的**：动态自适应阈值可能更灵活

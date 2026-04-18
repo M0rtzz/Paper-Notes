@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TransPL: VQ-Code Transition Matrices for Pseudo-Labeling of Time Series Unsupervised Domain Adaptation
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{L}_{\text{trg}} = \lambda_1 \mathcal{L}_{\text{ce}} + \lambda_2 \math
 3. **弱监督的优雅整合**：通过贝叶斯先验自然地纳入标签分布信息，比 CoDATS 的 ad-hoc KL 散度最小化更有数学根基
 4. **最优传输度量通道偏移**：利用码间语义距离作为 OT 的代价矩阵，比简单的欧氏距离更能捕捉语义相似转移间的关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **通道重要性未区分**：当前方法对偏移大的通道降权，但若该通道恰好含有关键分类信息则适得其反。未来可结合通道重要性度量
 2. **粗-细分工缺乏数学约束**：虽然实验验证了粗码捕获趋势、细码捕获残差，但缺少显式的正则化来强制这种层级关系

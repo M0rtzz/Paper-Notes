@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mass Concept Erasure in Diffusion Models with Concept Hierarchy
 description: >-
@@ -137,7 +137,7 @@ $$\min_{\mathbf{W}^*} \underbrace{\mathbb{E}_{i,j}\|\mathbf{W}^*\mathbf{e}_{j,i}
 - **存储效率显著**：154MB vs MACE 198MB vs UCE 3379MB
 - **训练速度最快**：18min vs MACE 20min vs UCE 218min
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖共享supertype结构**：当擦除概念间缺乏语义关联时，分组效果减弱
 - **两级层级限制**：仅构建了parent-child两层，更复杂的多级层级实验在附录但未充分验证

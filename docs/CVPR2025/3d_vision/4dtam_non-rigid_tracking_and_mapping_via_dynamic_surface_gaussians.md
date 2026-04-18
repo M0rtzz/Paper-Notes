@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4DTAM: Non-Rigid Tracking and Mapping via Dynamic Surface Gaussians
 description: >-
@@ -121,7 +121,7 @@ tags:
 - Sim4D数据集的构建思路值得借鉴：利用大规模开源3D模型和动画建模，通过Blender渲染生成带完整标注的4D数据
 - 从公式推导到CUDA实现，工程完整度很高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 跟踪速度仅1.5fps，离实时（30fps）还有距离
 - 全局优化仍需额外1分钟后处理
 - 目前依赖RGB-D输入，纯RGB扩展仅在补充材料中简要展示

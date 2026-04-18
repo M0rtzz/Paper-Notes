@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Audio-Visual Speech Separation with Discrete Lip Semantics and Multi-Scale Global-Local Attention
 description: >-
@@ -153,7 +153,7 @@ HDA 层 vs Conv1D：HDA 达到 16.9 dB SI-SNRi，优于 Conv1D 的 16.5 dB，参
 - **热扩散物理先验**：将热方程引入局部注意力，仅学习缩放/门控参数即可精细建模局部特征，降低过拟合风险
 - **双路径互补哲学**：重建路径保留身份/表情辅助信息，语义路径提取音频对齐信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖干净同步的唇部视频，对大角度头部姿态/遮挡/极端光照鲁棒性不足
 2. 极端资源受限设备部署仍有挑战，可探索量化/剪枝

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] M3DLayout: A Multi-Source Dataset of 3D Indoor Layouts and Structured Descriptions for 3D Generation
 description: >-
@@ -109,7 +109,7 @@ M3DLayout 的构建分为三个阶段：（1）多源数据收集与清洗；（
 3. Inf3DLayout 子集的贡献突出：68.5% 小物体占比填补了现有数据集在装饰/功能小物件上的巨大空白
 4. 数据集规模（21k布局、433k物体）远超现有最大数据集，且是唯一提供结构化文本描述的 3D 布局数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **模型创新有限**：benchmark 模型直接改编自 DiffuScene，未提出针对多源数据特点的新架构
 2. 在 3D-FRONT 参考集上 FID 反而更差，因为生成场景过于复杂——评测指标与生成目标存在矛盾

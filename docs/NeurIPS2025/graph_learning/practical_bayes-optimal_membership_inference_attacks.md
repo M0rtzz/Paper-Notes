@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Practical Bayes-Optimal Membership Inference Attacks
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **实用性强**: BASE 在降低一个数量级计算成本的同时匹配或超越 SOTA
 - **统一视角**: 揭示了 BASE 与 RMIA 的等价关系，为现有方法提供了理论依据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 高斯近似假设在某些分布下可能不够精确
 2. G-BASE 目前主要验证在小规模图数据集上，大规模图的可扩展性有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Non-Clairvoyant Scheduling with Progress Bars
 description: >-
@@ -85,7 +85,7 @@ tags:
 - 组合策略的一般性令人印象深刻——可组合任何具有可计算延迟的调度算法
 - $1+\Theta(g^{-1/3})$的紧致竞争比利用了Poisson过程的统计不可区分性，类似于bandit下界的论证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 一致性-鲁棒性权衡下界$1+\Omega(1/\sqrt{\alpha})$与上界$1+1/\alpha$之间仍有$\Theta(\sqrt{\alpha})$的gap
 - 组合策略的regret项$O(n^{5/3}\max p_i)$在$\max p_i$较大时可能主导

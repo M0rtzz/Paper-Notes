@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generate, Refine, and Encode: Leveraging Synthesized Novel Samples for On-the-Fly Fine-Grained Category Discovery
 description: >-
@@ -60,7 +60,7 @@ DiffGRE 包含三个阶段：
 
 #### 1. **属性组合生成（Attribute Composition Generation, ACG）**
 
-- **做什么**：从不同已知类别中采样两张图像，在扩散模型的潜空间中进行跨类别插值，合成属于"虚拟类别"的新图像
+- **功能**：从不同已知类别中采样两张图像，在扩散模型的潜空间中进行跨类别插值，合成属于"虚拟类别"的新图像
 - **核心思路**：在三个嵌入空间中同时进行球面插值（Spherical Interpolation）——Stable Diffusion 的潜空间、CLIP 视觉空间和 CLIP 文本空间：
 
 $$\bar{z}^* = \frac{\sin((1-\lambda_*)\theta)}{\sin(\theta)} z_1^* + \frac{\sin(\lambda_*\theta)}{\sin(\theta)} z_2^*, \quad * \in \{t, v, l\}$$
@@ -78,7 +78,7 @@ $$\mathcal{L}_{DM} = \mathbb{E}_{t, \bar{z}_0^l, \epsilon} \left[\|\epsilon - \e
 
 #### 2. **多样性驱动精炼（Diversity-Driven Refinement, DDR）**
 
-- **做什么**：从大量合成图像中筛选出包含丰富额外类别信息的图像，过滤与已知类别过于相似的图像
+- **功能**：从大量合成图像中筛选出包含丰富额外类别信息的图像，过滤与已知类别过于相似的图像
 - **核心思路**：
   1. 计算合成图像与所有已知类别中心的余弦相似度：$s(z_{\text{gen}}, c_k) = \frac{z_{\text{gen}} \cdot c_k}{\|z_{\text{gen}}\| \|c_k\|}$
   2. 计算每个合成样本与所有类别中心的平均相似度：$s_{\text{mean}}(z_{\text{gen}}) = \frac{1}{K}\sum_{k=1}^{K} s(z_{\text{gen}}, c_k)$
@@ -88,7 +88,7 @@ $$\mathcal{L}_{DM} = \mathbb{E}_{t, \bar{z}_0^l, \epsilon} \left[\|\epsilon - \e
 
 #### 3. **半监督 Leader 编码（Semi-supervised Leader Encoding, SLE）**
 
-- **做什么**：为合成图像分配可靠的伪标签，并生成类别级 Leader 特征用于在线推理
+- **功能**：为合成图像分配可靠的伪标签，并生成类别级 Leader 特征用于在线推理
 - **核心思路**：
   1. **虚拟类别分配**：合并标注数据与合成数据构建代理训练集 $\mathcal{D}_A = \mathcal{D}_S \cup \mathcal{D}_G$，使用聚类算法生成初始类别标签，再通过匈牙利算法与已知标签对齐校正
   2. **Leader 特征生成**：计算每个虚拟类别的平均特征作为类别 Leader 特征
@@ -172,7 +172,7 @@ $$\mathcal{L} = \mathcal{L}_{sup} + \mathcal{L}_{reg} + \alpha \cdot \mathcal{L}
 3. **从哈希到在线聚类的推理范式转变**：SLE 的 Leader 特征保留了高维信息，OCI 的自适应阈值机制使在线推理更加鲁棒
 4. **DDR 的简洁有效性**：仅使用类别中心的平均相似度就能有效过滤低质量样本，设计简洁且计算开销低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖预训练扩散模型质量**：合成图像质量受 Stable Diffusion 性能限制，对低资源域（如医学影像）可能效果有限
 2. **插值参数敏感性**：$\lambda_t$, $\lambda_v$, $\lambda_l$ 三个插值参数需要在特定数据集上调优

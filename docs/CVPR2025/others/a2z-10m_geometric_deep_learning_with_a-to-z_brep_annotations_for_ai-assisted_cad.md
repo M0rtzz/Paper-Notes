@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A2Z-10M+: Geometric Deep Learning with A-to-Z BRep Annotations for AI-Assisted CAD Modeling and Reverse Engineering
 description: >-
@@ -116,7 +116,7 @@ A2Z数据集包含四大类标注，总存储量近5TB：
 5. **标注覆盖率惊人**：边界和面标注覆盖率均>97%，通过严谨的多阈值SPH加权策略实现
 6. **强零样本迁移能力**：在CC3D上未经训练即达到高性能，证明数据的泛化价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **无设计历史**：A2Z不包含CAD参数化操作序列，对需要设计历史的方法不适用
 2. **3D扫描为模拟而非真实扫描**：虽然引入了多种噪声，但与真实扫描仪数据仍有分布差异

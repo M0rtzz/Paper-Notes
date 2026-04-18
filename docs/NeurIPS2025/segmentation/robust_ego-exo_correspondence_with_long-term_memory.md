@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust Ego-Exo Correspondence with Long-Term Memory
 description: >-
@@ -81,7 +81,7 @@ tags:
 3. 压缩策略简洁有效——仅用相邻帧欧式距离+平均合并
 4. Exo2Ego任务相比第二名提升18.25 IoU
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 推理速度仅8.4 FPS（V100），实时应用有距离
 2. BA指标（物体存在性判断）相比XSegTx仍有差距（64.22 vs 66.31）
 3. 压缩策略较为简单（平均合并），可能丢失关键帧的独特信息

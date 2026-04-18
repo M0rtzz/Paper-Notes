@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Sample Complexity for Private Nonsmooth Nonconvex Optimization
 description: >-
@@ -98,7 +98,7 @@ $$n = \widetilde{\Omega}\!\left(\frac{d}{\beta^2} + \frac{d^{3/4}}{\varepsilon\a
 - **首次 Goldstein 稳定性泛化保证**: 以往 NSNC 文献缺少从 ERM 到总体的泛化结果，本文填补了这一空白，使 ERM 框架在隐私场景下有实际意义。
 - **理论完整**: 从单遍到多遍、从零阶到一阶、从经验到总体，提供了一套系统化的改进。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **纯理论工作**: 没有实验验证，所有结果仅在理论层面成立。实际深度学习场景中的效果未知。
 - **常数和对数因子**: 样本复杂度中隐藏了 poly-log 因子和 Lipschitz 常数 $L$、初始间隙 $\Phi$ 的依赖，实际所需样本量可能较大。

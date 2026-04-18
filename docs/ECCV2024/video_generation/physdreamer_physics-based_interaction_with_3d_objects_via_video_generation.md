@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhysDreamer: Physics-Based Interaction with 3D Objects via Video Generation
 description: >-
@@ -116,7 +116,7 @@ $$L_{\text{tv}} = \sum_{i,j} \|\bm{u}_{i+1,j} - \bm{u}_{i,j}\|_2^2 + \|\bm{u}_{i
 - **物理一致性**: 估计的材料场可在任意外力下复用，不局限于特定运动
 - **子采样策略**: 有效降低计算量，使百万级粒子场景可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需手动指定前景物体、分割背景、设定边界条件
 - 计算量大：即使有子采样，每秒视频需约 1 分钟（NVIDIA V100）

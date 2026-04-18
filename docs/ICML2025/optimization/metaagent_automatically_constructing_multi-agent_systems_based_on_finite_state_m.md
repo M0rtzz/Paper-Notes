@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MetaAgent: Automatically Constructing Multi-Agent Systems Based on Finite State Machines
 description: >-
@@ -152,7 +152,7 @@ MetaAgent 不依赖传统的损失函数或梯度训练。其"优化"是通过 L
 4. **轻量优化**：不需要 ADAS/Symbolic Learning 那样的大量迭代和外部数据，降低了部署门槛
 5. **工具集成**：代码解释器 + 搜索引擎的组合使 Agent 能处理实际任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 Designer LLM 的能力**：FSM 设计质量取决于 LLM 的规划能力，弱模型可能生成低质量的 FSM
 2. **状态合并的粒度控制**：当前合并策略是两两遍历，时间复杂度为 $O(|S|^2)$，状态数多时效率下降

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Swap-guided Preference Learning for Personalized RLHF (SPL)
 description: >-
@@ -30,7 +30,7 @@ tags:
 
 **现有痛点**：VPL的潜变量在稀疏数据+强解码器组合下会后验崩坏——潜变量被完全忽略，退化为单一奖励模型
 
-**核心idea一句话**：swap引导正则化强制潜变量有用 + IAF分解用户特定信号
+**核心 idea**：swap引导正则化强制潜变量有用 + IAF分解用户特定信号
 
 ## 方法详解
 
@@ -82,7 +82,7 @@ $\mathcal{L}(\phi, \psi) = -\text{ELBO} + \lambda \mathcal{L}_{guide}$
 - P-IAF 的 swap-reversal/invariant 分解在梯度场上有明确的物理意义——方向信号与不确定性信号解耦
 - 自适应调节避免了"强制使用 $z$"导致的过拟合——当 $z$ 信号弱时自动回退
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 测试场景有限，未验证实际 RLHF 训练中的个性化效果（仅评估了偏好预测准确率）
 - 用户偏好类型用预定义分类（helpfulness/honesty 等），未处理连续偏好谱
 - P-IAF 的步数 $K$ 和 $\lambda$ 的选择依赖调参，缺乏自适应机制

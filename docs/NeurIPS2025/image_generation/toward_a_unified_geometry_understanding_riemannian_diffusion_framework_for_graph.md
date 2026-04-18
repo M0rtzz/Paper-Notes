@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Toward a Unified Geometry Understanding: Riemannian Diffusion Framework for Graph Generation and Prediction
 description: >-
@@ -97,7 +97,7 @@ QM9 无条件分子生成：
 - GyroKernel 替代指数映射的设计巧妙：保留了黎曼空间的几何属性同时避免了数值问题，使整个扩散过程可以在欧几里得空间中进行
 - 自引导策略简单有效：利用潜在空间已有的几何信息生成伪标签，将所有任务统一为条件生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 积流形的组件数量和曲率选择是超参数，当前通过可学习曲率部分解决但缺乏理论指导
 - 分子生成仅在 QM9（≤9重原子）上验证，对更大分子的扩展性有待检验

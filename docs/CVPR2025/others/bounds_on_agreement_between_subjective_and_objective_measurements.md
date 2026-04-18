@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bounds on Agreement between Subjective and Objective Measurements
 description: >-
@@ -115,7 +115,7 @@ tags:
 5. **数学推导自洽**：从评分量表性质到MOS性质，再到界限公式，逻辑链完整
 6. **兼容受试者偏差**：证明了well-behaved MOS等价于well-behaved投票，偏差仅增加投票方差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限PCC和MSE**：未扩展到Spearman秩相关（SRCC）等其他常用一致性统计量
 2. **BinoVotes是简化模型**：对于某些测试场景（如图像质量评估），实际方差缩放因子(0.15)低于BinoVotes的0.25

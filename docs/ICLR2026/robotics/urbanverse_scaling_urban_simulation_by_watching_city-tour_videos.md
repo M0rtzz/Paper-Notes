@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UrbanVerse: Scaling Urban Simulation by Watching City-Tour Videos
 description: >-
@@ -130,7 +130,7 @@ PPO优化，学习率1e-4（自适应），γ=0.99，GAE τ=0.95，PPO clip ε=0
 - **24国160场景**: 跨文化、跨地理的多样性是真实世界泛化的关键
 - **Real-to-sim-to-real闭环**: 针对已知部署环境，拍一段视频→生成仿真→微调策略→部署，实用价值极高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Digital cousin仍与真实场景有gap——资产替换不可能完美匹配原始物体
 - 朝向误差(19.8°)仍较大，对精确导航可能有影响
 - 仅使用PPO，未探索更先进的强化学习算法

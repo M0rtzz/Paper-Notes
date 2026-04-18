@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Robustness of Reward Models for Language Model Alignment
 description: >-
@@ -199,7 +199,7 @@ BSR 在所有四种泛化场景下均表现出更好的鲁棒性，尤其在 Mut
 - RLHF 端到端实验令人印象深刻：生成长度降低 40% 说明 BSR-RM 有效抑制了冗长偏差，这是一个长期困扰 RLHF 的问题
 - 隐状态范数弥散与 classification 场景中的 logit 范数过大问题有相似的机制（参考 Wei et al., 2022），跨领域的 insight 迁移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **BSR 仅约束 batch 内均值**：batch 内部的奖励分布可能仍然存在问题，更精细的约束（如方差约束）可能进一步提升效果
 2. **$\lambda$ 的选择**：虽然只有一个超参数，但不同任务/模型规模的最优 $\lambda$ 可能不同，缺乏自适应调整机制

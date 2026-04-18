@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Equivariant Transformer for Self-Driving Agent Modeling
 description: >-
@@ -108,7 +108,7 @@ DriveGATr 将场景中的所有元素（agent 和地图节点）编码为 2D 射
 - 不变适配器是一个巧妙的设计：等变特征到不变输出的桥梁，通过变换到局部坐标系实现。
 - 可以直接使用 FlashAttention 等高效注意力核，这是实际部署的重要优势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 2D 平面上实现 SE(2) 等变性，真实驾驶是 3D 问题（可通过辅助标量编码高度维度扩展到 2.5D）
 - 仅在交通模拟任务评估，未验证运动预测和规划等相关任务

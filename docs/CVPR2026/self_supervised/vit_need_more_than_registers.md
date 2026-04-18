@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vision Transformers Need More Than Registers
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：ViT 在 image-level 分类上表现优异，但 patch-level 的 dense feature 质量差——高分 patch 落在背景而非前景，且 Register token 只能移除 high-norm 现象但无法解决根本问题（PiB 反而下降）。
 
-**本文要解决什么**：从第一性原理出发，统一定义、分析和解决不同监督范式下 ViT 的 artifact 问题。
+**本文目标**：从第一性原理出发，统一定义、分析和解决不同监督范式下 ViT 的 artifact 问题。
 
 **切入角度**：提出 Patch Score（CLS-patch 相似度）和 Point-in-Box（PiB）统一度量 artifact，发现根因是 lazy aggregation——全局注意力 + 粗粒度监督 → ViT 走捷径用背景 patch 编码全局语义。
 
-**核心idea一句话**：通过频率域稳定性分析区分前景/背景 patch，选择性聚合稳定 patch 到 CLS token，消除 lazy aggregation。
+**核心 idea**：通过频率域稳定性分析区分前景/背景 patch，选择性聚合稳定 patch 到 CLS token，消除 lazy aggregation。
 
 ## 方法详解
 
@@ -136,7 +136,7 @@ CLS 聚合方式对比（OpenCLIP ViT-B/16）：
 3. **方法简洁有效**：仅替换 CLS 聚合方式，无需额外模块/数据/损失，即可在 12 个 benchmark 上一致提升
 4. **颠覆性发现**：涌现性分割不是自监督独有的——消除 lazy aggregation 后全监督 ViT 也能展现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 频率域稳定性假设（前景 patch 更稳定）可能在某些场景下不成立（如纹理丰富的前景 vs 均匀背景）
 2. Channel-wise Top-K 需要额外的 FFT/IFFT 计算，虽然轻量但对实时推理仍有开销

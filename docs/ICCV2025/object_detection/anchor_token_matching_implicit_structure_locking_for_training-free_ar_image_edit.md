@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Anchor Token Matching: Implicit Structure Locking for Training-free AR Image Editing
 description: >-
@@ -106,7 +106,7 @@ ISLock（Implicit Structure Locking）不依赖显式注意力操纵或微调，
 - **隐式 vs 显式**：关键洞察在于不直接注入注意力图（会导致伪影），而是通过 token 匹配让注意力一致性自然涌现
 - **渐进式结构固化**：对 AR 生成中结构控制机制的系统分析，揭示了早期 token 对全局结构的决定性作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 整体性能仍落后于专为扩散框架优化的编辑方法（如 Null-text Inversion）
 - 依赖 AR 模型生成原始图像，无法直接编辑真实图片

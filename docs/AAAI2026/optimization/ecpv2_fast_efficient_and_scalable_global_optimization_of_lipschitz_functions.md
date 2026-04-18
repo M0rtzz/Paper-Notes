@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ECPv2: Fast, Efficient, and Scalable Global Optimization of Lipschitz Functions
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{R}_{\text{ECPv2},f}(n) \leq k \cdot \text{diam}(\mathcal{X}) \cdot \l
 - **模块化设计**：三项创新可独立使用或组合，灵活适配不同场景
 - **原则性超参数**：$\beta=5, \delta=2/3$有解析推导支撑，非启发式调参
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限Lipschitz连续假设**：对非Lipschitz函数无理论保证
 - **regret中的$n^{-1/d}$维度诅咒**：这是Lipschitz优化的固有限制，非算法问题

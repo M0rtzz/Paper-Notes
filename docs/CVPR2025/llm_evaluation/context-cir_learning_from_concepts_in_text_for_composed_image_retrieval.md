@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConText-CIR: Learning from Concepts in Text for Composed Image Retrieval
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：引入概念级别的表示学习，使文本中各名词短语的表示与查询图像的相关区域对齐。
 
-**核心 idea 一句话**：Text Concept-Consistency 损失 + 合成数据管线 = 概念级对齐的组合图像检索。
+**核心 idea**：Text Concept-Consistency 损失 + 合成数据管线 = 概念级对齐的组合图像检索。
 
 ## 方法详解
 

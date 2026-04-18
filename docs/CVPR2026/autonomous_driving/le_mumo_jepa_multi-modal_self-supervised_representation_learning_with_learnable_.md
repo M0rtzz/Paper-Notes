@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Le MuMo JEPA: Multi-Modal Self-Supervised Representation Learning with Learnable Fusion Tokens
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{\text{MM}} = \lambda \cdot \mathcal{L}_{\text{SIGReg}}(\mathbf{Z}
 - **统一2D避免3D骨干**：将LiDAR投影到2D而非保持3D稀疏格式，虽丢弃部分3D结构信息，但换来了架构统一性和灵活性（同一框架切换RGB-Thermal仅需换patch stem）
 - **from-scratch公平对比**：所有方法在相同数据和计算预算下从零训练，排除了预训练权重的混杂因素
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LiDAR投影到2D丢弃了原生3D结构（如遮挡关系、点云密度变化），可能限制复杂3D推理场景的性能
 - 仅用ViT-Small/16评估，更大模型（ViT-Base/Large）可能有不同的融合动态
 - 训练epoch数非常短（5 epoch），与标准SSL训练（300+ epoch）差距大，可能尚未收敛

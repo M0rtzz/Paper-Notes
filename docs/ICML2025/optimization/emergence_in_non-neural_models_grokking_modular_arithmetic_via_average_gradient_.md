@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product
 description: >-
@@ -126,7 +126,7 @@ $$\rho(M_t, M^*) = \frac{\langle \tilde{M}_t, \tilde{M}^* \rangle}{\|\tilde{M}_t
 4. **正则化解释**：通过 NFA（Neural Feature Ansatz），将权重衰减的作用解释为对 AGOP 迹的正则化，AGOP 正则化可替代权重衰减实现 grokking
 5. **实用启示**：随机循环特征即可使核/神经网络快速泛化，说明泛化不需要精确学到的特征，只需正确的**结构类型**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务受限**：仅验证了模算术（加减乘除），是否能推广到更复杂的代数结构或自然语言中的"技能涌现"尚未探讨
 2. **AGOP 对齐是后验指标**：需要已知最终收敛模型的特征矩阵，无法作为训练过程中的实时预测工具

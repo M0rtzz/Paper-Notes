@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiTo: Surface Light Field Tokenization
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：RGB-D多视角图像就是表面光场的离散采样——每个像素提供一个(表面点位置, 观察方向, 颜色)元组。通过随机子采样这些光场样本作为输入，用编码器插值、用3阶球谐Gaussian解码器输出。
 
-**核心idea一句话**：将表面光场的随机子采样编码为紧凑latent tokens，用双路解码器(flow-matching几何 + 球谐Gaussian外观)实现几何和视角依赖外观的统一3D表示。
+**核心 idea**：将表面光场的随机子采样编码为紧凑latent tokens，用双路解码器(flow-matching几何 + 球谐Gaussian外观)实现几何和视角依赖外观的统一3D表示。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - **3D patchification**巧妙解决了百万级token输入的效率问题，且方法概念上与ViT的patch一致，易于理解
 - **单阶段生成 + 坐标系旋转**比TRELLIS的两阶段更简洁，且自然解决了输出对齐问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练数据需要RGB-D多视角渲染(150视角)，获取成本较高
 - 3D patchification用L2距离近似表面局部性，当多个表面靠近时会跨表面attend
 - 未建模透明/半透明物体(深度图假设第一个交点)

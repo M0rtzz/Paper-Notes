@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ELEMENTAL: Interactive Learning from Demonstrations and Vision-Language Models for Reward Design in Robotics
 description: >-
@@ -100,7 +100,7 @@ ELEMENTAL 将视觉语言模型 (VLM) 与逆强化学习 (IRL) 融合，通过 V
 - **首次在 IsaacGym 上成功使用 IRL**：得益于 VLM 提供的结构化特征空间
 - **自我反思机制**：特征计数差异提供了比文本反馈更精确的改进信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 运行时间较 EUREKA 多约 2.5 倍 (168 vs 68 分钟)
 - 尚未在真实机器人上验证
 - 视觉演示的形式 (叠加图/关键帧) 需要针对任务类型手动选择

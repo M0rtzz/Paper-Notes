@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reallocating Attention Across Layers to Reduce Multimodal Hallucination
 description: >-
@@ -69,7 +69,7 @@ tags:
 - 在MLRM（长推理模型）上验证——这类模型的幻觉问题更为突出
 - 贡献图(Contribution Map)通过gate参数+梯度反传的分析方法可以作为通用的head归因工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 边界$\ell_{perc}, \ell_{reas}$需要手动调参（尽管在一个较宽的区间内稳定）
 - 仅在Qwen系列架构上验证（Ocean-R1、Kimi-VL都是Qwen衍生），他类架构(LLaMA系列)待验证
 - 对所有样本使用相同增益，**输入自适应**的增益调整可能更优

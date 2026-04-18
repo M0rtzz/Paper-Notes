@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prune2Drive: A Plug-and-Play Framework for Accelerating Vision-Language Models in Autonomous Driving
 description: >-
@@ -124,7 +124,7 @@ $$\sum_{i=1}^{M} w_i \cdot d_H(V_i, S_{i,\text{Prune2Drive}}) \leq \sum_{i=1}^{M
 3. **视图自适应率优化自动发现前视 > 后视**：无需手工设计先验，TPE 搜索自动分配最优预算
 4. **6.40× 加速有直接工业价值**：对实时自动驾驶系统的部署有实际意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **大面积均匀纹理物体可能被欠采样**：如橙色公交车因 token 特征相似，T-FPS 可能保留过少 token，导致该物体信息损失
 2. **T-FPS 依赖随机初始化**：初始 token 的随机选择可能引入轻微波动，论文未报告多次运行的方差

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shrinking the Teacher: An Adaptive Teaching Paradigm for Asymmetric EEG-Vision Alignment
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L}_{SCE} = -\frac{1}{2N}\sum_{i=1}^{N}\left[\log\frac{\exp(z_{v,i}^\t
 - **RSA 定性分析揭示机制**：视觉特征经 ShrinkAdapter 后去除了冗余的类间细微相似性，同时保留了核心类别语义
 - **解码到的 EEG 特征是混合表征**：同时编码了高层语义概念和低层视觉属性（颜色、纹理、方向）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 跨被试设置下改进不显著（p>0.05），被试间脑信号变异性是主要挑战
 - 当学生编码器能力不足时，ShrinkAdapter 反而有害——需要更鲁棒的适配机制

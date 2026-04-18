@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reference Recommendation based Membership Inference Attack against Hybrid-based Recommender Systems
 description: >-
@@ -164,7 +164,7 @@ DP 提供了一定的隐私保护（$\epsilon = 0.1$ 时 ASR 接近 0.5），但
 3. **免训练范式**：与需要训练影子模型和攻击分类器的方法不同，本文方法仅需两次黑盒查询和简单运算
 4. **理论与实证统一**：从函数分析到分布可视化，全方位证明了度量的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅使用欧几里得距离**：其他距离度量（Jaccard、KL 散度等）留待未来探索
 2. **数据集规模有限**：仅在 MovieLens 系列上验证

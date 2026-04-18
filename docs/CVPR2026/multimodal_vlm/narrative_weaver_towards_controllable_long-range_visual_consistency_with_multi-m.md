@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Narrative Weaver: Towards Controllable Long-Range Visual Consistency with Multi-Modal Conditioning
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：缺乏统一框架将叙事规划、精细控制和长程一致性三项能力融为一体。同时缺乏大规模多模态条件生成数据集。
 
-**本文要解决什么**：实现 (text, image) → (text, {Image_i}) 的多模态条件长序列一致性生成。
+**本文目标**：实现 (text, image) → (text, {Image_i}) 的多模态条件长序列一致性生成。
 
 **切入角度**：AR 模型做规划 + 扩散模型做生成的混合架构，关键帧间通过 Memory Bank 传递一致性信息。
 
@@ -102,7 +102,7 @@ tags:
 - 三阶段训练策略在有限计算和数据下实现 SOTA，实用性强
 - 计算复杂度从二次增长降为线性增长，允许生成更长叙事序列
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前以关键帧生成为主，关键帧间的过渡视频片段一致性尚未解决
 - Qwen2.5-VL-3B 的规划能力可能限制叙事复杂度，更大 MLLM 可能提升上限
 - EAVSD 数据集的生成依赖商业模型（Qwen-Image、Flux.1-kontext），可能引入生成偏差

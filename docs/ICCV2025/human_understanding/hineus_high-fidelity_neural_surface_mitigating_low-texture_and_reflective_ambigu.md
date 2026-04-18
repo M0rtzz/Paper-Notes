@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity
 description: >-
@@ -124,7 +124,7 @@ $$\mathcal{L}_{eikonal} = \frac{1}{|\mathcal{S}|}\sum_{\mathbf{x}\in\mathcal{S}}
 - 平面约束的自适应权重巧妙地利用外观特征差异来区分纹理边界和低纹理区域
 - 三个模块看似独立，但通过 SDF 和渲染误差的双向耦合形成了协同优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 500k 迭代的训练时间较长，效率不如近期基于 3D 高斯的方法
 - 反射 MLP 的容量有限，可能无法处理复杂的多次反弹光照

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Dual Uncertainty Optimization: Boosting Monocular 3D Object Detection under Test-Time Shifts
 description: >-
@@ -130,7 +130,7 @@ nuScenes跨场景适应（MonoFlex为base）：
 - **互补闭环设计**很优雅：语义到几何到语义的正反馈循环
 - 法线场约束通过简单高效的Sobel算子实现，不需要额外网络或数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. CFL的高阶近似引入近似误差，在极端分布偏移下效果不确定
 2. 仅在anchor-free检测器（MonoFlex、MonoGround）上验证，未测试anchor-based方法

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NeuroCircuitry-Inspired Hierarchical Graph Causal Attention Networks for Explainable Depression Identification
 description: >-
@@ -137,7 +137,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \lambda_{\text{kl}} \mathcal{L}_{\tex
 - **反事实因果推理**：VLCA 通过"切断环路交互"的反事实实验估计因果效应，比 post-hoc 注意力可视化更有说服力
 - **临床可解释性强**：所有模块的中间结果都可映射到已知的神经科学发现，而非黑盒中间表示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 REST-meta-MDD 单一数据集验证，未在 ABIDE（自闭症）等其他精神疾病数据上测试泛化性
 2. 5 大环路的划分基于先验知识，不同疾病可能需要不同的环路定义

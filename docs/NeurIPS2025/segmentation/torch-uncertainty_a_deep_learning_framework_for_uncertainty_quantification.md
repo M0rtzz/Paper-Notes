@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Torch-Uncertainty: A Deep Learning Framework for Uncertainty Quantification
 description: >-
@@ -96,7 +96,7 @@ Torch-Uncertainty 基于 PyTorch 和 Lightning 构建，核心架构包括：任
 - **工程质量极高**：98% 的单元测试覆盖率、ruff 代码规范、Discord 社区、HuggingFace 预训练模型和 Zenodo 数据集
 - **实用价值**：降低了 UQ 研究和部署的门槛，研究者可专注方法创新而非数据和评估的基础设施建设
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分割基准仅使用 UNet + MUAD，未覆盖更大规模模型（如 Mask2Former）和更主流的数据集（如 Cityscapes、ADE20K）
 - 当前不支持高斯过程方法（因难以扩展到大模型）

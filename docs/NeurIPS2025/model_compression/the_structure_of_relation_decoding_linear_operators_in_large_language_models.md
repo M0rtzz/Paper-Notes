@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Structure of Relation Decoding Linear Operators in Large Language Models
 description: >-
@@ -109,7 +109,7 @@ Hernandez et al. (2023) 发现 Transformer 语言模型中的关系知识（如"
 - 张量网络作为压缩工具的成功暗示了**可能将 LoRA 矩阵集合也进行类似的张量网络压缩**。
 - 交叉评估协议是一种独立于嵌入相似度的语义相似性度量方法，可广泛应用于其他场景。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在较小的 LLM 上验证（6B、8B、20B参数），大型模型/指令微调模型上的适用性未知。
 - 关系数据集覆盖有限（47-79 个关系），人类知识中的关系空间远大于此。

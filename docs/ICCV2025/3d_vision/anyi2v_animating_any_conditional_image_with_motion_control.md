@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnyI2V: Animating Any Conditional Image with Motion Control
 description: >-
@@ -108,7 +108,7 @@ tags:
 - **PCA-based特征分析**: 通过PCA降维可视化深入理解了不同特征的时域特性，发现query是最佳对齐目标
 - 支持LoRA和文本编辑，提供丰富的编辑空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 大范围运动控制精度不足，轨迹过长时效果下降
 - 模糊遮挡场景处理不佳，空间关系可能不清晰
 - 首帧控制精度不如ControlNet（因为特征注入仅在早期去噪步骤）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Handling the Non-smooth Challenge in Tensor SVD: A Multi-objective Tensor Recovery Framework
 description: >-
@@ -118,7 +118,7 @@ MOTC 在视频修复中超越第三名方法 **3.5 dB 以上**，部分视频改
 4. **收敛性保证**：证明了 APMM 收敛到 KKT 点，收敛速率为 $\mathcal{O}(1/\eta^{(t)})$
 5. **实验效果显著**：视频修复上 MOTC 提升 3.5+ dB，在部分困难样本上提升 5-10 dB
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销大**：MOTC 需要对所有 $(k_1,k_2)$ 模式对分别运行 APMM，再加上 NSGA-II 迭代，大规模数据上效率堪忧
 2. **NSGA-II 的启发式性质**：多目标优化阶段依赖遗传算法，结果取 Pareto 前沿平均值，缺乏理论最优性保证

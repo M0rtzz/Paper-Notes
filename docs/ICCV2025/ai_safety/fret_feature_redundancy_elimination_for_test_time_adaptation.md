@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FRET: Feature Redundancy Elimination for Test Time Adaptation
 description: >-
@@ -124,7 +124,7 @@ FRET框架分为两个层次：
 - **GCN的巧妙使用**：将GCN的图传播用于建模特征间关系，使得注意力和冗余关系可以在特征层级显式分离
 - **label shift的处理**：通过引入类中心感知的对比学习，G-FRET弥补了纯冗余最小化方法的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 - G-FRET引入了GCN和对比学习，增加了测试时的计算开销（每个batch需要构建图和传播）
 - 掩码矩阵 $M_M$ 固定为单位阵，可能不是所有场景的最优选择
 - 对极端分布偏移（如corruption level 5）的性能提升有限

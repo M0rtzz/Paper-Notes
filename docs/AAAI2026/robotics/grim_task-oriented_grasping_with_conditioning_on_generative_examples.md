@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRIM: Task-Oriented Grasping with Conditioning on Generative Examples
 description: >-
@@ -150,7 +150,7 @@ $$S_{\text{task},i} = \underbrace{(\mathbf{v}_{\text{target}} \cdot \mathbf{v}_{
 - **语义优先、几何精炼**的设计理念：在 3D 对齐中把语义权重设为几何的 10 倍，在最终评分中把任务兼容性权重设为几何质量的 19 倍——这种强先验非常合理
 - **终身学习能力**：记忆库可在运行时通过人工示范动态扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖多个上游预训练模型（Gemini Pro, VEO2, SAM, 手物重建等），可能继承幻觉和偏差
 - 离线记忆构建每个实例需 7 分钟，大规模记忆库的可扩展性受限

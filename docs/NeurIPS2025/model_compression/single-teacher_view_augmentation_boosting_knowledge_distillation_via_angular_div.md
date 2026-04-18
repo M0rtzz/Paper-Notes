@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Single-Teacher View Augmentation: Boosting Knowledge Distillation via Angular Diversity
 description: >-
@@ -133,7 +133,7 @@ Angular-KD以单教师的计算量超越了所有多教师方法。
 - **即插即用**：可集成到DKD、ReviewKD、MLKD等多种现有KD框架中，提供一致性能提升
 - **泛化性强**：在图像分类、二值分割、不平衡数据、少样本和跨数据集迁移等多场景下均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **受限于教师知识**：增强视角本质上被原始教师的知识所约束，无法引入根本性的新语义信息
 - **训练时间开销**：尽管比多教师高效，生成多个视角仍带来不可忽略的训练额外开销

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoachMe: Decoding Sport Elements with a Reference-Based Coaching Instruction Generation Model
 description: >-
@@ -94,7 +94,7 @@ CoachMe 包含三个模块：(1) Concept Difference Module 对齐学员与参考
 - **在极少量数据下工作**：FS 数据集仅 177 训练视频，BX 仅 163 个，通过在 HumanML3D 上预训练 + LoRA 微调实现了有效适配
 - **可视化注意力图增强可解释性**：图卷积网络学到的注意力图可以直观展示模型关注的关节和关节间关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集规模很小且标注来源有限（FS 仅 1 位教练标注，领域覆盖窄）
 - G-Eval 分数整体偏低（最好也只有 2.20/5），说明生成质量还有很大提升空间
 - 只测试了跳跃和出拳等单一动作，复杂组合动作和整场比赛分析未涉及

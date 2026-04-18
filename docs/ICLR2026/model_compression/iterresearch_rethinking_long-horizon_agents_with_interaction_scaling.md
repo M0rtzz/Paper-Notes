@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IterResearch: Rethinking Long-Horizon Agents with Interaction Scaling
 description: >-
@@ -97,7 +97,7 @@ IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathca
 - 交互扩展的发现意义重大——说明当前Agent的"失败"更多是因为探索不够而非能力不够
 - 跨范式知识迁移和零训练提示策略两个发现拓展了方法的应用边界
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 报告质量是关键瓶颈——如果重要信息在摘要中丢失，后续推理将受影响
 - 每轮重构意味着需要再次理解报告，可能有冗余计算
 - 仅在Qwen3-30B-A3B上训练，更大/更小模型的表现需验证

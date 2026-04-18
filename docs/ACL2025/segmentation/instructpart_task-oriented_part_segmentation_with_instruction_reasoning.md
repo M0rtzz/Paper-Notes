@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：VLM 能理解语言指令也能做分割，但将两者结合到部件粒度的任务推理上，现有模型几乎无法胜任。
 
-**本文要解决什么**：(1) 构建联结任务指令和部件分割的 benchmark；(2) 评估现有 VLM 的部件推理能力；(3) 提供 baseline 方法。
+**本文目标**：(1) 构建联结任务指令和部件分割的 benchmark；(2) 评估现有 VLM 的部件推理能力；(3) 提供 baseline 方法。
 
 **切入角度**：日常家务场景——给定"倒些水"的指令和水壶图片，模型需推理出应该抓水壶的"把手"，并输出把手的分割 mask。
 
@@ -107,7 +107,7 @@ InstructPart 是 benchmark + 简单 baseline。核心贡献在数据集构建和
 - **指令中隐含部件名**：故意不在指令中提及部件名（"倒水"而非"握住把手"），迫使模型做真正的推理，更接近真实交互场景
 - **Affordance 双层标注**：低层操作动作+高层功能动作，为 affordance 研究提供了更细粒度的标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 2400 张图规模偏小，48 类物体可能不够覆盖所有日常场景
 - 每张图只有一个目标物体的标注，多物体场景未考虑
 - PISA baseline 较简单（LISA+DINOv2），更强的架构（如 Grounding DINO v2 + SAM2）可能有更大提升空间

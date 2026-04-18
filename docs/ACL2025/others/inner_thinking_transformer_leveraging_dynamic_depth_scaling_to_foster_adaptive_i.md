@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inner Thinking Transformer: Leveraging Dynamic Depth Scaling to Foster Adaptive Internal Thinking
 description: >-
@@ -112,7 +112,7 @@ ITT ×4-162M 在 11 个基准上超越 230M Transformer，达到 466M Transforme
 4. **路由的互补性**：模型自发学会了"深度思考"与"广度补偿"交替的策略
 5. **理论支撑**：证明了多步优化相比单步映射更容易收敛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练时使用固定路由模式，可能限制对多样 token 复杂度的动态适应
 2. 实验仅在 162M-466M 参数规模验证，大规模模型可能出现新的架构交互

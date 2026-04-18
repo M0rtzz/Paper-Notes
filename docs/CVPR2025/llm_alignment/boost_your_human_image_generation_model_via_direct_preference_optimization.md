@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Boost Your Human Image Generation Model via Direct Preference Optimization
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：真实图像是更好的对齐目标，但生成-真实图像分布 gap 导致直接使用时训练崩溃（Naive DPO FID 暴涨到 112.67）。
 
-**本文要解决什么？** 弥合分布鸿沟，让 DPO 能以真实人像为优化目标。
+**本文目标** 弥合分布鸿沟，让 DPO 能以真实人像为优化目标。
 
 **切入角度**：课程学习逐步缩小 gap + 统计匹配消色偏。
 
-**核心idea一句话**：三阶段课程 DPO（Easy→Normal→Hard 渐进引入真实图像）+ 统计匹配损失。
+**核心 idea**：三阶段课程 DPO（Easy→Normal→Hard 渐进引入真实图像）+ 统计匹配损失。
 
 ## 方法详解
 
@@ -93,7 +93,7 @@ Win-rate: vs Diffusion-DPO **99.97%**, vs Pick-a-Pic v2 **86.03%**
 - **统计匹配损失的针对性设计**：色偏是生成→真实图像 DPO 的特有问题，channel-wise 统计对齐是简洁有效的解决方案
 - **与个性化模型的兼容性**：HG-DPO 训练的 LoRA 可直接与 InstantBooth 等个性化方法叠加，说明学到的偏好知识是通用的
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要高质量真实人像数据集，训练成本不低（340K steps total），Easy 阶段需要大量 GPU 时间生成偏好对
 - 仅验证了人像，可扩展到其他有丰富真实数据的领域（如风景、建筑、动物）
 - DPO 的 $\beta=2500$ 极大，远高于 LLM 中的典型值（0.1-0.5），说明扩散模型 DPO 的超参数空间与 LLM 差异巨大，调参成本高

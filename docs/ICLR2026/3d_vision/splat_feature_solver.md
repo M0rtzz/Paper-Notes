@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Splat Feature Solver
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：feature lifting 本质上是一个稀疏的、行随机的线性逆问题，会因噪声 mask 和不完备性变得病态(ill-conditioned)，但现有方法要么需要昂贵训练，要么缺乏理论保障。
 
-**本文要解决什么？** 建立 feature lifting 的形式化数学框架，提供闭式解和误差上界，并处理多视角噪声。
+**本文目标** 建立 feature lifting 的形式化数学框架，提供闭式解和误差上界，并处理多视角噪声。
 
 **切入角度**：利用 alpha blending 渲染的行随机性质，将 feature lifting 转化为标准线性逆问题，通过 Jensen 不等式推导代理损失的最优解。
 
-**核心idea一句话**：feature lifting 可表述为 $AX=B$，其中 $A$ 是渲染权重矩阵，row-sum preconditioner 给出的闭式解 $x_j = \frac{\sum_i A_{ij} B_i}{\sum_i A_{ij}}$ 在凸损失下有可证明的 $(1+\beta)$-近似保证。
+**核心 idea**：feature lifting 可表述为 $AX=B$，其中 $A$ 是渲染权重矩阵，row-sum preconditioner 给出的闭式解 $x_j = \frac{\sum_i A_{ij} B_i}{\sum_i A_{ij}}$ 在凸损失下有可证明的 $(1+\beta)$-近似保证。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - $(1+\beta)$-近似误差上界是首个用于 feature lifting 的理论保证
 - 完全 kernel-agnostic 和 feature-agnostic：同一框架可处理 3DGS/2DGS/Beta Splatting 和 CLIP/DINO/ViT/ResNet 等任意特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\beta$ 上界依赖最优解的特征离散度，实际值难以先验估计
 - Post-Lifting Aggregation 的 IoU 阈值虽有自动选择，但仍有场景敏感性

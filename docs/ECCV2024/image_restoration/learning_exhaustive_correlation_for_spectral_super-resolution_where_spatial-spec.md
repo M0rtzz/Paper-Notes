@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Exhaustive Correlation for Spectral Super-Resolution: Where Spatial-Spectral Attention Meets Linear Dependence
 description: >-
@@ -128,7 +128,7 @@ ECT 同时拥有**最少参数 (1.19M)** 和**最低推理延迟 (82ms)**，比 
 - **效率极优**: 在参数量 (1.19M)、FLOPs (16.75G) 和推理延迟 (82ms) 三个维度同时取得最优，实用性强。
 - **SD3D 切分策略的物理直觉**: 空间连续保局部结构、光谱非连续捕远距离依赖，简洁优雅地统一了两类相关性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 31 通道 HSI 上验证，更高光谱分辨率场景待检验。
 - 真实数据实验规模较小（仅彩色卡片），缺乏复杂场景验证。

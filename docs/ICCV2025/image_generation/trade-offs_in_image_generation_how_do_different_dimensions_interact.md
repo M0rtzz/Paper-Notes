@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Trade-offs in Image Generation: How Do Different Dimensions Interact?
 description: >-
@@ -119,7 +119,7 @@ TRIG 框架包含三个核心组件：
 - DTM 不仅是分析工具，还直接可指导模型微调优化，形成了"评估→诊断→改进"的闭环
 - 4 种权衡类型的定义（Synergy/Bottleneck/Tilt/Dispersion）提供了清晰的分析框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - TRIGScore 依赖特定的 VLM（Qwen2.5-VL），换用其他 VLM 可能得到不同结果
 - 10 个维度的定义虽然全面，但某些维度（如 Ambiguity、Knowledge）的边界可能模糊
 - 数据集标注使用了 GPT-4o 辅助，可能引入标注偏差

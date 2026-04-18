@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents
 description: >-
@@ -120,7 +120,7 @@ ST-WebAgentBench 基于 BrowserGym 环境构建，集成了 WebArena 和 SuiteCR
 - **实际企业视角**：不同于学术基准只追求任务完成，本文从企业安全合规角度重新审视 Agent 评估
 - **BrowserGym 集成**：开源并计划回馈扩展到 BrowserGym 生态
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数据集规模较小（235 任务），策略类别分布不均衡
 2. 边界维度的任务设计有待改进，当前对 Agent 性能影响有限

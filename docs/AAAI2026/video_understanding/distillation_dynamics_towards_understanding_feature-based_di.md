@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distillation Dynamics: Towards Understanding Feature-Based Distillation in Vision Transformers
 description: >-
@@ -110,7 +110,7 @@ ProjectorKD：$\mathcal{L}_{\text{Proj}} = \text{MSE}(\text{Projector}(\mathbf{A
 - **"蒸馏引导发展轨迹"的视角**深刻——后层蒸馏没有给错信号的"量"，而是给了错误的"方向"
 - 减小β反而更差的发现和解释非常有启发性：揭示了蒸馏损失与分类损失之间存在微妙的动态均衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **主要是分析论文**：SpectralKD/ProjectorKD只是验证分析的工具，实际性能提升极其有限（最佳仅77.08 vs baseline 76.99）
 - **未设计有效的ViT蒸馏方法**："phase-specific distillation"停留在建议层面，未实现

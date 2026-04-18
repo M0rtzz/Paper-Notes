@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Orchestration Framework for Financial Agents: From Algorithmic Trading to Agentic Trading
 description: >-
@@ -136,7 +136,7 @@ $$w_{\text{model}}(q_t) = \begin{cases} 0.10, & q_t < 0.05 \\ 0.20, & 0.05 \leq 
 4. **Memory Agent 的设计**使系统具有可审计性和状态持久性
 5. **端到端框架可复用性强**：同一 DAG 拓扑适用于股票和 BTC，仅数据源和调度不同
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **回测时间窗口过短**：股票仅 8 个月（04-12/2024），BTC 仅 17 天，统计显著性不足
 2. **股票实验不如等权基准**：在 2024 年科技股强势行情中，20.42% 对比等权 47.46%，缺少对不同市场环境的鲁棒性分析

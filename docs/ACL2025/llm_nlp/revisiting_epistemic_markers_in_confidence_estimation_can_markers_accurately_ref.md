@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Epistemic Markers in Confidence Estimation: Can Markers Accurately Reflect Large Language Models' Uncertainty?
 description: >-
@@ -105,7 +105,7 @@ tags:
 - 发现更强的模型对认知标记有更好的理解，暗示标记校准可能随模型能力提升而自然改善。
 - 揭示了一个深层问题：LLM 虽然在 QA 任务上表现良好，但并不真正"理解"认知标记的含义。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在英语闭源 QA 任务上评估，未考虑其他语言或开放式生成任务。
 - 认知标记的定义相对简化，未考虑句法结构、上下文等对置信度表达的影响。

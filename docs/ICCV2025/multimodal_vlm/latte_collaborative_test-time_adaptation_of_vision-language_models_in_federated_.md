@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LATTE: Collaborative Test-Time Adaptation of Vision-Language Models in Federated Learning
 description: >-
@@ -108,7 +108,7 @@ Latte 在所有基准上均取得最佳性能。值得注意的是，在 TerraIn
 - **实用性强**：通信与推理解耦使其真正适用于实际 FL 系统，而非仅限于理想化设置
 - 免训练特性使其适合资源受限的边缘设备
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在图像分类任务上验证，未扩展到检测、分割等视觉任务
 - 对客户端数据分布差异极端的情况（如完全不重叠的类别空间）未充分讨论

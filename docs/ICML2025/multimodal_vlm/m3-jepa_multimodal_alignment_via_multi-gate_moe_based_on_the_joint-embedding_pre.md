@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] M3-JEPA: Multimodal Alignment via Multi-gate MoE based on JEPA
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：token 空间的对齐过于"表面"——它要求预测出精确的 token sequence，但跨模态信息天然存在不确定性和一对多映射。需要一种在更抽象的潜在空间中对齐的方案，只保留跨模态共享的核心语义信息。
 
-**本文要解决什么？** (1) 如何避免 token 空间对齐导致的模态崩溃？(2) 如何设计一个通用的 any-to-any 多模态对齐框架？(3) 如何在多方向任务（如 image→text 和 text→image）之间避免梯度冲突？
+**本文目标** (1) 如何避免 token 空间对齐导致的模态崩溃？(2) 如何设计一个通用的 any-to-any 多模态对齐框架？(3) 如何在多方向任务（如 image→text 和 text→image）之间避免梯度冲突？
 
 **切入角度**：JEPA（Joint-Embedding Predictive Architecture）从能量基模型的角度出发，不在 token 空间做生成式预测，而是用一个预测器将输入嵌入投影到输出嵌入空间，在潜在空间进行对齐。I-JEPA 和 V-JEPA 已在视觉自监督学习中验证了该范式的有效性，但尚无通用多模态版本。
 
-**核心idea一句话**：用 Multi-gate MoE 实现 JEPA 的跨模态预测器，门控函数自动解耦模态特定和共享信息，配合交替梯度下降避免多任务冲突，实现首个 any-to-any 的多模态 JEPA 对齐框架。
+**核心 idea**：用 Multi-gate MoE 实现 JEPA 的跨模态预测器，门控函数自动解耦模态特定和共享信息，配合交替梯度下降避免多任务冲突，实现首个 any-to-any 的多模态 JEPA 对齐框架。
 
 ## 方法详解
 

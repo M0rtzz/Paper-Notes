@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MPD-SGR: Robust Spiking Neural Networks with Membrane Potential Distribution-Driven Surrogate Gradient Regularization
 description: >-
@@ -168,7 +168,7 @@ CIFAR-100 上同样大幅领先（Vanilla: FGSM +18.35%；AT: FGSM +16.35%）。
 4. **与现有方法正交**：可以和对抗训练、编码方法叠加使用
 5. **连接了 SG 优化和鲁棒性两个研究方向**：此前 SG-MPD 对齐只用于改善训练，本文首次将其用于增强鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - η 参数需要调节（虽然附录有分析但没有自适应机制）
 - 理论分析基于三角形 SG 函数，虽然实验验证了其他 SG 函数也有效，但理论扩展到任意 SG 函数有待完善

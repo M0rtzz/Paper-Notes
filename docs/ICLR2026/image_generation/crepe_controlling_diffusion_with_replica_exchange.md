@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CREPE: Controlling Diffusion with Replica Exchange
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：SMC 的"并行粒子 + 串行时间步"的模式决定了它天然存在多样性和灵活性的瓶颈。需要一种计算上对偶的方案。
 
-**本文要解决什么？** 提出 SMC 的替代方案，实现：(a) 粒子逐个生成而非批量 (b) burn-in 后保持高多样性 (c) 支持在线精炼和早停 (d) 覆盖 tempering、reward-tilting、model composition、CFG debiasing 等多种任务
+**本文目标** 提出 SMC 的替代方案，实现：(a) 粒子逐个生成而非批量 (b) burn-in 后保持高多样性 (c) 支持在线精炼和早停 (d) 覆盖 tempering、reward-tilting、model composition、CFG debiasing 等多种任务
 
 **切入角度**：Replica Exchange / Parallel Tempering 恰好是 SMC 的计算对偶——它在不同去噪步上并行运行链，串行生成样本。将这个 MCMC 采样框架适配到扩散模型的设定中。
 
-**核心 idea 一句话**：将 Parallel Tempering 的 swap move 适配到扩散模型路径空间上，利用 Radon-Nikodym Estimator 计算接受概率，实现无需显式目标密度的推理时控制。
+**核心 idea**：将 Parallel Tempering 的 swap move 适配到扩散模型路径空间上，利用 Radon-Nikodym Estimator 计算接受概率，实现无需显式目标密度的推理时控制。
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ CREPE 维护 $M+1$ 个粒子，每个粒子驻留在不同的扩散时间步 $t_
 - **在线精炼**是 SMC 完全做不到的——对实际应用（交互式生成、迭代设计）非常有用。
 - **统一框架**覆盖 tempering、reward-tilting、model composition、CFG debiasing 等多种任务，还可以自由组合。方法论上很通用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Burn-in 期间样本质量差，少量样本场景不如 SMC
 - 每个 swap move 需要模拟前向+后向扩散路径，计算开销非平凡
 - 高维图像（ImageNet-512）上主要展示 reward-tilting 的定性结果，缺少定量对比

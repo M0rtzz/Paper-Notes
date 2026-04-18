@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VOccl3D: A Video Benchmark Dataset for 3D Human Pose and Shape Estimation under Real Occlusions
 description: >-
@@ -127,7 +127,7 @@ VOccl3D-B-CLIFF 在 Hard-Occlusion MPJPE 上比 BEDLAM-CLIFF 降低约 **18.5mm*
 - **多任务基准**: 同一数据集支持HPS估计、检测、分割多任务评估
 - **端到端分析**: 从检测器到姿态估计器的完整链路分析，揭示了检测器对HPS的关键影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据与真实数据仍存在域差距（lighting, texture, physics）
 - 仅使用 SMPL-X 模型，缺少手部/面部精细估计

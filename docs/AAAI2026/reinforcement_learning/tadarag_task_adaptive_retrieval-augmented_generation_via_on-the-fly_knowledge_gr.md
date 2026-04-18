@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TAdaRAG: Task Adaptive Retrieval-Augmented Generation via On-the-Fly Knowledge Graph Construction
 description: >-
@@ -170,7 +170,7 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}^{\text{base}} + (1-\alpha) \cdot \mathc
 - 已在**商业系统（Xinyu AI Search）中部署**，具有实际落地价值
 - 覆盖了从开放域 QA 到法律、医学、到长文本摘要的多种场景，泛化性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **动态 KG 构建增加了计算开销**——每次推理都需要生成 KG，延迟比标准 RAG 更高
 - 部分依赖**手工设计的领域模板**（尽管只是冷启动用），限制了全自动化程度

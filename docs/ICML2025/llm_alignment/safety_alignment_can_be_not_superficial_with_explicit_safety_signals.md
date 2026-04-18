@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safety Alignment Can Be Not Superficial With Explicit Safety Signals
 description: >-
@@ -143,7 +143,7 @@ tags:
 4. **GCG防御机理深刻**：动态重分类从根本上破坏了梯度优化攻击的前提——静态对抗信号
 5. **与现有方法兼容**：可作为SFT/DPO/RLHF的**后增强阶段**叠加使用，而非替代
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限文本模态**：未验证在多模态（图文、语音等）场景下的有效性
 2. **预训练增益有限**：受限于LLaMA3-Guard标注质量和计算资源，预训练阶段带来的额外收益不显著

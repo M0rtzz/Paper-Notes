@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoE-Gyro: Self-Supervised Over-Range Reconstruction and Denoising for MEMS Gyroscopes
 description: >-
@@ -173,7 +173,7 @@ MoE-Gyro包含三个核心组件：
 - **FFT引导增强实用**：基于Allan方差标准的物理合理噪声生成
 - **ISEBench贡献**：首个开源IMU信号增强评估基准，统一7个评估指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 架构相对较大，对资源受限的嵌入式设备（如MCU）部署仍有挑战
 - 训练数据来自iPhone 14单一设备（虽然零样本泛化效果不错）

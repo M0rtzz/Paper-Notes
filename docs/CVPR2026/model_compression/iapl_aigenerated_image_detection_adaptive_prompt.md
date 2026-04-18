@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Generalizable AI-Generated Image Detection via Image-Adaptive Prompt Learning
 description: >-
@@ -103,7 +103,7 @@ tags:
 - "固定backbone + 动态prompt"的设计哲学很优雅：大部分参数提供稳定的表征能力，少量参数（仅2个prompt token）提供per-instance的灵活性。这种架构层面的分工比全模型微调或全参数测试时适应更高效且稳定。
 - 测试时token调优只需2步优化6个view就足够——说明域偏移的信号很强，决策边界的微调不需要大量迭代，这对实际部署的延迟控制很重要。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 测试时调优增加了推理延迟（需要多次前向传播+梯度回传），对实时检测场景可能不适用
 - 仅用DCT选择单个纹理丰富patch提取条件信息，可能遗漏其他区域的伪造线索

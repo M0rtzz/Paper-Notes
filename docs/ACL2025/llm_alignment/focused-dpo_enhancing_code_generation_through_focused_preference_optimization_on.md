@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Focused-DPO: Enhancing Code Generation Through Focused Preference Optimization on Error-Prone Points
 description: >-
@@ -110,7 +110,7 @@ tags:
 - **PageRank 自验证机制**巧妙解决了无人工标注下的数据质量问题，使得策略模型可以自举（self-bootstrap）生成高质量偏好数据
 - **数据效率极高**：仅 5000 个样本即可在已经过百万级对齐训练的 Qwen2.5 上取得显著提升，实用价值高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了 Python 代码生成，其他编程语言（C++/Java/Rust 等）的错误分布模式可能不同
 - $w_{focused}=2$ 是手动设定的固定值，可探索自适应权重学习或按问题难度动态调整

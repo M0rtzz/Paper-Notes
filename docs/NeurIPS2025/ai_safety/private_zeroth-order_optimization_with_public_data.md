@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Private Zeroth-Order Optimization with Public Data
 description: >-
@@ -120,7 +120,7 @@ PAZO (Public-data-Assisted Zeroth-Order) 框架在标准零阶优化流程中引
 - **实用性极强**: 16x 加速 + 低内存 = 边缘设备上的隐私保护训练成为可能
 - **理论支撑**: 在公私数据相似性假设下提供了收敛性分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要公共数据与私有数据之间有一定相似性,跨域差异大时效果下降
 2. 理论分析要求凸性或 PL 条件,非凸深度模型的理论保证有限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 去偏与效用保持之间存在根本性的trade-off。去偏会不可避免地丢失部分语义信息，导致下游任务性能下降。现有方法要么不显式处理效用保持（BiasedPrompt），要么通过重构损失间接保持（DeAR、SANER），但重构嵌入不等于保持跨模态对齐。没有任何方法提供效用损失的理论上界。此外，现有方法仅关注群组公平性（group fairness），忽视了交叉公平性（intersectional fairness，如性别×年龄的组合）。
 
-**本文要解决什么**: 提出一种统一的VLM去偏框架，同时满足五个要求：免训练、免标注数据、双模态联合去偏、覆盖多种下游任务、提供效用损失的理论保证。并且首次将交叉公平性纳入VLM去偏的系统评估。
+**本文目标**: 提出一种统一的VLM去偏框架，同时满足五个要求：免训练、免标注数据、双模态联合去偏、覆盖多种下游任务、提供效用损失的理论保证。并且首次将交叉公平性纳入VLM去偏的系统评估。
 
 **切入角度**: 观察到VLM的嵌入空间是单位超球面 $\mathbb{S}^{d-1}$，任何嵌入都可以通过正交分解定理分解为属性相关分量和中性内容分量。与之前方法（PRISM-mini、Orth-Proj）投影到群组原型张成的子空间 $\mathcal{S}$ 不同——$\mathcal{S}$ 中包含语义信息（如"doctor"）会被一并删除——本文只投影到属性差异方向张成的子空间 $\mathcal{A}$，精准去除偏见同时保留语义。
 
-**核心idea一句话**: 在跨模态嵌入空间中，通过属性子空间的正交分解将去偏问题降维到二维单位圆，再用Chebyshev极小极大方法推导出闭式最优解，同时实现Pareto最优公平性和有界效用损失。
+**核心 idea**: 在跨模态嵌入空间中，通过属性子空间的正交分解将去偏问题降维到二维单位圆，再用Chebyshev极小极大方法推导出闭式最优解，同时实现Pareto最优公平性和有界效用损失。
 
 ## 方法详解
 
@@ -49,19 +49,19 @@ tags:
 
 **模块1: LLM引导的群组原型构建**
 
-- **做什么**: 为每个敏感属性群组（如male/female）构建一个鲁棒的嵌入原型 $\vec{p}_g$，用于定义属性子空间。
+- **功能**: 为每个敏感属性群组（如male/female）构建一个鲁棒的嵌入原型 $\vec{p}_g$，用于定义属性子空间。
 - **核心思路**: 给定输入prompt（如"a photo of a doctor"），用LLM（GPT-5）完成两步操作：(1) 插入群组标识得到 $T_g$（如"a photo of a male doctor"）；(2) 生成该群组的多种语言变体 $\mathcal{T}_g$（如"a photo of a man doctor"、"a photo of a masculine doctor"）。将所有变体的文本嵌入取球面均值（spherical mean）作为群组原型：$\vec{p}_g = \frac{\vec{e}_g + \sum_i \vec{e}_g^{(i)}}{\|\vec{e}_g + \sum_i \vec{e}_g^{(i)}\|}$。
 - **设计动机**: 之前方法（PRISM、Orth-Proj）直接用单一prompt作为群组原型，但属性群组在语言上并非单一的（"man"、"gentleman"、"boy"都表示男性但语义不同）。SANER虽构建了词库但不受输入prompt约束，可能产生语义不一致。LLM能根据上下文生成恰当的变体，球面均值则确保原型在超球面上代表性最强。
 
 **模块2: 属性子空间正交分解**
 
-- **做什么**: 将原始嵌入 $\vec{e}$ 分解为属性泄露分量（bias）和中性内容分量（semantics），为去偏提供精确操作空间。
+- **功能**: 将原始嵌入 $\vec{e}$ 分解为属性泄露分量（bias）和中性内容分量（semantics），为去偏提供精确操作空间。
 - **核心思路**: 定义属性子空间 $\mathcal{A} = \text{span}\{\vec{a}_2, \dots, \vec{a}_n\}$，其中 $\vec{a}_i = \vec{p}_{g_i} - \vec{p}_{g_1}$。通过投影算子 $P_{\mathcal{A}_\parallel} = A(A^\top A)^{-1}A^\top$ 和 $P_{\mathcal{A}_\perp} = I - P_{\mathcal{A}_\parallel}$ 将嵌入分解为 $\vec{e} = \vec{e}_{\mathcal{A}_\parallel} + \vec{e}_{\mathcal{A}_\perp}$。公平性目标等价于让去偏嵌入与所有群组原型等距，即 $\langle \vec{u}, \vec{a}_i \rangle = 0$。
 - **设计动机**: 之前方法投影到 $\mathcal{S} = \text{span}\{\vec{p}_{g_1}, \vec{p}_{g_2}, \dots\}$，但 $\mathcal{S}$ 中包含所有群组共享的语义成分（如"doctor"的含义），投影后这些语义被错误删除。$\mathcal{A}$ 只包含群组间的差异方向，维度为 $r \leq n-1 \ll d$，远小于 $d$，因此去偏操作对语义的影响最小化。
 
 **模块3: Chebyshev标量化闭式求解**
 
-- **做什么**: 在公平性（最小化属性泄露 $L(\alpha) = \alpha$）和效用（最小化self-utility loss $V(\alpha)$）的Pareto前沿上找到对任意权重鲁棒的最优点。
+- **功能**: 在公平性（最小化属性泄露 $L(\alpha) = \alpha$）和效用（最小化self-utility loss $V(\alpha)$）的Pareto前沿上找到对任意权重鲁棒的最优点。
 - **核心思路**: 通过Lemma 1将超球面上的搜索空间降维到 $\text{span}\{\vec{e}_{\mathcal{A}_\parallel}, \vec{e}_{\mathcal{A}_\perp}\}$ 上的二维单位圆；通过Lemma 2进一步将搜索限制在第一象限且 $\alpha \in [0, \|\vec{e}_{\mathcal{A}_\parallel}\|]$。最终通过Chebyshev极小极大方法求解：$\min_\alpha \sup_{w_1,w_2} \{w_1 L(\alpha) + w_2 V(\alpha)\}$，得到闭式解 $\alpha^* = \frac{E - \|\vec{e}_{\mathcal{A}_\perp}\|\sqrt{E^2 - \|\vec{e}_{\mathcal{A}_\parallel}\|^2}}{E^2 + \|\vec{e}_{\mathcal{A}_\perp}\|^2}$，其中 $E = \|\vec{e}_{\mathcal{A}_\parallel}\| + (1-\|\vec{e}_{\mathcal{A}_\perp}\|)/\|\vec{e}_{\mathcal{A}_\parallel}\|$。
 - **设计动机**: 由于方法要求任务无关（task-agnostic），不能假设知道下游任务来调节 $w_1, w_2$ 的偏好。Chebyshev方法确保在最坏权重组合下目标最小，实现对任意任务的鲁棒性。闭式解避免了迭代优化的计算开销和收敛问题。
 
@@ -125,7 +125,7 @@ tags:
 - 通过Chebyshev极小极大实现任务无关的鲁棒性，避免了为每个下游任务单独调参
 - 三个RQ的系统分析为VLM去偏领域提供了清晰的设计准则：无需标注、无需训练、需要双模态
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 效用保证在嵌入空间（余弦相似度）而非任务指标空间（F1/R@K），两者的差距在极端场景下可能显著
 - 闭式解依赖属性子空间的线性假设，非线性偏见模式可能无法捕获

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Collaborative Mean Estimation Among Heterogeneous Strategic Agents: Individual Rationality, Fairness, and Truthful Contribution
 description: >-
@@ -104,7 +104,7 @@ tags:
 4. **无货币机制**：与数据市场不同，本文不依赖支付手段来激励参与，更符合科研合作、公共数据共享等场景
 5. **凸优化可解**：IR 约束下的最优分配是凸问题，实际可用标准优化库求解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **高斯假设**：限于正态分布的均值估计，扩展到更一般的分布族（如指数族）或更复杂的学习任务（如分类、回归）是开放方向
 2. **公知成本假设**：假设所有成本 $c_{i,k}$ 公开可知；实际中成本通常是私有信息，需进一步引入成本报告机制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Model Stitching in the Foundation Model Era
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: 先前 model stitching 研究仅在同数据集小模型上验证（如 ResNet-18 on CIFAR-10），VFM 时代下训练目标、数据、模态混合完全不同的大模型是否仍可拼接未知。
 
-**本文要解决什么**: 异构 VFM 是否可拼接？如何正确训练 stitch layer？是否能从拼接中获得超越单模型的性能？
+**本文目标**: 异构 VFM 是否可拼接？如何正确训练 stitch layer？是否能从拼接中获得超越单模型的性能？
 
 **切入角度**: 设计系统化的实验协议（stitch point × stitch layer family × training loss × downstream task），揭示现有方法的失败模式并提出新方案。
 
-**核心 idea 一句话**: 用 Final Feature Matching 匹配 target 模型倒数第二层特征来初始化 stitch layer，使异构 VFM 可靠拼接并融合互补知识。
+**核心 idea**: 用 Final Feature Matching 匹配 target 模型倒数第二层特征来初始化 stitch layer，使异构 VFM 可靠拼接并融合互补知识。
 
 ## 方法详解
 
@@ -49,22 +49,22 @@ $$F(x) = T_\phi^N \circ S \circ R_\theta^n(x)$$
 ### 关键设计
 
 **1. Layer Feature Matching (LFM) 的失败分析**
-- **做什么**: 训练 stitch layer 最小化拼接点处的特征差异 $\|S(R_\theta^n(x)) - R_\phi^n(x)\|_2^2$。
+- **功能**: 训练 stitch layer 最小化拼接点处的特征差异 $\|S(R_\theta^n(x)) - R_\phi^n(x)\|_2^2$。
 - **核心思路**: 虽然 layer 特征距离很低（$10^{-3}$ 量级），但最终特征距离很高，尤其在浅层拼接时。
 - **设计动机**: 小的中间层 mismatch 会被冻结的后续层累积放大，导致输出特征严重偏离。
 
 **2. Final Feature Matching (FFM)**
-- **做什么**: 训练 stitch layer 匹配 target 模型最终层（pre-logit）的 patch 特征。
+- **功能**: 训练 stitch layer 匹配 target 模型最终层（pre-logit）的 patch 特征。
 - **核心思路**: $\mathcal{L}_{\text{FFM}} = \frac{1}{M}\sum_{i=1}^{M} \|T_\phi^N(S(R_\theta^n(x_i))) - T_\phi^N(R_\phi^n(x_i))\|_2^2$，注意 FFM 是 label-free 的。
 - **设计动机**: 直接约束最终输出，消除误差累积问题；意外发现 FFM 同时在拼接点处保持了低特征距离，说明最终层监督能隐式诱导中间层对齐。
 
 **3. 两阶段训练策略**
-- **做什么**: (i) FFM 预训练 stitch layer → (ii) 用下游 task loss 微调。
+- **功能**: (i) FFM 预训练 stitch layer → (ii) 用下游 task loss 微调。
 - **核心思路**: 解决 Task Loss Training (TLT) 在浅层拼接时的梯度消失问题——梯度需穿过大量冻结层才能到达 stitch layer，FFM 预训练提供好的初始化绕过这一优化困难。
 - **设计动机**: TLT 在 DINOv2→SigLIP2 第 2 层仅 25.1% accuracy，FFM 初始化后提升至 51.7%。
 
 **4. Self-Stitch 基线设计**
-- **做什么**: 在同一模型内插入相同 stitch layer（如 DINOv2→DINOv2），排除 stitch layer 容量带来的伪提升。
+- **功能**: 在同一模型内插入相同 stitch layer（如 DINOv2→DINOv2），排除 stitch layer 容量带来的伪提升。
 - **核心思路**: 如果跨模型拼接优于同模型自拼接，说明确实发生了互补知识融合。
 - **设计动机**: 严格的对照实验设计，隔离了 stitch layer 容量 vs. 真正的知识融合。
 
@@ -127,7 +127,7 @@ FFM 初始化 vs 无初始化（TLT, DINOv2→SigLIP2）:
 - Self-stitch 基线设计严谨，有效排除了容量伪提升的解释
 - VFM Stitch Tree 为多 VFM 部署提供了连续的性能-效率权衡 knob
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VFM Stitch Tree 仅在 VQAv2 和 MME 上验证，更广泛的多模态评估待确认
 - 仅考虑相同架构（ViT）的 VFM，不同架构间的拼接未探索

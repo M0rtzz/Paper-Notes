@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SoMe: A Realistic Benchmark for LLM-based Social Media Agents
 description: >-
@@ -129,7 +129,7 @@ SoMe 由三部分组成：(1) 8 项社交媒体任务定义，(2) 基于 MCP 协
 - 工具幻觉分析（响应幻觉 vs 调用格式幻觉）为智能体可靠性研究提供了新切入点
 - 基于 MCP 协议的工具平台设计确保了广泛兼容性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估依赖 LLM 打分器（RED/SES/SMQ），可能引入评分偏差
 - 当前仅覆盖英文和中文内容，缺乏多语言评测

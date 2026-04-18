@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ResidualViT for Efficient Temporally Dense Video Encoding
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{J}_{L \rightarrow V} = -\sum_{i=1}^{B}\sum_{k=1}^{N}\sum_{j=1}^{B} \s
 - **广泛的任务泛化性**：在 NLTVG、AD、TAL、AR 四个任务和五个数据集上均有效，覆盖短视频和长视频
 - **实际加速**：不仅 GFLOPs 减少，实际推理墙钟时间也提升 2.5 倍，工程价值明确
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当 $N$ 较大（>3）时精度下降明显，对于变化剧烈的视频场景（如快速切换、大幅度运动），时间冗余假设可能不成立
 - 目前仅在 CLIP 上验证，是否能推广到其他视觉基础模型（如 DINOv2、SigLIP、InternVL）有待探索
 - 基于运动的 token dropping 策略依赖光流估计，可能引入额外计算开销，在实际部署中需要权衡

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QD-PCQA: Quality-Aware Domain Adaptation for Point Cloud Quality Assessment
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L}_{\text{all}}^{\text{mix}} = \lambda_1 \mathcal{L}_P(\hat{y}_s^{\te
 - **排序加权机制**：关注"排序不一致"的难样本对，精准纠正域迁移中的排序偏差
 - **两阶段训练**：避免早期不可靠伪标签对 RCA 的负面影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 点云投影为六个正交视图可能丢失 3D 结构信息
 - 伪标签质量依赖第一阶段模型水平，可探索更好的伪标签生成策略

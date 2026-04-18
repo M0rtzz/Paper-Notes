@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VisionTrap: Vision-Augmented Trajectory Prediction Guided by Textual Descriptions
 description: >-
@@ -133,7 +133,7 @@ nuScenes 预测数据集上的对比（单/多 agent 预测）：
 - **nuScenes-Text 数据集**：VLM 微调 + LLM 精炼的半自动标注 pipeline，94.8% 准确率，可迁移到其他数据集的文本标注
 - **Scene-centric 实时推理**：采用 ego-centric 方案一次处理所有 agent，推理 53ms 远快于 agent-centric 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 文本数据集生成依赖 VLM+LLM 的级联 pipeline，标注质量受两个模型性能影响
 - 只在 nuScenes 上验证，未测试 Waymo 等其他数据集的泛化性
 - 当前不支持长时序预测（仅 2-6 秒），更长时间的预测可能更需要视觉语义

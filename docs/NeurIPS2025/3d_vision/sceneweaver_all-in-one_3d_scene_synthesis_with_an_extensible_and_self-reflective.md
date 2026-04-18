@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SceneWeaver: All-in-One 3D Scene Synthesis with an Extensible and Self-Reflective Agent
 description: >-
@@ -97,7 +97,7 @@ SceneWeaver不涉及端到端训练。核心是利用预训练MLLM（GPT-4）的
 - 在8种开放词汇房间类型上的测试展示了强大的泛化能力，平均物体数36.5远超基线同时保持零物理违规
 - 记忆长度设为1的设计虽然简单但有效避免了LLM幻觉问题，体现了实用主义的工程智慧
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖GPT-4进行反思和工具选择，推理成本较高，单场景生成需要多轮API调用，速度和成本是瓶颈
 - 资产检索质量受限于现有3D模型库（Objaverse/3D-Future），某些罕见物体类别可能找不到合适的mesh
 - 物理优化是基于规则的简化版本，无法处理复杂的物理交互场景（如铰链、弹簧等）

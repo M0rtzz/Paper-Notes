@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PRO-VPT: Distribution-Adaptive Visual Prompt Tuning via Prompt Relocation
 description: >-
@@ -122,7 +122,7 @@ FGVC 基准：PRO-VPT 达到 91.7% 均值准确率，较 VPT 提升 2.0pp。
 3. **Taylor 展开近似**：将 O(N) 次前向传播的闲置分数计算降至一次梯度计算
 4. **统一了现有剪枝方法的理论框架**：证明剪枝方法只是 PRO-VPT 的特例
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RL 训练引入额外超参数和计算开销
 - 仅在 ViT-B/16 上验证，未在更大规模模型上测试

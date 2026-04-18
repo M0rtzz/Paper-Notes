@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Plana3R: Zero-shot Metric Planar 3D Reconstruction via Feed-Forward Planar Splatting
 description: >-
@@ -102,7 +102,7 @@ Plana3R在从未见过的NYUv2上实现零样本度量深度估计，超越MASt3
 - 度量尺度的直接预测受益于室内场景的人体尺度先验，这一观察很有见地
 - 平面分割作为紧凑表示的副产品自然涌现，体现了好表示自带上游能力的理念
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅支持双视角逐对推理，多视角需要多次前向传播
 - 平面表示对非平面区域（曲面、复杂物体）建模能力有限

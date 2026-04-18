@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ShiftLUT: Spatial Shift Enhanced Look-Up Tables for Efficient Image Restoration
 description: >-
@@ -123,7 +123,7 @@ ShiftLUT 采用三阶段设计：
 4. **多任务验证**：超分辨率、去噪、去块效应三个任务均验证有效
 5. **Pareto 前沿**：ShiftLUT 系列在存储-速度-质量三维空间建立了新的 Pareto 前沿
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. LUT 方法的表达能力仍受限于输入量化精度（6-bit MSB）
 2. LSS 的两阶段训练增加了训练复杂度

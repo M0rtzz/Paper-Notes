@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Articulate3D: Holistic Understanding of 3D Scenes as Universal Scene Description
 description: >-
@@ -119,7 +119,7 @@ USDNet较SoftGroup†提升7.3%，较Mask3D†提升5.7%（AP50+Origin+Axis）
 3. **下游应用全面**：展示了LLM驱动场景编辑、机器人策略训练（PPO开抽屉）、跨域泛化等多种应用
 4. **USD格式的工业标准选择**：相比URDF格式，USD对复杂网格和碰撞几何的支持更全面，且易于LLM理解和编辑
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **方法提升幅度有限**：USDNet在分割任务上相比Mask3D†的提升较小（AP50仅+2.7和+0.9），主要优势集中在运动参数预测
 2. **数据集规模仍可扩展**：280个场景相比ScanNet等语义理解数据集（1500+场景）仍偏小
 3. **连接图谱预测**：论文将连接图谱预测作为独立任务，未集成到USDNet统一框架中

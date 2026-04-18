@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DACoN: DINO for Anime Paint Bucket Colorization with Any Number of Reference Images
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L}_{dc} = \frac{1}{MN} \sum_{m,n} |\hat{S}_{m,n} - \hat{S}'_{m,n}|$$
 - 统一模型同时处理关键帧和连续帧两种任务，避免了维护多个模型
 - 在实际动画制作场景中，分段式上色保留了可编辑性，比生成式方法更实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 角色离镜头太近导致身体部位超出画面时，U-Net无法获取完整线稿信息
 - 极端姿态下性能下降，因为色彩设计图主要展示直立姿势

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Layer Consistency Matters: Elegant Latent Transition Discrepancy for Generalizable Synthetic Image Detection
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **推理速度最快**：冻结CLIP骨干 + 轻量双分支，FPS显著高于FatFormer等方法
 - **Physical prior的洞察**：生成模型重点优化像素级真实感和高级语义对齐，但中间层的结构连续性不受约束，因此成为泄露生成来源信息的"窗口"
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Midjourney在GenImage上的Acc仅62.97%，对部分高质量商业模型仍有提升空间
 - 严重依赖CLIP ViT的预训练表示——如果CLIP被用于生成过程本身（如未来模型），检测效果可能下降
 - 动态层选择用Gumbel-Softmax，推理时退化为固定选择，未能真正做到per-image adaptive

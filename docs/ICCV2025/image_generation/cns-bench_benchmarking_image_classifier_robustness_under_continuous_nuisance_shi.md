@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CNS-Bench: Benchmarking Image Classifier Robustness Under Continuous Nuisance Shifts
 description: >-
@@ -155,7 +155,7 @@ $$\mathcal{A}_{feat} = \cos(\mathcal{F}_0, \mathcal{F}_k)$$
 5. **失效点分析揭示退化模式差异**：天气偏移导致的失效逐渐累积，而风格偏移（如卡通）的失效集中在特定尺度，可能与 ImageNet 类别（如"comic book"）的混淆有关
 6. **用户研究验证**：最终数据集中仅 1% 为 OOC 样本，误差范围 ±0.5%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **CLIP 训练数据偏差**：生成偏移时无法完全消除 CLIP 和 Stable Diffusion 训练数据中固有的偏差，失效不能总是完全归因于目标干扰概念
 2. **合成 vs. 真实的分布偏移**：生成图像本身与真实图像之间存在域差距，可能引入额外偏差

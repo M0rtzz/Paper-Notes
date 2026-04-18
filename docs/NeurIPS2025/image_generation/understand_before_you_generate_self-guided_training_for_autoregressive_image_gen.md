@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understand Before You Generate: Self-Guided Training for Autoregressive Image Generation
 description: >-
@@ -116,7 +116,7 @@ ST-AR 使 LlamaGen-XL (775M) 仅训练 50 epoch 就接近 LlamaGen-3B (3.1B) 训
 - **完全"自引导"无需外部模型**：与 REPA（依赖 DINOv2）和 ImageFolder（依赖预训练表示）不同，ST-AR 通过自身的 EMA 教师和自监督损失自主提升
 - **效率惊人**：775M 模型 50 epoch 的效果接近 3.1B 模型 300 epoch——说明理解能力的提升可以极大地弥补模型容量的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练成本增加（额外的 EMA 教师、多视图编码、对比损失计算），论文未量化具体增幅
 - 仅在 LlamaGen 上验证，是否泛化到 MAR、VAR 等其他 AR 架构有待验证

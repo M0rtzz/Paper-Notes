@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COUNTS: Benchmarking Object Detectors and Multimodal Large Language Models under Distribution Shifts
 description: >-
@@ -106,7 +106,7 @@ COUNTS项目包含三个核心组成部分：
 4. "IID强不等于OOD强"的结论虽然不新，但在检测任务上的系统性验证填补了重要空白
 5. 34页的论文（含附录）数据量巨大，提供了检测器设计的详细指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 域的选择主要基于场景/背景级别的分布偏移，缺少对象级别的偏移（如姿态变化、形变等）
 - 14个域之间的独立性假设未被严格验证，某些域可能存在强相关（如road和street）
 - OODG基准目前仅定义了ICL阶段的分布偏移，未覆盖微调阶段的偏移

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Procurement Auctions with Predictions: Improved Frugality for Facility Location
 description: >-
@@ -128,7 +128,7 @@ $$o'_\ell(S) = \begin{cases} \frac{2}{\epsilon} \cdot o_\ell, & \text{if } S = \
 - "向上缩放"的反直觉设计深刻揭示了效率（最小化社会成本）与节俭（最小化支付）之间的本质差异
 - 容错设计中的两阶段验证（整体缩放 vs 逐设施惩罚）展现了优雅的工程化理论设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 所有结果基于确定性拍卖，随机化拍卖可能进一步改善节俭比
 - ErrorTolerant的鲁棒性保证中出现 $\lambda^4$ 量级，误差容忍参数的选择需要谨慎

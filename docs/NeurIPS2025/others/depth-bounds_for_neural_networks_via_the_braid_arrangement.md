@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Depth-Bounds for Neural Networks via the Braid Arrangement
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{V}_{\mathcal{B}_d}(0) \subsetneq \mathcal{V}_{\mathcal{B}_d}(1) \subs
 - **Maxout 的超预期发现**有独立意义：说明高阶激活函数的表达力用简单乘积公式无法刻画
 - 方法可潜在推广到其他扇结构，为理解一般网络深度下界提供工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\mathcal{B}_d^0$-conforming 是**真正的限制**：Bakaev et al. (2025b) 已证明一般（非 conforming）2 层网络可计算 5 个数 max
 - $\log \log d$ 增长极慢（$d=2^{2^{10}-1}$ 才需要 10 层），离期望的 $\Theta(\log d)$ 上界差距大
 - 纯理论工作，对实际架构设计的启示有限

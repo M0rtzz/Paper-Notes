@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Explore How to Inject Beneficial Noise in MLLMs
 description: >-
@@ -112,7 +112,7 @@ $$L \approx \frac{1}{n \cdot m} \sum_{i=1}^{n} \sum_{j=1}^{m} [-\log q(A_i | X_V
 - **即插即用的框架设计**：MuNG作为feature alignment layer和LLM decoder之间的插件，不修改模型主体架构，与LoRA等方法正交可叠加。
 - **跨模型泛化**：在Qwen2.5-VL-3B/7B和LLaVA-1.5-7B三个不同模型上都展示了有效性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **LLM Decoder未经多模态预训练时效果受限**：当LLM Decoder完全没见过多模态数据时（如LLaVA第一阶段pretrain模型），仅靠MuNG效果大幅下降，必须配合LoRA才能恢复。这说明MuNG的有效性依赖于LLM Decoder已具备基本的多模态理解能力。
 - **推理时TTFT略有增加**：MuNG在推理时需要额外运行噪声生成器，TTFT从Full-FT的0.9s增加到3.2s（Qwen2.5-VL-3B），对于延迟敏感的场景可能是个问题。
 - **仅验证了VQA类任务**：所有实验都是视觉问答/理解类benchmark，未验证在生成类任务（如image captioning、visual grounding）上是否同样有效。

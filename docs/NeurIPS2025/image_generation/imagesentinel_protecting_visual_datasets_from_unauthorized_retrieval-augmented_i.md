@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ImageSentinel: Protecting Visual Datasets from Unauthorized Retrieval-Augmented Image Generation
 description: >-
@@ -151,7 +151,7 @@ ImageSentinel 包含三个核心组件：**密钥生成**、**哨兵图像合成
 4. **实用性强**：黑盒检测设定，仅需 3–10 次查询即可达到近乎完美的检测效果
 5. **跨系统泛化**：在三种不同 RAIG 系统（SDXL、OmniGen、GPT-4o）上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **依赖文生图模型的文字嵌入能力**：SDXL 在图像中嵌入字符的能力较弱，当前主要依赖 GPT-4o，未来更强的文生图模型可进一步提升效果
 2. **对自适应攻击的鲁棒性有限**：Detect-and-Inpaint 攻击在少量查询时能显著削弱检测能力，需要更鲁棒的保护策略
 3. **检测指标单一**：目前仅使用 DINO 余弦相似度，更精确的相似度度量可能进一步提升检测

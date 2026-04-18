@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CapeLLM: Support-Free Category-Agnostic Pose Estimation with Multimodal Large Language Models
 description: >-
@@ -107,7 +107,7 @@ CapeLLM由三个核心组件构成：（1）DINOv2视觉编码器提取图像特
 - **浮点解码 = 隐式密度估计**：这个发现非常有趣——通过逐位数字预测坐标，MLLM实际上在建模一个截断的条件密度函数，其灵活性远超固定高斯
 - **详细文本描述 > 支持图像**：说明在CAPE中，精确的语义信息比视觉相似度更有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MP-100数据集规模有限（每类约200张），更大规模数据集上的效果有待验证
 - 浮点精度固定为3位（$10^{-3}$），对需要更高精度的任务可能不够

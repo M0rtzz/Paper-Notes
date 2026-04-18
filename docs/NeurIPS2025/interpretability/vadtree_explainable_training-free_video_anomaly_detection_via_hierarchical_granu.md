@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VADTree: Explainable Training-Free Video Anomaly Detection via Hierarchical Granularity
 description: >-
@@ -107,7 +107,7 @@ VADTree 由三大模块组成：
 - 簇内节点精炼的设计类似图上的消息传递，有效利用了节点间的语义关系
 - 完全无需训练即超越弱监督方法（MSAD），展示了"大模型+好的结构化推理"的巨大潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GEBD模型本身的质量直接影响树结构质量，如果事件边界检测有偏差，后续推理也会受影响
 - 推理开销较大：需要对每个节点分别调用VLM和LLM，实际部署成本高

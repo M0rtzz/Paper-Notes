@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KeyDiff: Key Similarity-Based KV Cache Eviction for Long-Context LLM Inference in Resource-Constrained Environments
 description: >-
@@ -117,7 +117,7 @@ KeyDiff 因无需计算注意力矩阵，兼容 FlashAttention，延迟显著更
 - **FlashAttention 兼容**：不需要物化注意力矩阵，直接利用 key 几何信息，实际部署中非常实用
 - **线性复杂度高效变体**：anchor 向量近似将 $O(n^2)$ 降到 $O(n)$，且几乎无精度损失
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论假设（如 $\text{CosSim}(\bar{k}, q) < 0$）可能不在所有 head/layer 成立
 - 仅在 Llama 和 Qwen 系列上验证，对其他架构（如 Mistral、Phi）的泛化性未知
 - 滑动窗口的比例需要手动调整，没有自适应策略

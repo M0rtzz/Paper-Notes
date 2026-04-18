@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLIPErase: Efficient Unlearning of Visual-Textual Associations in CLIP
 description: >-
@@ -93,7 +93,7 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{RM} + \lambda_2 \mathcal{L}_{FM} + \lambd
 - **可视化验证充分**：注意力热图和 t-SNE 嵌入空间可视化直观展示了遗忘效果。
 - **模型无关性**：框架不依赖 CLIP 特定组件，已验证可扩展到 BLIP-1。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 缺乏专门为多模态遗忘设计的标准化数据集和评估基准。
 2. 目前仅适用于多模态嵌入模型，尚未扩展到 VLM 等生成式多模态模型。

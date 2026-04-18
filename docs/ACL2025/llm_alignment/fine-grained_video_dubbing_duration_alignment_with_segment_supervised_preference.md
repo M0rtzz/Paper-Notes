@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fine-grained Video Dubbing Duration Alignment with Segment Supervised Preference Optimization
 description: >-
@@ -124,7 +124,7 @@ SSPO 在不显著降低翻译质量的前提下大幅提升时长一致性。LLM
 - **数据高效**：仅需 3% 数据即可获得接近理论上界的对齐效果
 - **通用性强**：跨三个基座模型（Llama3.1-8B、GLM-4-9B、Qwen2.5-14B）和四个语言对（zh→en/th/es, es→zh）均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **TTS 时长估计粗糙**：使用 edge-tts 合成时长作为代理指标，未考虑角色情感、语速变化等实际配音因素
 - **语言对上界差异**：不同语言对的信息密度差异决定了对齐上限，某些语言对天然难以完全消除时长不一致

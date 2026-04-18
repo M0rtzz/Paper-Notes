@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UPose3D: Uncertainty-Aware 3D Human Pose Estimation with Cross-View and Temporal Cues
 description: >-
@@ -130,7 +130,7 @@ Human3.6m数据集消融(T=27)：
 - **一个反直觉的发现**: 简单DLT三角化配合强2D预测器(CPN)就能超越一些复杂方法（如AdaFuse+noisy views），说明基础很重要
 - 计算效率优势随摄像机数量增加而愈发显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MLE优化阶段使用L-BFGS，计算成本有波动且不适合实时应用
 - 合成训练数据的多样性仍受限于AMASS数据集中的动作类型
 - 未涉及多人场景——仅处理单人多视角

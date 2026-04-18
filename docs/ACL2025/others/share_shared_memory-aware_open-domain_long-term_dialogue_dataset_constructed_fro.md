@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SHARE: Shared Memory-Aware Open-Domain Long-Term Dialogue Dataset Constructed from Movie Script
 description: >-
@@ -120,7 +120,7 @@ SHARE 数据集构建 + EPISODE 对话框架。数据从电影剧本中提取，
 - **完整的端到端框架**：从数据构建到记忆管理到响应生成的完整闭环
 - **多样化的对话风格**：不仅限于日常对话，还包含奇幻等多种类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据质量依赖 GPT-4**：信息提取完全依赖 GPT-4，可能存在提取偏差
 2. **英文单语言**：数据集仅覆盖英文

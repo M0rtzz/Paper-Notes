@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The First Impression Problem: Internal Bias Triggers Overthinking in Reasoning Models
 description: >-
@@ -114,7 +114,7 @@ tags:
 
 4. **Logit Lens 揭示的"认知失调"**：在模型已经显式推理出正确答案的情况下，错误的初始猜测在中间层仍保持更高的 decoding 概率，这是一个极其有趣的发现，揭示了推理模型内部"直觉"与"逻辑"并行竞争的动力学。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏根本性解决方案**：虽然注意力早退出机制有初步效果（$R_\Delta$ 从 31.5% 降至 9.4%），但这仍然是一种推理时的外部干预，而非让模型本身学会忽略错误直觉。未来可探索在 RL 训练阶段加入"偏差解耦"目标。
 

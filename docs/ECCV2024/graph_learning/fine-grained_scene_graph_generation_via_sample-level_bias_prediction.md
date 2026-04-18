@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fine-Grained Scene Graph Generation via Sample-Level Bias Prediction
 description: >-
@@ -138,7 +138,7 @@ union region vs 整张图像：使用 union region 特征的 A@50/100 为 44.6/4
 - **即插即用的通用框架**：适配三种主流两阶段 backbone（Motif/VCtree/Transformer）、三种单阶段方法、甚至目标检测任务
 - **极低的推理开销**：参数量仅增加 0.3-0.5%，推理速度增加 1.2-2.2%，可实际部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GAN 训练本身存在不稳定性，需要仔细调参（D/G 更新比 5:1，学习率敏感），增加了调参成本
 - 纠偏偏置集合 $\mathcal{S}$ 的构建过程较复杂，涉及条件判断和迭代修正，不够简洁

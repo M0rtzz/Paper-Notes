@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Modal Assistance for Unsupervised Domain Adaptation on Point Cloud 3D Object Detection
 description: >-
@@ -143,7 +143,7 @@ MMAssist 基于 teacher-student 自训练框架（DTS），包含两个阶段：
 3. **兼容性强**：集成到 3 个主流检测器均有效，方法通用性好
 4. **远距离伪标签补充策略简单有效**：利用 2D 检测器弥补 3D 检测器的远距离盲区
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在实例级别对齐特征，缺乏全局语义信息的利用
 - 依赖 LVLM（LLaVA）生成文本描述，增加了训练流水线的复杂度

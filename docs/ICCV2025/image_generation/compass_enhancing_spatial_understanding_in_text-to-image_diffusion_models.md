@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMPaSS: Enhancing Spatial Understanding in Text-to-Image Diffusion Models
 description: >-
@@ -106,7 +106,7 @@ CoMPaSS包含两个互补组件：SCOP数据引擎（提供高质量空间训练
 - TENOR设计极其简洁（无参数、零开销），但效果显著，体现了"对症下药"的思路
 - 方法具有很强的通用性：适用于UNet和MMDiT两种架构，4个不同模型上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅支持两个对象间的空间关系，多对象复杂场景的扩展有待探索
 - SCOP依赖COCO的bounding box标注，数据规模受限于标注数据集
 - 空间关系类型仅覆盖left/right/above/below，更复杂的关系（如"between"、"surrounding"）未涉及

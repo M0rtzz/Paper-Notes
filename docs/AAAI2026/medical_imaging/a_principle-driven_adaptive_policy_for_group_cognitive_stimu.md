@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment
 description: >-
@@ -135,7 +135,7 @@ $$\mathcal{L}_{\text{SFT}} = \gamma_1 \cdot \mathcal{L}_{\text{Gen}} + \gamma_2 
 - **双数据策略**：用GPT-4o生成符合18条治疗原则的模拟数据进行预训练，再用真实数据微调——有效的domain adaptation pipeline
 - **多维规则奖励的MRPO**：不需要reward model，组合多个自动指标做奖励信号驱动GRPO——实用且可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **缺乏临床验证**：所有评估都是计算指标和短期人工评估，没有长期临床试验证明实际治疗效果，这是最大的gap
 - **仅文本模态**：真实CST涉及视觉材料（照片）、声音语调等，纯文本系统丢失大量信息，尤其对认知障碍老人来说非语言线索至关重要
 - **粤语单一语言**：数据和评估仅限粤语，泛化性未验证

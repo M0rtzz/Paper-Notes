@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DVLO: Deep Visual-LiDAR Odometry with Local-to-Global Feature Fusion and Bi-directional Structure Alignment
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}^l = \|t_{gt} - t^l\| \exp(-k_x) + k_x + \|q_{gt} - q^l\|_2 \exp(-k
 4. **高效实时**：98.5ms 推理时间满足 10Hz 实时约束，优于所有其他多模态方法
 5. **泛化性强**：融合模块可直接迁移到场景流估计任务且超越专用 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 KITTI 验证**：缺少 nuScenes、Waymo 等更大规模数据集的评估
 2. **单目图像限制**：仅使用单目左相机，未探索立体视觉带来的深度信息增益

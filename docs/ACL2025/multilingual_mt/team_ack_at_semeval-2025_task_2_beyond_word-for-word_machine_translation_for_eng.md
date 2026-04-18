@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Team ACK at SemEval-2025 Task 2: Beyond Word-for-Word Machine Translation for English-Korean Pairs
 description: >-
@@ -118,7 +118,7 @@ tags:
 - "Incorrect Response"作为最主要错误类型的发现，暗示 LLM 在翻译任务中的指令遵循仍有改进空间
 - 证明了 M-ETA 在实体级翻译评估中的独特价值，标准 BLEU 和 COMET 在此类任务上的不足被量化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估英→韩单向翻译，未覆盖韩→英方向
 - 人工评估规模有限（650个样本），统计显著性可能受影响
 - 仅使用固定的问答模板格式数据集，未涉及长文档或叙事文本等体裁

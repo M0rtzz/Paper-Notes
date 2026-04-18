@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Fidelity Estimation for Quantum Programs with Graph-Guided Noise Awareness
 description: >-
@@ -107,7 +107,7 @@ $$\frac{z_\alpha \cdot \sigma}{\sqrt{|T|}} \leq \delta$$
 3. **图级抽象的巧妙性**：用 transpilation 前后的结构形变替代具体噪声模型，实现"噪声模型无关"的噪声感知
 4. **实际硬件验证**：在真实 IBM 量子后端上验证，非模拟器实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **马尔可夫假设**：噪声传播采用马尔可夫抽象，无法完全捕捉某些设备上的长程时间相关性
 2. **全局谱度量**：谱复杂度是全局指标，引入局部化或量子比特级别的形变度量可能进一步提升自适应性

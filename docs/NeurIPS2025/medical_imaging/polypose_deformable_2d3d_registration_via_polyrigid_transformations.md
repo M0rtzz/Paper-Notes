@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PolyPose: Deformable 2D/3D Registration via Polyrigid Transformations
 description: >-
@@ -107,7 +107,7 @@ $$(\hat{\mathbf{T}}_1, \ldots, \hat{\mathbf{T}}_K) = \arg\max_{\mathbf{T}_1, \ld
 - **无超参数设计**：受引力启发的权重函数完全消除了超参数搜索，实现了开箱即用的跨手术/解剖区域泛化
 - **理论保证**：多刚体变形场天然是微分同胚的，这不是通过正则化强制的，而是参数化本身的性质
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对远离骨骼的软组织极端变形（如腹部）的建模能力有待验证
 - 微分同胚约束无法表示某些变形（如张嘴），可通过引入运动链缓解

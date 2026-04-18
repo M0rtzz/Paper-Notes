@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EquivAnIA: A Spectral Method for Rotation-Equivariant Anisotropic Image Analysis
 description: >-
@@ -105,7 +105,7 @@ tags:
 - 用连续平滑滤波器替代离散bin的思路极其简洁，本质上是把一个离散化问题（bin边界量化误差）用信号处理的标准工具（频域滤波）优雅地解决了。方法不需要任何学习，完全可解释。
 - Cake wavelet vs Ridge filter的互补性为用户提供了实用的选择指南——看图像是结构性还是纹理性的，选对应滤波器即可。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅处理单分辨率分析，未扩展到多分辨率（ridgelets/curvelets/shearlets）
 - 无法区分 $\theta$ 和 $\theta+180°$，需要额外MSE比较步骤消歧

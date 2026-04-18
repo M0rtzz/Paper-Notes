@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimism Without Regularization: Constant Regret in Zero-Sum Games
 description: >-
@@ -120,7 +120,7 @@ $$\Psi(y^{T+1}) \leq 8a_{\max}\left(1 + 2\frac{a_{\max}}{a_{\text{gap}}}\right)^
 - **乐观vs交替的分离结果**具有理论优美性：同一框架（FP）下，两种改进策略在大步长极限下有本质不同
 - 对均衡计算算法（如组合博弈中的MCCFR变体）和自博弈RL有潜在影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限2×2零和博弈**：定理的证明深度依赖于2×2的结构（对偶向量落在二维子空间），推广到一般 $n \times n$ 是主要的未解决问题
 - **依赖唯一内点Nash均衡假设**：退化博弈（如纯策略NE）不在讨论范围内

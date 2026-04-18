@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Affine Correspondences by Integrating Geometric Constraints
 description: >-
@@ -135,7 +135,7 @@ tags:
 3. **解耦训练策略**: 避免了弱监督导致的损失歧义，实际效果优于端到端训练
 4. **实际应用价值**: 仿射对应可以用 2AC 求解单应性（而非 4PC）、1AC 求解本质矩阵（而非 5PC），大幅提升 RANSAC 效率
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 分类领域标注为 human_understanding 似乎有误，更适合归类为 **image_matching / geometric estimation**
 2. Patch 大小固定为 32×32，**自适应 patch 尺寸**可能提升大变形场景表现

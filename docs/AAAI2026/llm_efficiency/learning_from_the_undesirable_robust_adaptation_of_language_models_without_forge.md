@@ -53,7 +53,7 @@ $$\ell_{\text{LfU}}(\theta, \theta_{\text{aux}}) = \ell_{\text{SFT}}(\theta) + \
 
 ### 关键设计 1：模拟不良更新（One Step towards the Undesirable）
 
-- **做什么**：定义辅助模型 $\theta_{\text{aux}}$，在原始参数 $\theta$ 上添加额外可训练组件。计算 SFT 损失关于 $\theta_{\text{aux}}$ 的梯度，然后沿梯度上升方向走一步，使辅助模型偏向不良行为。
+- **功能**：定义辅助模型 $\theta_{\text{aux}}$，在原始参数 $\theta$ 上添加额外可训练组件。计算 SFT 损失关于 $\theta_{\text{aux}}$ 的梯度，然后沿梯度上升方向走一步，使辅助模型偏向不良行为。
 - **更新公式**：$\theta_{\text{aux}} \leftarrow \theta_{\text{aux}} + \alpha \cdot \frac{\nabla_{\theta_{\text{aux}}} \ell_{\text{SFT}}(\theta_{\text{aux}})}{\|\nabla_{\theta_{\text{aux}}} \ell_{\text{SFT}}(\theta_{\text{aux}})\|_2}$
 - **关键细节**：步长 $\alpha$ 控制扰动幅度；梯度归一化确保扰动方向稳定、不受梯度范数波动影响。
 - **与 SAM 的区别**：SAM 对全部参数做梯度上升寻找平坦最小值，LfU 仅对额外添加的辅助组件做上升，原模型参数 $\theta$ 保持冻结。

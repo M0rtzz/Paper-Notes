@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cook and Clean Together: Teaching Embodied Agents for Parallel Task Execution
 description: >-
@@ -66,7 +66,7 @@ tags:
 - **ORS3D-60K数据集** — 60K级规模的3D任务调度数据集，填补社区空白
 - **DeepSeek-R1对照** — DeepSeek-R1凭借数学RL训练在纯文本调度中TE 72.63%，但无法处理3D grounding
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在离线benchmark验证，未在真实机器人上部署
 - 外部求解器不可微，无法端到端优化
 - 当前仅支持单个可并行子任务的场景

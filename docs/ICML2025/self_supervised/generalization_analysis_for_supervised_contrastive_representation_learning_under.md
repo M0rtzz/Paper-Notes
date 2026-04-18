@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalization Analysis for Supervised Contrastive Representation Learning under Non-IID Settings
 description: >-
@@ -90,7 +90,7 @@ $$ER_{un}(\hat{f}_{\mathcal{U}}) \leq \mathcal{O}\left[\sum_c\rho(c)\frac{K_{\ma
 2. **与先前 IID 结果一致**：在 $N=nk$ 转换下界与 Lei et al. 量级吻合
 3. **实用指导**：无法遍历全部元组时增大 $M$ 即可逼近理论最优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 小 $k$ 时界含 $\sqrt{|\mathcal{C}|}$，源于类别独立分析
 - 仅考虑有监督 CRL，未扩展至自监督

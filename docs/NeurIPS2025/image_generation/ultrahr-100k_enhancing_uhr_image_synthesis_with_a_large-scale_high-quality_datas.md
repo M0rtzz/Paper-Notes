@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UltraHR-100K: Enhancing UHR Image Synthesis with A Large-Scale High-Quality Dataset
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **后训练范式值得参考**：不需要从头训练，只需少量后训练就能显著提升预训练模型的 UHR 细节能力
 - 10 万级 UHR 数据集的贡献本身就很有价值——将推动整个 UHR 生成领域的发展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 频率感知后训练略微降低了文本-图像对齐度（CLIP 分数轻微下降）
 - 数据集中人像数据较少，UHR 人像生成仍有提升空间

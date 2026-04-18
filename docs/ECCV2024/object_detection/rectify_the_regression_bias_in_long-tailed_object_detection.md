@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rectify the Regression Bias in Long-Tailed Object Detection
 description: >-
@@ -133,7 +133,7 @@ tags:
 - **方法极其简单**：核心修改仅一行公式（加权组合），即插即用
 - **泛化性强**：跨数据集、跨指标、跨分支（mask）均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - α的最优值可能因数据集/类别分布而异，目前固定为0.5
 - 合并方案（Table 2c）在某些指标下甚至优于CAB，但作者选择了更简单的CAB，未进一步探索自适应合并

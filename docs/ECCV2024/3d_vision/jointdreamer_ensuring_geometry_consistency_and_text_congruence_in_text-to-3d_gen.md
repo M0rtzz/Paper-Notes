@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JointDreamer: Ensuring Geometry Consistency and Text Congruence in Text-to-3D Generation via Joint Score Distillation
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 现有解决方案要么效果有限（prompt engineering），要么在有限 3D 数据上微调导致过拟合、丢失文本保真度（如 MVDream 处理复杂文本时缺失语义组件）。**几何一致性与文本一致性难以兼顾**。
 
-**本文要解决什么**: 从 SDS 优化范式本身出发，引入多视图一致性约束，在不牺牲扩散模型泛化能力的前提下消除 Janus 问题。
+**本文目标**: 从 SDS 优化范式本身出发，引入多视图一致性约束，在不牺牲扩散模型泛化能力的前提下消除 Janus 问题。
 
 **切入角度**: 用能量函数建模多视图图像的联合分布，从理论上推导出多视图 KL 散度并得到联合分数蒸馏函数。
 
-**核心idea一句话**: SDS 是 JSD 在能量项为零时的特例——引入视觉感知的能量函数即可从单视图优化自然过渡到多视图联合优化。
+**核心 idea**: SDS 是 JSD 在能量项为零时的特例——引入视觉感知的能量函数即可从单视图优化自然过渡到多视图联合优化。
 
 ## 方法详解
 
@@ -135,7 +135,7 @@ $$\nabla_\theta L_{JSD}(\theta) = \sum_{i=1}^{V} \mathbb{E}_{t, \epsilon^i_\Phi}
 - Geometry Fading 的洞察直观有效：几何和纹理需要分阶段优先处理
 - R-Precision 从 27.7% 直接跳到 88.5%，量变到质变的飞跃
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时间虽可接受但仍有加速空间，未探索 3D Gaussian Splatting 等高效表示
 - 能量函数模型仍需 3D 数据训练，对数据的依赖没有完全消除

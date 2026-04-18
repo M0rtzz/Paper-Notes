@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SynTSBench: Rethinking Temporal Pattern Learning in Deep Learning Models for Time Series
 description: >-
@@ -99,7 +99,7 @@ SynTSBench建立三个核心分析维度：
 - **实用性**：帮助从业者根据任务特点选择合适的模型架构
 - 揭示了"在标准基准上差距微小的模型在特定能力上可能差异巨大"这一重要洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据的复杂度仍然有限，难以完全模拟真实世界的复杂交互
 - 仅评估了单变量/少量多变量场景，未充分测试高维时间序列

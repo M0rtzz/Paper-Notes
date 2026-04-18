@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Conversation to Query Execution: Benchmarking User and Tool Interactions for EHR Database Agents
 description: >-
@@ -83,7 +83,7 @@ tags:
 - **值不匹配的重要性**：之前的Text-to-SQL基准忽略了这个问题，但在EHR中极其关键——"Lopressor"不等于"metoprolol tartrate"可能导致完全错误的查询结果。
 - **交互流设计**：IncreQA测试上下文保持，AdaptQA测试灵活适应——两者对齐了真实临床数据访问的不同模式。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LLM模拟用户引入了不可控的随机性
 - 仅两个EHR数据库，更多样的数据源可能有不同挑战
 - 工具集是预定义的，真实场景可能需要更灵活的工具调用

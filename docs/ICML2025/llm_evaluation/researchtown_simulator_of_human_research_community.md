@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ResearchTown: Simulator of Human Research Community
 description: >-
@@ -166,7 +166,7 @@ $$\mathbf{r}_v = f_g\Big([\mathbf{h}_v, \{f_a([\mathbf{h}_a, \mathbf{h}_v, \math
 - **跨学科 idea 生成**：ResearchTown 能组合 NLP+天文学、NLP+犯罪学等罕见领域组合，生成现实中不存在的研究方向
 - **隐状态设计巧妙**：将论文压缩为 bullet-point 紧凑形式作为隐状态，既保留关键信息又控制上下文长度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **审稿模拟质量有限**：Weakness 识别相似度仅 ~47，实际审稿涉及更深层推理和领域专精
 2. **跨学科组合过多时失败**：当组合 4+ 个不相关领域时，输出变得不连贯、流于表面（简单堆砌术语）

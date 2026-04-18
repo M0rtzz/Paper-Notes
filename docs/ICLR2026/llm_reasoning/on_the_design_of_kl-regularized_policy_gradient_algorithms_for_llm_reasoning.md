@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Design of KL-Regularized Policy Gradient Algorithms for LLM Reasoning
 description: >-
@@ -132,7 +132,7 @@ RPG 是一个迭代训练框架：每次迭代中，参考模型 $\pi_{\text{old
 - **内存效率**：RPG 训练时只需一个模型在 GPU 上，比同时需要当前策略和参考策略的 GRPO/REINFORCE++ 更高效
 - **$k_3$ 估计器的理论根基**：证明了 $k_3$ 估计器等价于非归一化 KL 散度，为其广泛使用提供了理论支撑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在数学推理任务上验证，未涉及代码生成、通用指令跟随等场景
 - 仅使用 7B 模型实验，更大规模模型上的表现尚未验证

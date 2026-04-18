@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Rationale-Answer Alignment of LVLMs via Self-Rationale Calibration
 description: >-
@@ -136,7 +136,7 @@ RAP 将模型输出结构化为 Rationale（视觉分析与推理过程）和 An
 - **轻量级实现**：LoRA 微调加轻量 R-Scorer，整体计算开销可控
 - **CoT 思维嵌入**：通过偏好学习而非纯 SFT 确保推理质量，是 Chain-of-Thought 在 VLM 训练中的深度应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **R-Scorer 可靠性**：评分模型偏差可能传播错误偏好信号
 - **迭代计算开销**：多轮候选生成加评分加 DPO 的总成本较高

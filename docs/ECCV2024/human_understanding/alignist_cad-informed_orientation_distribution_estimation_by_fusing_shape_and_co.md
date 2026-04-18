@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Alignist: CAD-Informed Orientation Distribution Estimation by Fusing Shape and Correspondences
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：想在 SO(3) 上学习尖锐的多模态分布，但缺乏足够视角的训练数据来覆盖所有对称模态
 
-**本文要解决什么？** 如何利用 CAD 模型先验来:(a) 减少对大量训练数据的依赖，(b) 得到覆盖所有对称模态的准确分布？
+**本文目标** 如何利用 CAD 模型先验来:(a) 减少对大量训练数据的依赖，(b) 得到覆盖所有对称模态的准确分布？
 
 **切入角度**：数学推导证明 $p(\mathbf{R}|\mathbf{I}) \propto p(\mathbf{X}'|\mathbf{I})$（旋转分布正比于变换后点云的分布），从而可以利用 CAD 模型预计算完整分布作为监督信号
 
-**核心 idea 一句话**：用 CAD 模型的 SDF 和 SurfEmb 特征作为两个"专家"构建 Product of Experts，预计算 SO(3) 上的完整分布作为监督信号，用 GKL 散度训练双分支 MLP
+**核心 idea**：用 CAD 模型的 SDF 和 SurfEmb 特征作为两个"专家"构建 Product of Experts，预计算 SO(3) 上的完整分布作为监督信号，用 GKL 散度训练双分支 MLP
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ tags:
 - **Product of Experts 融合几何和外观**：比简单的加权求和更有理论依据——两个专家各自提供不同维度的约束，乘积自然给出更尖锐的分布
 - **Cube PE 思路简洁但有效**：将旋转编码问题转化为 3D 坐标编码问题（旋转一个立方体），绕过了 SO(3) 流形上编码的难题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **对 SurfEmb 质量的依赖**：SurfEmb 特征质量影响 SE 专家的效果——如果 SurfEmb 训练不好，分布估计质量下降
 - **SDF 专家对纯球形物体无效**：球体的 SDF 在所有旋转下恒等，无法提供信息（SYMSOL-II SphereX 上表现差）
 - **类别级泛化受限**：ModelNet10 实验中使用单个 CAD 代表整类，导致精度不如 NF

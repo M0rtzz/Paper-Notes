@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Writing in Symbiosis: Mapping Human Creative Agency in the AI Era
 description: >-
@@ -166,7 +166,7 @@ $$y_{it} = \beta \cdot PostLLM_t + \gamma \cdot len_{it} + \delta_c + \alpha_i +
 4. **对 AI 检测领域的重要启示**：三种原型意味着简单的"人类 vs 机器"二分检测框架不足——Adopter 的文本统计上比 Resistor 更接近 AI 输出
 5. 多数作者（Resistors + Pragmatists，合计 62%）维持非 AI 风格签名，说明人类独特表达仍是被珍视且主动保护的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **观察性而非因果性**：无法确证是 AI 工具使用导致风格变化（可能有其他混杂因素）
 2. **仅限英语**：可能偏差于英语写作社区的适应模式，不同语言/文化可能有不同反应

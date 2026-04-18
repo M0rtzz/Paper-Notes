@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Radar-APLANC: Unsupervised Radar-based Heartbeat Sensing via Augmented Pseudo-Label and Noise Contrast
 description: >-
@@ -151,7 +151,7 @@ $$\mathcal{L}_{NCT} = \underbrace{\frac{1}{K^2}\sum_{i,j}\|S_{PL}[i] - S_P[j]\|^
 4. **实用的肤色公平性**：在关注 AI 公平性的大背景下，雷达无监督方法展现了比 RGB 方法更公平的感知能力
 5. **新数据集贡献**：RHB 数据集（80 人）将开源，有助于促进社区研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 与最佳监督方法仍有约 1.8 bpm 的 MAE 差距，伪标签质量是瓶颈
 2. 评估仅限于静坐场景（0.5-1m 距离），运动干扰和更远距离的场景未测试

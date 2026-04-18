@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PRE-Mamba: A 4D State Space Model for Ultra-High-Frequent Event Camera Deraining
 description: >-
@@ -106,7 +106,7 @@ PRE-Mamba以仅0.26M参数达到平均SR/NR/DA=0.95/0.91/0.93，相比EDnCNN FLO
 - **频域正则化巧妙**：不嵌入FFT层而是作为loss项，既利用了频域信息又避免了计算开销
 - **数据集贡献**：EventRain-27K是首个基于点的事件去雨数据集，包含合成、人工和真实场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集虽包含真实数据但标签仅限合成和人工数据,真实场景无ground truth
 - 仅在EventRain-27K上验证，未在其他事件相机数据集上测试跨数据集泛化

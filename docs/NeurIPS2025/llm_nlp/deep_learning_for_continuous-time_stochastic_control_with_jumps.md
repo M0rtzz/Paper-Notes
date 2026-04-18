@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Learning for Continuous-Time Stochastic Control with Jumps
 description: >-
@@ -145,7 +145,7 @@ GPI-PINN vs GPI-CBU：
 3. **GPI-CBU 的核心创新**：通过递归式更新规则，将跳跃期望从损失函数中完全消除，使高维跳跃控制问题首次可解
 4. **Actor-Critic 与 PIDE 求解的融合**：将 RL 中的 GPI 思想与偏微分方程数值方法优雅结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要已知动力学模型**：在经济金融等领域，动力学模型通常需从数据中推断，作者建议可先用模型学习算法预学习
 2. **GPI-CBU 的收敛稳定性**：使用单次跳跃估计导致方差较大，负缩放因子 $\zeta$ 会导致损失爆炸

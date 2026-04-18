@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Logits DeConfusion with CLIP for Few-Shot Learning
 description: >-
@@ -48,17 +48,17 @@ tags:
 ### 关键设计
 
 **1. 多层级 Adapter 融合（MAF）**
-- **做什么**: 从 CLIP 图像编码器的 4 个不同层级提取特征 $f_i^1, f_i^2, f_i^3, f_i^4$，分别经过独立 Adapter 变换后融合为统一表示 $z_i^e$。
+- **功能**: 从 CLIP 图像编码器的 4 个不同层级提取特征 $f_i^1, f_i^2, f_i^3, f_i^4$，分别经过独立 Adapter 变换后融合为统一表示 $z_i^e$。
 - **核心思路**: 提供两种融合机制——加权融合（WF: 权重 0.1:0.2:0.3:0.4）和可学习融合（LF: 拼接后 Adapter 降维）。融合特征经冻结的 Projector（ResNet 用 attention pooling，ViT 用线性投影）得到增强特征。
 - **设计动机**: 低层特征包含细节信息，高层特征包含语义信息；多层融合使得在少样本情况下获得更全面的特征表示，提升泛化能力。
 
 **2. 类间去混淆模块（ICD）**
-- **做什么**: 通过三个级联 Adapter 学习 logits 中的类间混淆模式并用残差消除: $s_i^{ICD} = s_i^{ZS} + \mathcal{E}_{A_3}^{ICD}(\mathcal{E}_{A_1}^{ICD}(s_i^{ZS}) + \mathcal{E}_{A_2}^{ICD}(z_i^e))$。
+- **功能**: 通过三个级联 Adapter 学习 logits 中的类间混淆模式并用残差消除: $s_i^{ICD} = s_i^{ZS} + \mathcal{E}_{A_3}^{ICD}(\mathcal{E}_{A_1}^{ICD}(s_i^{ZS}) + \mathcal{E}_{A_2}^{ICD}(z_i^e))$。
 - **核心思路**: $\mathcal{E}_{A_1}$ 从 zero-shot logits 中提取混淆线索，$\mathcal{E}_{A_2}$ 从增强视觉特征中提取混淆先验，两路相加后经 $\mathcal{E}_{A_3}$ 联合学习混淆模式，最终残差结构移除混淆。
 - **设计动机**: 实验观察发现 CLIP 对每个类别存在固定的类间混淆模式；视觉特征提供"应当是什么类别"的先验信息，指导混淆模式的精确学习。
 
 **3. 自适应 Logits 融合（ALF）**
-- **做什么**: 使用 $\alpha$ Generator 从增强特征 $z_i^e$ 生成自适应权重 $\alpha$，融合两路 logits: $s_i^{ALF} = \alpha \cdot s_i^{MAF} + (1-\alpha) \cdot s_i^{ICD}$。
+- **功能**: 使用 $\alpha$ Generator 从增强特征 $z_i^e$ 生成自适应权重 $\alpha$，融合两路 logits: $s_i^{ALF} = \alpha \cdot s_i^{MAF} + (1-\alpha) \cdot s_i^{ICD}$。
 - **核心思路**: 对于不同样本动态调整视觉特征 logits 和去混淆 logits 的占比。
 - **设计动机**: MAF logits 基于纯视觉特征，ICD logits 基于文本对齐的去混淆 logits，两者互补但最优权重因样本而异。
 
@@ -106,7 +106,7 @@ tags:
 - 自适应融合权重使方法对不同样本具有灵活性
 - 整体方法轻量高效，仅需训练少量 Adapter 参数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在极端 1-shot 场景下优势较小，混淆模式估计不够稳定
 - 仅在 ResNet-50 backbone 上做了主要实验，ViT backbone 的探索不够充分

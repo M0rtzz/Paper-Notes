@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Identity-preserving Distillation Sampling by Fixed-Point Iterator
 description: >-
@@ -46,7 +46,7 @@ tags:
 ### 关键设计
 
 **1. 不动点迭代正则化（FPR）**
-- **做什么**: 通过迭代更新源潜变量 $\mathbf{z}_t^{src}$，使得由 Tweedie 公式计算的后验均值与源图像一致。
+- **功能**: 通过迭代更新源潜变量 $\mathbf{z}_t^{src}$，使得由 Tweedie 公式计算的后验均值与源图像一致。
 - **核心公式**:
     - 后验均值: $\mathbf{z}_{0|t}^{src} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{z}_t^{src} - \sqrt{1-\alpha_t} \epsilon_\phi^{src})$
     - FPR 损失: $\mathcal{L}_{FPR} = d(\mathbf{z}^{src}, \mathbf{z}_{0|t}^{src})$（欧氏距离）
@@ -56,12 +56,12 @@ tags:
 - **为什么更新潜变量而非噪声**: 实验发现更新 $\mathbf{z}_t^{src}$ 能保留更多内容细节（因为分数以潜变量为输入）。
 
 **2. 引导噪声替代随机噪声**
-- **做什么**: FPR 收敛后，从优化的 $\mathbf{z}_t^{src*}$ 反解引导噪声 $\epsilon^* = \frac{1}{\sqrt{1-\alpha_t}}(\mathbf{z}_t^{src*} - \sqrt{\alpha_t}\mathbf{z}^{src})$
+- **功能**: FPR 收敛后，从优化的 $\mathbf{z}_t^{src*}$ 反解引导噪声 $\epsilon^* = \frac{1}{\sqrt{1-\alpha_t}}(\mathbf{z}_t^{src*} - \sqrt{\alpha_t}\mathbf{z}^{src})$
 - **核心思路**: 引导噪声 $\epsilon^*$ 不再是随机高斯噪声，而是"对齐到源图像身份的结构化噪声"；用它来生成目标潜变量 $\mathbf{z}_t^{trg*}$，使梯度方向包含身份一致性约束。
 - **设计动机**: DDS 中源和目标共享同一随机 $\epsilon$，但 $\epsilon$ 是无约束的，可能指向任意方向；$\epsilon^*$ 经过 FPR 修正后隐含了源图像的身份信息。
 
 **3. IDS 更新规则**
-- **做什么**: 用修正后的潜变量替代 DDS 中的原始潜变量:
+- **功能**: 用修正后的潜变量替代 DDS 中的原始潜变量:
   $$\nabla_\theta \mathcal{L}_{IDS} = \mathbb{E}_{t,\epsilon}[(\epsilon_\phi^\omega(\mathbf{z}_t^{trg*}, y^{trg}, t) - \epsilon_\phi^\omega(\mathbf{z}_t^{src*}, y^{src}, t)) \frac{\partial \mathbf{z}^{trg}}{\partial \theta}]$$
 - **可逆性验证**: IDS 编辑后的图像可以通过逆向编辑完美恢复到源图像（DDS 无法做到），证明梯度方向被正确修正。
 
@@ -125,7 +125,7 @@ tags:
 - 引导噪声替代随机噪声的设计直觉清晰：不是添加更多约束，而是从根本上修正误差来源
 - 对文本条件分数"为什么不精确"的分析透彻：后验均值 vs 源图像的差异随时间步增大可视化地展示了问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FPR 的 N 次迭代导致计算开销增加（每次迭代需要额外的 diffusion model 前向传播）
 - 依赖 DDS 框架，继承了其对文本提示对质量的依赖

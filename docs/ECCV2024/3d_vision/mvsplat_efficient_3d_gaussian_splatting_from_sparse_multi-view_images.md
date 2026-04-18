@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MVSplat: Efficient 3D Gaussian Splatting from Sparse Multi-View Images
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 精确定位3D Gaussian中心是高质量渲染的关键，但from-feature-to-depth的数据驱动回归方式难以提供可靠的几何感知。需要更具几何感知的深度估计方式。
 
-**本文要解决什么**: 设计一个轻量高效的前馈模型，从稀疏多视角图像直接预测高质量3D Gaussians。
+**本文目标**: 设计一个轻量高效的前馈模型，从稀疏多视角图像直接预测高质量3D Gaussians。
 
 **切入角度**: 引入经典多视角立体视觉（MVS）中的**代价体**（cost volume），通过特征匹配而非特征回归来估计深度，将问题从"从特征猜深度"变为"从匹配找深度"。
 
-**核心idea一句话**: 用plane-sweep代价体编码的跨视角特征匹配信息来定位Gaussian中心，比直接回归概率深度更可靠、更轻量。
+**核心 idea**: 用plane-sweep代价体编码的跨视角特征匹配信息来定位Gaussian中心，比直接回归概率深度更可靠、更轻量。
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ MVSplat用**1/10参数量**、**2倍以上速度**超越pixelSplat。
 - **极致高效**: 12M参数实现SOTA，22fps推理，实用性极强
 - **设计的一致性**: opacity从匹配置信度推导，Gaussian中心从匹配深度推导，所有关键量都来自同一个代价体
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 代价体要求已知相机内外参，无法处理unknown camera setting
 - $256 \times 256$分辨率限制，高分辨率时代价体内存占用增大

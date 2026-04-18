@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Blended Point Cloud Diffusion for Localized Text-guided Shape Editing
 description: >-
@@ -109,7 +109,7 @@ BlendedPC 采用两阶段策略：
 - **数据构建pipeline**：LLaMA 3提取部位名→PointNet分割→构建l-ShapeTalk子集，整个pipeline可复用到其他局部编辑任务
 - **FPD从217-488降到13.5，GD和l-GD降幅超75%**，定量提升显著；用户研究75%偏好也非常强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **类别受限**：仅在Chair、Table、Lamp三个类别上训练和测试，泛化到其他类别需要更多数据和分割模型支持
 - **分割依赖**：依赖预训练的PointNet分割模型获得mask，分割失败则编辑失败；PartNet的分割粒度有限

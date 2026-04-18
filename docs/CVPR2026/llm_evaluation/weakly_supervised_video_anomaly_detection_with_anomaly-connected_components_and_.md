@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Weakly Supervised Video Anomaly Detection with Anomaly-Connected Components and Intention Reasoning
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L}_\text{all} = \mathcal{L}_\text{ags} + \mathcal{L}_\text{fg} + \mat
 - **位置-速度-加速度的意图编码**：从物理学的运动学概念出发设计特征，直觉上很合理——偷窃动作确实比正常拿取更快。门控机制过滤噪声也是好设计。
 - **LLM 属性描述作为文本先验**：用 GPT-4 生成异常属性描述的做法简单有效，无需手动设计提示。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ACC 的阈值 $\tau$ 需要手动设定（0.9），对不同视频类型敏感
 - IAM 的位置/速度/加速度特征提取比较简单（全连接+差分），可能对复杂运动模式建模不足
 - 依赖 GPT-4 生成属性描述，引入外部模型依赖

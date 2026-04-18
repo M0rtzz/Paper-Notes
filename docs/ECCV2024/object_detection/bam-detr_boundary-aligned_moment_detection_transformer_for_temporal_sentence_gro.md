@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BAM-DETR: Boundary-Aligned Moment Detection Transformer for Temporal Sentence Grounding in Videos
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{loc}} + \lambda_{\text{qual}}\
 4. **鲁棒性强**：在反偏置 Charades-STA 上表现优异，特别是在时刻长度偏置设置下优势显著（R1@0.7: 40.74 vs QD-DETR 32.87），说明边界导向建模天然抗偏置
 5. **全面的实验**：三个数据集全面 SOTA，消融实验清晰展示每个组件贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 1D 时序**：当前设计针对时序句子定位，推广到 2D 空间（如视频中空间定位）需要额外适配
 2. **锚点质量依赖**：虽然降低了对中心的依赖，但锚点仍需落在目标时刻内部，对极短时刻或内容高度相似的场景可能仍有挑战

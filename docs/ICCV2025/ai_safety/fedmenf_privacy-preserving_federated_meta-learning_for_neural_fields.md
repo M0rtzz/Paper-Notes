@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedMeNF: Privacy-Preserving Federated Meta-Learning for Neural Fields
 description: >-
@@ -123,7 +123,7 @@ FedMeNF遵循标准的联邦元学习流程：服务器发送全局元学习器 
 - **多模态验证**：覆盖图像（PetFace）、视频（GolfDB）、3D（Cars, FaceScape）四个数据集，展示了方法的通用性
 - **Δ = PSNR - PSNRp 作为评估指标**：巧妙地同时衡量了"任务性能"和"隐私保护"两个目标
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\text{PSNR}_p$ 基于像素级MSE，可能无法捕获语义级的隐私泄露
 - 理论分析基于一阶近似，高阶项的影响未被量化
 - γ的最优选择可能因数据模态和任务而异，缺乏自动调节的理论指导

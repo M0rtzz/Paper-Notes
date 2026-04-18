@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large-scale Pre-training for Grounded Video Caption Generation
 description: >-
@@ -136,7 +136,7 @@ GROVE 系统由两部分组成：
 - **时间存在性头的设计**简洁有效——用一个额外 MLP 头就解决了视频定位中物体消失/重现的核心问题
 - 从 mask 解码器到 bbox 解码器的转换，通过复用大规模预训练权重实现了高效的知识迁移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - HowToGround1M 基于教学视频（HowTo100M），领域偏向性可能限制在其他视频类型上的泛化
 - 自动标注流程中 GLaMM 作为帧级模型处理视频，更强的视频级字幕模型可能进一步提升标注质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distillation Robustifies Unlearning
 description: >-
@@ -116,7 +116,7 @@ $$\theta_{\text{perturbed}} = (1 - \alpha) \theta_{\text{suppressed}} + \alpha \
 - **UNDO的$\alpha$旋钮设计**：提供了一个清晰的计算量-鲁棒性权衡曲面，实际部署中可根据需求灵活选取
 - **实验设计严谨**：多学习率最强对手评估（worst-case adversary）、5种随机种子、多任务多领域验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **WMDP上的retain性能损失**：MMLU平均下降4.88%，在实际部署中可能不可接受，作者归因于蒸馏时仅用了0.015%的预训练数据
 - **蒸馏计算成本**：虽然比数据过滤重训便宜，但相比纯微调遗忘方法仍然昂贵得多
 - **模型规模有限**：合成实验仅100M参数，WMDP实验仅2B参数，未验证在70B+规模上的表现

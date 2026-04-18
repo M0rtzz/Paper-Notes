@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] End-to-end Contrastive Language-Speech Pretraining Model For Long-form Spoken Question Answering
 description: >-
@@ -99,7 +99,7 @@ CLSR 由两部分组成：
 3. **无需大规模语音-文本预训练**，仅用任务数据联合训练即可达到与 pipeline 方法相当的性能
 4. VQ adaptor 的 straight-through 估计设计保证了端到端训练的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 TTS 合成语音和有限的真实录音上测试，对噪声环境、多说话人场景的鲁棒性未知
 - 当前固定将长音频切为 40 秒片段，缺乏自适应的语义分割策略
 - BGE 在联合训练中冻结，后训练带来的提升有限，可探索更好的解冻策略

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Discovering Global False Negatives On the Fly for Self-supervised Contrastive Learning
 description: >-
@@ -126,7 +126,7 @@ GloFND 可直接扩展到 CLIP 式的图像-文本对比学习：为每个实例
 4. **灵活应对假阴性**：虽然本文仅探索了"过滤"策略，但 GloFND 也支持将假阴性作为额外正对（FN attraction），为后续研究留下空间
 5. **理论保障**：Lemma 3.1 证明优化问题的解精确对应 top-k 选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假阴性利用方式单一**：本文仅验证了"过滤"假阴性的策略，没有深入探索将假阴性转为正对（attraction）是否更优
 2. **超参 α 需要调节**：α 依赖先验知识或下游任务粒度，缺乏自适应机制

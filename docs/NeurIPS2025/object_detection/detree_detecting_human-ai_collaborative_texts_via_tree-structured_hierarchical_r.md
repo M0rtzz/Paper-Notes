@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DETree: DEtecting Human-AI Collaborative Texts via Tree-Structured Hierarchical Representation Learning
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{\text{TSCL}}(x;\theta) = \frac{1}{d_c} \sum_{i=0}^{d_c-1} \mathca
 5. **鲁棒性强**：即使不做对抗训练，DETree 在多数攻击场景下仍优于经对抗训练的 RoBERTa-large
 6. **有趣发现**：混合文本中 AI 痕迹比人类特征更显著；人类编辑不会根本改变基础文本的 AI 特征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未探索通过模型微调进行对抗性逃避检测的场景
 2. 目前聚焦三作者（两 AI 或一 AI + 人类）的混合文本，更多协作者的场景有待研究

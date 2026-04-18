@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Triangle of Similarity: A Multi-Faceted Framework for Comparing Neural Network Representations
 description: >-
@@ -121,7 +121,7 @@ tags:
 4. **实证发现的实用价值**: 高静态相似性但低稀疏性鲁棒性 = 模型可能不适合迁移，这对实际模型选择有指导意义
 5. **广泛的模型覆盖**: 从 CNN 到 ViT 到 VLM，涵盖 8 种不同架构，提供了初始基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本高**: CKA 对样本数呈 $O(N^2)$，LMC 需要沿高维路径多次评估，对大型基础模型不友好
 2. **仅使用全局幅度剪枝**: 结构化剪枝、彩票假说的回退方法、学习型稀疏模式可能揭示不同的相似性动态

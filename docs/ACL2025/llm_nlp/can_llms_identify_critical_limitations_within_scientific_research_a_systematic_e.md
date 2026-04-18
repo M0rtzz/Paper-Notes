@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can LLMs Identify Critical Limitations within Scientific Research? A Systematic Evaluation on AI Research Papers
 description: >-
@@ -127,7 +127,7 @@ LimitGen 包含以下核心组件：
 4. **RAG 的实际价值**：首次在审稿场景中引入文献检索，模拟了人类审稿人参考已有文献的工作方式
 5. **诚实的结论**：坦诚指出当前 LLM 在识别论文局限性方面远不及人类专家
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未涵盖非文本输入（如图表），而图表在许多科学论文中提供关键证据
 2. 未探索高级 RAG 技术（如多轮检索推理、自适应检索等）

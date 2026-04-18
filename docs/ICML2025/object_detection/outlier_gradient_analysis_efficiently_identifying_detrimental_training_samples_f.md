@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Outlier Gradient Analysis: Efficiently Identifying Detrimental Training Samples for Deep Learning Models
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{I}(z_j) = -\sum_{z \in T/V} \nabla_{\hat{\theta}} \ell(z; \hat{\theta
 3. **通用性强**：从视觉模型（ResNet）到 NLP Transformer（RoBERTa）再到 LLM（Llama-2-13B），方法在不同规模和类型的模型上均有效。
 4. **与现有方法互补**：OGA 是数据修剪方法，可与修改损失函数/模型架构的噪声学习方法组合使用，潜在地获得更大收益。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **修剪预算 $k$ 的选择**：异常检测算法普遍面临的超参数问题——如何自动确定最优的修剪比例，目前仍需人工设定。
 2. **需要两次训练**：流程本质上需要训练两遍模型（第一遍用于获取梯度，修剪后第二遍重训练），对超大模型来说仍有一定代价。

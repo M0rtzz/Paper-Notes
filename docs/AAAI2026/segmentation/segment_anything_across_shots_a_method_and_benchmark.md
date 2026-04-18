@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Segment Anything Across Shots: A Method and Benchmark
 description: >-
@@ -167,7 +167,7 @@ SAAS-B+ vs SAM2-B+：YouMVOS +5.9% $\mathcal{J\&F}$，Cut-VOS +5.5% $\mathcal{J\
 4. **辅助目标设计精妙**：存在预测和边界框回归迫使 TCH 真正"理解"切换，而非仅检测
 5. **MST 局部记忆库**无监督地提取部件级特征，是一个巧妙的免标注方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对极端外观变化（如换装、换发型）仍然困难——TMA 无法有效模拟，局部特征线索也失效
 - 依赖纯视觉特征匹配，缺乏高级推理能力（不能区分"穿白衣的人A"和"穿白衣的人B"）

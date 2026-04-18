@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Silencing Empowerment, Allowing Bigotry: Auditing the Moderation of Hate Speech on Twitch
 description: >-
@@ -129,7 +129,7 @@ AutoMod 在最严格设置下整体召回率仅为 22%。隐性仇恨数据集 (
 3. **政策与实践脱节**：Twitch 社区指南明确要求考虑上下文，但 AutoMod 实际上不具备此能力
 4. **社会影响**：系统"允许仇恨、封锁赋权（Allowing Bigotry, Silencing Empowerment）"——标题精准概括核心发现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅审计了一个平台（Twitch），未与其他平台的审核系统对比
 2. 消息以非对话方式逐条发送，未模拟真实对话上下文

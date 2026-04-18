@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BoltzNCE: Learning Likelihoods for Boltzmann Generation with Stochastic Interpolants
 description: >-
@@ -31,11 +31,11 @@ BoltzNCE 用 Score Matching + InfoNCE 混合训练 Energy-Based Model 来近似 
 
 **核心矛盾**：好的采样质量需要准确的 flow/diffusion 模型，但似然评估的计算代价与采样质量无关——即使采样很好，每次评估似然仍然贵。
 
-**本文要解决什么**：将采样器质量和似然可处理性解耦——用一个独立的 EBM 来近似似然，避免 Jacobian 计算。
+**本文目标**：将采样器质量和似然可处理性解耦——用一个独立的 EBM 来近似似然，避免 Jacobian 计算。
 
 **切入角度**：将 BG 分为两阶段——先训练 Boltzmann Emulator（用 flow matching），再训练 EBM 近似其密度（用 NCE + score matching）。
 
-**核心idea一句话**：用 EBM 的 NCE 训练作为 Boltzmann Generator 似然的快速代理，实现 100× 推理加速。
+**核心 idea**：用 EBM 的 NCE 训练作为 Boltzmann Generator 似然的快速代理，实现 100× 推理加速。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ BoltzNCE 用 Score Matching + InfoNCE 混合训练 Energy-Based Model 来近似 
 - **NCE + SM 互补性**：InfoNCE 提供全局密度对齐（通过对比不同时间步），SM 提供局部梯度准确性——两者的组合在 2D 实验中的 15× 改进非常有说服力。
 - **科学计算的实际加速**：100× 推理加速对分子模拟有巨大实际价值，使得自由能计算从需要集群变为单 GPU 可行。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在小分子（二肽）上验证，大蛋白质/复杂系统的可扩展性未知
 - 泛化到新二肽系统时误差增大（0.43 vs 0.02 $k_BT$），需要微调
 - EBM 训练本身需要 ~12h，虽然是一次性成本但不可忽略

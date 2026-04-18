@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Concept-Guided Fine-Tuning: Steering ViTs away from Spurious Correlations to Improve Robustness
 description: >-
@@ -137,7 +137,7 @@ CFT 对 Transformer 架构效果最显著，ConvNeXt 也有改善但幅度较小
 - **跨架构通用性**：DINOv2、ViT、DeiT、ConvNeXt 均有效，不依赖特定架构设计
 - **可解释性增强**：relevance map 与语义部件的对齐可视化直接展示了模型"看对了地方"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM 生成的概念质量依赖 prompt 设计和 LLM 能力，对细粒度类别（如昆虫亚种）可能生成不够判别的概念
 - GroundedSAM 的零样本分割精度有限，对小物体或遮挡场景可能产生噪声掩码，会传播到微调过程

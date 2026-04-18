@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Single Labels: Improving Conversational Recommendation through LLM-Powered Data Augmentation
 description: >-
@@ -114,7 +114,7 @@ $$L_{soft} = \sum_{i=1}^{N} D_{KL}(P(i), \hat{y_i})$$
 - **与现有方法兼容**：本方法增强的是标签而非对话，可与现有对话增强方法（如CFCRS）互补。
 - **实践价值高**：方法适用于各种CRS推荐器骨干，无需修改推荐器架构。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 相关性评分器训练依赖GPT-4生成的数据，存在成本和偏见传递问题。
 - 标签平滑系数α需要手动调整，缺乏自适应机制。

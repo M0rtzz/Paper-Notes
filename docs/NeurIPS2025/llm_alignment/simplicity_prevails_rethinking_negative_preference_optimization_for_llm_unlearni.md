@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Simplicity Prevails: Rethinking Negative Preference Optimization for LLM Unlearning
 description: >-
@@ -139,7 +139,7 @@ NPO 在弱记忆化数据上过度遗忘，强记忆化数据上不足遗忘。
 3. **理论与合成实验支撑**：Markov Chain 合成实验精确控制遗忘难度，清晰验证假说
 4. **重学习攻击鲁棒性**：SimNPO 对短响应重学习攻击的鲁棒性解释了长度归一化的价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. SimNPO 仍依赖促进发散来实现遗忘，不可避免地损失部分效用
 2. 在知识遗忘场景（如 WMDP）中平衡遗忘效果与效用保留仍具挑战

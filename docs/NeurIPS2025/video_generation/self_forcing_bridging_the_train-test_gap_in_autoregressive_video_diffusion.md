@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion
 description: >-
@@ -103,7 +103,7 @@ Self Forcing 在 VBench 上超越了初始化权重 Wan2.1（一个速度慢 150
 - **DMD/SiD 实现无数据训练**：无需任何真实视频训练数据，仅用预训练扩散模型的分数函数就能将双向模型转为高质量自回归模型
 - **Rolling KV Cache 的简洁设计**：仅需一行"看不到第一帧"的训练修改就解决了 distribution shift 问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 生成远超训练上下文长度的视频时质量仍会退化
 - 梯度截断策略限制了模型学习长程依赖的能力

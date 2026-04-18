@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CA-I2P: Channel-Adaptive Registration Network with Global Optimal Selection
 description: >-
@@ -125,7 +125,7 @@ CMCF 贡献最大的 PIR 提升（+10.7pp），GOS 贡献最大的 IR 提升（+
 - 协方差矩阵分析揭示了哪些通道对模态变化敏感，提供了可解释的特征过滤依据
 - 用最优传输替代 top-k 选择，将局部贪心问题提升为全局优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在室内数据集上评估，未验证对大规模室外场景（如 KITTI）的适用性
 - CMCF 中掩码 $M_x$ 的三组分档策略可能不够灵活，可考虑可学习的软掩码

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Recipe for Generating 3D Worlds from a Single Image
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **简单方法赢过复杂系统**: 用最简单的ControlNet+5k微调就超越了ViewCrafter这类复杂视频生成方法
 - 整体pipeline的训练代价极低（全景无训练+修复5k步+3DGS 5k步），但效果全面领先
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 可导航范围限制在2m³立方体内，更远距离修复复杂度急剧增加
 - 无法生成遮挡物体的背面细节
 - 场景合成不是实时的（大规模扩散模型推理），只有最终3DGS渲染是实时的

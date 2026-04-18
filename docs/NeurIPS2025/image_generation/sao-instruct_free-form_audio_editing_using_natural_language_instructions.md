@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAO-Instruct: Free-form Audio Editing using Natural Language Instructions
 description: >-
@@ -110,7 +110,7 @@ tags:
 3. **指令多样化策略**：三阶段指令生成（初始→变体→精简）有效模拟真实用户的多样化表达方式
 4. **目标函数权重的人在回路设计**：通过小规模听测的ELO排名确定权重，比手动设计更可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据生成流水线计算开销大（贝叶斯优化×多次去噪×多样本）
 - 受底层Stable Audio Open生成质量限制，某些复杂场景可能失败

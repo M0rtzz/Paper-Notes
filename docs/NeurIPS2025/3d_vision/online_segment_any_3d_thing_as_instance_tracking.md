@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Online Segment Any 3D Thing as Instance Tracking
 description: >-
@@ -101,7 +101,7 @@ AutoSeg3D是一个跟踪中心的在线3D分割框架，由三个轻量级模块
 - 置信度门控的匈牙利匹配比朴素匹配更鲁棒，能抑制虚假关联
 - 整个框架轻量级，不增加推理延迟
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖VFM（SAM/FastSAM）的2D分割质量，若2D mask质量差则上限受限
 - LTM的缓冲队列容量固定，对于非常长的序列可能丢失历史信息

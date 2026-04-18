@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnyTouch 2: General Optical Tactile Representation Learning For Dynamic Tactile Perception
 description: >-
@@ -95,7 +95,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{Pixel} + \lambda_{Align}^i \mathcal{L}_{Ali
 - **46个操控任务设计**：ToucHD (Mani)涵盖了极其丰富的实际操作场景（从揉黏土到魔方旋转），为触觉社区提供了宝贵资源
 - **力预测的物理意义**：通过显式预测触力及其增量，将触觉表征落地到可量化的物理量，超越了纯语义理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ToucHD中DM-Tac W和GelStereo BioTip传感器的数据未被利用
 - 力数据采集受限于压头+传感器的简化设置，缺少对日常物体操控时的触力采集
 - 多传感器配对操控数据仅用于对齐，未引入跨传感器协同的专用架构

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sketch to Adapt: Fine-Tunable Sketches for Efficient LLM Adaptation
 description: >-
@@ -117,7 +117,7 @@ SpaLLM 的流程分为两个阶段：
 - **推理效率的本质优势**：单塔架构避免了双路径计算，这在多用户并发serving场景下尤为关键
 - **可迁移的trick**：加权 Lloyd 聚类 + Hessian 加权的组合可应用到任何需要权重聚类的压缩方法中
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Sketching 矩阵 $\Pi$ 的存储也需要空间（one-hot 矩阵的索引），论文中用比特数编码但未详细讨论其开销
 - 仅在 LLaMA 系列上验证，缺少对其他架构（如 Mistral、Qwen）的实验
 - GPR 的选择目前是手动的，可以考虑自适应地为不同层分配不同的 GPR

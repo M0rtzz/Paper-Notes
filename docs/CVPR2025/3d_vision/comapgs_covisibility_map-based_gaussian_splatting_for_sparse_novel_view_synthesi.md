@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMapGS: Covisibility Map-based Gaussian Splatting for Sparse Novel View Synthesis
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L} = (1-\lambda)\mathcal{L}_1(I, I^*) + \lambda\mathcal{L}_{D\text{-}
 - 共视性图的概念简洁有力，将复杂的多视角几何关系压缩为每个像素一个整数计数
 - **即插即用**设计：CoMapGS可直接集成到FSGS和CoR-GS中，不改变原有策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖MASt3R进行密集对应预测，增加了预处理计算成本
 - Proximity MLP分类器是离线训练的，不参与3DGS的在线优化，可能无法充分利用训练过程中几何的变化

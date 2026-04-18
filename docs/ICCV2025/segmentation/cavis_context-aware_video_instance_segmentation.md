@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CAVIS: Context-Aware Video Instance Segmentation
 description: >-
@@ -147,7 +147,7 @@ OVIS数据集上各组件贡献：
 - **PCC Loss的设计智慧**：通过原型化桥接pixel和instance两个尺度，比直接的实例对比loss更细粒度
 - 在OVIS上的大幅提升证明了上下文信息对解决遮挡问题的关键作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 上下文特征的Laplacian边界宽度是固定的，不同大小物体可能需要自适应边界
 2. 平均滤波的9x9 kernel大小是手动设定的，缺乏理论指导

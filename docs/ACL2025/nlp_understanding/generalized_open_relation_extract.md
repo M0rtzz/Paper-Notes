@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards a More Generalized Approach in Open Relation Extraction
 description: >-
@@ -146,7 +146,7 @@ $$\mathcal{L}_c = -\frac{1}{D_c}\sum_{i=1}^{D_c}\sum_{r=1}^{|\mathcal{C}_u|} y_r
 4. **5% 显著性水平阈值有理论依据**：与统计假设检验的惯例对齐
 5. **三元组损失只用 labeled data 构建正样本对**：避免弱标签噪声引入假阳性对
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **需要预知 novel 关系数量 $|\mathcal{C}_{novel}|$**：这在实际场景中通常未知，可考虑自动确定聚类数的方法（如 BIC/AIC）
 2. **5% 阈值可能不够鲁棒**：不同数据集中 novel 关系的占比差异很大

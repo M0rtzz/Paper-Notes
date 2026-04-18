@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4DGCPro: Efficient Hierarchical 4D Gaussian Compression for Progressive Volumetric Video Streaming
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L}_{key} = \sum_{l=1}^{L} \lambda_l \left( \mathcal{L}_{color}^l + \l
 - **巧用标准视频编码器做最后一公里**：属性展平为2D图像→H.264编码，直接利用硬件编解码加速，避免了自研解码器在移动端部署的困难。
 - **自适应分组思路**简单实用，用运动幅度阈值自动切换参考帧，比固定分组全面优胜。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **训练时间较长**：层级监督需要每层都渲染一次，导致训练时间是V³的4.4倍（4.3min vs 0.97min），虽然远短于HPC（93min），但仍有优化空间。
 - **依赖多视角输入**：需要密集多视角（如81个同步相机），稀疏视角下表现受限，限制了消费级场景应用。

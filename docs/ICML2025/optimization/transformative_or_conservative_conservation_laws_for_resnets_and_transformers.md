@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transformative or Conservative? Conservation Laws for ResNets and Transformers
 description: >-
@@ -119,7 +119,7 @@ $$\mathbb{E}|h(\theta_k) - h(\theta_0)| \leq \frac{C_h C_L}{2}\sum_{i=0}^{k-1}\t
 5. **连续到离散的桥梁**：Proposition 5.1 量化了 SGD 下的守恒破坏程度，增强了理论的实用价值
 6. **Weight decay 的 Structure Theorem**：优雅地证明了 WD 下的守恒律在最优点处趋于零（对应已知的平衡性）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **未覆盖 LayerNorm**：Transformer 中的归一化层被忽略，这是实际模型中不可或缺的组件
 2. **多头注意力完备性**：Corollary 3.10 中多头守恒律的完备性未证明，留为 open problem

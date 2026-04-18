@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking the Bias of Foundation Model under Long-tailed Distribution
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **反直觉发现**：logit 调整（GLA-Train）在训练阶段反而无法解决参数不平衡——表明偏差嵌在特征空间而非决策边界
 - **跨模型验证**：在 CLIP、OpenCLIP、MetaCLIP 三种基础模型上验证了参数不平衡的一致存在
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 后门调整需要估计不完整语义因子的分布；当语义因子维度很高或难以估计时可能受限
 - 未考虑多模态场景下文本 encoder 的参数不平衡

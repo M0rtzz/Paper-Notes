@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaIRv2: Attentive State Space Restoration
 description: >-
@@ -46,7 +46,7 @@ tags:
 ### 关键设计
 
 **1. 注意力与状态空间的桥接分析**
-- **做什么**: 将因果线性注意力和状态空间方程统一为通用形式进行对比
+- **功能**: 将因果线性注意力和状态空间方程统一为通用形式进行对比
 - **核心发现**:
     - 隐藏状态 $h_i \sim \mathbf{S}_i$（注意力的累积 KV）
     - 输入矩阵 $\mathbf{B} \sim \mathbf{K}^\top$（类似 Key）
@@ -55,7 +55,7 @@ tags:
 - **意义**: 既然 $\mathbf{C}$ 扮演 Query 角色，就可以让它"查询"未扫描的像素信息
 
 **2. Attentive State-space Equation（ASE）**
-- **做什么**: 在原始状态空间方程的输出矩阵 $\mathbf{C}$ 中加入可学习 prompt $\mathbf{P}$
+- **功能**: 在原始状态空间方程的输出矩阵 $\mathbf{C}$ 中加入可学习 prompt $\mathbf{P}$
 - **核心思路**:
     - 构建 prompt pool $\mathcal{P} \in \mathbb{R}^{T \times d}$，用低秩分解 $\mathcal{P} = \mathbf{M}\mathbf{N}$（$\mathbf{N}$ 跨 block 共享，$\mathbf{M}$ block 特定）
     - 路由策略：线性投影 + LogSoftmax 预测概率 → Gumbel-Softmax 可微选择 → 得到 one-hot 路由矩阵 $\mathbf{R}$  → $\mathbf{P} = \mathbf{R}\mathcal{P}$
@@ -63,7 +63,7 @@ tags:
 - **设计动机**: prompt 代表全图中语义相似的像素集合，注入后 $\mathbf{C}$ 能"看到"未扫描的像素 → 单方向扫描即可获得全局信息，消除多方向扫描的冗余和开销
 
 **3. Semantic Guided Neighboring（SGN）**
-- **做什么**: 在送入 ASE 之前，将图像按语义标签重新排列，使语义相似的像素在 1D 序列中空间相邻
+- **功能**: 在送入 ASE 之前，将图像按语义标签重新排列，使语义相似的像素在 1D 序列中空间相邻
 - **核心思路**:
     - 复用 ASE 中的路由矩阵 $\mathbf{R}$（已为每个像素分配了语义标签）
     - SGN-unfold：将相同 prompt 类别的像素聚合为一组，各组按类别值顺序拼接形成语义邻域序列
@@ -136,7 +136,7 @@ Urban100 上超 SRFormer 0.35dB，参数少 9.3%。
 - 单方向扫描消除冗余是一个有吸引力的效率优势
 - "让 Mamba 变得像 Attention 一样非因果"是一个清晰的叙事和有价值的研究方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Prompt pool 大小 $T$ 和内在秩 $r$ 需要超参调优
 - SGN 的语义分组基于简单的 prompt 路由，分组粒度可能不够精细

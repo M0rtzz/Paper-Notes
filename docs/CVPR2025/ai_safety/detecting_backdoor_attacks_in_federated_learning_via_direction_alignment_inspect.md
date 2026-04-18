@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Detecting Backdoor Attacks in Federated Learning via Direction Alignment Inspection
 description: >-
@@ -40,7 +40,7 @@ tags:
 
 **切入角度**：从两个粒度检查方向对齐——全局时序方向对齐和细粒度重要参数符号对齐。
 
-**核心 idea 一句话**：时序方向对齐（TDA） + 重要参数符号对齐（MPSA） + MZ-score 异常检测 + 后过滤裁剪 = 鲁棒后门防御。
+**核心 idea**：时序方向对齐（TDA） + 重要参数符号对齐（MPSA） + MZ-score 异常检测 + 后过滤裁剪 = 鲁棒后门防御。
 
 ## 方法详解
 

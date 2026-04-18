@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Inference of Vision Instruction-Following Models with Elastic Cache
 description: >-
@@ -133,7 +133,7 @@ Budget=0.5 时 Elastic Cache 相比 H2O 改善 PPL 4.34、ROUGE 0.089。
 - **任意加速比**：不受 cache 容量上限约束，从指令编码阶段就开始压缩
 - 在极端压缩（budget=0.2）下仍保持合理生成质量，同时避免 OOM
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于注意力分数的重要性度量不一定总是最优的 cache 优化策略
 - 未探索与 KV cache 量化、模型蒸馏的组合效果

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QiMeng-NeuComBack: Self-Evolving Translation from IR to Assembly Code
 description: >-
@@ -120,7 +120,7 @@ tags:
 - LLM能利用向量指令（如cmpps）进行传统编译器未做的向量化优化
 - 基准数据集的两级设计（基础编译 vs 优化潜力）很有针对性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 总体功能正确率仍不够高（L2上64%），距实用尚有差距
 - 仅在函数级别测试，未涉及更大规模的程序编译

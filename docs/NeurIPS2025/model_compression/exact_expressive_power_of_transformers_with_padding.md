@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exact Expressive Power of Transformers with Padding
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：此前已知 padded Transformer 上界为 $\mathsf{TC}^0$，但是否能达到整个 $\mathsf{TC}^0$（即下界是否匹配）一直是开放问题。
 
-**本文要解决什么**：(a) 精确刻画 padded Transformer 的表达能力；(b) 理解 padding + looping 组合如何系统地扩展 Transformer 能力。
+**本文目标**：(a) 精确刻画 padded Transformer 的表达能力；(b) 理解 padding + looping 组合如何系统地扩展 Transformer 能力。
 
 **切入角度**：不走标准的 $\mathsf{FO}[\mathsf{M}, \mathsf{bit}]$ 路线（`bit` 谓词难以在 Transformer 中模拟），而是使用 $\mathsf{FO}+\mathsf{M}^2$（含成对多数量词的一阶逻辑），后者等价于 $\mathsf{TC}^0$ 但不需要 `bit`。
 
-**核心idea一句话**：$n^k$ 个 padding token 为 Transformer 提供了足够"存储空间"来枚举 $k$ 个变量的所有赋值组合，从而求解任意 $\mathsf{FO}+\mathsf{M}^2$ 公式。
+**核心 idea**：$n^k$ 个 padding token 为 Transformer 提供了足够"存储空间"来枚举 $k$ 个变量的所有赋值组合，从而求解任意 $\mathsf{FO}+\mathsf{M}^2$ 公式。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ tags:
 - **Padding 作为"计算宽度"、looping 作为"计算深度"**的对偶视角为设计推理时计算策略提供了清晰框架
 - **Uniformity 坍缩定理**本身是一个有独立价值的电路复杂度新结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AHAT 模型（hard attention + masked pre-norm）是对标准 soft-attention Transformer 的理想化，实际模型的表达能力可能不同
 - 理论指出 padding 有效，但实践中如何让模型"学会利用 padding"仍是开放问题（现有实证结果 mixed）
 - Looping 的实际可训练性存疑——合适的参数化和训练策略尚未解决

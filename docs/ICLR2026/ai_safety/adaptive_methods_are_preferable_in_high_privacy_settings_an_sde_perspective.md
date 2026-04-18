@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Methods Are Preferable in High Privacy Settings: An SDE Perspective
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：DP 噪声在非自适应和自适应方法中的作用机制不同，但现有分析无法区分这种差异。
 
-**本文要解决什么？** (1) 建立 DP 优化器的 SDE 模型；(2) 精确刻画 $\varepsilon$ 对收敛速度和渐近邻域的影响；(3) 比较固定超参数和最优调参两种协议下的表现。
+**本文目标** (1) 建立 DP 优化器的 SDE 模型；(2) 精确刻画 $\varepsilon$ 对收敛速度和渐近邻域的影响；(3) 比较固定超参数和最优调参两种协议下的表现。
 
 **切入角度**：SDE 弱逼近框架可以捕获 DP 噪声对连续动力学的影响，SignSGD 作为 Adam 的理论代理便于分析。
 
-**核心idea一句话**：DP-SignSGD 的收敛速度虽依赖 $\varepsilon$ 但隐私-效用权衡仅为 $\mathcal{O}(1/\varepsilon)$，而 DP-SGD 收敛速度独立于 $\varepsilon$ 但权衡为 $\mathcal{O}(1/\varepsilon^2)$，因此在严格隐私下自适应方法更优。
+**核心 idea**：DP-SignSGD 的收敛速度虽依赖 $\varepsilon$ 但隐私-效用权衡仅为 $\mathcal{O}(1/\varepsilon)$，而 DP-SGD 收敛速度独立于 $\varepsilon$ 但权衡为 $\mathcal{O}(1/\varepsilon^2)$，因此在严格隐私下自适应方法更优。
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ tags:
 - 首次将 SDE 工具引入 DP 优化分析，揭示了隐私噪声与自适应性的结构性差异，这是此前所有离散分析无法捕获的
 - 实际启示明确：在严格隐私设置下应优先使用 DP-Adam/DP-SignSGD，不仅因为渐近性能更优，更因为超参数可跨 $\varepsilon$ 迁移，节省调参的隐私预算消耗
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论仅覆盖 DP-SGD 和 DP-SignSGD，未直接分析 DP-Adam（依赖 SignSGD 作为代理的经验扩展）
 - 实验局限于逻辑回归和简单凸问题，深度网络上的验证不够充分
 - 假设梯度噪声为高斯或 Student-t 分布，实际深度学习中的噪声结构可能更复杂

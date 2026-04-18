@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Blurry-Edges: Photon-Limited Depth Estimation from Defocused Boundaries
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **极强的泛化能力**：简单几何体训练 → 真实场景推理，说明 Blurry-Edges 的参数化表示具有良好的先验归纳偏置
 - 该方法证明了边界信息在噪声环境中比全局纹理信息更鲁棒
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 稀疏深度图仅沿边界估计，无纹理区域没有深度值
 - 密化依赖后处理网络（U-Net），引入额外计算开销

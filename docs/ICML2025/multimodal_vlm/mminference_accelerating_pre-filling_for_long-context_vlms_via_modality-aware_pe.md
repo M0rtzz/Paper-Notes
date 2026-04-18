@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MMInference: Accelerating Pre-filling for Long-Context VLMs via Modality-Aware Permutation Sparse Attention
 description: >-
@@ -189,7 +189,7 @@ MMInference 的策略是：
 - 亮点 4：强调 kernel 内动态加载/写回，而非显式转置，体现系统级优化意识。
 - 亮点 5：覆盖多个 SOTA 长上下文 VLM 与多任务评测，说明不是单模型特化技巧。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ### 当前缓存可见的局限
 - 局限 1：缓存文件在方法中段截断，缺失完整实验章节，无法核对全部 benchmark 的精确分数。

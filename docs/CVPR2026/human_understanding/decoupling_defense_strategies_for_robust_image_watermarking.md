@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdvMark: Decoupling Defense Strategies for Robust Image Watermarking
 description: >-
@@ -116,7 +116,7 @@ AdvMark 采用两阶段解耦设计：Stage 1 EAT 专注对抗鲁棒性，通过
 - **理论 + 实践的完整链条**：先理论证明约束下鲁棒性保持，再用 quality-aware early-stop 实践落地，理论指导工程
 - **通用框架**：即插即用于 9 种已有水印方法，说明方法的通用性和实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Stage 2 的直接图像优化需要额外推断时间（每张图像优化数十步），实时场景可能受限
 - Quality-aware early-stop 的阈值需要针对不同应用场景设定，不完全免调参
 - 理论保证基于 $\|x_{w2} - x_{w1}\| \leq \epsilon$ 的假设，实际优化可能超出此范围

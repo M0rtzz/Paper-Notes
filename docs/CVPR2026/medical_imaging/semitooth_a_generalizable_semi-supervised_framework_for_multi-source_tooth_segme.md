@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SemiTooth: a Generalizable Semi-supervised Framework for Multi-Source Tooth Segmentation
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{sup} + \alpha \mathcal{L}_{cons}^u + \beta 
 - Mixed 子集通过 Wasserstein 距离选择分布相似样本作为源间桥梁，设计简洁有效
 - 消融实验层次分明，清楚展示了各组件的独立和联合贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MS3Toothset 仅 98 个标注样本 + 438 未标注，规模较小
 - 仅在自有数据集上验证，泛化到公开标准基准的能力未知

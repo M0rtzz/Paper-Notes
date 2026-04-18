@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Impact of Auxiliary Patient Data on Automated Chest X-Ray Report Generation and How to Incorporate It
 description: >-
@@ -93,7 +93,7 @@ tags:
 - 提出ARN指标和分段奖励机制，解决了RL训练中的文本重复问题
 - 首次将放射报告的history部分用于CXR报告生成，发现其与indication同等重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **单一数据源偏差**: 数据仅来自Beth Israel Deaconess Medical Center，泛化性有待验证
 - **缺乏放射科医生的主观评估**: 目前仅使用自动指标评估
 - **Attention Dilution**: 模型架构限制——当输入过多（如多个prior exams + 所有有效源）时，自注意力权重被稀释，性能反而下降

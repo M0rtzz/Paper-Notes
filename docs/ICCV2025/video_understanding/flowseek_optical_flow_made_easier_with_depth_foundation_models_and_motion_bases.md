@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlowSeek: Optical Flow Made Easier with Depth Foundation Models and Motion Bases
 description: >-
@@ -132,7 +132,7 @@ FlowSeek (L) 在 Sintel Final 上相对 SEA-RAFT (L) 提升 **35%**，在 KITTI 
 - **经典与现代的桥接**：30 年前的运动基理论 + 最新的深度基础模型，两者跨时代协同
 - **设计空间的系统探索**：对先验组合、模型规模、深度模型选择、骨干兼容性的全面消融非常扎实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练深度模型（其本身可能需要大量算力训练），某种程度上"转移"了计算开销
 - 运动基理论仅对刚体运动成立，对剧烈非刚体运动场景效果有限

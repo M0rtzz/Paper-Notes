@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Style Evolving along Chain-of-Thought for Unknown-Domain Object Detection
 description: >-
@@ -122,7 +122,7 @@ Real-to-Art 跨域检测（VOC → 艺术域）：
 - **成本友好**：仅需单张 3090 GPU 训练，不需要目标域数据，也不需要复杂的域自适应流程。
 - **与 LLM 的有机结合**：利用 ChatGPT 生成风格描述是一种轻量化的 LLM 应用方式，不需要微调或在线推理 LLM。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **对 captioning 模型的依赖**：Stage 1 的词汇提取质量取决于 captioning 模型，低质量描述会影响后续层级
 - **风格原型数量需手动调节**：M 的选择需要根据数据集特性人工设定
 - **仅验证了检测任务**：方法是否能推广到分割、分类等其他视觉任务有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning
 description: >-
@@ -45,13 +45,13 @@ BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文
 ### 关键设计
 1. **文本分布学习（Textual Distribution Learning）**：
 
-    - **做什么**：从 LLM 生成的 $M$ 个语义释义中估计每类文本的高斯分布。
+    - **功能**：从 LLM 生成的 $M$ 个语义释义中估计每类文本的高斯分布。
     - **核心思路**：计算经验均值 $\bar{\mathbf{z}}^c$ 和协方差 $\mathbf{S}^c$，建立先验 $p(\boldsymbol{\nu}^c) = \mathcal{N}(\bar{\mathbf{z}}^c, \beta^2\mathbf{I})$，通过 MAP 估计得到确定性原型 $\boldsymbol{\nu}^c_{\text{MAP}}$。
     - **设计动机**：单一文本模板无法捕获语义多样性，多释义的高斯建模提供更丰富的类别语义先验。
 
 2. **几何分布学习（Geometric Distribution Learning）**：
 
-    - **做什么**：为每类维护在线高斯分布 $\{\boldsymbol{\mu}_t^c, \boldsymbol{\Sigma}_t^c\}$，随新样本到达递归更新。
+    - **功能**：为每类维护在线高斯分布 $\{\boldsymbol{\mu}_t^c, \boldsymbol{\Sigma}_t^c\}$，随新样本到达递归更新。
     - **核心思路**：初始化为文本原型 $\boldsymbol{\mu}_0^c = \bar{\mathbf{z}}^c$，利用贝叶斯规则闭式递归更新：
     $\boldsymbol{\mu}_t^c = \boldsymbol{\Sigma}_t^c((\boldsymbol{\Sigma}^c)^{-1}\mathbf{x}_t + (\boldsymbol{\Sigma}_{t-1}^c)^{-1}\boldsymbol{\mu}_{t-1}^c)$
     $\boldsymbol{\Sigma}_t^c = ((\boldsymbol{\Sigma}_{t-1}^c)^{-1} + (\boldsymbol{\Sigma}^c)^{-1})^{-1}$
@@ -59,7 +59,7 @@ BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文
 
 3. **贝叶斯多模态加权（Bayesian Model Averaging）**：
 
-    - **做什么**：将文本和几何模态的后验预测自动融合。
+    - **功能**：将文本和几何模态的后验预测自动融合。
     - **核心思路**：$p(c|\mathbf{x}_t) = p(c|\mathbf{x}_t, \boldsymbol{\Omega}^c) p(\boldsymbol{\Omega}^c|\mathbf{x}_t) + p(c|\mathbf{x}_t, \boldsymbol{\Theta}_t^c) p(\boldsymbol{\Theta}_t^c|\mathbf{x}_t)$
     - 每个模态的权重是其后验证据 $p(\boldsymbol{\Omega}^c|\mathbf{x}_t)$ 和 $p(\boldsymbol{\Theta}_t^c|\mathbf{x}_t)$，自动调节。
     - **设计动机**：缓存方法的 $\lambda$ 需要手动调参，贝叶斯框架根据数据证据自动分配权重，更鲁棒。
@@ -97,7 +97,7 @@ BayesMM 提出了一个无需训练的动态贝叶斯分布学习框架，将文
 - 将分布学习引入 3D 多模态 TTA，在理论上比缓存方法更优雅
 - 模型无关：可即插即用到任何预训练3D视觉-语言模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 高斯假设可能不适合复杂的非高斯特征分布
 - 类别数很多时，维护每类协方差矩阵的计算开销较大
 - 当测试流中某类样本极少时，几何分布可能估计不准

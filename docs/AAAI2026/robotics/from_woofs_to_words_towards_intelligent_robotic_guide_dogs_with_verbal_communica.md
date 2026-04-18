@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Woofs to Words: Towards Intelligent Robotic Guide Dogs with Verbal Communication
 description: >-
@@ -142,7 +142,7 @@ tags:
 - **面向真实用户的 HRI 研究态度值得称赞**：招募真实视障参与者而非模拟用户，使结论更可靠
 - **安全护栏设计**：对 LLM 输出的格式检查和无效回复替换，体现了对安全性的重视
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 人类研究样本量非常小（仅 6 名有效参与者），定量结论的统计效力有限
 - 真人实验使用 Wizard of Oz 远程操控机器人运动，未验证完全自主导航的效果

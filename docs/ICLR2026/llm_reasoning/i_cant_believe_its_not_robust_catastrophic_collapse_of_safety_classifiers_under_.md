@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] I Can't Believe It's Not Robust: Catastrophic Collapse of Safety Classifiers under Embedding Drift
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：embedding 空间在模型更新后是否真的稳定？如果不稳定，现有的监控机制（基于平均置信度的监控）能否检测到这种失效？
 
-**本文要解决什么？**（1）量化 embedding 漂移的精确失效阈值；（2）刻画 silent failure 现象——置信度仍高但分类已错；（3）揭示 alignment（RLHF）对分类器鲁棒性的反直觉影响。
+**本文目标**（1）量化 embedding 漂移的精确失效阈值；（2）刻画 silent failure 现象——置信度仍高但分类已错；（3）揭示 alignment（RLHF）对分类器鲁棒性的反直觉影响。
 
 **切入角度**：通过受控的 additive perturbation 模拟 embedding drift，系统测试不同漂移类型（高斯、方向性、子空间旋转）下分类器的退化行为。
 
-**核心 idea 一句话**：Embedding stability 假设在实践中不成立，微小漂移即可导致安全分类器灾难性失效且标准监控无法察觉。
+**核心 idea**：Embedding stability 假设在实践中不成立，微小漂移即可导致安全分类器灾难性失效且标准监控无法察觉。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - **置信度失效的 sigmoid 解释**：sigmoid 函数将大幅值映射到接近 0 或 1 的置信度，即使漂移随机翻转了 $w^\top z + b$ 的符号（破坏准确率），也不会系统性降低 $|w^\top z + w^\top \varepsilon + b|$ 的幅度，所以置信度仍高但方向已错。
 - **对生产系统的启示**：每次模型更新都必须强制重训安全分类器，不能依赖平均置信度监控来发现问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **控制实验 vs 真实漂移**：additive perturbation 可能低估了实际模型更新带来的分布偏移（架构变化、数据更新等引起的漂移更复杂）
 - **分类器过于简单**：只测了逻辑回归，更复杂的分类器（如 MLP、ensemble）在漂移下的表现未知
 - **缓解措施不够深入**：论文提到 meta-learning、domain adaptation 作为可能的改进方向，但没有实验验证

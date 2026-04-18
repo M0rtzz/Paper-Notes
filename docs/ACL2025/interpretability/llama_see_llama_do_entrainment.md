@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Llama See, Llama Do: A Mechanistic Perspective on Contextual Entrainment and Distraction in LLMs
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**: distraction是一个容易理解但难以精确定义的现象；无关上下文有时还对模型有利，说明需要更细粒度的分析。
 
-**本文要解决什么**: 从机制层面理解LLM为何会被上下文信息干扰，并找到对应的注意力头。
+**本文目标**: 从机制层面理解LLM为何会被上下文信息干扰，并找到对应的注意力头。
 
 **切入角度**: 观察LLM对出现在上下文中的token的logit变化，发现即使是随机token也会获得更高概率，说明这是一种底层机制现象。
 
-**核心idea一句话**: LLM存在contextual entrainment机制——"看过即提升概率"，通过可微掩码可定位并关闭对应的entrainment heads。
+**核心 idea**: LLM存在contextual entrainment机制——"看过即提升概率"，通过可微掩码可定位并关闭对应的entrainment heads。
 
 ## 方法详解
 
@@ -95,7 +95,7 @@ tags:
 - 随机token的entrainment现象是机制性质的最强证据——没有语言或事实因素能解释随机token概率上升
 - 实验覆盖5个LM（GPT-2 XL到Llama-3.1-8B-Instruct），结论一致性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在较小规模模型上验证（最大13B），需扩展到更大模型（70B+）验证entrainment heads的存在性
 - 关闭heads的方式较为粗暴（输出置零），可探索更精细的干预方法如activation patching
 - 目前仅在事实型QA（LRE数据集）上验证，可拓展到RAG、长文本理解等实际场景

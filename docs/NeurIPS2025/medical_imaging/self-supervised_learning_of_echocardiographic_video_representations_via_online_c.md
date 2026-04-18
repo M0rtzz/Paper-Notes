@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-supervised Learning of Echocardiographic Video Representations via Online Cluster Distillation
 description: >-
@@ -110,7 +110,7 @@ DISCOVR 是一个双分支自监督框架：视频分支通过掩码自蒸馏捕
 - **SCD 损失的优雅设计**：通过原型聚类实现跨模态知识传递，避免了直接特征对齐的困难
 - **长序列建模的重要性**：64帧（覆盖约2个心动周期）比短片段有显著优势，这对超声视频领域有重要指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对比的视频异常检测基线（MNAD、MemAE、C2FPL）主要设计用于自然场景，医学专用异常检测方法的对比不足
 - 当前采用固定的90%掩码率，自适应掩码策略可能更适合超声视频的高冗余特性

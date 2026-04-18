@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revealing the Deceptiveness of Knowledge Editing: A Mechanistic Analysis of Superficial Editing
 description: >-
@@ -122,7 +122,7 @@ tags:
 - **跨任务泛化**：将分析框架成功扩展到"表面遗忘"任务，证明了方法论的通用性
 - **揭示了知识编辑的根本局限**：即使编辑了 MLP 中的知识，注意力模块仍然保留着原始知识的"记忆"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅分析不修复**：论文深入分析了表面编辑的机制，但未提出有效的修复方案
 2. **攻击类型有限**：仅设计了三种攻击前缀，现实场景中可能有更多样的触发方式

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Disparate Impact of Differentially Private Learning through Bounded Adaptive Clipping
 description: >-
@@ -103,7 +103,7 @@ tags:
 - **隐私无损**：定理 3.2 证明 $C_{LB}$ 不影响隐私保证，是真正的"free lunch"。
 - **跨域通用**：图像和表格数据都有效，领域通用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $C_{LB}$ 选择需要 HPO，引入额外调参成本；可考虑 data-adaptive 自动选择
 - 缺乏收敛率理论分析——何时有界 clipping 改善、何时无用没有理论刻画

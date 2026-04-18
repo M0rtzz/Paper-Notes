@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lifting Unlabeled Internet-level Data for 3D Scene Understanding
 description: >-
@@ -102,7 +102,7 @@ tags:
 - 数据规模可观：6,687场景超过ARKitScenes，平均每场景49个目标、21个类别
 - 对模型可扩展性的深入讨论很有价值：依赖预计算分割的模型(Mask3D)比直接操作原始模态的模型(SpatialLM)更难扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖多个子模块（SfM、深度估计、分割、VLM标注）组合，各模块的误差会级联传播
 - 视频筛选中仍需少量人工标注（<10秒/场景）来保证数据质量

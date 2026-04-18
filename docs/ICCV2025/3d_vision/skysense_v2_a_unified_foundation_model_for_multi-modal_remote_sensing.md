@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SkySense V2: A Unified Foundation Model for Multi-Modal Remote Sensing
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{MGCL} + \lambda_2 \mathcal{L}_{ITA} + \la
 3. **QSACL准确把握遥感数据特性**：遥感图像的多语义分布是与自然图像最本质的区别之一，通过query聚合的方式正面解决了这一问题
 4. **工程规模令人印象深刻**：2100万组训练数据 × 128张H20 GPU × 600K迭代，体现了工业级别的预训练能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持光学RGB/多光谱/SAR三种模态，未涵盖高光谱、LiDAR等其他重要遥感数据源
 - 预训练数据规模巨大（2100万组），限制了学术界的复现能力

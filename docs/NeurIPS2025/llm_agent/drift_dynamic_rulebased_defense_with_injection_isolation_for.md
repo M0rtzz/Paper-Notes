@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DRIFT: Dynamic Rule-Based Defense with Injection Isolation for Securing LLM Agents
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：(1) 静态安全策略无法适应真实场景的动态决策需求（轨迹长度 ≥3 时 utility 急剧下降）；(2) 注入内容一旦进入 memory stream，会在长期交互中反复暴露给 agent 和其他安全模块，形成持续风险。
 
-**本文要解决什么**：设计能动态更新安全策略且隔离 memory 中注入内容的系统级防御框架，兼顾安全性和实用性。
+**本文目标**：设计能动态更新安全策略且隔离 memory 中注入内容的系统级防御框架，兼顾安全性和实用性。
 
 **切入角度**：受操作系统权限控制（Read/Write/Execute）启发，将函数调用按风险等级分类，Read 操作直接放行，Write/Execute 操作需要进行用户意图对齐验证。同时设计独立的 Injection Isolator 在每次工具返回后清洗 memory。
 
-**核心idea一句话**：三层防御——交互前预规划约束（控制流+数据流），交互中动态验证与权限管理，交互后 memory 注入清洗。
+**核心 idea**：三层防御——交互前预规划约束（控制流+数据流），交互中动态验证与权限管理，交互后 memory 注入清洗。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ Planner 提供强安全但大幅牺牲 utility；Validator 恢复 utility（+22%
 - **Injection Isolator 解决了一个被忽视的问题**：大多数防御关注"防止 Agent 执行恶意 action"，但忽略了注入内容对 final response 的影响和长期 memory 污染。Isolator 独立于 Agent 运行，不与 Agent 直接交互，减少了自身被注入攻破的风险
 - **子任务简化是关键设计原则**：DRIFT vs Progent 的对比揭示，让安全模块处理简单子任务（权限分类、意图对齐）比让它处理开放式决策（何时更新、如何更新策略）更鲁棒，尤其在弱模型上
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 评估限于 AgentDojo 和 ASB 的模拟环境，真实世界 Agent 场景可能更复杂
 - 三个安全模块都依赖 LLM，如果 LLM 本身被攻击可能级联失败
 - 对高度开放式任务（如"按邮件中的指示行动"）utility 有所下降（保留 70% 能力）

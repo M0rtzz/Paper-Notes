@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Drive As You Like: Strategy-Level Motion Planning Based on A Multi-Head Diffusion Model
 description: >-
@@ -114,7 +114,7 @@ M-Diffusion Planner 包含三个核心组件：
 3. **共享参数设计**：基础训练阶段多头共享权重，确保所有策略头都具备高质量规划基础
 4. **零样本策略切换**：推理时通过 LLM 即时翻译自然语言为策略 ID，实时切换无需重新加载
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 策略种类有限（仅 3 种 + base），更细粒度的偏好（如"稍微快一点"）无法精确建模
 - 闭环评估中策略头（尤其 Aggressive）性能相比 base 有明显下降（82.63 vs 93.43），安全性存疑

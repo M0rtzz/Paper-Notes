@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ChartNet: A Million-Scale, High-Quality Multimodal Dataset for Robust Chart Understanding
 description: >-
@@ -115,7 +115,7 @@ ChartMimic-v2 代码生成（granite-vision-2B）：
 - 2B 模型超越 GPT-4o 和 72B 模型的结果强有力地证明了领域特定高质量数据的价值
 - 安全对齐子集的设计为图表领域的 AI 安全提供了基础设施
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成数据为主，虽有真实世界子集但占比较小，可能存在领域偏移
 - 种子图表来源单一（TinyChart），可能限制初始多样性

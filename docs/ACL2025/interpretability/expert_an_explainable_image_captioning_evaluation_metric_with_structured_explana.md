@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EXPERT: An Explainable Image Captioning Evaluation Metric with Structured Explanations
 description: >-
@@ -167,7 +167,7 @@ EXPERT 在所有无参考指标中取得 SOTA（除 Pascal-50S）。甚至超越
 3. **分数分箱 + 分数平滑的组合**：训练时简化数值表示，推理时利用概率分布恢复精度，是一个巧妙的工程设计
 4. **实用的三维度评估框架**：流畅度、相关性、描述性覆盖了图像描述评估的核心方面，具有良好的可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度慢**：生成结构化解释需要大量输出 token，显著增加推理时间
 2. **过度惩罚倾向**：最常见错误是对缺乏细节的描述给予过低分数

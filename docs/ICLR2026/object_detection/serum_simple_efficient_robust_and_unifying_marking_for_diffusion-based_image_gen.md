@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SERUM: Simple, Efficient, Robust, and Unifying Marking for Diffusion-based Image Generation
 description: >-
@@ -87,7 +87,7 @@ tags:
 - **KL散度保证**：归一化水印噪声的KL散度理论保证比GaussMarker更低→图像质量更好的数学基础。
 - **优先经验回放训练**：借鉴RL中的PER来采样"困难"增强→检测器自动聚焦弱点→不需要手动选择增强策略。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要访问LDM编码器做检测——纯像素级检测未探索
 - $\alpha$ 的选择需平衡检测率和图像多样性
 - 多用户时组合数限制了用户上限

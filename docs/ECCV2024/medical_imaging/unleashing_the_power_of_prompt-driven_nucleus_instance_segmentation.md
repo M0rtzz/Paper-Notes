@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unleashing the Power of Prompt-driven Nucleus Instance Segmentation
 description: >-
@@ -149,7 +149,7 @@ CPM-17 上 AJI 超前最优 +1.9，PQ 超前最优 +2.8。
 - **实用性强**：无需后处理调参，计算量大幅降低，FPS 提升显著
 - **可迁移思路**：negative prompt 的训练-推理一致性设计可推广到其他 SAM 变体的应用场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Prompter 和 Segmentor 独立训练**：端到端训练可能带来进一步提升（论文提到初步尝试但未收敛）
 - **依赖 SAM 的 ViT backbone**：模型参数量仍然较大（145M+），部署于边缘设备受限

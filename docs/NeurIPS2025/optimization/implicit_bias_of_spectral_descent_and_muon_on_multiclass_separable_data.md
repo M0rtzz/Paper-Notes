@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data
 description: >-
@@ -116,7 +116,7 @@ $$\|\Omega_t\|_{\text{sum}} \leq 2B\beta_1^{t/2} \mathcal{G}(W_t) + 2\alpha_M d 
 - **逐类分解技巧**：避免了 NMD 分析中 $k$ 因子的出现，不仅简化了证明也改进了结果
 - **实践意义**：为理解 Muon/Shampoo 等新兴优化器为何在 LLM 训练中表现优异提供了理论基础——它们隐式偏好谱范数 margin 最大化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **NMD 速率中有额外 $d$ 因子**：Theorem 2 比 Theorem 1 多一个 $d$，能否去除是开放问题
 - **Adam 的速率仅为 $\mathcal{O}(t^{-1/3})$**：慢于 NSD/NMD 的 $\mathcal{O}(t^{-1/2})$，有空间改进
 - **仅限线性多分类**：扩展到同质/非同质神经网络是重要方向

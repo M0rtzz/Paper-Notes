@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Prompt Tuning and In-Context Learning via Meta-Learning
 description: >-
@@ -125,7 +125,7 @@ $$\mathscr{R}_{\tilde\theta}^{P^{Target}}(N) = \mathbb{E}_{\tau^*} \mathbb{E}_{P
 - 内部状态的PCA可视化清晰展示了不同调优方法如何影响网络动态
 - 实验虽小（硬币翻转），但抓住了提示调优的本质问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验使用简单的Bernoulli任务和小网络，向前沿模型规模外推需谨慎
 - 理论保证仅在预训练分布内的数据上严格成立，分布外泛化需进一步研究

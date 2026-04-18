@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] If Attention Serves as a Cognitive Model of Human Memory Retrieval, What is the Plausible Memory Representation?
 description: >-
@@ -82,7 +82,7 @@ tags:
 - **从"计算层"走向"算法层"**：相比 surprisal 理论在 Marr 三层描述中最抽象的计算层，将注意力解读为记忆检索使研究下移到更具体的算法层。
 - **双重记忆系统假说**的实证支持：一个基于句法结构、一个基于 token 序列，注意力是通用检索算法。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - NAE 的计算方式（仅顶层、跨头求和、子词求和）沿用旧方法，替代方案值得探索
 - 仅在英语自步阅读时间语料上验证，跨语言和跨认知指标（如眼动、EEG/fMRI）的泛化性未知

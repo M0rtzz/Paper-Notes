@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Supervised Learning from Structural Invariance
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：InfoNCE 的点积相似度隐式假设 vMF 分布（等向噪声），AnInfoNCE 扩展到各向异性但仍是常数噪声。然而理论证明（Proposition 2.1），即使噪声在潜空间是等向的，映射到归一化嵌入空间后也必然产生异方差性——这是几何失配的必然结果。
 
-**本文要解决什么**：如何让 SSL 灵活建模任意复杂的条件分布 $p(\mathbf{z}^+|\mathbf{z})$，同时保持相似度函数简单？
+**本文目标**：如何让 SSL 灵活建模任意复杂的条件分布 $p(\mathbf{z}^+|\mathbf{z})$，同时保持相似度函数简单？
 
 **切入角度**：受 JEPA 启发，引入潜变量 $\mathbf{r}$ 捕获预测不确定性，将复杂条件分布分解为两步：先采样 $\mathbf{r}$（如相机运动、动作），再用简单模型预测 $\mathbf{z}^+$。
 
@@ -47,19 +47,19 @@ tags:
 
 1. **AdaSSL-V（变分版本）**:
 
-    - **做什么**：用变分分布 $q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+)$ 建模潜变量
+    - **功能**：用变分分布 $q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+)$ 建模潜变量
     - **核心思路**：$\mathcal{L} = \mathcal{L}_{SSL}(\mathbb{E}_{q_\phi} \psi_1(\mathbf{x}, \mathbf{r}), \psi_2(\mathbf{x}^+)) + \beta D_{KL}(q_\phi(\mathbf{r}|\mathbf{x}, \mathbf{x}^+) \| p_\theta(\mathbf{r}|\mathbf{x}))$，KL 正则防止 $\mathbf{r}$ 直接编码 $f(\mathbf{x}^+)$
     - **设计动机**：推导出 $I(f(\mathbf{x}); f(\mathbf{x}^+))$ 的可处理下界，理论上严格
 
 2. **AdaSSL-S（稀疏版本）**:
 
-    - **做什么**：确定性预测 $\mathbf{r}$，正则化其稀疏性
+    - **功能**：确定性预测 $\mathbf{r}$，正则化其稀疏性
     - **核心思路**：$\mathbf{r} = m(f(\mathbf{x}), f(\mathbf{x}^+))$，用 Gumbel-Sigmoid 实现可微 L0 惩罚。编辑函数采用模块化低秩设计 $t(f(\mathbf{x}), \mathbf{r}) = f(\mathbf{x}) + \sum_i r_i (\mathbf{B}_i \mathbf{A}_i f(\mathbf{x}) + b_i)$
     - **设计动机**：自然变化通常对应潜因子的稀疏改变，稀疏归纳偏置更符合因果表征学习
 
 3. **异方差性必然性定理（Proposition 2.1）**:
 
-    - **做什么**：理论证明嵌入空间中配对的条件分布必然异方差
+    - **功能**：理论证明嵌入空间中配对的条件分布必然异方差
     - **核心思路**：当潜空间 $\mathbb{R}^{d_z}$ 映射到弯曲流形（如单位球 $\mathbb{S}^{d_f}$）时，局部邻域的扭曲与位置相关，即使原始噪声等向也会产生位置依赖的方差
     - **设计动机**：从根本上证明了标准 SSL 相似度函数的不足
 
@@ -101,7 +101,7 @@ tags:
 - **潜变量建模的通用性**：同一个框架兼容对比和蒸馏 SSL，适用于数值/图像/视频
 - **稀疏模块化编辑**的设计（$\mathbf{r}$ 控制低秩编辑模块）与 LoRA 风格思想异曲同工
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AdaSSL-S 在蒸馏方法（BYOL）上需要额外处理
 - 潜变量维度 $d_r$ 需要预设，自动确定更好
 - 大规模验证不足（没有 ImageNet 级别实验）

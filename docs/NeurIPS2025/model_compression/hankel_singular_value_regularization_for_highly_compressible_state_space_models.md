@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hankel Singular Value Regularization for Highly Compressible State Space Models
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{R}_*(\boldsymbol{\sigma}^{(1)}, \ldots, \boldsymbol{\sigma}^{(L)}) = 
 - **训练即压缩准备**：一次正则化训练，后处理仅需标准平衡截断，无需重训
 - **$\mathcal{O}(n^2)$ Gramian 算法**：实用的效率提升使正则化在训练中可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **不适用于预训练模型**：必须从头带正则化训练，无法对已训练 SSM 事后压缩
 2. **仅限线性时不变系统**：Mamba 的时变/输入依赖 SSM 不适用

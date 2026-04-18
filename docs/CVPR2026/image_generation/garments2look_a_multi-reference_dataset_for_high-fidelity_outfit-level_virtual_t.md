@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Garments2Look: A Multi-Reference Dataset for High-Fidelity Outfit-Level Virtual Try-On with Clothing and Accessories
 description: >-
@@ -118,7 +118,7 @@ tags:
 - 实验深入且有针对性：四个递进问题（件数极限、一致性、整体效果、结构化标注价值）系统性地揭示瓶颈
 - 对商业编辑模型的深入分析（Nano Banana vs GPT-4o vs Seedream）提供了宝贵的工业视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成 look image 依赖 Nano Banana，其姿态控制和 inpainting 能力有限，导致不可避免的合成偏差
 - 仅约 40% 的合成图通过审核，数据构建效率较低

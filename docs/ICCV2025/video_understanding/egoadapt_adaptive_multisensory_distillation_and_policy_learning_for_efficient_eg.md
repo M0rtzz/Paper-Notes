@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoAdapt: Adaptive Multisensory Distillation and Policy Learning for Efficient Egocentric Perception
 description: >-
@@ -101,7 +101,7 @@ ASL 任务（EasyCom）：EgoAdapt 达到 89.74% mAP，仅 0.070 GMACs 和 0.39M
 - 策略模块的动作空间可按任务灵活调整，具有良好的通用性
 - 在 GTX2080Ti 上实现 >180 FPS，28% GPU 利用率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅验证了三个自我中心任务，更复杂的手-物交互和长期活动理解待探索
 - 策略空间可扩展到空间分辨率选择、网络量化等维度

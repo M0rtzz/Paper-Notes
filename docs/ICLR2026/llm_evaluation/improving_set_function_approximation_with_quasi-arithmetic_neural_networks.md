@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Set Function Approximation with Quasi-Arithmetic Neural Networks
 description: >-
@@ -88,7 +88,7 @@ QUANN: $\hat{F}(X) = \rho(\psi^{-1}(\frac{1}{|P_k(X)|}\sum_{\pi} \psi(\phi(\pi))
 - **解耦编码器与池化**：固定池化→编码器必须"适配"池化→嵌入不通用。可学习池化→编码器只需学好的嵌入→池化自动适配→嵌入迁移性增强。
 - **可逆性的双重价值**：(1) 保证Kolmogorov均值有定义（需要可逆生成函数）；(2) 保持信息→不像max那样丢弃信息。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - RevNet增加了计算开销（虽然可逆性让我们不需要存储中间激活）
 - QUANN-2对元素对的二次复杂度限制了大集合
 - 仅在有限集合上实验，函数集合（连续集合）的情况未考虑

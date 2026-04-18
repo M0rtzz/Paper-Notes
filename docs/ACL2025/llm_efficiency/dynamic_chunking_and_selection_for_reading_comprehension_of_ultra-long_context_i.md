@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Chunking and Selection for Reading Comprehension of Ultra-Long Context in Large Language Models
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：固定长度分块的简单性 vs. 语义连贯性的必要性——要么保持分块简单但丢失语义，要么需要更智能的分块策略。
 
-**本文要解决什么**：如何在不改变 LLM 架构的前提下，通过语义感知的动态分块 + 问题相关的块选择，压缩长文本输入并保持回答准确性。
+**本文目标**：如何在不改变 LLM 架构的前提下，通过语义感知的动态分块 + 问题相关的块选择，压缩长文本输入并保持回答准确性。
 
 **切入角度**：用 Sentence-BERT 编码句子级语义，利用相邻句子间的语义距离自适应确定分块边界；再训练一个轻量分类器根据问题选择相关块。
 
@@ -126,7 +126,7 @@ Single-hop 代表性成绩：Loogle_SD 45.10（原始 21.25），Factrecall 29.8
 4. **即插即用**：可搭配任意 LLM（Llama3/Mistral/Vicuna），无需修改模型架构
 5. **迭代细化策略**巧妙：先粗分再合并，确保每个 chunk 既不超长也不过碎
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分类器依赖基座 LLM 的特征提取**：需要对每个 chunk-question pair 做一次前向传播获取 hidden states，当 chunk 数量多时开销不小
 2. **仅在 QA 任务上验证**：未涉及摘要、翻译等其他长文本任务

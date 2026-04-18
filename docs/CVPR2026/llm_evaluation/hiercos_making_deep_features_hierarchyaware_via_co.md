@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hier-COS: Making Deep Features Hierarchy-aware via Composition of Orthogonal Subspaces
 description: >-
@@ -78,7 +78,7 @@ tags:
 - HOPS指标填补了层次评估的关键空白——AHD@k的排列不变性问题被很好解决
 - 轻量级：只需变换模块，可冻结backbone直接训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 - tieredImageNet-H（12层、不平衡树）上top-1 accuracy略低于HAFrame（72.22 vs 73.70），深层不平衡树是挑战
 - 空间维度 $n$ 随节点数线性增长，大规模层次（如ImageNet-21k）可能面临维度爆炸
 - 作者提出用kernel trick隐式映射到高维Hier-COS空间，但尚未实现

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EmbodiedOcc: Embodied 3D Occupancy Prediction for Vision-based Online Scene Understanding
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L} = \lambda_1 \mathcal{L}_{focal} + \mathcal{L}_{lov} + \mathcal{L}_
 3. **与人类认知的对齐**：置信度机制模拟了人类重访场景时的认知过程——对已知区域微调，对新区域重建
 4. **基准数据集构建**：重组了EmbodiedOcc-ScanNet基准，包含537/137个训练/验证场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在室内场景验证，未扩展到更大规模的户外环境
 2. 停止机制较为简单（基于已更新高斯比例的阈值），缺乏对探索策略的学习

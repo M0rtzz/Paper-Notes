@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LittleBit: Ultra Low-Bit Quantization via Latent Factorization
 description: >-
@@ -129,7 +129,7 @@ LittleBit 在 0.55 BPW 时的 PPL 已超越 STBLLM 在 0.7 BPW 的表现。在 0
 4. **残差补偿不增加预算**：同一比特预算下"两条低秩路径"优于"一条高秩路径"，这是一个具有普遍意义的设计原则
 5. **覆盖模型规模广泛**：从 1.3B 到 32B 参数，包括 Llama/OPT/Phi-4/QwQ 多个模型族
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅针对权重量化，未涉及激活值量化
 - 0.1 BPW 下虽然 PPL 可接受，但零样本推理能力损失仍然较大

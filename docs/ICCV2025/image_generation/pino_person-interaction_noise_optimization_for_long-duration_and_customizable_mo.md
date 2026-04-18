@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PINO: Person-Interaction Noise Optimization for Long-Duration and Customizable Motion Generation of Arbitrary-Sized Groups
 description: >-
@@ -136,7 +136,7 @@ PINO的输入包含两部分：（1）有序的参与者列表，指定每组两
 - 物理惩罚项设计为可微分形式，可无缝嵌入扩散模型的噪声优化循环
 - 运动扩展+prompt切换组合可实现丰富的时序交互叙事
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 性能依赖基础两人模型（InterGen）的质量，最终会受其能力上限约束
 - 聚焦于两人交互的分解方式无法建模高阶协调行为（如一人推另一人撞到第三人的连锁反应）

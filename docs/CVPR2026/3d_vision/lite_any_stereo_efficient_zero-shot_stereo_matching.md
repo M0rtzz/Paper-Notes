@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lite Any Stereo: Efficient Zero-Shot Stereo Matching
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **训练策略的通用价值**：三阶段策略对不同架构（LightStereo、BANet）都有效，可直接作为高效立体匹配的标准训练范式
 - **student超越teacher**：DrivingStereo上轻量学生超越FoundationStereo教师，说明蒸馏+域特化可以让小模型在特定分布上优于大模型，这一现象值得深入研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **与先验方法差距**：未使用DepthAnything等深度先验，性能上限受限（ETH3D: 3.53 vs FoundationStereo 0.49）
 - **伪标签瓶颈**：Stage③质量完全依赖FoundationStereo——教师在某些场景失败，学生也学不好

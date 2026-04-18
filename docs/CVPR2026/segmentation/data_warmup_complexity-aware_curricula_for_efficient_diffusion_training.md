@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Data Warmup: Complexity-Aware Curricula for Efficient Diffusion Training
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **语义vs像素级复杂度**：证明了像素级统计(频率/熵)是差代理，语义结构(前景显著度+典型性)才是扩散模型"难度"的正确刻画
 - **极低成本**：~10分钟H100单卡预处理+零每迭代开销→实用门槛极低
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖DINO-v2提供前景分离——在DINO-v2不适用的域(如医学图像)可能需要替代方案
 - K=1000的k-means聚类数和sigmoid参数($\kappa=12, v_{min}=0.002$)是经验超参
 - 仅在ImageNet验证——其他数据集(LAION等)和文本条件扩散模型的泛化待确认

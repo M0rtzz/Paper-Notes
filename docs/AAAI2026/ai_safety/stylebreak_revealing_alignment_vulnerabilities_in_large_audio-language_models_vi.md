@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StyleBreak: Revealing Alignment Vulnerabilities in Large Audio-Language Models via Style-Aware Audio Jailbreak
 description: >-
@@ -161,7 +161,7 @@ $$\max_\theta \mathbb{E}_{q \sim \mathcal{Q}, s \sim \pi_\theta(q)} [J(M(a_p^s, 
 3. **自适应策略的高效性**：仅需 3 次查询迭代即可达到显著攻击效果（ASR 提升 7.1%-22.3%），远优于穷举搜索
 4. **t-SNE 可视化的深刻洞察**：音频查询在模型表示空间中的良性/恶意重叠度远高于文本，解释了音频越狱为何天然更有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅使用 CosyVoice2-0.5B 作为 TTS**：其他 TTS 系统可能产生不同效果
 2. **AdvBench 查询集有限**：可扩展到更多样化的有害查询类型

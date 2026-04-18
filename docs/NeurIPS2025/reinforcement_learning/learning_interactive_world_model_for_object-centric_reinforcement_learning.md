@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Interactive World Model for Object-Centric Reinforcement Learning
 description: >-
@@ -109,7 +109,7 @@ FIOC-WM 分为两个阶段：
 - **交互即技能**的理念很有启发性：将长时任务分解为交互原语序列，自然地实现了任务的组合分解
 - 利用预训练视觉特征作为观测的代理，既利用了丰富语义又保持了结构化建模
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练的物体发现模型（Slot Attention），无法自动处理未知类别的物体
 - 交互模型主要对已见物体类别泛化，对全新类别的泛化未验证

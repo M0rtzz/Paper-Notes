@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DTopia-XL: Scaling High-Quality 3D Asset Generation via Primitive Diffusion
 description: >-
@@ -111,7 +111,7 @@ tags:
 - 在同类原生3D扩散模型中首个支持完整PBR材质（几何+纹理+金属度/粗糙度）
 - 3D inpainting和插值等应用展示了原生3D扩散模型相对重建方法的独特优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 生成质量仍受训练数据规模和多样性限制
 - PrimX原语数量固定，不能自适应复杂度不同的物体
 - 当前只支持单物体生成，场景级生成有待探索

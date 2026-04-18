@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Do Visual Tokens Really Encode? Uncovering Sparsity and Redundancy in Multimodal Large Language Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：现有分析方法（LogitLens用unembedding矩阵）无法区分语义是视觉编码器/投影层固有的，还是语言骨干注入的。
 
-**本文要解决什么？** (a) 视觉token在输入层的语义组织结构；(b) alive token携带多少信息（进入LLM前）；(c) LLM内部视觉计算的必要性和深度位置。
+**本文目标** (a) 视觉token在输入层的语义组织结构；(b) alive token携带多少信息（进入LLM前）；(c) LLM内部视觉计算的必要性和深度位置。
 
 **切入角度**：提出EmbedLens在输入嵌入空间中直接探测token语义，避免被后续层变换混淆。
 
-**核心idea一句话**：视觉token呈sink/dead/alive三分结构，alive token已是"预语言"的，LLM内部视觉计算大多冗余。
+**核心 idea**：视觉token呈sink/dead/alive三分结构，alive token已是"预语言"的，LLM内部视觉计算大多冗余。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **"预语言"发现的架构启示**：既然alive token已经编码足够语义，LLM视觉计算冗余，那么可以(a)直接跳过视觉FFN/自注意力、(b)将视觉token注入中间层而非第一层
 - **颜色偏置的细粒度发现**：模型的颜色预测往往依赖背景统计而非目标物体本身，暴露了VLM的一个系统性偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分析主要基于LLaVA-1.5架构，虽验证了InternVL/Qwen-VL的一致性，但未覆盖更多视觉编码器（如SigLIP）
 - 三分类的界定依赖聚类，不同图像中比例可能波动
 - "预语言"验证用的patch压缩基准非常受控（70张图），在自然图像上的通用性有待验证

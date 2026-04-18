@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SSVQ: Unleashing the Potential of Vector Quantization with Sign-Splitting
 description: >-
@@ -103,7 +103,7 @@ $$W_q = \mathcal{C}[A] \circ \text{sign}(L_s)$$
 3. **广泛验证**：覆盖分类、检测、分割、生成、NLP 五类任务，CNN/ViT/UNet/DiT/LLM 多种架构
 4. **硬件落地**：构建了支持 SSVQ 的硬件仿真器，验证了 3× 加速，不是"纸上谈兵"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 1-bit 符号掩码在极端低比特下的存储占比较高，可探索更高效的符号编码
 - 迭代冻结的超参（冻结间隔、阈值衰减）仍需手动调节

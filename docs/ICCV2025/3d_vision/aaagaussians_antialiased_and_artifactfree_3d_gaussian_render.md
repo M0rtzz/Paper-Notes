@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AAA-Gaussians: Anti-Aliased and Artifact-Free 3D Gaussian Rendering
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **统一解决所有伪影**: 首个在单一框架中解决锯齿+投影畸变+popping+剔除的光栅化方法
 - **OOD场景的价值**: 分布内指标差异不大，但OOD场景（大FOV、分辨率变化）才能真正体现方法的鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分布内评估指标改进有限（标准benchmark上与MCMC接近）
 - 视空间边界仍绑定针孔相机模型，不支持鱼眼等其他相机
 - 层级排序带来额外性能开销（vs 不排序快近2×，但有popping）

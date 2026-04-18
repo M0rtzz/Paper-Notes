@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Monotonicity: Revisiting Factorization Principles in Multi-Agent Q-Learning
 description: >-
@@ -143,7 +143,7 @@ $$L(\theta) = \mathbb{E}_{s,\mathbf{a},r,s'}[(y^{tot} - Q_{tot}(s,\mathbf{a};\th
 - **"少即是多"的范例**：去除约束反而提升性能，挑战了MARL研究的主流设计范式
 - GRF中"先慢后快"的学习曲线完美对应理论中鞍点逃逸的动力学行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析限于单状态矩阵博弈，尚未严格扩展到序贯决策
 - softmax替代ε-greedy的理论跳板依赖Clarke广义梯度连接，近似程度未量化

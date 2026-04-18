@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HAODiff: Human-Aware One-Step Diffusion via Dual-Prompt Guidance
 description: >-
@@ -133,7 +133,7 @@ HMB-R（运动模糊残留比）仅0.1167，是OSDHuman的一半，说明HAODiff
 3. **效率与质量兼得**：单步扩散+LoRA微调，0.2s推理全面超越50步大模型
 4. **新基准MPII-Test**：5,427张真实HMB图像+YOLO检测器量化评估，为人体复原提供标准化运动模糊评测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 退化管线中HMB仅模拟**刚体运动模糊**（基于PSF卷积），未建模关节柔性运动导致的非均匀模糊
 2. 依赖Sapiens分割模型的质量——分割失败时HMB模拟可能不准确

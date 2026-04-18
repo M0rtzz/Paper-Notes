@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] YOLOE: Real-Time Seeing Anything
 description: >-
@@ -75,7 +75,7 @@ YOLOE基于标准YOLO架构（backbone + PAN + 回归头 + 分割头），将分
 - **实用性极强**：支持TensorRT和CoreML部署，手机端实时，对工业应用友好
 - **检索代替生成**的无提示范式：避免语言模型依赖，53x加速
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多任务（检测+分割）联合训练导致frequent类APf有0.9的下降
 - 视觉提示仅训练2 epochs，冻结其他参数，可能限制visual prompt的上限
 - 无提示模式依赖预定义的4585类词汇表，无法发现全新类别

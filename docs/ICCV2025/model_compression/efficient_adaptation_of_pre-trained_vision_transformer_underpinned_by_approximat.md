@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Adaptation of Pre-Trained Vision Transformer Underpinned by Approximation Theory
 description: >-
@@ -113,7 +113,7 @@ VTAB-1k 基准（19 个数据集，3 组，ViT-B/16 部分结果）：
 - **对 PEFT 方法的通用增强**：AOFT 作为 plug-and-play 模块可提升多种 PEFT 方法
 - **不强制严格正交**：放松归一化约束让模型在正交性和灵活性之间取得平衡，这种设计选择体现了工程智慧
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 正交矩阵的构造依赖特定的数学形式（Householder 变换推广），是否存在更优的构造方式值得探索
 - LoRA+AOFT 在某些数据集（如 NABirds）上性能略低于原始 LoRA，说明近似正交约束可能在部分场景下过于严格
 - 仅在图像分类任务上验证，未扩展到检测、分割等密集预测任务

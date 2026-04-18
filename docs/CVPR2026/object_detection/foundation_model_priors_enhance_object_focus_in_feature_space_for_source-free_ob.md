@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Foundation Model Priors Enhance Object Focus in Feature Space for Source-Free Object Detection
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{L}_{\text{IRPL}} = \sum_{(\hat{b},\hat{c})} w_{\hat{c}}[\alpha(-\log 
 - **理论支撑扎实**：提供完整的检测风险分解与上界分析，SPAR 和 IRPL 各自对应理论中的具体项
 - **长尾友好**：IRPL 显著提升低频类性能（train/truck/bus），不损害头部类
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 OVSAM 掩码质量有依赖，若基础模型在极端域（如热红外）分割不佳，SPAR 效果可能打折
 - 分类精度提升相对有限（person/car 类 AP 几乎不变），主要收益来自稀有类

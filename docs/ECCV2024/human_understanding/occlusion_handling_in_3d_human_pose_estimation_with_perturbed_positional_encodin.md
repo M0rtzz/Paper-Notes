@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Occlusion Handling in 3D Human Pose Estimation with Perturbed Positional Encoding
 description: >-
@@ -119,7 +119,7 @@ PerturbPE建立在MöbiusGCN之上。整体流程：(1) 给定可能有边缺失
 - 从图拉普拉斯特征基的规则/不规则分解角度理解遮挡问题，提供了理论支撑
 - 方法极其轻量——不增加参数、不改变架构、推理时间几乎不变，纯粹通过更好的位置编码提升性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设关节数已知（只是边缺失），实际遮挡可能导致关节也不可见
 - 扰动次数κ增加会线性增加预处理时间，论文未讨论κ的最优选择策略

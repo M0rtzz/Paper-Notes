@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AutoDS: Autonomous Data Selection with Zero-shot Generative Classifiers for Mathematical Texts
 description: >-
@@ -99,7 +99,7 @@ AutoDS 的核心流程：(1) 设计 meta-prompt 向基座模型提两个 YES/NO 
 - **与 Bradley-Terry / DPO 的理论联系**：LM-Score 的 softmax 形式与 RLHF 奖励模型一致，暗示数据选择和偏好优化可能在理论上统一
 - **成本效率极高**：用 4 张 A100 约 750 GPU 小时处理 1126 万文档，成本不到 1 万美元（vs 人工标注 1000 万+美元）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评分质量依赖基座模型能力——弱模型可能无法准确评估数学内容价值
 - 仅验证了数学领域，其他专业领域（医学/法律/代码）的 meta-prompt 需重新设计

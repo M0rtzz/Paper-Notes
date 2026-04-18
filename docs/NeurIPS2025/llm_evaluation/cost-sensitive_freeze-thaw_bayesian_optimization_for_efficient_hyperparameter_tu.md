@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cost-Sensitive Freeze-thaw Bayesian Optimization for Efficient Hyperparameter Tuning
 description: >-
@@ -126,7 +126,7 @@ $\lambda_1, \lambda_2 \sim \text{Uniform}(0,1)$。可无限采样训练数据，
 - **自适应停止准则**效果显著优于固定阈值，且接近理论最优停止点
 - LC mixup 数据增强简单有效，可推广到其他 PFN 训练场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 效用函数形式需用户先验（虽然提供了 Bradley-Terry 估计，但仍需指定函数族）
 - 配置空间固定为有限集 $\mathcal{X}$，不支持连续 HPO
 - 仅在表格/NLP/视觉分类 LC 上验证，未覆盖大规模 LLM 训练场景

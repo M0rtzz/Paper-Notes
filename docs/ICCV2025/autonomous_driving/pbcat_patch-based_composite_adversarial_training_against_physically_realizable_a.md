@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PBCAT: Patch-Based Composite Adversarial Training against Physically Realizable Attacks on Object Detection
 description: >-
@@ -127,7 +127,7 @@ $$\theta = \arg\min_\theta \mathbb{E}_\mathbf{x}\left\{\max_{\|\delta_p \odot \m
 - **高效的梯度引导**：与之前需要多次前向推理搜索最优位置的方法相比，仅需一次前向/反向传播
 - **实际安全价值**：直接应对穿着对抗服装隐身的真实威胁，对视频监控和自动驾驶安全意义重大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与大多数 AT 工作类似，PBCAT 会轻微降低干净数据上的准确率
 - 物理可实现攻击的鲁棒性与干净准确率之间是否存在内在权衡仍是开放问题

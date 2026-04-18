@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spiking Brain Compression: Post-Training Second-Order Compression for Spiking Neural Networks
 description: >-
@@ -123,7 +123,7 @@ $$\arg\min_{\hat{W}} E_X[\mathcal{L}(f(X,W), f(X,\hat{W}))], \text{ s.t. } \math
 - **SMP 的"常数代理梯度"简化令人意外地有效**：看似粗糙的 $g(u) = 1$ 近似，却因 OBS 只关注 Hessian 相对大小而成立。
 - **首次压缩大型 SNN**的里程碑意义：为未来大规模 SNN 的部署开辟了道路。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 量化中存在权重补偿导致的越界问题（后量化权重被推到网格范围外），需要研究更好的量化网格选择。
 - 目前只使用了最简单的常数代理梯度，更精细的代理梯度函数可能进一步提升性能。

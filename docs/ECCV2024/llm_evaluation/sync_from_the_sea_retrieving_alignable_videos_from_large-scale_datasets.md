@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sync from the Sea: Retrieving Alignable Videos from Large-Scale Datasets
 description: >-
@@ -112,7 +112,7 @@ DRAQ 越低说明最优对齐相对随机对齐提升越大，即两个视频越
 - **评估协议的创新**：提出基于环形一致性（Cycle Consistency）的 AVR 评估方法，避免了密集标注的昂贵成本
 - **对现有基准的反思**：指出 PennAction 上的代理指标可通过位置编码"作弊"，提出更直接的 Aligned Phase Agreement 指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 跨数据集对齐（不同动作类间的语义对齐）效果有限
 2. DRAQ 的随机路径采样策略仍有优化空间（如学习式采样）

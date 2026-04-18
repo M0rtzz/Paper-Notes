@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 7DGS: Unified Spatial-Temporal-Angular Gaussian Splatting
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **高效**：在更好质量的同时用更少的点，渲染速度可达401 FPS
 - 自定义了 7DGS-PBR 数据集（真实CT心脏 + 体积云 + 体积火焰），填补了动态+视角依赖的评测空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 7D协方差矩阵参数量（28个独立元素 per Gaussian）比3DGS（6个）和4DGS多得多，内存开销增加
 - Technicolor 数据集上提升较小（+0.33 dB），说明对真实复杂场景的泛化可能有限
 - AGR 的 MLP 引入了额外计算，使完整版 7DGS 的 FPS 低于 4DGS

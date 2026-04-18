@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MonoCLUE: Object-Aware Clustering Enhances Monocular 3D Object Detection
 description: >-
@@ -60,7 +60,7 @@ MonoCLUE基于DETR架构，包含以下核心组件：
 
 #### 1. 局部聚类（Local Clustering）
 
-**做什么**：在物体形状mask内对视觉encoder特征进行K-means聚类，提取具有多样视觉线索的局部聚类特征 $L_c \in \mathbb{R}^{N_l \times C}$。
+**功能**：在物体形状mask内对视觉encoder特征进行K-means聚类，提取具有多样视觉线索的局部聚类特征 $L_c \in \mathbb{R}^{N_l \times C}$。
 
 **核心思路**：
 1. 使用SAM生成物体形状mask $M_n$ 替代传统box形状mask → 消除背景噪声
@@ -76,7 +76,7 @@ $$L_c^{(k)} = \frac{\sum_{i,j} M_n^{(k)}(i,j) \cdot \mathbf{F}_n^v(i,j)}{\sum_{i
 
 #### 2. 广义场景记忆（Generalized Scene Memory）
 
-**做什么**：跨图像聚合局部聚类特征，构建数据集级别的共享外观表示 $G_c \in \mathbb{R}^{N_g \times C}$。
+**功能**：跨图像聚合局部聚类特征，构建数据集级别的共享外观表示 $G_c \in \mathbb{R}^{N_g \times C}$。
 
 **核心思路**：
 1. 初始化 $N_g$（=类别数）个embedding向量作为记忆
@@ -96,7 +96,7 @@ $$G_c = \text{softmax}\left(\frac{w_q G_c (w_k \tilde{L}_c)^\top}{\sqrt{C}}\righ
 
 #### 3. 相似性重定位（Similarity-based Re-localization）
 
-**做什么**：利用聚类特征发现图像中分割头遗漏的物体区域（特别是遮挡/小物体）。
+**功能**：利用聚类特征发现图像中分割头遗漏的物体区域（特别是遮挡/小物体）。
 
 **核心思路**：
 1. 计算视觉特征 $\mathbf{F}_n^v$ 与所有 $N_l$ 个聚类特征的像素级余弦相似度
@@ -113,7 +113,7 @@ $$c = \sum_{i,j} \text{softmax}(S(i,j)) \cdot r(i,j), \quad \Delta(i,j) = c - r(
 
 #### 4. 查询初始化（Query Initializer）
 
-**做什么**：将局部聚类特征 $L_c$、广义场景记忆 $G_c$ 和背景特征 $B_c$ 预注入object queries。
+**功能**：将局部聚类特征 $L_c$、广义场景记忆 $G_c$ 和背景特征 $B_c$ 预注入object queries。
 
 **核心思路**：
 - 背景特征 $B_c \in \mathbb{R}^{N_b \times C}$：对背景区域（$1-M_n$）用相同K-means方法得到，提供上下文线索（地面信息有助于深度估计）
@@ -200,7 +200,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{2D} + \mathcal{L}_{3D} + \lambda \mathcal{L
 3. **场景记忆**提供了一种"跨图像知识迁移"的廉价方法：不需要对比学习或大规模预训练，简单的交叉注意力聚合就够了。
 4. **CUDA加速的K-means**使得聚类操作实际开销很小（52ms vs 42ms）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在KITTI上评测，数据集较小且场景单一，需要更多数据集（如Waymo、nuScenes）验证泛化性
 2. K-means的簇数 $N_l$ 固定为10，未探索自适应确定最优簇数的方法

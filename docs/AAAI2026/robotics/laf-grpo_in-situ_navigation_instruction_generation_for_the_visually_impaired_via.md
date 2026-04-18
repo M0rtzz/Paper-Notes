@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LaF-GRPO: In-Situ Navigation Instruction Generation for the Visually Impaired via GRPO with LLM-as-Follower Reward
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{J}_{\text{GRPO}}(\theta) = \mathbb{E}_{q, \{o_i\} \sim \pi_{\theta_{\
 3. **奖励设计的人体工学考量**：方向和距离权重 0.4 > 安全警报 0.2，反映了导航任务的实际优先级
 4. **时钟方向系统**（如"1点钟方向"）比角度更直观，是面向视障用户的人性化设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在模拟环境（CARLA）中验证**，未进行真实世界测试
 2. **代理用户而非真实视障用户**参与评估，可能存在认知偏差

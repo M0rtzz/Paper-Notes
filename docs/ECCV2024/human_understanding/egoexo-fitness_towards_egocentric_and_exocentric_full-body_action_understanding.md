@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoExo-Fitness: Towards Egocentric and Exocentric Full-Body Action Understanding
 description: >-
@@ -141,7 +141,7 @@ EgoExo-Fitness 是一个**数据集+基准**贡献，核心包含三个部分：
 3. **下看ego相机的独到设计**：除正前方外，左右下方两个相机捕获更多身体运动细节，弥补了正前方ego相机身体可见度不足的问题
 4. **动作序列设计**：每段视频包含3-6种不同动作，天然支持动作定位和序列验证任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模（32小时）相比 Ego-Exo4D（数百小时）较小
 - 仅覆盖12类健身动作，运动多样性有限

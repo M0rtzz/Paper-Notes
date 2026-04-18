@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Disentangled Concepts Speak Louder Than Words: Explainable Video Action Recognition
 description: >-
@@ -149,7 +149,7 @@ $$\mathcal{L}_{cls} = -\frac{1}{K}\sum_k y_k\log\hat{y}_k + \lambda[(1-\alpha)\f
 3. **前置可解释设计**：不是事后解释，而是模型本身通过概念做预测，保证解释的忠实性
 4. **实用的模型调试能力**：概念权重的可编辑性使得模型调试和域适应变得简单直接
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖2D姿态估计器的质量，估计不准确会影响运动概念质量
 2. 仅适用于以人为中心的动作识别，对非人类动作（如自然现象）不适用

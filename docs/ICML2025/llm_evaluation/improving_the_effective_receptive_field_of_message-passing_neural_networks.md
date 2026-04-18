@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving the Effective Receptive Field of Message-Passing Neural Networks
 description: >-
@@ -87,7 +87,7 @@ tags:
 - 多尺度方法从 CNN 迁移到 GNN 的思路自然但验证充分
 - 框架通用性强，可作为任何 MPNN 的即插即用增强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Graclus 粗化是固定的预处理，不可学习
 - 对非常异构的图拓扑，粗化质量可能不一致
 - 未与最新 Graph Transformer 方法做全面对比

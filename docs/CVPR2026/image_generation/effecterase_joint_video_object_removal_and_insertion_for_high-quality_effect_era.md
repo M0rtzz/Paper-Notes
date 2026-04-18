@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EffectErase: Joint Video Object Removal and Insertion for High-Quality Effect Erasing
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{denoise}}^{\text{remove}} + \m
 - **VOR 数据集价值巨大**：60K 配对视频、145小时、真实+合成混合，是该领域迄今最大规模数据集
 - 软差异图先验比二值 mask 保留更多强度信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对极端遮挡（如大面积前景遮挡背景）的恢复质量仍有待提升
 - 真实拍摄数据的采集成本高，难以覆盖所有场景

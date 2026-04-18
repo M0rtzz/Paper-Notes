@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaptiveStep: Automatically Dividing Reasoning Step through Model Confidence
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L}_{PRM}^\theta = -\sum_{k=1}^{K} (r_k^e \log r_k^\theta + (1-r_k^e) 
 - 数据构建成本仅为 Math-Shepherd 等方法的 70%，且只需单个模型采样（非多模型）
 - 收集并开源了 LeetCodeDataset（1940 道题 + 测试用例 + sandbox），填补了代码 PRM 评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 2% 阈值虽源于认知科学，但对不同能力的模型可能并非最优，更强的模型可能需要更少的划分点
 - 仅用单一模型生成 rollout 数据，限制了跨模型迁移性（vs Math-Shepherd 用多模型）
 - ASPRM-M 在 MATH500 上表现一般，可能因为训练数据未覆盖 MATH 测试集且仅用单模型构建
@@ -202,7 +202,7 @@ $$\mathcal{L}_{PRM}^\theta = -\sum_{k=1}^{K} (r_k^e \log r_k^\theta + (1 - r_k^e
 - 开源了功能级 LeetCode 数据集（含测试用例和沙盒），填补了代码 PRM 训练数据的空白
 - 跨域数据混合训练是一个低成本增强 PRM 的实用 trick
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 阈值 2% 并非对所有模型最优，更强的模型可能需要更少的训练数据（论文已观察到但未深入探讨自适应阈值选择）
 - 单模型生成训练数据限制了迁移能力，论文在 MATH500 上的 ASPRM-M 表现不如多模型构建的基线
 - 代码任务的 PRM 训练数据较难获取（49k vs 388k），在更大规模数据下效果可能进一步提升

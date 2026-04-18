@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM2Fx-Tools: Tool Calling for Music Post-Production
 description: >-
@@ -84,7 +84,7 @@ $$\mathcal{L}_{\text{NTL-WAS}} = \frac{1}{|\mathcal{I}_{\text{num}}|} \sum_{i \i
 - Fx-chain 排序对最终音频质量至关重要（即使参数精度高，错误排序也导致质量下降）
 - LP-Fx 数据集（101K 对话）为音频效果 LLM 研究提供了基础设施
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 工具集限于 9 个模块 26 个参数，实际后期制作更复杂
 - 数据生成依赖 LLM 合成对话，可能存在分布偏差
 - 4B 参数模型在复杂场景下可能力有不逮

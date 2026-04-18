@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Points-to-3D: Structure-Aware 3D Generation with Point Cloud Priors
 description: >-
@@ -45,7 +45,7 @@ tags:
 
 1. **点云先验驱动的潜空间初始化**：
 
-    - **做什么**：将可见点云编码到 TRELLIS 的 SS latent 空间作为生成起点，替代纯噪声初始化
+    - **功能**：将可见点云编码到 TRELLIS 的 SS latent 空间作为生成起点，替代纯噪声初始化
     - **核心公式**：
     $\mathbf{q}_{\text{comb}} = \mathbf{m}_s \odot \mathbf{q}_{\text{vis}} + (1 - \mathbf{m}_s) \odot \boldsymbol{\epsilon}_s$
       其中 $\mathbf{q}_{\text{vis}} = \mathcal{E}_s(\mathbf{M}')$ 是编码后的可见区域 latent，$\mathbf{m}_s$ 是下采样到 latent 分辨率（$r=16$）的 occupancy mask
@@ -53,7 +53,7 @@ tags:
 
 2. **Mask-aware 结构补全网络 $\mathcal{G}_{inp}$**：
 
-    - **做什么**：基于 TRELLIS 的 Structure Flow Transformer 微调，学习从可见区域向不可见区域推断几何
+    - **功能**：基于 TRELLIS 的 Structure Flow Transformer 微调，学习从可见区域向不可见区域推断几何
     - **输入设计**：将 mask $\mathbf{m}_s$ 沿通道维度拼接到 $\mathbf{q}_{\text{comb}}$，替换掉原始输入层适配新通道数 $(c_s + c_m)$
     - **训练数据构建**：从完整 3D 资产的 $T=24$ 个视角渲染深度图，通过深度一致性检验（阈值 $\tau$）提取每个视角的可见点云，构造 $(\mathbf{q}_{\text{comb}}^t, \mathbf{m}_s^t, \mathbf{I}_t, \mathbf{q}_{\text{gt}})$ 训练对
     - **训练目标**：Conditional Flow Matching 损失
@@ -61,7 +61,7 @@ tags:
 
 3. **两阶段采样策略（Staged Sampling）**：
 
-    - **做什么**：将 $t$ 步采样分为结构补全阶段（$s$ 步）和边界精炼阶段（$t-s$ 步）
+    - **功能**：将 $t$ 步采样分为结构补全阶段（$s$ 步）和边界精炼阶段（$t-s$ 步）
     - **结构补全阶段**：每步重建 $\mathbf{q}_{\text{pred}}$ 后与 mask $\mathbf{m}_s$ 重新拼接，循环 $s$ 步，保持可见区域锚定
     - **边界精炼阶段**：将 mask 替换为全 1（$\mathbf{m}_1$），转为标准去噪，修复补全边界处的"空洞"伪影
     - **设计动机**：纯 inpainting 会在可见/不可见区域交界处因下采样信息损失产生几何空洞；后续精炼步骤可在不破坏全局结构的前提下修复边界
@@ -117,7 +117,7 @@ tags:
 3. **灵活输入**：支持真实传感器点云和 VGGT 预测点云，覆盖有/无真实 3D 先验的场景
 4. **即插即用**：基于 TRELLIS 框架，仅修改输入层和训练数据，架构改动最小
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. VGGT 预测点云与真实点云仍有差距（F-Score 0.881 vs 0.964），受限于前馈预测精度
 2. 体素化分辨率 $N=64$ 可能限制细粒度几何表达

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Joint Learning Approach to Hardware Caching and Prefetching
 description: >-
@@ -122,7 +122,7 @@ $$L_{total} = L_{replacement} + \lambda_1 L_{prefetch} + \lambda_2 L_{contrastiv
 3. **系统思维**：将多任务学习的思想引入系统组件设计，开辟了新的研究方向
 4. **实用性强**：方法可以自然推广到其他存在策略耦合的系统组件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **初步结果**：论文明确指出这是"promising preliminary results"，实验规模和数据集有限
 2. **工作负载覆盖不足**：仅在有限的内存访问模式上验证，缺少对多样化真实负载的测试

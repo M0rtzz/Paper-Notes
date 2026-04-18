@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Trustworthy Multi-Turn LLM Agents via Behavioral Guidance
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **任务分析器的元学习角色**新颖：不直接解任务，而是决定如何解任务，类似认知科学中灵活人类学习的概念
 - **规则从过拟合到泛化的自然进化**过程令人印象深刻，与 RL 的探索利用理论一致
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 仅在两个简单游戏任务（GmN 和 Wordle）上验证，真实多轮 Agent 任务场景的适用性未验证
 - 任务分析器目前为简单的 LLM prompt 实现，更复杂任务可能需要数据驱动的分析策略

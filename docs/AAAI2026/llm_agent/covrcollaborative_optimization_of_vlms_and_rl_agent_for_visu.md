@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COVR: Collaborative Optimization of VLMs and RL Agent for Visual-Based Control
 description: >-
@@ -149,7 +149,7 @@ VLM 推理性能随微调迭代逐步提升：Iteration 0 → 5，ER 从 -13 提
 - **渐进式微调**减少计算开销：间隔线性增长的设计简单但有效，避免了后期不必要的频繁微调。
 - **跨基线兼容性好**：可以"即插即用"地增强 SAC/DeepMDP/RAD 等不同基线。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **方差偏大**：COVR 在 CARLA 上的标准差（±81/±89）明显高于 DGC（±13/±14）和 ResAct（±36/±40），虽然均值最高但稳定性不足，几个种子之间差异大。
 - **VLM 规模受限**：受计算资源限制只用了最大 3B 的 VLM。作者也承认更大的 VLM 可能带来更丰富的先验。

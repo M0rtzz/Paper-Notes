@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPACE: Noise Contrastive Estimation Stabilizes Self-Play Fine-Tuning for Large Language Models
 description: >-
@@ -114,7 +114,7 @@ Space 在 GSM8K 上 **+8.3 点**，IFEval 上 **+12.3 点**。
 4. **数据高效**：50K + Space 超越 200K + SFT
 5. **稳定性优势明显**：其他方法峰值后退化，Space 持续改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅 7B 模型验证**：缺少更大规模实验
 2. **生成质量依赖基础模型**：基础模型差时 NCE 区分信号可能不足

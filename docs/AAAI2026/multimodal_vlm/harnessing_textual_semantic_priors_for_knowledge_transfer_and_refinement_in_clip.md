@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harnessing Textual Semantic Priors for Knowledge Transfer and Refinement in CLIP-Driven Continual Learning
 description: >-
@@ -157,7 +157,7 @@ SECA基于CLIP构建，包含冻结的视觉和文本编码器、可学习的文
 - **模态差距的桥接方案**：不是简单地融合文本和视觉特征，而是用文本的关系结构来"雕刻"视觉原型
 - **无replay即超SOTA**：说明语义引导的选择性迁移可以替代传统的样本/特征回放策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在分类任务上验证，未扩展到检测、分割等更复杂的持续学习场景
 - adapter池固定大小为5，对于任务数量极多（如100+任务）的场景可能不够
 - 依赖于CLIP的视觉-文本对齐质量，对于CLIP对齐较弱的领域（如医学）效果未知

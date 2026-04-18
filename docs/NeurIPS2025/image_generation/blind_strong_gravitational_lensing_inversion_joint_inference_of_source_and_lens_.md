@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Blind Strong Gravitational Lensing Inversion: Joint Inference of Source and Lens Mass with Score-Based Models
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：score-based 先验很有表达力但需要已知前向算子（透镜模型），而天文学中前向算子本身就是未知的——需要同时推断数据和算子。
 
-**本文要解决什么？** 在 score-based 先验框架下实现源和透镜的联合推断（盲反演）。
+**本文目标** 在 score-based 先验框架下实现源和透镜的联合推断（盲反演）。
 
 **切入角度**：将离散时间的 GibbsDDRM（一种用于未知前向算子逆问题的扩散采样器）改编到连续时间域，结合两种似然 score 近似（CLA 和 ΠiGDM）。
 
-**核心 idea 一句话**：连续时间 GibbsDDRM + score-based 源先验 + 参数化透镜模型 = 首次实现 score-based 盲透镜反演。
+**核心 idea**：连续时间 GibbsDDRM + score-based 源先验 + 参数化透镜模型 = 首次实现 score-based 盲透镜反演。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **"联合推断源+透镜"**解锁了 score-based 模型在引力透镜科学中的完整应用——之前假设透镜已知是一个严重的实用性限制
 - 对即将到来的 Rubin/LSST 和 Euclid 巡天（预计发现 20 万个强透镜系统）的自动分析管道有直接指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅在模拟数据上验证，真实 HST/JWST 观测的测试待完成
 - 12 参数的透镜模型是参数化的，更复杂的质量分布（如暗物质子结构）需要扩展
 - 计算成本仍较高：406 个联合样本需要显著的 GPU 时间

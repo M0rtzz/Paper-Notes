@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pedagogically-Inspired Data Synthesis for Language Model Knowledge Distillation
 description: >-
@@ -108,7 +108,7 @@ IOA 是一个三阶段流水线：Identifier（识别什么知识需要教）→
 - 知识依赖图的构建和条件性能分析是数据驱动的，客观可量化
 - 在复杂推理任务上的提升远超简单指令跟随任务，符合教育学理论预期
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 知识模块的分解依赖教师 LLM 的自我组织能力，可能不完全准确
 - 阶段性训练的总时间开销较大（需要多轮评估和补救）

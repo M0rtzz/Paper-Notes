@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DMesh++: An Efficient Differentiable Mesh for Complex Shapes
 description: >-
@@ -117,7 +117,7 @@ DMesh++延续DMesh的概率化思想：每个点用 $(d+1)$ 维向量表示（$d
 3. **通用的2D/3D适配**：同一框架可以处理2D线段网格和3D三角网格，展示了方法的理论通用性
 4. **实用价值**：作为ML pipeline中可微网格的基础组件，可被生成模型（如MeshGPT变体）直接采用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\mathbb{F}_{min}$ 是 $\mathbb{F}_{dt}$ 的严格子集，因此生成的网格可能有"空洞"（某些Delaunay面不在Minimum-Ball集中）
 - 多视图重建的质量与NeuS等隐式方法仍有差距

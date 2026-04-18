@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MMTok: Multimodal Coverage Maximization for Efficient Inference of VLMs
 description: >-
@@ -149,7 +149,7 @@ MMTok将视觉token选择形式化为**最大覆盖问题**，通过子模函数
 - **IC指标对evaluation的反思**：指出SQA、MMMU等数据集不适合评估视觉token选择质量
 - **Agent增强**：轻量级VLM的预回答作为辅助信号，思路新颖但效果因任务而异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅在LLM输入前选择token，LLM推理过程中的token动态剪枝未探索
 - Agent方法对多选题QA效果不佳（Agent回答如"A"对token选择无意义引导）

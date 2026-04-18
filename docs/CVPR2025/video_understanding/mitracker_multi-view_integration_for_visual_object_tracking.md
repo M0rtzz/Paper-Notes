@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MITracker: Multi-View Integration for Visual Object Tracking
 description: >-
@@ -93,7 +93,7 @@ $$L_{track} = L_{cls} + \lambda_{giou}L_{giou} + \lambda_{L_1}L_1 + \lambda_{bev
 - **3D-aware token 的设计**巧妙地将多视角空间信息压缩为单个 token，以最小开销实现跨视角信息传递
 - **恢复能力是多视角跟踪的核心价值所在**——当一个视角被遮挡时，其他视角的信息可以帮助恢复
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅包含室内场景，泛化到户外仍需验证
 - 依赖精确的相机标定参数进行 3D 投影，在无法标定的场景（如手持相机）中难以应用

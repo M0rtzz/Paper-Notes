@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoLoGen: Progressive Learning of Concept-Localization Duality for Unified Image Generation
 description: >-
@@ -112,7 +112,7 @@ tags:
 - 渐进训练 + 专家冻结是终身学习在生成模型中的有效应用，有效缓解灾难性遗忘
 - 数据工程细致：mask inpainting 的 3 种 mask 类型（random/object-shaped/Bessel curve 不规则）、20:40:40 采样比例
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 随着任务和专家数量增加，PRW 的内存占用持续增长，可扩展性受限
 2. 当前仅验证了 5 个任务，对更多条件类型（如 pose、sketch）的泛化能力未知

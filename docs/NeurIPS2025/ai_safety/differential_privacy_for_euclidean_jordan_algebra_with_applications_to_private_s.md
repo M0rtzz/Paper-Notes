@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Differential Privacy for Euclidean Jordan Algebra with Applications to Private Symmetric Cone Programming
 description: >-
@@ -102,7 +102,7 @@ $$\alpha = \widetilde{O}\left(\frac{\Delta_\infty^{1/2} r^{1/4} k^{1/4}}{\epsilo
 4. **Noisy MWU 框架**：将隐私噪声注入 MWU 的 oracle 中形成 noisy MWU，可推广到其他需要不同误差保证的场景
 5. **$\gamma$-net 技术**：对正半定锥和一般 EJA 中 primitive idempotent 射线进行 $\gamma$-net 量化，这一技术可能有独立价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **隐私分析工具较基础**：仅使用了经典的 Gaussian 机制和 Advanced Composition，未利用 Rényi DP 或 Moments Accountant 等更紧的分析工具
 2. **约束不完全满足**：在高灵敏度设置下，输出解会违反少量约束；在低灵敏度设置下有 $\alpha$ 量级的约束松弛。能否精确满足所有约束仍是开放问题

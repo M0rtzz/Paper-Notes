@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JavisDiT++: Unified Modeling and Optimization for Joint Audio-Video Generation
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L}_{\mathrm{DPO}}^{av} = -\mathbb{E}\left[\log\sigma\left(-\beta_v(\m
 - 首次将 DPO 引入多模态联合生成，且设计了模态感知的偏好数据构建流程
 - 推理仅比纯视频生成多 1.6% 开销，实用性极强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前视频分辨率和时长受限（240-480p, 2-5s），离实际商用还有距离
 - AV-DPO 的客观指标提升有限，奖励模型的评估能力可能是瓶颈

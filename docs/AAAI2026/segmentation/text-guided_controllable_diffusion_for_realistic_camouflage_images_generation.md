@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Text-guided Controllable Diffusion for Realistic Camouflage Images Generation
 description: >-
@@ -165,7 +165,7 @@ CT-CIG在总体FID上以52.88大幅领先，CLIPScore最高表明最佳语义对
 4. **频率域增强控制信号**：在扩散模型中引入傅里叶变换来增强信息贫乏的二值掩码控制，是少见但有效的设计
 5. **参数效率高**：仅微调约4%参数即可适配伪装场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖COD数据集的掩码质量，掩码标注噪声会影响训练效果
 2. VLM生成的文本提示质量有上限，复杂场景的描述可能不够准确

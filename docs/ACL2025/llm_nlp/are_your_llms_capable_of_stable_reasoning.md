@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are Your LLMs Capable of Stable Reasoning?
 description: >-
@@ -117,7 +117,7 @@ tags:
 - 基于超几何分布的公式设计简洁优雅，无需额外拟合参数
 - 开源了完整评估框架，支持 OpenCompass 和 LightEval
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在数学推理上验证，未扩展到代码生成、逻辑推理等其他需要稳定性的任务
 - LiveMathBench 题量有限（~100题级别），可能不够大规模

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robustness in Both Domains: CLIP Needs a Robust Text Encoder
 description: >-
@@ -139,7 +139,7 @@ OpenCLIP-ViT-H/14 结果：
 3. **即插即用**：鲁棒编码器可直接替换SD/SDXL中的原始编码器
 4. **鲁棒性≈可解释性**：鲁棒模型的embedding反演质量更高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 图像和文本编码器独立微调，联合对抗攻击（同时扰动两个域）未测试
 2. 仅研究字符级攻击，token级鲁棒性未涉及（因token攻击常改变语义）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Energy Matching: Unifying Flow Matching and Energy-Based Models for Generative Modeling
 description: >-
@@ -142,7 +142,7 @@ Spearman 相关系数 vs PNG 压缩率（4096 张图）：
 - ⭐⭐⭐⭐ **多功能性**：同一模型可做生成、逆问题求解、LID 估计——都源于显式似然建模
 - ⭐⭐⭐ **蛋白质设计**：交互能项轻松扩展到受控蛋白质生成，展示方法的灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分辨率有限**：实验仅在 CIFAR-10 (32×32) 和 ImageNet 32×32 上验证，未扩展到高分辨率
 2. **采样步数多**：采样需要 325 步 Euler-Heun，比一些加速流匹配方法慢

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predicting the Performance of Black-Box LLMs through Follow-Up Queries
 description: >-
@@ -137,7 +137,7 @@ QueRE（Follow-up Question Representation Elicitation）的工作流程：
 3. **实际应用潜力巨大**：可用于API审计（检测是否提供了声称的模型）、安全监控（检测系统提示注入）、质量保证（预测部署时的错误概率）
 4. **PAC-Bayes泛化界更紧**：低维表示+线性模型组合天然有更好的泛化保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 后续查询引入额外延迟（虽可通过批处理缓解）
 2. 方法依赖LLM回答后续问题时概率分布的有意义变化，对非常低质量的模型可能不成立

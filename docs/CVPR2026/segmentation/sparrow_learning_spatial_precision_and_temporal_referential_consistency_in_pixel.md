@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs
 description: >-
@@ -63,7 +63,7 @@ SPARROW 的流程：双分支视觉编码器（空间 ℱg + 时间 ℱh）→ V
 
 ### 关键设计 1：目标特定追踪特征（TSF）
 
-**做什么**：在训练时为模型提供时间对齐的目标特定参考线索，使模型学会跨帧身份保持。
+**功能**：在训练时为模型提供时间对齐的目标特定参考线索，使模型学会跨帧身份保持。
 
 **核心思路**：
 1. 给定文本 query，GroundingDINO 在某一帧检测目标，CLDTracker 跨帧传播得到候选框序列 B'_1...B'_K'
@@ -76,7 +76,7 @@ SPARROW 的流程：双分支视觉编码器（空间 ℱg + 时间 ℱh）→ V
 
 ### 关键设计 2：双提示定位（Dual-Prompt Grounding）
 
-**做什么**：将 [BOX] 和 [SEG] 结合实现粗到细定位，稳定首帧并缓解漂移。
+**功能**：将 [BOX] 和 [SEG] 结合实现粗到细定位，稳定首帧并缓解漂移。
 
 **[BOX] 分支**：
 1. LLM 输出 [BOX] embedding e_BOX，经 L→V 适配器 Wb 投影
@@ -166,7 +166,7 @@ VideoGLaMM 在 Ref-DAVIS17 上 F（边界质量）提升高达 +14.5，所有集
 - **粗到细双提示**：[BOX] 提供几何约束、[SEG] 提供语义精修，二者在信息维度上正交互补，类似于检测后分割的两阶段思路但通过 token 优雅实现
 - **大规模数据集构建**：整合 7 个公开数据源形成 30K+ 视频的统一训练集，填补了目标中心时间定位数据的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 proposal 召回**：小目标、严重遮挡或未见类别若 proposal 未覆盖则无法恢复，recall 是瓶颈
 2. **长视频误差累积**：早期 [BOX] 错误仍可能在长序列中传播，虽然双提示缓解了但未完全消除

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Sustainability of Adversarial Examples in Class-Incremental Learning
 description: >-
@@ -103,7 +103,7 @@ SAE由两个核心模块组成：(1) 语义校正模块——CLIP通用语义 + 
 - **CLIP作为语义锚点的巧妙利用**：CLIP的跨域通用性天然适合作为抵抗域漂移的稳定参考
 - **攻击者假设的现实性**：仅需初始模型和公开数据，不需要CIL训练数据或过程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑定向攻击，非定向攻击在CIL下的可持续性未探讨
 - 如果目标域与CLIP训练分布差距大，语义锚点质量可能下降

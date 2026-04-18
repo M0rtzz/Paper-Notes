@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Death of the Novel(ty): Beyond n-Gram Novelty as a Metric for Textual Creativity
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **LLM 写作的"新颖度-语用合理性"权衡**：LLM 越试图生成新颖文本越可能产生不合语境的表达，而人类写作不存在这种权衡
 - **close reading 标注范式本身的价值**：为文本创造力研究提供了表达级细粒度标注数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 前沿闭源模型（GPT-5/Claude 4.1）的探索性研究规模较小（仅各 5 篇），统计效力不足
 - 仅聚焦小说领域，其他文体（诗歌、科技写作、新闻）的适用性未知

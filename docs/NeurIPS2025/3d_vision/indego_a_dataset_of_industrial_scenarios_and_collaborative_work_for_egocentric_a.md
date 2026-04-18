@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IndEgo: A Dataset of Industrial Scenarios and Collaborative Work for Egocentric Assistants
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **三项挑战性基准**：错误检测（含严重性分级）、推理问答、协作理解，均暴露了SOTA模型的显著不足
 - **硬件可扩展性**：基于Project Aria设备，轻量穿戴式采集方案可推广到更多工业场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **单一场地**：数据仅在柏林Fraunhofer IPK采集，缺乏跨厂区和跨行业的泛化性验证
 - **参与者数量有限**：20名参与者，性别比15:5反映工业现状但可能引入偏差

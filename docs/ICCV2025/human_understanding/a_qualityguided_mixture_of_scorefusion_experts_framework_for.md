@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition
 description: >-
@@ -143,7 +143,7 @@ L_score = ReLU(S'_nm) + ReLU(m - S'_mat)
 4. **Score Triplet Loss**：直接对齐训练目标与评价指标（TAR@FAR），比标准三元组损失更有效
 5. **强泛化性**：不同模态组合（2模态/3模态）、不同模型组合、不同数据集均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **专家数量有限**：仅实验了 Z=1,2，未深入探讨计算代价和收益平衡
 2. **三模态融合不一定优于两模态**：在 LTCC 上三模态融合因弱人脸模态反而退化，框架对极弱模态的鲁棒性仍有提升空间

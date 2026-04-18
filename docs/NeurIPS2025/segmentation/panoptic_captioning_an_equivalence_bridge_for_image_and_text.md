@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Panoptic Captioning: An Equivalence Bridge for Image and Text
 description: >-
@@ -98,7 +98,7 @@ tags:
 -    **实际应用价值**：text-only 检索超越 CLIP-style 对齐模型（DOCCI R@1: 61.9 vs 59.9）
 -    **概念创新**：将 CLIP 的 embedding 空间对齐推进到数据空间对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 -    任务定义仍是"最小文本等价"的近似——极细微细节（地面颗粒等）未覆盖
 -    Location 维度 F1 仅 31.76——bbox 精度是主要瓶颈

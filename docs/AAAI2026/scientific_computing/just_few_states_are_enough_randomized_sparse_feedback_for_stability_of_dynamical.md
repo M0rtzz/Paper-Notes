@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Just Few States are Enough: Randomized Sparse Feedback for Stability of Dynamical Systems
 description: >-
@@ -120,7 +120,7 @@ Monte Carlo 模拟验证：$p \geq p^\star$ 时所有轨迹均方收敛至零；
 4. **自适应机制**：分量级概率分配使得高影响状态高采样、低影响状态低采样，自然适配异构传感成本
 5. **计算可行性**：基于 LMI 的算法可用标准凸优化求解器（MOSEK）高效求解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **保守性**：基于谱范数不等式的上界分析可能过于保守，$p^\star$ 可能不是紧的下界
 2. **无噪声假设**：当前分析未考虑过程噪声和测量噪声，实际系统不可避免存在干扰

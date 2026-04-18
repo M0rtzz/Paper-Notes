@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semantic Alignment and Reinforcement for Data-Free Quantization of Vision Transformers
 description: >-
@@ -146,7 +146,7 @@ $$\mathcal{L}_G = \alpha_1 \mathcal{L}^{\text{APA}} + \mathcal{L}^{\text{SL}} + 
 - **MSR + SL 的协同设计**：MSR 丰富语义但需要适配的损失函数，SL 恰好提供了多语义兼容的监督信号
 - **极少数据量化**：仅用 32 张合成图像，却能大幅提升量化模型性能，对数据隐私受限场景极有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与使用真实数据相比仍存在显著性能差距（如 W4A4 ViT-B：51.84% vs 68.16%），约 16% 的差距
 - 缺乏理论框架解释 APA 和 MSR 如何影响合成图像的形式化分析

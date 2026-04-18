@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shadows in the Code: Exploring the Risks and Defenses of LLM-based Multi-Agent Software Development Systems
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：定义两种威胁场景（MU-BA 和 BU-MA），设计覆盖 5 大恶意软件家族的 12 种攻击行为，并在三个主流框架上系统评估。
 
-**核心 idea 一句话**：首次系统化 LLM 多 Agent 软件开发系统的攻防研究——IMBIA 隐式恶意注入 + Adv-IMBIA 对抗性提示防御。
+**核心 idea**：首次系统化 LLM 多 Agent 软件开发系统的攻防研究——IMBIA 隐式恶意注入 + Adv-IMBIA 对抗性提示防御。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ tags:
 - **"更强模型更脆弱"的悖论**揭示了 instruction following 能力与安全性的矛盾——越听话的模型越容易执行恶意指令
 - **"关键 Agent 防御"策略**很实用——不需要防御所有 Agent，只需防御关键阶段的 Agent 即可达到接近全防御的效果（节省资源）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 防御方法完全基于 prompt 注入，没有代码级验证（如静态分析、沙箱执行）
 - BU-MA 场景的防御效果较弱（MetaGPT 仅降 7%），需要更强的防御机制
 - 只用 GPT-4o-mini 作为主要实验模型，跨模型验证有限

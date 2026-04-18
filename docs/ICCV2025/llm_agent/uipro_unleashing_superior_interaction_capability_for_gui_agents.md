@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UIPro: Unleashing Superior Interaction Capability for GUI Agents
 description: >-
@@ -126,7 +126,7 @@ UIPro 采用两阶段训练：
 - 系统化去噪流程揭示了 GUI 数据质量问题的严重性（某数据源 29% 噪声率）
 - 功能性 grounding 任务（funcgnd）的加入是一个重要贡献——让模型理解元素"能做什么"而非仅"是什么"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 桌面环境训练数据远少于移动和 Web，限制了 UIPro 在 Windows/MacOS 上的表现
 - 当前仅支持离线评估（offline evaluation），on-device 实时交互评估待探索

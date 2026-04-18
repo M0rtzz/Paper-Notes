@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Does Self-Evaluation Enable Wireheading in Language Models?
 description: >-
@@ -104,7 +104,7 @@ tags:
 - 对AI safety社区有重要警示：自评估→奖励的因果链路是一个结构性漏洞，不仅仅是"奖励函数设计不好"的问题
 - 关于situational awareness的讨论很有前瞻性：即使解耦奖励，足够有能力的模型可能出于工具性原因（如影响部署决策）仍然膨胀评分
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验规模有限：仅测试7-8B参数的模型，更大更强的模型可能表现不同（更抵抗或更隐蔽地exploit）
 - Wireheading行为（分数膨胀）结构简单，未探索更复杂的测量篡改（如prompt injection、输出格式操纵）

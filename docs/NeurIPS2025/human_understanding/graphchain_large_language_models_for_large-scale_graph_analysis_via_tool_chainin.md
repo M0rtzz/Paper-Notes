@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraphChain: Large Language Models for Large-scale Graph Analysis via Tool Chaining
 description: >-
@@ -141,7 +141,7 @@ $$L_{\text{STTA}}(\psi) = \mathbb{E}\left[w_L N_{\tau_i} + w_{KL} \sum_{t=0}^{N_
 - **测试时自适应无需重训**：通过图谱指纹+轻量适配器快速适配新图拓扑
 - **工具链分析有启发性**：不同领域自组织出领域特异性工具分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅处理静态图，不支持动态/时序图
 - 工具库固定为 45 个 NetworkX 函数，领域特定操作可能缺失
 - 子图划分为 <100 节点用于公平比较基线，但实际大图的子图策略未详述

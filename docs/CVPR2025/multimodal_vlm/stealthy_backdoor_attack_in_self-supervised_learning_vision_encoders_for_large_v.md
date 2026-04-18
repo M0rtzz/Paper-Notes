@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BadVision: Stealthy Backdoor Attack in Self-Supervised Learning Vision Encoders for Large Vision Language Models
 description: >-
@@ -109,7 +109,7 @@ BadVision是一个两阶段攻击框架：Stage 1 触发器优化——在冻结
 - **触发器聚焦机制精巧**：不是消除特征集中（这会降低攻击效果），而是让编码器只对真实触发器敏感，对"仿冒"触发器保持正常——思路类似对抗训练
 - **迁移性**：7B模型的后门直接在13B上生效，因为后门在编码器层面，与LLM参数无关
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 双层优化采用两阶段近似，非全局最优解
 - 仅验证了CLIP和EVA两种编码器，其他SSL编码器（如DINOv2、SigLIP）未涉及

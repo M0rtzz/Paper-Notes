@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Empirical Investigation of Neural ODEs and Symbolic Regression for Dynamical Systems
 description: >-
@@ -135,7 +135,7 @@ tags:
 - **NODE 作为数据增强器 + 去噪器** 的双重角色是一个优雅的发现：一个模型同时解决了数据稀缺和数据质量两个问题
 - 仅用 10% 的仿真数据就能通过 NODE→SR 流水线恢复 2/3 的控制方程，展示了该方法在数据稀缺科学领域的实用潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. SR 分析仅基于单次偏移仿真，扩展到多条件、多样化数据可能显著提升方程恢复率
 2. NODE 的训练数据未经优化以最大化泛化能力，可进一步探索训练集设计策略

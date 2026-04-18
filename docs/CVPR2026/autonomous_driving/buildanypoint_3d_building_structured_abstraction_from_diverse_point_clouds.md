@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BuildAnyPoint: 3D Building Structured Abstraction from Diverse Point Clouds
 description: >-
@@ -54,7 +54,7 @@ Loca-DiT（图3）学习条件分布 $p_\text{BAP}(\mathcal{M} | \mathcal{P}_{in
 
 #### 1. 三级潜在空间转换
 
-- **做什么**：设计三种潜在空间渐进弥合点云→Mesh的表示鸿沟
+- **功能**：设计三种潜在空间渐进弥合点云→Mesh的表示鸿沟
 - **核心思路**：
     - **稠密潜在网格 $\mathcal{G}_d$**：对GT点云低分辨率体素化后用稀疏VAE编码，在瓶颈层**密化**稀疏网格为稠密网格——为解码器提供完整空间上下文，能"雕刻"出未占用区域
     - **稀疏潜在网格 $\mathcal{G}_s$**：高分辨率体素化后用稀疏VAE编码——精细化几何细节
@@ -63,7 +63,7 @@ Loca-DiT（图3）学习条件分布 $p_\text{BAP}(\mathcal{M} | \mathcal{P}_{in
 
 #### 2. 分层潜在扩散
 
-- **做什么**：分两级恢复建筑的完整几何先验
+- **功能**：分两级恢复建筑的完整几何先验
 - **核心思路**：
     - 粗级扩散模型 $p_{\theta_d}(\mathcal{G}_d | \mathcal{P}_{in})$：在稠密网格上去噪，恢复基础形状
     - 细级扩散模型 $p_{\theta_s}(\mathcal{G}_s | \mathcal{G}_d)$：条件于粗级输出在稀疏网格上去噪，精细化高分辨率几何
@@ -73,7 +73,7 @@ Loca-DiT（图3）学习条件分布 $p_\text{BAP}(\mathcal{M} | \mathcal{P}_{in
 
 #### 3. 自回归Mesh生成
 
-- **做什么**：从恢复的点云条件化生成低面数、拓扑一致的建筑Mesh
+- **功能**：从恢复的点云条件化生成低面数、拓扑一致的建筑Mesh
 - **核心思路**：
     - 基于MeshAnything V2的decoder-only Transformer
     - 输入序列 $\mathcal{T} = [\mathcal{T}_P; \mathcal{T}_M^{<t}]$，自回归预测下一个mesh token
@@ -132,7 +132,7 @@ Loca-DiT（图3）学习条件分布 $p_\text{BAP}(\mathcal{M} | \mathcal{P}_{in
 2. **密化瓶颈的巧妙设计**：在稀疏VAE瓶颈处将稀疏网格密化，让解码器能同时看到"有"和"无"的区域进行形状推理
 3. **中间产物即为SOTA**：仅作为框架中间表示的恢复点云，在建筑点云补全基准上就已达到SOTA
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **数据集几何多样性受限**：公开建筑数据集偏向简单几何，复杂结构（如哥特式建筑、不规则形态）的建模能力受限
 2. **无高度/地理坐标等先验**：未利用建筑的物理约束（如重力、对称性）和地理信息

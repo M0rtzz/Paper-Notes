@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Linking Perception, Confidence and Accuracy in MLLMs
 description: >-
@@ -97,7 +97,7 @@ GRPO 训练，总奖励 $r_j = R_{\text{Conf},j} + R_{\text{Output},j} + R_{\tex
 - "校准后的置信度是免费午餐"——训练时的校准直接转化为推理时 TTS 的能力，无需额外成本
 - CA-TTS 的三个模块完全解耦、顺序无关，都只贡献投票，架构灵活且鲁棒
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CA-TTS 依赖 Expert Model（如 Gemini-2.5-Pro），引入了外部 API 成本和延迟
 - 训练数据仅 1936 样本，扩大规模可能进一步提升校准质量
 - Self-Check 的 VCD 需要对噪声图像额外推理，增加了推理开销

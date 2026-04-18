@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Catastrophic Forgetting in Kolmogorov-Arnold Networks
 description: >-
@@ -183,7 +183,7 @@ $\log(F_i)/d_i$ 近似恒定，验证遗忘与内禀维度的**指数关系**。
 - **诚实的负面结果**：KAN-LoRA在高维场景的失败并非回避而是正面呈现，增强了工作可信度
 - **实用指导**：Grid Size ↑ → 遗忘 ↓ 的量化关系为KAN在持续学习中的使用提供了直接调参指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. KAN-LoRA设计相对直接，未探索更复杂的适配策略（如task-specific spline routing）
 2. 理论假设中的Lipschitz和有界损失条件在实际网络中可能不严格成立

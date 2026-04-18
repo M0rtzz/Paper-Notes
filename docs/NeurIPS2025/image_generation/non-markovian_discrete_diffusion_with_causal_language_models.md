@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Non-Markovian Discrete Diffusion with Causal Language Models
 description: >-
@@ -113,7 +113,7 @@ CaDDi是一个统一序列（因果）和时间（扩散）建模的非马尔可
 - **非马尔可夫框架的信息论基础扎实**：Proposition 3.1 建立了非马尔可夫与马尔可夫扩散的互信息等价性，为噪声调度提供理论指导
 - **半投机解码**思路新颖——利用扩散模型自身前一步的预测作为draft，天然匹配speculative decoding范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 完整轨迹 $\mathbf{x}_{t:T}$ 会占用大量上下文窗口，虽然有truncation策略但仍受限于上下文长度
 - CaDDi-AR虽然质量更高但推理开销大 $O(L \times T)$；半投机解码缓解但未完全解决

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RoadPainter: Points Are Ideal Navigators for Topology Transformer
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：回归提供稳定的初始定位但几何精度差，分割提供精确的几何细节但定位不稳定——如何结合两者优势？
 
-**本文要解决什么**：提升高曲率区域的中心线检测精度，同时改善拓扑推理性能。
+**本文目标**：提升高曲率区域的中心线检测精度，同时改善拓扑推理性能。
 
 **切入角度**：先用 transformer decoder 回归粗略中心线点，再用这些点引导生成实例 mask，从 mask 中采样新点与回归点融合精炼。
 
@@ -137,7 +137,7 @@ $$\mathcal{L} = \mathcal{L}_{top}(\mathbf{A}_{ll}) + \mathcal{L}_{cls}(\mathbf{S
 - **存在概率 + 方向概率**的预测解决了 mask 点数量可变和方向不确定的问题，实现了端到端训练
 - **SD Map 交互模块**可插拔设计，为没有 SD Map 的场景也保持了竞争力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DET_t（交通标志检测）和 TOP_lt（车道-标志拓扑）指标不如 TopoMLP，因为使用了 3 层 BEVFormer 而非 6 层 PETR，后者更适合检测交通标志
 - mask 精炼仅对实际车道有效，虚拟车道（缺乏视觉信息）未能受益

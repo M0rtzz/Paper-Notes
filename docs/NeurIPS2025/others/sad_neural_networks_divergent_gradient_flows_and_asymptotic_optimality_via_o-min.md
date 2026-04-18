@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAD Neural Networks: Divergent Gradient Flows and Asymptotic Optimality via o-minimal Structures
 description: >-
@@ -116,7 +116,7 @@ tags:
 - **"吸引阈值" $\varepsilon$ 的存在**（Theorem 2.8(v)）：这意味着足够好的初始化必然导致损失收敛到最优值，不需要额外的收敛条件——这是一个之前被忽视的结果
 - **ReLU 的特殊性**：理论明确指出 ReLU 不满足发散结论——浅层 ReLU 网络对多项式目标存在全局最小值。这解释了不同激活函数行为的根本差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅适用于梯度流**（连续时间），目前方法无法直接推广到（随机）梯度下降：关键障碍是缺乏对 Hessian 的控制
 - 数值实验相对有限，主要作为概念验证

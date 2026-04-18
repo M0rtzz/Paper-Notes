@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EditInfinity: Image Editing with Binary-Quantized Generative Models
 description: >-
@@ -165,7 +165,7 @@ Infinity 与 FLUX 生成能力相当（0.66 vs 0.66），但 EditInfinity 大幅
 4. **简洁的平滑核设计**：Manhattan 距离 + 线性插值，无需学习参数，效果优于高斯核
 5. **公平评估设计完善**：GenEval 验证基座模型能力相当，排除优势来源于更强基座的质疑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 反演阶段 107 秒较慢（虽然单次编辑快），可探索更快的文本优化方案
 - 依赖用户提供编辑掩码（标准设定但限制了自动化）

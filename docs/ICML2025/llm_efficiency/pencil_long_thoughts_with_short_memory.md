@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PENCIL: Long Thoughts with Short Memory
 description: >-
@@ -130,7 +130,7 @@ PENCIL在所有规模上均达100%准确率，trace rate也维持100%。
 4. **小模型大能力**：25M参数解决GPT-4都失败的Einstein puzzle，展示了方法论的杠杆效应
 5. **训练与推理统一**：reduction rule在训练和推理中自然一致，无需额外推理技巧
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖算法先验**：训练数据需要预先设计好带归约标记的推理路径（scaffolded CoT），模型不能自主发现归约策略
 2. **仅验证了合成/形式化任务**：SAT、QBF、Einstein puzzle是结构化程度极高的任务，对自然语言推理的推广性待验证

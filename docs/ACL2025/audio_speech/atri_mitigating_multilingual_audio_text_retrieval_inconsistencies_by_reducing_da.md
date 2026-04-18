@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ATRI: Mitigating Multilingual Audio Text Retrieval Inconsistencies by Reducing Data Distribution Errors
 description: >-
@@ -110,7 +110,7 @@ ATRI 方案的核心思想是：通过理论分析证明不一致性的根源是
 3. **实用性考量**：提供两种方案供不同场景选择——性能优先用 KCL，资源优先用 CACL
 4. **英语作为锚点的巧妙设计**：英语通常是翻译的源语言，质量最高，以此为共锚点是很自然且有效的选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在翻译数据集上验证（AudioCaps 和 Clotho），缺少原生多语言数据的评估
 - 翻译质量可能影响结果，特别是日语和中文等语法差异大的语言

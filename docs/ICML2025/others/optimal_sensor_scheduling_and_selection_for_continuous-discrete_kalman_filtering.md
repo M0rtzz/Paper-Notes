@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Sensor Scheduling and Selection for Continuous-Discrete Kalman Filtering with Auxiliary Dynamics
 description: >-
@@ -142,7 +142,7 @@ $$\bar{t}_i^s = \mathbb{E}[\tau_s \mid \tau_s \in [a_{i-1}^s, a_i^s]] = \frac{\i
 4. **广泛适用**：框架可扩展至非线性 SSM（EKF/UKF 近似）、水质监测（附录 E）、航天器监测（附录 F）
 5. **实际意义**：Greedy 和 Random 方法在带约束场景（能量有限、辐射退化）中频繁违约，本方法天然满足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **线性假设**：核心理论针对线性 SSM，非线性情况仅提供近似保证（类似 EKF 假设）
 2. **开环规划**：解的是有限时域开环 OCP，未考虑在线反馈/闭环重规划（MPC 式）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Filter-And-Refine: A MLLM Based Cascade System for Industrial-Scale Video Content Moderation
 description: >-
@@ -113,7 +113,7 @@ MLLM方案在F1上比传统分类模型提升66.50%，微调后比零样本在PR
 - **无标注的Router**：使用无监督嵌入检索做第一阶段过滤，避免了标注瓶颈
 - **实际落地验证**：不是纯学术实验，而是在TikTok真实生产环境中部署并验证了效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍然依赖少量人工标注数据，可能引入噪声
 - Router的召回率有上限，存在漏检风险
 - 仅展示了Mistral-7B级别的MLLM，更大/更强模型是否能进一步提升？

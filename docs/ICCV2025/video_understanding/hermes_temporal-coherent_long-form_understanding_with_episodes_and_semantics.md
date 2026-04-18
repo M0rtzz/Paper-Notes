@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HERMES: temporal-coHERent long-forM understanding with Episodes and Semantics
 description: >-
@@ -155,7 +155,7 @@ LVU 上相比前 SOTA 提升 **+7.3%**。
 - SeTR 的 keep ratio 可低至 20%（丢弃 80% 帧），说明长视频确实存在大量冗余。
 - 定性分析显示 HERMES 能诚实地表达不确定性（"I'm not sure"），而非像其他模型一样产生幻觉。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ECO 和 SeTR 依赖启发式规则（余弦相似度合并/步长采样），可能在某些微妙的时间细节上失效。
 - 两个模块独立运行，缺乏联合优化，可能产生冗余。

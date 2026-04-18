@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AerialMind: Towards Referring Multi-Object Tracking in UAV Scenarios
 description: >-
@@ -100,7 +100,7 @@ HETrack 基于 Deformable DETR 架构，使用 ResNet50 做视觉骨干、RoBERT
 4. **CFE 的"共进化"思想**：不是简单的早融合或晚融合，而是让视觉结构化和语言引导同步迭代演进
 5. **跨域泛化有趣发现**：跨域测试 HOTA 反而更高，作者分析原因是 UAVDT 仅有车辆类别，语义空间更简单
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **未利用 LLM 推理能力**：当前架构基于传统 VL 融合范式，未引入大语言模型的高级推理
 2. **部署效率不足**：51.4M 参数、15.6 FPS，难以在资源受限的无人机平台实时运行
 3. **数据集依赖已有标注**：基于 VisDrone/UAVDT 扩展，继承了原始数据集的少量标注错误

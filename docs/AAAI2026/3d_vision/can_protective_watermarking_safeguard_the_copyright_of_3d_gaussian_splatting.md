@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can Protective Watermarking Safeguard the Copyright of 3D Gaussian Splatting?
 description: >-
@@ -87,7 +87,7 @@ GSPure 框架包含三个核心模块：
 3. **通用性强**：对三种不同技术路线的水印方案（SH 加密、译码器隐藏、锚点设计）均有效
 4. **可视化有说服力**：点云聚类可视化清晰展示了水印原语的空间聚集特性，直观验证了方法的可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **阈值需手动调整**：$\tau_c$ 和 $\tau_n$ 对不同水印方法需要不同设置（如 SecureGS 用 (2,3) 而非默认 (4,4)），自动化程度有待提高
 2. **SecureGS 上效果相对较弱**：基于 Scaffold-GS 锚点设计的水印更难去除，Score 仅 5.03（vs. Splats in Splats 的 15.21）

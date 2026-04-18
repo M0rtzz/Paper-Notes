@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FastGHA: Generalized Few-Shot 3D Gaussian Head Avatars with Real-Time Animation
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：两阶段设计——先从少样本图像前馈重建 canonical 高斯头部（带学习的逐高斯特征），再用轻量 MLP 做表情驱动的变形，实现快速动画。
 
-**核心idea一句话**：基于 SD-Turbo VAE + DINOv3 特征的多视角 Transformer 重建 canonical 高斯头部，配合逐高斯学习特征和轻量变形 MLP 实现实时动画。
+**核心 idea**：基于 SD-Turbo VAE + DINOv3 特征的多视角 Transformer 重建 canonical 高斯头部，配合逐高斯学习特征和轻量变形 MLP 实现实时动画。
 
 ## 方法详解
 
@@ -89,7 +89,7 @@ FastGHA 全面超越 Avat3r：PSNR +1.8, LPIPS -0.10, CSIM +0.14, FPS 7.75×。
 - **逐高斯语义特征**：32维学习特征使变形 MLP 可以利用超越低级几何属性的高层信息，小开销大收益
 - **实时动画的关键**：变形 MLP 独立处理每个高斯（无需跨高斯交互），完全可并行化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要预先获取相机参数和 FLAME 表情编码——实际应用中这一步可能成为瓶颈
 - 仅在实验室多视角数据集上训练和评估，对 in-the-wild 自拍等低质量输入的鲁棒性未验证
 - 不支持头发和配饰的精细建模（受限于高斯表示）

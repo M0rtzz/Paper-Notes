@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Extending Direct Preference Optimization to Accommodate Ties
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：Bradley-Terry 模型只有两个outcomes（$y_i$ 赢或 $y_j$ 赢），没有给"平局"留出概率空间。当 $\lambda_i \neq \lambda_j$ 时，模型永远偏向更强的一方。
 
-**本文要解决什么？** 让 DPO 能正确利用平局数据，既不丢弃也不降低性能。
+**本文目标** 让 DPO 能正确利用平局数据，既不丢弃也不降低性能。
 
 **切入角度**：从经典配对比较理论出发，Rao-Kupper (1967) 和 Davidson (1970) 早已提出了容纳平局的 Bradley-Terry 扩展——直接嵌入 DPO 框架即可。
 
-**核心idea一句话**：用经典统计中的平局感知偏好模型替换 DPO 的 Bradley-Terry 模型，使优化目标对胜负对增大reward margin，对平局对驱动reward margin趋近零。
+**核心 idea**：用经典统计中的平局感知偏好模型替换 DPO 的 Bradley-Terry 模型，使优化目标对胜负对增大reward margin，对平局对驱动reward margin趋近零。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ $\mathcal{L}(\pi_\theta; \pi_{ref}) = -\mathbb{E}_{t=0}[\log p_\theta(y_w \succ 
 - **理想策略理论解释正则化**：通过Chen et al. (2024)的理想DPO策略理论严谨地解释了平局的正则化效应——不是经验观察而是理论推导
 - **实用价值高**：对任何使用DPO训练的pipeline，只需将之前丢弃的"模糊"偏好对标记为平局，换用DPO-RK损失，就能免费获得数据利用率+正则化的双重收益
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验规模较小（翻译和TL;DR），未在大型LLM（>7B参数）上验证
 - 仅考虑了两种经典模型，是否有更好的平局概率分配方案？
 - 平局的定义依赖于启发式阈值（如BLEURT分差），更好的平局detection方法值得探索

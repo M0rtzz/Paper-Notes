@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EA-ViT: Efficient Adaptation for Elastic Vision Transformer
 description: >-
@@ -131,7 +131,7 @@ $$\text{MACs}(\theta) = \sum_{l=1}^{L}[D_{\text{MLP}}^{(l)} \cdot 2NE^2R^{(l)} +
 3. **实用性强**：同一框架适用于分类、分割、医学影像、遥感等多种任务
 4. **数据集敏感度分析**：简单数据集（SVHN）对模型缩小不敏感，复杂数据集（DTD、Flowers）需要更大模型表达能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前以MACs作为主要约束，可扩展到延迟、参数量等其他指标
 - 弹性适配仍需一定训练成本，能否进一步减少Stage 1的训练开销值得探索

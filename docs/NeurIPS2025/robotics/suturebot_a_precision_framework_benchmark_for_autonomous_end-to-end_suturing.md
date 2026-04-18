@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SutureBot: A Precision Framework & Benchmark for Autonomous End-to-End Suturing
 description: >-
@@ -136,7 +136,7 @@ tags:
 - 恢复演示的DAgger式策略是一个实用的工程洞察
 - ACT这种"小而专"的模型在小规模均质数据上反而优于大型VLA，值得深思
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个实验仅10次试验，统计效力有限
 - 当前依赖人工选择穿刺目标点，完全自主需要自动化目标选取

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] THUNDER: Tile-level Histopathology image UNDERstanding benchmark
 description: >-
@@ -142,7 +142,7 @@ THUNDER 本身不训练模型，评估使用：
 4. **Spotlight 接收**：被认为对社区有重要参考价值
 5. **开源代码**：完全开源，便于社区复现和扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 tile 级**：未涵盖 slide 级任务（如 MIL 聚合后的 WSI 分类）
 2. **评估协议有限**：主要使用线性探测和 KNN，未包含 prompt tuning 等方法

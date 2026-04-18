@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnomalyVFM -- Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors
 description: >-
@@ -53,7 +53,7 @@ AnomalyVFM 提出了一个通用框架，通过三阶段合成数据生成方案
 
 2. **Feature Adaptation Module（特征适配模块）**：
 
-    - **做什么**：在 VFM 的每个 Transformer 块中注入 LoRA，适配内部表示。
+    - **功能**：在 VFM 的每个 Transformer 块中注入 LoRA，适配内部表示。
     - **核心思路**：在注意力机制的 Query、Value 和 Output 投影层注入 LoRA（rank=64）
     - **解码器**：两个上采样块（Conv + GroupNorm + ReLU + 双线性上采样）+ 最终卷积层输出异常分割图 $M_o$ 和置信度图 $c$
     - **图像级分数**：[CLS] token 经线性层预测
@@ -61,7 +61,7 @@ AnomalyVFM 提出了一个通用框架，通过三阶段合成数据生成方案
 
 3. **置信度加权损失（Confidence-Weighted Loss）**：
 
-    - **做什么**：降低合成标注中不确定区域的损失权重。
+    - **功能**：降低合成标注中不确定区域的损失权重。
     - **核心思路**：
     $\mathcal{L}_{seg} = \mathcal{L}_{base}(M_o, M_{GT}) \cdot C - \alpha \log(C)$
       其中 $C = 1 + \exp(c)$，$c$ 是解码器预测的置信度图
@@ -102,7 +102,7 @@ AnomalyVFM 提出了一个通用框架，通过三阶段合成数据生成方案
 - 置信度加权损失优雅地处理了合成标注的噪声问题
 - 框架通用性强：换不同 VFM 骨干均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据生成依赖 FLUX 模型的生成质量和 prompt 覆盖度
 - LoRA rank=64 相对较高，更小 rank 是否可行未充分探索
 - 某些特定领域（如 KSDD 钢铁表面）的像素级性能仍有不足

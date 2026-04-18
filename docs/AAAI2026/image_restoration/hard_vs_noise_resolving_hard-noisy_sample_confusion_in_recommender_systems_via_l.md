@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hard vs. Noise: Resolving Hard-Noisy Sample Confusion in Recommender Systems via Large Language Models
 description: >-
@@ -96,7 +96,7 @@ LLMHNI 包含两个核心模块：
 3. **工程实践友好**：LLM 推断在训练前离线完成，不增加推荐模型的在线训练开销；框架兼容不同 GNN 骨干
 4. **抗幻觉设计合理**：通过随机边丢弃+对比学习的方式处理 LLM 幻觉问题，比简单过滤更优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **LLM 成本高**：需要调用 GPT-4o 对候选交互对逐一评分，大规模数据集的 API 成本和延迟不可忽视
 2. **分类过于简化**：困难/噪声的二分类标准（两个维度都为 High 才算困难）可能过于保守，中间状态的样本处理不够精细

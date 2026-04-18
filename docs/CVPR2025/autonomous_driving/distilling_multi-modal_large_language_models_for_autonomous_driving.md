@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilling Multi-modal Large Language Models for Autonomous Driving
 description: >-
@@ -120,7 +120,7 @@ DiMA由两个主要组件组成：(1) 视觉端到端规划器（场景编码器
 - 联合训练而非冻结场景编码器是关键，使得视觉表示与语言知识真正融合
 - 长尾场景的显著提升（44%的L2误差降低）证明了LLM世界知识的迁移价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 开环评估（open-loop）的局限性：预测轨迹好不代表闭环驾驶表现好
 - 训练流程较复杂：两阶段训练，需要DriveLM数据集和额外生成的QA对
 - LLaVA-v1.5-7B作为基座LLM并非最新最强，换用更强的LLM可能进一步提升

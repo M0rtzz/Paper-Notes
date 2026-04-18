@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Boundaries: Leveraging Vision Foundation Models for Source-Free Object Detection
 description: >-
@@ -72,7 +72,7 @@ $\mathcal{L}_{tot} = \mathcal{L}_{det} + \lambda(\mathcal{L}_{pgfa} + \mathcal{L
 - 跨5种检测器架构和6种backbone都一致有效，方法通用性极强
 - 即使源模型很弱（训练5个epoch），也能通过VFM获得显著提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练时需要额外的VFM推理（+79%训练时间），且需要DINOv2+Grounding DINO两个大模型
 - Grounding DINO需要文本提示，假设目标域的类别名称已知
 - 在极端域偏移下（如ACDC夜景）提升幅度有限，夜景mAP仅23.0

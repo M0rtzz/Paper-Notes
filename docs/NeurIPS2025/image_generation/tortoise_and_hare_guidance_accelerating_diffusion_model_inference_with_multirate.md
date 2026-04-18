@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tortoise and Hare Guidance: Accelerating Diffusion Model Inference with Multirate Integration
 description: >-
@@ -141,7 +141,7 @@ THG 是**完全免训练**的方法：
 4. **实用性强**：可与现有扩散模型直接集成，加速推理
 5. **开源代码**：促进社区复现和扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅适用于 CFG 模式**：对不使用 CFG 的方法（如 flow matching）不直接适用
 2. **外推精度有限**：当引导尺度 $s$ 很大时，粗网格外推可能引入可察觉的伪影

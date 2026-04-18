@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning or Memorization? Unreliable Results of Reinforcement Learning Due to Data Contamination
 description: >-
@@ -154,7 +154,7 @@ $$\nabla_\theta J_{\text{CLIP}} = \nabla_\theta r_{i,t} \cdot G(r_{i,t})$$
 - **GRPO利用偏差的理论分析**：从梯度层面解释了为什么高概率token（记忆答案）在随机奖励下会被进一步增强
 - **对社区的重要警示**：提醒研究者在评估RL方法时必须使用无污染基准，且测试多个模型系列
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算资源限制**：仅测试了Qwen2.5和Llama3.1的子集，未覆盖更多模型家族（如Gemma、Mistral等）
 2. **RandomCalculation较为简单**：仅涉及基础算术运算，不能全面代表数学推理能力（缺乏代数、几何、概率等）

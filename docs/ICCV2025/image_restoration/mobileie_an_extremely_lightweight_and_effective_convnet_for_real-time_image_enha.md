@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MobileIE: An Extremely Lightweight and Effective ConvNet for Real-Time Image Enhancement on Mobile Devices
 description: >-
@@ -159,7 +159,7 @@ MobileIE 架构极其精简：
 - **IWO 策略**可泛化到其他紧凑模型训练场景，本质上是一种知识蒸馏思想（从自身先前状态蒸馏）
 - **三个不同 IE 任务**（低光、水下、ISP）使用同一架构，验证了方法的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PSNR 虽然领先轻量方法，但与大型方法（DDNet 等）仍有差距
 - 未在去噪、去雾等其他低级视觉任务上验证

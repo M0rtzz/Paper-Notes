@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RSONet: Region-guided Selective Optimization Network for RGB-T Salient Object Detection
 description: >-
@@ -85,7 +85,7 @@ RSONet 分为**区域引导阶段**和**显著性生成阶段**两个阶段。
 4. **完整的消融实验**: 验证了每个模块（CI/SF/SO/DDE/MIS）的独立贡献
 5. **融合损失设计合理**: BCE + 边界 IoU + F-measure 三项损失互补，分别关注像素准确度、边界质量和整体F值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 三路并行分支的参数量和计算量较大（三个相同的编码器-解码器），推理速度仅 9.4 FPS，难以满足实时需求
 - 相似度计算仅使用全局均值比较，可能丢失局部区域级的模态偏好信息
 - 未探索轻量化版本或实时应用场景

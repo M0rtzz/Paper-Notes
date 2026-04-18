@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ToolTree: Efficient LLM Agent Tool Planning via Dual-Feedback Monte Carlo Tree Search and Bidirectional Pruning
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：搜索方法虽然有前瞻性但计算代价大且评估不接地（evaluate hypothetical thoughts）；贪心方法高效但缺乏纠错能力。需要一种既有前瞻能力又基于实际执行反馈的方法。
 
-**本文要解决什么？** 在固定计算预算下，如何让 Agent 进行前瞻性工具规划，同时保证效率？
+**本文目标** 在固定计算预算下，如何让 Agent 进行前瞻性工具规划，同时保证效率？
 
 **切入角度**：将 MCTS 的 selection-expansion-simulation-backpropagation 循环改造为适合工具调用的框架，执行前用 LLM 快速预评估筛选分支，执行后用实际输出评分修正策略。
 
-**核心idea一句话**：双阶段评估（pre-execution 预判 + post-execution 实测）+ 双向剪枝（执行前砍低分支 + 执行后砍失败分支），让 MCTS 在工具规划场景下既高效又准确。
+**核心 idea**：双阶段评估（pre-execution 预判 + post-execution 实测）+ 双向剪枝（执行前砍低分支 + 执行后砍失败分支），让 MCTS 在工具规划场景下既高效又准确。
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ ToolTree 是**无训练**（training-free）的规划框架，不需要微调模
 - **Training-free 实用性**：无需微调，即插即用适配任意 LLM + 工具库组合，部署成本极低。
 - **效率-准确度帕累托最优**：虽然比贪心方法慢，但 accuracy-per-second 最高。这表明"聪明地搜索"比"更多地搜索"更重要。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LLM judge 的评估本身有 cost（每步两次 LLM 调用），在 API 价格敏感场景可能不划算
 - 预评估依赖 LLM 对工具的理解质量，如果工具描述不清晰，$r_{\text{pre}}$ 可能不准
 - 未探索学习型的评估函数（如微调一个小型 reward model 替代 LLM judge）

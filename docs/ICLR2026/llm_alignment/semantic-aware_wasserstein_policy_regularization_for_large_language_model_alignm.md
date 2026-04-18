@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semantic-aware Wasserstein Policy Regularization for Large Language Model Alignment
 description: >-
@@ -100,7 +100,7 @@ WPR 将标准 RLHF 目标中的 KL 正则化项替换为熵正则化 Wasserstein
 - 截断策略设计精巧，将 $O(d^2)$ 降到 $O(k_2^2)$，计算开销几乎可忽略
 - 案例分析（Figure 6）直观展示了 WPR 在语义相近token上惩罚小、语义漂移时惩罚大
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 代价矩阵依赖参考模型的 embedding，不同 tokenizer 的模型之间无法直接迁移
 - 仅在 2B-7B 规模验证，更大模型的缩放特性未知
 - $\beta$ 仍需手动调节（虽然比 f-散度更鲁棒），自动调整是未来方向

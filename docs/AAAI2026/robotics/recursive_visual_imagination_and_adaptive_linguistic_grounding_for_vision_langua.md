@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recursive Visual Imagination and Adaptive Linguistic Grounding for Vision Language Navigation
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **ALG的注意力矩阵复用设计巧妙**：利用已有的cross-modal attention矩阵做网格-组件匹配，零额外计算开销
 - **受脑科学启发的动机论述有说服力**：海马体管记忆、小脑管运动→ISR中不同位置网格对应不同职能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **提升幅度有限**：SR仅提升1-2个点，可能接近该范式（非LLM-based）的天花板
 - **仅室内MP3D场景**：未在更大规模户外环境或更多样化数据集上验证

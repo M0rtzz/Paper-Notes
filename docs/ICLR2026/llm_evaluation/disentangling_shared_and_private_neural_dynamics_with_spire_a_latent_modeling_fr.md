@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Disentangling Shared and Private Neural Dynamics with SPIRE: A Latent Modeling Framework for Deep Brain Stimulation
 description: >-
@@ -119,7 +119,7 @@ DLAG 在真实颅内数据上高斯过程优化数值不稳定无法收敛。SPI
 - 首次在儿科 DBS 数据上展示共享潜变量编码频率依赖的网络重组，为 DBS 的分布式网络调制理论提供了定量证据
 - shared-private 解缠思想可迁移到多模态 AI 模型中，如视觉-语言模型中分解模态共享与模态专属表示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅限较短时间尺度刺激，未验证长期慢性刺激效果及可塑性变化
 - 仅使用 LFP 信号，未整合 spike 数据或行为学模态，多模态融合是自然扩展方向

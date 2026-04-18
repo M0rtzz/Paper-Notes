@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Semantically Disentangled Unified Model for Multi-category 3D Anomaly Detection
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{C3L}} + \mathcal{L}_{\text{rec
 - **多分辨率+全局token+对比学习**三者配合完整覆盖了从特征提取到空间分离到条件化重建的全链路
 - 统一模型反超类别特定模型说明跨类别学习本身是有益的（共享泛化知识）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要类别标签进行对比学习，无标签场景适应性受限
 - 当类别数非常多时，C3L的动态缓冲区可能不足以覆盖所有负样本
 - 当前仅处理点云，RGB-D或多模态融合可能进一步提升

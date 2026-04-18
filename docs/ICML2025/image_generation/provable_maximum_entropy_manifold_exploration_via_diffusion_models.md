@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provable Maximum Entropy Manifold Exploration via Diffusion Models
 description: >-
@@ -116,7 +116,7 @@ for k = 1 to K:
 4. **完整的收敛理论**：从理想化的单步最优性到现实情形下的渐近收敛，理论层次递进且完整
 5. **无需外部奖励**：纯粹利用模型自身的 score 函数作为内在奖励，实现自引导探索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **收敛率较慢**：$\tilde{\mathcal{O}}((\log\log k)^{-1})$ 在理论上是目前最优的，但实际中可能需要较多迭代
 2. **计算开销**：每步迭代需要完整的扩散模型微调流程（Adjoint Matching），多步迭代的累计计算成本较高

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RobustSplat: Decoupling Densification and Dynamics for Transient-Free 3DGS
 description: >-
@@ -128,7 +128,7 @@ NeRF On-the-go 数据集消融（以 PSNR 为指标）：
 - 从低分辨率到高分辨率的级联监督策略体现了"粗到细"的经典思想，在处理欠重建-过检测权衡中非常有效
 - 整体方案无需引入额外的大模型（如 SAM、Stable Diffusion），仅用 DINOv2 ViT-S/14，计算效率高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 延迟时间（10K 迭代）和低/高分辨率切换点是手动设置的固定参数，能否自适应调整有待探索
 - 对于非常密集的瞬态遮挡（>50%），延迟策略可能不足以让静态结构先稳定

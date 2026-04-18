@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reward-Aware Proto-Representations in Reinforcement Learning
 description: >-
@@ -82,7 +82,7 @@ tags:
 - **DR 是 SR 的奖励感知推广**：统一了"去哪"和"去那划不划算"两个维度
 - 默认特征实现了**不需要环境动态就能做迁移学习**——SR 特征虽然更灵活（任意奖励变化）但只能恢复到参考策略水平
 
-## 局限性 / 可改进方向
+## 局限与展望
 - DR 中 $\exp(-r/\lambda)$ 在大负奖励时可能产生数值不稳定
 - 只在表格环境中验证，未扩展到深度 RL
 - DR 只能在终端奖励变化时做迁移，不如 SF 灵活

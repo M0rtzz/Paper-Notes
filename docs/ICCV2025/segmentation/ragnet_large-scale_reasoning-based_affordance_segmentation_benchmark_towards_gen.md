@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAGNet: Large-scale Reasoning-based Affordance Segmentation Benchmark towards General Grasping
 description: >-
@@ -154,7 +154,7 @@ RAGNet 是首个同时覆盖所有四大领域并支持推理指令的大规模 
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

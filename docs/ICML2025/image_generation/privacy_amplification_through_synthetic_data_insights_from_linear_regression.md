@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Privacy Amplification Through Synthetic Data: Insights from Linear Regression
 description: >-
@@ -130,7 +130,7 @@ $$D_\alpha(G_v, G_w) \leq \frac{\alpha nl \Delta^2}{4(d-n)\sigma_\theta^2} + o(d
 4. **组合性质**：多点释放的结果自然体现为单点机制的组合，$nl$ 因子线性增长
 5. **两全其美**：DP生成模型同时享有后处理保证（大量释放时）和组合保证（少量释放时，更优）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限线性回归**：结论对非线性生成模型的推广尚不清楚
 2. **CLT常数的保守性**：非渐近CLT的常数可能导致小 $d$ 时界不紧（Figure 2中的初始平台）

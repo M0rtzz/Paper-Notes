@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Information to Generative Exponent: Learning Rate Induces Phase Transitions in SGD
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **Alternating SGD 的简洁性**：仅仅对两层使用不同学习率（两时间尺度）就能产生非关联更新，无需 batch reuse 或改变损失
 - **统一框架的表达力**：通过 $\mu_i(\eta)$ 系数统一分析三种算法，使得相变条件和复杂度比较一目了然
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑单指标模型，多指标模型的推广尚未完成
 - 假设高斯输入分布，一般分布的情况需要进一步研究
 - Alternating SGD 的分析仅覆盖 $p_2 = \text{IE}(\sigma_*^2)$，深层网络的条件较难验证

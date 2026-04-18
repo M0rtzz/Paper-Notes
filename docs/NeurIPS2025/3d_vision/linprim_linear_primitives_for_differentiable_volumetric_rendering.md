@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LinPrim: Linear Primitives for Differentiable Volumetric Rendering
 description: >-
@@ -117,7 +117,7 @@ LinPrim 建立在3DGS的pipeline之上，替换了核心的场景表示和渲染
 - 光线-三角形求交天然可微且成熟（MTIA），理论上可直接利用已有的三角形渲染硬件加速
 - 从SfM初始化后用随机旋转确保覆盖均匀性是一个细节但重要的设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在MipNeRF360大场景上PSNR低于3DGS约0.8dB，差距较明显
 - 有界基元在观察稀疏区域会产生硬边伪影（不像高斯平滑过渡）

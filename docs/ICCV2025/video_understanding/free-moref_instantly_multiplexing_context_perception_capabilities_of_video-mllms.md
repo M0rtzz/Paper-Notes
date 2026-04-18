@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Free-MoRef: Instantly Multiplexing Context Perception Capabilities of Video-MLLMs within Single Inference
 description: >-
@@ -137,7 +137,7 @@ N=2时效果最佳且计算量仅为原来的27.6%。
 - **计算效率惊人**：8×帧数仅需27.6%-400%原始FLOPs，单卡A100可处理1024帧
 - **兼容性好**：支持Flash-Attention，可与流式推理或token压缩方案叠加
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多参考分割打断了跨chunk的视觉特征连续性，参考融合仅部分补偿
 - 超参数(M, N, L)需要手动配置，缺乏自适应机制

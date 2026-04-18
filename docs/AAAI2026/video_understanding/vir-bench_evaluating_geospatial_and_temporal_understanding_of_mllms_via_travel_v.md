@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VIR-Bench: Evaluating Geospatial and Temporal Understanding of MLLMs via Travel Video Itinerary Reconstruction
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：现有benchmark的空间尺度太小（室内/短距离），无法评估模型在宏观地理（城市间导航）和长时间跨度（多日行程）上的理解能力。
 
-**本文要解决什么？** 构建一个评估MLLM长距离地理空间-时间理解的视频benchmark。
+**本文目标** 构建一个评估MLLM长距离地理空间-时间理解的视频benchmark。
 
 **切入角度**：用旅行vlog视频的行程重建（itinerary reconstruction）作为测试任务——模型需要从视频中识别所有访问的地点及其层次关系和时间顺序。
 
-**核心idea一句话**：从旅行视频中重建visiting order graph（节点=地点，边=包含/转移关系）来评估MLLM的地理空间和时间智能。
+**核心 idea**：从旅行视频中重建visiting order graph（节点=地点，边=包含/转移关系）来评估MLLM的地理空间和时间智能。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ VIR-Bench定义了一个层次化的visiting order graph：
 - **宏观尺度的补位**：填补了micro（室内/短距离）到macro（跨城市/跨地区）的benchmark空白
 - **从评估到应用的闭环**：不只是评测，还开发了travel-planning agent验证benchmark的实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **地理覆盖有限**：只包含日本，其他国家/地区的旅行视频可能有不同特征
 - **POI标注依赖视频内容质量**：有些vlog拍摄角度有限，导致POI难以标注
 - **End-to-end generation太难**：实际把node和edge prediction分开了，失去了端到端的挑战性

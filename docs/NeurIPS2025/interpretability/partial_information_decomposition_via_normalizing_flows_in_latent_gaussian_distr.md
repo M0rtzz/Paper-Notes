@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Partial Information Decomposition via Normalizing Flows in Latent Gaussian Distributions
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：PID 的理论优美性与计算不可行性之间的鸿沟——理论上能精确量化模态交互，实际上只能处理离散低维数据。
 
-**本文要解决什么？** (1) 证明高斯 PID 中联合高斯解的最优性；(2) 设计比 Tilde-PID 更高效的算法；(3) 推广到非高斯高维连续数据。
+**本文目标** (1) 证明高斯 PID 中联合高斯解的最优性；(2) 设计比 Tilde-PID 更高效的算法；(3) 推广到非高斯高维连续数据。
 
 **切入角度**：两个洞察——高斯分布下 PID 有闭式解且可高效计算；normalizing flow 的可逆性保证互信息不变，可以先变换到高斯空间再算 PID。
 
-**核心 idea 一句话**：用 normalizing flow 把数据变成高斯，然后在高斯空间里高效算 PID。
+**核心 idea**：用 normalizing flow 把数据变成高斯，然后在高斯空间里高效算 PID。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ Flow-PID 损失为两个边际的高斯边际正则化之和：$\mathcal{L}_{\te
 - **广播信道重新解释非常巧妙**：将 PID 等价为高斯广播信道中的最不利噪声优化，建立了信息论和多模态学习之间的优美桥梁
 - **Flow 保持 PID 不变的理论保证**：不是"训练一个好的 encoder 然后拿来用"，而是有严格数学保证可逆映射保持整个 PID 分解不变
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Flow-PID 的精度依赖 normalizing flow 对真实分布的逼近质量，复杂分布可能需要更强的 flow 架构
 - 目前只处理两个信源的 PID，扩展到多信源理论可行但复杂度增加

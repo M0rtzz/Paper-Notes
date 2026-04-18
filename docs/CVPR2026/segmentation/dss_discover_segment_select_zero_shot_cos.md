@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DSS: Discover, Segment, and Select - A Progressive Mechanism for Zero-shot Camouflaged Object Segmentation
 description: >-
@@ -73,7 +73,7 @@ tags:
 - Leiden聚类+PCA降维的组合巧妙——自动确定聚类数且计算效率高，整个FOD仅7.7s
 - 在多实例场景的优势显著——这正是现有方法的最大痛点
 
-## 局限性 / 可改进方向
+## 局限与展望
 - SMS模块耗时占72.9%（每图30.6s），主要因为多次MLLM推理调用，速度瓶颈在选择阶段
 - Ideal Seg消融显示mask质量距离理想还有差距（COD10K：0.892 vs 0.871），更好的选择策略或端到端优化可能帮助
 - 微小伪装目标检测未专门处理——结论中提到未来需要多尺度特征聚合

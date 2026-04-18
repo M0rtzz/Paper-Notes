@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tractable Multinomial Logit Contextual Bandits with Non-Linear Utilities
 description: >-
@@ -140,7 +140,7 @@ $$\mathrm{Regret}_T = \widetilde{\mathcal{O}}\left(\kappa^{-3/2}d_w\sqrt{T} + \k
 - **广义几何条件**：严格弱化了已有几何假设，允许多全局最优的非凸损失景观，天然适配神经网络
 - **新型集中不等式**：推导出对正则化参数$\lambda$无关的参数估计集中bound，突破了$\lambda = \mathcal{O}(\sqrt{T})$时的技术瓶颈
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **实例依赖因子$\kappa$**：遗憾bound中$\kappa^{-1}$在最坏情况下可达$\mathcal{O}(K^2)$，消除或弱化此依赖是开放问题
 - **Phase I需i.i.d.上下文**：Assumption 3要求探索阶段上下文独立同分布，虽然Phase II可对抗，但仍是限制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPOT-Trip: Dual-Preference Driven Out-of-Town Trip Recommendation
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L} = \beta_1 \mathcal{L}_S + \beta_2 \mathcal{L}_D + \beta_3 \mathcal
 2. **偏好分离设计**：静态偏好用KG语义建模，动态偏好用神经ODE连续时间建模，避免混合冲突
 3. **TransE交替训练**：KG嵌入与推荐模型交替优化，增强多关系语义空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 知识图谱构建依赖数据集自带的属性信息，对属性不丰富的场景适用性有限
 - 神经ODE在推荐阶段缺乏实际时间戳，使用归一化位置作为代理可能产生偏差

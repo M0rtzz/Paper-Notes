@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TensorRL-QAS: Reinforcement Learning with Tensor Networks for Improved Quantum Architecture Search
 description: >-
@@ -95,7 +95,7 @@ TensorRL-QAS 由三个步骤组成：
 - **Fixed TN-init 的意外优势**：虽然信息更少，但由于 state 更小、参数更少，反而在实践中表现最好，且产生最紧凑的线路
 - **CPU-only 可行性**：TensorRL (fixed) 在 8-qubit 以内可在 CPU 上高效训练，降低了量子架构搜索的硬件门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Action space 限为 $\{RX, RY, RZ, CNOT\}$，更大系统可能需要更丰富的门集
 - 仅使用 brickwork warm-start 结构，其他张量网络拓扑（如 MERA）未探索

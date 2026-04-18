@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Image Pre-Training with Siamese Cropped Masked Autoencoders
 description: >-
@@ -125,7 +125,7 @@ CropMAE的训练pipeline：输入一张图像 $I$ → 生成两个裁剪视图 $
 - 方法的简洁性极强：无需对比学习中的负样本构造、无需momentum encoder、无需精心设计的数据增强
 - 将视频预训练问题转化为图像预训练问题，大幅降低数据和计算门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在姿态传播（JHMDB）上逊于SiamMAE，因为随机裁剪无法模拟人体运动的复杂变形
 - 模型和数据的可扩展性（更大ViT、更多数据）尚未充分探索

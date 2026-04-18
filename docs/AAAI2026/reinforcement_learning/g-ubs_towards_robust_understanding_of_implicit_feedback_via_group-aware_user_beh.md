@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] G-UBS: Towards Robust Understanding of Implicit Feedback via Group-Aware User Behavior Simulation
 description: >-
@@ -191,7 +191,7 @@ UGM 分组方法消融（表5）：
 4. **可部署性**：FP16 量化部署，4×A100 下 QPS=5.3，日处理 458K 视频
 5. **案例分析生动**：跳伞视频案例完美展示了群组画像（中老年易因高空画面不适）的消噪能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **UGM 依赖闭源 LLM**（GPT-4o 用于生成画像和标注），成本高且不可重现
 2. **IF-VR 标注依赖 GPT-4o + 人工检查**，标注质量的系统性评估不足

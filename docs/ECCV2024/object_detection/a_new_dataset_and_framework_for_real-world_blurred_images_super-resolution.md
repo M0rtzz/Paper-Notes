@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A New Dataset and Framework for Real-World Blurred Images Super-Resolution
 description: >-
@@ -89,7 +89,7 @@ PBaSR在三种不同架构（CNN: Real-ESRGAN, VQVAE: FeMaSR, Transformer: SRFor
 - **权重插值做跨域通信**: CFM用自适应权重插值代替特征蒸馏/teacher-student等复杂方法，简单高效且效果更好。本质上是**模型融合（model merging/model souping）**思想在训练循环中的应用。
 - **框架通用性强**: 成功应用于CNN、VQVAE、Transformer三种架构，且代码已开源。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **模糊map依赖**: 训练需要模糊区域mask（人工或自动检测），自动检测的精度直接影响训练效果，且推理时不需要mask意味着模型只能隐式学习模糊感知。
 - **仅限x4超分**: 论文所有实验均为4倍放大，未验证其他尺度。

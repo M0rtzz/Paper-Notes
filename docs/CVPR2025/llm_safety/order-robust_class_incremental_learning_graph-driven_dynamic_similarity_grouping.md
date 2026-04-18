@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Order-Robust Class Incremental Learning: Graph-Driven Dynamic Similarity Grouping
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：不改变类的到达顺序，而是在学习时将相似类分到不同组——每组内的类尽量不相似。用图着色理论保证分组最优性。
 
-**核心idea一句话**：构建相似度图 → Welsh-Powell 着色 → 异组内类不相似 → 独立 NCM + 适配器 = 顺序无关的增量学习。
+**核心 idea**：构建相似度图 → Welsh-Powell 着色 → 异组内类不相似 → 独立 NCM + 适配器 = 顺序无关的增量学习。
 
 ## 方法详解
 
@@ -72,7 +72,7 @@ tags:
 - **图着色 × CIL 的跨领域创新**——用组合优化的经典工具解决深度学习中的顺序敏感性
 - **理论驱动设计**——从 Corollary 1 直接推导出方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖冻结 ViT-B/16 backbone
 - 元分类器增加推理复杂度
 - Gram 矩阵和原型矩阵随类数增长

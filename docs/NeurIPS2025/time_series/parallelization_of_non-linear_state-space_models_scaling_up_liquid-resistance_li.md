@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parallelization of Non-linear State-Space Models: Scaling Up Liquid-Resistance Liquid-Capacitance Networks for Efficient Sequence Modeling
 description: >-
@@ -100,7 +100,7 @@ LrcSSM 架构包含：输入编码器 → 归一化层 → 多层非线性 LRC S
 - **生物合理性**：液态电阻和液态电容建模了真实神经元的饱和效应和膜电容的动态特性，非线性表达力有理论根基
 - **通用方法论**：论文明确展示了如何将任意非线性 RNN 转化为对角 Jacobian 形式（GRU/LSTM/MGU 验证），方法可推广
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 并行化需多步牛顿迭代收敛，线性 SSM 无此开销，实际速度优势取决于迭代次数
 2. 目前使用显式 Euler 积分，隐式积分（如 LinOSS-IM）可能进一步提升精度

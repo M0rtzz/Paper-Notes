@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fair Lung Disease Diagnosis from Chest CT via Gender-Adversarial Attention Multiple Instance Learning
 description: >-
@@ -90,7 +90,7 @@ $$P = \frac{1}{2}(\text{MacroF1}_{\text{male}} + \text{MacroF1}_{\text{female}})
 - GRL 对抗训练是消除特征空间中性别偏差的优雅方案，比简单的数据平衡更彻底
 - OOF 阈值优化避免了对验证集的过拟合，是后处理公平性校准的实用技巧
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 女性鳞癌数据极度稀缺（仅 18 例），过采样无法完全弥补
 - 未探索生成式数据增强（如 diffusion-based CT 合成稀缺子群）

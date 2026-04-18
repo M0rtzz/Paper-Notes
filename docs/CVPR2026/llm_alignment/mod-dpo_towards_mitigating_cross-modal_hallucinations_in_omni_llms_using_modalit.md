@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoD-DPO: Towards Mitigating Cross-modal Hallucinations in Omni LLMs using Modality Decoupled Preference Optimization
 description: >-
@@ -124,7 +124,7 @@ $$\mathcal{L}_{\text{MoD-DPO}} = \mathcal{L}_{\text{DPO}} + \alpha \cdot \mathca
 - **自动数据构建**：从 10.8k 视频自动生成 18.1k 偏好样本，无需人工标注，可扩展性强
 - **训练效率高**：无梯度 forward pass + 快速收敛，仅需 1/4 epoch 即可超越完整训练的 baseline
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **模态数量限制**：当前主要在音视频两个模态上验证，扩展到更多模态（如触觉、深度、点云）时，损坏策略和正则化的设计可能需要调整
 2. **相关/无关模态的判定**：自动数据生成依赖于预定义的"哪个模态与问题相关"规则，对于模态边界模糊的问题（如"描述整个场景"涉及所有模态）不完全适用
 3. **损坏方式的影响**：不变性/敏感性正则化的效果可能依赖于损坏操作的具体方式（随机噪声 vs 替换为其他样本 vs 完全移除），不同损坏方式的比较不充分

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BPP-Search: Enhancing Tree of Thought Reasoning for Mathematical Modeling Problem Solving
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：CoT 只生成单条路径，容易出错；SC 无法验证中间步骤正确性；ToT 生成大量叶节点但不知道选哪个作为最终答案。PRM 可以给中间步骤打分来指导搜索，但 PRM 在回归任务上打分不够精确——结构高度相似但正确性不同的候选方案会得到接近的分数。
 
-**本文要解决什么？** (a) 构建带有完整建模过程标注的运筹学数据集；(b) 在 ToT 框架中高效搜索并可靠选出最优建模方案。
+**本文目标** (a) 构建带有完整建模过程标注的运筹学数据集；(b) 在 ToT 框架中高效搜索并可靠选出最优建模方案。
 
 **切入角度**：观察到 PRM 在最后一层 Beam Search 中难以区分高度相似的正确/错误候选，于是引入 Pairwise Preference 模型来做成对比较排序。
 
-**核心idea一句话**：用 Beam Search + PRM 做树搜索剪枝加速，再用 Pairwise Preference 模型在最终候选中做成对排序选出最优答案。
+**核心 idea**：用 Beam Search + PRM 做树搜索剪枝加速，再用 Pairwise Preference 模型在最终候选中做成对排序选出最优答案。
 
 ## 方法详解
 
@@ -111,7 +111,7 @@ tags:
 - **用手工标注代替 MCTS 生成 PRM 训练数据**：MCTS 需要大量 rollout 且存在 Reward Hacking 风险，手工标注虽然成本高但数据质量更可靠
 - **Random Greedy 作为 PRM 不精确时的简单 baseline** 很实用——仅保留接近最高分的候选并随机选择，在某些情况下比标准 Greedy 更好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **数据集规模偏小**：StructuredOR 只有 124 个问题，限制了结论的泛化性
 - **树的宽度和深度受限于计算成本**：当前每层最多 3 个子节点、4 层深度，更大的树可能带来更好效果但代价过高
 - **对 Policy Model 能力要求高**：小模型（如 Llama-3.2-11B）几乎无法在 ToT 框架下生成有效建模方案，方法的适用范围有限

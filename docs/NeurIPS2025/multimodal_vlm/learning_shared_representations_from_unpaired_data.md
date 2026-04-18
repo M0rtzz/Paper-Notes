@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Shared Representations from Unpaired Data
 description: >-
@@ -109,7 +109,7 @@ $f_\mathcal{X} = Q_\mathcal{X} \circ S_\mathcal{X}$，$f_\mathcal{Y} = F_\theta 
 - **MMD loss 的妙用**：作为不需要配对数据的分布对齐工具，使得全部非配对数据都能被利用
 - **语义算术**（文本嵌入 + 图像嵌入 = 组合语义图像）在几乎没有配对的条件下出现，展示了通用嵌入空间的深层结构性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 绝对检索性能仍远低于 CLIP 等大规模配对训练的 SOTA（R@10≈33 vs CLIP>>90），作者也承认目前不意在替代大配对模型
 - 仅在视觉-语言和视觉-视觉场景验证，需扩展到视频、语音、科学数据等更复杂模态
 - SE 的计算复杂度（特征分解）可能成为超大数据集的瓶颈，虽然 SpectralNet 缓解了部分问题

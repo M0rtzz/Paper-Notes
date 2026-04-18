@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QuRL: Efficient Reinforcement Learning with Quantized Rollout
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：量化可以显著加速推理，但量化 actor 与全精度 actor 之间的策略分歧会破坏 PPO/GRPO 的 importance sampling 和 clipping 机制。
 
-**本文要解决什么？** 如何在保持 RL 训练质量的同时，利用量化加速 rollout 推理。
+**本文目标** 如何在保持 RL 训练质量的同时，利用量化加速 rollout 推理。
 
 **切入角度**：结合 Decoupled PPO 分离行为策略和近邻策略，在此基础上解决量化带来的两个独特挑战：clipping 不稳定和权重更新被量化淹没。
 
-**核心idea一句话**：用量化模型做 rollout 但用全精度模型做 clipping 和梯度更新，通过自适应裁剪范围和不变缩放技术弥合量化带来的差距。
+**核心 idea**：用量化模型做 rollout 但用全精度模型做 clipping 和梯度更新，通过自适应裁剪范围和不变缩放技术弥合量化带来的差距。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ RL 训练循环中：(1) 将旧 actor $\theta_{\text{old}}$ 量化为 $\hat{\the
 - 精准诊断了量化RL的两个核心问题：clipping失效和权重更新被淹没。特别是后者（权重更新量级$10^{-7}$ vs 量化误差$10^{-3}$~$10^{-1}$）是一个此前未被认识的根本性挑战。
 - UAQ利用不变缩放同时"缩小分母、放大分子"获得$s^2$改善的设计非常巧妙，单一操作同时解决两个问题，且几乎零计算开销。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证 INT8/FP8 两种精度，4-bit 量化可带来更大加速但挑战更大，未探索
 - FP8 KV cache 量化在当前 vLLM 中未优化，实际加速效果受限

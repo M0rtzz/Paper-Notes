@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sample Complexity of Distributionally Robust Off-Dynamics Reinforcement Learning with Online Interaction
 description: >-
@@ -120,7 +120,7 @@ $$\mathbb{E}[\text{Regret}(K)] = \Omega(C_{vr}^{1/2} \sqrt{K})$$
 - **信息赤字视角新颖**：从名义环境与最坏环境的访问分布错配出发理解问题，解释了为何 fail-state 假设有效（Proposition 5.4）
 - **RRMDP 优于 CRMDP 的证据**：RRMDP-TV 的 regret 比 CRMDP-TV 少 $\sqrt{S}$ 因子；RRMDP-KL 无需额外假设且有闭式解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限表格型**：算法和理论均限于有限状态动作空间，未扩展到函数逼近
 2. **$C_{vr}$ 实际不可知**：部署前无法计算 $C_{vr}$（取决于未知的最坏转移），难以预判算法效果

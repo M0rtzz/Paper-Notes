@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hybrid eTFCE–GRF: Exact Cluster-Size Retrieval with Analytical p-Values for Voxel-Based Morphometry
 description: >-
@@ -91,7 +91,7 @@ $$A(v) = \sum_{i=1}^{n} -\log P(Z_v \geq \tau_i \mid c_v^{\mathrm{uf}}(\tau_i))$
 - **工程价值高**: pytfce 纯 Python 包无 R/FSL 依赖，通过 pip 安装即可使用，大幅降低了全脑 VBM 分析的门槛
 - **验证极其系统**: 六项蒙特卡洛实验 + 两个真实脑数据集 + 网格收敛分析，统计严谨性非常高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GRF 假设要求场足够光滑（FWHM > 3倍体素大小）和近似平稳，对高分辨率或具有强非平稳性的数据可能不适用
 - 混合方法仍保留 $-\log P$ 空间的离散求和（第二类离散化），union-find 仅消除了 CCL 的离散化（第一类）

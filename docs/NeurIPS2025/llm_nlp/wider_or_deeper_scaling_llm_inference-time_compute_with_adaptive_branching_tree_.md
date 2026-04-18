@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Wider or Deeper: Scaling LLM Inference-Time Compute with Adaptive Branching Tree Search
 description: >-
@@ -107,7 +107,7 @@ AB-MCTS 构建搜索树 $T$，每个非根节点对应一个 LLM 生成的答案
 - **两种变体各有所长**：M 变体通过共享参数利用跨组信息，A 变体更轻量拥有解析更新
 - **与后训练方法正交**：可以与 o1 等 CoT 微调方法无缝结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖可靠的外部评分函数（如测试用例），不是所有任务都有
 - MCMC 采样（M 变体）在节点多时可能成为计算瓶颈

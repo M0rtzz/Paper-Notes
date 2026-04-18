@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pairwise Optimal Transports for Training All-to-All Flow-Based Condition Transfer Model
 description: >-
@@ -120,7 +120,7 @@ $$\int \|x_1 - x_2\|^2 d\Pi^*(x_1, x_2 | c_1, c_2) = W_2^2(P_{c_1}, P_{c_2})$$
 - 与函数表示定理的联系提供了为什么逐对OT在条件迁移中有效的深层理解
 - 计算成本仅依赖于$|D|$而非条件对数$K^2$，比需要分组的方法更可扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\beta$的选择仍存在精度与OT近似之间的权衡，虽然$\beta = N^{1/(2d_c)}$的启发式有效但缺乏严格的最优性保证
 - 不保证循环一致性（$T_{c_2 \to c_3} \circ T_{c_1 \to c_2} = T_{c_1 \to c_3}$），因为OT本身不满足此性质

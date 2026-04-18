@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ExPLoRA: Parameter-Efficient Extended Pre-Training to Adapt Vision Transformers under Domain Shifts
 description: >-
@@ -107,7 +107,7 @@ ExPLoRA（M-[1,L]-r32）在仅 29.7M 预训练参数、320 GPU 小时下达到 6
 4. **灵活组合性**：ExPLoRA 与下游 PEFT 方法（LoRA、SA2VP、VPT 等）正交可组合。
 5. **关键发现**：LoRA 仅作用于 Q、V 矩阵效果最优；作用于 MLP 或全部矩阵反而大幅降低性能。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **域覆盖有限**：主要在遥感上做了深入 case study，医学/农业等域仅在 WILDS 上做了初步验证。
 - **仅限 ViT 架构**：方法绑定 Transformer block 结构，对 CNN 或混合架构的适用性未探索。

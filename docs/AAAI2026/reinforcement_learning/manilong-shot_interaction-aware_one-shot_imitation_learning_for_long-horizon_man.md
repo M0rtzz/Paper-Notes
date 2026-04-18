@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ManiLong-Shot: Interaction-Aware One-Shot Imitation Learning for Long-Horizon Manipulation
 description: >-
@@ -190,7 +190,7 @@ $$\mathbf{T}_j = \arg\min_{\mathbf{T} \in SE(3)} \|\mathbf{T} \mathbf{T}_i^{-1} 
 4. **两种分解策略的灵活性**：规则法稳定 + VLM法可学习语义模式，可按需选择
 5. **端到端一次性泛化**：无需任务特定微调，真正的 zero-shot
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限抓取操作**：三阶段分解基于物理接触，不适用于非抓取行为（如擦拭、倒水等连续交互）
 2. **平行夹爪假设**：框架围绕平行夹爪设计，灵巧手操作未涉及

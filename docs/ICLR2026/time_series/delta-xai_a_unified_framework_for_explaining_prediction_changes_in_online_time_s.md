@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Delta-XAI: A Unified Framework for Explaining Prediction Changes in Online Time Series Monitoring
 description: >-
@@ -93,7 +93,7 @@ Delta-XAI 的输入是一个在线时间序列监控模型（如LSTM）和流式
 - **SWING的简洁优雅**：仅仅改变积分路径的起点（从零基线到前一时间步），就同时解决了OOD问题和时序依赖捕获问题
 - **评估套件的完整性**：从忠实度、充分性、一致性等多个角度评估，提供了在线XAI研究的标准化评估工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验主要在MIMIC-III数据集和LSTM模型上进行，对其他数据集（如金融时间序列）和其他模型架构（如Transformer）的泛化性有待验证
 - SWING的移位窗口机制假设相邻时间步之间的变化是平滑的，在极端突变事件（如市场崩盘）时可能效果受限
 - 14种方法的包装函数设计可能需要针对不同模型架构进行适配，当前实现主要针对RNN类模型

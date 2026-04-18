@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Facial-R1: Aligning Reasoning and Recognition for Facial Emotion Analysis
 description: >-
@@ -113,7 +113,7 @@ Facial-R1 采用三阶段渐进式训练：
 - **推理灵活性 vs 路径限制的权衡**：RL 比 SFT 更适合情绪推理，因为情绪表达是高度个人化的，不应强制统一路径
 - 可视化显示 Facial-R1 能准确检测多个 AU 并合理推理出情绪，而基线 VLM 常出现 AU 误判
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前数据合成依赖 FABA-Instruct 的图像来源，多样性受限
 - BP4D 上未超过 Norface（69.3 vs 67.4），说明对实验室控制场景的泛化仍有提升空间
 - 仅支持离散情绪分类，未考虑连续维度（valence-arousal）或复合情绪

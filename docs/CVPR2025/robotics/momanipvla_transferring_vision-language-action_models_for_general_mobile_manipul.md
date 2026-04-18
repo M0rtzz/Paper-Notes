@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoManipVLA: Transferring Vision-Language-Action Models for General Mobile Manipulation
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：保持 VLA 不变，在其输出 waypoints 之上加一层双层优化器：内层用 IK 求解关节角，外层优化底盘位置使可达性最大化、运动最平滑、碰撞最少。
 
-**核心idea一句话**：VLA 生成 waypoints + 双层轨迹优化（可达性/平滑/碰撞）= 低成本移动操作迁移。
+**核心 idea**：VLA 生成 waypoints + 双层轨迹优化（可达性/平滑/碰撞）= 低成本移动操作迁移。
 
 ## 方法详解
 
@@ -69,7 +69,7 @@ VLA 用少量体现特定（embodiment-specific）数据微调。底盘优化无
 - **零数据底盘规划**——不需要移动操作数据，靠优化器在推理时求解
 - **VLA 复用的策略**——不重新训练 VLA，只加一层规划优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖视觉分割掩码质量（无掩码成功率降至 23.7%）
 - 轨迹长度限制 <150 步
 - 需要体现特定微调

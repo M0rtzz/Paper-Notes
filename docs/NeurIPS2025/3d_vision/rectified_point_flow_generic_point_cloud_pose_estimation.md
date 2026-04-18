@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rectified Point Flow: Generic Point Cloud Pose Estimation
 description: >-
@@ -98,7 +98,7 @@ Pipeline 分为两个阶段：
 - **联合训练**跨不同部件定义的数据集学到可迁移的几何知识，这是生成式方法的独特优势
 - 轻量的重叠预测预训练比 GARF 的物理模拟预训练更可扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SVD 恢复位姿是后处理步骤，可能引入误差
 - 锚定部件的选择（最大体积）在实际应用中可能不现实

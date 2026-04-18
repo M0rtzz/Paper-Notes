@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DPAD: Discriminative Perception via Anchored Description for Reasoning Segmentation
 description: >-
@@ -101,7 +101,7 @@ GRPO优化，采样组大小G用于组内相对排名。训练基于标准的RL 
 - Anchored description同时服务于两个目的：(1)作为R_dpad的计算媒介；(2)作为可解释性输出供用户理解模型推理
 - 推理链长度减少42%意味着推理时间也相应缩短，实用价值高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - R_dpad是二值奖励(0/1)，丢失了判别性程度的连续信号，可探索smooth reward如R_dpad=σ(α·Δ)
 - GT box用于计算V_ROI，部署时需用predicted box替代，可能引入噪声
 - CLIP的视觉-语言对齐能力限制了R_dpad的上限——对于CLIP无法良好区分的细粒度差异，R_dpad可能失效

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EffiVLM-Bench: A Comprehensive Benchmark for Evaluating Training-Free Acceleration in Large Vision-Language Models
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**：各加速方法各自为政地评估，缺乏统一框架和全面指标，无法指导实际部署选择
 
-**核心idea一句话**：构建统一的评估框架，从性能、泛化性、忠诚度、效率四个维度系统对比 LVLM 加速方法
+**核心 idea**：构建统一的评估框架，从性能、泛化性、忠诚度、效率四个维度系统对比 LVLM 加速方法
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ EffiVLM-Bench 评估两类训练免加速方法：(1) Token 压缩 — 包括 to
 - **TTFT vs 解码时间的分解分析**很有洞察力：Token pruning 主要加速 TTFT（prefill），KV cache 主要加速解码。这意味着实际部署应根据任务特点（短回答 vs 长文本）选择不同压缩策略
 - **Pareto 最优分析**直接指导部署决策，比仅报告单一指标实用得多
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 参数压缩只评估了 LLM backbone，未涉及视觉编码器的压缩
 - 未评估 token 压缩与参数压缩的**组合使用**效果
 - 模型以 7B-38B 为主，未覆盖更小（1-3B）或更大（70B+）的模型

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Certification for Differentially Private Prediction in Gradient-Based Training
 description: >-
@@ -124,7 +124,7 @@ $$z \sim \text{Cauchy}\left(\frac{6 \exp(-\epsilon k'/6)}{\epsilon}\right)$$
 3. **理论基础坚实**：从参数空间界到预测稳定性再到平滑敏感度，形成完整的认证链条，每一步都有严格的理论保证
 4. **计算可行**：AGT 单次运行仅为标准训练的 2-4 倍，总计 20-40 倍即可获得大部分隐私收益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **多分类性能有限**：当前仅考虑二分类，多分类交叉熵的区间松弛特别松，推广到多分类后界可能显著变差
 2. **大 batch / 少 epoch 依赖**：界传播在每次迭代中取最坏情况，要获得有意义的保证需使用更大 batch 或更少 epoch

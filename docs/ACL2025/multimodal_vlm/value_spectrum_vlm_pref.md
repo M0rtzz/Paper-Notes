@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Value-Spectrum: Quantifying Preferences of Vision-Language Models via Value Decomposition
 description: >-
@@ -135,7 +135,7 @@ tags:
 4. **ISQ 策略的设计思路有价值**：通过多维度打分引导模型进行更深层次的角色扮演
 5. **VLM vs LLM 对比揭示了多模态对价值偏好的影响**：不同于简单假设"VLM = LLM + 视觉"
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **偏好分数的有效性依赖 VLM 的 yes/no 回答质量**：低能力模型可能给出无意义的回答（如 Blip-2）
 2. **社交媒体推荐系统是黑盒**：无法完全控制实验变量
 3. **仅使用短视频截图而非完整视频**：可能丢失时序信息

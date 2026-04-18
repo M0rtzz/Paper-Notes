@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synthia: Novel Concept Design with Affordance Composition
 description: >-
@@ -112,7 +112,7 @@ Synthia 在新颖性和连贯性上分别取得 **25.1% 和 14.7%** 的人工评
 3. **课程学习有效**：从易到难的 affordance 组合训练策略显著优于随机训练
 4. **推理简洁**：推理时无需复杂提示或负约束，仅需 affordance 关键词
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据依赖 DALL-E 生成的伪新颖图像，质量受限于 DALL-E 本身
 - 本体构建需要人工设计，扩展到更多领域成本较高

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Score-informed Neural Operator for Enhancing Ordering-based Causal Discovery
 description: >-
@@ -99,7 +99,7 @@ SciNO 分两步：(1) 在光滑函数空间中训练神经算子来近似 score 
 - **LLM 与统计因果推理的桥梁**：概率控制算法优雅地融合数据驱动和语义先验
 - 36 页，18 图，12 表，实验极为详尽
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ANM 假设限制了适用范围（非加性噪声场景）
 - 大规模图（d>100）的可扩展性待验证
 - LLM 先验依赖领域知识质量

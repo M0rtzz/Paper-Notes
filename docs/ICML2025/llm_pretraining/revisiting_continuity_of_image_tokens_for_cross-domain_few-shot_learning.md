@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning
 description: >-
@@ -79,7 +79,7 @@ ReCIT (Re-visiting Continuity of Image Tokens) 在训练和推理时对图像 to
 - 解释了为什么 ViT 在大域差距下表现退化的深层原因（大模式不可迁移）
 - 提供了一种新的理解 ViT 特征层次的视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 连续性破坏程度的最优选择依赖域差距的先验知识
 - 对域差距小的情况可能有负面影响
 - 仅在 CDFSL 上测试，对标准 few-shot 或 full-data 场景效果未知

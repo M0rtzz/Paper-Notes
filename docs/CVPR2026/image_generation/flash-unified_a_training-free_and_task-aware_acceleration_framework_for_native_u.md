@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models
 description: >-
@@ -132,7 +132,7 @@ FlashU 是免训练、任务感知的加速框架：
 3. **完全免训练**：仅需少量校准，即插即用
 4. **V-Norm 代理**：巧妙解决 Flash Attention 下注意力不可用问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 生成性能有下降（GenEval 0.76 -> 0.72）
 2. 仅在 Show-o2 验证，泛化待验证

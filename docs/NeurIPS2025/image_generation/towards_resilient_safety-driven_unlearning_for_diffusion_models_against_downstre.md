@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Resilient Safety-Driven Unlearning for Diffusion Models Against Downstream Fine-tuning
 description: >-
@@ -120,7 +120,7 @@ ResAlign在标准卸载目标上增加一个韧性项：$\theta^* = \arg\min_\th
 - **平坦极小值的安全性解释**提供了直觉上通俗、数学上严谨的理解
 - **元学习配置分布的设计**展现了对实际使用场景的深入思考
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 完美的韧性面对恶意微调（使用有害数据）是固有困难的——攻击者可以将恢复有害能力视为新的学习任务
 - 主要在SD v1.4上实验，虽然验证了跨模型泛化，但最新的Flux等模型未测试

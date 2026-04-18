@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Click-Gaussian: Interactive Segmentation to Any 3D Gaussians
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{cont}} + \lambda_1 \mathcal{L}
 3. **实用性极强**：10ms级别的交互响应时间使得真正的实时3D编辑成为可能
 4. **stop gradient的巧妙运用**：在细级负对比学习中对粗级分量使用stop gradient，避免了粗-细级特征间的梯度冲突
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖预训练3DGS的质量，若单个高斯表示多个语义不同但颜色相似的物体，特征学习会受阻
 2. 只有两级粒度，缺少中间层级，对于需要多层级分割的复杂场景可能需要多次交互

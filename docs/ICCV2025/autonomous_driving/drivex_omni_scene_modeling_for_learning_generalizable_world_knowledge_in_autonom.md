@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DriveX: Omni Scene Modeling for Learning Generalizable World Knowledge in Autonomous Driving
 description: >-
@@ -61,7 +61,7 @@ DriveX 包含两阶段训练：
 
 #### 1. Omni Scene Modeling (OSM)
 
-- **做什么**：统一多模态监督信号来训练 World Encoder
+- **功能**：统一多模态监督信号来训练 World Encoder
 - **核心思路**：从 BEV 特征 $B_t$ 通过 Channel-to-Height 模块转换为体素特征 $F_t$，沿射线采样路径点，利用体积渲染预测深度、语义和颜色：
   $$\alpha_i = \sum_{j=1}^{n} \tau_j (1-\exp(-\sigma_{i,j}\delta_j))\alpha_{i,j}$$
   相机视角射线优化语义+颜色损失，LiDAR 视角射线优化深度损失
@@ -69,7 +69,7 @@ DriveX 包含两阶段训练：
 
 #### 2. 解耦潜在世界建模
 
-- **做什么**：将表示学习和时序动态建模分开训练
+- **功能**：将表示学习和时序动态建模分开训练
 - **核心思路**：
     - 先训练 World Encoder（40 epochs），获得高质量 BEV 表征
     - 再训练 Future Decoder（24 epochs），在冻结的 BEV 空间建模时序演化
@@ -80,13 +80,13 @@ DriveX 包含两阶段训练：
 
 #### 3. Dynamic-aware Ray Sampling
 
-- **做什么**：在未来时间步的场景建模中，优先采样运动显著区域的射线
+- **功能**：在未来时间步的场景建模中，优先采样运动显著区域的射线
 - **核心思路**：使用离线跟踪器识别运动物体的 RoI，在这些区域额外采样射线
 - **设计动机**：大部分射线属于静态背景，动态物体容易被忽略
 
 #### 4. Future Spatial Attention (FSA)
 
-- **做什么**：统一范式将世界模型预测集成到下游任务
+- **功能**：统一范式将世界模型预测集成到下游任务
 - **核心思路**：任务查询 $q$ 通过空间注意力从多个未来时间步的 BEV 特征聚合信息：
   $$q := q + \sum_{k=1}^{K}\sum_{j=1}^{J} A_{kj} W \hat{B}_{t+k}[T_t^{t+k}(p + \Delta p_{kj})]$$
 - **设计动机**：不同任务可通过调整采样偏移 $\Delta p_{kj}$ 来适配，无需修改已有架构
@@ -150,7 +150,7 @@ DriveX 包含两阶段训练：
 3. **解耦训练的简洁高效**：相比联合训练使用相同总时间，解耦方案效果显著更好，是一个实用且可推广的设计策略
 4. **FSA 范式的统一性**：同一个世界模型可同时服务占据预测、流估计和规划，仅需调整采样偏移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了 nuScenes 和 NAVSIM**：未在更大规模数据集（如 Waymo、Argoverse）上验证
 2. **推理延迟增加约 42-48ms**：对实时性要求极高的场景仍有优化空间

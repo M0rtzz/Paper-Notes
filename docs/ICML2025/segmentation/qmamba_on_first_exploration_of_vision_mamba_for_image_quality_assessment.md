@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QMamba: On First Exploration of Vision Mamba for Image Quality Assessment
 description: >-
@@ -118,7 +118,7 @@ StylePrompt 仅用 4% 参数即达到 Full tuning 99% 的性能。
 3. **StylePrompt 设计精巧**：基于"域偏移≈特征风格偏移"的洞察，仅通过调节均值/方差即可高效迁移，3.83M 参数击败需 28.33M 的 Conv_Prompt
 4. **效率优势明显**：QMamba-T 仅 4.47G FLOPs 即超越 17.58G 的 ViT-B 和 15.47G 的 Swin-B
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证图像质量评估**：未扩展到视频质量评估（VQA）或音频质量评估，SSM 的序列建模特性理应适合此类任务
 2. **数据集规模有限**：IQA 领域标注数据稀缺，未探索大规模预训练的效果

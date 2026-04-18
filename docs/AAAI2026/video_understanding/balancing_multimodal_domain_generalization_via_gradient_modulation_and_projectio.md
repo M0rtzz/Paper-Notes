@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Balancing Multimodal Domain Generalization via Gradient Modulation and Projection
 description: >-
@@ -120,7 +120,7 @@ GMP 作为即插即用模块集成到 RNA-Net、MOOSA、SimMMDG、CMRF 后均有
 - **即插即用的通用性**：GMP 可无缝集成到多种现有 MMDG 方法中，均带来增益
 - 消融实验充分，理论分析清晰，t-SNE 可视化直观展示了效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在视频+音频两模态上验证，缺少对更多模态（如文本、IMU、深度图等）的验证
 - 超参数 $\alpha_k$、$\alpha_p$ 需在 [0,1] 上调参，在不同数据集间的敏感性需关注

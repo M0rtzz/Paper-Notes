@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Representation Dynamics of Diffusion Models via Low-Dimensional Models
 description: >-
@@ -119,7 +119,7 @@ $$\text{SNR}(\hat{x}_\theta^\star, t) \approx \frac{C_t}{(K-1)} \cdot \left(\fra
 - MoLRG数据假设虽简化但物理动机充分（低维流形+KL正则化+子空间结构）
 - 泛化-记忆的相变与表示动态的联系是一个重要的实践洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MoLRG数据假设限制了理论的直接适用性，真实图像分布远比高斯混合复杂
 - 网络参数化高度简化（相当于浅层U-Net），无法直接推广到实际的深层U-Net

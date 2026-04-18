@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IAP: Invisible Adversarial Patch Attack through Perceptibility-Aware Localization
 description: >-
@@ -118,7 +118,7 @@ $$\delta_{t+1} = \delta_t - \eta \cdot \overline{\nabla_\delta} \mathcal{L}_T \o
 - **保色更新规则简洁有效**：仅通过通道平均梯度就保持了基色不变，计算几乎零开销
 - 对防御体系的警示意义：所有 6 种 SOTA 防御在 IAP 面前几乎完全失效，说明**基于显著性的防御范式需要根本性反思**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 不考虑局部像素上下文，个别像素可能出现异常亮/暗
 - 感知感知的定位增加了计算开销（滑动窗口搜索）

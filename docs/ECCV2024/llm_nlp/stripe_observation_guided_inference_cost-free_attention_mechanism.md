@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stripe Observation Guided Inference Cost-Free Attention Mechanism
 description: >-
@@ -202,7 +202,7 @@ $$A_{enhanced}^{(h)} = A_{std}^{(h)} + \alpha^{(h)} \cdot A_{stripe}^{(h)}$$
 
 4. **极高的实用价值**：方法适用于任何基于Transformer的架构，不改变模型的推理结构，不增加部署复杂度，是一种真正可以"白嫖"性能提升的方法。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **条纹模式假设的局限性**：条纹模式的强度在不同任务和模型中可能差异较大。对于某些高度局部化的任务（如小目标检测），全局条纹模式可能不那么突出，收益可能有限。
 

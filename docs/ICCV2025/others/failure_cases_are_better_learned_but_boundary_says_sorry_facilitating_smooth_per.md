@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Failure Cases Are Better Learned But Boundary Says Sorry: Facilitating Smooth Perception Change for Accuracy-Robustness Trade-Off in Adversarial Training
 description: >-
@@ -109,7 +109,7 @@ RPAT++ vs 12 个 SOTA 方法（PreActResNet-18）：
 - **理论完备**：从局部线性性和 Lipschitz 正则化两个角度证明了 Robust Perception 的合理性
 - **即插即用**：RPAT 正则项可直接叠加到任意现有 AT 方法上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 超参数 $\alpha$ 和 $\lambda$ 的选择仍需针对不同数据集调优
 - 实验主要在相对小规模的数据集（CIFAR-10/100, Tiny-ImageNet）上，缺乏 ImageNet 规模验证

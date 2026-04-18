@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] U-F²-CBM: CLIP-Free, Label Free, Unsupervised Concept Bottleneck Models
 description: >-
@@ -80,7 +80,7 @@ tags:
 - 40+架构的大规模验证，CNN/Transformer/混合架构全覆盖
 - 推理时概念集可即时切换——真正的plug-and-play可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多义词问题（polysemy）：类名"drake"会匹配到歌手而非鸟类，依赖概念集的质量
 - 仅用类名训练MLP——虽然刻意避免信息泄露，但可能限制了语义空间的完整性
 - 概念激活是余弦相似度，缺乏校准——高激活不一定意味着高语义重要性

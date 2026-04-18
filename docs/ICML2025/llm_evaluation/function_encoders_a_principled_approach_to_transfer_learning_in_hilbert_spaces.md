@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces
 description: >-
@@ -102,7 +102,7 @@ $$L = \frac{1}{n} \sum_{\ell=1}^{n} \|f_{S_\ell} - \sum_{j=1}^{k} c_j^\ell g_j\|
 4. **不需要微调**：与 MAML 不同，推理时仅需解最小二乘，无梯度计算
 5. **冗余维度的利用**：当基函数数量 $k$ 大于源任务数时，LS 能自动利用多余维度适配 Type 3 任务，这是其他方法不具备的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **内积选择**：不同问题需手动设计内积（如 $L^2$、概率分布内积），通用性受限
 2. **基函数数量 $k$ 需调参**：$k$ 太小限制表达能力，太大增加计算和正则化难度

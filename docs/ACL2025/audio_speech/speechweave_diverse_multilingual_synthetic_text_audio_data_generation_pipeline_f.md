@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpeechWeave: Diverse Multilingual Synthetic Text & Audio Data Generation Pipeline for Training Text to Speech Models
 description: >-
@@ -108,7 +108,7 @@ SpeechWeave 包含四个核心模块：关键词采样器（Keyphrase Sampler）
 - **关键词采样的去重策略**：使用模糊搜索而非语义嵌入进行去重效果更好，说明多样性控制需要考虑字面层面的差异
 - **跨语言语音克隆的实用价值**：用英语参考音频标准化其他语言语音，大幅降低了多语言TTS数据的制作门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实体采样器支持的语义类数量有限（仅9种），扩展新类型需要手动编写规则
 - 仅在英语和西班牙语上评估，形态复杂的语言（如阿拉伯语、日语）效果未知

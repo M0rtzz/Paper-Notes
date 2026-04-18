@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Task-Agnostic Pre-training and Task-Guided Fine-tuning for Versatile Diffusion Planner
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{BC}}(\theta) = \mathbb{E}_{k, \mathbf{a}_\mu^k \sim p_\mu} 
 3. **数据效率高**：仅 100k 步微调即可达到 59.26%，性能几乎不降
 4. **无需奖励标签预训练**：降低了多任务数据收集的成本门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅在仿真环境验证**：Meta-World/Adroit 均为仿真，未在真实机器人上测试
 2. **在线微调仍需环境交互**：每个下游任务需要在线 RL 环境，部署到真实场景的 sim-to-real gap 未讨论
 3. **分类存疑**：论文实际是 RL 规划而非图像生成，当前文件夹归类为 image_generation 可能不准确

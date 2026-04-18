@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InstantHDR: Single-forward Gaussian Splatting for High Dynamic Range 3D Reconstruction
 description: >-
@@ -102,7 +102,7 @@ $$\tilde{\boldsymbol{t}}_v^A = \text{softmax}\left(\frac{QK^\top}{\sqrt{d}}\righ
 - **MetaNet 预测色调映射参数**: 将通常需要逐场景优化的 CRF 学习变为前馈预测，区别于固定/可学习参数的传统做法
 - **HDR-Pretrain 数据集填补空白**: 168场景远超现有 HDR 数据集（最大仅14场景），推动前馈 HDR 研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在密集视角（18-view）下仍略逊于 GaussianHDR（-0.17 dB），可能受限于单分支色调映射
 - Zero-shot HDR 输出亮度偏高，前馈模型预测极端辐射值仍是开放问题

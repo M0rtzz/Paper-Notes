@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GREAT: Geometry-Intention Collaborative Inference for Open-Vocabulary 3D Object Affordance Grounding
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: Affordance 的动态性和多样性使得仅靠数据驱动的模式匹配难以泛化到开放词汇场景。
 
-**本文要解决什么**: 在任意指令下定位 3D 物体的 affordance 区域，特别是对未见物体和未见 affordance 的泛化。
+**本文目标**: 在任意指令下定位 3D 物体的 affordance 区域，特别是对未见物体和未见 affordance 的泛化。
 
 **切入角度**: 模拟人类认知——用 MLLM 的世界知识进行多步推理（CoT），挖掘几何属性和交互意图，形成可迁移的 affordance 知识。
 
-**核心 idea 一句话**: 用 MHACoT 微调 MLLM 挖掘物体几何属性（为什么这个部位能交互）和交互意图（还能怎样交互），将推理出的知识注入点云特征实现开放词汇 affordance 定位。
+**核心 idea**: 用 MHACoT 微调 MLLM 挖掘物体几何属性（为什么这个部位能交互）和交互意图（还能怎样交互），将推理出的知识注入点云特征实现开放词汇 affordance 定位。
 
 ## 方法详解
 
@@ -133,7 +133,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{focal} + \mathcal{L}_{dice}$$
 4. **不依赖 affordance 类别标签**: 损失函数直接监督热力图，天然适配开放词汇设置
 5. **可视化解释性强**: 注意力图清晰展示了 CoT 各步骤对模型关注区域的影响
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. MLLM 推理需要为每张交互图像运行四次 prompt，效率较低
 2. PointNet++ 和 ResNet18 作为特征提取器较为基础，换用更强的 backbone 可能效果更好

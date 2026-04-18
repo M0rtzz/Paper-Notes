@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Affordance-Guided Coarse-to-Fine Exploration for Base Placement in Open-Vocabulary Mobile Manipulation
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **零样本、跨任务泛化**：不需要任何任务相关训练或微调，仅靠VLM的零样本推理就能处理pick-and-place和articulation两大类任务
 - 实验中发现的insight有价值：**VLM无法自动将语义理解转化为空间推理**，必须依赖显式的投射机制——这对后续VLM在机器人中的应用有通用启示
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅仿真验证**：所有实验在Isaac Sim中完成，没有真实物理机器人实验，sim-to-real gap未探讨
 - **目标位置假设已知**：系统假设目标物体的2D位置由模拟器直接提供，回避了开放世界中的目标检测和定位问题

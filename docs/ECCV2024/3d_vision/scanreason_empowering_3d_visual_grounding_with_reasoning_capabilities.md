@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ScanReason: Empowering 3D Visual Grounding with Reasoning Capabilities
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：3D 场景理解需要同时具备推理能力（理解隐式意图）和定位能力（精确3D坐标）。现有 MLLM（如3D-LLM）有推理能力但定位精度差；专用 grounding 模型定位准但缺乏推理能力。
 
-**本文要解决什么？** (a) 定义 3D reasoning grounding 新任务；(b) 构建包含多种推理类型的基准数据集；(c) 设计能同时推理和精确定位的模型架构。
+**本文目标** (a) 定义 3D reasoning grounding 新任务；(b) 构建包含多种推理类型的基准数据集；(c) 设计能同时推理和精确定位的模型架构。
 
 **切入角度**：将推理和定位拆分为两个协作模块——先推理"要找什么"，再回头看3D场景精确定位。
 
-**核心idea一句话**：用 MLLM 做视觉中心的推理生成 grounding query，再通过几何增强的 look-back 机制在 3D 点云中精确定位目标。
+**核心 idea**：用 MLLM 做视觉中心的推理生成 grounding query，再通过几何增强的 look-back 机制在 3D 点云中精确定位目标。
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ $\mathcal{L} = \lambda_{text}\mathcal{L}_{text} + \lambda_{det}\mathcal{L}_{det}
 - **Chain-of-Grounding**：将 CoT 的思路从纯文本推理扩展到"推理+感知"交替——感知结果反馈推理，形成更强的闭环。这个思路可以泛化到其他需要多轮感知-推理的任务
 - **5种推理类型的层次化设计**：从基础（空间+功能）到高级（逻辑+情感+安全），提供了评估具身AI推理能力的系统性框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 整体精度仍然较低（best Acc@0.25 只有 30.62），离实用有较大距离
 - ScanReason 数据集由 GPT-4 自动生成，可能存在标注噪声和偏差
 - CoG 目前只做两轮推理-定位交替，更复杂的场景可能需要更多轮

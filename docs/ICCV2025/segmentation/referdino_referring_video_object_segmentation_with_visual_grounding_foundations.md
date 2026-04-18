@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReferDINO: Referring Video Object Segmentation with Visual Grounding Foundations
 description: >-
@@ -126,7 +126,7 @@ ReferDINO在GroundingDINO基础上新增三个模块：
 - **查询剪枝的巧妙设计**：复用解码器自注意力权重计算置信度，零额外计算开销
 - **实时性能**：51 FPS的推理速度使其可应用于实时视频场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 骨干网络冻结 + LoRA微调可能限制了对特定RVOS场景的适配深度
 - 记忆增强追踪器使用动量更新，长视频中可能存在漂移问题

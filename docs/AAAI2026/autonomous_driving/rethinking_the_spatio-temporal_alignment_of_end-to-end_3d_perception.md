@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking the Spatio-Temporal Alignment of End-to-End 3D Perception
 description: >-
@@ -141,7 +141,7 @@ $$B_{t,t-1} = \bar{B}_{t,t-1} + \Phi_r(Q_{t,t-1})$$
 - **恶劣天气鲁棒性**：在nuScenes-C Snow条件下，HAT的运动建模增强使NDS提升5.0%，弥补了语义被破坏时的感知退化
 - **低额外开销**：仅增加7ms延迟（基线111ms），具有实际部署可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **运动模型库固定**：MML中的5种模型是预定义的，未涉及数据驱动的运动模型学习或动态模型库扩展
 - **仅验证camera-only方案**：未在LiDAR或多模态融合设定下验证HAT的效果

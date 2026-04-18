@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Relative Error Fair Clustering in the Weak-Strong Oracle Model
 description: >-
@@ -60,19 +60,19 @@ tags:
 
 #### 1. Coreset 构造
 
-- **做什么**：将原始 $n$ 个点压缩为加权小样本集 $\mathcal{S}$，满足 $\text{fair}_k(\mathcal{S}) \leq (1+\varepsilon) \cdot \text{fair}_k(\mathcal{X})$
+- **功能**：将原始 $n$ 个点压缩为加权小样本集 $\mathcal{S}$，满足 $\text{fair}_k(\mathcal{S}) \leq (1+\varepsilon) \cdot \text{fair}_k(\mathcal{X})$
 - **核心思路**：基于弱预言机广泛采样建立粗略距离估计，再在关键点处调用强预言机纠偏，确保公平约束在 coreset 上也被维持
 - **设计动机**：直接对全数据做公平聚类需 $O(n^2)$ 或更多强查询；coreset 把规模缩到 $\text{poly}(k \log n / \varepsilon)$，后续处理的查询也相应减少
 
 #### 2. 公平约束维持
 
-- **做什么**：保证 coreset 中各受保护群体的组成与原集合成比例
+- **功能**：保证 coreset 中各受保护群体的组成与原集合成比例
 - **核心思路**：在采样和加权过程中，按群体分层抽样并调整权重，确保公平条件在加权意义下被保持
 - **与旧方法区别**：Bateni 等人的 Meyerson sketch 完全不考虑公平，本文将公平约束"内建"到 coreset 构造中
 
 #### 3. 从常数因子到相对误差的跃迁
 
-- **做什么**：将近似质量从 $C > 10$ 提升到 $1 + \varepsilon$
+- **功能**：将近似质量从 $C > 10$ 提升到 $1 + \varepsilon$
 - **核心思路**：Meyerson sketch 的常数因子来自其贪心框架的固有松弛，无法通过参数调优突破。本文采用全新的 coreset 构造范式，通过更精细的采样概率设计和误差传播分析控制各阶段偏差叠加
 - **关键定理（Theorem 1）**：存在算法构造 $(1+\varepsilon)$-coreset，大小为 $\text{poly}(k \log n / \varepsilon)$，所需强预言机查询数同为 $\text{poly}(k \log n / \varepsilon)$
 
@@ -112,7 +112,7 @@ tags:
 - **方法学普适性**：核心思想（弱信号广覆盖 + 强信号精纠偏）可迁移到其他需要异质信息源的 ML 场景
 - **技巧可复用**：分层采样维持公平约束的做法可直接用于其他公平优化问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 缓存在 Theorem 1 处截断，完整的证明链条、下界结果、实验评估未能复原
 - $\text{poly}(k \log n / \varepsilon)$ 的具体多项式次数在工程实现中很关键，需查阅完整版本

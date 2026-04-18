@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HollowFlow: Efficient Sample Likelihood Evaluation using Hollow Message Passing
 description: >-
@@ -113,7 +113,7 @@ $$\text{RT}^{step}(L(G_k)) = \mathcal{O}(n(T^{lg} k^2 + dk))$$
 - 框架具有极强的通用性：任何等变GNN或注意力架构都可以改造为NoBGNN（附录中展示了注意力机制的适配）
 - 理论加速和实验加速高度一致，验证了分析的正确性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - kNN图引入了局部性假设，对长程交互系统（如含库仑力的分子）可能不适用
 - 每步消息传递后需要移除边，可能在大规模系统中带来额外开销

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] xChemAgents: Agentic AI for Explainable Quantum Chemistry
 description: >-
@@ -104,7 +104,7 @@ Validator 不只做二分类（通过/拒绝），而是给出结构化批评，
 
 5. 框架通用性：Selector-Validator 模式可迁移到其他科学特征选择任务。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 描述符候选池固定为 9 个，扩展到更大规模后 Agent 选择负担增大。
 2. CLIP 编码器对化学文本的理解深度有限。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The LLM Bottleneck: Why Open-Source Vision LLMs Struggle with Hierarchical Visual Recognition
 description: >-
@@ -90,7 +90,7 @@ Vision LLM (VLLM)统一了多种视觉任务，具有构建这样的通用系统
 - HCA作为评估指标比叶精度更严格也更反映真实需求
 - 发现LLM嵌入中已编码了层次信息但无法解码，暗示可能通过特定训练策略激活
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 作者明确指出结论主要针对开源LLM，不应外推到商业LLM（因无法探测其内部表示）
 - 四选一VQA评估方式可能低估了开放生成场景下的层次一致性问题
 - 未深入探索如何有效注入分类法知识到LLM中

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ARGMatch: Adaptive Refinement Gathering for Efficient Dense Matching
 description: >-
@@ -192,7 +192,7 @@ ArgMatch+在PCK@0.5px上超越RoMa 1.3%，在最精细粒度达到SOTA。
 3. **效率与精度的平衡**：以RoMa 1/6的计算成本实现可比精度，充分展现了设计的高效性
 4. **幻觉匹配现象**：诚实讨论了局部一致回归导致的遮挡区域幻觉匹配问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **幻觉匹配**：局部一致回归可能在遮挡区域传播邻域信息产生虚假匹配，确定性图的学习因MegaDepth噪声标注而不够理想
 2. 仅训练到1/2分辨率，全分辨率恢复依赖RoMa的卷积模块（未训练）

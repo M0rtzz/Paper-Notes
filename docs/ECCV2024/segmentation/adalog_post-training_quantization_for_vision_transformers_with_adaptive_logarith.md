@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaLog: Post-Training Quantization for Vision Transformers with Adaptive Logarithm Quantizer
 description: >-
@@ -82,7 +82,7 @@ AdaLog作用于标准ViT block中的post-Softmax层(MatMul2)和post-GELU层(FC2)
 - FPCS的beam search思想迁移到量化超参搜索，兼顾了搜索精度和效率
 - 在3-bit极端低bit下，其他方法完全崩溃而AdaLog仍有合理精度，说明非均匀量化在低bit场景的核心优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在post-Softmax和post-GELU层使用AdaLog，其他层仍用均匀量化器——是否可以对所有层统一使用自适应非均匀量化？
 - 实验仅覆盖分类/检测/分割，未验证在生成类任务(如扩散模型)或更大规模模型(如VLM)上的效果
 - 3-bit下绝对精度仍然不高（ViT-S仅13.88%），实用性有限，2-bit几乎不可用

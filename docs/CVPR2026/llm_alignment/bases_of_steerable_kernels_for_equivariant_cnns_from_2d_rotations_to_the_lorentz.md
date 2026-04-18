@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bases of Steerable Kernels for Equivariant CNNs: From 2D Rotations to the Lorentz Group
 description: >-
@@ -120,7 +120,7 @@ $$K^{(j,l)}(g \cdot x) = \rho_j(g) K^{(j,l)}(x) \rho_l(g)^{-1}, \quad \forall g 
 3. **投影算符的物理直觉**：在 Lorentz 群情形中，互紧子就是向不同自旋子空间的投影算符，有清晰的物理图像（如正交于四速度 $u$ 的空间投影）
 4. **实用价值**：给出的基底是显式的、可直接使用的解析公式，不需要数值计算 CG 系数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏实验验证**：没有任何数值实验证明本方法在实际等变网络中的效率提升或性能表现。作者承认"needs to be shown in different experiments"
 2. **未讨论离散化/混叠问题**：实际CNN中核在离散网格上采样，论文仅处理连续情形，aliasing 问题仅一笔带过

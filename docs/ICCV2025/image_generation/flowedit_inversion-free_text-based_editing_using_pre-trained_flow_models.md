@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlowEdit: Inversion-Free Text-Based Editing Using Pre-Trained Flow Models
 description: >-
@@ -124,7 +124,7 @@ FlowEdit 的传输代价不到 inversion 的一半，同时目标分布拟合（
 3. **模型无关性**：在 SD3 和 FLUX 两个不同架构上均验证有效，迁移性极强
 4. **Cat-Dog 合成实验**优雅地展示了传输代价差异和模式保持能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **大范围编辑受限**：强结构保持在需要大幅修改的编辑（如姿态变化、背景替换）中可能成为限制
 2. **每步需两次模型前向**：分别计算 V^src 和 V^tar，推理成本是普通生成的约 2 倍

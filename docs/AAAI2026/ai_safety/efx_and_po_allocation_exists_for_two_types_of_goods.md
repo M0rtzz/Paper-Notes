@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EFX and PO Allocation Exists for Two Types of Goods
 description: >-
@@ -109,7 +109,7 @@ EFX（Envy-Freeness up to Any good）是 EF 的一个重要松弛：允许代理
 - **Proper allocation 框架**：引入的 proper allocation 概念统一了 PO 的证明，所有中间分配和最终分配都自动满足 PO
 - **嫉妒方向单调性**：发现 split 分配族中嫉妒方向的单调性质，这是二分搜索可行的关键洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **物品类型受限**：仅适用于两种物品类型，距离一般情形（任意多类型或任意物品）仍有很大距离
 - **正估值假设**：要求所有 $v_{i,j} > 0$，不适用于代理对某类物品估值为零的场景（已知零估值下 EFX+PO 可能不相容）

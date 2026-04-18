@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DexGrasp Anything: Towards Universal Robotic Dexterous Grasping with Physics Awareness
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：将三种物理力直接集成到扩散过程：训练时用估计的干净样本收物理约束梯度，采样时用 classifier guidance 将物理约束作为引导信号。
 
-**核心idea一句话**：表面拉力（拉手掌向物体）+ 外穿透排斥力 + 自穿透排斥力，集成到扩散训练和采样的每一步 + LLM 语义描述增强物体感知。
+**核心 idea**：表面拉力（拉手掌向物体）+ 外穿透排斥力 + 自穿透排斥力，集成到扩散训练和采样的每一步 + LLM 语义描述增强物体感知。
 
 ## 方法详解
 

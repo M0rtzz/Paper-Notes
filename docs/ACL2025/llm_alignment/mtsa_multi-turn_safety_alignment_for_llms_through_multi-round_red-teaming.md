@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MTSA: Multi-Turn Safety Alignment for LLMs through Multi-Round Red-Teaming
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}_{adv} = -\log\sigma\left(\beta\log\frac{\pi_{t+1}^{adv}(q_w|s_h^{a
 3. **同时优化攻防双方的对抗框架**：红队模型和目标模型在迭代中共同进化，形成"安全军备竞赛"，这比单方面防御更能发现和修补漏洞
 4. **红队模型仅7B参数但攻击能力超越所有基线**（包括攻击GPT-4o和Claude-3.5），展示了思维引导策略的强大效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在7B规模的模型上验证攻防效果，更大规模模型（如70B+）的适用性未知
 - 攻击策略分类为4类可能不够全面，更多攻击模式（如社会工程学、多模态攻击）未覆盖

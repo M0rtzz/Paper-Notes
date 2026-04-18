@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation
 description: >-
@@ -49,7 +49,7 @@ BiCLIP 输入一张医学图像及其临床文本描述。文本通过冻结的 
 
 #### 1. BMF（Bidirectional Multimodal Fusion，双向多模态融合）
 
-**做什么**：实现视觉信息反向精炼文本表示的闭环交互。
+**功能**：实现视觉信息反向精炼文本表示的闭环交互。
 
 **核心思路**：
 - **前向融合**：拼接文本嵌入 $\mathbf{t}$ 和图像嵌入 $\mathbf{i}$ 得到联合表示 $\mathbf{z} = [\mathbf{t}; \mathbf{i}]$，通过 MLP $g_{\text{BMF}}(\cdot)$ 预测残差 $\Delta\mathbf{t} = g_{\text{BMF}}(\mathbf{z})$，精炼文本嵌入 $\mathbf{t}' = \mathbf{t} + \Delta\mathbf{t}$
@@ -60,7 +60,7 @@ BiCLIP 输入一张医学图像及其临床文本描述。文本通过冻结的 
 
 #### 2. IAC（Image Augmentation Consistency，图像增强一致性）
 
-**做什么**：约束中间特征在不同强度增强下保持一致，提升对外观变化的鲁棒性。
+**功能**：约束中间特征在不同强度增强下保持一致，提升对外观变化的鲁棒性。
 
 **核心思路**：
 - **输入构造**：伪图像 $\hat{\mathbf{x}}$ 与原始图像 $\mathbf{x}$ 沿通道维拼接得到 $\mathbf{x}_{\text{cat}}$，先做空间增强（联合对图像和 mask 操作保持空间对齐），再对真实图像部分分别施加弱增强 $\mathcal{A}_w$ 和强增强 $\mathcal{A}_s$，伪图像部分做归一化 $\mathcal{N}_p$ 作为稳定语义参考：
@@ -128,7 +128,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \lambda_{\text{gen}}\m
 - **IAC 的弱/强增强一致性**思路简洁有效，类似 FixMatch 的 consistency regularization 思想引入到多模态医学分割
 - 在极低标注（1%）和强噪声（低剂量 CT）下的鲁棒性令人印象深刻，打击痛点准确
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 COVID-19 CT 两个相关数据集上验证，缺乏跨器官/跨模态（MRI、X-ray、超声）的泛化验证
 - 文本编码器冻结 CXR-BERT（胸片预训练），泛化到非胸部影像可能需要更通用的医学语言模型
 - 伪图像生成器依赖 GT 监督信号，在无标签场景（如自监督预训练）中无法直接应用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UFVideo: Towards Unified Fine-Grained Video Cooperative Understanding with Large Language Models
 description: >-
@@ -32,11 +32,11 @@ UFVideo 是首个统一全局、像素级和时序级三种粒度视频理解能
 
 3. **核心矛盾**：不同粒度的视频知识实际上可以互补——细粒度时序知识能增强对引用目标的理解，全局视频知识能为细粒度任务提供语义支持。但现有模型在生成时各粒度是隔离的，没有显式关联。
 
-4. **本文要解决什么？** 如何在单一模型中统一全局（global）、像素级（pixel-level）、时序级（temporal-level）三种粒度的视频理解，并且让它们协同工作。
+4. **本文目标** 如何在单一模型中统一全局（global）、像素级（pixel-level）、时序级（temporal-level）三种粒度的视频理解，并且让它们协同工作。
 
 5. **切入角度**：设计统一的视觉-语言引导对齐策略，通过特殊 token 区分不同任务的输入输出，共享 LLM backbone 实现多任务联合训练。
 
-6. **核心idea一句话**：用统一的 token 设计（`<Ref>` / `<Seg>` / `<Temp>`）将全局问答、像素级分割、时序定位三类任务统一到同一个 Video LLM 中，实现多粒度协同视频理解。
+6. **核心 idea**：用统一的 token 设计（`<Ref>` / `<Seg>` / `<Temp>`）将全局问答、像素级分割、时序定位三类任务统一到同一个 Video LLM 中，实现多粒度协同视频理解。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ UFVideo 以 LLM 为骨架，视觉编码器将视频编码为离散 token 与文
 - **SAM2 decoder 作为分割桥梁**：直接让 LLM 输出 mask 不现实，通过提取 `<Seg>` 位置的 embedding 送入 SAM2 decoder，巧妙地在 language space 和 pixel space 之间建立映射
 - **相对时序 token 设计**：将视频时长归一化到固定长度后编码，使模型能处理不同长度视频的时序定位，且可与文本 token 统一生成
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前模型在 UFVideo-Bench 上的表现表明多粒度协同理解仍有很大提升空间，特别是 PixTRQA 同时需要时序检索+分割+问答的任务难度很高
 - 视频帧数和分辨率受限于 GPU 内存，对超长视频的处理能力有限
 - 分割质量受限于 SAM2 decoder 的能力上界

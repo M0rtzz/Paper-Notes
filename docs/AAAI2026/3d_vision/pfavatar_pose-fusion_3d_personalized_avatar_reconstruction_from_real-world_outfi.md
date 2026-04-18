@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PFAvatar: Pose-Fusion 3D Personalized Avatar Reconstruction from Real-World Outfit-of-the-Day Photos
 description: >-
@@ -53,7 +53,7 @@ PFAvatar 包含两个阶段：
 
 #### 1. **ControlBooth：姿态感知扩散模型**
 
-**做什么**：训练一个能够根据任意姿态条件生成个性化人物图像的扩散模型。
+**功能**：训练一个能够根据任意姿态条件生成个性化人物图像的扩散模型。
 
 **数据预处理流程**：
 - 使用 Ground-SAM 分离前景人物与背景（仅隔离人体区域，避免细粒度部件分割的不一致问题）
@@ -74,7 +74,7 @@ $$\mathcal{L}_{\text{cppl}} = \mathbb{E}\left[\lambda w'_t \|\mathcal{D}_\theta(
 
 #### 2. **BoothAvatar：NeRF 表示与3D-SDS蒸馏**
 
-**做什么**：从微调好的扩散模型中蒸馏出一个标准A-pose下的3D NeRF 头像。
+**功能**：从微调好的扩散模型中蒸馏出一个标准A-pose下的3D NeRF 头像。
 
 **选择 NeRF 而非网格的理由**：
 - NeRF 的体密度天然处理遮挡（通过transmittance），避免生成假表面
@@ -89,7 +89,7 @@ $$\nabla_{\boldsymbol{\theta}} \mathcal{L}_{\text{3D-SDS}} = \mathbb{E}\left[w(t
 
 #### 3. **局部几何约束（Local Geometry Loss）**
 
-**做什么**：解决 SDS 优化不稳定导致手部、面部等精细结构退化的问题。
+**功能**：解决 SDS 优化不稳定导致手部、面部等精细结构退化的问题。
 
 基于预定义的身体部件网格，通过 margin ranking loss 将 NeRF 密度与部件网格对齐：
 
@@ -155,7 +155,7 @@ PFAvatar 在所有评估指标上均显著领先。
 3. **CPPL 的正则化思想**：用预训练模型的自生成数据做正则化，是解决少样本微调过拟合的优雅方案。
 4. **局部几何约束**：巧妙利用人体部件的先验知识稳定 SDS 优化中的局部结构。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. NeRF 表示相对较新，缺乏传统网格方法的丰富操作工具链（虽然文中展示了动画能力）。
 2. 依赖 GPT-4V 生成文本描述，增加了成本和对外部API的依赖。

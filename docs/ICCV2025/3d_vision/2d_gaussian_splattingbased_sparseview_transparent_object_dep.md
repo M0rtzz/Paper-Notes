@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L} = a_\text{color}\mathcal{L}_c + a_\text{mask}\mathcal{L}_m + a_\te
 - **场景更新仅需单张图像**：结合物理仿真，用单张鸟瞰图即可更新场景，精度达到使用6张图的baseline的1.5倍
 - 用非字典词"786dvpteg"作为透明物体的文本prompt是一个聪明的工程trick
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **严重依赖分割质量**：分割失败（tracking failure、强光照、边界模糊）会直接导致重建和物理仿真失败
 - **只能处理部分物体移除或轻微运动**：无法处理更复杂的动态场景（如任意物体的添加、大幅移动）

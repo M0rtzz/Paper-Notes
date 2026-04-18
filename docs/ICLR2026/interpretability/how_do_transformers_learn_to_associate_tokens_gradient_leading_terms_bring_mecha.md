@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Do Transformers Learn to Associate Tokens: Gradient Leading Terms Bring Mechanistic Understanding
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **分布式语义假说的理论证据**：token-interchangeability基函数直接对应"在相似上下文中出现的词具有相似语义"的语言学假说，本文从训练动态的纯数学分析中自然导出了这一结论
 - **定量验证而非仅定性描述**：不仅仅是理论推导，还在真实LLM上做了系统性的定量验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 前导项近似在训练后期（权重增大后）精度下降，对完全训练后的模型解释力有限
 - 分析主要集中在训练早期阶段，训练中后期的非线性效应和特征复杂化未被充分捕捉
 - 三种基函数的分解是否适用于更大规模的模型（数十亿参数级别）需要进一步验证

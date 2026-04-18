@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AbbIE: Autoregressive Block-Based Iterative Encoder for Efficient Sequence Modeling
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：如何在不大幅增加训练成本的前提下让 Transformer 具备 test-time compute scaling 能力？
 
-**本文要解决什么？** 设计一种递归 Transformer 使得：(a) 单次迭代时等价于标准 Transformer；(b) 仅需 2 次迭代训练；(c) 推理时可扩展到任意迭代次数且性能持续提升。
+**本文目标** 设计一种递归 Transformer 使得：(a) 单次迭代时等价于标准 Transformer；(b) 仅需 2 次迭代训练；(c) 推理时可扩展到任意迭代次数且性能持续提升。
 
 **切入角度**：观察到 Transformer 的残差流自然地将原始输入信息注入每一层，这可能足以实现 Path Independence（收敛到不动点），从而无需额外投影矩阵就能递归迭代。
 
-**核心 idea 一句话**：将 Transformer 分为 Head-Body-Tail 三段，只对 Body 做递归迭代，利用 inter-iteration residual connection 确保收敛，2 次训练迭代即可实现推理时的 upward generalization。
+**核心 idea**：将 Transformer 分为 Head-Body-Tail 三段，只对 Body 做递归迭代，利用 inter-iteration residual connection 确保收敛，2 次训练迭代即可实现推理时的 upward generalization。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ tags:
 - **仅 2 次训练迭代**的设计巧妙地平衡了训练成本和推理能力。对比 0pt 需要大量迭代训练但仍无法泛化，说明关键在于架构设计（inter-iteration residual）而非训练配方。
 - **concept space 的理论框架**为 Head-Body-Tail 分割提供了合理解释，也为未来自适应选择分割点提供了方向。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅验证到 350M 模型**：scaling 到 1B+ 模型是否仍然有效尚不清楚。作者提到 200M 模型的 upward generalization 不如 350M，暗示存在一个临界模型规模。
 - **推理延迟线性增长**：$r$ 次迭代意味着推理延迟乘以 $r$（虽然参数不增加），对延迟敏感的场景不友好。
 - **ICL 改善幅度有限**：最大改善约 12%（HellaSwag），但绝对性能仍与同等规模标准模型持平。

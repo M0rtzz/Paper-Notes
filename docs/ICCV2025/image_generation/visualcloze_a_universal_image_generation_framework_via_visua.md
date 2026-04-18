@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VisualCloze: A Universal Image Generation Framework via Visual In-Context Learning
 description: >-
@@ -182,7 +182,7 @@ In-context 示例数量的影响（以 Depth→Image 为例）：
 3. **Graph200K 的图结构数据设计**巧妙解决了视觉任务稀疏问题：每张图 49 种标注、134 种重叠任务，使模型学到紧凑的共享表示
 4. **四种能力**（域内、未见泛化、多任务组合、反向生成）从同一框架中自然涌现，无需分别设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分辨率受限**：将多张图拼成网格导致每张图被 resize 到 384×384 或 512×512，精细细节可能丢失
 2. **可控性与专用模型有差距**：在 Canny→Image 任务上 F1 得分低于 OminiControl（0.36 vs 0.47），精细边缘控制不如专用模型

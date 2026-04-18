@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Long-Tailed Recognition via Information-Preservable Two-Stage Learning
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{BNS} = -\frac{1}{m+1}\left[\sum_{q_* \in \{q_i\} \cup \boldsymbol
 3. **尾部提升显著**：在不大幅牺牲头部性能的前提下，few-shot 准确率提升极为显著（CIFAR-10 上比 OTmix 高 19.9%）
 4. **鲁棒性强**：在极端不平衡（IF=200）下性能下降最小，且在小/大规模数据集上均 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Many-shot 准确率有所牺牲**：方法在头部类别上不如部分baseline，存在以头换尾的 trade-off
 2. **计算开销**：IP-DPP 需要谱分解对称随机矩阵，大规模数据集上的计算成本值得关注

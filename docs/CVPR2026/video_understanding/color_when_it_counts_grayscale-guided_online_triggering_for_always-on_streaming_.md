@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Color When It Counts: Grayscale-Guided Online Triggering for Always-On Streaming Video Sensing
 description: >-
@@ -123,7 +123,7 @@ ColorTrigger 以 8.1% 的 RGB 帧实现全彩基线 91.6% 的性能（67.49/73.6
 - **QP + 信用预算的设计**优雅地平衡了局部触发灵活性与全局预算约束
 - 完全 training-free，即插即用，与任何冻结 MLLM 兼容
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 灰度相机的分辨率和画质通常低于 RGB 相机，实际部署中的硬件异质性处理有待验证
 - 当前仅用 CLIP CLS token 做亲和分析，可能遗漏局部细节变化

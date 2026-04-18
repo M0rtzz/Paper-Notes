@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decoupling Dynamical Richness from Representation Learning: Towards Practical Measurement
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：Rich dynamics（动态丰富度）和 better representation（更好表征）经常被混为一谈，用准确率作为 richness 的代理指标。但实际上 rich dynamics 并不总意味着更好的泛化——作者在 MNIST 上展示 rich 训练模型测试准确率仅 10%，而 lazy 模型却达 74.4%。
 
-**本文要解决什么？** (1) 独立于性能的 richness 度量；(2) 计算效率高；(3) 能统一解释 neural collapse 等已知现象。
+**本文目标** (1) 独立于性能的 richness 度量；(2) 计算效率高；(3) 能统一解释 neural collapse 等已知现象。
 
 **切入角度**：从 rich 训练的低秩偏差出发——rich 动态下，最后一层之前的特征应该只学到表达学到函数所需的最少维度（低秩结构）。
 
-**核心idea一句话**：定义最小投影算子 $\mathcal{T}_{MP}$，用 CKA 衡量实际特征核与理想低秩投影之间的距离，値越小说明训练越 rich。
+**核心 idea**：定义最小投影算子 $\mathcal{T}_{MP}$，用 CKA 衡量实际特征核与理想低秩投影之间的距离，値越小说明训练越 rich。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ tags:
 - "Rich ≠ Better"的实证清楚展示 rich 训练可以把特征集中在虚假编码上反而泛化失败，打破了"rich 训练必然更好"的常识
 - BN 促进 rich dynamics 的发现可以迁移到研究其他 normalization 技术对训练动态的影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅关注最后一层特征，忽略中间层动态（作者在附录讨论了这一点）
 - 要求目标函数正交且各向同性，不涵盖不平衡标签场景
 - 可视化方法依赖 Nyström 近似，需要 $n > p$ 个样本

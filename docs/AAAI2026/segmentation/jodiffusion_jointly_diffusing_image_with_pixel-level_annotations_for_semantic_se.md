@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JoDiffusion: Jointly Diffusing Image with Pixel-Level Annotations for Semantic Segmentation Promotion
 description: >-
@@ -131,7 +131,7 @@ JoDiffusion在不需要手工标注掩码作为输入的前提下，仍然一致
 - **共享噪声机制**：对图像和标注施加相同噪声，从扩散过程本身保证结构一致性，而非依赖后处理对齐
 - **显著的性能增益**：纯合成数据训练下，VOC上比Dataset Diffusion高10+mIoU点，证明了联合生成策略在语义一致性上的根本优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖预训练文本描述**：需要BLIP-2为训练图像生成文本描述，描述质量直接影响生成效果
 - **固定分辨率训练**：所有图像和标注统一resize到512×512，限制了对高分辨率精细分割的支持

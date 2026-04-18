@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compensating Distribution Drifts in Class-incremental Learning of Pre-trained Vision Transformers
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L}_{\text{All}} = \mathcal{L}_{\text{CE}} + \gamma_{\text{kd}} \mathc
 4. **方法通用性强**：SLDC 可作为即插即用模块集成到现有 SeqFT 方法中
 5. **MLP 过拟合的观察有价值**：揭示了分布补偿中非线性程度需要精心控制，弱非线性是更好的平衡点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **高斯假设的局限**：深层特征的分布未必是高斯的，对于多模态或长尾分布的类别，高斯近似可能不够准确
 2. **转换算子的任务数据依赖**：若当前任务数据与旧任务数据分布差异极大，用当前任务数据估计的算子可能不适用于旧类

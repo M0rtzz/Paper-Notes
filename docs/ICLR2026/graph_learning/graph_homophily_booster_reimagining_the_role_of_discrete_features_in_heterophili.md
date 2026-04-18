@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRAPHITE: Graph Homophily Booster — Reimagining the Role of Discrete Features in Heterophilic Graph Learning
 description: >-
@@ -117,7 +117,7 @@ GRAPHITE 在全部 4 个异质图上显著第一，超越最佳基线 +4.17%/+5.
 - **理论完备**：同质性提升和图规模增长均有严格数学证明
 - **实验说服力强**：27 种基线全面对比，GRAPHITE 实现所有异质图 SOTA，且单独图变换就能大幅增强同质 GNN
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖离散/二值特征**：连续特征需先离散化（如 one-hot 编码），离散化粒度的选择缺乏理论指导
 - **特征维度敏感**：特征节点数等于特征维度 $|\mathcal{X}|$，极高维稀疏特征可能导致大量 hub 节点
 - **假阳性同质连接**：共享某特征但标签不同的节点也会被 2 跳连通，self-gating 虽可缓解但无法根除

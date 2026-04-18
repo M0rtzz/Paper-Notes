@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Regret Bounds for GP-UCB in Bayesian Optimization
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：$I(\mathbf{X}_T) \leq \gamma_T(\mathcal{X})$ 是最坏情况约束。GP-UCB 输入集中在最优点附近，信息增益远小于最大值。
 
-**本文要解决什么？** 利用 GP-UCB 输入集中性给出更紧信息增益上界。
+**本文目标** 利用 GP-UCB 输入集中性给出更紧信息增益上界。
 
 **切入角度**：GP-UCB 因 sublinear regret 导致输入集中在 $\mathbf{x}^*$ 附近，集中输入的信息增益 $\ll \gamma_T(\mathcal{X})$。
 
-**核心idea一句话**：利用算法自身行为导致的输入集中性，在收缩局部区域上分析信息增益。
+**核心 idea**：利用算法自身行为导致的输入集中性，在收缩局部区域上分析信息增益。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ GP-UCB：$\mathbf{x}_t = \arg\max \mu(\mathbf{x}) + \beta_t^{1/2} \sigma(\mathbf
 - **不改算法**：实际使用零成本，且不需要知道样本路径常数（vs Scarlett）
 - 可推广到 instance-dependent regret 分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Matern 核需 $2\nu+d \leq \nu^2$ 的光滑性条件。例如 $d=1$ 需 $\nu \geq 3$；$d=2$ 需 $\nu \geq (2+\sqrt{12})/2 \approx 2.73$。高维时条件更严苛
 - 不能得到 Bayesian 期望 regret $\mathbb{E}[R_T]$ 的改进，因为 Lemma 2 中样本路径常数对 $\delta_{\text{GP}}$ 的依赖关系未知
 - 仅适用于 GP-UCB，因其他算法（Thompson Sampling、Information-directed sampling）缺乏必要条件 (i)(ii) 的验证

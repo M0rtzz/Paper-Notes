@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Addressing Divergent Representations from Causal Interventions on Neural Networks
 description: >-
@@ -139,7 +139,7 @@ CL loss 将 EMD 降低约 4.5 倍，IIA 略有提升。OOD 设置中（在 dense
 
 5. **实用性**：CL loss 实现简单，可插入现有 DAS 流程，在 7B LLM 上验证有效。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏有害偏移的自动分类方法**：无法自动区分无害与有害偏移，限制实用性。
 2. **CL loss 是"广撒网"策略**：同时减少所有偏移（含无害的），非精准消除有害偏移。

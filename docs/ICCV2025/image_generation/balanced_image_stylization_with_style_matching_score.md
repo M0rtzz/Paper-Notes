@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Balanced Image Stylization with Style Matching Score
 description: >-
@@ -151,7 +151,7 @@ $$L_{style} = \mathbb{E}_{t,\epsilon}[\|\mathcal{R}(z_t^{src}, t) \odot w_t (\ep
 - **语义先验的创新用法**：用无条件与有条件扩散预测的差异作为语义重要性图
 - **像素→参数空间的统一**：同一框架支持单图优化和批量训练前馈模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖现成的 Style-LoRA，LoRA 的质量直接影响风格化效果
 - 单图优化仍需 500 步迭代（~数分钟），速度有待提升

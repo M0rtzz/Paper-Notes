@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Implicit Bias of Per-sample Adam on Separable Data: Departure from the Full-batch Regime
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **预条件器的核心差异**：$\sum_i (\nabla \mathcal{L}_i)^2 \neq (\sum_i \nabla \mathcal{L}_i)^2$——单样本梯度的平方之和不等于全批梯度的平方。这个简单的数学事实导致了完全不同的隐式偏差。
 - **Signum的鲁棒性**：sign操作使Signum对采样方式免疫——这可能部分解释了Signum/SignSGD在某些场景下的稳定性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AdamProxy分析需要假设方向收敛存在（Assumption 4.4）
 - 仅分析了batch=1的极端情况，中间batch size的行为开放
 - 仅限于线性分类+可分数据，深层网络的情况更复杂

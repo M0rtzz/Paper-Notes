@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Zero-Shot Generalization of Vision-Based RL Without Data Augmentation
 description: >-
@@ -128,7 +128,7 @@ $$\text{cov}(\hat{s_i}, \hat{s_j} | z_k) = 0, \quad \forall s_i \in D, s_j \in E
 4. **不丢弃无关信息**：与任务中心表示方法不同，ALDA保留所有变量但解耦编码，当任务变化时这些"无关"信息可能变得有用
 5. **极简改动大效果**：仅更换分离函数（argmin→Softmax）+去掉量化损失，就显著改善泛化性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **时序信息未解耦**：$z_d$ 仅建模图像分布的因子，时序信息由下游1D-CNN处理，如何学习同时包含图像和时序因子的解耦表示是开放问题
 2. **DistractingCS上性能仍有限**：相机抖动影响隐式学到的动力学，所有方法均大幅退化

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ONEBench to Test Them All: Sample-Level Benchmarking Over Open-Ended Capabilities
 description: >-
@@ -120,7 +120,7 @@ Plackett-Luce模型通过最大化对数似然进行参数估计：
 3. **实用性强**：支持个性化查询、终身扩展、不完整数据处理，符合实际评测需求。
 4. **排名vs分数的深刻洞察**：从信息损失到外部效度的权衡分析很有说服力——排名比分数更鲁棒、更可迁移。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Plackett-Luce假设的限制**：模型假设样本间独立、效用参数固定，不能捕捉"某模型在数学好但语言差"这种能力差异结构。
 2. **违反可分性和成对多数一致性**：论文自身承认Plackett-Luce违反了这两个社会选择性质。

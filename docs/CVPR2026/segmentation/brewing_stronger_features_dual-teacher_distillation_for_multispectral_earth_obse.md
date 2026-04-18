@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Brewing Stronger Features: Dual-Teacher Distillation for Multispectral Earth Observation
 description: >-
@@ -56,7 +56,7 @@ tags:
 
 #### 1. 多光谱对比自蒸馏
 
-- **做什么**：学习鲁棒的多光谱表示
+- **功能**：学习鲁棒的多光谱表示
 - **核心思路**：基于DINO框架，MS教师权重通过EMA更新。损失函数结合余弦相似度（压缩）和编码率正则化（膨胀）：
   $$\mathcal{L}_{MS} = \mathcal{L}_\text{cos}(p_M(\mathbf{z}_g^M), p_s^{MS}(\mathbf{z}_{g \cup l}^M)) - \gamma \mathcal{L}_{CR}(\cdot)$$
   其中 $\mathcal{L}_{CR} = -\log\det(\mathbf{I} + \text{Cov}[\mathbf{z}])$ 防止表示坍塌
@@ -64,7 +64,7 @@ tags:
 
 #### 2. 光学VFM蒸馏
 
-- **做什么**：将DINOv3的全局语义和像素级特征迁移到学生
+- **功能**：将DINOv3的全局语义和像素级特征迁移到学生
 - **核心思路**：蒸馏三类特征，各用独立投影头：
   $$\mathcal{L}_O = \alpha_1 \mathcal{L}_\text{cos}(\text{[cls]}_F) + \alpha_2 \mathcal{L}_\text{cos}(\text{[p]}_F) + \alpha_3 \mathcal{L}_\text{cos}(\text{[p]}_\text{mid})$$
   - $\text{[cls]}_F$：最终层class token（全局语义）
@@ -147,7 +147,7 @@ $$\mathcal{L} = -\mathcal{L}_{MS} - \mathcal{L}_O$$
 3. **"不损害"的多模态**：增加MS能力不牺牲光学性能——这在多模态基础模型中难能可贵
 4. **Swin替代ViT**：patch size 4产生的精细特征对dense prediction很关键，即使教师是ViT也可以跨架构蒸馏
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **仅覆盖Sentinel-2的10个波段**：未处理SAR、热红外等更多模态
 2. **空间分辨率受限**：Sentinel-2原生10-60m分辨率，虽部分替换了高分光学数据但MS波段仍为低分辨率

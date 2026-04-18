@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Detecting AI-Generated Forgeries via Iterative Manifold Deviation Amplification
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}_{\text{stage}} = \mathcal{L}_{\text{BCE}} + \mathcal{L}_{\text{Dic
 - **冻结 + 调制**：MAE encoder 保持冻结保留流形先验，仅通过 FiLM 调制注入任务信息，参数高效
 - **零样本泛化**：在 diffusion inpainting 上训练，零样本迁移到传统 copy-move/splicing，说明流形偏差是统一的伪造指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MAE 的重建能力有限，对极小区域（<32×32 像素）的伪造可能残差不显著
 - 两阶段串行推理增加延迟，实时视频伪造检测需优化效率
 - TAPI 仅迭代一次（Stage 1 → Stage 2），多次迭代是否能进一步提升未探索

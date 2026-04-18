@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Expert Pyramid Tuning: Efficient Parameter Fine-Tuning for Expertise-Driven Task Allocation
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：均匀架构的expert无法捕获多样化的特征粒度。低rank expert缺乏对复杂任务的表达力，高rank expert在简单任务上过参数化导致泛化差。而且每个expert独立学习各自的LoRA矩阵，参数间缺乏知识共享，导致参数冗余。
 
-**本文要解决什么**：(a) 如何让不同expert捕获不同粒度的特征？(b) 如何在expert间共享通用语言知识的同时保留任务特异性？(c) 如何准确路由token到合适的expert？
+**本文目标**：(a) 如何让不同expert捕获不同粒度的特征？(b) 如何在expert间共享通用语言知识的同时保留任务特异性？(c) 如何准确路由token到合适的expert？
 
 **切入角度**：借鉴CV中Feature Pyramid Network的多尺度思想——识别不同大小目标需要不同分辨率特征，类似地，处理不同复杂度的NLP任务需要不同粒度的参数适配。
 
-**核心idea一句话**：用不同kernel size的反卷积算子从共享低维meta-knowledge子空间投影出多尺度参数金字塔，替代MoE-LoRA中各自独立的均匀expert。
+**核心 idea**：用不同kernel size的反卷积算子从共享低维meta-knowledge子空间投影出多尺度参数金字塔，替代MoE-LoRA中各自独立的均匀expert。
 
 ## 方法详解
 
@@ -128,7 +128,7 @@ EPT替换Transformer中线性层的LoRA模块。输入token经过router选择top
 - **expert分配可视化有说服力**：QNLI/QQP（大数据集复杂任务）激活高维expert 7-8，STS-B/RTE（小数据集简单任务）激活低维expert 1-2，完美验证了方法假设
 - **频率补偿因子设计巧妙**：$d_t/T$ 平衡shared和task-specific参数的梯度能量，是多任务优化中被广泛忽视的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - expert维度配置 $\{2,2,4,4,6,6,8,8\}$ 是静态超参数——通过NAS或autoML动态搜索最优配置可能进一步提升
 - 评测限于NLU（GLUE + 常识推理），缺少生成任务（如摘要、翻译）的验证——PEFT在生成任务上的行为可能不同
 - 仅在T5-base和LLaMA2-7B上实验，缺少更大模型（13B/70B）的可扩展性验证

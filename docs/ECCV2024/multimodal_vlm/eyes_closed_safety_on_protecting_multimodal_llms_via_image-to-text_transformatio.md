@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Eyes Closed, Safety On: Protecting Multimodal LLMs via Image-to-Text Transformation
 description: >-
@@ -116,7 +116,7 @@ ECSO是完全训练无关（training-free）的推理时方法，不涉及任何
 - **query-aware captioning**的设计避免了信息丢失，这个trick可迁移到其他需要图文转换的场景
 - **数据引擎的副产品**：ECSO不仅做推理时保护，还能自动生成安全对齐数据，形成良性循环
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ECSO依赖底层LLM自身的安全能力，如果LLM本身存在安全缺陷，ECSO也会失效
 - 图像到文本转换过程中不可避免会有信息损失，对于强依赖视觉信息的查询可能影响回答质量

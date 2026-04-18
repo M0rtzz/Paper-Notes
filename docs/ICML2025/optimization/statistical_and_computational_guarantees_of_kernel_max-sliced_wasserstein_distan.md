@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Statistical and Computational Guarantees of Kernel Max-Sliced Wasserstein Distances
 description: >-
@@ -135,7 +135,7 @@ $$\max_{S\in\mathcal{S}_{2n}} F(S), \quad F(S)=\min_{\pi\in\Gamma_n}\sum_{i,j}\p
 4. **实用一阶算法**：复杂度从内点法的 $\tilde{O}(n^{6.5})$ 降至 $\tilde{O}(n^2\delta^{-3})$，使得中等规模问题可解。
 5. **非线性投影的自适应性**：KMS 在包含非线性结构的场景（混合分布、图像数据）中显著优于线性投影的 MS。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **松弛间隙较保守**：Theorem 4.7 给出的比值含 $n^{-4}$ 因子，理论保证偏悲观，实际表现好得多。
 - **秩缩减代价**：$O(n^5)$ 的秩缩减算法在大规模时仍是瓶颈。

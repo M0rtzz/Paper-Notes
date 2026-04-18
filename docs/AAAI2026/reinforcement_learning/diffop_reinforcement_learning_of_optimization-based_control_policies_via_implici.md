@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffOP: Reinforcement Learning of Optimization-Based Control Policies via Implicit Policy Gradients
 description: >-
@@ -132,7 +132,7 @@ DiffOP 在瞬态代价上取得所有方法中最优，稳态代价与 TASRL 持
 4. **联合学习代价和动力学**：避免了目标不匹配问题，直接用环境反馈端到端优化
 5. **约束处理能力**：在电压控制实验中展示了对硬约束的自然支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **强凸假设较强**：理论收敛保证依赖代价函数对控制变量的强凸性，非凸情形下灵敏度可能无界
 2. **约束边界处不光滑**：不等式约束的活跃集变化可能导致梯度不连续，论文未覆盖此情形的理论分析

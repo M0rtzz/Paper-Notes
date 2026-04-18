@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Accelerating Online Mapping and Behavior Prediction via Direct BEV Feature Attention
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **时序BEV能编码agent动态**：StreamMapNet的时序BEV特征不仅含静态道路信息，还隐式建模了动态agent运动，可完全替代agent轨迹输入——这一发现对end-to-end driving很有价值
 - **即插即用**：三种策略可以根据下游预测模型的特点灵活选用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **可解释性下降**：用黑箱BEV特征替代显式矢量地图，增加了预测行为的不可解释性，这在安全关键的自动驾驶场景中是个问题
 - **缺乏联合训练**：目前是建图模型先训练→冻结→提取BEV特征→训练预测模型的两阶段方案，没有端到端联合优化梯度回传到编码器
 - **仅在nuScenes验证**：缺少在Argoverse 2、Waymo等更大规模数据集上的验证

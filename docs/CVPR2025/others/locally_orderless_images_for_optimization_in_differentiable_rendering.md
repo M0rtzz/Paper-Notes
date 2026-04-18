@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Locally Orderless Images for Optimization in Differentiable Rendering
 description: >-
@@ -49,17 +49,17 @@ tags:
 ### 关键设计
 
 **1. 内尺度空间（Inner Scale, σ）——分辨率模糊**
-- **做什么**: 使用高斯滤波器 $G(x;\sigma)$ 对渲染图像进行多分辨率模糊: $\mathcal{I}(x;\theta,\sigma) = (G * I)(x;\sigma)$。
+- **功能**: 使用高斯滤波器 $G(x;\sigma)$ 对渲染图像进行多分辨率模糊: $\mathcal{I}(x;\theta,\sigma) = (G * I)(x;\sigma)$。
 - **核心思路**: 尺度越大，图像特征变成更大的重叠区域，产生非零梯度。类似高斯金字塔但在连续尺度空间中操作。
 - **设计动机**: 当目标与初始化不重叠时，标准分辨率下梯度为零；模糊后两者重叠产生梯度信号。但单纯模糊会改变局部外观并抑制高频细节。
 
 **2. 色调尺度空间（Tonal Scale, β）——强度不确定性建模**
-- **做什么**: 将每个像素的辐射值从确定值放松为概率分布 $\mathcal{P}(x, k; \theta, \sigma, \beta) = \frac{1}{\sqrt{2\pi\beta^2}} \exp(-\frac{(k-\mathcal{I}(x;\theta,\sigma))^2}{2\beta^2})$。
+- **功能**: 将每个像素的辐射值从确定值放松为概率分布 $\mathcal{P}(x, k; \theta, \sigma, \beta) = \frac{1}{\sqrt{2\pi\beta^2}} \exp(-\frac{(k-\mathcal{I}(x;\theta,\sigma))^2}{2\beta^2})$。
 - **核心思路**: 对于给定强度 $k$，$\mathcal{P}(x,k)$ 是一个"软等照度线"（soft isophote），将不同强度的像素分离为独立的图像层，避免了多目标场景中的强度混淆。
 - **设计动机**: 蒙特卡罗渲染和传感器噪声导致辐射值本身就有不确定性；色调分离使不同外观的物体在优化时不会相互干扰。
 
 **3. 范围尺度空间（Extent Scale, α）——直方图空间积分**
-- **做什么**: 使用空间窗 $A(x;\alpha)$ 对局部概率分布进行积分: $\mathcal{H}(x, k; \theta, \sigma, \beta, \alpha) = \int A(x-y;\alpha) \mathcal{P}(y, k) dy$。
+- **功能**: 使用空间窗 $A(x;\alpha)$ 对局部概率分布进行积分: $\mathcal{H}(x, k; \theta, \sigma, \beta, \alpha) = \int A(x-y;\alpha) \mathcal{P}(y, k) dy$。
 - **核心思路**: 与内尺度直接对像素值求平均不同，范围尺度对直方图贡献求平均——保留了分布的模态信息。即使在粗尺度下，强度分布的峰值仍然稳定。
 - **设计动机**: 高斯金字塔在粗尺度下丢失了局部外观的多模态特性（只保留均值），而直方图积分保留了完整分布，对噪声也更鲁棒。
 
@@ -104,7 +104,7 @@ tags:
 - 1D Wasserstein 距离有闭式解，实现简洁高效
 - 可与其他优化方法（变分优化等）组合使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多尺度参数选择（$\alpha, \beta, \sigma$ 的离散取值）需要手动设定，可探索自适应策略
 - 直方图 bin 数量和宽度影响性能，需要调参

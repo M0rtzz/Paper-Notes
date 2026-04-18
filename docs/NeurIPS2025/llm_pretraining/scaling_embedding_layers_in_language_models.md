@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Embedding Layers in Language Models
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：推理成本往往远超训练成本（模型被查询数十亿次），传统缩放方式将推理成本和训练计算绑定。
 
-**本文要解决什么**：找到一种"训练时可以用更多计算，但推理时加速器资源不变"的新缩放方式。
+**本文目标**：找到一种"训练时可以用更多计算，但推理时加速器资源不变"的新缩放方式。
 
 **切入角度**：embedding lookup本质上是内存取操作（无计算），可以卸载到主存/SSD而几乎不影响延迟。高频n-gram的上下文化embedding可以预计算并缓存。
 
-**核心idea一句话**：用独立Transformer为高频n-gram学习上下文化embedding，推理时预计算并offload，解耦训练缩放和推理成本。
+**核心 idea**：用独立Transformer为高频n-gram学习上下文化embedding，推理时预计算并offload，解耦训练缩放和推理成本。
 
 ## 方法详解
 
@@ -87,7 +87,7 @@ tags:
 - **实用性极强**：主存比GPU显存便宜10-100x，存储1B个embedding只需几十GB主存
 - **与BPE的巧妙连接**：f-gram选择策略受BPE启发，但不改变tokenizer——避免了改变词汇量带来的output layer问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - f-gram的最长匹配策略可能不是最优——有时短n-gram的embedding可能更好
 - 预计算所有f-gram embedding的存储成本随数量线性增长
 - 仅在decoder-only架构上验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnyBimanual: Transferring Unimanual Policy for General Bimanual Manipulation
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{BC} + \lambda_{skill}\mathcal{L}_{skill} + 
 - **数据效率**：仅需 20-100 个双臂示范即可迁移，大幅降低数据需求
 - **可解释性好**：技能调度权重和体素分解mask均可可视化，便于理解模型行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对需要精确旋转的简单任务（如 Rotate Toothbrush）表现不佳（20%成功率）
 - 在短时序简单任务（如 Lift ball）上引入额外复杂性可能略降性能

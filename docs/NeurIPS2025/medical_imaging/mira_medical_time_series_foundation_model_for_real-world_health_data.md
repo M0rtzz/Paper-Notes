@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MIRA: Medical Time Series Foundation Model for Real-World Health Data
 description: >-
@@ -123,7 +123,7 @@ MIRA_large 在 OOD 数据集上取得全面最优 RMSE，平均误差降低约 8
 - **数据规模可观**：4540 亿时间点的预训练语料，是目前最大的医学时间序列预训练数据集之一
 - **MoE + Neural ODE 组合**：频率专家处理多尺度时间动态，ODE 实现连续时间外推，设计合理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - channel-independent 设计可能丢失多变量间相关信息，ICU 多参数监测场景中变量交互重要
 - Neural ODE 的计算开销较大（自适应步长 ODE 求解器），可能限制实时应用

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SlimLLM: Accurate Structured Pruning for Large Language Models
 description: >-
@@ -79,7 +79,7 @@ tags:
 4. 98.7%保留在20%剪枝下几乎无损。
 5. 方法组件可独立使用（通道/头/恢复/比例）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在LLaMA系列验证，Mistral/Qwen待测试。
 2. 线性回归恢复在高剪枝率(>40%)下效果可能有限。

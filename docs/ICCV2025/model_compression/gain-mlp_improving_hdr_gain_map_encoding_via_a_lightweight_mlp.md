@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gain-MLP: Improving HDR Gain Map Encoding via a Lightweight MLP
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **指数残差的理论洞察**：将 gain map 问题重新框架为幂函数参数编码，找到了问题的更自然表示
 - **色度噪声初始化的巧妙性**：用符合自然图像统计的合成数据做元初始化，避免内容偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MLP 优化仍需 4 秒/图像，对实时应用仍有延迟
 - 对于存在大量裁剪信息的 SDR tone mapping，MLP 重建能力有限——因为这些信息已经不可逆丢失

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Gaussian Splatting Driven Multi-View Robust Physical Adversarial Camouflage Generation
 description: >-
@@ -145,7 +145,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{det}}(T(\mathcal{I}_{\text{det
 - **主色正则化设计实用**：从背景提取主色调约束伪装颜色，同时提升视觉隐蔽性和环境适应性
 - **从数字到物理的完整验证链**：CARLA模拟→1:24模型车→1:1真车的三级验证极具说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **白盒攻击转黑盒的迁移性有待提升**：从实验数据看，白盒Faster R-CNN上AP可降至1-4%，但迁移到YOLO-v5时仍有40-55%的AP，差距显著
 - **背景噪声预算$\epsilon$的选择**：论文未充分讨论该超参数的敏感性，过大可能导致伪装难以优化，过小则无法有效过滤非鲁棒特征

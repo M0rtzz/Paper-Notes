@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FeatureBench: Benchmarking Agentic Coding for Complex Feature Development
 description: >-
@@ -116,7 +116,7 @@ $$\text{Passed Rate} = \frac{1}{N}\sum_{i=1}^{N}\frac{\#\text{F2P tests passed}_
 - **揭示 Agent 的"结构性无能"**：不是模型不够大，而是跨文件推理、长 horizon 规划、高效利用上下文等架构级能力不足——这对下一代 Agent 架构设计有直接指导意义。
 - **Lite Set 与 Full Set 排名高度一致**，验证了小规模快速评估的代表性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅覆盖 **Python** 仓库，对 Java/C++/Rust 等语言的代码 Agent 评估缺失。
 - 24 个仓库主要集中在 AI/ML 工具链（如 Transformers、FlashAttention），对 Web、系统软件等领域覆盖不足。
 - LLM 用于分类 top-level 对象（F1=84.94%），分类误差会传播到任务构建质量。

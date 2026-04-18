@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Period-LLM: Extending the Periodic Capability of Multimodal Large Language Model
 description: >-
@@ -97,7 +97,7 @@ $$\Omega(c_i) = \begin{cases} 1 + \beta \cdot e^{\frac{iter_{num}}{max_{iter}}},
 - **RLO的通道级分析视角**：不同于EWC等经典持续学习方法按参数重要性保护，RLO从特征通道活跃度出发，将新知识引导到"冗余通道"
 - **首次揭示MLLM的周期性盲区**：GPT-4和Video-LLaMA等模型在计数任务上表现糟糕，这是一个被忽视的能力维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模型仅基于LLaMA-7B和CLIP ViT-L/14，在更大LLM或更强视觉编码器上效果未知
 - RLO假设特征通道的活跃度能代表知识分布，这一假设缺乏严格理论证明
 - 训练数据构建严重依赖GPT-4生成QA对，成本较高且可能引入偏见

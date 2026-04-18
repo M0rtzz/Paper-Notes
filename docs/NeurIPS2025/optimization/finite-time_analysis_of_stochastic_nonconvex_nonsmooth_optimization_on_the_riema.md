@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Finite-Time Analysis of Stochastic Nonconvex Nonsmooth Optimization on the Riemannian Manifolds
 description: >-
@@ -107,7 +107,7 @@ RO2NC 基于双层循环结构：外层 epoch $k=1,...,K$，内层迭代 $t=0,..
 - **基准动作的巧妙选择**：通过平行移动组合构建时间变化的基准 $u_t$，使得可以复用在线优化的遗憾分析
 - **零阶估计器的切空间采样**：避免流形体积计算，大幅降低实现复杂度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Goldstein 稳定性定义依赖平行移动选择，其他传输映射可能给出不同结构
 - 实验仅在球面上验证，缺乏 Stiefel/Grassmann 等更复杂流形的实验
 - 曲率效应的更深入分析和自适应利用曲率信息的算法设计是开放问题

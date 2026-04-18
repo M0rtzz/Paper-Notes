@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Copyright Infringement Detection in Text-to-Image Diffusion Models via Differential Privacy
 description: >-
@@ -118,7 +118,7 @@ $$\hat{CS}(M, \hat{x}_i, D^*) = \frac{CS(M, x_i, D^*)}{  \overline{CS(M, X_{\tex
 4. **实用的检测设置**：白盒模型访问、无需原始训练数据或对应 prompt，贴近真实场景
 5. **层次化侵权分类体系**：从技术层到语义层的四级分类为版权侵权研究提供了系统化框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销较大**：每个待检测样本都需要进行两轮微调（学习 + 遗忘），在大规模检测场景下效率有限
 2. **仅针对文本到图像扩散模型**：尚未扩展到 LLM 或 LVLM 的版权检测，论文也承认这是未来工作方向

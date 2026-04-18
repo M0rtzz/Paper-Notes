@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Cooperative Transmission Design for URLLC via Deep RL
 description: >-
@@ -32,12 +32,12 @@ tags:
     - ARQ 重传协议可提升可靠性但增加延迟；5G NR 的 AMC、可伸缩 numerology、mini-slot 等特性此前只被单独优化（只优化 AMC 或只优化 numerology），未联合利用；
     - 没有现有工作考虑 ARQ 重传对两跳中继系统在时延约束下可靠性的影响。
 3. **核心矛盾**：两跳传输中，总端到端延迟 $\mathcal{T}$ 是随机变量（取决于信道衰落和重传次数），其分布难以解析建模，传统优化方法无法处理 $\mathcal{T} \le T_{\text{th}}$ 这一约束。
-4. **本文要解决什么？**
+4. **本文目标**
     - 在每次（重）传输尝试中优化两跳各自的 numerology $\mu$、mini-slot 大小 $N_{\text{sym}}$、MCS $I_{\text{MCS}}$
     - 最大化端到端成功递送概率，同时满足严格延迟约束
     - 仅依赖本地 CSI 和 ARQ 反馈，无需全局 CSI
 5. **切入角度**：将两跳自适应传输建模为 MDP，源节点和中继节点作为两个独立 Agent，各自学习时延感知的传输策略。
-6. **核心 idea 一句话**：双 Agent DQN 分布式学习逐跳传输参数配置策略，用 DOR（delay outage rate）作为跨跳协调信号，在无全局 CSI 下实现 URLLC。
+6. **核心 idea**：双 Agent DQN 分布式学习逐跳传输参数配置策略，用 DOR（delay outage rate）作为跨跳协调信号，在无全局 CSI 下实现 URLLC。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **有限块长失效概率建模**：在 URLLC 短包场景下用 Polyanskiy 有限块长公式替代 Shannon 容量假设，更切合实际。
 - **实用的分布式架构**：双 Agent 各自维护独立 DQN，部署简单，无需集中式训练或通信开销。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅 Rayleigh 衰落**：信道假设简单（单径 Rayleigh），未考虑多径、莱斯衰落或频率选择性衰落。
 - **完美 ARQ 假设**：假设 ARQ 请求总能成功接收，实际中 ARQ 本身也可能出错。

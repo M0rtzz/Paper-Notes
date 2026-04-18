@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Numeric Rewards: In-Context Dueling Bandits with LLM Agents
 description: >-
@@ -115,7 +115,7 @@ LEAD 采用两阶段自适应切换：
 4. **深入的行为分析**：对 LLM 决策轨迹的可视化和失败模式分析（探索脆弱性、利用无能、预训练偏见）具有重要启发价值。
 5. **鲁棒性验证**：在噪声和对抗提示下的系统评估，证明了 LEAD 框架的实用可靠性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅关注无上下文 DB**：未涉及更复杂的上下文 DB（Contextual Dueling Bandits）、多人对决（Multi-Dueling）或对抗 DB 设置。
 2. **赢家定义单一**：仅考虑 Condorcet winner 定义，未探索 Borda winner 或 Neumann winner 等替代定义下的 LLM 表现。

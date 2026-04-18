@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAFNet: Selective Alignment Fusion Network for Efficient HDR Imaging
 description: >-
@@ -104,7 +104,7 @@ SAFNet 包含三个子网络：金字塔编码器 E、由粗到精解码器 D、
 - 自建 Challenge123 数据集填补了大运动 HDR 评估的空白（平均运动 128.7 vs 20.1 像素，饱和比 0.201 vs 0.061）
 - 窗口分区裁剪是一个优雅的训练技巧，巧妙地统一了两阶段不同裁剪尺寸的需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在 Tel 23 数据集上 PSNR-μ 和 HDR-VDP2 略逊于 Transformer 方法，说明在以去鬼影为主（而非大运动聚合）的场景中，注意力机制仍有优势
 2. 显式光流对齐在极端遮挡和严重变形场景中仍可能失败

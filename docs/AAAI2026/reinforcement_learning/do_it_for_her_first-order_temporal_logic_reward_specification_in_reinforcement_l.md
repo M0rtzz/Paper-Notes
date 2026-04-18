@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do It for HER: First-Order Temporal Logic Reward Specification in Reinforcement Learning
 description: >-
@@ -152,7 +152,7 @@ $$t := v \mid w \mid c \mid f(t_1, \ldots, t_k)$$
 4. **CRM+HER 的巧妙组合**：首次将奖励机器的反事实推理与后见之明回放结合，利用 LTLfMT 框架使 HER 目标定义自动化
 5. **开辟新方向**：将一阶项重新引入规范语言，为连续域 RL 的安全约束、持续奖励、形式验证铺路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **NRA 求解器效率**：非线性实数算术的 SMT 求解在每步调用中引入计算开销，可能限制实时应用
 2. **DFA 规模爆炸**：复杂公式导致 DFA 状态数指数增长，影响积 MDP 规模

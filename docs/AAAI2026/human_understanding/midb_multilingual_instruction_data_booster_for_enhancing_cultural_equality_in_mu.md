@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MIDB: Multilingual Instruction Data Booster for Enhancing Cultural Equality in Multilingual Instruction Synthesis
 description: >-
@@ -148,7 +148,7 @@ $$\theta_m = \arg\max_\theta \sum_{i \in [1,16]} \sum_{x_j \in C_i} \log P(y_j |
 - **社会影响导向**：明确阐述了弥合数字鸿沟和缓解文化不平等的社会意义
 - **统一模型设计**：一个 MIDB 模型同时处理 16 种语言，降低部署成本并促进语言间知识迁移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅覆盖 16 种语言，而全球有数千种语言，扩展受限于专家资源
 2. 人工标注的训练集构建方式难以大规模扩展，可考虑众包或迭代自训练

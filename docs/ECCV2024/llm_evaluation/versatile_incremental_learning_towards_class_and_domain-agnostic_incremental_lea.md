@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Versatile Incremental Learning: Towards Class and Domain-Agnostic Incremental Learning
 description: >-
@@ -142,7 +142,7 @@ IC 的进一步分解（iDigits VIL）：
 2. **CAST 的设计巧妙**：通过权重偏移（=累积梯度）间接度量学习方向，再用聚类区分"相似"和"不同"的历史任务，把正则化集中在"不同类型"任务上——避免了一刀切的正则化
 3. **IC 的低成本扩展**：不像 DER/DyTox 那样扩展整个网络，仅扩展分类器最后一层的部分节点，成本极低
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. VIL 场景中每个任务的类别数和领域数是固定的，论文也承认"变化的类别/领域数量是更现实的场景"
 2. CAST 依赖 K-Means 聚类，聚类数 K 需要调参，且对不同数据集的最优值不同

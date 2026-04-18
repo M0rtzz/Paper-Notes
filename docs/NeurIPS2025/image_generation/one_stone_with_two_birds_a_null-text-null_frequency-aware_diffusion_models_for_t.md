@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Stone with Two Birds: A Null-Text-Null Frequency-Aware Diffusion Models for Text-Guided Image Inpainting
 description: >-
@@ -113,7 +113,7 @@ $$\tilde{z}_t^{in} = \text{IDCT}(\text{DCT}(z_t^{text}) \odot m_{mid} + \text{DC
 - 即插即用的频带替换层（DCT域操作）不需要额外训练，简洁高效
 - 自适应阈值设计考虑了遮盖比例的影响，提升了对不同掩码的泛化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要三个并行去噪过程，推理计算量是标准扩散模型的约3倍
 - 基于Stable Diffusion v1.5，未在更新的SD-XL或SD3上验证

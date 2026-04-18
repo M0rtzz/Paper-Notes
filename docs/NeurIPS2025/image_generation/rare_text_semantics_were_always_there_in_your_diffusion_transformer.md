@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rare Text Semantics Were Always There in Your Diffusion Transformer
 description: >-
@@ -122,7 +122,7 @@ $$\tilde{z}_t = \alpha \cdot (z_t - \bar{z}_t) + \bar{z}_t$$
 - **新洞察**: 揭示了 MM-DiT 中稀有语义被抑制的机制,具有理论价值
 - **跨任务泛化**: 方法在多个文本到视觉任务上都有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 对所有文本 token 统一缩放可能不是最优的,应该只放大"稀有" token
 2. 如何自动确定最优 $\alpha$ 值是一个开放问题

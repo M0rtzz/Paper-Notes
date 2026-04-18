@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recurrent Self-Attention Dynamics: An Energy-Agnostic Perspective from Jacobians
 description: >-
@@ -103,7 +103,7 @@ $$\left\| \frac{\partial \text{RMSNorm}(X + \eta \Delta X)}{\partial X} \right\|
 - 实验发现与理论分析高度一致：归一化压制谱范数→临界态→高性能，形成完整因果链
 - 伪能量的 Jacobian 解释优雅：循环推理本质上是做约束的幂迭代，逐步向 Jacobian 最大特征方向对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅关注循环 SA（不含位置编码、掩码、MLP 块），与实际 Transformer 仍有距离
 - Proposition 5.1 的上界过于松弛（比实际观察值大得多），需要更紧的理论界

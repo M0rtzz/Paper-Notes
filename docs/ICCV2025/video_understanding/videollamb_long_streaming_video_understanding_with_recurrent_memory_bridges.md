@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoLLaMB: Long Streaming Video Understanding with Recurrent Memory Bridges
 description: >-
@@ -105,7 +105,7 @@ NExT-QA 准确率比较：
 - 线性内存扩展使得长视频理解在学术界可行
 - NIAVH 基准填补了帧级检索评估的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于 7B 模型，与 GPT-4o 等大模型仍有差距
 - 语义分段质量依赖 ViT [CLS] token 的表征能力

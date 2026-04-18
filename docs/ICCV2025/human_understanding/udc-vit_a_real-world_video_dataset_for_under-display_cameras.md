@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UDC-VIT: A Real-World Video Dataset for Under-Display Cameras
 description: >-
@@ -129,7 +129,7 @@ DDRNet 在合成数据上表现最佳（31.91 dB），但在真实数据上仅 2
 3. **应用驱动的数据集设计**：专门面向人脸识别场景设计（64.6% 视频含人脸），并量化了复原质量对人脸识别的影响
 4. **数据集公开可用**：通过 GitHub 仓库开放下载
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对 Samsung Galaxy Z-Fold 5 的 UDC 面板，其他设备（ZTE Axon 系列或其他 Fold 系列）的退化特性不同，需要迁移学习
 - 排除了快速运动物体（如行驶车辆），限制了数据集在高速场景下的适用性

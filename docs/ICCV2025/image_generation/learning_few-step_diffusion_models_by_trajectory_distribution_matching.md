@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Few-Step Diffusion Models by Trajectory Distribution Matching
 description: >-
@@ -141,7 +141,7 @@ LoRA 适配到未见过的定制模型（Realistic, SD-v1.5, 4步）：
 - **确定性+灵活采样**：TDM-unify 是首个同时支持确定性采样和灵活步数调整的蒸馏方法
 - **与 Consistency Models 的理论连接**：揭示了 TDM 和 CM 在学习目标上的深层相似性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Fake score 的学习质量直接影响蒸馏效果，需要仔细调节训练策略
 - 性能上限受限于教师模型质量（data-free 的双刃剑），"Better Teacher, Better Student" 策略可缓解但增加了前期投入

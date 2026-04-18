@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Well Begun, Half Done: Reinforcement Learning with Prefix Optimization for LLM Reasoning
 description: >-
@@ -172,7 +172,7 @@ $$R_i = \sum_{j=1}^{G} \mathbb{1}(\hat{y}_{\mathbf{c}_j} = a) + \mathbb{1}(\hat{
 4. **前缀质量的跨模型可迁移性**：暗示高质量推理起始具有一定通用性，不局限于特定模型
 5. **与人类认知的类比**：将认知科学中的路径依赖理论成功映射到 LLM 推理，连接了两个研究领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **$\eta$ 阈值的选择**：15%-35% 基于实验观察，不同模型/任务可能需要不同范围
 2. **计算开销**：每个前缀需要额外采样 G=8 个延续，总采样量为 8×8=64

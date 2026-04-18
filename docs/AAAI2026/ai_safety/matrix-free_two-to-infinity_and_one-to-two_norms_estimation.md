@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Matrix-Free Two-to-Infinity and One-to-Two Norms Estimation
 description: >-
@@ -122,7 +122,7 @@ WideResNet Jacobian 矩阵（$3072 \times 100$）上的收敛：TwINEst++ 约在
 - $O(1/\Delta^2) \to O(1/\Delta)$ 的复杂度改进对于 $\Delta$ 小的难实例意义重大
 - $\|·\|_{2\to\infty}$ 范数正则化在图像分类上的效果出人意料地好，为 Jacobian 正则化提供了新的选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - oracle 复杂度下界尚未建立，TwINEst/TwINEst++ 的最优性未知
 - 深度学习实验仅在 WideResNet-16-10 上验证，缺乏对更多架构（ResNet、ViT 等）的评估

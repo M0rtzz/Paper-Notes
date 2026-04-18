@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Repetition-Invariant Representations for Polymer Informatics
 description: >-
@@ -100,7 +100,7 @@ tags:
 - **即插即用**：Max 替换 Sum/Mean + 环化，可以升级任何现有 GNN 为重复不变版本。
 - **聚合物科学意义**：解决了该领域长期存在的表示歧义问题，使预测更可靠。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Max 聚合可能丢失数量信息（如原子数），对某些性质可能不利
 - 仅考虑均聚物（单一重复单元），共聚物需扩展

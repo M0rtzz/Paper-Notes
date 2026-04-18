@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Constant Bit-Size Transformers Are Turing Complete
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：扩大模型精度/参数是否是处理更长输入的必要条件？
 
-**本文要解决什么？** 证明模型 bit-size 无需增长，仅扩展 context window 即可实现任意图灵机的模拟。
+**本文目标** 证明模型 bit-size 无需增长，仅扩展 context window 即可实现任意图灵机的模拟。
 
 **切入角度**：Post Machine（一种基于队列的图灵等价模型）的行为与 Transformer 的 autoregressive decoding 具有天然的结构相似性——context window 可以被视为队列。
 
-**核心idea一句话**：通过模拟 Post Machine（队列自动机）而非传统图灵机，构造常数精度单层 Transformer 来实现图灵完备性。
+**核心 idea**：通过模拟 Post Machine（队列自动机）而非传统图灵机，构造常数精度单层 Transformer 来实现图灵完备性。
 
 ## 方法详解
 
@@ -93,7 +93,7 @@ tags:
 - **Attention 作为队列操作的新解读**：attention 机制不仅是统计聚合器，还可以作为队列结构上的离散计算操作——这为理解 Transformer 的推理能力提供了新视角
 - **为"扩大窗口"策略的理论辩护**：工程界已经在朝着更长 context window 的方向发展（100K+ tokens），本文从计算理论角度证明了这一策略的合理性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **模拟效率低**：每个 TM 步需要 O(s(n)) 个 CoT token，总模拟时间是 $O(t(n) \cdot s(n))$，比直接运行 TM 慢很多
 - **纯存在性证明**：构造的 Transformer 参数是手工设计的，不涉及学习——无法保证实际训练的 Transformer 会学到类似的计算模式
 - **hardmax 假设**：用 hardmax 代替 softmax，虽是标准理论简化但与实践有差距

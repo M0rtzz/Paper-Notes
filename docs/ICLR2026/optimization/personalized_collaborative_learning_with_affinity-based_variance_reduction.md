@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Personalized Collaborative Learning with Affinity-Based Variance Reduction
 description: >-
@@ -123,7 +123,7 @@ $$\bar{A}^i x^i_* = \bar{b}^i, \quad i = 1, ..., n$$
 - **反直觉发现**：与不相似智能体协作也可能有益——这挑战了"只与相似者合作"的直觉
 - **通用性强**：框架涵盖监督学习、强化学习（TD 学习）和统计决策
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **线性系统假设**：核心理论基于线性系统 $\bar{A}^i x^i_* = \bar{b}^i$，向非线性深度学习场景的推广需要进一步工作
 2. **通信效率**：当前假设每步都通信，更实际的设定应考虑间歇通信和通信压缩

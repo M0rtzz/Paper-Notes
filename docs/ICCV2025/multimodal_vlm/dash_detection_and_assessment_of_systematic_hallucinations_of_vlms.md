@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DASH: Detection and Assessment of Systematic Hallucinations of VLMs
 description: >-
@@ -103,7 +103,7 @@ DASH包含四个阶段：查询生成（DASH-LLM或DASH-OPT）→ 探索（Explo
 3. **DASH-OPT的巧妙设计**：利用扩散蒸馏模型实现单步生成，计算高效；在潜空间优化保证生成自然图像而非对抗样本
 4. **实用价值**：发现的系统性幻觉模式可直接用于微调改进模型（DASH-B精度提升11.6%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. ReLAION-5B虽然庞大但仍无法覆盖所有自然图像分布，某些场景可能缺乏足够的语义邻居来构成聚类
 2. 保守的检测器阈值可能导致对最先进VLM的评估出现偏差——当VLM的能力接近检测器时
 3. 目前的微调策略是独立任务式的，未与VLM的正常训练流程整合（如curriculum learning）

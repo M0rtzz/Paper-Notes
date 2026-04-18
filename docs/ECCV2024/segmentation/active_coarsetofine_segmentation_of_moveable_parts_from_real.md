@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Active Coarse-to-Fine Segmentation of Moveable Parts from Real Images
 description: >-
@@ -69,7 +69,7 @@ tags:
 - **交互方向预测是亮点设计**: 用6DoF姿态+离散交互方向来定位物体的"交互面"，这比直接分割部件要简单得多，而且错误容易被人工快速纠正
 - **AL中三类分拣策略实用**: perfect/missed/fair的分类让人工只需处理最难的样本，fair的保留避免了contaminating训练集
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅支持6类室内铰接物体（Storage/Fridge/Dishwasher等），且只有door/drawer两种部件标签，泛化到更多物体类型和运动形式（如旋钮、滑动）未验证
 - 依赖6DoF姿态估计，而微调时姿态没有GT，可能存在姿态漂移问题
 - 数据集只有2550张图像，规模偏小；标注质量依赖人工验证者的一致性

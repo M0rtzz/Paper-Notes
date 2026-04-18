@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Semantic Search: Towards Referential Anchoring in Composed Image Retrieval
 description: >-
@@ -94,7 +94,7 @@ tags:
 - OACIRR是首个跨四个领域的大规模实例级组合检索基准，具有很高的社区价值
 - CAAM的上下文感知调制机制优雅地平衡了实例保真度与组合推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Bounding box标注增加了用户交互成本，未来可探索自动实例锚定
 - 当前仅支持单实例锚定，多实例场景待扩展
 - 未探索视频级实例追踪检索

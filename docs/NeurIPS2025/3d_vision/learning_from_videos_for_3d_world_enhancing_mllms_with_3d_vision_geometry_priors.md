@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning from Videos for 3D World: Enhancing MLLMs with 3D Vision Geometry Priors
 description: >-
@@ -122,7 +122,7 @@ VG LLM在标准MLLM基础上增加一个3D视觉几何编码器分支：
 - **数据高效**：仅234K空间推理数据（SPAR-7M的3%）即可在VSI-Bench上达到SOTA
 - **统一文本生成框架**：所有3D任务（定位、描述、检测）统一为文本生成，无需任务特定头
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VGGT-1B在推理时增加了计算开销，尤其对长视频序列
 - 3D视觉定位的绝对精度仍低于使用真实3D数据的方法（41.6% vs 58.1%）

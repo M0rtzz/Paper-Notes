@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoEMeta: Mixture-of-Experts Meta Learning for Few-Shot Relational Learning
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L}(\mathcal{S}_r) = \sum_{(h_i,r,t_i) \in \mathcal{S}_r} \max\{0, \te
 2. **关系原型概念**：将关系视为基本模式的组合而非独立学习，更符合KG的语义结构
 3. **轻量适应**：仅3个投影向量（标量级参数）即实现有效任务适应，避免少样本过拟合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅预测尾实体 $(h, r, ?)$，未考虑头实体预测
 - TransE初始化的依赖可能限制对某些复杂关系模式的覆盖

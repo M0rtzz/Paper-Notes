@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] iQUEST: An Iterative Question-Guided Framework for Knowledge Base Question Answering
 description: >-
@@ -135,7 +135,7 @@ AE-LLM 更依赖内部知识（GPT-4o +18%）而非推理能力。
 3. **消融设计精巧**：基于假设区分推理能力与内部知识的贡献，得出"IQG 分担推理，AE 依赖知识"的清晰结论
 4. **轻量训练**：仅训练 GNN，LLM 完全不微调
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **双 LLM 计算开销**：IQG + AE 两次 LLM 调用增加延迟和成本
 2. **GNN 仅限二跳**：对需要更深跳数推理的领域可能不够

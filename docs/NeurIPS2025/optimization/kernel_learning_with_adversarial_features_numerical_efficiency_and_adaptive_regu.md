@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Kernel Learning with Adversarial Features: Numerical Efficiency and Adaptive Regularization
 description: >-
@@ -125,7 +125,7 @@ $$\min \frac{1}{n}\sum_{i=1}^n \left(|y - \sum_j f_j(x)| + \delta \sum_j \|f_j\|
 3. 泛化界严格建立了特征扰动与输入扰动的松弛关系，给出了理论保证
 4. 多核学习扩展使框架可应对多模态场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 计算复杂度仍为 $O(n^3)$，大规模数据需 Nyström 近似（文中未展开）
 2. 理论分析聚焦 fixed-design 回归，random-design 和分类场景需进一步研究
 3. 仅测试了中等规模 UCI 数据集，缺少大规模或高维数据集验证

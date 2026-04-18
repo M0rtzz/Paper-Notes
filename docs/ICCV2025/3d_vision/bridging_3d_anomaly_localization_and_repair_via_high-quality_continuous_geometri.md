@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging 3D Anomaly Localization and Repair via High-Quality Continuous Geometric Representation
 description: >-
@@ -175,7 +175,7 @@ PatchCore(FPFH) 引入 PAM 后 O-AUROC 提升 24.6%，P-AUROC 提升 28.7%，效
 3. **连续 vs 离散**：用连续的 SDF 替代离散的体素/点云/投影表征，避免量化伪影，保留精细几何细节
 4. **PAM 的即插即用特性**：不仅服务于 PASDF，还能显著提升其他方法的性能，具有很好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：PAM 在初始姿态困难情况下的配准计算较为昂贵，可探索基于学习的或层次化配准方法
 2. **单类假设**：当前假设单一正常物体类别，扩展到多类检测将提升实用性

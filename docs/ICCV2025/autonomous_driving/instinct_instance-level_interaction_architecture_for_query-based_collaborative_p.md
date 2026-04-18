@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] INSTINCT: Instance-Level Interaction Architecture for Query-Based Collaborative Perception
 description: >-
@@ -96,7 +96,7 @@ INSTINCT 的流程分为五步：
 - 双分支路由策略简洁有效，将协作无关实例分离避免干扰
 - 基于高斯距离的局部非对称注意力机制设计巧妙，利用几何先验指导特征交互
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在极稀疏点云场景下检测仍有局限
 - DDR 中 IoU 阈值 $\lambda$ 为手动设定的超参数，自适应选取可进一步探索

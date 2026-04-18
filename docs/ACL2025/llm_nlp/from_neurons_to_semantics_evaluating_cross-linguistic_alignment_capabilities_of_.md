@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Neurons to Semantics: Evaluating Cross-Linguistic Alignment Capabilities of Large Language Models via Neurons Alignment
 description: >-
@@ -107,7 +107,7 @@ NASCA 与 XNLI 零样本迁移性能的皮尔逊相关达 0.9326，与 BMLAMA-53
 4. **对低资源语言友好**：NAS 表征空间更平滑，缓解了表示坍缩对低资源语言的负面影响
 5. **层级分析的洞察**：揭示了 LLM 内部的多语言处理机制——中间层是语义对齐的关键层
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅关注 FFN 层的神经元，未考虑注意力层的贡献
 2. 仅使用英语作为枢纽语言（pivot），未探索其他高资源语言作为枢纽的效果

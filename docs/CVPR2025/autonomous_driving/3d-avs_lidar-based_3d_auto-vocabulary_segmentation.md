@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-AVS: LiDAR-based 3D Auto-Vocabulary Segmentation
 description: >-
@@ -88,7 +88,7 @@ tags:
 - **TPSS指标**：巧妙利用CLIP空间的语义对齐来评估词表质量，避免了传统mIoU依赖固定标注的局限
 - **完全训练免**：所有组件均用预训练模型，无需微调即可部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 - mIoU（30.6）与全监督（82.0）和OVS方法（42.1）差距仍然很大，说明自动词表的准确性和分割质量还有很大提升空间
 - 词表生成依赖BLIP的描述质量，对罕见或小物体可能漏检
 - LAVE评价需要LLM做映射，引入额外噪声；TPSS虽然annotation-free但取决于CLIP对齐质量

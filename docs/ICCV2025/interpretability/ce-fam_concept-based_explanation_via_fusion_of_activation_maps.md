@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CE-FAM: Concept-Based Explanation via Fusion of Activation Maps
 description: >-
@@ -153,7 +153,7 @@ ImageNet-S数据集上（ViT-B/16分类器）：
 3. **NRA指标设计合理**：通过归一化消除了样本分布对评价的影响
 4. **零样本能力**：无需概念标注数据集，仅依赖VLM知识即可处理任意概念
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 概念表达能力受限于VLM的性能：CLIP倾向于被图像中突出特征主导，难以预测细粒度概念
 - 概念集选择敏感：过大的概念集会引入无关概念噪声

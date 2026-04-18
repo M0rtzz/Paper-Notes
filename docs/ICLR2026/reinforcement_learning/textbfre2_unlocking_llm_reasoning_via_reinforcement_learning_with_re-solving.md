@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] $\textbf{Re}^{2}$: Unlocking LLM Reasoning via Reinforcement Learning with Re-solving
 description: >-
@@ -74,7 +74,7 @@ Re² 使用标准的 RLVR 训练框架，采用可验证奖励（verifiable rewa
 - **对 overthinking 问题的深入分析**: 清晰地揭示了标准 RLVR 模型在 CoT 初始方向不佳时的脆弱性
 - **测试时计算效率**: Re² 不仅提升了 pass@1，在需要多次采样的 pass@k 设置下也表现出色，说明该方法生成的多条推理路径更加多样化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 论文主要关注数学推理任务，在代码生成、逻辑推理等其他推理领域的效果有待验证
 - Re-solving 机制增加了模型的平均输出长度，在推理延迟敏感的场景中可能不够理想
 - 何时触发 re-solving 的决策完全由模型隐式学习，缺乏显式的触发条件分析

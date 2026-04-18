@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Laws and Pathologies of Single-Layer PINNs: Network Width and PDE Nonlinearity
 description: >-
@@ -109,7 +109,7 @@ tags:
 3. **可分离模型不够**：证明简单幂律无法捕捉宽度×非线性的耦合效应，揭示了PINN优化景观的本质复杂性
 4. **行动呼吁(Call-to-action)**：作者明确表示核心目的不是解决问题，而是倡导在更多设置下建立类似的缩放研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用单层网络和Adam优化器，结论对多层网络和二阶方法的推广性未知
 - 仅测试一维空间的三种PDE，高维和更复杂PDE的行为可能不同

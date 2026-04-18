@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ChuLo: Chunk-Level Key Information Representation for Long Document Understanding
 description: >-
@@ -213,7 +213,7 @@ Token classification 数据集包括 GUM 和 CoNLL-2012 文档级 NER。
 4. ChuLo 同时验证了 document classification 和 token classification，这一点比很多只在单一任务上报告结果的长文档方法更有说服力。
 5. 论文暗含一个重要经验：在压缩表示之后，主干模型未必要更“大”或更“长上下文”，而应该更匹配压缩后输入的结构特性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 作者明确承认，关键词抽取质量直接影响整个系统效果。如果关键短语抽错，后续 chunk 表示会被错误放大。
 2. 当前方法主要验证在分类和 NER 上，还没有证明它对长文本生成、长文档问答、检索增强生成等任务同样有效。
 3. SKP 的 prompt-ranking 需要对候选短语逐个打分，虽然比直接跑全长 Transformer 更省，但在超长文档和大量候选短语下仍然可能有额外成本。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DocVLM: Make Your VLM an Efficient Reader
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：文档理解需要精确的文字和布局信息，但从像素中提取这些信息需要大量视觉 token；OCR 可以直接提供文字，但缺乏高效的编码和压缩方式将其融入 VLM。
 
-**本文要解决什么？** 设计一个高效的 OCR 编码模块，用极少的 token（64 个）将文档的文字和布局信息注入冻结的 VLM，在不修改 VLM 权重的前提下显著提升文档理解。
+**本文目标** 设计一个高效的 OCR 编码模块，用极少的 token（64 个）将文档的文字和布局信息注入冻结的 VLM，在不修改 VLM 权重的前提下显著提升文档理解。
 
 **切入角度**：利用 DocFormerV2 的编码器处理 OCR 文本 + 2D 位置信息，通过 instruction-aware 的 learned query 压缩机制将 800+ 个 OCR token 压缩为 64 个，然后与视觉 token 拼接送入 VLM。
 
-**核心idea一句话**：用 learned query 压缩的 OCR 编码器作为即插即用的文档理解增强模块，以 64 个 token 的开销实现接近 800 token 完整编码的文档理解能力。
+**核心 idea**：用 learned query 压缩的 OCR 编码器作为即插即用的文档理解增强模块，以 64 个 token 的开销实现接近 800 token 完整编码的文档理解能力。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ tags:
 - **64 个 token 的极致压缩**：类似 BLIP-2 的 Q-Former 但加入了 instruction-awareness，使压缩更智能。这个 idea 可以迁移到视频 VLM 中压缩长视频的 token
 - **零样本多页扩展**：只在单页上训练但能处理多页，通过 global/page-wise 两种编码策略灵活应对不同需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖外部 OCR 系统的质量，OCR 错误会直接传播到编码器
 - OCR 编码器额外增加 344M 参数，加上 64 个 query 的推理开销，在极端实时场景下可能不可忽略
 - 仅在文档理解任务上验证，对通用图像理解任务是否有影响未讨论

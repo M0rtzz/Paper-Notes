@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified Reasoning Framework for Holistic Zero-Shot Video Anomaly Analysis
 description: >-
@@ -70,7 +70,7 @@ VAU: GPT-C在UCF-Crime从0.384提升到0.444(+InterTC)
 - 自动提取的 $t_V$ 超越人工标签是一个令人惊喜的发现——说明上下文化的描述比类别名更有用
 - 比LAVAD快4倍，因为减少了不必要的VLM查询
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能受冻结VLM/LLM的先验知识约束——如果预训练数据不覆盖某种异常类型则可能失效
 - 对短暂异常（<10秒）敏感度不足，因为均匀采样的 $c_i$ 可能缺乏足够时间粒度
 - 仅在监控/暴力领域验证，医疗/工业场景的异常检测尚未探索

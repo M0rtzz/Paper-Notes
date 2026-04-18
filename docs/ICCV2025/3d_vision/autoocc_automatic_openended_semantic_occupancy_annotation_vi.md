@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AutoOcc: Automatic Open-Ended Semantic Occupancy Annotation via Vision-Language Guided Gaussian Splatting
 description: >-
@@ -114,7 +114,7 @@ AutoOcc-V（纯相机）相比最佳自监督方法VEON：IoU提升25.09（+43.3
 - **极致效率**：30 GPU小时完成全数据集标注，内存仅5G，分别是SurroundOcc的1/33时间和1/14内存
 - **强泛化能力**：在SemanticKITTI零样本测试中保持明显优势，且在极端天气（雨天、夜间）下性能甚至可超越人工标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VLM的语义注意力图质量受限于VLM本身能力，对罕见/细粒度物体可能有遗漏
 - 纯视觉模式下对深度估计的依赖：UniDepth在复杂场景下可能引入几何误差
 - 虽然支持开放式类别，但语义合并策略依赖启发式规则（梯度阈值），可能在极端长尾分布下失效

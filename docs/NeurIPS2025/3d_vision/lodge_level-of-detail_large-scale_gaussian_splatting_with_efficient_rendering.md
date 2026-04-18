@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LODGE: Level-of-Detail Large-Scale Gaussian Splatting with Efficient Rendering
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **经典 LOD 在 3DGS 中的回归**：图形学的老技术在新表示形式下焕发活力。
 - **实用性**：使大规模 3DGS 在消费级硬件上可行，降低了部署门槛。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LOD 合并损失信息——某些细节在近距离观察时可能退化
 - 动态场景的 LOD 更新策略未涉及

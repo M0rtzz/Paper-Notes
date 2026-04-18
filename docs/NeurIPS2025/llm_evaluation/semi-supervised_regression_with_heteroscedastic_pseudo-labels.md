@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semi-Supervised Regression with Heteroscedastic Pseudo-Labels
 description: >-
@@ -133,7 +133,7 @@ $$\min_\phi -\langle \nabla_\theta \mathcal{L}^{inner}(\theta, \phi), \nabla_\th
 - 仅展开回归头梯度的近似策略巧妙地在理论优雅性和计算效率之间取得平衡。
 - 理论上证明了双层优化等价于内外梯度对齐，提供了清晰的直觉解释。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设标注数据和未标注数据可以同时访问，可能不适用于隐私敏感场景。
 - 未考虑标注数据中的系统性偏差（如人口学不平衡），可能通过伪标签放大。

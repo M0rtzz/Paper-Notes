@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Olica: Efficient Structured Pruning of Large Language Models without Retraining
 description: >-
@@ -153,7 +153,7 @@ Fast-OND 加速约 **7 倍**，性能几乎无损。
 4. 仅需 **256 样本**、对样本数量和序列长度都不敏感（8→2048 变化，PPL 波动仅 2.4）
 5. 资源消耗极低（3GB 显存 / 7 分钟），使得边缘设备上也能执行 LLM 剪枝
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **高稀疏率性能骤降**：50% 稀疏率时所有方法性能都大幅下降（LLaMA-7B Olica仅 50.68%），无重训练方法在此区间的天花板较低
 2. **仅验证了 LLaMA 家族**：未覆盖 Mistral、Qwen、Phi 等非 LLaMA 架构，泛化性有待验证

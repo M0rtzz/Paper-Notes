@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hi Robot: Open-Ended Instruction Following with Hierarchical Vision-Language-Action Models
 description: >-
@@ -167,7 +167,7 @@ $$p_{\text{gen}}(\ell_t, u_t | \mathbf{I}_t^1, \dots, \mathbf{I}_t^n, \hat{\ell}
 4. 高层训练仅需 2 小时（8×H100），说明合成数据生成 + VLM 微调的效率优势
 5. 框架天然支持**多模态人机交互**：语音输入 → Whisper ASR → 高层推理 → 语音回复 + 动作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏记忆机制**：高层策略无法处理需要长上下文推理的指令，没有跨时间步的记忆
 2. **高层-低层解耦训练**：两层模型不了解彼此能力，高层可能生成低层无法执行的命令

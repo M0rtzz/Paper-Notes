@@ -46,19 +46,19 @@ $$L(w^T) = L^{R^0_\rho}(w^T) + \gamma \cdot L^{R^1_\rho}(w^T)$$
 
 ### 关键设计 1：扰动方向分解
 
-- **做什么**：将 batch 梯度 $\hat{g}_B$ 分解为与全局梯度 $g$ 对齐的分量 $\text{Proj}_g(\hat{g}_B)$ 和正交的随机噪声分量 $\text{Proj}_g^\perp(\hat{g}_B)$，仅使用噪声分量构造扰动方向
+- **功能**：将 batch 梯度 $\hat{g}_B$ 分解为与全局梯度 $g$ 对齐的分量 $\text{Proj}_g(\hat{g}_B)$ 和正交的随机噪声分量 $\text{Proj}_g^\perp(\hat{g}_B)$，仅使用噪声分量构造扰动方向
 - **核心思路**：正交分量近似为 $\hat{g}_B - \sigma m_t$，其中 $\sigma$ 为梯度间余弦相似度（训练中固定为常数），$m_t$ 为梯度的 EMA 估计；删除梯度对齐方向避免与优化轨迹冲突
 - **设计动机**：实验发现 full-gradient 对齐扰动反而损害性能（与学习动态冲突），而随机噪声分量在所有设置中一致优于其他变体，是提升泛化的关键
 
 ### 关键设计 2：一阶 sharpness 的噪声分解
 
-- **做什么**：对一阶 sharpness（梯度范数的曲率）同样执行分解，将 $\nabla\|\hat{g}_B\|$ 分解为与 EMA 方向对齐和正交的分量
+- **功能**：对一阶 sharpness（梯度范数的曲率）同样执行分解，将 $\nabla\|\hat{g}_B\|$ 分解为与 EMA 方向对齐和正交的分量
 - **核心思路**：通过 Hessian-vector product 高效计算一阶 sharpness 梯度 $\nabla\|g\| = \nabla^2 L(w) \cdot \frac{\nabla L(w)}{\|\nabla L(w)\|}$，再用 EMA $n_t$ 近似全局方向并提取噪声分量
 - **设计动机**：一阶 sharpness 关注梯度本身的 sharpness（即函数的曲率），与零阶互补；噪声分量同样比完整方向更有利于泛化
 
 ### 关键设计 3：轻量调度策略
 
-- **做什么**：不在所有 epoch 都使用 FLAD，而是仅在部分 epoch（如 10-20%）中激活 FLAD 优化器，其余使用 vanilla SGD
+- **功能**：不在所有 epoch 都使用 FLAD，而是仅在部分 epoch（如 10-20%）中激活 FLAD 优化器，其余使用 vanilla SGD
 - **核心思路**：探索在每个任务训练中仅部分 epoch 应用 FLAD 的调度方案，发现少量使用即可获得显著收益
 - **设计动机**：FLAD 每步需 2 次前向 + 4 次反向传播；调度策略可将计算开销降低至少 50%，同时保持甚至超过全程使用的性能
 

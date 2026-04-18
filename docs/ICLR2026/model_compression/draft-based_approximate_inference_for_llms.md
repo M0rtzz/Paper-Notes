@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Draft-based Approximate Inference for LLMs
 description: >-
@@ -95,7 +95,7 @@ Draft-based Approximate Inference 是一个统一框架：先用小型 draft 模
 - SpecKV 是首个利用 draft model lookahead 做 KV cache 优化的方法
 - 级联压缩的设计思路值得借鉴：先粗后细，每步用最合适的信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Draft 模型引入额外的内存开销（虽然可以 offload 到 CPU）
 - 在非常短的上下文（<4K）下，draft 开销可能不值得

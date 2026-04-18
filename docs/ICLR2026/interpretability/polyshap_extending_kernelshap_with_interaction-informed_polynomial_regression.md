@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PolySHAP: Extending KernelSHAP with Interaction-Informed Polynomial Regression
 description: >-
@@ -94,7 +94,7 @@ PolySHAP 求解的是带约束的加权最小二乘问题，约束条件为 Shap
 - **统一视角**: 将 KernelSHAP、Faith-SHAP、$k_{ADD}$-SHAP 等方法纳入统一框架
 - **投影引理**: 提出的技术性投影引理（Lemma A.1）在证明多个定理中发挥关键作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 高维场景中三阶交互项组合数爆炸（$\binom{d}{3}$），实际可加入的交互项有限
 - 猜测配对 $k$-PolySHAP 等价于 $(k+1)$-PolySHAP（$k$ 为奇数）但未能证明

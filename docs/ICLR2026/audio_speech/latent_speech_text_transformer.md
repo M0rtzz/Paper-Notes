@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Speech-Text Transformer
 description: >-
@@ -115,7 +115,7 @@ tags:
 - **效率与质量双赢**：降低序列长度同时提升质量——不是 trade-off 而是 win-win。原因：更短的序列使全局 Transformer 更容易学到长距离依赖
 - **Curriculum 的巧妙设计**：alignment patching 需要推理辅助模型（不实用），static patching 丢失语义对齐（不最优），curriculum 从前者平滑过渡到后者——训练用对齐，推理用静态
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Patch 大小的选择对不同语言（音节结构差异大）和说话速率的鲁棒性未充分验证
 - 仅使用 HuBERT semantic tokens，未测试 codec-based acoustic tokens（如 SoundStorm）
 - 未与 Moshi、Spirit-LM 等端到端语音 LLM 做直接对比

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RDD: Retrieval-Based Demonstration Decomposer for Planner Alignment in Long-Horizon Tasks
 description: >-
@@ -135,7 +135,7 @@ RDD仅比Expert分解器低0.2%成功率，显著优于UVD和均匀分割。
 - **理论扎实**：从最优分区问题出发，证明了线性复杂度和最优性保证
 - **Proposition 3.1的巧妙设计**：通过乘以区间长度使评分函数对分割数量不变，避免了过度分割或过少分割的偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - RDD的质量受限于底层策略训练数据的质量——如果训练集包含大量噪声样本，可能需要数据筛选预处理
 - 区间相似度仅使用起止帧的单帧特征，对需要历史地标图像的场景（如视觉语言导航）可能不足

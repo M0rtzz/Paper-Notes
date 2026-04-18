@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bid Farewell to Seesaw: Towards Accurate Long-tail Session-based Recommendation via Dual Constraints of Hybrid Intents
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}_c = -\sum_{S^u \in \mathcal{B}} \log \frac{\mathbf{X}}{(1+\lambda 
 - **即插即用**：HID可无缝接入任意SBR模型（序列型、图型均可），且混合意图构建可离线完成，不增加推理开销
 - **双赢验证充分**：在4个基线模型×3个数据集×6个指标的所有组合上，HID均实现了准确性和长尾性能的同步提升，p值普遍<0.001
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖物品属性信息**：混合意图构建需要物品的类别属性作为初步意图单元，在缺乏属性元数据的场景下适用性受限（尽管附录中有使用语义聚类替代的实验）
 - **谱聚类簇数需调参**：最优簇数$n$因数据集而异（Tmall=4, Diginetica=3），缺乏自适应选取策略

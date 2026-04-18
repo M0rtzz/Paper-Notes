@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Spatial to Actions: Grounding Vision-Language-Action Model in Spatial Foundation Priors
 description: >-
@@ -166,7 +166,7 @@ $$\mathcal{L} = \sum_{i=t}^{t+C-1} \text{MSE}(\hat{a}_{i,\text{pose}}, a_{i,\tex
 3. **空间基础模型的新应用**：首次将 DUSt3R/VGGT 系列的空间重建 token 用作 VLA 的几何先验，打通了重建与控制
 4. **仅 RGB 超越 GT 点云**：说明空间基础模型学到的隐式 3D 表示比显式点云更适合作为策略网络的输入
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **静态相机假设**：ESM 处理第三视角静态相机图像，对于移动基座机器人自身视角变化的场景适用性有待验证
 2. **桌面操控为主**：实验聚焦于桌面操控任务，导航和全身运动控制场景未涉及

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GUAVA: Generalizable Upper Body 3D Gaussian Avatar
 description: >-
@@ -158,7 +158,7 @@ Pipeline 包含四个阶段：
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

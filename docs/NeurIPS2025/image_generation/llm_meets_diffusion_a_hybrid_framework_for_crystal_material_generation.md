@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM Meets Diffusion: A Hybrid Framework for Crystal Material Generation
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L} = \mathcal{L}_{lattice} + \mathcal{L}_{coord}$$
 - LLM的自然语言接口天然支持条件生成，比去噪模型更灵活
 - 首次系统地验证了LLM+扩散的混合策略在材料生成中的优越性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LLM和扩散模型之间没有交互，两模块训练完全独立，未来可探索双向反馈机制
 - 仅使用了LLaMA-2-7B，更强的LLM（如LLaMA-3）可能带来进一步提升

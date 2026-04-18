@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Breaking Barriers: Do Reinforcement Post Training Gains Transfer To Unseen Domains?
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **极少数据也能造成域外损害**：AZR-Coder 几乎没有训练数据就导致 OOD -23%，说明 RPT 本身（而非过拟合）是泛化失败的原因
 - **CMH 统计检验的使用**：引入标准化的假设检验框架而非仅看点估计，增强了结论可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 干预实验仅使用 1.5B 模型，更大模型（7B+）的单域 RPT 实验缺失
 - 知识密集型推理的训练数据由 o3-mini 过滤去除数学/代码内容，过滤质量可能影响结论

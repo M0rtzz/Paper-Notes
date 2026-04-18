@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] T2SMark: Balancing Robustness and Diversity in Noise-as-Watermark for Diffusion Models
 description: >-
@@ -116,7 +116,7 @@ T2SMark 是 training-free 的水印方案，无需额外训练。关键超参数
 - 用多维投影而非逐元素判决来解码，充分利用了高斯向量的连续结构信息
 - 评估方法严谨：用 t 检验而非简单对比来评估视觉质量退化，是同类工作中少见的统计学规范
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对高斯噪声攻击脆弱（$\sigma=0.1$ 即严重退化），这是 NaW 类方法的通病
 - 依赖 ODE 可逆采样器（DDIM），不适用于不支持反演的扩散模型

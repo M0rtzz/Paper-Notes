@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cooperation of Experts: Fusing Heterogeneous Information with Large Margin
 description: >-
@@ -121,7 +121,7 @@ CoE 在所有 5 个数据集上均取得最优，且标准差最低（如 ACM ±
 4. **鲁棒性突出**：在 ACM 数据集上，即使 90% 边被扰动，CoE 仍保持稳定性能
 5. **通用性强**：同一框架同时处理多关系网络和多模态数据，无需结构性修改
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性隐患**：置信张量 $\Theta \in \mathbb{R}^{c \times c \times k}$ 随类别数和专家数增长，大规模场景可能面临内存问题（部分 baseline 在 MAG 上 OOM，CoE 虽未 OOM 但未讨论计算开销）
 2. **仅限分类任务**：实验仅覆盖节点分类，未验证在链接预测、图分类等其他图任务上的表现

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlexGen: Flexible Multi-View Generation from Text and Image Inputs
 description: >-
@@ -130,7 +130,7 @@ Text-to-multi-view 对比（GSO 300 样本）：
 - Condition switcher 的训练策略使单一模型同时支持三种推理模式，提升了实用性
 - 材质可控生成（metallic/roughness）是一个有价值的创新点，对 3D 资产创建很有用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对复杂用户指令的解析能力有限，可能源于训练数据规模不足（147K）
 - GPT-4V 标注需要 API 调用，数据集构建成本较高，且依赖闭源模型

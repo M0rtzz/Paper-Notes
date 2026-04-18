@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeformTrace: A Deformable State Space Model with Relay Tokens for Temporal Forgery Localization
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L} = \mathcal{L}_{match} + \mathcal{L}_{cls} + \lambda_1 \cdot \mathc
 3. **鲁棒性强**：在 10 种音视频干扰（压缩、噪声、模糊等）下均优于现有方法
 4. **中继令牌设计巧妙**：借鉴通信领域中继思想，辅助损失确保信息聚合与多样性
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. DC-SSM 目前仅用于 query 与特征序列之间的交互，作者提到可推广到音频-视频对应关系学习等更广泛场景
 2. 特征提取器（Raven）被冻结，未探索端到端微调对性能的影响
 3. 中继令牌数量与视频时长相关，实际部署可能需要自适应调整策略

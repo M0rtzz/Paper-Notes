@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unifying Vision-Language Latents for Zero-Label Image Caption Enhancement
 description: >-
@@ -102,7 +102,7 @@ ViZer在冻结的视觉编码器和VLM的隐层特征空间之间引入一个轻
 - **评估指标反思**：深刻揭示了CIDEr/BLEU等参考依赖指标的局限性——它们惩罚正确但超出参考范围的细节，这对自监督方法极不公平
 - **架构通用性**：ViZer可即插即用地集成到任何使用视觉编码器的VLM架构，训练仅需单张24GB GPU
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当baseline caption质量极差时，ViZer改进有限（如消防站的年份猜测）
 - 目前仅验证了图像描述任务，向VQA扩展存在挑战——VQA关注局部区域而非全局语义
 - 缺乏合适的自动化评估指标——需要开发不依赖参考文本且具有图像理解能力的评估方法

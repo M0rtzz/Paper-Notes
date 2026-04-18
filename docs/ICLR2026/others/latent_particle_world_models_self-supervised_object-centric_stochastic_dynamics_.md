@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics
 description: >-
@@ -122,7 +122,7 @@ LPWM 在 PandaPush 和 OGBench 的多任务上显著超越基线。OGBench task3
 - **"what-where"视觉通路的计算实现**：粒子表示天然对应视觉系统的物体分解，潜在动作对应动作预测，整体架构与人类视觉-空间世界模型的神经科学发现吻合
 - **统一的多条件接口**：同一个模型支持无条件/动作/语言/图像/多视角条件化——这使得从视频预训练 → 机器人控制的迁移变得自然
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设小的相机运动和重复场景（如机器人桌面操作），不适用于任意视频（如街景、电影）
 - >4 个原子行为的长 horizon 任务（OGBench task4/5）全部方法失败——长期规划仍是挑战
 - 粒子数 $M$ 固定，无法动态适应不同复杂度的场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Make LoRA Great Again: Boosting LoRA with Adaptive Singular Values and Mixture-of-Experts Optimization Alignment
 description: >-
@@ -147,7 +147,7 @@ LoRA-MoE 写法：
 - 亮点 3：缩放因子从经验规则转向可推导量，解释了为何 LoRA-MoE 在低 rank 时尤其依赖较大 scaling。
 - 亮点 4：方法没有引入重型新模块，符合 PEFT 社区对“低侵入、可复现、可迁移”的偏好。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 局限 1：缓存片段未含完整实验大表，难以逐数据集做精确复盘。
 - 局限 2：理论对齐主要建立在近似与期望意义下，实际路由离散性可能带来偏差。
 - 局限 3：方法依赖 SVD 分解质量，若预训练矩阵噪声结构异常，段划分收益可能下降。

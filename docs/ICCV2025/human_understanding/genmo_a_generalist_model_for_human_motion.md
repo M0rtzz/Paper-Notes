@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GENMO: A GENeralist Model for Human MOtion
 description: >-
@@ -144,7 +144,7 @@ $$x^i = (\Gamma_{\text{gv}}^i, v_{\text{root}}^i, \theta^i, \beta^i, t_{\text{ro
 - **变长序列支持**通过 RoPE + 滑窗注意力实现，无需后处理拼接，产生自然连贯的长序列
 - NVIDIA 出品，工程实现和数据规模都很扎实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 使用 SMPL 参数表示运动，导致在 HumanML3D 指标上不如使用专用表示的方法（存在表示不匹配问题）
 - 通用模型在单个任务上通常不如专用模型（如音乐-舞蹈的 FIDk），虽然综合性能更优

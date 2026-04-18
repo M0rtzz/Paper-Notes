@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Toward Gaze Target Detection in Young Autistic Children
 description: >-
@@ -99,7 +99,7 @@ tags:
 - Upper Bound 分析清晰指出了瓶颈（gate 质量），且随 MLLM 的发展系统性能可自然提升
 - 问题定义有强临床价值，连接了 AI 与自闭症早期干预
 
-## 局限性 / 可改进方向
+## 局限与展望
 - SCA 模块（Qwen2.5-VL-7B）的 Face 召回率仅 65.53%，是系统主要瓶颈
 - 框架引入了多个模型（MLLM + 两个专家），推理成本较高
 - AGT 数据集来自单一评估场景（CSBS-DP），泛化到其他自然场景需验证

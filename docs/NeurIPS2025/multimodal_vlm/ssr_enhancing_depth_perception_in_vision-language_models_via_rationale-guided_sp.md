@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SSR: Enhancing Depth Perception in VLMs via Rationale-Guided Spatial Reasoning
 description: >-
@@ -88,7 +88,7 @@ SSR (7B) 进一步提升：SpatialBench 上超越 LLaVA-NeXT-13B、SpatialBot-3B
 - **Mamba 作为推理引擎**：选择 Mamba 而非 Transformer 进行推理，充分利用其选择性状态空间特性和线性复杂度优势。
 - 数据构建流水线（Depth Pro + SpatialRGPT + GPT-4o）系统化，可复用。- Stage 1 训练 19h、Stage 2 训练 48h 的计算开销可接受，且 Stage 2 是可选的。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖单目深度估计模型（Depth Pro）的质量，深度估计失败时推理也会受影响。
 - SSR-CoT 数据集构建依赖 GPT-4o，成本较高且可能引入偏差。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AtomicVLA: Unlocking the Potential of Atomic Skill Learning in Robots
 description: >-
@@ -69,7 +69,7 @@ AtomicVLA 提出统一规划-执行框架，通过Think-Act自适应切换生成
 - 主轴分析的原子技能自动标注管线减少了对人工标注的依赖
 - 真实机器人上混合训练3个长horizon任务且一致超越π₀.5
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖VLM的规划准确性——如果VLM给出错误的原子技能抽象，错误会传播到执行
 - 新技能仍需收集大量演示数据做模仿学习，未探索RL或少样本学习
 - 原子技能粒度固定（Pick/Place/Open等），更细粒度或更抽象的技能层级未探索

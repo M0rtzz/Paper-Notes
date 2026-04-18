@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization
 description: >-
@@ -151,7 +151,7 @@ $$R_{\text{total}} = R_{\text{format}} + R_{\text{accuracy}}$$
 - **多答案范式的普适性**：多答案生成+自适应奖励的框架不仅适用于GUI定位，对其他需要空间探索的视觉定位任务（如referring expression comprehension）也可能有效
 - **共线惩罚的巧妙设计**：用简单的几何约束防止退化策略，计算开销极小但效果显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 多答案生成增加了推理时的计算开销（尽管平均N较小），实际部署时需要权衡性能和效率
 - 共线惩罚基于三角形面积的简单启发式，可能在高维或更复杂的空间探索场景中需要改进

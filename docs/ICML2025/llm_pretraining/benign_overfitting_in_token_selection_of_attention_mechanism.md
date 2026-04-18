@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Benign Overfitting in Token Selection of Attention Mechanism
 description: >-
@@ -76,7 +76,7 @@ tags:
 - 揭示了 softmax 带来的两大独特困难
 - token 选择的"双轨"特性提供了理解 Transformer 泛化的新视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑一层注意力和固定线性头
 - 假设条件较强
 - 未扩展到自回归设置

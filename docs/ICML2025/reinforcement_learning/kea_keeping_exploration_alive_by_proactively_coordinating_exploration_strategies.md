@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KEA: Keeping Exploration Alive by Proactively Coordinating Exploration Strategies
 description: >-
@@ -145,7 +145,7 @@ KEA-RND-SAC 在 Walker Run 上提升 **119%**，Cheetah Run 提升 **51%**。
 4. **共享 buffer 提效**：两个智能体共享 replay buffer，充分利用 off-policy 特性，不浪费数据
 5. **泛化性分析透彻**：明确指出 KEA 的适用条件——基础探索策略需与新颖性探索产生耦合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅适用于 off-policy 方法**：标准智能体需要共享经验，无法直接扩展到 on-policy（PPO 等）
 2. **阈值 $\sigma$ 为固定超参数**：虽然对阈值不敏感，但自适应阈值（如基于内在奖励分布的分位数）可能进一步提升性能

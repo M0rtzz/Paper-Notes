@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HRScene: How Far Are VLMs from Effective High-Resolution Image Understanding?
 description: >-
@@ -131,7 +131,7 @@ HRScene 包含两大部分：
 - 发现 Qwen2-VL 72B 在 WhiteBackground NIAH 中几乎不受分辨率影响（Region 指标始终低于 10），暗示其内部分辨率处理策略可能更优
 - 人类在 Medical 上仅 23.81% 但模型平均 36.64%，说明某些专家领域模型已超越非专家人类
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基准以多选题为主，对开放式回答的评估有限
 - 诊断数据集仅用白色背景和视觉相似干扰，更自然的复合场景可进一步挑战模型

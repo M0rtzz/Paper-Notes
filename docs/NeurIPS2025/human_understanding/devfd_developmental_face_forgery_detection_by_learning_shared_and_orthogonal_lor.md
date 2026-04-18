@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DevFD: Developmental Face Forgery Detection by Learning Shared and Orthogonal LoRA Subspaces
 description: >-
@@ -91,7 +91,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{cls}} + \mathcal{L}_{\text{ort}} + \lambda_3\
 - **严格数据隔离**：不使用任何 replay 机制，仍优于使用 replay 的 DFIL 和 SUR-LID，体现了架构设计本身的优势
 - **标签引导的软路由**：通过平衡系数矩阵实现"鼓励匹配、抑制不匹配"，同时保持所有专家的协同推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 随着任务数增长 LoRA 分支线性增加，在极长任务序列下参数量和推理开销值得关注
 - LoRA 秩 $r$ 的选择依赖网格搜索，不同任务可能需要不同秩的自适应分配
 - 正交子空间的维度有限（$r \ll \min(d_O, d_I)$），理论上任务数量受限于特征空间维度

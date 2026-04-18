@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PID-controlled Langevin Dynamics for Faster Sampling of Generative Models
 description: >-
@@ -102,7 +102,7 @@ Langevin 动力学是 EBM（能量模型）和 SGM（分数匹配生成模型）
 - **I 项和 D 项的互补性**: 二者分别在推理和生成任务中扮演主角，说明完整 PID 控制提供了任务自适应的最优平衡
 - **增益衰减保证理论收敛**: $\gamma^t$ 衰减使系统最终退化为标准 LD，兼顾早期加速和后期理论保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要面向 Langevin 采样的模型（EBM、SGM），不直接适用于 DDPM/DDIM 等 ODE 采样器
 - I 项的 $1/t$ 归一化和指数衰减的 $\gamma$ 引入了额外超参数，需要调优

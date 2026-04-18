@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Causal Abstraction Inference under Lossy Representations
 description: >-
@@ -162,7 +162,7 @@ $$\sigma_{X_L} = \begin{cases} x_1 & \text{概率 } P(x_1 \mid X_L \in \{x_1,x_2
 4. **同时覆盖观测层、干预层、反事实层**：Theorem 1 保证了 $\mathcal{L}_3$ 级别的一致性，这是最强的保证
 5. **投影采样的实用价值**：为表示学习 + 因果推断的结合提供了实际可行的方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **假设低层因果图已知**：投影 C-DAG 的构造需要知道低层的因果图结构和 AIC 违反变量集 $\mathbf{V}^\dagger_H$，在实际中这些信息可能不完全可用
 2. **离散变量假设**：理论框架限定在有限离散域的内生变量上，连续变量的扩展尚未讨论

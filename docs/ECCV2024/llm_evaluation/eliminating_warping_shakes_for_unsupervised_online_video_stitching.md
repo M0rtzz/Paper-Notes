@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Eliminating Warping Shakes for Unsupervised Online Video Stitching
 description: >-
@@ -145,7 +145,7 @@ StabStitch包含三个核心组件：
 - 3D卷积平滑网络设计简洁高效（仅3层），突出了无监督学习scheme的有效性
 - 在线模式仅需1帧延迟，通过滑动窗口和在线协作约束实现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 以稳定输入为前提——如果源视频本身就有大幅抖动（如极端运动），需要先单独稳定
 - Fast-Moving场景的对齐性能不如UDIS++重训版本（23.36 vs 24.78），因为平滑会牺牲部分对齐

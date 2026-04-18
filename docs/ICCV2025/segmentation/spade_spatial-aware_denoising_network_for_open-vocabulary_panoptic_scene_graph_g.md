@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPADE: Spatial-Aware Denoising Network for Open-vocabulary Panoptic Scene Graph Generation
 description: >-
@@ -124,7 +124,7 @@ SPADE是一个两阶段方法：
 - **扩散+判别双路分类**：空间推理靠扩散模型，开放识别靠CLIP，互补融合发挥各自优势
 - **LoRA校准的必要性**：全参数微调反而不如LoRA，验证了保留预训练知识的重要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 两阶段训练流程较复杂，需要先独立校准UNet再训练RGT
 - 扩散模型推理的计算开销较大，未报告推理速度

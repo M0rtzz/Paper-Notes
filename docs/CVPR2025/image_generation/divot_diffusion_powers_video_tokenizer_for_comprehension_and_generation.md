@@ -1,4 +1,4 @@
-# DiVoT: Diffusion Powers Video Tokenizer for Comprehension and Generation
+﻿# DiVoT: Diffusion Powers Video Tokenizer for Comprehension and Generation
 
 **会议**: CVPR 2025  
 **arXiv**: [2412.04432](https://arxiv.org/abs/2412.04432)  
@@ -19,7 +19,7 @@
 
 **切入角度**：扩散去噪本身就是强大的自监督信号——如果连续表示能引导去噪成功，说明它捕获了足够的时空信息。用 GMM 替代 MSE 让 LLM 建模多模态分布。
 
-**核心idea一句话**：扩散去噪作为自监督信号训练视频分词器 + GMM 分布建模替代 MSE 回归 + U-Net 兼做反分词器。
+**核心 idea**：扩散去噪作为自监督信号训练视频分词器 + GMM 分布建模替代 MSE 回归 + U-Net 兼做反分词器。
 
 ## 方法详解
 

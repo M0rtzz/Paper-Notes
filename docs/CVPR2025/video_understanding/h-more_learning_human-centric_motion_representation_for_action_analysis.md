@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] H-MoRe: Learning Human-centric Motion Representation for Action Analysis
 description: >-
@@ -116,7 +116,7 @@ H-MoRe 包含两个核心组成部分：
 - **即插即用**：H-MoRe 输出矩阵格式的表示，可直接替代光流作为任何 CNN/ViT 的输入通道
 - **Patch-centroid distance**：用质心距离近似 Chamfer 距离的技巧值得借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在 2D 验证，未扩展到 3D 环境
 - 受限于计算资源，每个场景目前仅支持有限数量的主体

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation
 description: >-
@@ -154,7 +154,7 @@ $$\tilde{\mathcal{F}}_{sub}^l = \sigma(\mathbf{Q}(\mathcal{F}_{sub}^l) \cdot \ma
 3. **特征容器设计**：FIFO 队列存储历史特征增强了模型的长期记忆能力，类似 MoCo 的动量队列思想
 4. **双重角色认知**：首次明确指出特征交互既是增强也是扰动，并利用这种双重性提升模型鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 论文未讨论方法在 2D 医学图像上的适用性，实验仅涉及 3D 数据
 - CR 路由器的设计较为简单（轻量级网络），可探索更复杂的路由策略如 MoE 风格的门控

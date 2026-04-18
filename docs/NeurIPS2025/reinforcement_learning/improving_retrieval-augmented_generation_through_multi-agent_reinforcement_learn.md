@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**: 现有端到端优化方法（如用 PPO 或 DPO 优化单个 RAG 组件）仅关注两组件的简单 pipeline 或孤立优化单个模块，无法充分建模多组件间的协作关系。
 
-**本文要解决什么**: 如何联合优化 RAG 系统中多个组件的参数，使各模块的优化目标与最终答案质量对齐。
+**本文目标**: 如何联合优化 RAG 系统中多个组件的参数，使各模块的优化目标与最终答案质量对齐。
 
 **切入角度**: 将 RAG 建模为协作多智能体强化学习（Co-MARL）问题，用 MAPPO 实现多智能体联合优化。
 
-**核心idea一句话**: 把 RAG 看成合作博弈——各组件是 agent，共享"最终答案F1"作为全局奖励，用 MAPPO 同步优化所有 agent。
+**核心 idea**: 把 RAG 看成合作博弈——各组件是 agent，共享"最终答案F1"作为全局奖励，用 MAPPO 同步优化所有 agent。
 
 ## 方法详解
 
@@ -48,14 +48,14 @@ MMOA-RAG 将 RAG 建模为 $\langle \mathcal{G}, \mathcal{O}, \mathcal{A}, \math
 
 1. **多智能体建模（Co-MARL）**:
 
-    - **做什么**: 将 RAG 的各组件视为 RL agent，共享全局奖励
+    - **功能**: 将 RAG 的各组件视为 RL agent，共享全局奖励
     - **为什么**: 单独优化各模块会导致目标不一致；多智能体框架自然建模了组件间的协作关系
     - **怎么做**: 定义三个 agent：Query Rewriter（QR）接收问题 $q$，输出子问题 $subq$；Selector（S）接收 $q$ 和候选文档 $D$，输出选中的文档 ID 子集 $D_{\text{selected}}$；Generator（G）接收 $q$ 和 $D_{\text{selected}}$，生成最终答案
     - **区别**: 相比 Rewrite-Retrieve-Read（仅优化 rewriter）或 BGM（仅优化 bridge 模块），MMOA-RAG 同时优化三个组件
 
 2. **智能体的观测/动作/奖励设计**:
 
-    - **做什么**: 为每个 agent 定义精确的 MDP 元素
+    - **功能**: 为每个 agent 定义精确的 MDP 元素
     - **为什么**: 不同 agent 的角色差异要求差异化的动作空间和惩罚项设计
     - **怎么做**: 
         - QR 的动作空间为完整词表 $\mathcal{V}$，奖励 $R_{QR} = R_{\text{shared}} + P_{QR}$，当子问题数 > 4 时惩罚 -0.5
@@ -66,7 +66,7 @@ MMOA-RAG 将 RAG 建模为 $\langle \mathcal{G}, \mathcal{O}, \mathcal{A}, \math
 
 3. **MAPPO 联合优化**:
 
-    - **做什么**: 使用 Multi-Agent PPO 算法联合更新所有 agent
+    - **功能**: 使用 Multi-Agent PPO 算法联合更新所有 agent
     - **为什么**: MAPPO 在全合作环境中使用共享全局奖励促进agent间协作，比独立 PPO 更适合此场景
     - **怎么做**: Actor 损失采用标准 PPO 的 clip objective，扩展到多 agent：
     $\mathcal{L}_{\text{Actor}}(\theta) = \sum_i \sum_t \min(r_t^i \hat{A}_{\pi_\theta}^{i,t},\ \text{clip}(r_t^i, 1-\epsilon, 1+\epsilon) \hat{A}_{\pi_\theta}^{i,t})$
@@ -129,7 +129,7 @@ MMOA-RAG 将 RAG 建模为 $\langle \mathcal{G}, \mathcal{O}, \mathcal{A}, \math
 - **参数共享**: 三个 agent 共享同一 LLM（仅通过不同 prompt 区分角色），使训练计算开销接近单 agent PPO
 - **惩罚项设计**: 各 agent 的轻量惩罚（子问题数量、格式合规、答案长度）在不影响主要优化目标的同时约束了输出质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Retriever 被固定不参与优化，理论上检索模块的联合优化可能带来更大收益
 - 仅在 Llama-3-8B 上验证，未测试更大规模模型或闭源 LLM

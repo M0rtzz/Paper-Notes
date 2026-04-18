@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BoSS: A Best-of-Strategies Selector as an Oracle for Deep Active Learning
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{B}^{\star}=\arg\min_{\mathcal{B}\in\{\mathcal{B}_1,\dots,\mathcal{B}_
 - **Pick frequency分析揭示AL动态特性**：冷启动阶段需代表性策略→当前无监督策略在此阶段不足；利用阶段无一致最优→需自适应机制
 - **设计理念简洁**：三个简单组件的组合（集成+proxy+选择），易于复现、扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Oracle策略依赖全量标签和测试集，不可直接用于实际AL→仅作为评估上界
 - 仅在图像分类任务上验证，目标检测/语义分割/NLP等任务范围有限

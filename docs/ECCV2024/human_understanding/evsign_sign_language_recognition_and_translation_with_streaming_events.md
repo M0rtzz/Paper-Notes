@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvSign: Sign Language Recognition and Translation with Streaming Events
 description: >-
@@ -158,7 +158,7 @@ tags:
 3. **Gloss感知掩码的优雅设计**：同时考虑特征相似度（哪些Token属于同一gloss）和时间距离（避免远距离同类误聚合），比简单全局注意力更合理
 4. **实用价值**：事件相机的高时间分辨率+低延迟+隐私保护，非常适合可穿戴手语翻译设备
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - EvSign仅含中文手语，泛化到其他手语系统需要验证
 - 9位手语者规模相对较小，个体差异覆盖有限

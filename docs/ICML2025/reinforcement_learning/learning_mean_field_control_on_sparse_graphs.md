@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Mean Field Control on Sparse Graphs
 description: >-
@@ -147,7 +147,7 @@ $$\hat{\mu}_{t+1}^\infty = \sum_{x,u} \hat{\mu}_t^\infty(x) \pi_t^\infty(u|x, \h
 
 LWMFMARL 和 IPPO 在直接网络交互时表现较好，但在较大规模网络（N=860, 1598）上，LWMFC 方法族整体优于 IPPO。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **两系统近似的精度损失**：低度/高度智能体的分割阈值 k* 是手动设定的，不同问题的最优 k* 不同
 2. **LWMFC 在极限系统而非真实系统上评估**：Algorithm 1 学到的策略是极限系统最优，但可能与真实有限系统存在差异

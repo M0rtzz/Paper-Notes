@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Overfitting in Adaptive Robust Optimization
 description: >-
@@ -135,7 +135,7 @@ $$\|\boldsymbol{V}^\top \boldsymbol{a}_i - \boldsymbol{d}_i\|_2 \leq \frac{b_i -
     - 使用约束特定的不确定性集大小
 - **岭回归的直接对应**：$\ell_2$ 范数约束将 ARO 的鲁棒对偶与岭回归连接，跨领域知识转移潜力大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限仿射决策规则**：更复杂的决策规则（多项式、分段线性）下的分析尚未探索
 2. **缺少大规模数值实验**：仅有玩具示例，未在实际运筹问题上验证

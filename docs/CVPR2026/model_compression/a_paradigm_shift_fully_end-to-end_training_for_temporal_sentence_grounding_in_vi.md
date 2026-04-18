@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Paradigm Shift: Fully End-to-End Training for Temporal Sentence Grounding in Videos
 description: >-
@@ -101,7 +101,7 @@ Charades-STA: R1@0.5 = **48.1%**(ViT), ActivityNet: R1@0.5 = **30.5%**。
 - **SCADA的设计巧妙**：双分支结构让语句信息既影响backbone内部（内分支）又产生跳跃连接（外分支），在极少参数下实现深度跨模态融合
 - **视频中心学习的实用性**：利用TSGV数据集"一视频多查询"的天然特性，是一个低开销高回报的工程优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅在Charades-STA和ActivityNet两个数据集上验证，更多数据集（如TACoS、DiDeMo）有待探索
 - SCADA的插入位置和数量是手动设定的，能否自动搜索最优配置？
 - 与Video LLM方法(如D2VLM R1@0.5=50.30)的对比还不够全面

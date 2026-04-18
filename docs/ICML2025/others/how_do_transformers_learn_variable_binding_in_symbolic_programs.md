@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Do Transformers Learn Variable Binding in Symbolic Programs?
 description: >-
@@ -87,7 +87,7 @@ Variable Scope网站提供所有实验的交互式可视化。
 4. 因果干预方法比纯探测(probing)更可靠。
 5. Variable Scope平台开创了可交互验证的可解释性研究范式。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在合成程序上验证，真实代码理解可能不同。
 2. 4步最大跳数可能不够挑战深度推理。

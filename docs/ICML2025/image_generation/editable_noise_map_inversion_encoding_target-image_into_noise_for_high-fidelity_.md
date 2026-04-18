@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Editable Noise Map Inversion: Encoding Target-image into Noise For High-Fidelity Image Manipulation
 description: >-
@@ -168,7 +168,7 @@ ENM Inversion 作为即插即用的反演模块，可直接替换以下编辑方
 4. **实验全面**：覆盖图像编辑（PIE-Bench, 9 种任务类型）和视频编辑（DAVIS），与 7+ 种基线全面对比
 5. **损失设计简洁有效**：两项损失一加权，解决两个核心需求，优雅且高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖基础模型能力**：若目标图像超出 Stable Diffusion 生成域，方法会失败
 2. **每次编辑需重新反演**：不同于传统方法可复用 noise map 用于多个目标 prompt，ENM 需要针对每个源-目标对单独反演，增加计算开销

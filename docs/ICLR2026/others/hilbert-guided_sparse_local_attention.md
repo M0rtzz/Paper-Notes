@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hilbert-Guided Sparse Local Attention
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：Hilbert曲线具有优秀的局部性保持特性——2D空间邻近的点在1D曲线上也邻近。用Hilbert曲线重排token→窗口内token在1D上连续→空块率大增、partial blocks大减。
 
-**核心idea一句话**：Hilbert重排让2D局部注意力模式在1D序列中更紧凑→更多空块→块稀疏kernel更高效。
+**核心 idea**：Hilbert重排让2D局部注意力模式在1D序列中更紧凑→更多空块→块稀疏kernel更高效。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ tags:
 - **不修改模型，只改排列**：插入Hilbert重排不改变注意力的逻辑语义（仍是相同空间邻域），只改变物理布局以适配块稀疏kernel。对现有模型零侵入。
 - **FlexAttention的杀手应用**：HWA/HSA/HNA都可以通过FlexAttention的mask_mod/score_mod接口定义，无需手写kernel。展示了可编程稀疏注意力框架的威力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 全局RPB比窗口RPB参数多，可能在小模型上引入过拟合
 - Hilbert曲线仅适用于2的幂次尺寸——非方形或非2^n尺寸需要padding
 - shifted window在Hilbert序列上可能引入不相邻token共窗——需要额外mask

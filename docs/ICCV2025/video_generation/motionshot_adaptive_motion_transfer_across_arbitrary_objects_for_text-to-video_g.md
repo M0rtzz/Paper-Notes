@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MotionShot: Adaptive Motion Transfer across Arbitrary Objects for Text-to-Video Generation
 description: >-
@@ -147,7 +147,7 @@ MotionShot 是**完全无训练**的框架：
 4. **结构感知关键点采样**：均匀轮廓+泊松盘内部的采样策略确保关键点在物体各区域的均匀覆盖
 5. **运动分解**：全局旋转+平移 + 局部极坐标偏移的运动分解方式，细粒度地迁移复杂运动
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当参考物体和目标物体完全没有语义相似性时（如飞机→花朵），方法失效
 - 语义对应依赖 SD 和 DINO 的特征质量，对于远离预训练分布的物体可能不可靠

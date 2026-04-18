@@ -1,4 +1,4 @@
----
+﻿---
 title: "CRISP: Object Pose and Shape Estimation with Test-Time Adaptation"
 description: "类别无关的物体姿态与形状估计pipeline，结合优化校正器和自训练实现测试时域适应"
 tags: ["object pose estimation", "shape estimation", "test-time adaptation", "self-training", "neural implicit field"]
@@ -30,7 +30,7 @@ tags: ["object pose estimation", "shape estimation", "test-time adaptation", "se
 2. **域差距问题严重**：训练数据（尤其是合成数据）与真实测试环境分布差异大，导致估计结果不可用甚至在安全关键场景中造成危险
 3. **自训练不稳定**：已有自监督方法（如 Chamfer loss）在自训练中需要合成数据稳定训练，不适合真实部署
 
-### 本文要解决什么
+### 本文目标
 
 1. 设计一个**类别无关**的姿态与形状估计 pipeline
 2. 提供**优化校正器**来修正神经网络估计误差

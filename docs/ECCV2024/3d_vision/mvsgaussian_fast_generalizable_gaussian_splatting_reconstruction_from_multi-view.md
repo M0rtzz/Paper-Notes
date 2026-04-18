@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MVSGaussian: Fast Generalizable Gaussian Splatting Reconstruction from Multi-View Stereo
 description: >-
@@ -67,7 +67,7 @@ tags:
 - **45秒超越3D-GS**: 高质量初始化+几何一致性筛选是关键——证明"好的初始化值千步优化"
 - **视图数量无关设计**: 训练时混用2/3/4视角，测试时任意数量都能用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 继承MVS的局限：弱纹理和高反射区域深度估计不准
 - 泛化模型仅在DTU训练，场景多样性有限
 - 可探索将混合渲染insight迁移到更大规模场景(如城市级)

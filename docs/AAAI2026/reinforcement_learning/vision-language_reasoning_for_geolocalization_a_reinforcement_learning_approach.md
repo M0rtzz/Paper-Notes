@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vision-Language Reasoning for Geolocalization: A Reinforcement Learning Approach
 description: >-
@@ -154,7 +154,7 @@ $$r_{distance} = \begin{cases} 1.0 - 0.5 \cdot \frac{d}{750}, & d \leq 750 \\ 0.
 3. **分段线性奖励函数设计细致**：三段式设计让模型在不同误差范围内都有有意义的学习信号
 4. **从 SFT 到 RL 的自然过渡**：SFT 建立推理结构基础，RL 精调坐标精度，两者互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **7B 模型的天花板**：仅用 Qwen2.5-VL-7B，更大模型可能进一步提升
 2. **YFCC4K 上 1km 精度偏低**（10.47%），跨域泛化仍有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SimPB: A Single Model for 2D and 3D Object Detection from Multiple Cameras
 description: >-
@@ -135,7 +135,7 @@ SimPB 遵循 DETR-like 框架：
 4. **截断感知聚合**：在 2D→3D 聚合时引入截断指示器，让模型更好处理相机边缘的截断物体
 5. **即插即用**：SimPB 的 2D decoder 可替换现有 3D 方法的部分 decoder 层，具有良好泛化性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理延迟增加**：Query 分配和聚合过程可能成为瓶颈，作者自己也指出了这一问题
 2. 仅在 nuScenes 上评估，未在 Waymo/Argoverse 等数据集验证

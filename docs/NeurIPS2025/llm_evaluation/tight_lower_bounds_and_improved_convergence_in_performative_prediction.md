@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tight Lower Bounds and Improved Convergence in Performative Prediction
 description: >-
@@ -114,7 +114,7 @@ ARM 的实际实现是在每步 $t$ 对最近 $\tau$ 个快照的数据做均匀
 - **打破下界的条件明确**：ARM 通过使用两个快照将收敛阈值从 1 放宽到 1.155，虽然改进幅度不大但意义在于突破了 RRM 下界
 - 下界分析技术可推广到其他迭代决策依赖优化（如 proximal ARM, Theorem 7）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ARM 的收敛阈值改进有限（1 → 1.155），实际收益主要体现在收敛速度而非问题类的扩展
 - RRM 与 ARM 的下界之间仍有 2 倍常数因子的间隙，不清楚是否能紧致

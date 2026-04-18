@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mixture-of-Expert Variational Autoencoders for Cross-Modality Embedding of Type Ia Supernova Data
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L}(x_{1,\dots,M}) = \mathbb{E}_{z^{1:K} \sim q_\phi} \left[ \log \sum
 3. **Laplace 分布选择**：先验和后验均使用 Laplace 分布而非高斯，可能更适合超新星数据的稀疏/尖峰特性
 4. **面向 LSST 的实用价值**：模型支持推理时单模态输入，可用于光谱缺失场景下的实时超新星分类和后续观测优先级排序
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **后验校准不足**：置信区间覆盖率偏低，模型输出的不确定性估计不可靠，限制了科学应用
 2. **仅在模拟数据上验证**：所有实验基于辐射转移模拟，未在真实观测数据上测试泛化能力

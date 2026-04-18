@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Cooperative Multi-Agent Reinforcement Learning with State Modelling and Adversarial Exploration
 description: >-
@@ -174,7 +174,7 @@ $$L_\text{actor}(\psi^i) = -\beta_H \cdot H(\pi_{\psi^i}(a_t^i \mid h_t^i, z_t^i
 4. **极高的计算效率**：相比 MASER 快 25 倍、EMC 快 30 倍，额外开销仅为 MAA2C 的约 2 倍
 5. **解决了多个公认的开放挑战**：LBF 中 2s-9x9-3p-2f 和 4s-11x11-3p-2f 被此前工作标记为未解决的难题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **架构扩展**：目前 ED 使用 MLP，作者提出将 Transformer 融入架构可能进一步提升状态建模能力
 2. **可扩展性**：重建目标随智能体数线性增长，虽然 AM 过滤器缓解了部分问题，但大规模场景下仍需验证

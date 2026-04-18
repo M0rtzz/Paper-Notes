@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ergodic Generative Flows
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}^{\text{div}}_{\text{FM}} = \mathbb{E}_{\underline{s}} \sum_{t=1}^\
 5. **与 NF 的桥梁**：EGF 可视为归一化流的随机采样器，每条采样轨迹对应一个随机 NF，建立了 GFN 与 NF 的深层联系
 6. **定量采样定理**：首次为非无环生成流给出定量采样误差界
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限低维实验**：实验仅在 $\mathbb{T}^2$ 和 $\mathbb{S}^2$ 上进行，高维场景的实际表现未知
 2. **$L^2$-mixing summability 条件难验证**：通用性所需的技术条件在高维中更难满足，需要进一步的理论发展

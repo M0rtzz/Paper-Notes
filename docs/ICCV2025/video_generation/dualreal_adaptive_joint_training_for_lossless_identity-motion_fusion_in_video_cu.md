@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DualReal: Adaptive Joint Training for Lossless Identity-Motion Fusion in Video Customization
 description: >-
@@ -127,7 +127,7 @@ DualReal 在 CLIP-I 和 DINO-I 上分别比次优方法提升 11.1% 和 20.0%，
 3. **StageBlender 的视觉分析**（图 7）为理解 DiT 内部的时空分工提供了新视角：浅层管身份、深层管运动，这一发现对后续定制生成工作有重要参考价值
 4. 分组机制 n=7 的最优性暗示了 DiT 内部存在约 7 个功能相近的 block 集群
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 评估数据集规模偏小（50 主体 × 21 运动 × 50 prompt），泛化性需更大规模验证
 - Dynamic Degree 指标显示运动强度偏低（DD=14.96 vs 参考 12.02），可能对高动态场景的支持不足

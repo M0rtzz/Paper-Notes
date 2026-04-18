@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing DPSGD via Per-Sample Momentum and Low-Pass Filtering
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{O}\!\left(\frac{f(x_0)-f^*}{\eta T} + L\eta C^2 + \frac{L\eta \, d\si
 3. **严格的理论保证**：提供了完整的收敛分析和隐私证明，收敛上界清晰展示了两个模块各自的贡献项。
 4. **跨模态泛化**：在图像分类（CNN/ResNet/ViT）和句子分类（RoBERTa）上均有效。
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **超参数敏感性**：$\beta$、$k$、滤波器系数 $\{a_r\}, \{b_r\}$ 需要手动调整，作者未提出自适应选择方法。
 2. **逐样本历史存储开销**：需要为每个样本维护最近 $k$ 轮梯度，内存开销随数据集规模和 $k$ 增长。
 3. **强隐私下绝对精度仍低**：$\epsilon=1$ 时 CIFAR-10 最高仅 40.96%，离实用仍有距离。

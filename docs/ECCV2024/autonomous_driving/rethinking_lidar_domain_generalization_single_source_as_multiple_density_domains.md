@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking LiDAR Domain Generalization: Single Source as Multiple Density Domains
 description: >-
@@ -132,7 +132,7 @@ LiDomAug 设定下的比较（MinkNet42 backbone, voxel=5cm）：
 - **无需目标域数据**：不依赖自车运动、序列标签或目标域数据，是真正的单源单帧域泛化。
 - **密度的物理建模**：利用 LiDAR 光束配置计算预期密度，再用高斯平滑得到多尺度密度表示，比启发式方法更有物理根据。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当源域和目标域的密度谱完全不重叠时（极端传感器差异），效果可能有限——密度增强在一定程度上缓解但无法完全解决。
 - 仅在 Waymo/SemanticKITTI/nuScenes 三个数据集上验证，对更多样的传感器（如 Pandaset-64ch、SemanticPOSS-40ch）的泛化能力有待检验。

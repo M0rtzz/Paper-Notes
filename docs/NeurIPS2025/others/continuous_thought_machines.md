@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continuous Thought Machines
 description: >-
@@ -121,7 +121,7 @@ $$L = \frac{\mathcal{L}^{t_1} + \mathcal{L}^{t_2}}{2}, \quad t_1 = \arg\min_t \m
 - **自适应计算的涌现性**：无需 PonderNet 的显式停机概率或 ACT 的累积门限，仅凭 min-loss + max-certainty 选择即自然实现
 - **架构统一性**：同一 CTM 无修改地用于迷宫/分类/算法任务，展示了通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 内部序列维度使训练时间线性延长（$T$ 倍）——当前实验规模有限
 - NLM 的私有参数增加参数量（虽提供新的缩放维度）
 - ImageNet 精度 72.47% 远低于 SOTA——作者明确说未做超参搜索，这是探索而非竞赛

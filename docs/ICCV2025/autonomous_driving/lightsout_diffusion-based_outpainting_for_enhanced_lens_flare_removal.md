@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LightsOut: Diffusion-based Outpainting for Enhanced Lens Flare Removal
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{L} = \frac{1}{2\sigma_1^2}\mathcal{L}_{\text{pos}} + \frac{1}{2\sigma
 - **物理先验融合**：将光源建模为参数化圆形实体，引入物理约束指导扩散生成
 - 下游任务验证：使用 YOLOv11 检测器验证了方法对目标检测的间接提升作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 三阶段流水线引入额外计算开销，可探索端到端优化
 - 当整体图像亮度较高或光斑占比过大时效果受限

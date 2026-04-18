@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RefLoRA: Refactored Low-Rank Adaptation for Efficient Fine-Tuning of Large Models
 description: >-
@@ -118,7 +118,7 @@ $$A_{t+1} = A_t - \eta \nabla \ell(W_t) B_t \tilde{S}_t^{-1}, \quad B_{t+1} = B_
 4. **多模态适用性**：不仅在 NLU 和推理任务上有效，还在 Stable Diffusion 图像生成微调上取得 14% 的损失降低。
 5. **黎曼几何视角**：将 LoRA 重分解与商流形上的最速下降联系起来，为 PEFT 方法提供了新的理论框架。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **满秩假设依赖**：Assumption 1 要求 $A_t, B_t$ 全列秩，而 LoRA 标准初始化 $B_0 = 0$ 违反此假设，需要 PiSSA 等 SVD-based 初始化配合。
 2. **仅验证语言和图像生成**：尚未在视觉 Transformer、语音模型等更广泛架构上验证。

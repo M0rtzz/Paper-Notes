@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cuckoo: An IE Free Rider Hatched by Massive Nutrition in LLM's Nest
 description: >-
@@ -156,7 +156,7 @@ OPT-C4-TuluV3（NTP 范式，同等数据和参数规模）在所有层级上均
 
 5. **小模型大能力**：RoBERTa-large（3 亿参数）通过 NTE 预训练，在 IE 任务上接近甚至超越远大于它的 LLM，展示了任务特化的参数效率优势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **标签嵌入**：当前方法需要枚举标签名（类似生成式 IE），可以探索标签嵌入版本以提升效率。
 2. **数据源多样性**：仅使用 C4 作为预训练数据源，特定数据源（如教科书）可能对某些 IE 技能更有益。

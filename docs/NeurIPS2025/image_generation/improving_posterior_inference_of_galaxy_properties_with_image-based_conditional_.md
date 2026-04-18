@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Posterior Inference of Galaxy Properties with Image-Based Conditional Flow Matching
 description: >-
@@ -124,7 +124,7 @@ tags:
 4. **实用价值明确**：为将形态学信息整合到 SED 拟合管线提供了可行路径
 5. **CFM 框架优雅**：用条件流匹配替代传统 MCMC/嵌套采样，生成 1000 条轨迹即可近似后验，计算效率优势明显
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **$A_V$ 约束不足**：尘埃消光的 Wasserstein 距离仍然最大（0.1937），尘埃-年龄简并仅部分缓解
 2. **样本限制**：仅限 SDSS 明亮恒星形成星系（$r < 17.78$），未覆盖淬灭星系、低面亮度星系或高红移源

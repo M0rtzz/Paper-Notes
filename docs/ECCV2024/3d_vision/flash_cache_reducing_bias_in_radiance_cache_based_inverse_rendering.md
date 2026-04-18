@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Flash Cache: Reducing Bias in Radiance Cache Based Inverse Rendering
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**: 计算效率与渲染无偏性之间的矛盾——精确的全局光照需要大量递归采样，但优化中的偏差梯度会导致材质/光照分解质量下降。
 
-**本文要解决什么？**: 在保持合理计算开销的前提下，尽可能消除渲染过程中的偏差。
+**本文目标**: 在保持合理计算开销的前提下，尽可能消除渲染过程中的偏差。
 
 **切入角度**: 不追求消除所有偏差来源，而是利用方差缩减技术（重要性采样+控制变量）让无偏估计器在实际计算预算下可行。
 
-**核心idea一句话**: 用快速缓存作为NeRF缓存的控制变量、用遮挡感知的vMF分布做重要性采样，在不引入偏差的前提下高效估计渲染方程。
+**核心 idea**: 用快速缓存作为NeRF缓存的控制变量、用遮挡感知的vMF分布做重要性采样，在不引入偏差的前提下高效估计渲染方程。
 
 ## 方法详解
 
@@ -51,7 +51,7 @@ tags:
 
 1. **双层辐射缓存 + 控制变量 (Dual Cache + Control Variate)**:
 
-    - **做什么**: 设计一个快速但近似的辐射缓存，将其作为高质量NeRF缓存的控制变量，实现无偏且高效的入射光估计。
+    - **功能**: 设计一个快速但近似的辐射缓存，将其作为高质量NeRF缓存的控制变量，实现无偏且高效的入射光估计。
     - **核心思路**: 快速缓存通过采样函数 $g_{\text{sample}}(\mathbf{x}, \boldsymbol{\omega}_i)$ 输出S=8个采样距离和权重，在这些位置查询低分辨率NGP特征后通过MLP解码入射辐射：$\hat{L}_i^{fast} = \text{MLP}_{\text{color}}(\sum_{k=1}^{S} w'_k \mathbf{f}_k)$。采用控制变量方案组合两个缓存：
     $\hat{L}_o = \hat{L}_o^{fast} + \Delta\hat{L}_o$
    其中 $\hat{L}_o^{fast}$ 用 $M'$ 个样本评估快速缓存，$\Delta\hat{L}_o$ 用 $M \ll M'$ 个样本评估NeRF缓存与快速缓存的差值。这样只需M次昂贵的NeRF缓存查询，就能获得接近 $M'$ 次查询的质量。
@@ -59,7 +59,7 @@ tags:
 
 2. **遮挡感知的vMF重要性采样器 (Occlusion-Aware vMF Importance Sampler)**:
 
-    - **做什么**: 学习一个空间变化的入射光分布，用于高效采样入射方向，减少蒙特卡洛估计的方差。
+    - **功能**: 学习一个空间变化的入射光分布，用于高效采样入射方向，减少蒙特卡洛估计的方差。
     - **核心思路**: 用NGP将每个空间点 $\mathbf{x}$ 映射为L个vMF分布的混合参数：
     $q(\boldsymbol{\omega}; \mathbf{x}) = \frac{1}{Z} \sum_{\ell=1}^{L} \lambda_\ell(\mathbf{x}) \text{vMF}(\boldsymbol{\omega}; \boldsymbol{\mu}_\ell(\mathbf{x}), \kappa_\ell(\mathbf{x}))$
    其中均值方向参数化为 $\boldsymbol{\mu}_\ell(\mathbf{x}) = (\boldsymbol{\mu}'_\ell(\mathbf{x}) - \mathbf{x}) / \|\boldsymbol{\mu}'_\ell(\mathbf{x}) - \mathbf{x}\|$，即每个vMF lobe指向一个3D光源位置的投影方向。通过损失函数 $\mathcal{L}_{\text{vMF}}$ 优化使分布匹配真实入射辐射分布（含遮挡）。
@@ -67,13 +67,13 @@ tags:
 
 3. **高效体渲染梯度 (Efficient Volume Rendering Estimator)**:
 
-    - **做什么**: 减少沿相机射线方向需要评估物理渲染的点数，从N个降到K个（K=1即可）。
+    - **功能**: 减少沿相机射线方向需要评估物理渲染的点数，从N个降到K个（K=1即可）。
     - **核心思路**: 从渲染权重分布 $\{w_k\}$ 中按分类分布采样K个索引：$j_1, \ldots, j_K \sim \text{Cat}(w_1, \ldots, w_N)$，然后只在这K个点评估物理外观：$\hat{L}_i(\mathbf{o}, \boldsymbol{\omega}_o) = \frac{1}{K} \sum_{k=1}^{K} L_o(\mathbf{x}(t_{j_k}), \boldsymbol{\omega}_o)$。这是一个无偏估计器。
     - **设计动机**: 当权重分布有单一峰值（实际中常见），即使K=1方差也很低。仍需N点评估密度，但只需K点评估昂贵的物理外观模型。
 
 4. **材质表示 (Material Representation)**:
 
-    - **做什么**: 表示空间变化的材质属性。
+    - **功能**: 表示空间变化的材质属性。
     - **核心思路**: 使用Disney-GGX BRDF模型，通过NGP网络 $g_{\text{material}}(\mathbf{x})$ 输出金属度 $m$、粗糙度 $r$ 和反照率 $\mathbf{a}$。法线使用密度场的负梯度（解析法线）和NGP预测法线的组合。
     - **设计动机**: 标准的物理BRDF模型，与Ref-NeRF一致。
 
@@ -131,7 +131,7 @@ $$\mathcal{L}_{\text{reg}} = \mathcal{L}_{\text{normals}} + \mathcal{L}_{\text{B
 - 体渲染积分的分类分布采样是一个简洁有效的技巧（K=1即可），已被Gupta等人提出但在此场景中很好地集成
 - 整个系统是一个"偏差消除"的系统性工程，每个组件都在解决一个具体的偏差来源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 体渲染积分的求积近似（Eq.3）仍然是偏差来源，可结合无偏体渲染方法（如差分比率追踪）
 - 快速缓存有时难以捕捉极细的近场光照结构细节，虽然控制变量防止偏差但增加方差

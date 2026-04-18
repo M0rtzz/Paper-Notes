@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diversity by Design: Leveraging Distribution Matching for Offline Model-Based Optimization
 description: >-
@@ -94,7 +94,7 @@ DynAMO 在离线模型优化 (MBO) 中将设计多样性建模为分布匹配问
 - **离线数据利用**: 利用数据集本身编码的多样性结构，而非凭空创造多样性
 - **插件式设计**: 不替换现有方法，而是增强它们——提升了实用性和采用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对抗训练的不稳定性可能影响结果质量
 - "高分数据"的阈值选择影响匹配目标
 - 当离线数据的高分区域本身不多样时，方法可能退化

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Addressing Data Scarcity in 3D Trauma Detection through Self-Supervised and Semi-Supervised Learning with Vertex Relative Position Encoding
 description: >-
@@ -46,22 +46,22 @@ tags:
 输入：原始DICOM CT序列 → 预处理标准化为512×336×336体素(各向异性spacing 2.0×1.0×1.0mm) → 阶段一：patch-based MIM自监督预训练3D U-Net编码器 → 阶段二：冻结/解冻编码器 + VDETR解码器做3D检测 + Mean Teacher半监督 → 输出：3D bounding box + 分类标签
 
 ### 关键设计1：Patch-based Masked Image Modeling 自监督预训练
-- **做什么**: 从1,206个CT体数据(含206个有标注+1,000个无标注)中提取128³ patch，将每个patch划分为8³子块，随机遮蔽75%子块，训练3D U-Net重建被遮蔽区域
+- **功能**: 从1,206个CT体数据(含206个有标注+1,000个无标注)中提取128³ patch，将每个patch划分为8³子块，随机遮蔽75%子块，训练3D U-Net重建被遮蔽区域
 - **核心思路**: 利用MAE思想，通过重建任务迫使编码器学习有意义的解剖结构模式和空间关系，无需任何人工标注
 - **设计动机**: 医学数据标注成本极高(仅4.4%有标注)，但无标注数据充足。patch级操作大幅降低计算开销(128³ vs 512×336×336)，同时通过多patch采样保证解剖结构覆盖率。50 epoch训练后冻结编码器权重，作为下游任务的固定特征提取骨架
 
 ### 关键设计2：VDETR + 3D Vertex Relative Position Encoding
-- **做什么**: 预训练编码器输出32×21×21×256特征图，采样4,096个token送入VDETR解码器，通过3D RPE计算每个体素到预测框8个顶点的几何关系
+- **功能**: 预训练编码器输出32×21×21×256特征图，采样4,096个token送入VDETR解码器，通过3D RPE计算每个体素到预测框8个顶点的几何关系
 - **核心思路**: 对每个query q和体素位置，计算到预测box全部8个顶点的偏移向量 $\Delta\mathbf{P}_i \in \mathbb{R}^{K \times N \times 3}$，经非线性变换和MLP生成位置偏置 $\mathbf{R} = \sum_{i=1}^{8}\mathbf{P}_i$，叠加到标准attention分数上：$\mathbf{A} = \text{softmax}(\mathbf{QK}^T + \mathbf{R})$
 - **设计动机**: 医学器官/损伤形状高度不规则，单一中心点距离无法判断体素是在目标内部、外部还是边界上。8-corner编码提供完整的几何包含/排斥信息，即使有限训练数据也能学到正确的locality归纳偏置
 
 ### 关键设计3：两阶段训练 + Mean Teacher半监督
-- **做什么**: Phase I(epoch 0-20)冻结编码器只训练解码器；Phase II(epoch 20-100)解冻编码器联合微调(学习率10×低于解码器)，同时引入Mean Teacher半监督利用2,000个额外无标注体数据
+- **功能**: Phase I(epoch 0-20)冻结编码器只训练解码器；Phase II(epoch 20-100)解冻编码器联合微调(学习率10×低于解码器)，同时引入Mean Teacher半监督利用2,000个额外无标注体数据
 - **核心思路**: Teacher模型用弱增强(Gaussian noise σ=0.01, 强度偏移±2%)生成伪标签，Student模型用强增强(σ=0.05, 偏移±10%, blur, elastic deformation)训练，通过一致性损失强制预测一致
 - **设计动机**: Phase I防止随机初始化的解码器梯度破坏预训练特征；Phase II的差异学习率(编码器1e-5 vs 解码器1e-4)防止灾难性遗忘。半监督在epoch 20才启动(λ从0线性升至0.3)，避免解码器未收敛时pseudo-label质量太差导致训练崩溃
 
 ### 关键设计4：多标签损伤分类(下游任务II)
-- **做什么**: 冻结编码器 bottleneck特征(32×21×21×256)经 global average pooling → 两层FC(256→128→7) → 7个独立二分类
+- **功能**: 冻结编码器 bottleneck特征(32×21×21×256)经 global average pooling → 两层FC(256→128→7) → 7个独立二分类
 - **核心思路**: Linear probe评估——仅训练33,799参数的分类头(vs编码器5.6M参数)，直接检验自监督特征的判别力
 - **设计动机**: 类别严重不均衡(如bowel injury仅18%阳性)，使用加权BCE损失 $w_i^{pos} = N_i^{neg}/N_i^{pos}$ 对稀有类别的假阴性施加更重惩罚
 
@@ -128,7 +128,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{supervised} + \lambda(t) \times (\mathcal{L
 - **Linear probe在epoch 0就达到94.07%**: 说明自监督预训练学到的特征具备即时可迁移性，无需任何微调
 - **代码开源**，完整pipeline可复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **绝对检测性能仍有提升空间**: 测试集45.30% mAP@0.50距离临床部署还有差距，特别是mAP@0.75仅28.72%表明定位精度不够
 - **分类AUC很低(51.4%)**: 虽然准确率高(94.07%)，但概率校准严重不足，sigmoid输出置信度与真实概率不对齐。作者归因于calibration问题但未在论文中解决
 - **数据规模偏小**: 仅206个有标注+1,000个无标注做预训练，在当今大规模预训练时代偏少

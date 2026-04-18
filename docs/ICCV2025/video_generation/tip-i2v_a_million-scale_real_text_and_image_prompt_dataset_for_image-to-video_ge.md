@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TIP-I2V: A Million-Scale Real Text and Image Prompt Dataset for Image-to-Video Generation
 description: >-
@@ -115,7 +115,7 @@ TIP-Eval上5个I2V模型的多维评估（10维评估标准化后比较）：
 - "用户视角的评估可能颠覆专家视角的结论"这一发现对模型开发具有指导意义
 - 数据集设计考虑了扩展性——研究者可用新模型和现有prompt生成更多视频
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 图像prompt通过视频首帧恢复，可能存在质量损失（压缩伪影等）
 - 数据来源单一（仅Pika Discord），用户群体可能存在偏差

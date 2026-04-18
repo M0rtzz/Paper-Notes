@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoRE-Brain: Routed Mixture of Experts for Interpretable and Generalizable Cross-Subject fMRI Visual Decoding
 description: >-
@@ -141,7 +141,7 @@ MoRE-Brain 用不到一半的参数达到了竞争性能。瓶颈分析显示 Mo
 - **可解释性即设计目标**：通过路由权重可精确追踪不同建模大脑区域如何在不同时空维度上形塑重建图像的语义和空间属性
 - **瓶颈分析方法论**：提出了一种区分"真实神经解码"和"过度依赖生成先验"的系统性方法，对整个 fMRI 解码领域都有方法论意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在 NSD 数据集上验证，泛化到其他 fMRI 数据集未知
 - 16 个最终级专家的数量是根据视觉皮层图谱经验选择的，更大的搜索空间可能更优

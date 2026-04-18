@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In-Context Linear Regression Demystified: Training Dynamics and Mechanistic Interpretability of Multi-Head Softmax Attention
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**: 多头 softmax attention 的非线性使得训练动力学分析极为困难，但实验中却反复涌现出简洁的参数结构。这种"复杂训练 → 简洁结构"的现象的根本原因是什么？
 
-**本文要解决什么**: 从理论和实验两方面完整解释多头 softmax attention 在线性回归 ICL 中的训练动力学和涌现结构。
+**本文目标**: 从理论和实验两方面完整解释多头 softmax attention 在线性回归 ICL 中的训练动力学和涌现结构。
 
 **切入角度**: 分析梯度流的渐近行为，证明特定参数结构是稳定不动点。
 
@@ -101,7 +101,7 @@ tags:
 - **连接两个重要方向**: 将 ICL 理论与 mechanistic interpretability 自然联系起来
 - **实用启示**: softmax attention 在长序列泛化上的优势对实际 ICL 应用有指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分析限于单层 attention，多层的情况远更复杂
 - 仅考虑线性回归任务，非线性任务的 ICL 机制有待探索
 - 理论结果依赖特定的数据分布假设（高斯）

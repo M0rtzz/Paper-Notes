@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalization or Hallucination? Understanding Out-of-Context Reasoning in Transformers
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L}_{\text{test}}(\tilde{\theta}_t) \geq \log|\mathcal{A}_2| > 0, \qua
 - **样本效率的双刃剑**：margin 下界仅依赖 $m_{\text{train}} / m_{\text{test}}$ 比率，只要 $m_{\text{train}} > 0$ 就会产生 OCR——既解释了强泛化也解释了易幻觉
 - **实用启示**：提示知识注入时需要格外小心不相关概念的共现，因为模型会自动建立关联
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅分析单层线性注意力**：实际 Transformer 是多层 softmax 注意力，扩展到多层是重要方向
 - **符号化任务的简化**：真实世界的知识更复杂，多跳推理的分析更有挑战性
 - **Theorem 3 未扩展到分解模型**：可训练 $W_{KQ}$ 下分解模型的完整分析因高阶项交互而留为未来工作

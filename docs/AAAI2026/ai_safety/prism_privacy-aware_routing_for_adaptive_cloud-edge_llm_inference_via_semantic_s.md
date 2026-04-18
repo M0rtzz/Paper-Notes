@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PRISM: Privacy-Aware Routing for Adaptive Cloud-Edge LLM Inference via Semantic Sketch Collaboration
 description: >-
@@ -161,7 +161,7 @@ $$\hat{R} = \mathcal{G}_{\text{edge}}(\mathcal{C}_{\text{edge}})$$
 - **真实硬件评测**: 在实际 RTX 3070 端侧设备上测量能耗和延迟，而非仅靠模拟
 - **构建了覆盖 4 领域的半合成数据集**: 涵盖旅游、医疗、银行、通用知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **NER 依赖**: 敏感度分析依赖命名实体识别的准确性，NER 漏检会导致隐私泄露
 2. **数据集规模有限**: 每个领域仅 40 条 prompt，缺乏大规模真实场景验证

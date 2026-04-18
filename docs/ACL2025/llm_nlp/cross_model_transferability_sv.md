@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-model Transferability among Large Language Models on the Platonic Representations of Concepts
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：如果不同 LLM 学到了同一概念的不同表示，跨模型控制就不可行；但 Platonic Representation Hypothesis 认为不同网络会趋向共享的现实统计模型。
 
-**本文要解决什么？** 验证概念表示在不同 LLM 间是否共享一个底层结构，以及能否通过简单变换实现跨模型迁移。
+**本文目标** 验证概念表示在不同 LLM 间是否共享一个底层结构，以及能否通过简单变换实现跨模型迁移。
 
 **切入角度**：类比柏拉图洞穴寓言——不同 LLM 是不同"囚徒"，看到的是同一现实的不同"影子"，线性变换是"影子"之间的桥梁。
 
-**核心 idea 一句话**：不同 LLM 的概念表示存在线性可变换的共享结构，支持弱到强的跨模型控制。
+**核心 idea**：不同 LLM 的概念表示存在线性可变换的共享结构，支持弱到强的跨模型控制。
 
 ## 方法详解
 
@@ -88,7 +88,7 @@ tags:
 - 线性可迁移性支持了 Platonic Representation Hypothesis 在 LLM 概念层面的成立
 - 弱到强迁移对 AI 安全有直接意义：可以用小模型作为"概念探测器"来控制大模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 3 个 LLM 系列（Llama2/3.1、Qwen2）上验证
 - 线性变换可能不适用于差异极大的架构
 - 缩放因子 $\beta$ 仍需手动调整

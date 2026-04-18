@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Expanded Massive Multilingual Dataset for High-Performance Language Technologies (HPLT)
 description: >-
@@ -135,7 +135,7 @@ HPLT v2 相比 v1.2 有显著优势。与 OPUS 数据结合使用时，BLEU 和 
 
 5. **Document-level 平行数据**：提供了 DocHPLT，包含句子和段落对齐标注的文档级平行数据，这对文档级翻译研究非常有价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数据主要以印欧语言（尤其是英语）为主，平行数据以英语为中心。增加欠服务语言的数据量仍是重要的未来工作。
 2. 数据中仍存在 LID 错误、样板文本残留（特别是 Wikipedia 和博客平台）以及其他清洗步骤的残留错误。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InfoSEM: A Deep Generative Model with Informative Priors for Gene Regulatory Network Inference
 description: >-
@@ -88,7 +88,7 @@ tags:
 4. "未见基因评估"更贴近真实应用场景。
 5. GT标签用作先验而非监督的思路有广泛启发。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 文本嵌入的质量受限于预训练数据。
 2. 仅在scRNA-seq数据上验证。

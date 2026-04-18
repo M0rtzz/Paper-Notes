@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoRAgent: Parameter Efficient Agent Tuning with Mixture-of-Roles
 description: >-
@@ -113,7 +113,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CE}} + \alpha_1 \mathcal{L}_{\
 4. **正交损失的引入**：显式鼓励同一角色内的不同 LoRA 学习正交方向，减少冗余，提升参数效率。
 5. **数据质量控制流程完整**：用两个不同 LLM（GPT-4o 补全 + DeepSeek-V3 过滤）+ 人工修正的流水线，确保训练数据可靠性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **角色定义较刚性**：三角色分解（Reasoner/Executor/Summarizer）是预定义的，不同 Agent 任务可能需要不同的角色划分。论文未探讨更灵活或自适应的角色发现机制。
 2. **评估基准有限**：主要在 StableToolBench 和 BFCL 上评测，缺少对更复杂多轮交互场景（如 WebArena、OSWorld 等）的验证。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Judging the Judges: Can Large Vision-Language Models Fairly Evaluate Chart Comprehension and Reasoning?
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **Chart-Instruct-Eval 新基准**：填补了图表领域指令跟随评估的空白，揭示了大多数模型在这方面的薄弱。
 - **人工评估验证**：两位标注者与 LLaVA-Critic-70B 的相关性高于 GPT-4o，佐证了开源模型作为替代标注者的可行性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用 GPT-4o 和 LLaVA-Critic-70B 作为参考评判标准，这些模型本身可能存在偏差。
 - 未探索微调小型 LVLM 专门用于图表评判任务的可能性。

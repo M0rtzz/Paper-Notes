@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAPiD-Seg: Range-Aware Pointwise Distance Distribution Networks for 3D LiDAR Segmentation
 description: >-
@@ -117,7 +117,7 @@ RAPiD vs PDD 对比：
 - **双层嵌套 AE 的必要性**：外层处理点→体素的不规则转换，内层处理高维→低维的压缩，分工明确
 - **类感知对比损失**：解决 AE 嵌入非唯一性的关键，使同类特征聚拢、异类特征分开
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - C-RAPiD 依赖语义标签或伪标签，伪标签质量直接影响性能
 - RAPiD 特征需要预计算，增加了数据处理流程的复杂性

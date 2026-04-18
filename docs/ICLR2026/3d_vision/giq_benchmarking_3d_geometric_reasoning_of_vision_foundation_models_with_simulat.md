@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GIQ: Benchmarking 3D Geometric Reasoning of Vision Foundation Models with Simulated and Real Polyhedra
 description: >-
@@ -136,7 +136,7 @@ GIQ 是一个系统基准测试工作，包含四个评估维度：
 - **人类基线的纳入**：42 人用户研究提供有意义的比较锚点
 - **揭示训练数据偏差**：重建模型学到的是带噪声的表面先验而非数学精确性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估多面体**：与任意有机形状的推广关系需进一步研究
 2. **数据集规模有限**：224 种形状，某些类别样本少

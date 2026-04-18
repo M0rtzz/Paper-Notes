@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoCoLIT: ControlNet-Conditioned Latent Image Translation for MRI to Amyloid PET Synthesis
 description: >-
@@ -135,7 +135,7 @@ $$\hat{y} = \mathcal{D}^{(y)}(\bar{z}^{(y)}), \quad \bar{z}^{(y)} = \frac{1}{m}\
 3. **LAS 的理论贡献**：首次给出 LAS 的统计性质分析，证明其偏差在良好训练模型中可忽略
 4. **大幅领先**：Aβ 阳性分类 BA 领先第二名 +10.5%（内部）/ +23.7%（外部）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - BA 最高 62.3%（内部），距离可靠临床应用仍有差距
 - LAS 需要 m 次采样，无 GPU 并行时仍有计算成本

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Live Interactive Training for Video Segmentation
 description: >-
@@ -123,7 +123,7 @@ LoRA配置：rank=4, $\alpha=4$, dropout=0.1, 学习率 $1 \times 10^{-4}$，每
 - 35K参数+0.5秒训练的极轻开销使其真正可在实际标注工作流中部署
 - 对SAM2 predicted IoU的深入分析揭示了其作为自动质量估计器的不可靠性，是有价值的发现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖用户监控来检测错误，SAM2缺乏可靠的内部质量估计器（predicted IoU与ground truth IoU不对齐）
 - 实验主要使用合成用户纠正，真实用户可能有不同的纠正策略和行为模式

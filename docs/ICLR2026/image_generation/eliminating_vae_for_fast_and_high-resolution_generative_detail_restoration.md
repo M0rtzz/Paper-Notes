@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Eliminating VAE for Fast and High-Resolution Generative Detail Restoration
 description: >-
@@ -140,7 +140,7 @@ $$\mathcal{L}_{\mathcal{G}_2} = \|y_{\text{tea}} - y_{\text{stu}}\|_1 + \lambda_
 - RandPad 解决判别器坍塌的方案简单高效，受 E-LPIPS 启发
 - 1 秒 4K + 6GB 显存的实际性能具有工业部署价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在 GenDR（SD2.1 UNet）上验证，未推广到 SDXL、Flux 等更新架构
 - 仅支持 ×4 SR，其他缩放因子的适配需要调整 pixel-shuffle 参数

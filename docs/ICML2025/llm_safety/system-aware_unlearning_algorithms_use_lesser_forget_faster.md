@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] System-Aware Unlearning Algorithms: Use Lesser, Forget Faster
 description: >-
@@ -124,7 +124,7 @@ $$x_t^\top A_{t-1}^{-1} x_t > T^{-\kappa}$$
 3. **单调性是关键**：BBQSampler 查询条件仅依赖输入 $x$（不依赖标签），确保删除不会导致新的点被查询，避免遗忘时重新运行采样器
 4. **理论完整**：给出了内存、删除容量、excess risk、期望删除时间的完整 tradeoff 分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限分类任务**：当前算法和理论仅针对二分类（线性和一般函数类），未涉及回归、生成等任务
 2. **可实现性假设**：要求存在 Bayes optimal 预测器在假设类中（realizability），限制了实际适用性

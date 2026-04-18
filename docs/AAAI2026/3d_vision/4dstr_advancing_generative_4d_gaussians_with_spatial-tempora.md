@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4DSTR: Advancing Generative 4D Gaussians with Spatial-Temporal Rectification for High-Quality and Consistent 4D Generation
 description: >-
@@ -102,7 +102,7 @@ tags:
 3. **模块轻量高效**：时序模块仅增加0.1M参数和0.23 GiB显存，不影响实时渲染（80 FPS），工程实用性强。
 4. **长序列扩展能力**：在60帧序列上不仅保持而且进一步提升性能，说明所设计的时空机制具有良好的泛化能力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅校正尺度和旋转**：时序校正模块只回归scale和rotation的残差，未涉及position和SH系数的时序校正，position的跨帧一致性同样重要。→ 相关idea见 [全属性时序校正与运动感知自适应稠密化](../../ideas/3d_vision/20260317_full_attribute_temporal_rectification_4dgs.md)
 2. **依赖Zero123++的多视角生成质量**：输入的多视角帧来自Zero123++，其生成质量直接影响4D重建的上限。

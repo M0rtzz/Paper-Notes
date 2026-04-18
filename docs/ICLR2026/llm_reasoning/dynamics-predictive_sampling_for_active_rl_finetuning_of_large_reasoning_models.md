@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamics-Predictive Sampling for Active RL Finetuning of Large Reasoning Models
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：当前最先进的在线 prompt 选择方法 Dynamic Sampling（DS）通过扩大候选批次（通常为最终批次的 3-4 倍）并逐一 rollout 来筛选有效 prompt，虽然能精准找到部分求解的样本，但 rollout 的计算开销极为昂贵——生成长链推理响应的成本常常超过微调本身。另一方法 History Resampling（HR）在 epoch 级别过滤已完全求解的 prompt，但其"吸收态"假设过于刚性，且只排除已解 prompt 而不主动寻找部分求解的。
 
-**本文要解决什么？** 如何在不进行昂贵 rollout 的前提下，在线预测哪些 prompt 当前处于"部分求解"状态，从而以极低的额外开销实现与 DS 相当甚至更优的训练效果？
+**本文目标** 如何在不进行昂贵 rollout 的前提下，在线预测哪些 prompt 当前处于"部分求解"状态，从而以极低的额外开销实现与 DS 相当甚至更优的训练效果？
 
 **切入角度**：作者将每个 prompt 的求解进度视为一个随时间演化的动力系统——随着模型更新，prompt 的求解状态（未解→部分求解→已解）会发生转移。这种演化可以用 HMM 建模：隐状态是求解程度，观测是间歇性的 rollout 结果。利用历史 rollout 数据进行贝叶斯推断就可以预测未来的求解状态，无需实际 rollout。
 
-**核心 idea 一句话**：将 prompt 求解进度建模为 HMM 动力系统，通过在线贝叶斯推断预测求解状态，在 rollout 前就选出最可能处于"部分求解"状态的 prompt，实现 rollout-free 的自适应采样。
+**核心 idea**：将 prompt 求解进度建模为 HMM 动力系统，通过在线贝叶斯推断预测求解状态，在 rollout 前就选出最可能处于"部分求解"状态的 prompt，实现 rollout-free 的自适应采样。
 
 ## 方法详解
 
@@ -128,7 +128,7 @@ DPS 在 Countdown（数值规划）和 Geometry3k（视觉几何推理，使用 
 - **预测准确率的自增强效应**：DPS 优先采样 State 2 prompt，获得更多 State 2 的观测数据，反过来提升对 State 2 的预测精度。这形成正反馈循环，是方法越用越准的内在机制
 - **与课程学习的隐式联系**：DPS 本质上实现了一种数据驱动的自适应课程——训练早期大量 prompt 处于 State 1（未解），DPS 自然采样到刚开始能解的 prompt；训练后期更多 prompt 转向 State 3（已解），DPS 自动聚焦于剩余的挑战性样本。这种课程无需人工设计难度指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **奖励结构假设**：当前方法依赖正确性二值奖励来定义三个状态。对于密集奖励（如 process reward）或连续奖励场景，需要重新设计状态划分方案。作者提到可以通过划分累积回报区间来扩展，但未验证
 - **Prompt 间独立假设**：每个 prompt 维护独立的 HMM，未利用 prompt 之间的结构相似性（如同一知识点、同一难度级别的 prompt 可能有相似的状态转移）。共享转移模型或引入 prompt 嵌入可能进一步提升预测精度

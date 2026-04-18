@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Balancing Task-Invariant Interaction and Task-Specific Adaptation for Unified Image Fusion
 description: >-
@@ -134,7 +134,7 @@ TITA 在不使用任务标识的前提下，多项指标超越专用方法和通
 - 仅 1.39M 参数，轻量高效
 - 无需推理时任务标识的设计使得框架可直接应用于任何新融合任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - OAF 中仅有三种操作分支（HPF、ADD、MUL），可能不足以覆盖所有融合任务的需求
 - 训练数据在不同任务间不平衡（IVF 12025 对 vs MFF 800 对），虽然做了均匀采样但效果受限

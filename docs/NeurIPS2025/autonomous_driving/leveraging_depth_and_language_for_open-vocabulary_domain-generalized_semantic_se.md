@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Depth and Language for Open-Vocabulary Domain-Generalized Semantic Segmentation
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：如何同时实现跨域鲁棒性和开放词汇识别能力？DGSS侧重编码器端特征泛化，OVSS侧重解码器端开放识别——两者天然互补。
 
-**本文要解决什么**：构建统一的OV-DGSS（开放词汇域泛化语义分割）框架，在域偏移下对未见类别也能鲁棒分割。
+**本文目标**：构建统一的OV-DGSS（开放词汇域泛化语义分割）框架，在域偏移下对未见类别也能鲁棒分割。
 
 **切入角度**：利用深度图的域不变性（深度和几何线索对光照、纹理变化不敏感），结合冻结VFM的泛化能力。
 
-**核心idea一句话**：用GeoText Query在冻结VFM层间注入深度几何和文本语义先验，辅以CMPE增强梯度流和DOV-VEH融合多模态特征。
+**核心 idea**：用GeoText Query在冻结VFM层间注入深度几何和文本语义先验，辅以CMPE增强梯度流和DOV-VEH融合多模态特征。
 
 ## 方法详解
 
@@ -54,7 +54,7 @@ Vireo包含三个核心模块：
 
 1. **GeoText Query**：
 
-    - **做什么**：在冻结VFM的各层间注入结构-语义先验，逐层精炼特征
+    - **功能**：在冻结VFM的各层间注入结构-语义先验，逐层精炼特征
     - **为什么**：深度特征提供域不变的空间约束，缓解RGB特征的域偏移；文本嵌入提供开放词汇的语义对齐
     - **怎么做**：每层通过交叉注意力机制让可学习query $P_l$ 与视觉特征 $f_l^V$、深度特征 $f_l^D$、文本嵌入 $t_k$ 交互：
     $\mathcal{A}_l = \text{CrossAttn}(P_l, f_l^V, f_l^D, \{t_k\})$
@@ -63,14 +63,14 @@ Vireo包含三个核心模块：
 
 2. **Coarse Mask Prior Embedding (CMPE)**：
 
-    - **做什么**：生成粗糙语义概率图，反向增强梯度流通过冻结编码器
+    - **功能**：生成粗糙语义概率图，反向增强梯度流通过冻结编码器
     - **为什么**：冻结编码器导致梯度稀疏、收敛缓慢，CMPE注入更密集的梯度信号
     - **怎么做**：选取VFM第8/12/16/24层的精炼特征，上采样到统一分辨率，经自适应注意力门控（AAG）融合后，与文本嵌入通过爱因斯坦求和计算粗糙掩码 $\mathcal{M}(x,y,k) = \langle f^M(x,y), t_k \rangle$。进一步通过softmax归一化生成query先验：
     $q_j^{prior} = \sum_k \text{Softmax}(\langle q_j, e_k^{class} \rangle) \cdot e_k^{class}$
 
 3. **DOV-VEH (Domain-Open-Vocabulary Vector Embedding Head)**：
 
-    - **做什么**：融合多尺度精炼特征，生成像素级分割掩码
+    - **功能**：融合多尺度精炼特征，生成像素级分割掩码
     - **怎么做**：多尺度特征经Pixel Decoder增强空间表示，再经Transformer Decoder让GeoText Query与解码特征和文本嵌入交互，生成掩码嵌入 $\mathcal{E}_{mask}$ 和分类嵌入 $\mathcal{E}_{cls}$，最终预测：
     $\hat{\mathcal{M}}(x,y,k) = \sum_d \mathcal{E}_{mask}(x,y,d) \cdot \mathcal{E}_{cls}(k,d)$
 
@@ -133,7 +133,7 @@ Vireo包含三个核心模块：
 - **DGSS和OVSS的互补性洞察**：DGSS优化编码器端泛化，OVSS优化解码器端识别——Vireo在两端同时发力
 - **参数效率高**：3.78M可训练参数即实现SOTA，适合实际部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 深度估计依赖DepthAnything V2的质量，在极端场景（如强雾、夜间）深度估计可能不准确
 - CMPE生成的粗糙掩码质量有限，可能引入噪声先验

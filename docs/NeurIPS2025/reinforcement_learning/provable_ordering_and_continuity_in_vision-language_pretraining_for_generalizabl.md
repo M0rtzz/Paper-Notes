@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provable Ordering and Continuity in Vision-Language Pretraining for Generalizable Embodied Agents
 description: >-
@@ -80,7 +80,7 @@ tags:
 - **不假设终帧是目标**是关键创新——只用帧间的相对时间距离来约束表征，更鲁棒
 - **布朗桥作为连续性正则化器**的想法优雅：自然地将不确定性建模引入时间表征
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对循环/重复动作（如搅拌）可能不适用，因为时间排序假设不成立
 - 预训练数据集仅 EPIC-KITCHEN-100，未验证在更大数据集上的表现
 

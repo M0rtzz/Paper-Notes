@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Weaving Context Across Images: Improving Vision-Language Models through Focus-Centric Visual Chains
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **不损害通用能力**：在 HallusionBench、MMStar 等单图基准上保持甚至略有提升
 - **25K 数据激活效应**：少量数据即可解锁模型的多图推理潜力，暗示这是一种"能力激活"而非新能力学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 成对图像关联标注的二次复杂度限制了图像集规模的扩展
 - 数据集主要覆盖真实照片和漫画，对图表、代码截图等结构化视觉内容的效果未经验证

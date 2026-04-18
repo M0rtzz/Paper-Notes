@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] XTrack: Multimodal Training Boosts RGB-X Video Object Trackers
 description: >-
@@ -131,7 +131,7 @@ RGB-Event 跟踪（VisEvent）：
 - EdgeMix 的 Laplacian 先验为共享专家提供了合理的归纳偏置
 - 实验设计严谨：渐进式添加训练模态，清晰展示每个模态的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练仍依赖成对的 RGB-X 数据，无法利用无配对的单模态数据
 - 低维投影虽降低计算量，但可能损失部分信息

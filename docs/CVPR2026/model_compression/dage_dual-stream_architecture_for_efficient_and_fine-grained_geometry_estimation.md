@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DAGE: Dual-Stream Architecture for Efficient and Fine-Grained Geometry Estimation
 description: >-
@@ -117,7 +117,7 @@ tags:
 - **snap-to-grid RoPE**：跨尺度 attention 的优雅解决方案
 - **梯度损失替代 multi-scale 对齐**：多视图下保持全局单一对齐更重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LR 流固定 252px，某些场景可能不足
 - 依赖 MoGe2 和 Pi3 预训练权重

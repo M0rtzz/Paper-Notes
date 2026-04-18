@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Update Your Transformer to the Latest Release: Re-Basin of Task Vectors
 description: >-
@@ -106,7 +106,7 @@ $O(Ld_m^3)$，与 Git Re-Basin 相同（Proposition 3.2）。关键操作：SVD 
 3. 功能等价性有数学证明
 4. 一次匹配可复用于所有任务向量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LAP 近似无最优性保证
 - 仅同架构间迁移

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Explaining Matters: Leveraging Definitions and Semantic Expansion for Sexism Detection
 description: >-
@@ -138,7 +138,7 @@ DDA 在 Task C 上的改善最为显著：从 0.5601 提升至 0.6018（+4.17 F1
 - **CSE 的"内省"式纠错**：不是简单的self-training或置信度过滤，而是让LLM解释为什么一个样本可能被错分——类似 Chain-of-Thought 但用于分类而非生成
 - **工程上务实**：回退集成不追求方法新颖性，而是解决实际问题（多类别下投票平局），选择 Mistral-7B 做裁判基于实证而非理论
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. DDA 和 CSE 依赖 LLM（GPT-4o）做增强，可能引入预训练数据中的偏见
 2. 仅在英语 EDOS 数据集上评估，多语言和低资源语言效果未知

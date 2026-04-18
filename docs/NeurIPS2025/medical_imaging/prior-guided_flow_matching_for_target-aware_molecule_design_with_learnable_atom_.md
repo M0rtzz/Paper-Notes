@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prior-Guided Flow Matching for Target-Aware Molecule Design with Learnable Atom Number
 description: >-
@@ -85,7 +85,7 @@ PAFlow 采用 FM 框架建模分子生成过程。原子坐标使用 Variance Pr
 - 原子数预测器的设计理念——仅用口袋信息而非参考配体——更符合实际药物发现场景
 - 噪声注入的数学合理性证明是一个有趣的细节
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - QED/SA 等分子性质未在生成中显式优化，有进一步提升空间
 - 交互预测器的引导强度 $\gamma$ 需要手动调节

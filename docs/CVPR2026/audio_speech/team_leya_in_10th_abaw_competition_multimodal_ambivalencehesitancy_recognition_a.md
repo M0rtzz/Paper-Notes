@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Team LEYA in 10th ABAW Competition: Multimodal Ambivalence/Hesitancy Recognition Approach
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **稳定性导向的超参搜索**：用 5 个固定随机种子评估每个配置，减少选择偏差
 - **模态缺失处理**：二值模态掩码使融合模型可优雅处理部分模态缺失
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 验证集与测试集表现差距大（83.25% vs 65.21%），泛化能力有待加强
 - 未建模模态间的时序交互（仅在视频级嵌入上融合）
 - BAH 语料库规模较小（1,427 视频），限制了模型的训练充分度

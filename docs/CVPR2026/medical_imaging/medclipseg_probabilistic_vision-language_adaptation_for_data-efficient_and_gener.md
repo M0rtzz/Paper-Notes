@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MedCLIPSeg: Probabilistic Vision-Language Adaptation for Data-Efficient and Generalizable Medical Image Segmentation
 description: >-
@@ -102,7 +102,7 @@ MedCLIPSeg在所有数据比例下均大幅领先。尤其在仅10%数据时，D
 4. **不确定性图的临床价值**：不确定性和分割质量高度相关，可作为自动质控信号提醒临床医生复核哪些区域的分割不可靠。
 5. **软对比损失的泛化增益**：从硬目标到软目标的改进虽然不大（HM +1.11），但几乎零成本，体现了细粒度对比学习的价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 文本提示需要人工设计，包含器官位置和成像模态等信息，自动化提示生成可能进一步降低使用门槛
 - Monte Carlo采样增加推理时间，实际部署需要在采样次数和效率间权衡

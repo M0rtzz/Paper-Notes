@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] In-Context Compositional Learning via Sparse Coding Transformer
 description: >-
@@ -134,7 +134,7 @@ $$\phi(\mathbf{X}) = \text{ReLU}(\mathbf{W}_{qk}^{(h)} \mathbf{X}), \quad \psi(\
 3. **参数极其高效**：每层仅增加 $L-1$ 个参数（通常 < 10），系数迁移几乎零开销
 4. **可控稀疏性**：通过阈值 $\xi$ 可精确控制注意力稀疏度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在小规模合成数据集（S-RAVEN、RAVEN）上验证，未在大规模实际任务上证明
 2. 语言模型实验（Llama-7B）结果尚不及 LoRA/DoRA，但参数量极少

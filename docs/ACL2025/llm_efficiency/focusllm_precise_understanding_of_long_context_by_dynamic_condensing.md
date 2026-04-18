@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FocusLLM: Precise Understanding of Long Context by Dynamic Condensing
 description: >-
@@ -114,7 +114,7 @@ tags:
 - 与RefreshKV的对比：RefreshKV在解码时刷新小KV缓存；FocusLLM则在每步动态提取信息——思路相似但实现路径不同
 - 双损失设计揭示了长文本理解的两个必要能力：续写能力 + 信息恢复能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 硬件限制仅测试到400K，实际上限未知
 - 训练数据规模较小（0.5B token），增大数据量应能进一步提升
 - local context大小固定，未探索自适应调整

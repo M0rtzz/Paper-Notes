@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SocialHarmBench: Revealing LLM Vulnerabilities to Socially Harmful Requests
 description: >-
@@ -146,7 +146,7 @@ SocialHarmBench 的构建包括三个核心阶段：
 4. **实用价值**：数据集已开源，可直接集成到安全测试流水线中
 5. **警示意义**：揭示了即使是经过精心对齐的模型，在政治敏感场景中仍存在严重漏洞
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅英文提示**：未覆盖非英语语言，跨文化泛化性受限
 2. **地区代表性不均**：撒哈拉以南非洲和太平洋岛国覆盖不足

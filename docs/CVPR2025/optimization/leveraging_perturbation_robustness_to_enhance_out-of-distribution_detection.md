@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Perturbation Robustness to Enhance Out-of-Distribution Detection
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：利用这种扰动鲁棒性差异——在 ε-球内用梯度下降搜索最小 OOD 得分，OOD 样本的最小得分会被大幅压低而 IND 的变化较小，从而拉开分界。
 
-**核心idea一句话**：在推理时搜索扰动后的最小 OOD 得分 → OOD 被压低 → IND/OOD 更可分。
+**核心 idea**：在推理时搜索扰动后的最小 OOD 得分 → OOD 被压低 → IND/OOD 更可分。
 
 ## 方法详解
 
@@ -78,7 +78,7 @@ CIFAR-10 FPR@95↓：
 - **对抗鲁棒性与 OOD 检测的首次显式连接**——OOD 样本的"脆弱性"正是检测它们的线索
 - **通用后处理增强器**——可以提升任何已有 OOD 得分方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理时需要梯度下降，增加 K 倍计算开销
 - 需要对抗训练模型达到最佳效果
 - ImageNet 规模实验有限

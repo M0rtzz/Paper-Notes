@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CAT: Enhancing Multimodal Large Language Model to Answer Questions in Dynamic Audio-Visual Scenarios
 description: >-
@@ -137,7 +137,7 @@ CAT 由三个信息流组成，输入到冻结的 LLaMA2-7B：
 - **极少可训参数（5.8M）即达SOTA**：得益于LoRA和冻结编码器/LLM的设计，训练成本可控
 - **AVinstruct数据集的构建**：为音视频联合问答提供了专门的指令微调数据，填补了该领域的数据空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ImageBind的音频编码只产生1个token，音频信息可能被过度压缩，限制了模型对复杂音频场景的理解
 - ADPO依赖GPT进行模糊审查和重写，引入了外部模型的偏差

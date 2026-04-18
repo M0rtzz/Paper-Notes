@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Octopus: Embodied Vision-Language Programmer from Environmental Feedback
 description: >-
@@ -110,7 +110,7 @@ $$p(\mathbf{T}_r | \mathbf{T}_i, \mathbf{X}_v) = \prod_{l=1}^{L} p(t_l | \mathbf
 3. **RLEF 训练方案**：利用模拟器的环境反馈构建偏好数据，通过 PPO 优化策略模型，在推理任务和未见环境上提升尤为显著（推理任务从 0.13 提升到 0.20）
 4. **完整的数据收集流水线**：GPT-4 驱动的自动数据收集 + 错误管理机制，可扩展性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **绝对性能仍有差距**：最佳 Octopus 模型在 OctoGibson 上任务完成率仅 0.18，远低于 GPT-4V 的 0.45（且后者也远未饱和）
 2. **空间推理能力不足**：在 OctoMC 和 OctoGTA 中，模型在精确空间推理（角度、距离）上常常失败，即使规划正确仍因动作不精确而导致任务失败

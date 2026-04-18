@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SparseRM: A Lightweight Preference Modeling with Sparse Autoencoder
 description: >-
@@ -137,7 +137,7 @@ SparseRM包含三个步骤：
 3. **可解释性**：通过Neuronpedia可解读每个偏好方向的语义，如latent 4128对应"WRONG, untrue remarks"
 4. **与既有SAE生态系统的无缝衔接**：直接使用GemmaScope/LlamaScope，降低使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 依赖预训练SAE的质量和覆盖范围，对没有开源SAE的模型不适用
 2. 层选择需要实验搜索（如Gemma-2-9B-it仅3个层有SAE）
 3. 仅测试了安全性/真实性维度，对更复杂偏好（如有用性、创造性）效果未验证

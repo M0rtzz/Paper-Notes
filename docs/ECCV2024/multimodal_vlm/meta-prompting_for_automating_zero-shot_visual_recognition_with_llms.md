@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meta-Prompting for Automating Zero-Shot Visual Recognition with LLMs
 description: >-
@@ -106,7 +106,7 @@ $$l_{\hat{c}}(x) = \frac{e^{\cos(\psi_{\hat{c}}, \phi(x))/\tau}}{\sum_{c \in C} 
 4. **广泛泛化**：在 20 个跨域数据集、多种 VLM 骨干上均取得一致提升
 5. **开源大规模语料**：释放 250 万条类别描述，可直接复用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖文本质量**：LLM 生成的描述可能包含不准确的视觉信息，目前无质量过滤机制
 2. **计算开销**：两阶段查询 LLM 且每个类别需大量 prompt，推理时文本编码开销较大

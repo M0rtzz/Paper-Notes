@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Where to Start Alignment? Diffusion Large Language Model May Demand a Distinct Position
 description: >-
@@ -159,7 +159,7 @@ MOSA 对通用能力的影响极小，与原始模型基本持平。
 4. **训练极其高效**：12 分钟 + 3000 条数据即可完成，实用性极强
 5. **超越安全领域的启示**：作者建议"锚点-填充"（anchor-then-fill）策略可能是释放 dLLM 潜力的通用方法，如先生成关键中间公式再前后补全
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 对"叙事包装"型攻击（如 Avatar、Speakeasy）的防御效果相对较弱，因为训练数据中缺乏足够多样的伪装恶意 prompt
 2. 中间 token 窗口（20-60）是手动设定的，未自适应不同任务/模型

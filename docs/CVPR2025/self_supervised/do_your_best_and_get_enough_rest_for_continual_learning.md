@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do Your Best and Get Enough Rest for Continual Learning
 description: >-
@@ -95,7 +95,7 @@ Fig.4实证验证了遗忘曲线理论在神经网络中的适用性：
 - **极简但有效**：不需要新架构、新优化器、新损失函数设计——仅通过调整数据schedule和加一个KL散度loss
 - **"Do your best AND get enough rest"的直觉**：学生（模型）应该每次学习时尽可能深入（SSL），但也需要足够的间隔来巩固记忆——这个类比非常贴切
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - V的最优值需要根据数据集和任务调整，缺乏理论指导
 - 自监督损失使用KL散度较简单，可探索更复杂的一致性约束

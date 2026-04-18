@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CADMorph: Geometry-Driven Parametric CAD Editing via a Plan-Generate-Verify Loop
 description: >-
@@ -108,7 +108,7 @@ $$C' = \arg\min_{C'} \mathcal{D}_{\text{geometry}}(\mathcal{F}(C'), S') + \lambd
 4. **实用下游应用**：支持迭代编辑（多轮连续修改）和逆向工程增强（细化逆向工程管线的输出结果）
 5. **巧妙利用 cross-attention maps**：类比 text-to-image 扩散模型中词与像素的对应关系，发现 P2S 模型中参数化序列片段与几何部件的注意力对齐现象
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理延迟**：需要多轮 plan–generate–verify 迭代，运行时间较长；可通过加速模型推理和并行化 generation/verification 来缓解
 2. **测试集局限**：仅在 CAD-Editor 测试集上评估，其模型复杂度低于工业实际；需要更丰富、更具挑战性的数据集

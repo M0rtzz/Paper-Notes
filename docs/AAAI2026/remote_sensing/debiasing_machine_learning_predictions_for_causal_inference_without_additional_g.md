@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Debiasing Machine Learning Predictions for Causal Inference Without Additional Ground Truth Data
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：上游ML团队需要创建一个与下游用途无关(agnostic)的数据产品，同时该产品被下游团队直接用于因果推断时不应有衰减偏差。上下游团队之间应有"防火墙"——无需沟通。
 
-**本文要解决什么？** 构建后处理校正方法，在上游阶段一次性校正预测衰减，使同一地图可被多个下游团队在不同因果研究中复用。
+**本文目标** 构建后处理校正方法，在上游阶段一次性校正预测衰减，使同一地图可被多个下游团队在不同因果研究中复用。
 
 **切入角度**：将ML预测的收缩问题建模为Berkson误差模型 $Y_i = \hat{Y}_i + \varepsilon_i$（真值=预测+残差），然后应用Tweedie公式进行局部去收缩。
 
-**核心idea一句话**：用Tweedie密度分数估计进行局部去收缩：$\tilde{Y}_i = \hat{Y}_i - \sigma^2 \frac{d}{d\hat{y}} \log p_{\hat{Y}}(\hat{Y}_i)$，无需新标注数据。
+**核心 idea**：用Tweedie密度分数估计进行局部去收缩：$\tilde{Y}_i = \hat{Y}_i - \sigma^2 \frac{d}{d\hat{y}} \log p_{\hat{Y}}(\hat{Y}_i)$，无需新标注数据。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **Tweedie公式的巧妙应用**：将扩散模型/经验贝叶斯中经典的Tweedie恒等式应用于ML预测去收缩，理论上优雅（条件无偏），实践上简洁（KDE估计分数）
 - **Berkson误差模型的转换视角**：传统测量误差模型 $\hat{Y} = Y + \varepsilon$ vs Berkson模型 $Y = \hat{Y} + \varepsilon$——后者更适合ML预测场景（预测是平滑的，残差来自未捕获的真实变异）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Berkson模型假设的近似性**：残差与预测值的条件独立性假设在实践中可能不严格成立
 - **KDE分数估计在高维/多模态分布下的精度**：当预测值分布复杂时KDE可能不够准确
 - **Tweedie增加预测方差**：虽然纠正了条件均值偏差，但伪结果 $\tilde{Y}_i$ 的方差大于 $\hat{Y}_i$，可能影响下游统计检验的功效

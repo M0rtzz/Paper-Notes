@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] unMORE: Unsupervised Multi-Object Segmentation via Center-Boundary Reasoning
 description: >-
@@ -122,7 +122,7 @@ $$\ell = \text{CE}(\tilde{f^e}, f^e) + \ell_2(\tilde{\boldsymbol{f}^c}, \boldsym
 4. **边界距离场梯度性质**：归一化后梯度的倒数即可恢复物体尺寸，直接用于提案扩张/收缩
 5. **COCO* 补充标注**：手动为 COCO val 补充 197 类标注，更公平评估无监督方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖预训练特征质量**：粗略 mask 来自 DINO/v2 + VoteCut，若预训练特征在特定领域（如医学影像）定位能力弱则效果受限
 2. **推理效率**：Step 2/3 的迭代推理需要对每个提案多次前向传播，大量提案时计算开销较大

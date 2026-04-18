@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Good-for-MDP State Reduction for Stochastic LTL Planning
 description: >-
@@ -147,7 +147,7 @@ $\textsf{GF}\varphi$ 直接构造 vs 最先进约简方法（Table 2）：
 3. **理论与实践并重**：不仅有严格的正确性证明链（Theorem 2→3→4），还有覆盖 8+ 文献来源的全面基准实验
 4. **$\textsf{GF}\varphi$ 构造的优雅直觉**：重复可达属性可通过"随时重置到初态"的简单策略处理——Büchi 条件自然保证无限次满足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **GFG 最小化本身可能耗时**：在 NU[6]（27.75s）、LFR[8]（39.11s）等复杂模式上约简时间不可忽略
 2. **仅限 Büchi/co-Büchi 条件**：Rabin 条件的 GFM 约简未在实验中验证（论文提及可推广但未实现）

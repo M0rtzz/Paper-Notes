@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Parametrized Multi-Agent Routing via Deep Attention Models
 description: >-
@@ -110,7 +110,7 @@ $$\widehat{\nabla_{\mathcal{Y}^t} F_\beta} = \sum_{i=1}^N \rho_i \sum_{q=1}^L \h
 - **跨规模泛化**：10-100节点训练、300节点测试仍保持6%最优性gap
 - **实用价值**：匹配Gurobi精确解同时快1500倍，支持800 agent × 200 node的大规模场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅考虑欧式距离代价**：未涉及道路网络、障碍物等更现实的代价函数
 - **设施无容量约束**：实际充电站有容量限制，需扩展模型处理多agent竞争

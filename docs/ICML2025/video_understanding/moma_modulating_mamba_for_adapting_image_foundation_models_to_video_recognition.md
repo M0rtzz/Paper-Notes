@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoMa: Modulating Mamba for Adapting Image Foundation Models to Video Recognition
 description: >-
@@ -140,7 +140,7 @@ $$\mathbf{V}^{i+1} = \text{FFN}(\text{SeqMod}(\mathbf{x}^i, \mathbf{y}_1^i, \mat
 3. **窗口化注意力 + SSM 的互补**：Divide 阶段用窗口局部注意力捕获短程空间依赖，Modulate 阶段用 SSM 捕获全局长程时空依赖，分工明确。
 4. **长视频场景表现突出**：在 Breakfast 和 COIN 数据集上不仅超越传统方法，也优于专为长视频设计的 VideoMamba。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **SSv2 上 ViT-L/14 的 8帧设置低于 DiST**（72.2 vs 73.1），需要 32 帧才能超过，说明在帧数受限时 Mamba 的优势减弱。
 2. **K400 上 ViT-L/14 的 8帧设置也低于竞品**（86.7 vs 87.3），MoMa 对帧数的依赖较大。

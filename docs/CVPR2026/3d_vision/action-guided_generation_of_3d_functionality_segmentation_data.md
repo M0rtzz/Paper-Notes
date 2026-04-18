@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Action-guided Generation of 3D Functionality Segmentation Data
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **"正确空间关系比视觉真实感更重要"**是重要发现：说明功能理解更依赖结构而非外观
 - 成本效益极高：1美元/场景 vs 109美元/场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 PartNet-Mobility 资产库（仅~2K物体/46类），覆盖率有限
 - 窗户等类别因布局策略偶发失败导致频率不足
 - 当前生成2D多视角图像，未直接生成3D功能掩码

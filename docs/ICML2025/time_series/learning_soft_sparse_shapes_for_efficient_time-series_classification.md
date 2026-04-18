@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Soft Sparse Shapes for Efficient Time-Series Classification
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{ce}} + \lambda(\mathcal{L}_{\t
 4. **实验扎实**：128 个 UCR 数据集 + 19 个 baseline + 完整消融 + 统计检验
 5. **稀疏率 50% 性能无损**：说明大量子序列确实是冗余的，但不应硬丢弃
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持单变量时间序列**：未验证多变量场景，实际应用中多变量更常见
 2. **效率分析不够充分**：虽然声称提升效率，但缺乏详细的 FLOPs/推理速度对比

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unveiling the Spatial-Temporal Effective Receptive Fields of Spiking Neural Networks
 description: >-
@@ -53,7 +53,7 @@ tags:
 
 1. **ST-ERF 理论框架**：
 
-    - **做什么**：量化 SNN 中各输入特征在不同时空位置对输出的贡献
+    - **功能**：量化 SNN 中各输入特征在不同时空位置对输出的贡献
     - **核心定义**：$\text{ERF}^{(\mathcal{S},\mathcal{T})}_{(i,j)}[y_{(m,n)}[t], \tau; \mathbf{x}] = \frac{\partial y_{(m,n)}[t]}{\partial x_{(i,j)}[t-\tau]}$
     - 空间 ERF 是 ST-ERF 在所有时间步上的加权平均；时间 ERF 是 ST-ERF 在空间维度上的积分
     - **Loss-Derived 计算方法**：利用 PyTorch 自动微分，通过设置特定的梯度刺激（gradient stimuli）高效计算。具体地，将中心位置所有通道和时间步的梯度设为 1，反向传播即可得到空间 ERF
@@ -61,14 +61,14 @@ tags:
 
 2. **MLPixer（MLP-based Mixer）**：
 
-    - **做什么**：完全用 MLP 替换卷积通道混合器
+    - **功能**：完全用 MLP 替换卷积通道混合器
     - **核心设计**：$\text{MLPixer}(\mathbf{X}) = \text{BN}(\text{MLP}(\mathbb{SN}\{\text{BN}(\text{MLP}\{\mathbb{SN}(\mathbf{X})\})\}))$
     - 两层 MLP + 批归一化 + 脉冲神经元的堆叠
     - **设计动机**：MLP 是逐像素操作，不引入空间局部性偏置，使通道混合时不会破坏全局空间特征。ST-ERF 可视化显示 MLPixer 确实实现了更广泛的全局感受野
 
 3. **SRB（Splash-and-Reconstruct Block）**：
 
-    - **做什么**：折中方案——保留第一层卷积用于局部特征提取，第二层用 MLP
+    - **功能**：折中方案——保留第一层卷积用于局部特征提取，第二层用 MLP
     - **核心设计**：$\text{SRB}(\mathbf{X}) = \text{BN}(\text{MLP}(\mathbb{SN}\{\text{BN}(\text{Conv}\{\mathbb{SN}(\mathbf{X})\})\}))$
     - 第一层用 1×1 卷积，第二层用 MLP
     - **设计动机**：在减少参数量的同时保持性能。SRB 在准确率和模型大小之间达到最优平衡
@@ -139,7 +139,7 @@ SRB 在减少参数的同时大幅提升 mIoU。
 3. **简洁有效的改进**：仅替换前两阶段的通道混合器就能显著提升性能，修改量小
 4. **减参提性能**：SRB 在参数减少的情况下反而提升性能，说明卷积在这些位置是冗余的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MLPixer 虽然全局 ERF 更强，但在某些任务上不如 SRB，说明完全去除局部特征提取未必最优
 - 仅在 Meta-SDT 架构上验证，对其他 SNN 架构的适用性有待检验

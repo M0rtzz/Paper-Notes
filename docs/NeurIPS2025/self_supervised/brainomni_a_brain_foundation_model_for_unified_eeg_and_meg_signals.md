@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BrainOmni: A Brain Foundation Model for Unified EEG and MEG Signals
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：如何构建一个统一模型同时处理 EEG 和 MEG，既不依赖固定电极命名/拓扑，又能从跨模态数据中获益？
 
-**本文要解决什么**：构建设备不可知（device-agnostic）的脑信号基础模型，统一两种模态预训练，支持跨设备零样本泛化。
+**本文目标**：构建设备不可知（device-agnostic）的脑信号基础模型，统一两种模态预训练，支持跨设备零样本泛化。
 
 **切入角度**：借鉴传统 EEG/MEG 源活动估计（source estimation）的思想——用传感器的物理属性（3D 笛卡尔坐标、朝向、类型）而非电极名称来编码空间信息，从观测信号反推"隐含源变量"，实现与具体设备的解耦。
 
-**核心 idea 一句话**：编码传感器物理属性实现设备不可知 → RVQ 离散化构建统一 token 表示 → Criss-Cross Transformer 分别建模空间和时间依赖。
+**核心 idea**：编码传感器物理属性实现设备不可知 → RVQ 离散化构建统一 token 表示 → Criss-Cross Transformer 分别建模空间和时间依赖。
 
 ## 方法详解
 
@@ -54,7 +54,7 @@ tags:
 
 #### 1. BrainTokenizer + Sensor Encoder
 
-- **做什么**：将不同设备、不同通道数的 EEG/MEG 信号统一编码为固定维度的离散 token
+- **功能**：将不同设备、不同通道数的 EEG/MEG 信号统一编码为固定维度的离散 token
 - **核心思路**：
     - SEANet 编码器（1D 卷积 + 残差块 + 步长卷积）提取时间表示 $\mathbf{Z}_{\text{time}} \in \mathbb{R}^{C \times W \times D}$
     - Sensor Encoder 对每个传感器的物理信息编码：位置嵌入层编码 6 维笛卡尔坐标（3D 位置 + 3D 朝向），类型嵌入层编码传感器类型（EEG=0, GRAD=1, MAG=2），融合得到传感器嵌入 $\mathbf{V} \in \mathbb{R}^{C \times D}$
@@ -64,13 +64,13 @@ tags:
 
 #### 2. Criss-Cross Transformer
 
-- **做什么**：在 Stage 2 中对离散 token 序列建模空间和时间依赖
+- **功能**：在 Stage 2 中对离散 token 序列建模空间和时间依赖
 - **核心思路**：将特征沿维度方向一分为二，一半做空间注意力（跨 $C'$ 个源变量），一半做时间注意力（跨时间步 $T$），拼接后送入 FFN。时间注意力使用 RoPE 位置编码
 - **设计动机**：脑信号的空间依赖（不同脑区间协同）和时间依赖（时间序列动态）具有不同结构特征，分别建模比全注意力更高效且更具针对性
 
 #### 3. 联合 EEG-MEG 预训练策略
 
-- **做什么**：在统一 token 空间上同时用 EEG（1997 小时）和 MEG（656 小时）数据自监督预训练
+- **功能**：在统一 token 空间上同时用 EEG（1997 小时）和 MEG（656 小时）数据自监督预训练
 - **核心思路**：50% 掩码比例的非自回归掩码 token 预测——每个被掩码位置的 4 层 RVQ 同时预测。80% 掩码位置用专用 mask token，20% 用随机采样 token 替代，防止对 mask token 过拟合
 - **设计动机**：EEG 数据量充足可帮助数据稀缺的 MEG 模态，跨模态知识共享
 

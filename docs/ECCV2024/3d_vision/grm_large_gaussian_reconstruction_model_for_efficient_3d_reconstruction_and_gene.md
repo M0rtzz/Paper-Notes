@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 如何在保持快速推理的同时，生成足够数量的高质量3D高斯以实现高保真重建？
 
-**本文要解决什么？**: 设计一种可扩展的前馈框架，能从稀疏视图高效生成大量像素对齐的3D高斯，实现高质量快速3D重建和生成。
+**本文目标**: 设计一种可扩展的前馈框架，能从稀疏视图高效生成大量像素对齐的3D高斯，实现高质量快速3D重建和生成。
 
 **切入角度**: 用3D高斯替代triplane-NeRF，用纯Transformer架构替代CNN-based模型，利用窗口注意力进行高效上采样。
 
-**核心idea一句话**: Transformer编码器聚合多视图信息 + Transformer上采样器生成高分辨率特征 + pixel-aligned Gaussians沿视线射线约束高斯位置。
+**核心 idea**: Transformer编码器聚合多视图信息 + Transformer上采样器生成高分辨率特征 + pixel-aligned Gaussians沿视线射线约束高斯位置。
 
 ## 方法详解
 
@@ -58,7 +58,7 @@ GRM的pipeline：
 
 1. **Pixel-aligned Gaussians（像素对齐高斯）**:
 
-    - **做什么**: 将3D高斯的位置约束在输入视线射线上，而非自由预测3D坐标
+    - **功能**: 将3D高斯的位置约束在输入视线射线上，而非自由预测3D坐标
     - **核心思路**: 每个高斯的3D位置由相机中心和射线方向确定:
     $\boldsymbol{\mu} = \mathbf{c}_o + \tau \mathbf{r}$
    其中 $\mathbf{c}_o$ 是相机中心，$\mathbf{r}$ 是射线方向，$\tau$ 是预测的深度值。每个视图预测一个 $H \times W \times 12$ 的高斯属性图（深度+旋转+缩放+透明度+SH DC项），总共生成 $V \times H \times W$ 个3D高斯
@@ -66,7 +66,7 @@ GRM的pipeline：
 
 2. **Transformer编码器**:
 
-    - **做什么**: 从多视图图像提取并融合全局特征，实现跨视图信息交换
+    - **功能**: 从多视图图像提取并融合全局特征，实现跨视图信息交换
     - **核心思路**: 
         - 用Plücker embedding注入相机信息到每个像素
         - 卷积tokenizer（kernel/stride=16）提取 $H/16 \times W/16$ 局部特征
@@ -77,7 +77,7 @@ GRM的pipeline：
 
 3. **Transformer上采样器**:
 
-    - **做什么**: 渐进式将低分辨率特征图上采样到原始输入分辨率，恢复高频细节
+    - **功能**: 渐进式将低分辨率特征图上采样到原始输入分辨率，恢复高频细节
     - **核心思路**: 每个上采样块包含:
         - Linear层4倍扩展通道维度
         - PixelShuffle 2倍空间上采样
@@ -147,7 +147,7 @@ $$\mathbf{s} = s_{min} \cdot \sigma(\mathbf{s}_o) + s_{max} \cdot (1 - \sigma(\m
 - **模型规模化的效果**: 24层编码器+4块上采样器的大规模模型在大数据(100K物体)上训练，展现出强大的泛化能力
 - **模块化设计**: 重建器可与任意多视图扩散模型即插即用，实现text/image-to-3D
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 输入视图不一致时重建质量下降（来自扩散模型的生成图可能不完全一致）
 - 重建器是确定性的，未来可嵌入概率框架处理多模态不确定性

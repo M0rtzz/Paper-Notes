@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TROLL: Trust Regions improve Reinforcement Learning for Large Language Models
 description: >-
@@ -153,7 +153,7 @@ $$\mathcal{L}_{TROLL}(\theta) = \mathbb{E}\left[\sum_t A_t \cdot \log \tilde{\pi
 
 4. **稀疏化的直觉**：仅在Top-K token上执行投影的设计不仅节省计算，还暗含了一个深刻洞察——策略更新最重要的信息集中在高概率token的分布变化上。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销略有增加**：虽然稀疏化降低了投影成本，但相比极度简单的裁剪操作，TROLL仍有额外开销。在极大规模训练中（数百GPU），这一差异可能变得显著。
 

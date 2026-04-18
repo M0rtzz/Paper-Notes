@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MergeVLA: Cross-Skill Model Merging Toward a Generalist Vision-Language-Action Agent
 description: >-
@@ -155,7 +155,7 @@ $$\mathbf{S}_m = \mathbb{I}\left[|\tau_m| > \lambda |\tau_{\text{merge}} - \tau_
 4. **无训练路由**——用 SVD 主成分做任务判别，既优雅又实用，无需额外训练数据或辅助网络
 5. **从仿真到真机全链路验证**——LIBERO / LIBERO-Plus / RoboTwin / 真机 SO101 四重验证，覆盖跨任务、跨环境、跨具身三个维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **无法在线增量合并**：新任务加入需重新计算掩码和合并，不支持即插即用
 2. **VLM 规模受限**：仅验证了 Qwen2.5-0.5B，更大模型（如 7B+）是否同样适用待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FairContrast: Enhancing Fairness through Contrastive Learning and Customized Augmentation
 description: >-
@@ -147,7 +147,7 @@ argmin_theta L_NCE(theta) = argmax_theta { I(Z;Y) - lambda * I(Z; S|Y) }
 3. **通用性强**：学习到的公平表示可直接用于任意下游任务，具有跨任务迁移潜力
 4. **Adult 数据集上 86% 的 DP 降低几乎不牺牲精度**，展示了公平与准确不必矛盾的理念
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅考虑组公平（人口统计均等），未涉及个体公平
 2. 当前关注单一公平指标 DP，而实际中多种公平定义可能相互冲突

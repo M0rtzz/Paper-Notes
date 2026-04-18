@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probabilistic Reasoning with LLMs for K-Anonymity Estimation
 description: >-
@@ -100,7 +100,7 @@ Branch（Bayesian network Reasoning for k-ANonymity using Conditional Hierarchie
 - 数据集构建方法周密：双人标注、合成数据生成、普查记录验证，标注质量与官方普查误差相当
 - 实用性强：可作为类似"密码强度计"的在线隐私工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - LLM内化的人口统计知识可能过时或有偏差（训练数据截止日期问题）
 - 220个文档的数据集规模较小，可能无法覆盖所有隐私场景
 - 仅考虑英语文本和主要面向西方国家的人口统计

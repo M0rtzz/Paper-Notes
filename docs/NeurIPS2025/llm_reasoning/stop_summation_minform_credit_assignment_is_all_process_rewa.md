@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stop Summation: Min-Form Credit Assignment Is All Process Reward Model Needs for Reasoning
 description: >-
@@ -32,11 +32,11 @@ PURE 发现 PRM 导致 reward hacking 的根本原因是 RL 中标准的 sum-for
 
 **核心矛盾**：sum-form 累积使得单个高奖励步骤就能拉高整条轨迹的价值，而 PRM 不可能对每一步都给出完美奖励 → reward hacking 几乎不可避免。
 
-**本文要解决什么？** 如何设计信用分配使 PRM 能安全地用于 RL 微调？
+**本文目标** 如何设计信用分配使 PRM 能安全地用于 RL 微调？
 
 **切入角度**：将价值函数定义为未来奖励的**最小值**而非**累积和**——这意味着模型必须确保每一步都不太差才能获得高价值，而不是只做好几步就够。
 
-**核心idea一句话**：用 $V(s_t) = \min_{t' \geq t} r_{t'}$ 替代 $V(s_t) = \sum \gamma^{t'-t} r_{t'}$，消除单步高奖励对整体价值的过度拉升。
+**核心 idea**：用 $V(s_t) = \min_{t' \geq t} r_{t'}$ 替代 $V(s_t) = \sum \gamma^{t'-t} r_{t'}$，消除单步高奖励对整体价值的过度拉升。
 
 ## 方法详解
 
@@ -80,7 +80,7 @@ PURE (Process sUpervised Reinforcement lEarning) 保持标准 PPO/GRPO 框架，
 - **首次清晰诊断 PRM + RL = reward hacking 的根因**：不是 PRM 本身不准，而是 sum-form 信用分配放大了 PRM 的微小误差。这个洞察对整个领域都有指导意义
 - **Min-form 的"木桶效应"直觉非常优雅**：价值取决于最短板，迫使模型均匀提升每一步质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Min-form 可能过于保守：单步异常低分就会拖累整条轨迹的价值
 - 目前只在数学推理任务上验证
 - PRM 的质量仍然重要——min-form 缓解但不完全消除 reward hacking

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Nonlinearly Preconditioned Gradient Methods: Momentum and Stochastic Analysis
 description: >-
@@ -120,7 +120,7 @@ iHGD的预条件映射为 $\nabla\phi^*(y) = \text{arsinh}(\|y\|) \frac{y}{\|y\|
 - Proposition 2.6提供了 $(L_0,L_1)$-光滑函数的新刻画：预条件梯度的Lipschitz连续性
 - $\cosh - 1$ 作为参考函数的优美性质：强凸、超多项式增长、全域定义、生成sigmoid型预条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 动量参数目前限制在 $\beta < 0.5$（一般情形）或需要额外假设扩展至 $\beta < 1$
 - 随机版本**尚未结合动量**，这是一个重要的开放问题

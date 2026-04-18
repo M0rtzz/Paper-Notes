@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NTSFormer: A Self-Teaching Graph Transformer for Multimodal Isolated Cold-Start Node Classification
 description: >-
@@ -183,7 +183,7 @@ Transformer层数影响（All设置准确率%）：
 4. **MoE的位置感知设计**：通过拼接one-hot位置向量让门控网络感知token的语义角色（自身/邻居、文本/视觉），比朴素共享投影更合理
 5. **$\langle\text{MISS}\rangle$ 占位符 + 训练时随机drop的设计**使模型天然具备处理模态缺失的能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持两种模态（文本+视觉）**，扩展到更多模态需要调整预计算和掩码设计
 2. **预计算假设图结构在训练期间不变**，不适用于动态图场景（论文已提及）

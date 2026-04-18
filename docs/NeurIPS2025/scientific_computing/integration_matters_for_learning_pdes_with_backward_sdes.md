@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Integration Matters for Learning PDEs with Backward SDEs
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：标准 BSDE 使用 Euler-Maruyama (EM) 积分离散化一步自一致损失时，会产生与步长 $\tau$ 无关的**不可消除偏差项** $\text{Bias}(\theta) = \frac{1}{2T}\int_0^T \mathbb{E}\text{tr}((H \cdot \nabla^2 u_\theta)^2)dt$，使得优化目标偏离真实解。
 
-**本文要解决什么？** (1) 揭示 BSDE vs PINNs 性能差距的根因；(2) 提出无偏差的积分方案。
+**本文目标** (1) 揭示 BSDE vs PINNs 性能差距的根因；(2) 提出无偏差的积分方案。
 
 **切入角度**：将 BSDE 解释为 Stratonovich SDE（而非 Itô SDE），使用随机 Heun 积分（收敛到 Stratonovich 解），从而消除偏差。
 
-**核心idea一句话**：用 Stratonovich + Heun 积分替代 Itô + EM 积分，消除 BSDE 损失中的离散化偏差。
+**核心 idea**：用 Stratonovich + Heun 积分替代 Itô + EM 积分，消除 BSDE 损失中的离散化偏差。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ tags:
 - **理论驱动的算法改进**：通过精确的偏差分析（而非经验试错）找到问题并设计解决方案，理论和实验完美吻合。
 - **Stratonovich vs Itô 的选择在数值实现中的重要性**：虽然两种形式在连续极限下等价，但离散化时 Stratonovich 形式对数值方法更友好。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Heun 方法每步需要两次函数评估（vs EM 的一次），计算成本翻倍
 - 实验仅在三个标准 PDE benchmark 上验证，未在更复杂的实际问题上测试
 - 100D BZ 问题所有方法表现都不好（RL2 > 1.7），说明高维耦合 FBSDE 仍然很有挑战性

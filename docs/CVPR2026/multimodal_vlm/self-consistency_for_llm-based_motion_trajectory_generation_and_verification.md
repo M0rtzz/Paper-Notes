@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Consistency for LLM-Based Motion Trajectory Generation and Verification
 description: >-
@@ -93,7 +93,7 @@ tags:
 - **验证 > 生成的独特发现**：自一致性方法在验证任务上的优势比生成更大，因为形状族恢复后的成员检查本质上是一个良定义的几何问题
 - 为 LLM 视觉生成的自动评估/验证提供了不依赖 VLM 的替代路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅处理可用单一原型+变换群描述的形状族，对歧义描述（如"curved path"）不适用
 - 多原型情况（如七角星 {7/2} 和 {7/3}）需要特殊处理
 - 基于 ICP 的距离计算对噪声和离散化误差有一定敏感性

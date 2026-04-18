@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Monocular Open Vocabulary Occupancy Prediction for Indoor Scenes (LegoOcc)
 description: >-
@@ -139,7 +139,7 @@ $$L_{\text{total}} = \lambda_{\text{focal}} L_{\text{focal}} + \lambda_{\text{lo
 3. **弱监督超越强监督的 IoU**：开放词汇模型在几何精度上超过了闭集全标注方法，证明 language-embedded Gaussians 作为中间表示的表达能力很强
 4. **推理速度最快**（22.47 FPS），比 ISO（3.81）快 6 倍，兼顾性能和效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **mIoU 仍有提升空间**：开放词汇 mIoU（21.05）与闭集（47.76）差距大，尤其是 tvs（5.36）、furniture（5.88）、objects（6.94）等细粒度类别识别困难
 2. **依赖外部模型**：需要 Depth-Anything V2 提供深度先验 + Trident 提供开放词汇分割特征 + Qwen2.5-VL 提取物体名词，pipeline 较长

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Diffusion Model Guidance through Calibration and Regularization
 description: >-
@@ -138,7 +138,7 @@ JS 散度取得最优 FID 2.13，无需重训练扩散模型或分类器。
 3. **新颖的洞察**：JS 散度优于 RKL 和 FKL 挑战了"模式覆盖(RKL)对生成最优"的传统认知
 4. **Smooth ECE 损失**简单且有效，仅需少量微调即可改善校准性和 FID
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 作为 **Workshop paper**，实验规模有限——仅在 ImageNet 128×128 上评估，未测试更高分辨率
 2. f-散度引导的超参数（$\alpha, \epsilon, \tau_1, \tau_2$）需要调节，论文未充分讨论敏感性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Asking like Socrates: Socrates helps VLMs understand remote sensing images
 description: >-
@@ -110,7 +110,7 @@ RS-EoT-7B在**所有VQA和Grounding任务上一致SOTA**，尤其Object@F1从36.
 - **"以铁磨铁"的训练哲学**：先在最需要精细证据搜索的grounding任务上磨练，再泛化到VQA——这种从难到易的课程安排符合技能学习的直觉
 - **多选题重构的实用策略**：将简单Yes/No VQA转化为对RL友好的格式，解决了遥感RL训练中的reward hacking难题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - RS-EoT当前是语言内循环（模型在文本中交替推理和"自我提问"），未显式检索图像子区域——可结合visual grounding工具实现真正的区域检索
 - SocraticAgent依赖GPT-5-mini和Gemini-2.5-flash等昂贵API合成数据
 - 基于Qwen2.5-VL-7B，更大规模模型上的效果未验证

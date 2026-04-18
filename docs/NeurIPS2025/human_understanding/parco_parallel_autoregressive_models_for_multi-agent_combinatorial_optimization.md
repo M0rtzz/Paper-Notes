@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PARCO: Parallel AutoRegressive Models for Multi-Agent Combinatorial Optimization
 description: >-
@@ -103,7 +103,7 @@ $$\nabla_\theta \mathcal{L} \approx \frac{1}{B \cdot S} \sum_{i=1}^{B} \sum_{j=1
 - Priority-based Conflict Handler 将冲突解决与模型学习统一，避免了启发式规则
 - PARCO 是一个通用框架，不限于特定问题类型，在路由和调度问题上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 并行解码假设联合动作可分解为独立分布的乘积，忽略了智能体间动作的相关性
 - 冲突处理中"回退到原地等待"可能导致额外的构建步数

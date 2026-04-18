@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Layer-wise Update Aggregation with Recycling for Communication-Efficient Federated Learning
 description: >-
@@ -113,7 +113,7 @@ AG News 场景内存降低 78%，FEMNIST 降低 75%。
 4. 服务器端计算，无需额外通信来选层
 5. 方法与优化器无关，可与 FedProx、SCAFFOLD 等组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 理论仅保证收敛到稳定点邻域（非精确最优解），$(4+9\mathcal{L}^2)\sigma_L^2$ 项不随 $\eta \to 0$ 消失
 2. 实验规模有限（128 客户端，2 GPU），未验证千级客户端场景
 3. $\delta$ 为手动超参，虽有消融分析但缺自适应策略

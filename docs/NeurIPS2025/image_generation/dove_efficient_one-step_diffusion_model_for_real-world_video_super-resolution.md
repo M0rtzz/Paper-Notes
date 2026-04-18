@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DOVE: Efficient One-Step Diffusion Model for Real-World Video Super-Resolution
 description: >-
@@ -173,7 +173,7 @@ Stage-2 显著提升感知质量（CLIP-IQA: 0.32→0.51），混合训练优于
 4. **数据质量 >> 数据数量**：2K 高质量视频胜过 40 万视频，运动区域裁剪是关键
 5. **t=399 的选择**：不从纯噪声开始，利用 LR 已有的结构信息，减少不必要的重建负担
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于 CogVideoX 的模型体量较大，单帧推理仍需 GPU
 - 仅在 ×4 超分上评估，可扩展到其他倍数和退化类型

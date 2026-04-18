@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Convergence of Muon with Newton-Schulz
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：直接分析 NS 近似的极坐标误差 $\varepsilon_q$，证明它随步数双指数衰减。
 
-**核心idea一句话**：NS 近似误差 $\varepsilon_q$ 双指数衰减→几步 NS 就将 Muon 收敛率拉到 SVD 级别→每步计算远低于 SVD→wall-clock 更快。
+**核心 idea**：NS 近似误差 $\varepsilon_q$ 双指数衰减→几步 NS 就将 Muon 收敛率拉到 SVD 级别→每步计算远低于 SVD→wall-clock 更快。
 
 ## 方法详解
 
@@ -85,7 +85,7 @@ Muon 每步：(1) 计算随机梯度 $G_t$；(2) 动量更新 $M_t = \beta M_{t-
 - **Nuclear norm 度量的选择**：在矩阵空间用 nuclear norm 而非 Frobenius——自然匹配极坐标分解，揭示秩优势
 - **对未来矩阵优化器的启发**：NS 近似的通用分析框架可扩展到其他矩阵优化器
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 纯理论贡献，无新实验（但论文目标就是解释已有实践）
 - 假设标准光滑+有界方差，未覆盖 Adam 风格自适应
 - 未分析 Muon 与 Shampoo/SOAP 等二阶方法的比较

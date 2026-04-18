@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Why Is Attention Sparse in Particle Transformer?
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：ParT 的注意力计算中包含两个成分——传统的 $QK^T/\sqrt{d_k}$ attention 项和物理启发的 interaction 矩阵 $U$。两者在 softmax 之前相加。那么问题来了：这种极端的二值化稀疏行为究竟是由哪个成分主导的？是 attention 机制自发学到的，还是 interaction 矩阵的物理先验导致的？进一步地，如果 interaction 矩阵的数值量级远小于 attention 项（后续实验证实相差 $10^4$-$10^5$ 倍），那它对模型性能到底有多重要？能否在推理时安全移除以节省计算成本？
 
-**本文要解决什么？** 具体来说，本文聚焦于三个递进的问题：（1）ParT 中稀疏 attention 的根源是什么——传统 attention 还是 interaction 矩阵？（2）在不同数据集和特征配置下，稀疏性是否普遍存在？（3）interaction 矩阵虽然量级微小，但它对模型推理的实际影响有多大？
+**本文目标** 具体来说，本文聚焦于三个递进的问题：（1）ParT 中稀疏 attention 的根源是什么——传统 attention 还是 interaction 矩阵？（2）在不同数据集和特征配置下，稀疏性是否普遍存在？（3）interaction 矩阵虽然量级微小，但它对模型推理的实际影响有多大？
 
 **切入角度**：作者采用了一个巧妙的分析策略——先比较 pre-softmax 阶段 attention 项和 interaction 项的绝对量级比值，直接量化两者的相对贡献；再通过跨数据集（JetClass、Top Landscape、Quark-Gluon）和跨特征配置（full features vs. kinematic-only）的系统对比，排除 PID 特征等混淆因素；最后通过零化 interaction 矩阵的消融实验，精确测量其对推理性能的影响，并提出 interaction-dependent computation 这一新指标来解释该影响机制。
 
-**核心 idea 一句话**：通过量级分析、跨数据集对比和精细消融，证明 ParT 的稀疏 attention 由 attention 机制自发产生，但 interaction 矩阵虽量级微小却通过改变绝大多数 token 的 argmax 粒子选择而不可或缺。
+**核心 idea**：通过量级分析、跨数据集对比和精细消融，证明 ParT 的稀疏 attention 由 attention 机制自发产生，但 interaction 矩阵虽量级微小却通过改变绝大多数 token 的 argmax 粒子选择而不可或缺。
 
 ## 方法详解
 
@@ -139,7 +139,7 @@ Pre-softmax attention 分数与 interaction 矩阵值的比值分析是本文最
 - **零化消融 vs 标准消融的对比揭示了模型组件之间的共适应（co-adaptation）**。从头训练不含 interaction 的 ParT（plain）只损失 1.2% 精度，但训练后零化则损失 45.6% 精度，这说明模型中各组件的权重已经互相适应。这对模型压缩和剪枝实践有重要启示：不能简单地通过"该组件的权重量级小"来判断其可以安全移除，需要配合重训或微调。
 - **跨数据集的稀疏性差异**是一个有趣的发现。JetClass（大规模、多类别）产生二值化 attention，而 Top Landscape（小规模、二分类）则不产生。这暗示稀疏性可能是模型在面对复杂多分类任务时自发产生的一种"信息压缩"策略——通过让每个粒子只关注最重要的一个伙伴来简化计算和表示。如果这一假说成立，那么在 NLP 和 CV 领域的大规模多任务 Transformer 中也可能观察到类似的稀疏化趋势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **单一模型架构**：本文所有分析都基于 ParT 一个模型和一个预训练权重（JetClass 用预训练，Top Landscape 和 Quark-Gluon 从头训练），没有验证结论在不同模型大小、不同训练超参数设置下是否稳健。特别是，稀疏性随训练轮数的演化过程没有被追踪——稀疏性是在训练早期就出现的，还是慢慢收敛到的？
 - **因果解释的缺失**：虽然本文成功识别了稀疏性的"来源"（attention 自身而非 interaction），但没有解释稀疏性产生的"原因"——是什么驱动了 attention 分数在训练过程中向极端值收敛？这可能与 softmax 函数的数学性质、训练目标的梯度动态、或数据分布的特定结构有关，需要更深入的理论分析。

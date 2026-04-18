@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TubeRMC: Tube-conditioned Reconstruction with Mutual Constraints for Weakly-supervised Spatio-Temporal Video Grounding
 description: >-
@@ -151,7 +151,7 @@ TubeRMC 框架包含三个层面：
 3. **可插拔视觉定位模型**：框架对视觉定位模型不敏感，可随模型升级获得收益
 4. **重建即理解**：通过"能否重建掩码文本"来评估 tube-文本匹配质量，是一种优雅的弱监督信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在严重视角变化和遮挡情况下，MDETR 可能错误分配边界框给相似动作的其他人（如可视化案例第3行）
 2. 性能仍依赖于视觉定位模型的质量，当 MDETR 预训练语料与目标数据集差异大时（如 VidSTG Interrogative），效果受限

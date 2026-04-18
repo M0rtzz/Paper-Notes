@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Domain Lossy Compression via Rate- and Classification-Constrained Optimal Transport
 description: >-
@@ -38,11 +38,11 @@ tags:
 
 **核心矛盾**：压缩表示需要同时服务多个目标——(1) 保持低失真重建、(2) 满足率约束、(3) 保留下游分类信息、(4) 维持感知质量——但这些目标存在基本权衡，缺乏统一的理论分析框架。
 
-**本文要解决什么？** 建立跨域有损压缩的理论框架，推导率、失真、分类和感知之间的基本权衡关系的闭式表达。
+**本文目标** 建立跨域有损压缩的理论框架，推导率、失真、分类和感知之间的基本权衡关系的闭式表达。
 
 **切入角度**：将问题形式化为带双重约束（率+分类）的最优传输问题，利用shared common randomness消除one-shot设置中的随机性，在经典可解分布族上推导闭式解。
 
-**核心idea一句话**：最优传输 + 率约束 + 分类约束的统一框架，首次给出跨域设置下DRC/DRPC权衡的解析表达。
+**核心 idea**：最优传输 + 率约束 + 分类约束的统一框架，首次给出跨域设置下DRC/DRPC权衡的解析表达。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ tags:
 - **Reviewer F3r6给出10分**：Soundness 4/Presentation 4/Contribution 4 全Excellent，推荐accept as highlight
 - **Fano不等式的桥接作用**：$H(S|Y)$ 通过Fano不等式直接下界化分类误差——信息论量和分类性能之间的优雅联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 闭式解限于Bernoulli/Gaussian两种典型分布，自然图像远比这两种复杂——理论与实践的gap需要更多数值方法填补
 - PSNR指标不及BM3D等专用去噪方法——因为本框架同时优化率和感知等多重目标

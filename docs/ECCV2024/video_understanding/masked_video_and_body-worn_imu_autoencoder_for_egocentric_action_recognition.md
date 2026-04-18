@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Masked Video and Body-worn IMU Autoencoder for Egocentric Action Recognition
 description: >-
@@ -136,7 +136,7 @@ IMU 设备缺失鲁棒性 (遮掩 2/4 个 IMU)：
 - 实验设计考虑周全：不仅评估标准准确率，还测试了 IMU 缺失、视频退化、跨数据集等实际挑战场景
 - IMU only 模态下的巨大提升 (15.30 → 31.68) 展示了自监督预训练对小规模数据的显著增益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅使用 4 个 IMU，图结构全连接，更多 IMU 时需设计更精细的图拓扑
 - CMU-MMAC 数据集中 IMU only 准确率仍较低 (31.68%)，因涉及物体/环境交互，IMU 无法感知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inference-Time Dynamic Modality Selection for Incomplete Multimodal Classification
 description: >-
@@ -114,7 +114,7 @@ PolyMNIST 80%缺失：DyMo超OnlineMAE +5.67%；DVM全表缺失：超ModDrop +4.
 - ICS校准的非对称设计（$\alpha \leq 1$ 当恢复后代表性低于恢复前）体现了对恢复模态的"保守主义"——合理的工程直觉
 - 训练策略简洁有效：随机子集模拟 + 对比损失，无需额外网络或多阶段训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ICS校准项在CAD/Infarction数据集上反而降低性能，需要引入数据集特定的超参数调优
 - 每个恢复模态都需要一次前向传播计算MTIR——缺失模态数 $M - |\mathcal{I}|$ 越多推理开销越大

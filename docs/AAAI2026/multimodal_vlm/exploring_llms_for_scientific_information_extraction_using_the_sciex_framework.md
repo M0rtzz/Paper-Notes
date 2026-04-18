@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring LLMs for Scientific Information Extraction using the SciEx Framework
 description: >-
@@ -104,7 +104,7 @@ SciEx是纯prompt驱动的RAG框架，不涉及模型训练。使用GPT-4o和Gem
 - 错误分析部分极其详细实用，为后续研究提供了明确的改进方向
 - Map-Reduce式的概念类比使系统架构直观易懂
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 整体性能偏低，尤其是Precision，说明需要更好的相关性过滤机制
 - 缺乏与fine-tuned模型的对比，全部使用零/少样本推理
 - 三个数据集均来自医学/环境科学，其他理工科领域（如物理、化学、材料科学）的泛化性未知

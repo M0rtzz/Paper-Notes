@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MapGCLR: Geospatial Contrastive Learning of Representations for Online Vectorized HD Map Construction
 description: >-
@@ -53,7 +53,7 @@ MapGCLR 构建在 MapTRv2 之上，采用双分支半监督训练管线：
 
 1. **地理空间多次经过分析（Multi-Traversal Split）**:
 
-    - **做什么**：分析数据集中不同驾驶日志之间的地理重叠，划分为单次经过和多次经过子集
+    - **功能**：分析数据集中不同驾驶日志之间的地理重叠，划分为单次经过和多次经过子集
     - **核心思路**：将所有车辆姿态转换到全局坐标系，为每个姿态根据车辆朝向计算感知范围包围盒（横向 $\pm x$ 米、纵向 $\pm y$ 米），合并同一日志的所有包围盒为一个多边形。若某日志的多边形与至少一个其他日志的多边形相交，则归类为多次经过
     - **空间图构建**：图 $G = (V, E)$，节点 $v \in V$ 为车辆姿态，边 $e_{ij} \in E$ 连接满足 IoU 在 $[\text{IoU}_{\min}, \text{IoU}_{\max}]$ 范围内的姿态对。约束最小最大 IoU 确保重叠区域既有足够相关性又不完全相同
     - **数据集划分策略**：多次经过日志全部用于自监督（忽略其标注），单次经过日志再划分为监督子集（2.5%/5%/10%/20%）和验证集
@@ -61,7 +61,7 @@ MapGCLR 构建在 MapTRv2 之上，采用双分支半监督训练管线：
 
 2. **地理空间对比学习（Geospatial Contrastive Learning）**:
 
-    - **做什么**：基于 SimCLR 框架，利用地理重叠的 BEV 特征网格单元构建对比对，强制编码器学习地理一致的 BEV 特征
+    - **功能**：基于 SimCLR 框架，利用地理重叠的 BEV 特征网格单元构建对比对，强制编码器学习地理一致的 BEV 特征
     - **正负样本定义**：
         - **正样本对**：reference 姿态的 BEV 网格中某个单元 $c_a$（anchor）与 adjacent 姿态的 BEV 网格中对应同一地理位置的单元 $c_p$
         - **负样本**：从两个网格中随机采样不共享空间对应关系的单元 $c_n$
@@ -70,7 +70,7 @@ MapGCLR 构建在 MapTRv2 之上，采用双分支半监督训练管线：
 
 3. **投影头与 InfoNCE 损失**:
 
-    - **做什么**：将 BEV 单元特征 $\mathbf{f}$ 通过投影头 $h$ 映射到嵌入空间 $\mathbf{z} \in \mathcal{Z}$，在嵌入空间计算对比损失
+    - **功能**：将 BEV 单元特征 $\mathbf{f}$ 通过投影头 $h$ 映射到嵌入空间 $\mathbf{z} \in \mathcal{Z}$，在嵌入空间计算对比损失
     - **损失函数**：
 
     $\mathcal{L}_{\text{GCLR}} = -\log \frac{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_i^+) / \tau)}{\exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_i^+) / \tau) + \sum_{k=1}^{K} \exp(\text{sim}(\mathbf{z}_i, \mathbf{z}_k^-) / \tau)}$
@@ -128,7 +128,7 @@ $$\mathcal{L}_{\text{semi}} = \lambda_{\text{sup}} \mathcal{L}_{\text{sup}} + \l
 - **方法简洁且即插即用**：核心贡献是训练阶段的附加损失函数和数据组织策略，不改变模型推理时的架构和计算量。可直接应用于任何基于 BEV 特征网格的在线地图构建模型
 - **数据集分析本身有价值**：提出的多次经过分类方法和地理重叠分析为 Argoverse 2 等数据集提供了新的利用视角，可推广到其他需要空间一致性的任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 MapTRv2 单帧模型上验证**：未测试在 MapTracker 等带时序记忆的 SOTA 模型上的效果。时序模型本身已利用帧间一致性，与地理空间对比学习可能存在冗余或互补，值得探索
 - **依赖高精度定位**：对比对构建需要精确的全局姿态来计算 BEV 网格的地理重叠。缺乏高质量定位的数据集（如 nuScenes）难以直接应用

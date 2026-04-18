@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CRM: Single Image to 3D Textured Mesh with Convolutional Reconstruction Model
 description: >-
@@ -160,7 +160,7 @@ $$\mathcal{L} = \mathcal{L}_{MSE}(x, x^{GT}) + \lambda_{LPIPS}\mathcal{L}_{LPIPS
 4. **轮廓增强技巧**：虽然不改善定量指标，但大幅提升 in-the-wild 输入的鲁棒性
 5. **极快收敛**：20 分钟训练即可得到合理结果，说明先验发挥了巨大作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 多视角扩散模型无法保证完全一致，不一致图像会降低 3D 质量
 2. FlexiCubes 网格分辨率仅 80，限制了超精细几何细节

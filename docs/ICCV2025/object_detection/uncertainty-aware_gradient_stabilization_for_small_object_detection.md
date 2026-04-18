@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty-Aware Gradient Stabilization for Small Object Detection
 description: >-
@@ -126,7 +126,7 @@ DINO-5scale + UGS 超越了之前的 SOTA 方法 DQ-DETR（37.0 AP）。在 SODA
 - **方法与检测器正交**：UGS 作为定位损失的替代方案，可以即插即用地应用于 anchor-based、anchor-free、two-stage、DETR 以及 YOLO 系列检测器
 - **不确定性引导的对抗精炼**是一个精巧的设计：用不确定性损失的梯度方向作为对抗扰动，使得模型主动学习处理高不确定性区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. IN 标签中的超参 $\alpha$、$\beta$、$n$ 需要手动调节，未提供自适应策略
 2. 仅在 2D 检测上验证，未探索 3D 检测或实例分割中的小目标梯度稳定性

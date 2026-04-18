@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Representation Learning for Spatiotemporal Physical Systems
 description: >-
@@ -105,7 +105,7 @@ JEPA vs VideoMAE 改善：Active Matter **51%**，Shear Flow **43%**，Rayleigh-
 - **实验设计精巧**：用可量化的物理参数作为表示质量代理，避免了传统评估中指标选择的主观性
 - **简洁有力**：论文短小精悍，不追求复杂方法，核心贡献是实验发现和洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估了三个 2D PDE 系统，对 3D 系统、粒子系统、非 PDE 系统的泛化性未知
 - 下游任务仅限于参数估计（回归），未涉及分类（如层流/湍流判断）或其他科学任务
 - JEPA 编码器是简单 3D CNN，未探索更大规模模型或更复杂架构的影响

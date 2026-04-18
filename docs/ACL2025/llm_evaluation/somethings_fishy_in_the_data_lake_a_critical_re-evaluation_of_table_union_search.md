@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Something's Fishy In The Data Lake: A Critical Re-evaluation of Table Union Search Benchmarks
 description: >-
@@ -113,7 +113,7 @@ tags:
     - 确保真值标签的高质量和一致性
 4. **计算效率证据**：简单方法在效率上远优于 SOTA，但这里效率不是重点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅分析了已有基准的缺陷，未提出具体的新基准
 2. 部分 LakeBench 真实查询与合成查询无法区分，影响了分析精度

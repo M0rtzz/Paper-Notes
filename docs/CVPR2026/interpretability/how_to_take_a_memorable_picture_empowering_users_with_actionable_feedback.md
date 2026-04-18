@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How to Take a Memorable Picture? Empowering Users with Actionable Feedback
 description: >-
@@ -30,7 +30,7 @@ tags:
 
 **核心矛盾**：即使人类也无法准确判断什么是 memorable 的。MLLM 虽然有强大的推理能力，但实验证明它们对记忆性毫无理解（Spearman相关系数接近0）。
 
-**本文要解决什么？** 如何让不理解记忆性的 MLLM 生成有效的记忆性提升建议。
+**本文目标** 如何让不理解记忆性的 MLLM 生成有效的记忆性提升建议。
 
 **切入角度**：利用同一场景中不同记忆性照片之间的差异，从教师模型中蒸馏出记忆性感知的激活方向向量。
 
@@ -103,7 +103,7 @@ tags:
 - training-free + model-agnostic 的设计使其具有很好的实用性
 - 首次将 activation steering 用于感知类任务（而非安全性或风格控制）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖编辑模型（FLUX.1 Kontext）来验证反馈效果，编辑质量会影响评估
 - 记忆性预测器本身的准确性是系统的上界
 - 导向强度 $\alpha$ 和层 $l$ 的选择需要调参

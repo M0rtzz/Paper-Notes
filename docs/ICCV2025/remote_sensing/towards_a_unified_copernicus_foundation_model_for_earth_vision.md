@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards a Unified Copernicus Foundation Model for Earth Vision
 description: >-
@@ -126,7 +126,7 @@ tags:
 - **Copernicus-Bench填补空白**：15个任务覆盖三级应用层次（预处理→基础应用→专业应用），6个是新策划数据集
 - **全球网格嵌入数据集**：Copernicus-Embed-025deg为气候建模提供了语义丰富的地理表征
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅限Sentinel系列，未纳入Landsat、MODIS等其他重要卫星数据
 - 时间范围约1年（2021年前后），缺乏长时间序列建模能力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SeeDNorm: Self-Rescaled Dynamic Normalization
 description: >-
@@ -136,7 +136,7 @@ $$\text{AdaSeeDNorm}(\mathbf{x}, c) = [(\sigma(\mathbf{x} \cdot \boldsymbol{\bet
 3. **多头机制的方差分析**：从点积方差与维度正比的角度分析训练不稳定性，并通过分头计算有效解决，体现了理论指导设计的风格
 4. **完整的梯度分析**：对所有参数（$\boldsymbol{\alpha}$, $\boldsymbol{\beta}$, $\boldsymbol{\gamma}$, $\mathbf{x}$）在极端条件下的梯度行为给出了详尽分析，不仅停留在实验层面
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **PyTorch 原生实现效率有限**：SeeDNorm 的碎片化操作会增加内存访问次数，影响延迟和效率，需要融合 kernel 才能达到与 RMSNorm 接近的效率
 2. **AdaLN 兼容性需要特殊处理**：不能直接替换 DiT 中的 AdaLN，需要设计专用的 AdaSeeDNorm 变体

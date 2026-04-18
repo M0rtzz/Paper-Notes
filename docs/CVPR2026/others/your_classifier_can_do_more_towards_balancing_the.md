@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：AT 和 JEM 各解决了三难困境中的两个维度，无法统一。根本原因在于它们对数据分布的建模不完整——AT 只关注 $p(y|\tilde{x})$，JEM 只关注 $p(x,y)$。
 
-**本文要解决什么？** 用单个模型同时实现高分类精度、对抗鲁棒性和生成能力（打破三难困境）。
+**本文目标** 用单个模型同时实现高分类精度、对抗鲁棒性和生成能力（打破三难困境）。
 
 **切入角度**：从能量分布视角诊断——AT 使 clean-adv 能量分布重叠（Tab.1: AT 均值差 1.46 vs 标准模型 10.18），JEM 使 clean-generated 能量分布重叠。如果三者能量都对齐，就能统一三种能力。
 
-**核心 idea 一句话**：建模 clean+adversarial 的联合分布 $p(\mathbf{x}, \tilde{\mathbf{x}}, y)$，用 min-max 能量优化将对抗样本从高能量区拉回低能量区，同时保持生成采样和分类训练。
+**核心 idea**：建模 clean+adversarial 的联合分布 $p(\mathbf{x}, \tilde{\mathbf{x}}, y)$，用 min-max 能量优化将对抗样本从高能量区拉回低能量区，同时保持生成采样和分类训练。
 
 ## 方法详解
 
@@ -48,19 +48,19 @@ tags:
 
 1. **Min-Max 能量优化建模 $p(\tilde{\mathbf{x}}|\mathbf{x})$**
 
-    - **做什么**：在不需要预先知道对抗分布的情况下，通过能量最大化-最小化学习将对抗样本拉回低能量区域
+    - **功能**：在不需要预先知道对抗分布的情况下，通过能量最大化-最小化学习将对抗样本拉回低能量区域
     - **核心思路**：关键观察——对抗扰动几乎总是将样本推离高密度数据流形到低密度（高能量）区域。**Inner max**: 反向 SGLD 沿能量上升方向采样对抗样本，将其推向高能量区域；**Outer min**: 最小化 clean-adv 能量差 $\min_\theta \mathbb{E}[\max_{\|\tilde{\mathbf{x}}-\mathbf{x}\| \in \Omega}(E_\theta(\tilde{\mathbf{x}}|\mathbf{x}) - E_\theta(\mathbf{x}))]$，将对抗样本拉回低能量区。梯度近似为 $h_2 \approx \frac{\partial}{\partial\theta}[\frac{1}{L_1}\sum E_\theta(\mathbf{x}_i^+) - \frac{1}{L_2}\sum E_\theta(\tilde{\mathbf{x}}_i|\mathbf{x}_i^+)]$
     - **设计动机**：区别于传统 AT 的 max-CE（找最误导的样本），这里是 max-energy gap（找能量最高的样本）后 min-energy gap（拉回），直接操作能量景观而非交叉熵损失
 
 2. **三项梯度联合优化**
 
-    - **做什么**：统一驱动生成、能量对齐和鲁棒分类三个目标
+    - **功能**：统一驱动生成、能量对齐和鲁棒分类三个目标
     - **核心思路**：$h_1 = \partial \log p(\mathbf{x})/\partial\theta$（SGLD 正负样本能量差驱动生成），$h_2 = \partial \log p(\tilde{\mathbf{x}}|\mathbf{x})/\partial\theta$（clean-adv 能量对齐），$h_3 = \partial \log p(y|\mathbf{x}, \tilde{\mathbf{x}})/\partial\theta$（标准 CE 鲁棒分类）。默认权重 $w_1=w_2=w_3=1$
     - **设计动机**：消融表明 $h_2$（能量对齐）是防止训练崩溃的关键——去掉 $h_2$ 后第 41 轮即崩溃（ECO=41），保留则稳定到终点。$h_1$ 提供生成能力和额外分类精度
 
 3. **即插即用兼容性**
 
-    - **做什么**：EB-JDAT 作为通用框架直接嫁接到已有 JEM 变体上
+    - **功能**：EB-JDAT 作为通用框架直接嫁接到已有 JEM 变体上
     - **核心思路**：可与 JEM++（更快 SGLD 采样）或 SADAJEM（更稳定训练）无缝集成，利用其改进的采样策略，无需修改主框架。EB-JDAT-SADAJEM 在 CIFAR-10 上达到最佳鲁棒性 68.76%/66.12%（PGD-20/AA），EB-JDAT-JEM++ 训练更快（31.66h vs 66.64h）
     - **设计动机**：模块化设计提升实用性，让已有社区积累的 JEM 改进直接受益
 
@@ -123,7 +123,7 @@ WRN28-10 backbone；lr=0.01；5 步对抗采样；$\ell_\infty$ 约束 $\epsilon
 2. **min-max 能量优化替代 max-CE**：传统 AT 在交叉熵空间做 min-max，EB-JDAT 在能量空间做 min-max——语义更直观（高能量=低密度=对抗区域），且能额外捕获数据分布结构
 3. **计算效率碾压数据增强方案**：不用生成 100 万张图就超过对应方法，因为直接建模能量分布比用生成数据做间接正则化更本质
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 CIFAR-10/100 和 ImageNet 子集上实验，未在完整 ImageNet 上验证（作者称资源限制）
 2. 对抗采样步数敏感（5 步最佳），步数增大会导致 EBM 崩溃——能量模型训练不稳定的老问题

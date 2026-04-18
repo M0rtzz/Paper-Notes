@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faster Certified Symmetry Breaking Using Orders With Auxiliary Variables
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 完整的端到端形式化验证链：satsuma → VeriPB → CakePB（形式化正确性保证）
 - 实现在 SOTA 工具中，具有直接实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 证明验证仍可能比对称性破坏本身渐近更慢（每个对称性需推理所有序变量）
 - 启用证明生成仍有常数因子开销（主要是磁盘 I/O）

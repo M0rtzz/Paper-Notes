@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CodePercept: Code-Grounded Visual STEM Perception for MLLMs
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：作者通过 scaling 实验揭示——将 STEM 推理解耦为 perception (image→caption) 和 reasoning (caption→answer)，独立 scale 两者时，perception scaling 始终优于 reasoning scaling。这表明感知才是真正的杠杆。
 
-**本文要解决什么？** 如何系统性提升 MLLM 在 STEM 领域的视觉感知能力？
+**本文目标** 如何系统性提升 MLLM 在 STEM 领域的视觉感知能力？
 
 **切入角度**：自然语言描述 STEM 图像时存在"描述失语"——复杂空间关系、精确数值无法用自然语言完整表达。但可执行代码天然具有精确语义，与 STEM 图像的结构化特性高度匹配。
 
-**核心 idea 一句话**：用可执行 Python 代码作为 STEM 视觉感知的 ground truth 和训练媒介——能准确重构图像才证明真正理解了图像。
+**核心 idea**：用可执行 Python 代码作为 STEM 视觉感知的 ground truth 和训练媒介——能准确重构图像才证明真正理解了图像。
 
 ## 方法详解
 
@@ -124,7 +124,7 @@ tags:
 - **Execution tracer**：执行代码并记录所有渲染细节（坐标、z-order、颜色 RGB），作为代码分析的"说明书"，巧妙地解决了 LLM 难以分析复杂代码逻辑的问题。
 - **STEM2Code-Eval benchmark 的设计理念**：只有能重构图像才算真正理解图像——这比回答问题更全面地评估感知。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **代码生成限于 matplotlib**：某些 STEM 图像（如真实照片、手绘图）无法用 matplotlib 重构
 - **RL reward 依赖 GPT-4o**：GPT-4o 评分不稳定且昂贵，可探索基于像素相似度的自动 reward

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rectifying Magnitude Neglect in Linear Attention
 description: >-
@@ -124,7 +124,7 @@ Linear Attention 替换对比（DeiT-T/Swin-T/Swin-S 设置下，仅替换注意
 - 增长速率的差异是一个深刻洞察：Softmax 的指数增长导致过于尖锐，MALA 的分数增长提供更合理的分布
 - 跨领域验证（视觉/NLP/语音/生成）说明这是一个基础性改进而非特定任务的技巧
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - β 和 γ 引入额外的逐 token 标量计算，虽然不影响渐近复杂度但增加常数开销
 - 对负注意力分数的理论分析不够深入（仅声明实验中未观察到）

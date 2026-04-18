@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction
 description: >-
@@ -87,7 +87,7 @@ AEDR完全免训练。重建损失采用MSE（消融实验证明优于MAE/SSIM/L
 3. **在最新模型上有效**：解决了FLUX等高性能模型上现有方法完全失效的问题
 4. **极高的效率**：100倍以上加速，实际部署可行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **量化自编码器上性能下降**：MoVQ仅82.93%，VQ-VAE的离散量化导致重建精度不足，损害了"不动点"假设。如何为离散latent space设计类似的归因信号是开放问题
 2. **白盒假设**：需要访问目标模型的自编码器。对于完全黑盒的商业API模型（如DALL·E 3）不适用

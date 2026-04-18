@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Speculative Sampling with Reinforcement Learning
 description: >-
@@ -145,7 +145,7 @@ $$L^{MAX\text{-}ENT}(\theta) = L^{PPO}(\theta) + \beta_H \mathbb{E}_t[H(\pi_\the
 - 保持了**逐字节的输出无损保真性**，这是实际部署的硬性要求
 - 在最大模型（70B）上取得了**高达 5.45× 的整体加速**（含 EAGLE-3 自身的加速）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CNN/DailyMail 上因序列长度限制导致轻微退化，长文档场景有待优化
 - 当前仅在贪心解码（temperature=0）下验证，随机采样下的效果未知

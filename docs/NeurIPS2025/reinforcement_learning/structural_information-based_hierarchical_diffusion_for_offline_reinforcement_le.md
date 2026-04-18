@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Structural Information-based Hierarchical Diffusion for Offline Reinforcement Learning
 description: >-
@@ -152,7 +152,7 @@ SIHD包含三个模块：
 - **正则化的双重约束**：既鼓励探索稀疏状态（最大化Shannon熵），又限制探索在低层社区内（最小化社区熵），精妙地平衡了探索与保守
 - **理论完备**：Theorem 4.1保证了层次分解的可分性，Theorem 4.2建立了正则化的变分界
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 大规模离线数据集上结构熵优化的计算开销较大（通过预计算缓解）
 - Subgoal约束使用简单的末状态替换策略，可能不够精细

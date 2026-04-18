@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] High Dynamic Range Novel View Synthesis with Single Exposure
 description: >-
@@ -172,7 +172,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{ldr}} + \alpha \mathcal{L}_{\text{hdr}} + \be
 3. **闭环自监督思想**：H2L-CC闭环设计使得仅用LDR图像也能间接监督HDR空间学习，是一种优雅的无标签学习策略
 4. **元算法设计**：作为即插即用模块可以集成到任意NVS backbone中，已验证NeRF和3DGS两种实例化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **真实场景提升有限**：在真实数据上LDR NVS指标提升微弱（PSNR仅+0.47dB），说明方法在复杂真实光照条件下优势缩小
 2. **单曝光信息天花板**：严重过曝/欠曝区域的信息本质上已丢失，仅靠网络学习难以真正恢复

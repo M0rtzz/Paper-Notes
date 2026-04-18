@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prediction via Shapley Value Regression (ViaSHAP)
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}(\theta) = \sum_{x \in X}\sum_{j \in M}\left(\beta \cdot \mathbb{E}
 4. **理论完备**：严格证明了最优解满足 Shapley 值的三条公理性质。
 5. **架构无关**：方法可适配 KAN、MLP、ResNet、U-Net 等多种架构，通用性好。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **全局最优假设**：理论保证依赖全局最优，但实际训练中只能达到局部最优，Shapley 值的精确性受限。
 2. **推理增加的输出维度**：模型输出从 $d$ 维扩展至 $n \times d$ 维，高维特征场景下参数量和计算量增加。

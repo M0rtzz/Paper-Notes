@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harnessing Uncertainty: Entropy-Modulated Policy Gradients for Long-Horizon LLM Agents
 description: >-
@@ -121,7 +121,7 @@ EMPG 作为优势调制模块直接应用于 GRPO 或 DAPO 等基线之上。Age
 4. **双重校准设计精妙**：梯度缩放处理"学多少"，未来清晰度处理"往哪探索"
 5. **跨任务跨规模一致有效**：从 1.5B 到 32B 模型，从 web 导航到深度搜索均稳定提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **熵估计的粗糙性**：使用平均 token 级熵作为步级不确定性的代理，可能忽略了步内不同 token 的重要性差异
 2. **超参数敏感性**：缩放因子 k、k' 和 zeta 的选择需要调优，论文未充分讨论敏感性

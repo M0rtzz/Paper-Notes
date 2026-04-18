@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CGSA: Class-Guided Slot-Aware Adaptation for Source-Free Object Detection
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{unsup} + \lambda_{con} \mathcal{L}_{con} + 
 - 提供理论泛化分析——slot-aware 设计不仅是经验有效，还有理论支撑
 - **在无源设置下超越有源方法**是强有力的实验证据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在驾驶场景数据集验证，医疗/航拍/工业等领域的泛化性待测试
 - Slot 数量 $n=5$ 是手动设定，自适应机制可能更好

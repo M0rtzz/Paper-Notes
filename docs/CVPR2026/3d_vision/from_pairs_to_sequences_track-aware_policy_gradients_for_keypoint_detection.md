@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Pairs to Sequences: Track-Aware Policy Gradients for Keypoint Detection
 description: >-
@@ -105,7 +105,7 @@ $$\mathcal{L}(\theta) = -\mathcal{R}(\mathcal{A}) \cdot \left(\frac{1}{N} \sum_{
 - **解耦策略与描述子**：冻结描述子分支提供稳定奖励信号，策略网络专注优化检测，训练更稳定
 - **对下游任务全面有效**：不仅在配对任务上领先，在序列任务（视觉里程计、三维重建）上优势更显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练需要带有深度和位姿标注的序列数据（MegaDepth），数据构建成本高
 - 推理时仍用 NMS + sigmoid 提取关键点，未在推理阶段利用序列信息

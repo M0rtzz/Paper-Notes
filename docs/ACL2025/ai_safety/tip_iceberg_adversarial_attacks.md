@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TIP of the Iceberg: Task-in-Prompt Adversarial Attacks on LLMs
 description: >-
@@ -112,7 +112,7 @@ TIP 攻击由两个组件构成：任务指令 x_task（要求模型处理编码
 - **理论意义**：证明只要 LLM 保持通用任务求解能力，安全对齐就无法仅通过过滤已知模式来实现
 - **隐式解码**：模型无需显式输出解码过程就能利用编码内容，增加了检测难度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试了 6 个模型，未涵盖闭源模型的最新版本（如 Claude、Gemini）
 - PHRYGE benchmark 的 4 种攻击目标覆盖面有限

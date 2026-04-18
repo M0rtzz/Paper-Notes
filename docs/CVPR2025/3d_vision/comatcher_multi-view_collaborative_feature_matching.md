@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMatcher: Multi-View Collaborative Feature Matching
 description: >-
@@ -104,7 +104,7 @@ $$\mathcal{L}_{total} = \frac{1}{M}\sum_{I_i \in \mathcal{G}}(\mathcal{L}_{corr}
 - 置信度引导的注意力修正策略简洁高效——低置信度点借用高置信度对应点的attention分布，无需复杂的后处理
 - 几何约束的注意力机制（利用tracks的投影位置差作为位置编码）巧妙地限制了搜索空间而不丧失灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练时源视角数$M=4$固定，更多视角的泛化性未充分验证
 - 依赖组内预计算的tracks质量，如果初始tracks有误会影响几何约束的准确性

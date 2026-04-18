@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EvoLM: In Search of Lost Language Model Training Dynamics
 description: >-
@@ -122,7 +122,7 @@ tags:
 - **模型规模的解锁条件**：小模型在预训练不足时反而优于大模型；只有预训练到饱和区域后，模型规模优势才显现
 - **ORM score 作为代理指标**的实用价值，尤其在标注困难的任务中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 模型规模仅到 4B，趋势是否推广到更大模型未验证
 - 仅关注推理任务的 post-training，安全对齐、指令遵循、代码等目标未探索

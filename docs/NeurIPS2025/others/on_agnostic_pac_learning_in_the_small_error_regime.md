@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Agnostic PAC Learning in the Small Error Regime
 description: >-
@@ -121,7 +121,7 @@ ERM 最小化经验风险：$\hat{h}_{\text{ERM}} = \arg\min_{h \in \mathcal{H}}
 - **推进了学习理论的基本问题**：PAC 学习的精确复杂度至今未完全解决，本文是重要进展
 - **提出了清晰的开放问题**：能否将 $c$ 降至 1？
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 常数 $c = 2.1$，距离最优的 $c = 1$ 仍有差距
 - 分组数 $T$ 影响常数和计算效率之间的权衡，理论上 $T \to \infty$ 时 $c \to 2$

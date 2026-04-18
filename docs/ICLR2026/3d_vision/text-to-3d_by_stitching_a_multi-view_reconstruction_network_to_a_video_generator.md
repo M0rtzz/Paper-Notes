@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **现有痛点——对齐弱**：生成模型和VAE解码器分开训练，生成损失(扩散loss/flow matching)只间接促进3D一致性，导致生成的latent可能偏离解码器的输入分布，解码质量差。即使加渲染loss也只基于单步采样，未充分考虑完整去噪轨迹。
 
-**核心idea一句话**：与其从头训3D解码器，不如通过模型拼接直接复用现有最强3D基础模型作为解码器，并用奖励微调确保生成器产出的latent落在解码器的有效输入域内。
+**核心 idea**：与其从头训3D解码器，不如通过模型拼接直接复用现有最强3D基础模型作为解码器，并用奖励微调确保生成器产出的latent落在解码器的有效输入域内。
 
 ## 方法详解
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReCamMaster: Camera-Controlled Generative Rendering from A Single Video
 description: >-
@@ -106,7 +106,7 @@ VBench 质量评估：
 - UE5 数据集的真实拍摄模拟设计是泛化到真实视频的关键
 - 多任务训练（T2V/I2V/V2V 统一）是提升内容生成能力的有效策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 帧维度拼接使输入 token 翻倍，增加计算开销
 - 继承预训练 T2V 模型的缺陷（如手部生成效果不佳）

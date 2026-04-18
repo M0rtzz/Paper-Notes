@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Chimera: Improving Generalist Model with Domain-Specific Experts
 description: >-
@@ -157,7 +157,7 @@ Chimera 由以下组件构成：
 - **极简路由设计**：仅一个线性层即可达到 95.4% 的路由准确率，说明不同领域的视觉内容在特征空间中已有很好的区分性
 - **DPO 的高效集成**：展示了 Chimera 作为基础框架可以与偏好优化无缝结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Chimera-8B 在表格领域反而低于 InternVL2-8B（62.9% vs 67.1%），因为表格专家（StructEqTable）过于专业化，任务差距引入噪声
 - 路由标签基于数据集级别而非图像级别标注，"通用"类别可能包含混合领域图像

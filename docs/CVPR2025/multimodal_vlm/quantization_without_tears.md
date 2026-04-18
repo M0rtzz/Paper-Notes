@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantization without Tears
 description: >-
@@ -97,7 +97,7 @@ QwT 的核心范式转变：允许量化后的网络结构从 $S^{\mathbb{Z}} = 
 - **黑盒兼容**：可作为插件叠加到任意PTQ方法之上（RepQ-ViT, PTQ4ViT, GPTQ等），无需了解底层量化细节
 - **跨任务通用**：同一方法在CNN、ViT、CLIP、DiT、LLaMA上均有效，覆盖分类/检测/分割/生成/NLU
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 补偿层是全连接线性层，当 $d_{in}$ 很大时参数量和计算量不可忽略（ResNet中用分组卷积缓解）
 - 对QAT模型的闭式解无效，只能零初始化后微调

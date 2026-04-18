@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scalable Multilingual Multimodal Machine Translation with Speech-Text Fusion
 description: >-
@@ -91,7 +91,7 @@ tags:
 - 三阶段课程学习（ASR→S2TT→SMT）的设计让模型从浅层对齐逐步学到深层融合
 - CosyVoice2 的零样本多语言合成+随机声音克隆提供了韵律多样性，这比使用单一合成声音更有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理时需额外 TTS 步骤（CosyVoice2 合成），增加约 0.5-1s 延迟
 - 仅 9B 规模验证，更大模型是否仍受益于语音辅助待探索
 - COMET 评估指标的偏差可能影响自我进化中正样本的筛选质量——若 COMET 对某些语言不准确，可能引入噪声

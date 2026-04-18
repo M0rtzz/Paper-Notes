@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Image Geo-Localization to Continent Level
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **vs 跨视图检索（CVGL）**：以前仅限城市级，本文推广到大陆级
 - 可作为6-DoF精确定位的初始估计提供方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练需要大量StreetView地面图像（Google特殊权限）
 - cell分区粒度受训练内存限制
 - 仅在西欧验证，其他大陆的地貌和建筑风格差异可能影响泛化

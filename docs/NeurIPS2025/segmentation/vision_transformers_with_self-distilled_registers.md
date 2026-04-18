@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vision Transformers with Self-Distilled Registers
 description: >-
@@ -108,7 +108,7 @@ PH-Reg在8个基准中的7个取得最佳，平均提升1.94%。
 - 对伪影token本质的新发现（非静态、非总高范数）推进了社区对ViT内部机制的理解
 - Register token引入的参数量极小（仅几千个参数），推理成本增加可忽略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅在ViT-B/16上验证，更大模型（ViT-L、ViT-G）的效果未知
 - 去噪过程需要多次前向传播（默认10次），虽然远快于DVT但仍增加推理成本

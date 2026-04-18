@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TGDD: Trajectory Guided Dataset Distillation with Balanced Distribution
 description: >-
@@ -141,7 +141,7 @@ $$L_{overall} = L_{MMD} + \alpha L_{SDC}$$
 - **极低的存储需求**：仅需 5 条轨迹（vs MTT 的 200 条），且可预训练复用
 - **性能-效率帕累托最优**（图 1）：在相同 GPU 内存和蒸馏时间约束下达到最高精度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 ConvNet 架构上蒸馏，未探索使用 ViT 或 ResNet 作为蒸馏架构
 - 跨架构泛化虽优于基线但仍有下降空间，尤其是 ConvNet→DenseNet 的差距

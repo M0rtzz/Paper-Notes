@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforcement Learning for Long-Horizon Multi-Turn Search Agents
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：工具访问 ≠ 有效使用工具。agent 需要学会如何有效利用多轮交互机会来逐步缩小搜索范围。
 
-**本文要解决什么？** 用 RL 训练 agent 学会在多轮交互中有效使用搜索工具。
+**本文目标** 用 RL 训练 agent 学会在多轮交互中有效使用搜索工具。
 
 **切入角度**：构建法律文档搜索 benchmark，设计分段奖励结构（分别奖励找到正确文档、正确引用、承认不知道，惩罚幻觉和格式错误），用 GRPO 训练 LoRA adapter。
 
-**核心 idea 一句话**：通过精心设计的分段奖励和 GRPO 训练，14B 模型学会了有效利用多轮搜索交互，超越了 frontier 模型。
+**核心 idea**：通过精心设计的分段奖励和 GRPO 训练，14B 模型学会了有效利用多轮搜索交互，超越了 frontier 模型。
 
 ## 方法详解
 
@@ -98,7 +98,7 @@ GRPO (Group Relative Policy Optimization)。Base model: Qwen3-14B + LoRA adapter
 - **分段奖励设计**极具参考价值："不知道" > 幻觉的价值排序应该成为所有搜索 agent 的标准。
 - **小模型 + RL 可以超越大模型**：展示了在特定任务上，RL 训练的专家模型比通用 frontier 模型更强的路线。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **单一法律领域**：未验证在其他领域的泛化性。
 - **依赖 Gemini 2.5 Pro 作为 reward model**：高成本，且可能引入偏见。
 - **训练数据由 LLM 生成**：QA 对的质量和多样性受限于生成模型。

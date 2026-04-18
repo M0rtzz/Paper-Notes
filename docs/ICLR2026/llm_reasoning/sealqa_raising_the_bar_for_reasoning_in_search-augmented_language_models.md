@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SealQA: Raising the Bar for Reasoning in Search-Augmented Language Models
 description: >-
@@ -109,7 +109,7 @@ SealQA包含三种变体：
 - 证明了内置搜索训练（如ChatGPT）比检索式提示方法（FreshPrompt）更有效
 - 动态版本化基准设计，承诺定期更新答案以反映最新知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模小（Seal-0仅111题），统计显著性可能受限
 - 答案随时间变化需持续维护，长期可持续性存疑

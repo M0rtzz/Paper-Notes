@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion-Based Electromagnetic Inverse Design of Scattering Structured Media
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{L} = \mathbb{E}_{t, y_0, \epsilon}\left[\|\epsilon - \epsilon_\theta(
 - **非唯一性即多样性**：逆问题的"病态"特性在生成模型框架下反而是优势——提供多个可选设计方案
 - **实际可行性**：生成的结构可在射频实验室条件下实现（~10 GHz，~30 cm 尺度）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **规模限制**：当前仅验证 2×2 网格（12 维参数），更大网格（如 4×4, 8×8）待扩展
 2. **条件信息有限**：仅用 10 个角度的 DSCS 值作条件，更密集的角度采样可能提升精度

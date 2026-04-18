@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adversarial Robust Memory-Based Continual Learner
 description: >-
@@ -133,7 +133,7 @@ Split-CIFAR10 数据集，Buffer=200，ER 为基础框架的系统性分析：
 3. **即插即用设计**：AFLC 和 RAER 可自由组合进不同的持续学习算法和对抗训练方法
 4. **不需要额外数据**：与之前工作不同，完全依赖现有训练数据和记忆
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验主要基于小规模数据集（CIFAR-10/100、Tiny-ImageNet），大规模场景验证缺失
 2. 仅考虑了 $\ell_\infty$ 范数的 PGD 攻击，对其他攻击类型的鲁棒性未评估

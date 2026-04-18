@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Easy3E: Feed-Forward 3D Asset Editing via Rectified Voxel Flow
 description: >-
@@ -115,7 +115,7 @@ Easy3E 在所有指标上全面领先：FID 比次优 TRELLIS 降低 43.7%，LPI
 - Voxel FlowEdit 将 2D flow-matching 编辑范式巧妙适配到 3D 稀疏体素，用轮廓引导 + 轨迹校正解决了离散化漂移
 - 将编辑分解为"几何在潜空间做 + 外观用多视角扩散补"的思路很优雅：扬长避短地利用了 3D 生成模型的几何优势和 2D 扩散模型的纹理优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 性能受限于 TRELLIS 的生成能力上限，极端几何修改仍有困难
 - 法线引导精修目前在较低分辨率合成视角上操作，限制了非常精细纹理的恢复

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Multi-Agent LLM Framework for Multi-Domain Low-Resource In-Context NER via Knowledge Retrieval, Disambiguation and Reflective Analysis
 description: >-
@@ -96,7 +96,7 @@ KDR-Agent 分两个阶段运行：
 - **反思模块的4类错误分类体系**实用且可迁移：span错误、类型错误、幻觉和遗漏，这套诊断框架可以应用到其他信息抽取任务
 - 在MIT Restaurant上提升了惊人的+13个点，证明在实体类型多且边界模糊的场景下优势尤为明显
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理成本高**：每条文本需要多轮LLM调用（规划+检索+消歧+初始推理+反思+纠正），至少4-6次API调用，延迟和成本是实际部署的主要障碍
 - **仅使用Wikipedia作为知识源**：对于高度专业化的领域（如最新药物名称、小众技术术语），Wikipedia覆盖可能不足，未来可扩展到PubMed、专业知识图谱等

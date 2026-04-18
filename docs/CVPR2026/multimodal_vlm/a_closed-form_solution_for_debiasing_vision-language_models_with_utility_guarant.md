@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks
 description: >-
@@ -49,19 +49,19 @@ tags:
 
 #### 1. LLM引导的组原型构建（Group Prototype Construction）
 
-- **做什么**：为每个敏感属性组$g$构建一个鲁棒的文本原型$\vec{p}_g$。
+- **功能**：为每个敏感属性组$g$构建一个鲁棒的文本原型$\vec{p}_g$。
 - **核心思路**：给定输入prompt（如"a photo of a doctor"），用LLM（GPT-5）生成组特定提示（如"a photo of a male doctor"）及其多个同义变体（"a photo of a man doctor"、"a photo of a masculine doctor"等），然后取所有变体嵌入的球面均值作为组原型。
 - **设计动机**：先前方法直接用单个组提示作为原型，忽略了属性表达的语言多样性。SANER虽用语料库扩充，但词集不依赖输入上下文。本方法利用LLM推理能力生成上下文对齐的变体，使原型更具代表性。
 
 #### 2. 属性子空间构建与正交分解
 
-- **做什么**：定义属性子空间$\mathcal{A} = \text{span}\{\vec{a}_2, \ldots, \vec{a}_n\}$，其中$\vec{a}_i = \vec{p}_{g_i} - \vec{p}_{g_1}$为组间差异方向。
+- **功能**：定义属性子空间$\mathcal{A} = \text{span}\{\vec{a}_2, \ldots, \vec{a}_n\}$，其中$\vec{a}_i = \vec{p}_{g_i} - \vec{p}_{g_1}$为组间差异方向。
 - **核心思路**：将原始嵌入$\vec{e}$正交分解为$\vec{e}_{\mathcal{A}_\parallel}$（属性泄露分量）和$\vec{e}_{\mathcal{A}_\perp}$（中性语义分量），去偏即为减小前者、保留后者。
 - **设计动机**：区别于之前投影到整个$\mathcal{S}$子空间（会丢失语义），只投影到属性子空间$\mathcal{A}$可精准去除偏见而不损害内容。
 
 #### 3. 闭式最优解求解
 
-- **做什么**：在$\mathbb{S}^{d-1}$上求解同时最小化属性泄露（公平性）和self-utility loss（效用）的Pareto最优嵌入。
+- **功能**：在$\mathbb{S}^{d-1}$上求解同时最小化属性泄露（公平性）和self-utility loss（效用）的Pareto最优嵌入。
 - **核心思路**：
     - 通过Lemma 1将搜索空间从高维超球面降至$\text{span}\{\vec{e}_{\mathcal{A}_\parallel}, \vec{e}_{\mathcal{A}_\perp}\}$上的二维单位圆。
     - 用标量$\alpha$参数化解：$\vec{u} = \alpha \frac{\vec{e}_{\mathcal{A}_\parallel}}{\|\vec{e}_{\mathcal{A}_\parallel}\|} + \sqrt{1-\alpha^2} \frac{\vec{e}_{\mathcal{A}_\perp}}{\|\vec{e}_{\mathcal{A}_\perp}\|}$
@@ -129,7 +129,7 @@ $$\min_{0 \leq \alpha \leq \|\vec{e}_{\mathcal{A}_\parallel}\|} \sup_{w_1+w_2=1}
 - **Chebyshev scalarisation的巧用**：通过minimax避免了task-specific权重调参，使解对任意公平-效用偏好都鲁棒。
 - **属性子空间 vs 组原型子空间**的区分是关键insight——先前方法投影到$\mathcal{S}$会丢失"doctor"等语义，只投影到$\mathcal{A}$精准去除性别差异。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **效用保证在嵌入空间而非任务指标**：理论上界约束的是cosine similarity意义下的效用，不直接保证F1、R@K等具体指标；实际上文实验表明两者高度正相关，但gap仍存在。
 2. **仅限编码器侧**：方法在VLM编码器嵌入空间操作，尚未扩展到解码器（如直接对生成模型的decoder去偏）。

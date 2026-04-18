@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Thinking Drifts: Evidential Grounding for Robust Video Reasoning
 description: >-
@@ -131,7 +131,7 @@ Video-VER在10个基准中9个排名第一，平均比基座模型CoT提升+4.0%
 3. **方法高效轻量**：仅需额外的LLM判官和证据生成，无需修改模型架构，可直接应用于已有MLLM
 4. **最大提升在幻觉检测**：VideoHallucer上+9.0%的绝对提升，直接验证了VER对抑制幻觉的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 帧采样不完整时（遗漏关键帧），即使VER也无法纠正，视觉表征质量是前提
 - LLM判官（Llama-3.1-70B）本身的能力限制了奖励信号质量

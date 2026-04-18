@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CAP: Evaluation of Persuasive and Creative Image Generation
 description: >-
@@ -106,7 +106,7 @@ LLM扩展对T2I生成的改善（InternVL+LLAMA3+AuraFlow）:
 - 人-AI一致性超过人-人一致性的结果说明多组件集成评估的优势
 - LLM扩展策略简单但极其有效，揭示了T2I模型在理解隐式意图方面的根本缺陷
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 创意性指标C_obj与人类一致性仍有提升空间（0.54 vs 0.73人-人一致性）
 - 依赖PittAd数据集，广告类型和消息格式有限
 - LLM扩展策略虽然有效但偏向文字描述，无法捕捉纯视觉创意

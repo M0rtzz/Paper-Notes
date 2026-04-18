@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SimulMEGA: MoE Routers are Advanced Policy Makers for Simultaneous Speech Translation
 description: >-
@@ -114,7 +114,7 @@ $$\text{Action} = \begin{cases} \text{Write} & \text{if } p_{t,i} < \lambda \\ \
 3. **无监督策略学习**：路由门的$p$值自然学会读/写决策，无需人工策略设计
 4. **多语言鲁棒性**：同一阈值配置适用于所有语言对
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 级联系统的固有缺陷：S2TT和TTS的token不一致（Whisper vs Qwen2）
 - TTS目前仅支持中英两种语言
 - 最大输入时长30秒，仍依赖VAD模型分段

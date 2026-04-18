@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generative AI Agents for Controllable and Protected Content Creation
 description: >-
@@ -128,7 +128,7 @@ $$\min_{\theta_g, \theta_p} \{L_{plan} + L_{rev} + L_{int} + L_{prot}\}$$
 3. **模块化设计**：每个智能体可独立替换和优化，利用现有最优模型组装（GPT-4 做规划、SDXL 做生成、CLIP 做评估）
 4. **面向负责任 AI**：在创意内容生成中内建版权保护和溯源能力，契合 AI 治理的发展方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏实验验证**：作为 workshop paper，仅提供了可行性分析而非实际实验结果，论据说服力有限
 2. **计算开销**：多智能体编排和第三方 API 调用增加了显著的计算成本和延迟

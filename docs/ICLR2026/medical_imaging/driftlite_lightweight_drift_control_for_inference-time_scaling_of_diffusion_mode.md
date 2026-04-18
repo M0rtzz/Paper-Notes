@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DriftLite: Lightweight Drift Control for Inference-Time Scaling of Diffusion Models
 description: >-
@@ -36,13 +36,13 @@ DriftLite 提出在 Fokker-Planck 方程中利用漂移-势函数的自由度，
 
 **核心矛盾**：无偏性 vs 计算效率——SMC 理论正确但实际不稳定，guidance 高效但有偏
 
-**本文要解决什么？**
+**本文目标**
    - 如何在保持无偏性的前提下稳定粒子权重？
    - 能否找到一种 training-free 且开销极小的方法？
 
 **切入角度**：Fokker-Planck 方程中漂移项和势函数之间存在根本性的自由度——任何加到漂移上的控制项都可以被势函数的对应修正精确补偿，而这个自由度可以用来最小化残差势函数的方差。
 
-**核心idea一句话**：将 SMC 的被动重加权（passively reweight）改为主动转向（proactively steer）——把导致权重方差的势函数 $g_t$ 的一部分"卸载"到漂移项中，只需在每步求解一个小线性系统。
+**核心 idea**：将 SMC 的被动重加权（passively reweight）改为主动转向（proactively steer）——把导致权重方差的势函数 $g_t$ 的一部分"卸载"到漂移项中，只需在每步求解一个小线性系统。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ DriftLite 提出在 Fokker-Planck 方程中利用漂移-势函数的自由度，
 - **"主动转向 vs 被动重加权"的范式转换**值得关注——SMC 的本质问题不是理论正确性而是实际的权重退化。DriftLite 通过把"信息"从权重转移到漂移中，从根本上解决了这个工程问题。
 - **在 AlphaFold3 上的成功应用**证明了该方法在真实科学场景中的价值——这不仅仅是一个理论漂亮的方法，而是可以直接改善蛋白质结构预测的实用工具。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要 reward function 二阶可微（可用随机估计器近似，但精度下降）
 - 基函数选择仍是手工的（3个基函数），更多/更好的基函数可能进一步提升
 - 高维场景中 Laplacian 估计引入噪声，可能影响控制质量

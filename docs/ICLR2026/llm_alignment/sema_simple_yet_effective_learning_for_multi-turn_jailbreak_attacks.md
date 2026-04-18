@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SEMA: Simple yet Effective Learning for Multi-Turn Jailbreak Attacks
 description: >-
@@ -88,7 +88,7 @@ Stage 2 的受害模型可以和攻击者模型不同，这保证了模型迁移
 - 33.9%的ASR@1提升（vs SOTA）表明现有LLM的多轮防御能力远不够
 - 方法的紧凑性（代码量小、训练成本适中）使其适合作为标准化的安全压力测试工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 代码仍在 Microsoft Research 审核中，尚未完全公开
 - 开环攻击可能不如闭环攻击在特定受害模型上的效果好（无法利用中间反馈调整策略）
 - 防御方可以简单地检测多轮对话中的模式来防御此类攻击

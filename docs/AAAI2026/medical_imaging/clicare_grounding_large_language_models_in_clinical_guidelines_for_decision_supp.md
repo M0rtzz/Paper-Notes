@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CliCARE: Grounding Large Language Models in Clinical Guidelines for Decision Support over Longitudinal Cancer Electronic Health Records
 description: >-
@@ -165,7 +165,7 @@ TKG 压缩是最关键组件，移除后性能大幅下降（Gemini 从 4.976→
 3. **评估方法论贡献**：LLM-as-a-Judge 与专家评估的 $\rho \approx 0.7$ 相关性验证，为临床 NLP 评估提供了可信的度量方案
 4. **模型无关性**：框架同时提升了 7B-级和顶级商业模型的性能，证明结构化知识表示比单纯扩大模型更有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **领域覆盖有限**：仅在肿瘤学数据上验证，需推广到心血管、神经科等其他临床领域
 - **指南图谱构建成本**：需要领域专家参与构建临床指南知识图谱，扩展到新疾病时有人工成本

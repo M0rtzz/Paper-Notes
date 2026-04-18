@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ranked Entropy Minimization for Continual Test-Time Adaptation
 description: >-
@@ -168,7 +168,7 @@ $$\mathcal{L}_{REM} = \mathcal{L}_{MCL} + \lambda \cdot \mathcal{L}_{ERL}$$
 3. **单模型方案**：不需要教师模型、EMA 模型或源模型保存，从工程部署角度极具吸引力
 4. **利用 ViT 内在结构**：注意力分数天然指示目标位置，遮挡策略无需额外计算即可获得语义有意义的增强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论支撑不足**：显式遮挡导致熵增的假设缺乏严格数学证明，虽然实验验证了统计显著性，但个别样本可能存在反例
 2. **学习率敏感的适应速度权衡**：快速适应和泛化之间的 trade-off 未完全解决

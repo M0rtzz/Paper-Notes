@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConfTuner: Training Large Language Models to Express Their Confidence Verbally
 description: >-
@@ -30,11 +30,11 @@ ConfTuner 提出 tokenized Brier score 损失函数（理论证明为 proper sco
 
 **核心矛盾**：语言化置信度是离散的 token（"80%"是一个 token 而非概率值），经典的 Brier score 定义在连续概率上。如何将 proper scoring rule 理论扩展到 token 空间？
 
-**本文要解决什么**：(1) 设计理论上有保证的置信度校准损失；(2) 以极低成本（2000样本/4分钟）实现校准。
+**本文目标**：(1) 设计理论上有保证的置信度校准损失；(2) 以极低成本（2000样本/4分钟）实现校准。
 
 **切入角度**：将 Brier score 从对概率值的评分推广到对"置信度 token 上的概率分布"的评分——如果模型在"80%"上放了更多概率质量，而真实正确率确实接近80%，则损失低。
 
-**核心idea一句话**：Tokenized Brier score = 对置信度 token 的 proper scoring rule，迫使模型在最接近真实正确率的 token 上放最多概率。
+**核心 idea**：Tokenized Brier score = 对置信度 token 的 proper scoring rule，迫使模型在最接近真实正确率的 token 上放最多概率。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ Tokenized Brier score + LoRA。LLaMA 用 $\mathcal{T}_{100}$（0-100%），Qwen/
 - **"2000样本4分钟"**：极低的成本意味着任何使用 LLM 的团队都可以做置信度校准——民主化了不确定性估计。
 - **从校准到决策**：校准本身不是目的，自我纠错和级联才是。论文展示了完整的"校准→利用"链路。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 限于固定的置信度 token 集，灵活的自然语言表达（如"我相当确定但不完全肯定"）未处理
 - 理论保证与实践仍有差距——数据质量和优化动态会影响实际校准
 - 仅在推理任务上验证，创意写作/翻译等任务的校准未探索

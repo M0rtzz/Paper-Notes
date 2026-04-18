@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TimeBill: Time-Budgeted Inference for Large Language Models
 description: >-
@@ -168,7 +168,7 @@ $$\alpha^* = \min\left(\alpha_{\max}, 1 - \frac{T - \hat{t}_{\text{prefill}}(x) 
 3. **系统设计巧妙**：RLP与Prefill并行执行的设计消除了额外预测开销
 4. **实用性强**：框架支持不同推理任务的不同时间预算，且与量化等离线方法正交互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在单GPU单请求场景验证，未考虑批量推理和多请求调度
 2. RLP需要针对每个目标LLM重新训练，迁移性有限

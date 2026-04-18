@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stratified Knowledge-Density Super-Network for Scalable Vision Transformers
 description: >-
@@ -145,7 +145,7 @@ tags:
 - **超极少训练**：WPAC 阶段零训练 + PIAD 阶段少量训练，总成本远低于传统多次压缩
 - **统一框架**：同一个超网络覆盖从 1/3 到全尺寸的所有模型，真正做到"一次构建，任意提取"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 DeiT 和 Swin Transformer 上验证，未扩展到 LLM 或多模态模型
 - PIAD 训练仍需要数百个 epoch，对于更大的模型可能成本较高

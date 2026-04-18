@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TheoremExplainAgent: Towards Video-based Multimodal Explanations for LLM Theorem Understanding
 description: >-
@@ -124,7 +124,7 @@ TheoremExplainAgent（TEA）采用双 Agent 流水线：
 - **多模态解释作为推理缺陷探测器**：视觉化能暴露文本中隐藏的错误——这一发现对 AI 评估和教育应用都有深远意义
 - **Agentic 方法的必要性**：agentless 只能生成 ≤20 秒视频，agent 可达 10 分钟，规划能力是长内容生成的基石
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 视觉布局质量仍不理想，文本重叠、形状错位、大小不一致问题频繁出现
 - 依赖 Manim 库的能力边界：某些复杂可视化（3D 交互、化学分子结构）受限于 Manim 的表达能力

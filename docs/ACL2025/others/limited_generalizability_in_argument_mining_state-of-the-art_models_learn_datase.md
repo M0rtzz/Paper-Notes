@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Limited Generalizability in Argument Mining: State-Of-The-Art Models Learn Datasets, Not Arguments
 description: >-
@@ -134,7 +134,7 @@ tags:
 - **对领域的清醒批判**：不是提出更好的方法，而是揭示领域中普遍存在但未被系统验证的问题
 - **联合训练的启示**：虽然不能完全解决问题，但异质数据确实有助于提升泛化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅考虑 BERT 家族模型，未涉及更大模型（如 GPT-4、LLaMA）或基于 prompt 的方法
 2. 操纵实验仅移除功能词，未尝试其他细粒度干预（如替换论辩结构词、保留结构但改变内容）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A3GS: Arbitrary Artistic Style into Arbitrary 3D Gaussian Splatting
 description: >-
@@ -61,7 +61,7 @@ tags:
 - **大规模场景可行**：前馈设计避免了优化方法的内存瓶颈
 - **零样本泛化**：训练后可迁移任意未见风格
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅基于摘要信息判断，缺乏论文全文细节
 - 未见与最新StyGS等方法的定量对比数据
 - 基于AdaIN的风格注入可能丢失精细风格纹理

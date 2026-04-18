@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Lipschitz Continuity of Set Aggregation Functions and Neural Networks for Sets
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 注意力机制的非Lipschitz性质解释了其在对抗攻击下的脆弱性
 - 直接推导出的泛化Bound（基于Wasserstein距离）在实验中得到了良好验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Lipschitz上界对max函数和sum函数较松，可能需要更紧致的分析
 - 实验数据集和模型较简单（单层MLP+聚合+单层MLP），更深模型的行为未知
@@ -190,7 +190,7 @@ tags:
 - 理论结果表明 sum 聚合虽然表达力最强，但可能导致模型不具有 Lipschitz 连续性（非零偏置情况下）
 - 每种聚合函数对不同类型的扰动展现出互补的鲁棒性特性，这为模型选择提供了理论依据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑了置换不变的聚合函数，未涉及置换等变的消息传递架构
 - Lipschitz 上界可能较松（尤其 max 函数），可探索更紧的界

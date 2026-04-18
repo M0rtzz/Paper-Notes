@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding and Mitigating Memorization in Diffusion Models for Tabular Data
 description: >-
@@ -99,7 +99,7 @@ tags:
 4. TabCutMixPlus的特征聚类设计优雅地平衡了记忆化缓解和特征一致性。
 5. 方法简单有效，即插即用，不改变模型架构。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅测试两种扩散模型（TabSyn/TabDDPM），更多架构待验证。
 2. 特征聚类在极高维数据上可能效率不高。

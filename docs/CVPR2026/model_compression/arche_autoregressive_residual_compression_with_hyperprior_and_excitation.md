@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ARCHE: Autoregressive Residual Compression with Hyperprior and Excitation
 description: >-
@@ -115,7 +115,7 @@ ARCHE 采用变分自编码器（VAE）结构：分析变换 $g_a$ 将图像 $x$
 - **Masked PixelCNN vs ConvLSTM**：保持因果性同时支持并行训练
 - **SE 低成本高收益**：即插即用，可移植到其他压缩框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅优化 MSE，未使用感知损失
 - 未评估高分辨率图像（4K）上的表现

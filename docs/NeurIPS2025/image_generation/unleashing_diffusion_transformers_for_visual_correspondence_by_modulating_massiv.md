@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unleashing Diffusion Transformers for Visual Correspondence by Modulating Massive Activations
 description: >-
@@ -95,7 +95,7 @@ tags:
 - 完全无需训练的特征提取方法，实用性强
 - 研究思路可推广到分析其他 Transformer 变体中的激活值分布异常
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试了 SD3-5 和 Flux 两种 DiT 模型，更广泛的 DiT 变体有待验证
 - 通道丢弃策略需要预先确定 massive activation 维度，自适应方案可进一步探索
 - 目前仅在视觉对应任务上验证，语义分割、深度估计等任务有待测试

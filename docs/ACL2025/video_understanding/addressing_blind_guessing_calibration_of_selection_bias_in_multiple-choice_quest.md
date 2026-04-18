@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Addressing Blind Guessing: Calibration of Selection Bias in Multiple-Choice Question Answering by Video Language Models
 description: >-
@@ -118,7 +118,7 @@ BOLD是后处理方法，不涉及模型重训练。Weighted_BOLD的权重优化
 - **强理论基础**：将偏差分解为三个正交平面上的投影，数学框架清晰
 - **使用非常规选项名**：用a0/a1/a2代替A/B/C以减少token偏差的干扰，实验设计细节体现了严谨性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试了3个VLM模型，未涵盖最新的大规模VLM（如GPT-4o、Gemini等闭源模型）
 - 假设选项之间相互独立、无逻辑重叠，在某些实际基准中可能不完全成立

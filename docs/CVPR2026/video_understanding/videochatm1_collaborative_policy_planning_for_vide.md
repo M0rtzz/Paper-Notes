@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoChat-M1: Collaborative Policy Planning for Video Understanding via Multi-Agent Reinforcement Learning
 description: >-
@@ -162,7 +162,7 @@ $$\max_{\pi_\theta} \mathbb{E}_{o \sim \pi_{\theta_{\text{old}}}} \left[ \sum_{k
 - **Agent Dropout 优雅的正则化**：随机化通信拓扑避免共适应，灵感来源于神经网络 Dropout，简单有效
 - **极致效率**：37B 总参数（4 个小模型 + 工具模型），仅用 69.9 帧和 19.8s 推理时间，在多个 benchmark 上匹敌或超越 235B 级模型和 GPT-4o
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要 4 个模型并行推理 + 多个工具模型，**部署复杂度高**，实际应用中的工程挑战不小
 - 协作奖励依赖 GPT-4o 作为评判者，**训练成本不低**且引入外部依赖

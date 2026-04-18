@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large-Scale Training Data Attribution for Music Generative Models via Unlearning
 description: >-
@@ -131,7 +131,7 @@ $$({\mathbf{F}_{\text{diag}}})_{jj} \approx \frac{1}{N} \sum_{i=1}^N \frac{1}{T}
 - **实验设计严谨**：先通过自影响实验验证方法有效性（是否能正确识别目标样本），再用于实际归因分析
 - **对 AI 伦理的贡献**：为音乐 AI 领域的版权归因和创作者回馈提供了技术基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本高**：每次遗忘需 ~20 min（H100），全数据集损失计算需 ~5h（8×H100），大规模部署困难
 2. **仅单步遗忘**：网格搜索发现 1 步最优但理论上多步可能更精确，需更深入探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Global Convergence for Average Reward Constrained MDPs with Primal-Dual Actor-Critic
 description: >-
@@ -146,7 +146,7 @@ $$\frac{1}{K}\sum_k (\mathcal{L}(\pi^*, \lambda_k) - \mathcal{L}(\theta_k, \lamb
 - **MLMC的多重收益**：（a）低样本复杂度；（b）消除混合时间假设；（c）减少内存
 - **对偶学习率的精细平衡**：$\alpha = \beta = T^{-1/2}$ 的对称选择配合参数调整解决了约束-优化的固有矛盾
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未知混合时间时需要 $T \geq \tilde{\Theta}(\tau_{\text{mix}}^{2/\epsilon})$，对混合慢的问题可能要求极长时域
 2. $\epsilon_{\text{bias}}$ 和 $\epsilon_{\text{app}}$ 是不可消除的近似残差，但对丰富神经网络参数化可忽略不计

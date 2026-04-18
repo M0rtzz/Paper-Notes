@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meta-Adaptive Prompt Distillation for Few-Shot Visual Question Answering
 description: >-
@@ -125,7 +125,7 @@ MAPD 基于 LLaVA v1.5 架构，包含三个核心组件：
 - **参数效率**：24M 可训练参数，远少于全模型微调，但效果更好
 - **Operator Induction 的三层分解**（Task Induction + Perception + Math Reasoning）提供了理解模型能力的细粒度视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限单图像 VQA**：未扩展到多图像场景
 2. **测试时计算开销**：FT 适应需要约 5 倍于 ICL 的计算量（30 个梯度步）

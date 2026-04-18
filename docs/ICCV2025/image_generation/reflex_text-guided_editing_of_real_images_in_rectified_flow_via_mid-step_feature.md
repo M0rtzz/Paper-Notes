@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReFlex: Text-Guided Editing of Real Images in Rectified Flow via Mid-Step Feature Extraction and Attention Adaptation
 description: >-
@@ -122,7 +122,7 @@ ReFlex 的流程分为三步：
 - I2I-SA 适配中"替换 top-k 最高值"的设计巧妙利用了注意力分布在线性/对数尺度下的不同表现
 - 整体方法完全无需训练，直接插入 FLUX 推理流程，实际应用价值高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 编辑区域与主体重叠时可能意外改变主体的其他特征（如移除眼镜时改变发型，Fig. 12a）
 - 从 I2T-CA 生成的编辑掩码不够精确，可能引入伪影（Fig. 12b）
 - 编辑结果存在一定随机性变化

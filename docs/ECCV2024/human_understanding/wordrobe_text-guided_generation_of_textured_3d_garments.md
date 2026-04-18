@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WordRobe: Text-Guided Generation of Textured 3D Garments
 description: >-
@@ -141,7 +141,7 @@ tags:
 - **Canonical T-pose 生成的实用性**：直接对接标准动画/仿真管线（rigging, skinning, cloth simulation），有工业应用价值
 - **CLIP arithmetic 用于 latent editing**：利用 CLIP 文本-文本的向量算术来自动定位 latent 中需要修改的维度，无需显式标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - front-back 正交投影在切线区域会丢失纹理信息，需要 inpainting 填补可能产生模糊接缝
 - UDF 隐式表示难以建模精细几何细节（口袋、纽扣等）

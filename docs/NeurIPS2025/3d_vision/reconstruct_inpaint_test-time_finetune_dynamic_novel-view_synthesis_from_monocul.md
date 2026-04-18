@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reconstruct, Inpaint, Test-Time Finetune: Dynamic Novel-View Synthesis from Monocular Videos
 description: >-
@@ -110,7 +110,7 @@ tags:
 - TTF 是 test-time optimization 的"最佳两全方案"——保留数据驱动的鲁棒性（来自大规模预训练），获得优化的精度（来自测试时适应）
 - 方法**首次**在动态场景 NVS 上实现了"前馈速度+优化精度"的组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 推理仍需 ~5 分钟/视频（CogVideoX 较大）——更小更快的扩散模型可以加速
 - 依赖 MegaSAM 重建质量——重建失败的区域会传递错误的可见性掩码
 - 真实场景测试（DyCheck）仅 5 个视频——更大规模的真实 benchmark 验证待开展

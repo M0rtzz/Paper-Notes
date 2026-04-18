@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unified Category-Level Object Detection and Pose Estimation from RGB Images using 3D Prototypes
 description: >-
@@ -112,7 +112,7 @@ tags:
 - Progressive-X 多模型拟合的引入使模型能优雅处理同类别多实例场景
 - 双流特征设计（类别级 + 实例级）很好地解耦了检测和精化的需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在绝对位姿指标上表现一般，因为 RGB 下的尺度估计天然困难
 - 较小物体（高深度或小尺度）的性能有待提高，可通过使用更高分辨率特征改善

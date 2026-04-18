@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PaSE: Prototype-aligned Calibration and Shapley-based Equilibrium for Multimodal Sentiment Analysis
 description: >-
@@ -95,7 +95,7 @@ $$\psi_m(u) = \sum_{S \subseteq \mathcal{M} \setminus \{m\}} \frac{|S|!(k-|S|-1)
 - 双阶段训练策略合理：先让强模态建立表征结构，再用 SGM 平衡，避免过早调制导致不稳定
 - t-SNE 可视化表明 PaSE 的融合表征类别分离度远优于 SelfMM/EUAR
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Shapley 值计算需遍历所有模态子集（3 模态时 $2^3$ 种），模态数增多时计算开销指数增长
 - 仅在 MOSI/MOSEI/IEMOCAP 上验证，缺少更多 challenging 场景（如讽刺检测、多语言）

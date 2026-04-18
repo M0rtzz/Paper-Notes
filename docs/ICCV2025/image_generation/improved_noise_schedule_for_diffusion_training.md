@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Noise Schedule for Diffusion Training
 description: >-
@@ -53,7 +53,7 @@ tags:
 
 #### 1. **概率视角的噪声调度统一框架**
 
-- **做什么**：建立噪声调度 $\lambda(t)$ 与噪声强度采样分布 $p(\lambda)$ 之间的双向转换关系
+- **功能**：建立噪声调度 $\lambda(t)$ 与噪声强度采样分布 $p(\lambda)$ 之间的双向转换关系
 - **核心思路**：当 $t$ 服从均匀分布时，噪声强度 $\lambda = \log\text{SNR}$ 的采样概率为：
   $$p(\lambda) = -\frac{dt}{d\lambda}$$
   反过来，从任意概率分布 $p(\lambda)$ 可以导出噪声调度：
@@ -63,7 +63,7 @@ tags:
 
 #### 2. **Laplace 噪声调度**
 
-- **做什么**：提出以 Laplace 分布为 $p(\lambda)$ 的新噪声调度
+- **功能**：提出以 Laplace 分布为 $p(\lambda)$ 的新噪声调度
 - **核心思路**：Laplace 分布的概率密度函数为：
   $$p(\lambda) = \frac{1}{2b} \exp\left(-\frac{|\lambda - \mu|}{b}\right)$$
   对应的噪声调度为：
@@ -73,7 +73,7 @@ tags:
 
 #### 3. **统一训练公式与实际设置**
 
-- **做什么**：基于 VDM++ 的统一训练框架，分析为何修改 $p(\lambda)$ 优于修改 $w(\lambda)$
+- **功能**：基于 VDM++ 的统一训练框架，分析为何修改 $p(\lambda)$ 优于修改 $w(\lambda)$
 - **核心思路**：统一损失函数为：
   $$\mathcal{L}_w(\theta) = \frac{1}{2} \mathbb{E}_{\mathbf{x},\boldsymbol{\epsilon},\lambda\sim p(\lambda)} \left[\frac{w(\lambda)}{p(\lambda)} \|\hat{\boldsymbol{\epsilon}}_\theta(\mathbf{x}_\lambda;\lambda) - \boldsymbol{\epsilon}\|_2^2\right]$$
   虽然调整 $w(\lambda)$ 和 $p(\lambda)$ 理论等价，但修改 $p(\lambda)$ 意味着将更多的前向和反向传播计算直接投入到关键噪声水平，而调整 $w(\lambda)$ 仅改变梯度的大小而不增加该区域的计算量。
@@ -133,7 +133,7 @@ tags:
 3. **实用价值高**：Laplace 调度的实现只需几行代码（论文附录提供伪代码），可即插即用替换现有调度
 4. **与 SD3 的 logit-normal 采样互补**：论文在附录中分析了 SD3 的采样方案也符合"集中在中间时间步"的原理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **只在 DiT-B 规模验证**：为控制变量未在 XL 规模模型上实验，实际大模型训练中的效果有待进一步验证
 2. **超参数需根据分辨率调整**：512 分辨率需要不同的 $b$ 值（0.75 vs 0.5），无自适应方案

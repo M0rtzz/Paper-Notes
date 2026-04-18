@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MDNS: Masked Diffusion Neural Sampler via Stochastic Optimal Control
 description: >-
@@ -143,7 +143,7 @@ $J=1, h=0.1, \beta_{\text{high}}=0.28$，状态空间 $|\mathcal{X}_0| = 2^{16} 
 - **warm-up 策略**：先在高温（简单分布）训练再迁移到低温（多模态分布），有效帮助模型定位模式
 - **归一化常数估计**：副产品地提供 $Z$ 的无偏估计，有严格概率保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅验证了统计物理模型**：Ising 和 Potts 模型具有规则格点结构，在图结构分布或组合优化问题上的表现未知
 - **warm-up 策略缺乏系统化研究**：当前实验中 warm-up 温度和步数人工设定，未自动化

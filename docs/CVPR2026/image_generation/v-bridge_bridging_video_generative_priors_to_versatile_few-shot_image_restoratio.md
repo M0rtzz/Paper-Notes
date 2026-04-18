@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] V-Bridge: Bridging Video Generative Priors to Versatile Few-shot Image Restoration
 description: >-
@@ -100,7 +100,7 @@ V-Bridge 将图像修复建模为一条从低质到高质的"质量进化轨迹"
 - **Chain-of-Frames 思想的延伸**：将 CoF 推理从高层语义推理延伸到低层像素修复，证明了视频模型的通用性
 - **渐进式课程的工程价值**：coarse-to-fine 策略不仅提升性能，更是让大模型适配新任务的通用工程方法论
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在噪声去除和 JPEG 压缩等简单退化上不如专用方法，可能因为这些退化不需要复杂的结构先验
 - 推理成本高（视频生成模型参数量为 5B），不适合实时应用
 - 仅验证了 Wan2.2 作为主干，其他视频模型（如 CogVideoX、HunyuanVideo）未验证

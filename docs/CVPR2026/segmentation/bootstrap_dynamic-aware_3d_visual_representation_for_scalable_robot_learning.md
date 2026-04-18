@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AFRO: Bootstrap Dynamic-Aware 3D Visual Representation for Scalable Robot Learning
 description: >-
@@ -130,7 +130,7 @@ AFRO相比DynaMo-3D提升+11.1%，相比PointMAE提升+12.1%。
 - **大规模预训练 + 全面评估**: RH20T预训练 → MetaWorld + Adroit + real-world的完整验证链路
 - **纯自监督**: 不需要任何人工标注的动作标签，可利用大量野外机器人视频
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **PointNet++编码器较老**: 未探索更现代的3D backbone（如PointTransformerV3、Mamba3D等）
 - **扩散推理速度**: FDM的扩散去噪过程在推理时需要多步迭代，可能影响实时性
 - **单一预训练数据集**: 仅用RH20T，未探索多数据集联合预训练或Internet-scale数据

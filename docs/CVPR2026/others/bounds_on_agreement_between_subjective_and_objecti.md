@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bounds on Agreement between Subjective and Objective Measurements
 description: >-
@@ -91,7 +91,7 @@ tags:
 - 实用价值：任何客观质量估计器的开发者都可用这些界判断"还有多少提升空间"或"已经达到理论极限"
 - 显示了per-subject bias在数学上等价于增加投票方差——不需要显式建模偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 - i.i.d.投票假设在某些场景下可能过强（如疲劳效应、顺序效应）
 - BinoVotes模型假设方差是质量的对称抛物线，真实分布可能不对称
 - 仅验证了"overall quality"评分，其他属性（如noisiness、sharpness）的界可能不同

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large Scale Diffusion Distillation via Score-Regularized Continuous-Time Consistency
 description: >-
@@ -88,7 +88,7 @@ $$\mathcal{L}_{\text{rCM}}(\theta) = \mathcal{L}_{\text{sCM}}(\theta) + \lambda 
 - 无需 GAN 调优或大量超参搜索，$\lambda=0.01$ 跨任务通用
 - rCM 的多样性优势对交互式 world model 等需要多样响应的场景尤为重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要额外的 fake score 网络（内存开销）
 - JVP 计算仍比标准前向传播慢，训练成本高
 - 1步视频生成质量仍有明显下降（VBench 从 85.05 降至 83.02）

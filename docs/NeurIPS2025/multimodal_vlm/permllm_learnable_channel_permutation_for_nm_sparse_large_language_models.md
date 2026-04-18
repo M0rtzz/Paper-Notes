@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PermLLM: Learnable Channel Permutation for N:M Sparse Large Language Models
 description: >-
@@ -132,7 +132,7 @@ PermLLM是一个后训练剪枝框架，与现有one-shot剪枝方法（Wanda、
 - 块级排列是巧妙的工程设计，将参数量和计算复杂度从 $O(C_{in}^2)$ 和 $O(C_{in}^3)$ 分别降到 $O(C_{in} \cdot B)$ 和 $O(C_{in} \cdot B^2)$
 - 框架设计为插件式，可与任意one-shot剪枝方法结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 后训练过程仍需几小时GPU时间，对于资源极度受限的场景可能不够轻量
 - 块级排列限制了跨块的通道重排，可能遗漏全局最优解

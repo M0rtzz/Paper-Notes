@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MaterialRefGS: Reflective Gaussian Splatting with Multi-view Consistent Material Inference
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L} = \mathcal{L}_c + \lambda_{n-d}\mathcal{L}_{n-d} + \lambda_n\mathc
 - 将漫反射交给高斯、镜面反射交给BRDF的设计降低了优化难度，比全BRDF方法更适合复杂场景
 - 可微光线追踪实现的间接光照建模，让高斯本身参与环境建模的联合优化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 方法不等价于完整的逆渲染——不适合材质分解的定量评估和relighting
 - 反射强度先验的SAM2分割和ball query增加了预处理复杂度

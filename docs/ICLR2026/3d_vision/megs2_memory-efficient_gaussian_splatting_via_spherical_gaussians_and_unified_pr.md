@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MEGS2: Memory-Efficient Gaussian Splatting via Spherical Gaussians and Unified Pruning
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：SH是全局基函数，需要大量高阶系数才能表示局部高频细节(锐利高光)。球面高斯(SG)是局部基函数，用少量lobe就能高效建模视角依赖效果，且lobe数量可灵活调整——天然适合剪枝。
 
-**核心idea一句话**：用可剪枝的SG替代SH降低每个primitive的参数成本，再通过统一约束优化同时裁剪primitive数量和lobe数量，实现VRAM最优分配。
+**核心 idea**：用可剪枝的SG替代SH降低每个primitive的参数成本，再通过统一约束优化同时裁剪primitive数量和lobe数量，实现VRAM最优分配。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **统一剪枝的ADMM求解**：把两个离散优化统一为一个连续优化通过ADMM分解，优雅且有理论支撑。这个框架可泛化到任何需要同时优化"实体数量"和"每实体复杂度"的场景
 - **颜色补偿的解析解**：通过球面积分推导出closed-form解，无额外计算开销，简单有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 聚焦于静态VRAM压缩，动态VRAM(渲染器实现相关)的优化留给未来
 - 在高度复杂的高光场景(如全镜面物体)上性能有待进一步验证
 - 可以与神经压缩方法(如HAC++)组合，同时优化存储和VRAM

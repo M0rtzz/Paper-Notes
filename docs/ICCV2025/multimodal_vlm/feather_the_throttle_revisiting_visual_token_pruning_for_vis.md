@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration
 description: >-
@@ -69,7 +69,7 @@ FEATHER完全是training-free的推理时方法，不需要额外训练或微调
 - **Benchmark批判有价值**：揭示了当前VL benchmark普遍缺乏评估细粒度视觉能力的问题，这对社区有深远影响
 - **赛车比喻精妙**：两阶段剪枝类比赛车手在弯道中"先轻踩后重踩油门"，直觉易懂
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在LLaVA架构（SigLIP + Llama2-7B）上验证，更大模型和其他架构（Qwen-VL等）未探索
 - 去RoPE可能引入其他未预见的注意力权重偏移
 - 两阶段剪枝的超参数（K=8, K=16）似乎是手动调的，缺乏自适应选择

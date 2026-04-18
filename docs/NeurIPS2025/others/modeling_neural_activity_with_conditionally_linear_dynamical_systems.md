@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modeling Neural Activity with Conditionally Linear Dynamical Systems
 description: >-
@@ -91,7 +91,7 @@ $$\mathbf{y}_t = \mathbf{C}(\bm{u}_t)\mathbf{x}_t + \mathbf{d}(\bm{u}_t) + \omeg
 - **与Wishart过程模型的深层联系**：CLDS可视为Wishart过程的动态扩展，为跨时间噪声相关性估计提供了新框架。
 - **数据效率**：在神经科学中试次数据稀缺是常态，CLDS通过贝叶斯先验和条件间插值巧妙解决了这一实际问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅实现了高斯观测模型，尚未扩展到Poisson等更真实的尖峰计数似然
 - 假设了条件线性动态，当潜在状态与协变量之间的关联较弱时（如认知任务中的长期内部推理），近似误差可能增大

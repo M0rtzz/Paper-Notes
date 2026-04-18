@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are General-Purpose Vision Models All We Need for 2D Medical Image Segmentation? A Cross-Dataset Empirical Study
 description: >-
@@ -103,7 +103,7 @@ tags:
 - **实用价值**：对于新的医学分割任务，应优先评估 GP-VM（尤其是 VWFormer、InternImage 等）而非盲目设计新架构
 - **研究范式启示**：MIS 社区应更关注数据策划、训练协议优化和 OOD 泛化评估，而非片面追求新架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖三个 2D 数据集，缺乏 3D 体积数据（如 CT/MRI）和更多成像模态
 - 11 种模型并非穷举，参数量差异（25M–60M）可能引入偏差
@@ -230,7 +230,7 @@ tags:
 - **实用启示**：在引入新的专用架构之前，应先系统评估现有 GP-VMs 的性能
 - **资源节约视角**：当 GP-VMs 已经具备竞争力时，研究精力可转向数据整理、训练协议优化和 OOD 泛化评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅覆盖三个 2D 数据集，无法完全代表临床影像的多样性（如 3D、CT、MRI 等）
 - 部分模型参数量不完全可比（如 U-KAN 无 ImageNet 预训练）

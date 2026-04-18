@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Disentangled Textual Priors for Diffusion-based Image Super-Resolution
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \mathbb{E}[\|\epsilon - \epsilon_\theta(z_t, z_{lr}, t, c_g, c_{
 3. **多分支 CFG 策略**：无需额外训练即可抑制幻觉，用频率感知的负提示实现细粒度控制
 4. **鲁棒性实验**：即使上游模块（分割、描述）输出不完美，系统仍能正常工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. PSNR/SSIM 等全参考指标不如 GAN 方法，存在感知-失真权衡
 2. 依赖上游分割（Mask2Former）和描述（LLaVA）模型的质量

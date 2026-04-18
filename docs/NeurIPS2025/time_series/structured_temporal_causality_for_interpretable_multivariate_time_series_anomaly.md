@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Structured Temporal Causality for Interpretable Multivariate Time Series Anomaly Detection
 description: >-
@@ -134,7 +134,7 @@ OracleAD在F1上的优势：PSM +19.95%pt，SMD +10.87%pt，SWaT +0.9%pt。VUS-P
 - **全面的评估体系**：使用7种指标（含VUS-PR等新指标）评估，并对Affiliation F1等指标的缺陷进行了深入分析
 - **可解释性**：偏离矩阵可视化直接揭示异常时段中哪些变量的关系发生了结构性变化，提供了实用的根因诊断能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **全局关系一致性假设**：SLS假设正常状态下变量间关系全局稳定，对多模态分布或存在regime switching的复杂系统可能不适用
 - **连续输入假设**：假设输入是连续的，未处理缺失值、异步采样等实际问题

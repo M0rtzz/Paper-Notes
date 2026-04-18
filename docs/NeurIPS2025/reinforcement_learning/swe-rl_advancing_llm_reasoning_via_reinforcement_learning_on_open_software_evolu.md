@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution
 description: >-
@@ -114,7 +114,7 @@ SWE-RL 整体流程：(1) 从 GitHub 收集 273K 高质量 PR 作为 seed 数据
 - 🔑 **不依赖闭源模型蒸馏**：训练数据完全来自公开 PR，不包含任何 GPT-4o/Claude 蒸馏数据，在同级模型中是唯一的"自主进化"路径
 - 🔑 **连续奖励 > 离散奖励**：精巧的奖励设计证明部分正确的梯度信号对 RL 学习至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **奖励函数基于序列相似度而非语义等价**：可能惩罚功能等价但表达不同的 patch，限制了策略探索语义正确的多样解法
 2. **文件级定位过于简化**：Agentless Mini 仅做文件级定位，缺乏函数/行级精细定位，大文件场景下效率受限

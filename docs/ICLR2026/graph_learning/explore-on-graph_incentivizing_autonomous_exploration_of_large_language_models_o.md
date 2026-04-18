@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Explore-on-Graph: Incentivizing Autonomous Exploration of LLMs on Knowledge Graphs
 description: >-
@@ -122,7 +122,7 @@ EoG 在最困难的 ≥4-hop 推理中优势最大（69.6 vs 45.8/46.7）。
 - 两阶段 RL（先结果奖励再联合奖励）的课程设计值得借鉴
 - 在最具挑战性的 ≥4-hop 和 superlative 场景中提升最大，验证了探索对复杂推理的价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 真实路径获取依赖 BFS + LLM 验证，对于超大规模 KG 可能计算代价高
 - 路径奖励基于子串匹配，可能受同一实体不同名称的表述差异影响
 - 仅在 Freebase 和 Wikidata 上验证，领域特定 KG（如生物医学）待测试

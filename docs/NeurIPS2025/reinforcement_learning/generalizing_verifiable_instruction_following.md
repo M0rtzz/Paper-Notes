@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizing Verifiable Instruction Following
 description: >-
@@ -138,7 +138,7 @@ $$\text{Instance Reward} = \sum_{i=1}^{n} \text{verifiable\_reward}_i \cdot \tex
 - **指令层级发现**：不同模型对约束和任务的优先级排序不同——Qwen2.5倾向约束优先，Tülu-3倾向任务优先
 - **多轮训练**：混合单轮+多轮数据训练效果最佳
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅关注可验证约束，许多真实用户约束难以自动验证
 2. 部分约束可能显得不自然或刻意

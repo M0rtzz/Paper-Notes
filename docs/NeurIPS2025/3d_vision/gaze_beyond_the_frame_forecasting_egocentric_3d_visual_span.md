@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span
 description: >-
@@ -155,7 +155,7 @@ $$\mathcal{L} = 1 - \frac{2 \times \sum \tilde{Y}_{ijk} \odot Y_{ijk}}{\sum \til
 - **双向验证**：2D→3D 和 3D→2D 都有效，证明 3D 建模的优越性
 - **大规模 benchmark**：策划了 364.6K 样本的测试平台
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 SLAM 提供的半稠密关键点质量，某些场景关键点不足
 2. 中央凹跨度绝对 IoU 仍不算高（~0.28-0.37），精细预测仍有空间

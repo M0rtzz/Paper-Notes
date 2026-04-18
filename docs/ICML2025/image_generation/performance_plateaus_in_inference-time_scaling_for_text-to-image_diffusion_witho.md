@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Performance Plateaus in Inference-Time Scaling for Text-to-Image Diffusion Without External Models
 description: >-
@@ -131,7 +131,7 @@ tags:
 - **模型依赖性发现**：不同扩散模型上最优算法不同，说明注意力图的信息量和质量因模型而异，需要针对性地设计噪声优化策略
 - **公平比较框架**：统一以"损失计算次数"为预算单位，为不同复杂度的算法提供了公平的比较基准（尤其是 InitNO 的迭代优化 vs. CONFORM 的单次评估）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅覆盖三种算法**：当前仅评估 CONFORM、InitNO 和 Self-Cross guidance，未来可能出现的新型无外部模型算法或许能突破平台期
 - **损失函数设计空间未探索**：平台期的根本原因可能在于现有损失函数基于注意力图的信息表达能力不足，寻找更强的自监督信号是关键方向

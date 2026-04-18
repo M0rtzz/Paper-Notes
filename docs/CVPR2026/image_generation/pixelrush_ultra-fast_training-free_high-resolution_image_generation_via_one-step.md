@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PixelRush: Ultra-Fast, Training-Free High-Resolution Image Generation via One-step Diffusion
 description: >-
@@ -127,7 +127,7 @@ PixelRush 在所有指标上全面超越 SOTA，2K 生成仅需 4 秒（比 Free
 3. **打破速度-质量权衡**：PixelRush 在大幅加速的同时还提升了生成质量（FID 从 52.87 降到 50.13），颠覆了"加速必然牺牲质量"的传统认知。
 4. **实用性突破**：首次实现单 A100 GPU 上 100 秒内生成 8K 图像，使高分辨率生成从离线任务变为实际可用的实时工具。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **依赖蒸馏模型**：加速能力依赖于少步蒸馏模型（如 SDXL-Turbo）的可用性，对于没有蒸馏版本的新模型架构（如 DiT-based 模型），适配性有待验证。
 2. **固定超参数**：噪声注入系数 $\lambda=0.95$ 对所有实验固定，不同内容/风格可能需要自适应调整。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STELAR-Vision: Self-Topology-Aware Efficient Learning for Aligned Reasoning in Vision
 description: >-
@@ -162,7 +162,7 @@ STELAR-Vision-Short† 减少 18.1% 输出长度，仍超基座模型 +2.5%。
 - **Frugal Learning 只有在拓扑多样性基础上才有效**——仅有 Chain 训练时无法兼顾简洁和准确
 - 模型在 OOD 数据集上的拓扑选择分布与问题结构高度一致（简单逻辑→Chain，复杂几何→Tree/Graph），说明泛化是真实的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前拓扑类型是预定义的 {Chain, Tree, Graph}，更灵活的端到端拓扑发现有待探索
 - 与 Qwen2.5-VL 不兼容（该模型生成多样拓扑不稳定），限制了基座模型选择

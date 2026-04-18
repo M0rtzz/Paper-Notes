@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Astral: Training Physics-Informed Neural Networks with Error Majorants
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：残差最多是误差的间接度量，而不是直接上界，导致 PiNN 缺乏可靠的后验误差控制
 
-**本文要解决什么**：设计一个新损失函数，既能高效训练 PiNN，又能同时提供误差的严格上界估计
+**本文目标**：设计一个新损失函数，既能高效训练 PiNN，又能同时提供误差的严格上界估计
 
 **切入角度**：利用经典数值分析中的函数型后验误差估计（functional a posteriori error estimate），这类估计与近似方法无关（approximation-agnostic），天然适合神经网络
 
-**核心 idea 一句话**：用 PDE 的 error majorant（误差上界泛函）直接作为 PiNN 的训练损失，同时获得高质量近似解和可靠的误差估计
+**核心 idea**：用 PDE 的 error majorant（误差上界泛函）直接作为 PiNN 的训练损失，同时获得高质量近似解和可靠的误差估计
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ tags:
 - **误差指示器的空间相关性**：Astral 的误差指示器能精确定位误差集中的空间区域（相关性 0.82 vs 残差 0.22），可用于自适应加密
 - **避免二阶导数**：通过引入辅助场近似通量，Astral 只需一阶导数，减少了自动微分的计算开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要为每类 PDE 手动推导 error majorant，不能自动化
 - L 型域等具有几何奇异性的问题上表现不如残差损失
 - 辅助场增加了网络参数和训练复杂度

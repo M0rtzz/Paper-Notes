@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization
 description: >-
@@ -49,7 +49,7 @@ STAR采用**两阶段训练**：阶段1训练RaRSQ从专家演示中学习离散
 
 #### 1. 旋转增强残差技能量化（RaRSQ）
 
-**做什么**：将连续动作序列编码为层次化离散技能，同时防止codebook坍塌。
+**功能**：将连续动作序列编码为层次化离散技能，同时防止codebook坍塌。
 
 **核心思路**：在残差量化每一层，用旋转矩阵替代STE传播梯度。编码器输出 $\mathbf{z} = \phi(\mathbf{a}_{t:t+T})$，初始残差 $\mathbf{r}_0 = \mathbf{z}$，对每层 $d$：
 
@@ -63,7 +63,7 @@ $$\tilde{\mathbf{q}}_d = \text{sg}\left[\frac{\|\mathbf{e}_{(d,k_d)}\|}{\|\mathb
 
 #### 2. 因果技能Transformer（CST）
 
-**做什么**：给定多模态观测，自回归预测技能码序列并生成连续动作。
+**功能**：给定多模态观测，自回归预测技能码序列并生成连续动作。
 
 **核心思路**：层次化条件概率建模技能选择：
 
@@ -119,7 +119,7 @@ MetaWorld MT50: STAR达92.7%，超越所有基线2.1%-5.4%。
 - 两阶段设计清晰地分离了"技能学习"和"技能组合"
 - 残差量化+自回归的组合自然形成粗到细的技能层次，与操作任务结构契合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - codebook大小 $K$ 和量化深度 $D$ 需手动调优，缺乏自适应机制
 - 作为模仿学习方法，强依赖专家演示数据的质量和覆盖度

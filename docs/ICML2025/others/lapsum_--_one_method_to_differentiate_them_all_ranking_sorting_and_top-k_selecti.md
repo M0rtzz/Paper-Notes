@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LapSum -- One Method to Differentiate Them All: Ranking, Sorting and Top-k Selection
 description: >-
@@ -123,7 +123,7 @@ Top-k 的导数矩阵 $D = \frac{\partial P}{\partial r} = s\,q^T - \text{diag}(
 5. **$\alpha$ 可训练**：尺度参数可作为可学习参数，自动在 hard/soft 之间自适应
 6. **输出保证为概率向量**：$\sum_i p_i = k$ 严格成立，优于部分不保证概率归一的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **置换学习在大 $n$ 时退化**：$n=9, 15$ 时 LapSum 不如 NeuralSort，可能因 Laplace 分布尾部衰减过快导致 soft permutation 矩阵在大维度时区分度不足
 2. **$\alpha$ 敏感性**：实验表明 $\alpha$ 值对结果影响大，需要仔细调参或学习

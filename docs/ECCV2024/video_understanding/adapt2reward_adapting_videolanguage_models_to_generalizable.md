@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adapt2Reward: Adapting Video-Language Models to Generalizable Robotic Rewards via Failure Prompts
 description: >-
@@ -75,7 +75,7 @@ tags:
 - **Prompt 池设计可迁移**: 可学习 prompt 池 + 聚类伪标签的范式可以扩展到其他需要建模"负面模式"的场景（如质量检测、异常分类）
 - **密集奖励的优势**: 在 C2R 环境中甚至能超过手工设计的二值奖励，因为模型提供的是连续相似度分数，对"接近成功"的行为也给予部分奖励
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在仿真验证**: 所有实验在 MetaWorld 和 PyBullet 中完成，未验证 sim-to-real 迁移效果
 - **任务复杂度有限**: 测试任务都是较简单的桌面操作（推杯子、开关抽屉），长序列复杂任务未验证
 - **聚类数 K 固定**: 不同任务的失败模式数量可能差异很大，固定 K 不够灵活，可以考虑自适应聚类

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：$p_\theta(y_i|\mathbf{y}_{<i}, x, r, q)$ 这一联合条件概率在实践中无法有效利用$r$的信息——图像token的"吸引力"远大于rationale token。但去掉图像仅用 $p_\theta(y_i|\mathbf{y}_{<i}, r, q)$ 又会丢失视觉信息。
 
-**本文要解决什么？** 设计一种无需额外训练的解码策略，使LVLM在CoT推理时**真正**同时利用图像和rationale信息。
+**本文目标** 设计一种无需额外训练的解码策略，使LVLM在CoT推理时**真正**同时利用图像和rationale信息。
 
 **切入角度**：将图像条件和rationale条件**解耦**为两个独立分布，在logit层面合成，避免联合条件下rationale被忽略的问题。
 
-**核心idea一句话**：通过将CoT推理重新形式化为以rationale条件对数似然为奖励的KL约束最大化问题，得到最优解码策略——图像条件概率 × rationale条件概率的$\lambda$次方。
+**核心 idea**：通过将CoT推理重新形式化为以rationale条件对数似然为奖励的KL约束最大化问题，得到最优解码策略——图像条件概率 × rationale条件概率的$\lambda$次方。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ RED是纯推理时方法，**零训练**。只需要对现有LVLM做两次前向
 - **理论优雅**：将解码策略推导为KL约束奖励最大化的最优解，使得看似临时的logit相乘操作有了严格的理论支撑。这个RLHF味的推导框架也可迁移到其他"多信源融合"的解码问题
 - **实现极简**：两行代码（log-softmax加权求和）即可实现，零训练、零架构修改、零额外模型，是真正的即插即用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要两次前向传播（图像条件+rationale条件），推理开销翻倍（虽然可批并行）
 - rationale生成步骤本身仍用标准解码，没有保证其质量；RED的收益依赖于rationale的质量
 - $\lambda$需要在数据集上调优，不同任务的最优$\lambda$可能不同

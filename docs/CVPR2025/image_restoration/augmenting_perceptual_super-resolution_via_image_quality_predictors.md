@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Augmenting Perceptual Super-Resolution via Image Quality Predictors
 description: >-
@@ -114,7 +114,7 @@ AMO+FT 在所有 NR-IQA 指标上超越 UPos（HGGT SOTA），且无需人工标
 - **LoRA 正则化解决对抗攻击问题**：简洁而有效地解决了直接优化 IQA 的核心难题
 - 发现了 LPIPS-ST 这一更具感知意义的中层指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅基于 MUSIQ 一个 IQA 模型，组合多个互补 IQA（如作者分析的 NIMA、Q-Align）可能进一步提升
 - IQA 模型本身的偏差可能限制提升上限——若为 SR 任务微调 IQA 模型效果可能更好

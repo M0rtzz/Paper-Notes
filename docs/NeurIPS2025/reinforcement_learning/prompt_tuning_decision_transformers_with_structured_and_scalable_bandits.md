@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Prompt Tuning Decision Transformers with Structured and Scalable Bandits
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}(\phi_j) = \text{MSE}(\hat{y}_j, y)$$
 - 方法纯粹在推理时工作，不需要更新Transformer权重，部署成本极低
 - 即使演示数据中只有10%是专家数据，prompt调优也能恢复接近最优性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要环境模拟器进行在线rollout来获取bandit奖励，不适用于纯离线场景
 - 当演示数量增加时，搜索空间仍然组合增长——可通过学习采样器预选高潜力segment来缓解

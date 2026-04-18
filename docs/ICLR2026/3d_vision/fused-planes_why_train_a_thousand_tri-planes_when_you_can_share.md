@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fused-Planes: Why Train a Thousand Tri-Planes When You Can Share?
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：同类 3D 对象（如同类汽车）共享大量几何/纹理模式。将每个对象的 Tri-Plane 分解为"共享基底的加权组合 + 对象特有残差"，大幅减少重复计算。
 
-**核心idea一句话**：$T_i = T_i^{mic} \oplus (W_i \cdot \mathcal{B})$——每个对象的 Tri-Plane 由少量共享基平面的加权和（macro）加上对象特有的微观特征（micro）组成。
+**核心 idea**：$T_i = T_i^{mic} \oplus (W_i \cdot \mathcal{B})$——每个对象的 Tri-Plane 由少量共享基平面的加权和（macro）加上对象特有的微观特征（micro）组成。
 
 ## 方法详解
 
@@ -87,7 +87,7 @@ Fused-Planes 比 Tri-Planes: 7.2× 快，3.2× 省存储，PSNR 高 2.32dB，渲
 - **潜空间渲染与表示学习联合训练**是关键——预训练的 VAE 无法适应 NeRF 的特殊分布
 - 在保持平面结构（2D 兼容）的前提下实现了接近 Instant-NGP 的训练速度，这对下游生成任务（如用平面做 diffusion）非常有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 质量上限受限于 Tri-Plane 本身（30.47 vs TensoRF 36.74）——共享加速但不提升表示上限
 - 需要预先定义基平面数量 M，不同类别的最优 M 可能不同
 - 仅在合成数据（ShapeNet + Basel Faces）上验证，真实场景泛化未知

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RSVG-ZeroOV: Exploring a Training-Free Framework for Zero-Shot Open-Vocabulary Visual Grounding in Remote Sensing Images
 description: >-
@@ -166,7 +166,7 @@ $$\mathcal{A}_{CS}[u,v] \geq \tau \text{ 且 } (u,v) \in \text{DFS}(\mathcal{S})
 3. **DFS 区域生长**的进化策略简洁有效，无需学习参数即可抑制散射噪声
 4. **多模型注意力互补**的发现可推广：VLM 提供语义但缺结构，DM 提供结构但缺语义，融合互补
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零样本性能绝对值仍然有限（RSRES mIoU 仅约 28%），与全监督方法差距较大
 - 扩散模型推理耗时（20 步 DDIM），整体推理速度受限

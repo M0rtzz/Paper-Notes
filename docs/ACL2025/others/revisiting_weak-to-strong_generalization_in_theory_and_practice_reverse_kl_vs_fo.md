@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Weak-to-Strong Generalization: Reverse KL vs. Forward KL
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：Forward KL 在知识蒸馏中有效（强 teacher → 弱 student，soft label 可靠），但 W2SG 方向相反（弱 teacher → 强 student，soft label 不可靠）——同一损失函数的优势在场景反转后变成劣势。
 
-**本文要解决什么**：W2SG 中应该用什么损失函数？forward KL vs reverse KL 的理论比较与实践验证。
+**本文目标**：W2SG 中应该用什么损失函数？forward KL vs reverse KL 的理论比较与实践验证。
 
 **切入角度**：Reverse KL 的 zero-forcing / mode-seeking 特性——聚焦弱模型高置信预测区域，忽略低概率噪声区域——恰好适合从不可靠弱监督中提取可靠信号。
 
@@ -112,7 +112,7 @@ W2SG 设置：弱模型 $F_w$ 提供 soft label 监督强模型 $F_{sw} = f \cir
 - **"不改 pipeline 只改 loss"**：Zero-code-change 提升，只需翻转 KL 方向，对产业落地极具吸引力
 - **理论保证与实验完美对应**：Theorem 2 的"强模型至少超弱模型+分歧量"在实验中被一致验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限二分类 reward modeling**：CAI-Harmless 和 HH-RLHF 都是二分类任务，多分类/生成任务未验证
 - **模型规模有限**：最大到 Qwen2.5-14B，超大模型（70B+）上表现未知
 - **Theorem 2 假设较强**：需要"充分预训练"+ "只微调最后线性层"，全量微调下理论保证不明确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fast-and-Frugal Text-Graph Transformers are Effective Link Predictors
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：如何在保持高效（快速且低成本）的同时，有效融合文本和图结构信息？传统方法要么依赖大型文本编码器（昂贵），要么图编码不够有效（性能受限）。
 
-**本文要解决什么**：(1) 更有效地编码 ego-graph（1-hop 邻域）以减少对大型文本编码器的依赖；(2) 实现完全归纳设置，使关系也可以从文本描述计算。
+**本文目标**：(1) 更有效地编码 ego-graph（1-hop 邻域）以减少对大型文本编码器的依赖；(2) 实现完全归纳设置，使关系也可以从文本描述计算。
 
 **切入角度**：利用 Transformer 自注意力机制天然的图处理能力，将关系嵌入直接注入注意力计算中，用统一的 Transformer 架构同时处理文本和图结构。
 
-**核心idea一句话**：用 Graph Transformer 编码 ego-graph，将关系嵌入作为注意力的缩放因子，即使用小 BERT 也能超越 SOTA。
+**核心 idea**：用 Graph Transformer 编码 ego-graph，将关系嵌入作为注意力的缩放因子，即使用小 BERT 也能超越 SOTA。
 
 ## 方法详解
 
@@ -56,7 +56,7 @@ FnF-TG 由三个组件组成：
 
 #### 1. Text Transformer Encoder (TT)
 
-- **做什么**：将 KG 中每个实体和关系的文本描述编码为稠密向量
+- **功能**：将 KG 中每个实体和关系的文本描述编码为稠密向量
 - **核心思路**：使用 BERT 的 `[CLS]` 向量，经两层线性投影：
   $$\mathbf{x}_{TT} = \sigma(\text{BERT}_{\text{size}}(x_{KG})_{[\text{CLS}]} \mathbf{W}_0) \mathbf{W}_1$$
   其中 $\sigma$ 是 SiLU 激活函数，$\mathbf{W}_0, \mathbf{W}_1 \in \mathbb{R}^{d \times d}$
@@ -65,7 +65,7 @@ FnF-TG 由三个组件组成：
 
 #### 2. Graph Transformer Encoder (GT) — 核心创新
 
-- **做什么**：融合 ego-graph 的结构信息和 TT 输出的文本嵌入
+- **功能**：融合 ego-graph 的结构信息和 TT 输出的文本嵌入
 - **核心思路**：将图关系嵌入注入 Transformer 自注意力的计算中。对每对节点 $i, j$，注意力分数为：
   $$e_{ij} = \frac{\mathbf{x}_i \mathbf{W}_Q \cdot \text{diag}(\mathbf{1} + \text{LN}(\mathbf{r}_{ij})\mathbf{W}_R) \cdot (\mathbf{x}_j \mathbf{W}_K)^\top}{\sqrt{d}}$$
   其中 $\mathbf{r}_{ij}$ 是关系嵌入（由 TT 编码关系文本得到），通过 $\text{diag}(\mathbf{1} + ...)$ 映射为对角矩阵加单位矩阵
@@ -75,7 +75,7 @@ FnF-TG 由三个组件组成：
 
 #### 3. 完全归纳关系表示
 
-- **做什么**：使关系也能从文本描述计算，处理训练时未见过的关系
+- **功能**：使关系也能从文本描述计算，处理训练时未见过的关系
 - **核心思路**：关系嵌入 $\mathbf{r}_{ij}$ 由 TT 模块编码关系文本得到，同时作为链接预测的关系表示和 GT 自注意力的输入
 - **设计动机**：突破现有方法固定关系集合的限制
 
@@ -143,7 +143,7 @@ Wikidata5M$_{\text{IND}}$ 测试集（迁移设置）：
 4. **完全归纳设置的扩展**：首次使关系也可归纳，为 KG 链接预测开辟了新方向
 5. **结构化信息是有效替代品**：显式图关系的归纳偏置可以有效替代从文本中用强大编码器抽取相同信息
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 仅编码 1-hop 邻域（ego-graph），扩展到多跳可能进一步提升性能
 2. 完全归纳设置（unseen relations）的数据集较新，评估可能不够充分

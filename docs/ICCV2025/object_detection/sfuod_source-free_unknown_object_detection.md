@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SFUOD: Source-Free Unknown Object Detection
 description: >-
@@ -125,7 +125,7 @@ PAUL vs 其他未知标注方法：PAUL (H-Score 15.95) >> Attention-driven (7.1
 3. **协作调优解决知识混淆**：通过独立目标编码器保留源域知识的同时学习目标域新知识
 4. **完整的基准构建**：提供了两个 SFUOD 基准供后续研究使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SFUOD 场景定义中未知物体全部归为单一"unknown"类，未做细粒度分类
 - SVD 截断重构的主成分数 r 需要调参

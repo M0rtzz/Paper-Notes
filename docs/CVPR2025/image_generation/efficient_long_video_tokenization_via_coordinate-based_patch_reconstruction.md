@@ -1,4 +1,4 @@
----
+﻿---
 title: "Efficient Long Video Tokenization via Coordinate-based Patch Reconstruction"
 description: "基于坐标的patch重建实现高效长视频tokenization，通过Triplane表示和随机坐标采样直接训练128帧视频tokenizer"
 tags: ["视频tokenizer", "Triplane", "坐标重建", "视频生成", "图像生成"]
@@ -24,11 +24,11 @@ tags: ["视频tokenizer", "Triplane", "坐标重建", "视频生成", "图像生
 
 **核心矛盾**：视频的时序连贯性是高效压缩的关键先验（类似视频编解码器利用关键帧+差异编码），但现有 tokenizer 因训练成本限制只能在短片段上训练，无法利用这一先验。
 
-**本文要解决什么？** 如何设计一个可以直接在长视频上训练的 tokenizer，从而充分利用时序连贯性实现更高效的压缩？
+**本文目标** 如何设计一个可以直接在长视频上训练的 tokenizer，从而充分利用时序连贯性实现更高效的压缩？
 
 **切入角度**：受 3D 生成模型（如 NeRF/triplane）的启发——它们通过学习从随机采样坐标到 RGB/密度值的映射来避免全坐标一次性训练——将视频重建问题类似地转化为从 $(x,y,t)$ 坐标到对应 patch 的映射学习问题。
 
-**核心idea一句话**：将视频编码为三个2D平面（triplane）的紧凑表示，解码时只需随机采样少量坐标重建对应patch，训练成本与视频长度解耦，从而可直接在128帧长视频上训练获得更高效的tokenization。
+**核心 idea**：将视频编码为三个2D平面（triplane）的紧凑表示，解码时只需随机采样少量坐标重建对应patch，训练成本与视频长度解耦，从而可直接在128帧长视频上训练获得更高效的tokenization。
 
 ## 方法详解
 

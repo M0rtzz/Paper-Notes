@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Experience with Single Domain Generalization in Real World Medical Imaging Deployments
 description: >-
@@ -106,7 +106,7 @@ K1在盲测上PPV和NPV分别比纯ViT高29%和27%，5折交叉验证ROC AUC达9
 - **通用框架设计**：RareSaGe框架是泛化的——任何具备稀有类属性的应用都可实例化，已在DR、SOZ、CAD三个截然不同的领域验证
 - **临床交互反馈**：文中记录了Mayo Clinic心内科专家在盲测后提出的实际问题（LIME注意力图解释、数据质量评估、性别差异分析），展现了部署AI的真实挑战
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **专家知识编码成本高**：每个应用场景都需要大量人工提取和编码领域专家知识，可扩展性有限
 - **知识覆盖阈值$t_c$敏感**：ROC分析显示知识覆盖阈值的选择对性能影响显著，缺乏自动化选择策略

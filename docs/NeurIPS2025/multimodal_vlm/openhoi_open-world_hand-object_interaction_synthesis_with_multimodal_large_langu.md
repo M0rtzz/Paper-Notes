@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **模块化设计**：MLLM 推理、扩散生成、物理优化三层解耦，每层可独立替换和改进。
 - **实用性强**：对 VR/AR 中的虚拟手物交互有直接应用价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MLLM 推理的延迟较高（数秒），不适合实时应用
 - 对极端形状物体（非典型几何）的常识推理可能不准确

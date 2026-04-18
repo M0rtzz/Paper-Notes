@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Language-Free Generative Editing from One Visual Example
 description: >-
@@ -103,7 +103,7 @@ VDC在所有6个基准上设定了新SOTA，超越了训练免和全微调的文
 - INR启发的条件生成器设计优雅：连续函数+Fourier特征实现稳定全token优化
 - 真正的训练免方法，计算成本远低于微调方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要一对视觉示例（变换前后），获取示例对本身可能不总是容易的
 - 每次新编辑需要重新优化条件生成器（~100次迭代）

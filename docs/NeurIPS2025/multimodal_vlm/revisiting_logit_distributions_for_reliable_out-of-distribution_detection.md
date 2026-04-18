@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Logit Distributions for Reliable Out-of-Distribution Detection
 description: >-
@@ -109,7 +109,7 @@ LogitGap 可以作为插件替换现有方法的评分函数，与 CoOp、ID-Lik
 - **洞察深刻**：ID/OOD 样本的 logit 分布差异（尖峰 vs 平坦）是一个被低估的判别线索，LogitGap 将其显式化
 - **top-N 选择的数学推导**：将超参选择转化为 ID/OOD 均值差最大化问题，避免了盲目搜索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **语义接近的 OOD 检测仍有挑战**：当 OOD 数据与 ID 数据语义高度相似时（如 ImageNet-10 vs ImageNet-20），LogitGap 的改进幅度减小
 - **N 的自适应选择依赖 OOD 模拟**：用插值+噪声模拟 OOD 数据的假设可能不适用于所有场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SEMPO: Lightweight Foundation Models for Time Series Forecasting
 description: >-
@@ -121,7 +121,7 @@ SEMPO采用encoder-decoder架构，包含四个核心组件：EASD模块→Patch
 - **MoP设计的优雅性**：用128个提示向量+路由器替代庞大的MoE网络，参数效率极高
 - **两阶段训练策略**：预训练冻结MoP→调优冻结骨干，职责分离清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑单变量（channel independence），未建模多变量间的交互关系
 - 预训练数据规模（83M）虽然远小于竞品，但对真正资源受限的场景是否足够小待验证

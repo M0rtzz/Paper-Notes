@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAS-ZERO: Designing Multi-Agent Systems with Zero Supervision
 description: >-
@@ -31,11 +31,11 @@ MAS-ZERO 是首个推理时自动 MAS 设计框架，通过 meta-agent 迭代设
 
 **核心矛盾**：有效的自动 MAS 需要同时满足三个条件——(a) 能分解复杂问题并在不需要时退化为简单系统，(b) 自动学习 LLM agent 能力并设计匹配的架构，(c) 推理时逐问题适配而非依赖验证集。现有方法无一同时满足。
 
-**本文要解决什么**：设计一个无需验证集、在推理时自动为每个问题实例定制 MAS 配置的框架。
+**本文目标**：设计一个无需验证集、在推理时自动为每个问题实例定制 MAS 配置的框架。
 
 **切入角度**：引入 meta-agent 工作在 MAS 层面（而非 agent 层面），通过迭代的 meta-design（分解问题 + 分配 sub-MAS）和 meta-feedback（评估可解性和完整性）来自我进化，并在最终阶段从所有候选答案（包括简单 building block 的输出）中选择最优。
 
-**核心idea一句话**：用 meta-agent 将 MAS 设计变成一个推理时的迭代优化过程——每步设计一个 MAS（代码形式），执行后基于可解性和完整性反馈改进，最终从 building block 和多轮进化的候选中选择最佳答案。
+**核心 idea**：用 meta-agent 将 MAS 设计变成一个推理时的迭代优化过程——每步设计一个 MAS（代码形式），执行后基于可解性和完整性反馈改进，最终从 building block 和多轮进化的候选中选择最佳答案。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ MAS-Verify 是最关键组件——去掉后性能暴跌 21.70%。Oracle verifie
 - **Code-as-MAS 的表示方式**：将 MAS 设计以可执行 Python 代码表达，使得 meta-agent 的设计可以被直接运行和评估，大大降低了"设计"到"执行"的转换损失
 - **动态退化能力**：这是 MAS-ZERO 相对于其他自动 MAS 的最独特优势——当复杂 MAS 无帮助时自动回退到 CoT/CoT-SC，避免了"用力过猛"的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Meta-agent 需要足够强的 LLM（GPT-4o 级别），弱 LLM（7B-20B）无法可靠执行 meta 层面的代码生成和反馈
 - 推理时 token 成本较高（9 个候选答案 = 4 building block + 5 轮进化），虽然 Pareto 最优但绝对成本不低
 - Ensemble meta-feedback 失败表明当前 feedback 机制仍有改进空间

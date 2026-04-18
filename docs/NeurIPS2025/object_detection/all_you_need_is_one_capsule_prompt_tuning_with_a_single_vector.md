@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] All You Need is One: Capsule Prompt Tuning with a Single Vector
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：Soft prompts 被设计为引导生成的"指令"，但在 attention 层面它们实际上形成了一个自闭的小团体，未能有效地与输入内容交互。
 
-**本文要解决什么？** 如何让 prompt 真正与输入交互？能否用单个 prompt 实现更好的效果？
+**本文目标** 如何让 prompt 真正与输入交互？能否用单个 prompt 实现更好的效果？
 
 **切入角度**：发现"attention anchor"现象——将 instance-aware tokens 放在序列最前面可以保持对关键结构信息的强 attention，并与所有输入 tokens 产生活跃交互。
 
-**核心 idea 一句话**：用单个包含 instance-aware + task-aware 信息的 capsule prompt 替代多个纯 task-aware prompts，作为 attention anchor 驱动输入交互。
+**核心 idea**：用单个包含 instance-aware + task-aware 信息的 capsule prompt 替代多个纯 task-aware prompts，作为 attention anchor 驱动输入交互。
 
 ## 方法详解
 
@@ -87,7 +87,7 @@ tags:
 - **极致参数效率**：0.003% 参数量令人印象深刻。
 - **Attention anchor 概念**可以迁移到其他需要引导 attention 的场景。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 未在最大规模 LLM（如 70B+）上验证。
 - Instance-aware 表示的提取方式值得更多探索（当前用 CLS token 较简单）。
 

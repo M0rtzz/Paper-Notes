@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When People are Floods: Analyzing Dehumanizing Metaphors in Immigration Discourse with Large Language Models
 description: >-
@@ -51,21 +51,21 @@ tags:
 
 #### 模块一：LLM 词级隐喻检测
 
-- **做什么**：提示 LLM 识别文本中的隐喻词并映射到对应源域（或标记为 "none"）。
+- **功能**：提示 LLM 识别文本中的隐喻词并映射到对应源域（或标记为 "none"）。
 - **核心思路**：设计两种 zero-shot 提示策略——Simple（仅给出概念名称和基本指令）和 Descriptive（额外提供隐喻定义和概念描述）。测试 Llama3.1-70B、GPT-4-Turbo、GPT-4o 三种 LLM。
 - **设计动机**：隐喻检测需要语义理解能力，LLM 的上下文理解能力天然适合此任务；Descriptive 提示通过提供更多语境信息帮助模型区分字面义与隐喻义。
 - **词级得分计算**：$\text{LLM}_{\text{concept}} = \frac{C(\text{concept})}{\log(C(\text{words}) + 1)}$，其中 $C(\text{concept})$ 为检测到的隐喻表达数量，$C(\text{words})$ 为文档词数。使用对数归一化避免短文本与长文本间的线性失真。
 
 #### 模块二：SBERT 篇章级语义关联
 
-- **做什么**：使用 SBERT (all-MiniLM-L6-v2) 计算推文与源域「载体句」(carrier sentences) 之间的余弦相似度。
+- **功能**：使用 SBERT (all-MiniLM-L6-v2) 计算推文与源域「载体句」(carrier sentences) 之间的余弦相似度。
 - **核心思路**：即使文本不包含特定源域词汇，其整体语义逻辑仍可能隐式唤起某种隐喻概念。通过文档嵌入捕捉这种篇章级隐喻关联。
 - **设计动机**：直接嵌入源域名称（如 "water"）会过度匹配字面用法（如移民过海），因此手工构建 104 条「载体句」来表征隐喻性用法（如 "they flood in"、"they hunt them down"），每个源域 8-22 条载体句。
 - **篇章级得分**：$\text{EMB}_{\text{concept}} = \cos(\mathbf{e}_{\text{tweet}}, \bar{\mathbf{e}}_{\text{carriers}})$，即推文嵌入与载体句平均嵌入的余弦相似度。
 
 #### 模块三：组合打分 SUM
 
-- **做什么**：将词级和篇章级得分直接相加得到综合隐喻得分。
+- **功能**：将词级和篇章级得分直接相加得到综合隐喻得分。
 - **核心思路**：$\text{SUM}_{\text{concept}} = \text{LLM}_{\text{concept}} + \text{EMB}_{\text{concept}}$，词级信号覆盖显式隐喻，篇章级信号覆盖隐式隐喻，两者互补。
 - **设计动机**：SUM 自然偏重词级信号（因隐喻词较稀疏），但在无显式隐喻词时仍可通过篇章级信号检测隐喻。简单加法组合已优于各单独组件，更复杂的组合策略留待未来工作。
 
@@ -112,7 +112,7 @@ tags:
 4. **揭示意识形态-隐喻-互动的三角关系**：发现自由派对 creature 类隐喻更敏感（更多转推）这一反直觉结论，暗示去人化隐喻的效应不分左右。
 5. **定性分析补充定量发现**：识别出自由派使用去人化隐喻的四种模式，展示即便持亲移民立场，仍在隐性强化有害概念映射。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **因果推断缺失**：回归分析仅建立相关性，未做因果假设检验，用户互动的归因尚存模糊。
 2. **单一嵌入模型**：篇章级关联仅测试了 all-MiniLM-L6-v2 一种 SBERT，未探索更大或领域适配模型的效果。

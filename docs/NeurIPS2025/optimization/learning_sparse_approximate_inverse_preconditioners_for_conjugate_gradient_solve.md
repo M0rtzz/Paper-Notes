@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Sparse Approximate Inverse Preconditioners for Conjugate Gradient Solvers on GPUs
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心矛盾**：IC 类预条件子在迭代次数上表现好但 GPU 执行效率差（三角求解瓶颈），对角预条件子 GPU 效率高但迭代次数多。
 
-**本文要解决什么**：如何构建既能有效降低条件数又能充分利用 GPU 并行性的预条件子。
+**本文目标**：如何构建既能有效降低条件数又能充分利用 GPU 并行性的预条件子。
 
 **切入角度**：从 SPAI（稀疏近似逆）入手，将 $\mathbf{M}^{-1} = \mathbf{GG}^\top + \varepsilon\mathbf{I}$ 直接作为预条件子，每步 CG 只需两次稀疏矩阵向量乘（SpMV），天然 GPU 友好。
 
@@ -114,7 +114,7 @@ $$\mathcal{L}_{\text{SAI}}(\mathbf{A}, \mathbf{M}^{-1}, \mathbf{w}) = \left\|\le
 - **极轻量模型**：GNN 仅 24k 参数，说明局部结构信息足以指导高质量预条件子的构建
 - **全 GPU 流水线**：从构建（GNN 前向）到应用（SpMV），整个流程均在 GPU 上执行
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对 SPD 矩阵，不适用于非对称或不定系统
 - 需要为不同类型的 PDE 问题分别训练 GNN

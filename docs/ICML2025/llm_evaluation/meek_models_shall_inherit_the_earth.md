@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meek Models Shall Inherit the Earth
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：构建 SOTA 模型 vs 固定预算 meek 模型之间的训练损失差异模型，推导出损失优势的拐点时间和收敛趋势，并将损失差异转化为可观测的能力差异。
 
-**核心 idea 一句话**：在当前 next-token 缩放范式下，递减收益 + 共享的算法/硬件进步 = SOTA 与 meek 模型的能力差距终将收敛。
+**核心 idea**：在当前 next-token 缩放范式下，递减收益 + 共享的算法/硬件进步 = SOTA 与 meek 模型的能力差距终将收敛。
 
 ## 方法详解
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SA-DVAE: Improving Zero-Shot Skeleton-Based Action Recognition by Disentangled Variational Autoencoders
 description: >-
@@ -122,7 +122,7 @@ SA-DVAE 首次将特征解耦引入骨架零样本动作识别，通过双头 VA
 - **简单高效**：所有编码器/解码器/分类器都是单层 MLP，判别器仅两层，训练成本低（NTU-60 约 4.6 小时/单卡 RTX 3090）
 - **不依赖词性标注**：相比 SynSE/JPoSE 需要 PoS tags，SA-DVAE 直接使用简单类名
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 骨架特征提取器（Shift-GCN/ST-GCN）是单独预训练后冻结的，未与 VAE 联合端到端训练，可能限制了特征质量
 - 解耦维度 $z_x^r$ 和 $z_x^v$ 需要手动调参（如 160 vs 8），自适应维度分配可能更好

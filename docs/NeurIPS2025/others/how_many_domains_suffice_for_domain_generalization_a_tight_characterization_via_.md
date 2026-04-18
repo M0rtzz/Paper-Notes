@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Many Domains Suffice for Domain Generalization? A Tight Characterization via the Domain Shattering Dimension
 description: >-
@@ -98,7 +98,7 @@ Min-Max ERM 需要每个领域的近似误差估计 $\widehat{\text{err}}_\mathc
 - **最小假设**：不要求领域间有任何结构关系，仅假设存在全局好假设
 - 将领域适应中的 $\mathcal{H}$-divergence 统一到领域碎裂维度框架中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Min-Max ERM 在实际中计算效率可能很低，需要高效近似
 - 要求近可实现假设（$\tau^* \leq \tau - \alpha$），在强不可知设定下需扩展

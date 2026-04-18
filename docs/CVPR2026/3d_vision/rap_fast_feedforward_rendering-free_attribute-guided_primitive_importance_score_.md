@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAP: Fast Feedforward Rendering-Free Attribute-Guided Primitive Importance Score Prediction for Efficient 3D Gaussian Splatting Processing
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L}_{\text{entropy}} = 1 - \text{EntropyNorm}(S)$$
 - **三重损失设计精巧**：渲染 loss 保真度 + 剪枝 loss 防平凡 + 熵正则保分布，三者互补
 - **四大观察驱动特征设计**：从冗余原语的属性异常出发，系统提取空间/外观/尺度线索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅用 10 个场景训练，未验证在更大规模/更多样化场景（如城市级别）的泛化性
 - 15 维特征中未利用高阶 SH 系数的信息

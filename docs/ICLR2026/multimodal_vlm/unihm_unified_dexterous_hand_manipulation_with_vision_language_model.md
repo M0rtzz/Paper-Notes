@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniHM: Unified Dexterous Hand Manipulation with Vision Language Model
 description: >-
@@ -106,7 +106,7 @@ $$(J_t^T J_t + \mathbf{W}_{\text{gen}} + \mathbf{W}_{\text{vel}} + \mathbf{W}_{\
 - 仅用人类视频数据训练即可，无需昂贵的遥操作数据收集
 - 物理引导优化将生成先验、时序先验和接触约束统一在同一框架中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖RGB-D输入，缺乏触觉和力反馈
 - 接触和摩擦的能量项较简化

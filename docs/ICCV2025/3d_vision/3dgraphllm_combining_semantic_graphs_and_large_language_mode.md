@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DGraphLLM: Combining Semantic Graphs and Large Language Models for 3D Scene Understanding
 description: >-
@@ -89,7 +89,7 @@ $$L(\theta) = -\sum_{i=1}^{\ell} \log P(s_i^{res} | s_{[1,...,i-1]}^{res}, s^{pr
 - **语义关系的定量验证**：清晰证明加入物体间语义关系对接地任务有显著帮助（+5-7%）
 - **与SOTA持平但更快**：与GPT4Scene-HDM质量相当但推理快5倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 - k增大时GPU内存消耗快速增长（k=4已是上限）
 - 语义关系编码器(VL-SAT)在跨域时质量下降，需更鲁棒的关系提取
 - n-gram指标不适合评估LLM的丰富输出（CIDEr 0分但描述正确的情况）

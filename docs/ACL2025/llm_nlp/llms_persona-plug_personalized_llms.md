@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLMs + Persona-Plug = Personalized LLMs
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L} = -\sum_u \sum_i \log p_{\text{LLM}}(y_i^u | \mathbf{X}_i^u)$$
 - **端到端优化**：相比基于 RL 反馈的检索模型优化，PPlug 的直接梯度训练更稳定高效
 - **全局 vs 局部偏好的平衡**：输入感知注意力使模型能在保持全局偏好的同时关注与当前任务相关的历史
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 FlanT5 和 Llama2 等较早期模型上实验，更强的 LLM（GPT-4、Llama3）上的效果未验证
 - 编码器使用 BGE-base（220M 参数），对于特别长或复杂的用户历史，表达能力可能不足

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Boosting Vision Semantic Density with Anatomy Normality Modeling for Medical Vision-language Pre-training
 description: >-
@@ -157,7 +157,7 @@ ViSD-Boost 框架包含四个核心模块：
 4. **实验规模和全面性**：覆盖胸部 + 腹部 CT，54 种疾病 15 个器官，零样本/报告生成/分类三大任务，内部 + 外部验证，消融 + 可视化丰富
 5. **已开源**，来自阿里达摩院，工程可复现性较好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖分割预处理**：需要 TotalSegmentator 先分割器官，如果分割不准会级联误差。对新器官或罕见解剖变异适应性不明
 2. **训练流程复杂**：四阶段依次训练，每阶段 30-60 epochs，流程管理成本高。能否设计端到端的联合训练？

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stable Cinemetrics: Structured Taxonomy and Evaluation for Professional Video Generation
 description: >-
@@ -126,7 +126,7 @@ SCINE 由三部分组成：
 - 大规模专业评估（248K 标注、84 位从业者、ICC 80.4%）为结论提供了坚实基础
 - 训练的 VLM 评估器比 zero-shot 72B 模型对齐度更好，但 72% 准确率说明自动评估仍有很大提升空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分类体系受合作专家网络范围限制，可能未覆盖全球不同文化的电影传统
 - 某些节点（如色温 2000K、ISO 800）过于精细，即使人类标注者也难以准确感知

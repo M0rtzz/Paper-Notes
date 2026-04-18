@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AssistanceZero: Scalably Solving Assistance Games
 description: >-
@@ -146,7 +146,7 @@ AssistanceZero 减少 42 次人类动作，助手自主完成 27% 目标。
 5. **涌现行为**展示 assistance game 框架的本质优势——助手学会了语用沟通，而非简单模仿
 6. **对 LLM 后训练的展望**：将对话视为多轮 assistance game，可解决 RLHF 的欺骗激励和不确定性回避问题
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **环境简化**：MBAG 是极度简化的 Minecraft，真实世界复杂度远高于此
 2. **人类模型数据量有限**：仅 5 名被试 18 个 episode 训练 BC 模型

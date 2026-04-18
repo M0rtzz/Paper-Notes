@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transitive RL: Value Learning via Divide and Conquer
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}(\theta) = \mathbb{E}_{(s, m, g) \sim \mathcal{D}} \left[ \left( V_
 
 4. **通用性**：分治思想不局限于特定的环境或任务，适用于任何满足三角不等式的值函数学习问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅适用于GCRL**：TRL利用的是最短路径的三角不等式结构，不能直接推广到一般的RL问题（如含奖励折扣的累积奖励最大化）。
 

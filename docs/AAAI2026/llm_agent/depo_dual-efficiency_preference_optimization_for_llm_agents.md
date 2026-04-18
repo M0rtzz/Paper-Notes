@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DEPO: Dual-Efficiency Preference Optimization for LLM Agents
 description: >-
@@ -131,7 +131,7 @@ $z_0(\tau)$ 为当前策略与 BC 策略的 KL 散度正则项。
 4. **样本高效**：25% 数据即可获得显著效率增益，适合数据稀缺场景
 5. **跨域泛化**：在 Webshop/BabyAI 上训练，可迁移到数学推理任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **评估场景有限**：仅在 Webshop（网购）和 BabyAI（网格世界）两个相对简单的环境上训练和主评估，缺少更复杂的真实场景（如 web browsing、code execution）
 2. **数据生成依赖强模型**：MCTS 搜索使用 DeepSeek-V3，rephrasing 使用 GPT-4.1 mini，数据生成成本不低

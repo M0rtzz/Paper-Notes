@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint
 description: >-
@@ -182,7 +182,7 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{res} + \lambda_2 \mathcal{L}_{cp}
 - **Sub-prompt 选择频率的可视化**解释性很好——可以看出不同天气共享了哪些 attributes（如雨和雨滴选择频率相似），哪些是独特的
 - **可迁移思路**：prompt pool + key matching 的机制可以推广到其他需要处理多种退化/任务的 all-in-one 模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **训练时需要 paired data**：依赖 clean-degraded 图像对，限制了在真实场景的训练
 - **Depth-Anything 作为额外依赖**：虽然用的是 ViT-S，仍增加了模型复杂度和推理开销

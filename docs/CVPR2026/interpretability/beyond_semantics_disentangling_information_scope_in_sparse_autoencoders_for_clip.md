@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Semantics: Disentangling Information Scope in Sparse Autoencoders for CLIP
 description: >-
@@ -90,7 +90,7 @@ tags:
 - CDS指标巧妙地利用SCC隔离上下文因素，设计精妙且物理意义明确
 - 建立了SAE特征→outlier token→全局/局部信息的清晰链条
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CDS计算需要对每个特征选取top-k图像并做双向推理，计算成本随字典规模增长
 - 仅分析了CLIP模型，DINOv2等自监督ViT的信息范围特性待探索
 - 二分法（局部vs全局）可能过于粗糙，连续谱上的更细粒度分析有价值

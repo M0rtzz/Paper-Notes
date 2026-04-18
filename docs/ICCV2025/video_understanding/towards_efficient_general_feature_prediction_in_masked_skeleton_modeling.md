@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Efficient General Feature Prediction in Masked Skeleton Modeling
 description: >-
@@ -131,7 +131,7 @@ GFP 建立编码器-解码器架构与目标生成网络（TGN）之间的双向
 - VICReg 信息最大化约束的引入优雅地解决了协同训练中的坍塌问题
 - 轻量级 TGN（0.64G FLOPs，3层 MLP）的效率远超 S-JEPA 的 EMA 编码器（28.32G）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 层级粒度（5/10/30帧）为手动设定，可探索自适应确定方式
 - 仅在骨架数据上验证，未扩展到 RGB 视频的掩码建模

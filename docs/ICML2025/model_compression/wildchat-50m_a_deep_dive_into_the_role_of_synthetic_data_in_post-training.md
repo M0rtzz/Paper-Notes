@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WildChat-50m: A Deep Dive Into the Role of Synthetic Data in Post-Training
 description: >-
@@ -112,7 +112,7 @@ LLM 后训练（SFT、DPO、蒸馏）是解锁模型能力的关键步骤。Open
 - **实用 DGM 选择指南**：为学术实验室提供了"用哪个模型生成训练数据"的量化参考
 - **完全开源**：数据集、代码、SFT 方案全部公开
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅做 SFT 实验，DPO/RLHF 等偏好对齐阶段待探索
 - 回复相似度的发现未深入分析差异来源

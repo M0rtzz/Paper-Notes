@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safeguarding Vision-Language Models: Mitigating Vulnerabilities to Gaussian Noise in Perturbation-based Attacks
 description: >-
@@ -120,7 +120,7 @@ DiffPure-VLM由两个组件串联构成：
 3. **数据设计的匠心**：图文不对齐安全数据填补了VLGuard的盲区，少量高质量数据即可显著提升鲁棒性
 4. **实用性强**：单卡A100训练3小时，DiffPure推理开销低于JailGuard（无需多次模型推理）
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 仅在三个VLM上验证，未测试更新的模型（如Qwen2-VL、LLaMA-3.2-Vision）——附录有初步结果但不够深入
 2. 噪声增强仅应用于微调阶段，若能在预训练中集成效果可能更好
 3. DiffPure的时间步 $t^*$ 需要根据攻击强度选择，是否可以设计自适应的时间步选择机制？

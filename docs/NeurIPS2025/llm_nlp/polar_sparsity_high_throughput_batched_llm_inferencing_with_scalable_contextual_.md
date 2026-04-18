@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Polar Sparsity: High Throughput Batched LLM Inferencing with Scalable Contextual Sparsity
 description: >-
@@ -151,7 +151,7 @@ Router 训练：
 4. **与现有推理框架无缝集成**：基于 FlashAttention Triton kernel 构建，使用 CUDA Graphs
 5. **batch-invariant 性质**使其天然适合生产环境的 batched serving
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在小 batch 推理中收益有限，GPU 工作量不足以体现稀疏优势
 2. 固定 top-k 策略不够灵活，动态的输入/层自适应策略可能更优

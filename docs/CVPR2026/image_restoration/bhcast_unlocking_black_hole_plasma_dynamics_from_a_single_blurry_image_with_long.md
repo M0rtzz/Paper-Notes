@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BHCast: Unlocking Black Hole Plasma Dynamics from a Single Blurry Image with Long-Term Forecasting
 description: >-
@@ -101,7 +101,7 @@ BHCast从单张模糊的EHT黑洞图像出发，通过U-Net动力学代理模型
 - 多尺度金字塔+平均通量损失是实现100步稳定预测的关键
 - 模块化设计带来完全的可解释性：推断结果可追溯到视觉线索
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅离散自旋/倾角值的分类，连续值回归更有价值
 - U-Net容量有限，Transformer/FNO可能进一步提升
 - M87*训练数据极为有限，跨系统泛化仍是挑战

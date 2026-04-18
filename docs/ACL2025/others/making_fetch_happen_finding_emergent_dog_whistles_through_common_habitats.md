@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Making FETCH! Happen: Finding Emergent Dog Whistles Through Common Habitats
 description: >-
@@ -110,7 +110,7 @@ EarShot 本身不涉及端到端训练，而是一个管道式系统。各组件
 - **EarShot 的 two-path 设计**：PREDICT 路径高精确率适合减少人工审核负担，DIRECT 路径高召回率适合全面扫描，实际部署中可根据需求选择。
 - **向量数据库的巧妙应用**：通过语义近邻而非精确匹配，能发现词汇形式完全不同但语义相关的新狗哨。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在英语数据集上验证，狗哨在多语言场景中的研究尚为空白。
 2. 缺乏专门的人工标注语料库，依赖正则表达式匹配可能引入假阳性。

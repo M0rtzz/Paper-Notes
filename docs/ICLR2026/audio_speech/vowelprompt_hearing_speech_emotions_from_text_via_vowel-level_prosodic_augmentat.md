@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VowelPrompt: Hearing Speech Emotions from Text via Vowel-level Prosodic Augmentation
 description: >-
@@ -102,7 +102,7 @@ SFT: 标准 CE loss。GRPO: 组内相对优势 + KL 正则，accuracy 和 format
 - **元音作为情感锚点**的语言学假设被实验充分验证——元音级 > 辅音级 > 句子级
 - **无需音频编码器的部署优势**：推理时仅需文本 LLM，韵律信息以文本形式传入，大幅简化部署架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖强制对齐质量——MFA 在嘈杂环境或非标准语音中的对齐精度会下降
 - 韵律描述从音频提取，推理时仍需音频输入（虽然 LLM 推理本身是 text-only，但前处理需要音频）
 - 仅测试了 IEMOCAP、MELD 等少数 SER 基准，更多领域（如客服、心理健康）待验证

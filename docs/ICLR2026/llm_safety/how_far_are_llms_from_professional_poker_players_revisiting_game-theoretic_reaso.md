@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Far Are LLMs from Professional Poker Players? Revisiting Game-Theoretic Reasoning with Agentic Tool Use
 description: >-
@@ -91,7 +91,7 @@ tags:
 - **Tool + LLM 互补性**在博弈论场景中效果显著
 - BC-RIRL 比 Vanilla 更差的反直觉发现——仅靠模仿+RL 可能强化错误模式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖外部 CFR solver 增加延迟和部署复杂度
 - 仅验证两人扑克，未扩展到多人博弈
 - 工具调用偶有格式错误

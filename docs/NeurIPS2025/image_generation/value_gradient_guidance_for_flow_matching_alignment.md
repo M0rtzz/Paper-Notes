@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Value Gradient Guidance for Flow Matching Alignment
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{\text{total}}(\theta, \phi) = \mathcal{L}_{\text{matching}}(\thet
 - 与PMP的联系分析揭示了HJB方法的计算优势：分摊学习$\nabla V$而非逐轨迹求解adjoint方程
 - stop-gradient操作是实用的工程trick，源自DreamFusion但有理论解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于松弛目标，微调分布仅在$\lambda$较小时才良好近似KL正则化分布
 - 使用有限差分和禁用二阶梯度带来不可避免的偏差

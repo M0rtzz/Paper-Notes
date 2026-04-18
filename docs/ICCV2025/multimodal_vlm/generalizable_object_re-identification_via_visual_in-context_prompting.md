@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizable Object Re-Identification via Visual In-Context Prompting
 description: >-
@@ -135,7 +135,7 @@ VICP 框架分两大模块：
 - **ShopID10K** 数据集为该领域填补了一个重要空白
 - 选择 Triplet loss 而非更激进的度量学习损失的理由（保护预训练先验）有见地
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设推理时类别已知（需要上游检测器先确定物体类别），不处理跨类别歧义
 - LLM 处理的是视觉 token 而非原始图像，语义推理能力可能受限

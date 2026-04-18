@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffusionDrive: Truncated Diffusion Model for End-to-End Autonomous Driving
 description: >-
@@ -105,7 +105,7 @@ DiffusionDrive由感知模块和扩散解码器两部分组成。感知模块可
 - 推理灵活性：训练时的锚点数和推理时的采样数解耦，可以根据算力动态调整
 - 实时性能：45 FPS on 4090，远优于vanilla扩散策略的7 FPS
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 主要在非反应式仿真（non-reactive simulation）中评估，未在真实闭环驾驶中验证
 - 锚点由K-Means静态聚类得到，未来可探索自适应锚点生成
 - 扩散解码器目前仅与BEV特征交互（在Transfuser设置下），可以扩展到更丰富的场景表示

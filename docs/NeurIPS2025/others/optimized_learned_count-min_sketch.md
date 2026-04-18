@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimized Learned Count-Min Sketch
 description: >-
@@ -109,7 +109,7 @@ OptLCMS 不涉及传统神经网络训练。其核心是：
 - **理论保证**：LCMS 缺少的不可容忍误差概率保证被 OptLCMS 填补
 - **整数松弛的巧妙处理**：CMS 维度的上取整约束被松弛为连续变量，实践中引入的非凸性可忽略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 AOL 数据集上验证**：未在 CAIDA 网络流量数据集上测试
 2. **未与 confidence-aware LCMS 对比**：缺少与最新改进版本的比较

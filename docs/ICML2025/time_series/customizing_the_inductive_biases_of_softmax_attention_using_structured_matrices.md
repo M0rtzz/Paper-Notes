@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Customizing the Inductive Biases of Softmax Attention using Structured Matrices
 description: >-
@@ -168,7 +168,7 @@ MLR attention 的层级结构天然适合时间序列中的多尺度时间依赖
 4. **与 GQA 兼容**：MLR/BTT attention 可以直接嵌入使用 Grouped-Query Attention 的现代 LLM 架构
 5. **实用价值**：KV cache 压缩和 FLOPs 节省在大模型推理中具有直接的工程价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **时间序列实验不够充分**：论文只提到 MLR attention 在长程预测上有 "promising results"，缺乏与 PatchTST、iTransformer 等 SOTA 时序模型的详细对比
 2. **缺乏大规模 LLM 验证**：scaling law 实验的模型规模有限，尚需在 7B+ 参数的模型上验证

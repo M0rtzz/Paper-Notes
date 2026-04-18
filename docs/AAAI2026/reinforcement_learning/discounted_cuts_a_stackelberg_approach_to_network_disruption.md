@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Discounted Cuts: A Stackelberg Approach to Network Disruption
 description: >-
@@ -145,7 +145,7 @@ $$\text{时间} = (4^g \cdot n^{1.5} + m \cdot M) \cdot m^2 \cdot M \cdot \log^{
 3. **对偶图方法的深入应用**：将平面图对偶性与DP结合，处理非可加代价函数
 4. **跨领域桥梁**：将 AI、博弈论和运筹学的方法统一到折扣切割框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **有界亏格限制**：核心算法要求图具有有界亏格，更一般图类的复杂性未知
 2. **多项式代价假设**：部分结果要求边代价为多项式大小

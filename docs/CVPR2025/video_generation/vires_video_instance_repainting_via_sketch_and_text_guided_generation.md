@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ViReS: Video Instance Repainting via Sketch and Text Guided Generation
 description: >-
@@ -92,7 +92,7 @@ tags:
 - 实例级编辑保持背景完整，比全局编辑更实用
 - 时序注意力的设计平衡了quality和consistency
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要每帧的草图序列输入，用户交互成本较高
 - 对快速运动场景的时序一致性仍有挑战
 - 长视频编辑的计算成本较高

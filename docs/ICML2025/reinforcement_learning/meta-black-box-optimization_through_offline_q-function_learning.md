@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meta-Black-Box-Optimization through Offline Q-function Learning (Q-Mamba)
 description: >-
@@ -154,7 +154,7 @@ $$
 4. **Mamba vs Transformer**：实证 Mamba 在长序列 Q 学习中优于 Transformer（时变 SSM 的选择性记忆优势）
 5. **泛化性强**：从 ≤50 维合成问题零样本迁移到数千维 Neuroevolution 场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **离线数据依赖预训练基线**：E&E 数据集需要先训练 RLPSO/LDE/GLEET 等在线方法，初始成本未被充分讨论
 2. **仅验证进化算法**：未在梯度类优化器或贝叶斯优化等其他 BBO 范式上测试

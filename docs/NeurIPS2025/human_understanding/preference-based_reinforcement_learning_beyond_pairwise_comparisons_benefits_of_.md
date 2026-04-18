@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Preference-based Reinforcement Learning beyond Pairwise Comparisons: Benefits of Multiple Options
 description: >-
@@ -119,7 +119,7 @@ $$\text{SubOpt}(T) = \tilde{O}\left(\sqrt{d \sum_{t=1}^T \frac{1}{|S_t|}}\right)
 - **近匹配上下界**: 上界 $\tilde{O}(d\sqrt{T/K})$ 与下界 $\Omega(d\sqrt{T/K})$ 近乎匹配
 - **算法设计巧妙**: 平均不确定性最大化是关键创新，避免了单点最大化的次优性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前分析限于线性参数化奖励函数
 2. PL 模型假设可能无法完美描述所有真实人类排序行为

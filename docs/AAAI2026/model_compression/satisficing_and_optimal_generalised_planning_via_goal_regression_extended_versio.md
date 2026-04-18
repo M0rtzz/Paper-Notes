@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Satisficing and Optimal Generalised Planning via Goal Regression (Extended Version)
 description: >-
@@ -144,7 +144,7 @@ Moose 的泛化规划分为两个阶段：
 - **ESHO 域（Easy-to-Solve, Hard-to-Optimise）的识别**：P-time 可解但 NP-hard 最优化的域恰好是 Moose 最擅长的
 - **跨数值规划泛化**：同一框架自然扩展到数值规划域（NFerry, NMiconic, NMinecraft, NTransport）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - TGI 假设在许多规划域不成立（如 Blocksworld 的 Sussman Anomaly），限制了方法的适用范围
 - 理论保证所需的训练集大小在最坏情况下关于域大小是指数级的

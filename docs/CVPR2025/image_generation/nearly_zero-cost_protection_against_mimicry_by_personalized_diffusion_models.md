@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Nearly Zero-Cost Protection Against Mimicry by Personalized Diffusion Models
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：已有Universal Adversarial Perturbation (UAP)技术可通过预训练消除推理时优化，但UAP的单一扰动是image-agnostic的，直接用于图像保护任务会严重降低保护效力（FID从227.6降到207.6）。如何在保持UAP的速度优势的同时恢复image-specific优化的保护效力？
 
-**本文要解决什么？** 设计一个满足三重需求——有效保护、不可见性、实时延迟——的图像保护框架，使普通用户也能在低算力设备上保护自己的图像。
+**本文目标** 设计一个满足三重需求——有效保护、不可见性、实时延迟——的图像保护框架，使普通用户也能在低算力设备上保护自己的图像。
 
 **切入角度**：(1) 训练多个扰动（而非一个）并根据输入图像的VAE latent code自适应选择；(2) 在VAE多层特征空间计算保护loss增强训练效果；(3) 推理时根据输入纹理复杂度自适应选择目标图像和扰动强度。
 
-**核心idea一句话**：用Mixture-of-Perturbations (MoP)预训练替代逐图PGD迭代，通过基于VAE latent的聚类分配实现半image-specific保护，将推理成本从秒级降至毫秒级。
+**核心 idea**：用Mixture-of-Perturbations (MoP)预训练替代逐图PGD迭代，通过基于VAE latent的聚类分配实现半image-specific保护，将推理成本从秒级降至毫秒级。
 
 ## 方法详解
 

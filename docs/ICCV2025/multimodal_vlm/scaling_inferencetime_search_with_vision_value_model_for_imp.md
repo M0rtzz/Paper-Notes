@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Inference-Time Search with Vision Value Model for Improved Visual Comprehension
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：PRM只看当前step的即时奖励，但生成图像描述时，当前选择的句子会影响后续句子的质量和连贯性。一个当前看起来不错的句子可能导致后续产生大量幻觉。
 
-**本文要解决什么**：训练一个能预测长期价值（而非仅即时奖励）的视觉价值模型，用它指导VLM推理时搜索。
+**本文目标**：训练一个能预测长期价值（而非仅即时奖励）的视觉价值模型，用它指导VLM推理时搜索。
 
 **切入角度**：将VLM文本生成建模为MDP问题，每一步生成一个句子作为action，用TD learning（而非仅作为PRM的CLIP）训练价值函数来预测未来所有句子的累积奖励。
 
-**核心idea一句话**：用TD learning训练的价值模型替代即时奖励模型来指导VLM逐句搜索，实现"前瞻性"的质量评估，减少幻觉。
+**核心 idea**：用TD learning训练的价值模型替代即时奖励模型来指导VLM逐句搜索，实现"前瞻性"的质量评估，减少幻觉。
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ tags:
 - **完全自给自足的自训练闭环**：PRM来自VLM自身的视觉编码器，VisVM从VLM初始化，SFT数据由VLM+VisVM生成。整个流程不需要外部模型或人工标注，是一个真正的自改进pipeline。
 - **推理时搜索的效率与效果平衡**：VisVM比MCTS高效7倍却效果相当。核心优势在于VisVM的价值函数是一个可泛化的神经网络，而MCTS每次需要从头搜索。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 只在descriptive captioning任务上验证，未扩展到VQA、reasoning等其他VLM任务。
 - 搜索粒度固定为sentence-level，更细粒度（token-level）或更粗粒度（paragraph-level）可能在不同场景下更优。
 - VisVM训练数据只用了9K图像，扩大训练规模可能进一步提升。

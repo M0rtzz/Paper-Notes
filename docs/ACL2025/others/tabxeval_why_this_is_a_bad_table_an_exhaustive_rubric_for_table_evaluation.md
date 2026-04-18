@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation
 description: >-
@@ -118,7 +118,7 @@ TabXEval 是一个两阶段评估框架：
 3. **TabXBench 填补空白**：首个跨领域、含人工标注的表格评估基准，支持灵敏度-特异度分析
 4. **方法设计优雅**：确定性规则（精确匹配）+ LLM 灵活性（语义对齐）的混合策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 LLM（GPT-4o）进行语义对齐和比较，存在成本和可复现性问题
 - TabXBench 规模较小（50 个参考表），扩展覆盖范围是未来工作
@@ -234,7 +234,7 @@ TabXEval 是一个两阶段框架：
 3. **TabXBench 填补空白**：首个跨领域、控制性扰动、人工标注的表格评估基准
 4. **实验结果有力证明**：99.7% 的结构描述符人工相关性说明方法确实捕获了人类评估者关注的维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 LLM 进行 TabAlign 细化和 TabCompare，存在 LLM 本身的错误和不确定性
 - TabXBench 仅 50 张表×5 种扰动，规模较小

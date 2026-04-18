@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpatioTemporal Difference Network for Video Depth Super-Resolution
 description: >-
@@ -155,7 +155,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{rec} + \beta \mathcal{L}_{diff}$$
 4. **全面的跨数据集泛化性**：在 TarTanAir 上训练后，无需微调即在 DyDToF 和 DynamicReplica 上取得一致的性能提升，证明了方法的鲁棒性。
 5. **时间一致性的显著改善**：x-t 切片可视化清晰展示了 STDNet 在时间变化区域产生更稳定的深度预测。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **合成数据训练**：仅在合成数据集（TarTanAir、DyDToF、DynamicReplica）上实验，未验证在真实传感器采集的有噪声深度视频上的效果。
 2. **固定的邻近帧数量**：实验发现使用 2 帧（1 邻近+1 跨帧）时性能最佳，但这种经验设定可能不适用于运动剧烈或长时遮挡场景，缺乏自适应帧选择机制。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffEye: Diffusion-Based Continuous Eye-Tracking Data Generation Conditioned on Natural Images
 description: >-
@@ -122,7 +122,7 @@ DiffEye 训练数据量（8,934 轨迹）远小于基线（DeepGaze III 用 615K
 - **扩散模型的天然优势**：无需自回归采样即可生成多样化轨迹，真正建模人类注视行为的随机分布特性
 - **下游可转换性**：生成的连续轨迹可按需转换为 scanpath 或 saliency map，一个模型服务多种任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持固定长度输出**：当前固定生成 720 步 (240Hz)，无法适配不同采样率和序列长度
 2. **数据集单一**：MIT1003 是唯一提供原始眼动轨迹的自然图像数据集，规模有限

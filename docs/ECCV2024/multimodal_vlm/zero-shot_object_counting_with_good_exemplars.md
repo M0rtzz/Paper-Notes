@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Zero-shot Object Counting with Good Exemplars (VA-Count)
 description: >-
@@ -145,7 +145,7 @@ VA-Count由两个核心模块组成：
 - **单物体过滤器简单有效**：一个简单的二分类器解决了Grounding DINO框可能包含多物体的关键问题
 - **跨域泛化性强**：FSC-147→CARPK的迁移性能优于大多数baseline
 
-## 局限性 / 可改进方向
+## 局限与展望
 - RMSE指标不如CLIP-Count，说明存在少数极端误差样本，鲁棒性有待提升
 - Grounding DINO本身的计算开销较大，推理效率可能是瓶颈
 - 单物体分类器的训练数据构造方式较简单（随机裁剪），可能引入类别偏差

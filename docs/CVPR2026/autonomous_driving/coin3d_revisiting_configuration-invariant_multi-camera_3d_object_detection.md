@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoIn3D: Revisiting Configuration-Invariant Multi-Camera 3D Object Detection
 description: >-
@@ -121,7 +121,7 @@ CoIn3D 是首个统一适用于三大 MC3D 范式的跨配置泛化框架。
 - **范式无关的统一框架**：同一套 SFM+CDA 可即插即用到 BEVDepth / BEVFormer / PETR，不依赖特定的深度预测设计。
 - **大幅缩小与 Oracle 的差距**：NuScenes→Waymo 的 NDS* 从 0.178 提升到 0.513（Oracle 为 0.649），弥合了约 71% 的性能差距。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **语义分布差异未解决**：当前只处理配置差异，不同数据集的类别分布/场景分布差异仍影响跨域泛化，作者将此列为未来工作。
 - **依赖 LiDAR 点云构建 3DGS**：CDA 模块需要 LiDAR 数据来重建 mesh 和深度，限制了在纯视觉数据集上的应用。

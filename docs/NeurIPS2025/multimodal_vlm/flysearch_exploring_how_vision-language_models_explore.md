@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlySearch: Exploring how vision-language models explore
 description: >-
@@ -140,7 +140,7 @@ FS-Anomaly-1 评测结果：
 4. **可复现性好**：三组标准化挑战确保公平可比的评测条件
 5. **揭示根本性问题**：VLM 缺乏系统化探索策略——人类会沿街道搜索，而 VLM 随机移动
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅测试纯 VLM**：未评测更复杂的 ObjectNav 系统（如融合 SLAM 的方法）
 2. **简单提示策略**：仅用零样本提示，未探索少样本学习或提示优化

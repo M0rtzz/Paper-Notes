@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uni-CoT: Towards Unified Chain-of-Thought Reasoning Across Text and Vision
 description: >-
@@ -100,7 +100,7 @@ $\mathcal{L}_{joint} = \lambda_{CE} \cdot \mathcal{L}_{CE}^{text} + \mathcal{L}_
 - **统一理解与生成的推理框架**：基于 BAGEL 的 MoE 架构无缝切换理解/生成路径，推理过程中自然混合"看图"和"画图"动作
 - **将 MDP 形式化引入多模态 CoT**：把自反思过程建模为 MDP（状态、动作、奖励），为后续用 RL 优化多模态推理奠定了形式化基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **实验规模有限**：主要在 GenEval 上展示生成结果，理解任务（MMBench、MathVista 等）的结果未在主文中充分展示
 - **训练数据量小**：仅 31K 样本，限制了推理能力的深度
 - **基线对比不够充分**：主要与 BAGEL 基线比较，+0.02 的提升较小。缺少与 GPT-4o、Gemini 等闭源模型的对比

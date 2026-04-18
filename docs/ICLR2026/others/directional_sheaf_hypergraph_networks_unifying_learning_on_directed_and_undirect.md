@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Directional Sheaf Hypergraph Networks: Unifying Learning on Directed and Undirected Hypergraphs
 description: >-
@@ -46,30 +46,30 @@ DSHN 三步走：(1) 定义 Directed Hypergraph Cellular Sheaf（复值 restrict
 
 1. **方向性矩阵 $\mathcal{S}^{(q)}$（Definition 1）**
 
-    - **做什么**：为节点-超边对分配复值系数编码方向角色
+    - **功能**：为节点-超边对分配复值系数编码方向角色
     - **核心思路**：头节点系数 1，尾节点系数 $e^{-2\pi i q}$，参数 $q$ 控制方向信息强度
     - **设计动机**：$q=0$ 退化为无向；$q=1/4$ 时方向编码在虚部，与 Magnetic Laplacian 对齐
 
 2. **Directed Sheaf Hypergraph Laplacian**
 
-    - **做什么**：$\mathbf{L}^{\vec{\mathcal{F}}} = \mathbf{D}_V - \mathbf{B}^{(q)\dagger} \mathbf{D}_E^{-1} \mathbf{B}^{(q)}$
+    - **功能**：$\mathbf{L}^{\vec{\mathcal{F}}} = \mathbf{D}_V - \mathbf{B}^{(q)\dagger} \mathbf{D}_E^{-1} \mathbf{B}^{(q)}$
     - **核心思路**：对角块实值（自身信息），非对角块有向时为复值，修正了 Duta et al. 的对角项系数
     - **设计动机**：确保正半定性等所有谱卷积所需性质
 
 3. **谱性质保证**
 
-    - **做什么**：证明可对角化、实非负特征值、正半定、谱上界 1
+    - **功能**：证明可对角化、实非负特征值、正半定、谱上界 1
     - **核心思路**：通过 Dirichlet 能量非负性证明正半定
     - **设计动机**：保证 Fourier 变换良定义和多项式滤波器稳定
 
 4. **统一泛化**
 
-    - **做什么**：证明在特殊情况下退化为 Graph Sheaf Laplacian、Magnetic Laplacian、Zhou 超图 Laplacian、GeDi Laplacian 等
+    - **功能**：证明在特殊情况下退化为 Graph Sheaf Laplacian、Magnetic Laplacian、Zhou 超图 Laplacian、GeDi Laplacian 等
     - **设计动机**：一个框架统一所有已有算子
 
 5. **DSHNLight**
 
-    - **做什么**：detach Laplacian 构建的梯度，固定 restriction map 参数
+    - **功能**：detach Laplacian 构建的梯度，固定 restriction map 参数
     - **设计动机**：大幅降低计算成本，多个数据集上性能相当甚至更好
 
 ### 损失函数 / 训练策略
@@ -117,7 +117,7 @@ DSHN 三步走：(1) 定义 Directed Hypergraph Cellular Sheaf（复值 restrict
 3. 方向信息用复数相位编码的思路从有向图自然推广到超图
 4. DSHNLight 与极限学习机思想呼应，说明随机特征在图学习中有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $nd \times nd$ Laplacian 的可扩展性问题
 - $q$ 作为全局参数，未能为每条超边学习不同 $q$

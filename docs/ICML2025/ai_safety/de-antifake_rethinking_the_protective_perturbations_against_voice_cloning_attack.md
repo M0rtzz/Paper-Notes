@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] De-AntiFake: Rethinking the Protective Perturbations Against Voice Cloning Attacks
 description: >-
@@ -157,7 +157,7 @@ $$\mathbf{x}_{\text{ref}} = R_\phi(P_\theta(\mathbf{x}_{\text{adv}}), \mathbf{\L
 3. **音素作为 "内容锚点"**：利用保护性扰动主要针对说话人特征而非语音内容这一特性，将音素信息作为精炼过程的可靠引导，设计思路简洁有效
 4. **多域处理策略**：Purification 在时域（波形），Refinement 在频谱域（复数频谱），充分利用了不同域的互补优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **伦理风险**：本文提出的方法本质上是一种攻击技术——帮助攻击者绕过语音克隆防御。虽然作者强调这是为了暴露风险、推动更强防御的发展，但方法一旦公开，确实可能被恶意利用
 2. **净化模型需要训练数据**：Refinement 模型需要干净语音数据来构建训练对，对数据有一定依赖

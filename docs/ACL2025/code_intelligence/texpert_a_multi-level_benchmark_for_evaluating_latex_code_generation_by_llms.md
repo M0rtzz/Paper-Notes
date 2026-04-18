@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TeXpert: A Multi-Level Benchmark for Evaluating LaTeX Code Generation by LLMs
 description: >-
@@ -104,7 +104,7 @@ TeXpert的构建遵循两步流程：先收集科学文档中常用的原子LaTe
 - **DeepSeek Coder在Hard集上的领先**表明专门的代码训练对结构化输出生成有独特优势
 - **评估设计的务实性**：使用LLM-as-Judge + 人工参考代码的混合评估方式，在成本和准确性之间取得了平衡
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Hard集仅40个样本，统计可靠性有限
 - 仅覆盖科学文档，未涉及简历、书籍等其他文档类型
 - 未尝试使用TeXpert数据集对模型进行微调

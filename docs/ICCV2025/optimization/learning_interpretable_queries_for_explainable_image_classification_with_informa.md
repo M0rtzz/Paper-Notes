@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Interpretable Queries for Explainable Image Classification with Information Pursuit
 description: >-
@@ -113,7 +113,7 @@ K-Learned优于或可比4种SOTA概念瓶颈模型。
 - **交替优化的必要性**：揭示了querier与字典之间的耦合问题，联合优化会导致语义漂移
 - **渐进式解释**：IP的决策过程像"20个问题"游戏，每步都能观察后验分布变化，比CBM的静态解释更直观
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 严重依赖CLIP的查询回答质量，CLIP的噪声回答限制了最终性能
 - 查询宇宙需要预先构建（约30万个查询），构建质量影响学到的字典

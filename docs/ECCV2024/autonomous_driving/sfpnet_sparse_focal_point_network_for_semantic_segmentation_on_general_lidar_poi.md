@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SFPNet: Sparse Focal Point Network for Semantic Segmentation on General LiDAR Point Clouds
 description: >-
@@ -120,7 +120,7 @@ S.MID（混合固态LiDAR）对比：
 - **新数据集贡献**：S.MID 填补了工业场景和混合固态 LiDAR 的数据集空白
 - **focal modulation 到3D稀疏数据的扩展**：将2D视觉中的 focal modulation 范式成功移植到3D稀疏体素，展示了范式迁移的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SemanticKITTI test 上 mIoU 仅 70.3，落后于 SphereFormer (74.8)，说明在机械旋转式 LiDAR 上放弃专用偏置确实有代价
 - 多层级 SubMconv 的堆叠可能增加计算开销，尤其 kernel size 递增

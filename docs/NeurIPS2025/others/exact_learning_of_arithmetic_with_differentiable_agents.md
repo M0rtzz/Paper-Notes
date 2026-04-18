@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exact Learning of Arithmetic with Differentiable Agents
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **环境-控制解耦**：DFST 的核心创新不在于模型本身的结构，而在于让模型能在外部环境中自由移动——这打破了 sequential model 只能单向移动的限制，是实现图灵完备且可微的关键
 - **极简设计的力量**：纯线性运算 + 简单训练策略就能实现精确算法学习，无需任何花哨技巧
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要手工设计 Grid Agent（专家算法），未解决从零发现算法的问题
 - DFST 隐层维度需要匹配目标 Grid Agent 的状态数，需要先验知识
 - 乘法的泛化倍数（36x for mult2, 36x for mult10）远不如加法（1283x），可能因为乘法算法状态更复杂

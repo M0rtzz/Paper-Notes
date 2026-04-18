@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Statement-Tuning Enables Efficient Cross-lingual Generalization in Encoder-only Models
 description: >-
@@ -144,7 +144,7 @@ XLM-R large (560M) 在 XStoryCloze 上以 78.78 超越 Llama3.1 70B 的 68.32，
 4. **Statement-Tuning 的优雅设计**：通过统一的 True/False 框架将任意分类任务转换为单一形式
 5. **开放性发现**：英语训练数据 + 多语言预训练即可实现跨语言泛化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Statement-Tuning 高度依赖训练任务选择，与目标任务相关性不足时效果差（如 XWinoGrad）
 2. 需要手动设计语句模板，虽然验证了英语模板足够，但模板工程仍有成本

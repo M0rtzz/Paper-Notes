@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OCK: Unsupervised Dynamic Video Prediction with Object-Centric Kinematics
 description: >-
@@ -122,7 +122,7 @@ Transformer 组件消融（MOVi-A）：
 - **长期泛化能力**：仅用 6 帧训练，可泛化到 18 帧预测且误差增长缓慢
 - 在真实驾驶场景（Waymo）上也展现出强大能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 运动学仅在 2D 图像空间建模，对 3D 遮挡和深度变化的处理有限
 - 依赖 SAVi 预训练的 slot 编码器质量，复杂场景的 slot 分解可能不完美

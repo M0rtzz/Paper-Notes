@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are Greedy Task Orderings Better Than Random in Continual Linear Regression?
 description: >-
@@ -102,7 +102,7 @@ $$x_{k+1} = x_k - A_{i_k}^\dagger (A_{i_k} x_k - b_{i_k})$$
 - **实用指导**：允许任务重复是贪心排序成功的关键条件，这对课程学习（curriculum learning）和数据回放策略有直接启示
 - **理论与实验的落差**：理论上界 $\mathcal{O}(1/\sqrt[3]{k})$ 慢于随机的 $\mathcal{O}(1/\sqrt{k})$，但实验中贪心更快，说明上界可能不紧
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **限定于线性回归**：结论能否推广到非线性模型（如神经网络）尚不确定
 2. **联合可实现性假设过强**：实际持续学习中任务间常存在冲突

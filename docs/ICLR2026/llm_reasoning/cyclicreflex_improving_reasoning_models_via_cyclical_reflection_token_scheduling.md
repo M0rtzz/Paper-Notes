@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CyclicReflex: Improving Reasoning Models via Cyclical Reflection Token Scheduling
 description: >-
@@ -102,7 +102,7 @@ $$\delta(t) = A \left| \frac{4 \cdot (t - C/4) \bmod C}{C} - 2 \right| - A$$
 - **双向性是关键创新**：相比TIP的单向抑制，CyclicReflex交替促进和抑制反思的能力使其能够适应不同难度的问题
 - **与外部test-time scaling方法完美兼容**：与Best-of-N和Beam Search的组合均能进一步提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论基础仍偏弱：为什么LRM会出现over/under-reflection的根本原因未被阐明
 - 超参数（$A$和$C$）需要针对每个数据集做网格搜索，缺乏自适应机制
 - 仅在数学推理任务上验证，未测试代码生成、逻辑推理等其他推理场景

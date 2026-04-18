@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SDKD: Frequency-Aligned Knowledge Distillation for Lightweight Spatiotemporal Forecasting
 description: >-
@@ -47,7 +47,7 @@ SDKD包含四个阶段：(1) 教师模型预训练——频率解耦架构（CNN
 
 #### 1. 频率解耦教师模型（ST-AlterNet）
 
-- **做什么**：在隐空间中显式分离高频和低频时空模式，为蒸馏提供结构化的频域先验。
+- **功能**：在隐空间中显式分离高频和低频时空模式，为蒸馏提供结构化的频域先验。
 - **核心思路**：采用编码器-隐状态演化-解码器架构。编码器通过多层卷积将输入 $X$ 映射到隐空间 $Z = \mathcal{E}(X)$。隐状态演化模块包含两个并行的频率敏感分支：
     - **高频提取器（CNN分支）**：$Z^h = \text{ConvBlock}(Z) = \sigma(\text{Conv2D}(Z; \mathbf{W}_h) + b_h)$，CNN通过局部梯度算子 $\nabla_{x,y}$ 充当隐式高通滤波器，捕获突发变化和细粒度空间模式。
     - **低频建模器（Transformer分支）**：$Z^l = \text{Softmax}\left(\frac{QK^T}{\sqrt{d}}\right)V$，自注意力机制充当低通滤波器：$\mathcal{F}_{\text{low}}(Z)(\omega) = \frac{1}{1+\|\omega\|^2/\lambda} \cdot \hat{Z}(\omega)$，捕获全局长程依赖和趋势变化。
@@ -56,7 +56,7 @@ SDKD包含四个阶段：(1) 教师模型预训练——频率解耦架构（CNN
 
 #### 2. 频率对齐蒸馏机制
 
-- **做什么**：从教师隐空间提取多尺度频域特征，引导学生模型同时学习高频细节和低频趋势。
+- **功能**：从教师隐空间提取多尺度频域特征，引导学生模型同时学习高频细节和低频趋势。
 - **核心思路**：定义频谱传输损失：
   $\mathcal{L}_{\text{KD}} = \|\Psi_h(\mathcal{G}(X)) - \Psi_h(\mathcal{F}(X))\|_2^2 + \alpha \|\Psi_l(\mathcal{G}(X)) - \Psi_l(\mathcal{F}(X))\|_2^2$
   
@@ -66,7 +66,7 @@ SDKD包含四个阶段：(1) 教师模型预训练——频率解耦架构（CNN
 
 #### 3. 多教师蒸馏（CAMKD）
 
-- **做什么**：利用多个教师模型的互补知识，通过梯度空间的多目标优化来自适应加权。
+- **功能**：利用多个教师模型的互补知识，通过梯度空间的多目标优化来自适应加权。
 - **核心思路**：对每个教师 $\mathcal{F}_m$ 定义蒸馏损失 $\ell_m$，然后在每个mini-batch用"Agree to Disagree"(A2D)方法求解最优权重 $\{\alpha_m^*\}$：
   $\min_{\{\alpha_m\}} \frac{1}{2}\|\sum_{m=1}^M \alpha_m \nabla_\theta \ell_m\|^2, \quad \text{s.t.} \sum \alpha_m = 1, 0 \leq \alpha_m \leq C$
   
@@ -118,7 +118,7 @@ SDKD包含四个阶段：(1) 教师模型预训练——频率解耦架构（CNN
 - **理论支撑充分**：利用Neural Tangent Kernel理论和Plancherel定理证明了CNN高通/Transformer低通的属性以及频域误差分解的合理性。
 - **架构无关性**：学生可以是任意轻量架构（U-Net、ResNet、MLP-Mixer），不要求与教师结构匹配。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 频域解耦依赖CNN和Transformer的先验假设，当教师模型使用其他架构（如FNO或LSTM）时适用性不明。
 - 四个benchmark规模偏小（最大35K训练样本），在更大规模真实世界数据上的效果待验证。

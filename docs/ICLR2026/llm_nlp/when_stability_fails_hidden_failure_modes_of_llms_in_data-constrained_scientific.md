@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] When Stability Fails: Hidden Failure Modes of LLMs in Data-Constrained Scientific Decision-Making
 description: >-
@@ -112,7 +112,7 @@ Gemini 的 Jaccard 仅为 0.08，意味着两个语义几乎相同的 prompt 产
 - "**稳定性是正确性的必要非充分条件**"这一结论对所有使用 LLM 做科学决策的研究者都是重要警示
 - 实验设计的精妙之处：选择差异表达分析作为测试平台，因为它有确定性的统计参考答案，完美适合量化评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单一数据集**：仅使用一个 RNA-seq 数据集（GSE239514），泛化性有待验证
 2. **单一统计范式**：仅使用 DESeq2，未探索其他统计方法作为参考

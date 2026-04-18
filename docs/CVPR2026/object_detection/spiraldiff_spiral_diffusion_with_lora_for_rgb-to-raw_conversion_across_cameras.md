@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpiralDiff: Spiral Diffusion with LoRA for RGB-to-RAW Conversion Across Cameras
 description: >-
@@ -110,7 +110,7 @@ SpiralDiff 基于 ResShift（一种高效残差偏移扩散框架）构建，仅
 4. 实验覆盖全面：4 个数据集 + 过曝测试 + 真实 ISP + 下游检测 + 充分消融。
 5. 在 RAW-Diffusion 上做插件替换即可显著提升，说明 SpiralDiff 的通用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 权重图 $\mathbf{w}_t$ 的设计依赖 ground-truth $\mathbf{x}_0$，推理时需通过网络预测替代，可能引入误差累积。
 2. 仅在 4 个相机上验证 CamLoRA，对更大规模相机池（数十种传感器）的扩展性待考察。

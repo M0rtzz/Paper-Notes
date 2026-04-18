@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Factuality Matters: When Image Generation and Editing Meet Structured Visuals
 description: >-
@@ -77,7 +77,7 @@ tags:
 - **推理重要性的验证**：实验清楚表明 inference-time reasoning 对结构化图像任务带来一致性提升，且与模型架构无关
 - **Mask-based 训练策略**：针对结构化图像的像素统计特点（大面积均匀背景、编辑区域小）进行自适应损失加权
 
-## 局限性 / 可改进方向
+## 局限与展望
 - T2I 生成性能仍远低于闭源模型（28.80% vs 49.58%），编辑虽领先但差距不大
 - 外部推理器依赖 GPT-5，推理成本高，未探索轻量级替代方案
 - 数据构建高度依赖 GPT-5 标注和过滤，成本较高且可复现性存疑

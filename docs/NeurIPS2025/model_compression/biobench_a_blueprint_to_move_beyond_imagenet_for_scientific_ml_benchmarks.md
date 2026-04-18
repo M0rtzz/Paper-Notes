@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BioBench: A Blueprint to Move Beyond ImageNet for Scientific ML Benchmarks
 description: >-
@@ -35,14 +35,14 @@ tags:
 
 **核心矛盾**：在 46 个现代视觉 Transformer checkpoint 上，ImageNet top-1 与生态任务的 Spearman ρ 仅 0.55（整体），>75% 时降至 0.42——即前沿模型中约 30% 的排名是反的。
 
-**本文要解决什么？**
+**本文目标**
    - 构建一个统一、可复现的生态视觉基准，让研究者能在"真正重要的任务"上评估模型
    - 量化 ImageNet 作为科学 AI 代理评估的失效程度
    - 提供可推广到医学、制造等其他科学领域的 benchmark 设计蓝图
 
 **切入角度**：生态学拥有丰富的公开数据和 CV4Ecology 挑战赛积累的标注任务，是理想的测试场。
 
-**核心 idea 一句话**：将 9 个分散的生态视觉任务统一为 BioBench，证明 ImageNet 排行榜对科学 AI 已失去预测力，并提供 benchmark 设计的标准范式。
+**核心 idea**：将 9 个分散的生态视觉任务统一为 BioBench，证明 ImageNet 排行榜对科学 AI 已失去预测力，并提供 benchmark 设计的标准范式。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ tags:
 - **macro-F1 作为默认指标**：显式奖励尾部类别性能，比 top-1 更符合生态学需求（稀有物种识别往往更重要）。
 - **Benchmark 设计蓝图的方法论价值**：论文不只是贡献了一个 benchmark，更提供了 "如何为科学领域构建 benchmark" 的原则性指南——分布多样性、长尾指标、bootstrap 统计检验。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅生态领域**：医学、制造等领域可能需要检测/分割等不同任务类型。
 - **Frozen features 低估微调收益**：linear probe 隔离了表征质量，但实际部署时微调可能改变排名。

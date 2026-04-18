@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TrafficLoc: Localizing Traffic Surveillance Cameras in 3D Scenes
 description: >-
@@ -105,7 +105,7 @@ $$L = \lambda_1 L_{Att} + \lambda_2 L_{det} + \lambda_3 L_{coarse} + \lambda_4 L
 - **ICL 的设计思想**：同时优化跨模态对齐和模态内判别性，比单纯的跨模态对比学习更有效
 - 在未知内参场景下，可用 DUSt3R 预测内参进行初始化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前方法假设点云已预处理完成（累积+下采样），实时性受限
 - Carla 仿真数据与真实场景仍有域差距，虽然 Sim2Real 定性结果不错，但缺乏定量评估
 - 推理速度（0.85s with GT K）可进一步优化

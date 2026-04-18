@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Zero-AVSR: Zero-Shot Audio-Visual Speech Recognition with LLMs by Learning Language-Agnostic Speech Representations
 description: >-
@@ -107,7 +107,7 @@ Zero-AVSR 由两个核心组件组成：(1) AV-Romanizer：将多语言视听语
 - **数据量和语言多样性的 scaling 效应**：更多语言和数据能显著提升零样本能力
 - **LLM 作为通用去罗马化器**：消除了为每种语言训练独立语言模型的需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零样本性能与监督方法仍有差距（特别是阿拉伯语等书写系统差异大的语言）
 - Unified Zero-AVSR 使用较小的 Llama3.2-3B，更大模型可能进一步提升

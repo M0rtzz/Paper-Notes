@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Multiple Models Using Labeled and Unlabeled Data
 description: >-
@@ -123,7 +123,7 @@ $$|\text{AUC}_k - \widehat{\text{AUC}}_k| \leq \Phi\left(\frac{\mathbf{c}_k}{\sq
 - **广泛适用性**：跨医疗、NLP、化学、内容审核等多领域验证
 - **公平性应用**：可直接用于子群体性能评估，对算法公平性审查有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - KDE 在高维空间（分类器数量多 / 类别数多）可能效果下降
 - 假设标注和未标注数据同分布——分布偏移场景下未验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProMerge: Prompt and Merge for Unsupervised Instance Segmentation
 description: >-
@@ -98,7 +98,7 @@ ProMerge是一种纯推理时方法，不涉及训练。关键超参数包括：
 - 背景处理是无监督分割中经常被忽视但至关重要的问题
 - 将分割mask作为伪标签的应用展示了方法的实际价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 方法的效果强依赖于底层自监督特征的质量
 - 合并策略的超参数需要调节，不同场景可能需要不同的阈值

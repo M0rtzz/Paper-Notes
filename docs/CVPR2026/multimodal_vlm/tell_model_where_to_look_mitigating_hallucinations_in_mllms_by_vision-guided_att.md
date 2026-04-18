@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tell Model Where to Look: Mitigating Hallucinations in MLLMs by Vision-Guided Attention
 description: >-
@@ -105,7 +105,7 @@ VGA分两步：(1) 通过Visual Semantic Confidence (VSC)构建视觉定位 → 
 - Attention Heads Balancing是实用的设计，避免破坏模型原有的视觉功能头
 - PVG为captioning场景提供了动态attention引导的有效范式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VSC使用第一个token近似物体语义可能不够精确，尤其对多音节/多token物体
 - 超参数β需要手动设置，不同模型/任务可能需要调整
 - 未与训练方法结合，可能存在互补提升空间

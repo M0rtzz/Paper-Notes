@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image
 description: >-
@@ -119,7 +119,7 @@ $$L = L_{ssim} + L_1 + L_{lpips} + L_{adv} + L_{sds} + L_{consist} + L_{cas} + L
 3. **双层变形设计的洞察**：FLAME参数驱动的基础变形提供粗粒度结构，VASA隐空间驱动的密集残差提供细粒度表情
 4. **渲染一致性损失的精妙设计**：用stop_gradient防止SDS损失的平滑化效应反向影响基础变形
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 无法建模头部背面（受合成训练数据视角限制）
 - 不处理动态配饰（与VASA-1的限制一致）

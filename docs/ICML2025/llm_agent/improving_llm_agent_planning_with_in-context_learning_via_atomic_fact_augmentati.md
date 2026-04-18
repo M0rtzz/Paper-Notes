@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving LLM Agent Planning with In-Context Learning via Atomic Fact Augmentation and Lookahead Search
 description: >-
@@ -91,7 +91,7 @@ LLM 同时充当三个角色（均接收原子事实增强）：
 3. 搜索+经验的组合比纯反思（Reflexion）或纯搜索都更鲁棒。
 4. 纯 in-context 学习意味着对新环境的适应完全不需要训练。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. LLM 推理调用量大，每步多次 LLM 调用成本高。
 2. 原子事实质量完全依赖 LLM 反思能力。

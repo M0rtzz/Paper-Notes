@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Black-Box Generative Attacks via Generator Semantic Consistency
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{distill}} \cdot \mathc
 3. **ACR 指标**：揭示了现有评估协议的不足——传统指标忽略了"偶然纠正"（攻击后预测反而变正确）的情况
 4. **差异图分析**：可视化证实了本方法在残差块中生成的对抗噪声更集中在物体语义结构上
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 方法的效果依赖于生成器架构——如果早期中间块特征缺乏丰富语义线索（如U-Net等不同架构），蒸馏机制的改进有限
 - 在图像分类之外的任务（检测、分割）上的可迁移性提升有限，表明分类导向的代理模型难以充分对齐其他任务的特征表示

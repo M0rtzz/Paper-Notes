@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethink the Role of Deep Learning towards Large-scale Quantum Systems
 description: >-
@@ -115,7 +115,7 @@ $$n_{\text{pre}} \times M_{\text{pre}} + n_{\text{sft}} \times M_{\text{sft}} = 
 4. **规模不是万能**: 更大的 DL 模型不一定更好，正则化策略远比盲目增加参数重要
 5. **大尺度验证**: 实验扩展到 127 量子比特，覆盖三大主流哈密顿量族，结论稳健
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务覆盖有限**: 仅考虑关联函数、纠缠熵和相分类三类任务，未涉及量子态层析、保真度估计等更广泛任务
 2. **哈密顿量范围**: 三族哈密顿量虽经典但未覆盖化学分子、拓扑序等更复杂系统

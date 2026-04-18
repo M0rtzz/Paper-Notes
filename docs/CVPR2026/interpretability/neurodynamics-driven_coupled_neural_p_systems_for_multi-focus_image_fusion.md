@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neurodynamics-Driven Coupled Neural P Systems for Multi-Focus Image Fusion
 description: >-
@@ -104,7 +104,7 @@ $$F(i,j) = A(i,j) \times DM(i,j) + B(i,j) \times (1 - DM(i,j))$$
 3. **极低能耗与实时性**：CPU-only 即可实现实时融合（C++ 0.18s），能耗仅 $10^{-5}$ J 量级，适合边缘部署
 4. **理论分析首次性**：首次研究 CNP 系统的神经动力学，为该类模型的理论理解开辟了新方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数值提升相对有限，部分指标上仅微幅超越 PADCDTNP 和 DMANet
 2. 当前仅处理两幅输入图像的标准 MFIF 场景，虽然附录中扩展到多图，但复杂度分析不足

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D-ANC: Adaptive Neural Collapse for Robust 3D Point Cloud Recognition
 description: >-
@@ -75,7 +75,7 @@ tags:
 - **模型无关(model-agnostic)**: 只改分类头，可即插即用到任何点云backbone，实用性强
 - **两阶段训练+组件协作设计**: RBL解决不平衡→FDL在此基础上精细化类间分离，组件之间有逻辑依赖关系，不是简单堆砌
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在分类任务上验证**: 未测试在点云分割、检测等任务上的效果
 - **仅限点云模态**: NC思路完全可以推广到2D图像、多模态等领域的对抗鲁棒性
 - **ShapeNet上clean ACC有下降**: 在ShapeNet数据集上PointNet的clean ACC从78.6%降到74.1%，说明在某些数据分布上ETF头可能有负面影响

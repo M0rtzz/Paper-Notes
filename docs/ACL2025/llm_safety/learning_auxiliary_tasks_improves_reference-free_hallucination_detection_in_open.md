@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Auxiliary Tasks Improves Reference-Free Hallucination Detection in Open-Domain Long-Form Generation
 description: >-
@@ -152,7 +152,7 @@ RATE-FT 在所有模型上一致优于基线，展现出强泛化性。
 - **不确定性整合框架**：提出的双阈值+外部工具混合管道，为实际场景提供了灵活的部署选择
 - "label-rationale"格式的创新——训练时学习推理，推理时只需看第一个 token，巧妙地将 CoT 的效益融入微调而不增加推理开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅关注检测器性能的提升，未探索如何利用检测反馈作为奖励信号来引导 LLM 生成更事实性的内容
 - 基准数据集的领域覆盖仍有限（LongFact 38个领域 + Biography），更大规模的基准将增强适用性

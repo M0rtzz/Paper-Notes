@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RS2-SAM2: Customized SAM2 for Referring Remote Sensing Image Segmentation
 description: >-
@@ -142,7 +142,7 @@ $$\mathcal{L} = \lambda_{ce}\mathcal{L}_{ce} + \lambda_{dice}\mathcal{L}_{dice} 
 2. **密集提示替代稀疏提示**的策略在遥感场景中特别有效：遥感目标经常模糊不清，稀疏点/框提示无法充分引导分割
 3. **文本引导边界损失**巧妙利用文本语义来加权边界约束，针对遥感目标前景-背景对比度低的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要两个编码器（BEiT-3 + SAM2 Hiera），输入尺寸分别为 224 和 1024，计算开销较大
 - 仅在 RRSIS 数据集上验证，未探索更广泛的遥感任务（如变化检测、实例分割）

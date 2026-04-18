@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpatialTraceGen: High-Fidelity Traces for Efficient VLM Spatial Reasoning Distillation
 description: >-
@@ -105,7 +105,7 @@ SpatialTraceGen 的核心思路是：从一个大型教师模型（teacher model
 - **自动化验证替代人工标注**：验证器的设计使大规模高质量推理数据的生成成为可能，极大降低了成本
 - **步骤级粒度的重要性**：仅验证最终答案会遗漏大量中间推理错误，步骤级验证是关键
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅在 CLEVR-Humans 这一合成场景上验证，缺乏真实场景的评估
 2. 验证器本身依赖规则匹配，可能无法覆盖所有推理错误类型

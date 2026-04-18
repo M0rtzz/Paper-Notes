@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Less is More: Empowering GUI Agent with Context-Aware Simplification
 description: >-
@@ -54,7 +54,7 @@ SimpAgent 包含两个核心组件：
 ### 关键设计
 
 #### 1. **基于遮挡的元素剪枝（Masking-based Element Pruning）**
-- **做什么**：训练时在当前截图上随机遮挡一个矩形区域
+- **功能**：训练时在当前截图上随机遮挡一个矩形区域
 - **核心思路**：
     - 矩形尺寸 $h, w \sim U(a, b)$，中心点 $p_c$ 从均匀分布中采样
     - 遮挡操作以概率 $p$ 执行，推理时不遮挡
@@ -68,7 +68,7 @@ $$o_t^m = \mathcal{M}(o_t) = \begin{cases} v, & (x,y) \in \mathcal{R} \\ o_t(x,y
     - 避免了复杂的元素关系建模——不需要判断哪些元素是无关的
 
 #### 2. **基于 LLM 的历史丢弃（LLM-based History Dropping）**
-- **做什么**：在 LLM 的第 $k$ 层直接丢弃所有历史视觉 token
+- **功能**：在 LLM 的第 $k$ 层直接丢弃所有历史视觉 token
 - **核心思路**：浅层 LLM 通过因果自注意力已将视觉信息压缩到相邻的动作 token 中（通过注意力可视化验证），因此丢弃历史视觉 token 后信息可保留在动作 token 中
 - **设计动机**：
     - 无需额外参数
@@ -76,7 +76,7 @@ $$o_t^m = \mathcal{M}(o_t) = \begin{cases} v, & (x,y) \in \mathcal{R} \\ o_t(x,y
     - 实现27%的 FLOPs 降低
 
 #### 3. **一致性引导训练（Consistency Guidance）**
-- **做什么**：在训练时同时维护截断分支和完整分支，最小化两者输出分布的 KL 散度
+- **功能**：在训练时同时维护截断分支和完整分支，最小化两者输出分布的 KL 散度
 - **核心思路**：
 
 $$\mathcal{L} = -\mathbb{D}_{KL}[\pi_\theta(\tilde{a}_t|o_t^m, H_t, G) \| \pi_\theta(a_t|o_t^m, H_t^c, G)] - \sum_t \log \pi_\theta(\tilde{a}_t|o_t^m, H_t, G) - \sum_t \log \pi_\theta(a_t|o_t^m, H_t^c, G)$$
@@ -147,7 +147,7 @@ AndroidControl 结果：
 3. **训练-推理不对称设计**：训练时遮挡增强鲁棒性，推理时不遮挡保留完整信息
 4. **计算效率显著**：27% FLOPs 降低同时性能提升，证明"less is more"的主张
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 遮挡策略是数据无关的，未利用 UI 的结构信息（如组件层级、布局规律）
 2. 仅验证了 Qwen2-VL-2B 作为基座模型，对更大模型的泛化性未知

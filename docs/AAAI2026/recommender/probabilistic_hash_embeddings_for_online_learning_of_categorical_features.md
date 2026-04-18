@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probabilistic Hash Embeddings for Online Learning of Categorical Features
 description: >-
@@ -105,7 +105,7 @@ PHE 作为即插即用模块在不同任务上的应用效果：
 - 内存占比仅 2%~4% 体现了极高的实用性，对资源受限的部署场景非常友好
 - PHE 作为即插即用模块可以适配多种概率模型（DKF、NCF 等），扩展性好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 变分推断引入了近似误差（mean-field 假设），理论保证在实际中是近似成立
 - 假设模型参数 $\theta$ 在在线阶段固定，对于数据分布剧烈变化的场景可能不足

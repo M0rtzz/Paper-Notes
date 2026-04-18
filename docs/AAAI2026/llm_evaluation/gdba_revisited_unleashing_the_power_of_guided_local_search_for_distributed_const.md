@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GDBA Revisited: Unleashing the Power of Guided Local Search for Distributed Constraint Optimization
 description: >-
@@ -106,7 +106,7 @@ DGLS 继承了 GDBA 的基本运行流程——每轮中各智能体初始化代
 - 理论分析全面：有界性、势博弈结构、变体等价性、复杂度，形成完整的理论支撑
 - 蒸发机制借鉴蚁群优化中的信息素挥发，在 DCOP 场景中实现有限记忆的惩罚管理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 蒸发率 γ 需要手动调参，不同问题类型可能需要不同的值（文中稀疏问题用 0.5，结构化问题用 0.9）
 - 同步方案引入额外通信轮次（SYNC 消息），在通信受限场景可能不理想
 - 仅考虑二元约束，未扩展到高阶约束

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Token Probes: Hallucination Detection via Activation Tensors with ACT-ViT
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **核心洞察**：激活张量 $\mathbf{A} \in \mathbb{R}^{L \times N \times D}$（层数×token数×隐维度）在结构上类似于图像（高×宽×通道），可以借用视觉模型的方法来处理。
 
-**核心idea一句话**：把LLM的全部隐层激活当作"图像"，用ViT自适应地attend到最有信息量的层-token组合，实现跨LLM的高效幻觉检测。
+**核心 idea**：把LLM的全部隐层激活当作"图像"，用ViT自适应地attend到最有信息量的层-token组合，实现跨LLM的高效幻觉检测。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **跨LLM联合训练**的成功验证了一个重要假设：不同LLM编码幻觉的方式存在共性，可以通过线性变换对齐
 - **极致的效率**：推理$10^{-5}$秒/样本（比LLM-based检测方法快5个数量级），训练3小时搞定15个组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要白盒访问LLM的所有层隐状态——对API-only模型不适用
 - 激活张量的存储开销大（单个LLM约0.2GB/样本），大规模部署需要优化存储
 - 只测试了7-8B规模的模型，对更大（70B+）或更小（1B）模型的效果未知

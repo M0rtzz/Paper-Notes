@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Imbalance in Balance: Online Concept Balancing in Generation Models
 description: >-
@@ -123,7 +123,7 @@ Token-wise 重加权优于 sample-wise，因为它能对图像中不同概念区
 - **2D 合成实验精妙**: 用二维空间直观展示了数据不平衡导致无条件分布偏向高频概念、进而降低低频概念响应强度的机理。
 - **新 Benchmark Inert-CompBench**: 专门针对难以组合的惰性概念设计，填补了现有 benchmark（T2I-CompBench、LC-Mis）对尾部概念覆盖不足的空白。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于 1B 参数的 DiT 模型训练，未在更大模型（如 SDXL 级别）或商用模型上验证。
 - IMBA 距离在 $t=1000$（全噪声）时才有跨概念可比性，中间时间步的比较需要更多研究。

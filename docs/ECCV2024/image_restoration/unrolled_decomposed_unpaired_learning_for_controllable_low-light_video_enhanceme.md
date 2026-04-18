@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement
 description: >-
@@ -139,7 +139,7 @@ SDSD 数据集上的定量结果（无参考方法对比）：
 4. **BRISQUE 作为代理人类视觉**：使用无参考质量评估模型模拟人类感知，自动调整目标光照水平
 5. **端到端训练**：避免了模块分离训练导致的局部最优问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对相机运动剧烈或遮挡严重的场景，光流估计可能不准确
 - 人类感知反馈依赖 BRISQUE 模型，该模型本身有局限

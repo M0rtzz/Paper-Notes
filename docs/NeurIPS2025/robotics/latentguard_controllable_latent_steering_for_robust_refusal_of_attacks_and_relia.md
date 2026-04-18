@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LatentGuard: Controllable Latent Steering for Robust Refusal of Attacks and Reliable Response Generation
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{\text{VAE}} = \alpha \cdot \mathcal{L}_{\text{recon}} + \beta \cd
 3. **细粒度可控性**：连续潜空间支持平滑插值，干预强度 $\alpha$ 可调节安全-效用权衡曲线
 4. **跨架构泛化**：在 Qwen3-8B 和 Mistral-7B 两个不同模型家族上均有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **上游分类器依赖**：攻击类型和方法标签来自商用防火墙产品，分类错误会传播到潜空间
 2. **仅针对 MLP 激活**：扩展到 Attention 等其他组件需要新的监督设计

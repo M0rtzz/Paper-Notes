@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interchangeable Token Embeddings for Extendable Vocabulary and Alpha-Equivalence
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **训练时重采样是关键 insight**：每次 forward pass 重新采样 β 向量，迫使模型学会对任意随机嵌入都能正确推理，而非记住特定嵌入
 - **实用价值明确**：LTL 数据集生成成本随 AP 数指数增长，本方法用 5AP 训练即可达到接近 10AP 训练的效果，节省大量数据生成成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **不适用于自然语言**：自然语言中的 token 携带语义信息（如 electricity_bill vs water_bill），不满足可互换条件
 2. **需手动定义可互换 token 集合**：在某些场景下可能不可行

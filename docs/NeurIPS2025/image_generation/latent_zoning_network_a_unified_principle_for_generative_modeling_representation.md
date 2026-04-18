@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Zoning Network: A Unified Principle for Generative Modeling, Representation Learning, and Classification
 description: >-
@@ -116,7 +116,7 @@ LZN 建立一个共享的高斯潜在空间，连接多对编码器-解码器。
 - 设计哲学优雅：引入"基础潜在空间"概念，将所有数据类型视为同一潜在实体在不同观测模态下的投影，类似物理中的对称性思想
 - 对齐机制精巧：三步递进式解决 FM 离散分配的不可微问题——软近似→最大概率→早期截断，每步都有清晰的动机
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练效率：需要通过 FM 轨迹反向传播，计算成本高于标准对比学习
 - 无监督表征学习与 BYOL/DINO 仍有约 5% 的差距，需要更多训练迭代和更先进架构（如 ViT）
 - 目前仅在图像域验证，多模态扩展（图文、视频）尚未探索

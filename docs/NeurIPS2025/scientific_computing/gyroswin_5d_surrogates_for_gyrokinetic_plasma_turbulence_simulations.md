@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GyroSwin: 5D Surrogates for Gyrokinetic Plasma Turbulence Simulations
 description: >-
@@ -142,7 +142,7 @@ $$\mathcal{L} = w_f \mathcal{L}_f + w_\phi \mathcal{L}_\phi + w_Q \mathcal{L}_Q$
 4. **Scaling Law in Scientific ML**：在科学计算代理模型中验证了类似LLM的scaling law现象，为未来"大模型+科学模拟"的研究路线提供了信心。
 5. **局部注意力的成功**：5D移位窗口注意力的成功表明，在高维科学数据中，局部注意力不仅是计算上的妥协，更是物理上合理的归纳偏置（等离子体湍流本身具有局域性）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **绝热电子近似**：当前数据集仅考虑绝热电子，忽略了电子动力学效应。处理全动力学（kinetic electrons）模型需要将维度进一步扩展到包含电子物种，计算和内存开销将翻倍。
 2. **单物种离子**：仅处理单离子物种，实际聚变等离子体（如氘-氚混合物）涉及多物种，需要额外的物种维度。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] C3RL: Rethinking the Combination of Channel-independence and Channel-mixing from Representation Learning
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：CM 和 CI（隐式通道独立 ICI）的输入恰好是彼此的转置——类比于 SimSiam 中图像旋转生成的正样本对！用对比学习统一两者。
 
-**核心 idea 一句话**：把 $X$（CM视图）和 $X^T$（ICI视图）作为 SimSiam 的正样本对，用孪生网络联合优化对比损失和预测损失。
+**核心 idea**：把 $X$（CM视图）和 $X^T$（ICI视图）作为 SimSiam 的正样本对，用孪生网络联合优化对比损失和预测损失。
 
 ## 方法详解
 
@@ -87,7 +87,7 @@ tags:
 - 即插即用设计让框架有极强的通用性——适用于任何 CI 或 CM 模型
 - 用对比学习增强表示而非只做预测，提升了泛化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 孪生编码器增加了参数量和训练时间（约 1.5-2 倍）
 - ECI 策略（完全独立处理每个变量）的适配需要额外处理
 - 对比学习的温度/权重需要调参

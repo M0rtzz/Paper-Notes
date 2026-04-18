@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DBLoss: Decomposition-based Loss Function for Time Series Forecasting
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **Scale alignment + stopgrad** 是一个可迁移的 trick——任何多分量 loss 都可以用这个机制避免尺度不平衡。
 - **前向分解和损失分解互补**而非冗余——这一发现颠覆了直觉，说明损失端的归纳偏置注入是独立于模型设计的有效维度。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了长期多变量预测，短期预测和单变量场景未涉及。
 - EMA 平滑因子 $\alpha$ 固定，理论上可学习或自适应选择。
 - 对非平稳序列的趋势定义可能不够鲁棒——极端分布偏移场景下 EMA 分解的有效性存疑。

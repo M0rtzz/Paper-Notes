@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Look Before You Fuse: 2D-Guided Cross-Modal Alignment for Robust 3D Detection
 description: >-
@@ -160,7 +160,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{focal}} + \mathcal{L}_{\text{e
 - Edge-Critical Loss用梯度图加权Focal Loss的设计，将结构先验引入了训练目标
 - 细粒度消融（Table 4）展示了教科书式的模块贡献分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖2D目标检测器的质量——在2D检测困难的场景（极端天气、严重遮挡）可能退化
 - YOLOv9引入的额外计算开销未量化（文中只报告了模块增加的延迟，不包含2D检测器）

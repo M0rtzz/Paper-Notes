@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VisionTS: Visual Masked Autoencoders Are Free-Lunch Zero-Shot Time Series Forecasters
 description: >-
@@ -116,7 +116,7 @@ VisionTS 在 GIFT-Eval 排行榜上同样取得与专用时序基础模型可比
 4. **表征可视化**：通过 MAE 编码器的 t-SNE 可视化发现，时序数据与 ImageNet 图像存在表征重叠，且图像可充当不同时序领域之间的"桥梁"
 5. **超大规模评测**：覆盖 60+ 数据集（8 长期 + 29 Monash + 23 GIFT-Eval），是当时 TSF 基础模型中最大规模的评测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **多变量限制**：仅采用通道独立策略，未建模变量间交互，受限于图像通道数（仅 3 通道）
 2. **超参敏感性**：归一化尺度 $r$ 和可见区比例 $c$ 对性能有明显影响，当前依赖经验设定

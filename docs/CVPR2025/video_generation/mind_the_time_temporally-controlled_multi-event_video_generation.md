@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mind the Time: Temporally-Controlled Multi-Event Video Generation
 description: >-
@@ -105,7 +105,7 @@ MinT 在事件文本对齐（TA +0.55 vs Concat）和时序一致性（TC +0.29 
 - **全局+时序标题的内容-运动解耦**：比单 prompt 更有效地引导视频动态，且与 "spatial binding" 类比自然
 - **一次性生成所有事件** vs 自回归逐个生成：前者能感知全局结构，后者无法规划未来事件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要手动标注时序事件数据（~200K 视频），标注成本高
 - 仅支持 512×288 分辨率，最长 12 秒，无法处理真正的长视频

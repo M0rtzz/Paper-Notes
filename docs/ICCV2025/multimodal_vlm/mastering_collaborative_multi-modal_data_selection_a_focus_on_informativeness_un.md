@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mastering Collaborative Multi-modal Data Selection: A Focus on Informativeness, Uniqueness, and Representativeness
 description: >-
@@ -121,7 +121,7 @@ DataTailor 本身是一种数据选择方法，不引入额外的训练损失。
 - **自适应权重设计**：根据对话轮次和任务难度自适应调整，避免了繁琐的超参数搜索
 - **跨模型迁移能力**：代理模型选择的数据可有效用于不同架构的目标模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 聚类的 $\lambda$ 设置虽然声称自适应，但仍需按总选择比例设定
 - 层次聚类在超大规模数据集上的计算效率可能受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Devil is in the Spurious Correlations: Boosting Moment Retrieval with Dynamic Learning
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{hl} + \mathcal{L}_{moment}$$
 - **泛化性强**：可适配 SnAG、QD-DETR 等不同架构，且在 InternVideo2 特征上同样有效
 - 虚假相关性的分析范式可推广到其他视频理解任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 合成策略依赖 batch 内视频对，batch 较小时可能无法找到高质量配对
 - 时序差分是线性操作，可能无法捕获复杂的非线性时序模式

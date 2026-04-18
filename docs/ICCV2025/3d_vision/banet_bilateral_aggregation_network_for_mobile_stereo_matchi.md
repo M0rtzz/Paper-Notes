@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BANet: Bilateral Aggregation Network for Mobile Stereo Matching
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **MACs最低**：BANet-2D仅36G MACs，远低于所有对比方法（MobileStereoNet-2D 127G，HITNet 47G）
 - 消融实验覆盖2D和3D两种聚合网络，KITTI在线提交和Scene Flow测试集都有完整验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 注意力图的质量完全依赖多尺度特征的表达能力，在极端场景（全无纹理/极弱光照）下可能失效
 - 细节/平滑的二分法较为rigid，实际场景中频率是连续分布的，可以探索更多频段的分治策略

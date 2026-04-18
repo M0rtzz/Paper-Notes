@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules
 description: >-
@@ -108,7 +108,7 @@ tags:
 - **WSD 的优势机制**：长时间稳定阶段积累足够的信号学习，末尾衰减阶段高效消散累积噪声，两阶段互补
 - **与 Multi-Power-Law 模型的联系**：通过分部积分，FSL 可变换为近似等价于 Tissue 等人的 MPL 经验模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分析基于核回归（二次损失），与实际 LLM 的交叉熵损失有差距
 - 连续时间 SDE 近似要求 step size 足够小，实际训练中该条件不一定成立
 - random-$M$ 特征的分析仅覆盖 $s \leq 1$，对简单任务 $s > 1$ 的情况未解决

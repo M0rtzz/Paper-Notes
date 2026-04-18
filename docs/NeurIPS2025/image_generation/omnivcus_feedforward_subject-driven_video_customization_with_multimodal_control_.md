@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniVCus: Feedforward Subject-driven Video Customization with Multimodal Control Conditions
 description: >-
@@ -117,7 +117,7 @@ OmniVCus 基于 DiT 架构，将文本、图像、视频和控制信号通过 pa
 - TAE 的设计灵感来自控制信号与视频帧的时间对齐关系，对密集和稀疏信号采用不同处理策略
 - 用户偏好研究（37人）显示 OmniVCus 在身份保持、对齐和质量三方面均大幅领先
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖内部大规模视频数据池，复现门槛较高（64 A100, 300M 文生图数据）
 - Kosmos-2 和 SAM-2 的检测/分割质量直接影响数据质量
 - 主体之间的交互和遮挡关系处理仍有改进空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Improving Skill Learning for Robust Skill-based Meta-Reinforcement Learning
 description: >-
@@ -107,7 +107,7 @@ $$\beta = \frac{\exp(\bar{G}_{\text{on}} / T)}{\exp(\bar{G}_{\text{on}} / T) + \
 3. **自适应混合系数**: $\beta$ 根据在线/离线数据质量动态调节，形成自动课程学习
 4. **轻量级增强**: 仅增加16%额外计算，不改变元测试流程，易于集成到现有框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 元测试阶段仍需微调（0.5K迭代），零样本技能迁移是重要的改进方向
 - 奖励模型依赖简单的子任务完成奖励，在复杂奖励函数场景中可能需要逐任务标准化

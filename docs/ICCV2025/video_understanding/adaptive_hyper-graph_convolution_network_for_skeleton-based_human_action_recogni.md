@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Hyper-Graph Convolution Network for Skeleton-Based Human Action Recognition
 description: >-
@@ -165,7 +165,7 @@ A-NHG 超参数 $K$ 的影响（NTU120 X-Sub，单流关节）：
 3. **极致的效率-性能平衡**：Base 版仅 1.1M/1.63G 就超越大量 GCN 方法，证明超图卷积的信息聚合效率确实更高
 4. **散度损失的简洁有效**：用余弦相似度 + ReLU 截断的简单设计就解决了超关节同质化问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在标准数据集上验证**：NTU 和 NW-UCLA 主要是室内单人/双人动作，缺少复杂多人、户外场景的验证
 2. **超关节数量固定**：当前手工设定为 3 个，能否根据动作复杂度自适应确定数量？

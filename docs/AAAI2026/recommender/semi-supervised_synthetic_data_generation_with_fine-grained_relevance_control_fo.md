@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Semi-Supervised Synthetic Data Generation with Fine-Grained Relevance Control for Short Video Search Relevance Modeling
 description: >-
@@ -60,7 +60,7 @@ SSRA是一个两阶段半监督管道：
 
 #### 1. 短视频相关性数据集构建
 
-**做什么**：构建首个带4级细粒度相关性标注的中文短视频搜索数据集。
+**功能**：构建首个带4级细粒度相关性标注的中文短视频搜索数据集。
 
 **4级相关性定义**：
 
@@ -80,7 +80,7 @@ SSRA是一个两阶段半监督管道：
 
 #### 2. Stage 1: 基于分数的重标注增强多样性
 
-**做什么**：解决原始标注数据中"一个query对应多个document"导致的query生成单一化问题。
+**功能**：解决原始标注数据中"一个query对应多个document"导致的query生成单一化问题。
 
 **核心思路**：
 1. 在标注数据上训练score模型（预测4级相关性标签）
@@ -93,7 +93,7 @@ SSRA是一个两阶段半监督管道：
 
 #### 3. Stage 2: 迭代精炼增强相关性对齐
 
-**做什么**：提高query模型生成的query与目标相关性标签的匹配度。
+**功能**：提高query模型生成的query与目标相关性标签的匹配度。
 
 **核心步骤**：
 1. **初始合成**：用Stage 1训练的query模型在无标签document集上生成条件化于不同相关性标签的query
@@ -189,7 +189,7 @@ $$\mathcal{L}=\frac{1}{B}\sum_{i=1}^{B}s_i\cdot\mathcal{L}_{\text{infoNCE}}$$
 4. **工业验证**：在抖音级别的线上实验中获得显著提升，具有很强的实践说服力
 5. **带标签权重的InfoNCE**：简单而有效地将多级相关性融入对比学习损失
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集未公开**：虽然声称contribution是数据集，但受限于商业场景可能无法完全开源
 2. **依赖于领域标注数据**：SSRA仍需要一定量的高质量标注数据来训练Score模型，冷启动成本不低

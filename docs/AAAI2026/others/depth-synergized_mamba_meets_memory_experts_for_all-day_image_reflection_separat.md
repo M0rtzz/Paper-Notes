@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Depth-Synergized Mamba Meets Memory Experts for All-Day Image Reflection Separation
 description: >-
@@ -168,7 +168,7 @@ NightIRS 数据集性能：
 - **记忆机制弥补单图局限**：通过跨图像知识积累，为单图推理提供"经验"补偿
 - **NightIRS 数据集填补空白**：首个专门用于夜间反射分离的数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖预训练深度估计模型**：深度估计本身的误差会传播到反射分离
 2. **记忆库大小固定**：M 的选择需要平衡存储和性能

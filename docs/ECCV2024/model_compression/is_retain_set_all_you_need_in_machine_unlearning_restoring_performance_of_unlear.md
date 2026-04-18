@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Is Retain Set All You Need in Machine Unlearning? Restoring Performance of Unlearned Models with Out-Of-Distribution Images
 description: >-
@@ -151,7 +151,7 @@ SCAR 将 DNN $\Phi_\theta$ 分解为骨干 $\Phi_\psi$ 和最终全连接层 $\P
 - **Mahalanobis 距离引入充分利用分布信息**：相比质心方法提供更精确的特征空间引导
 - **Self-Forget 开创性**：首次实现无保留集 + 无遗忘集的类别移除
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 遗忘后保留集准确率有小幅下降（CIFAR100 从 77.55 降至 72.93），相比使用保留集的方法仍有差距
 - 需要存储每个类的均值和协方差矩阵，对类别数极多的场景可能带来存储开销

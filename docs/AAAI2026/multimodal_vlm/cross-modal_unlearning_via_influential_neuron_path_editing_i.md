@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Modal Unlearning via Influential Neuron Path Editing in Multimodal Large Language Models
 description: >-
@@ -121,7 +121,7 @@ MIP-Editor 分为两个阶段：
 - **仅编辑路径实现遗忘-保留解耦**：先剪枝后微调的两阶段策略，只更新少量参数即可恢复通用能力
 - **信息可分性验证**（§4.7）：用 MLP 分类器验证遗忘后模型能否区分遗忘/保留数据，MIP-Editor 分类准确率超过 85%，远超 baseline 的约 50%
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **在较大模型上效果减弱**：LLaVA-1.5-7B 上遗忘率明显低于 Qwen2.5-VL-3B（FVQA 38.40% vs 4.80%），scaling behavior 未被充分讨论
 - **贪心路径搜索非最优**：逐层贪心选择神经元组成路径，可能错过层间最优组合；时间复杂度仍然较高 $O(C_{\text{grad}} \cdot m \cdot L \cdot \sum|w_l|)$
 - **遗忘集比例敏感性**：5% 效果最好，10%/15% 时保留性能下降较明显（不同 forget ratio 下的一致性不够稳健）

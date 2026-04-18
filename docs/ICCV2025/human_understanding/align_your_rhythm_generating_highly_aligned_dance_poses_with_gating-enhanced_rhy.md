@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Align Your Rhythm: Generating Highly Aligned Dance Poses with Gating-Enhanced Rhythm-Aware Feature Representation
 description: >-
@@ -99,7 +99,7 @@ Danceba沿用Bailando的VQ-VAE + 自回归框架：先用预训练的Pose VQ-VAE
 - 门控机制（SiLU gate）与因果注意力的结合是一种低成本的全局上下文增强策略，可迁移至其他自回归生成任务
 - 并行Mamba的设计思路提示：对于具有明确结构划分的生成对象（如上下半身），分别建模后融合优于统一建模
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 音乐特征编码仅用简单线性层，未利用预训练音频模型（Jukebox、MERT、CLAP），可能遗漏细微音乐结构
 - 沿用Bailando的Pose VQ-VAE，编码空间有限，可能限制精细运动细节的表达
 - 仅在AIST++一个数据集上评估，未验证跨数据集泛化能力

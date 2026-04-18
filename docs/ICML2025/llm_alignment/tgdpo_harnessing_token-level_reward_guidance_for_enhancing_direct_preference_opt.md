@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TGDPO: Harnessing Token-Level Reward Guidance for Enhancing Direct Preference Optimization
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L}_{\text{TGDPO}}(\pi_\theta) = -\mathbb{E}_{(x, y_w, y_l) \sim \math
 - **收敛行为健康**：这是偏好优化领域难得的"loss收敛≈好性能"的方法，消除了传统方法中loss与性能错位的顽疾
 - **细粒度token级调控**：能在同一response内，对preferred token放大梯度、对dispreferred token缩小梯度，避免了"全盘接受赢回复、全盘否定输回复"的粗暴做法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **reward来源单一**：实用方法依赖先训一个DPO模型来提供token-level reward，增加了训练pipeline的复杂度；可探索其他更轻量的reward来源
 - **f函数形式简单**：当前仅使用线性形式 $f = 1 + \alpha r$，更复杂的非线性设计（如指数、softmax-based）可能带来进一步提升
@@ -226,7 +226,7 @@ $$\mathcal{L}_{\text{TGDPO}}(\pi_\theta) = -\mathbb{E}_{(x,y_w,y_l)\sim\mathcal{
 3. **框架统一性**：TGDPO的损失函数是一个通用框架，$f \equiv 1$ 时退化为DPO，可以衍生出多种变体
 4. **无需额外奖励模型**：利用DPO自身隐式学到的token级奖励作为引导信号，无需训练外部奖励模型，保持了DPO"轻量"的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **两阶段训练**：需要先训练一个DPO模型获取token级奖励，再训练TGDPO，增加了计算开销。能否做成迭代/在线更新奖励的单阶段方法？
 2. **仅评估helpfulness**：实验集中在指令遵循任务，未验证在safety、honesty等对齐维度的效果

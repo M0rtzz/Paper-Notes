@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provably Efficient Online RLHF with One-Pass Reward Modeling
 description: >-
@@ -140,7 +140,7 @@ OMD 方法训练时间约为 MLE 方法的 **1/3**，同时准确率更高。主
 4. **Local norm 设计精妙**：用 lookahead 点的 Hessian 构建 local norm，既保二阶信息又有 closed-form，设计巧妙
 5. **HVP + 共轭梯度的实用化**：从 $\mathcal{O}(d^3)$ 到 $\mathcal{O}(d)$，使 4096 维特征空间下的实时更新成为可能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 假设固定特征映射 $\phi$ — 实际中 LLM fine-tuning 过程中特征空间会变化
 2. 基于 Bradley-Terry 模型 — 未扩展到 Plackett-Luce 等更一般的偏好模型

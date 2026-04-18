@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Token Perturbation Guidance for Diffusion Models
 description: >-
@@ -123,7 +123,7 @@ s̃_θ = s_θ⁺ + γ(s_θ⁺ - s_θ⁻)
 - **条件无关的通用引导**：首次将 CFG 级别的引导效果扩展到无条件生成
 - **跨架构兼容（U-Net + DiT）**：通过 shuffle-unshuffle 策略适配 DiT 架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 与 CFG 一样需要两次前向传播，采样时间翻倍
 - 条件生成中仍落后于 CFG（FID 17.77 vs 12.79），差距约 5 个 FID 点

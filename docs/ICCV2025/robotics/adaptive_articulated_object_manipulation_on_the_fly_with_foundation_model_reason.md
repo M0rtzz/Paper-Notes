@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Articulated Object Manipulation On The Fly with Foundation Model Reasoning and Part Grounding
 description: >-
@@ -91,7 +91,7 @@ AdaRPG 包含三个核心组件：（1）零件级可操作性数据集构建与
 - **三阶段冻结基础模型级联**（GPT-4o → GroundingDINO → SAM）实现零训练的高质量零件分割
 - **真实世界性能优于仿真**，揭示了基础模型在弥合 sim-to-real 差距中的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 原子技能设计较为简单（6种），面对更复杂的工具使用场景可能不足
 - GPT-4o 的推理延迟可能限制实时性
 - 可操作性模型仍需在特定数据集上训练，未实现完全零样本

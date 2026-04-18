@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hallucination as an Upper Bound: A New Perspective on Text-to-Image Evaluation
 description: >-
@@ -162,7 +162,7 @@ tags:
 - **填补评估空白**：明确指出了 T2I 评估领域的一个系统性盲点
 - **实践指导**：为构建新的 T2I 幻觉基准提供了明确的分类维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **缺乏实验验证**：作为立场论文，未提供定量实验或基准测试
 - **缺少评估方法**：提出了分类学但未设计具体的检测方法或评估指标

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient RGB-D Scene Understanding via Multi-task Adaptive Learning and Cross-dimensional Feature Guidance
 description: >-
@@ -124,7 +124,7 @@ tags:
 4. **统一框架五任务**：语义分割、实例分割、朝向估计、全景分割、场景分类在一个网络中完成
 5. **速度优势明显**：71.82M 参数、20.33 FPS，超过 Swin v2 的 16.32 FPS，适合机器人部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **精度提升有限**：NYUv2 上 semantic mIoU 仅比 EMSAFormer 高 0.06，优势不明显
 2. **高分辨率可扩展性**：当前实现难以处理超高分辨率图像/视频，计算复杂度随分辨率增长

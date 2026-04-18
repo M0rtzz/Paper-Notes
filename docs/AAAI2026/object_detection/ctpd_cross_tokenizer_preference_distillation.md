@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CTPD: Cross Tokenizer Preference Distillation
 description: >-
@@ -138,7 +138,7 @@ $$\mathcal{L}_\text{CTPD} = -\mathbb{E}_{(x, y_w, y_l) \sim \mathcal{D}} \left[\
 3. **Reference model 作为重加权机制的理论分析**：从 DPO 梯度推导出 reference model 的本质作用是样本权重调控器，这一洞察为使用 teacher 作为 reference 提供了理论支撑
 4. **实验设计严谨**：消融实验系统性地验证了每个组件的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Qwen → Llama 这一模型系列组合上实验，未验证更多架构组合
 - aligned span 的计算可能在长序列上引入额外开销，未报告时间复杂度

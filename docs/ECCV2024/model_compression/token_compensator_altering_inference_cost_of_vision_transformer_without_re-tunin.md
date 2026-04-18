@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Token Compensator: Altering Inference Cost of Vision Transformer without Re-Tuning
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{L} = \mathcal{L}_{KD}\left(\hat{\mathcal{M}}_m \oplus \left(\bigoplus
 4. **经济的训练**：相比为每个压缩度重训模型，ToCom 仅需一次轻量自蒸馏
 5. **对密集任务的扩展**：通过 merge-before-FFN/unmerge-after-FFN 策略适配语义分割
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 补偿效果有上限，无法完全恢复到无压缩的性能水平
 - 当前仅基于 ToMe（Token Merging），未验证对其他 token 压缩方法（如 pruning）的泛化性

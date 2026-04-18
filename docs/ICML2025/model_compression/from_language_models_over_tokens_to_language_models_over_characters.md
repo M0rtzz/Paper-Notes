@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Language Models over Tokens to Language Models over Characters
 description: >-
@@ -100,7 +100,7 @@ tags:
 - Beam search 的 bucket 策略巧妙——按去掉最后 token 的前缀分桶，允许同一桶内不同的部分匹配 token
 - 对 prompt boundary problem 提供了原理性而非启发式的解决方案
 
-## 局限性/可改进方向
+## 局限与展望
 
 - 推理速度较慢（~250 bytes/s at K=8 for 1B model），不适合实时应用
 - covering 大小最坏情况指数级，虽然实践中高概率元素少但无理论保证

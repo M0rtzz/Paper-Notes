@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The World Is Bigger! A Computationally-Embedded Perspective on the Big World Hypothesis
 description: >-
@@ -115,7 +115,7 @@ $$J(\theta) = \sum_{k=1}^{T}\delta_{t+k}^2(z_t, \theta) - \delta_{t+k}^2(z_{t+k}
 - **无环境基准**：交互性最大化本身就是一个持续学习基准测试，不需要外部环境或数据集
 - **线性 vs 非线性网络的洞察**：可塑性丧失可能是非线性网络在非平稳学习中的固有缺陷
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验中网络深度仅到 $D=4$（但通过meta-gradient，有效深度为 $T \cdot D = 40$）
 - Meta-gradient方法的计算复杂度为 $O(HD^2)$，深度和horizon的扩展面临立方级增长

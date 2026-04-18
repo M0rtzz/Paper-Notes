@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Defense Against Prompt Injection Attack by Leveraging Attack Techniques
 description: >-
@@ -116,7 +116,7 @@ tags:
 - 多轮对话模拟防御（Fakecom-t）特别巧妙：利用 LLM 对对话结构的敏感性来强化防御
 - 为 LLM 应用的部署提供了即插即用的安全方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 防御方法的选择依赖于对攻击类型的先验知识（虽然有泛化能力，但最优防御需要匹配）
 - Escape Defense 的效果不稳定，依赖于 LLM 对特殊字符的处理方式

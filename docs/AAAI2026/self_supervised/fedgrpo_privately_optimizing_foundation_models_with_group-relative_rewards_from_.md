@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedGRPO: Privately Optimizing Foundation Models with Group-Relative Rewards from Domain Clients
 description: >-
@@ -130,7 +130,7 @@ FedGRPO 包含三步循环：
 - 能力感知的专家选择机制使得异构客户端的知识被自适应利用
 - 在 AIME 等高难度数据集上也有显著改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设 honest-but-curious 威胁模型，未考虑恶意客户端可能故意给出错误奖励
 - 需要服务器持有少量辅助数据（100 样本），在极端隐私场景下可能不现实
 - 每个问题需要采样 8 个候选策略，服务器端推理开销较大

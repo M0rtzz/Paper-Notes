@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：contrastive decoding需要对比两个分布，但现有方法通过跑两次完整模型来获取这两个分布，极其浪费。能否在单次推理内部直接构造出一个"textually-enhanced"分布？
 
-**本文要解决什么**：用单层intervention替代双重推理，在不显著增加计算的情况下获取用于对比解码的增强logits。
+**本文目标**：用单层intervention替代双重推理，在不显著增加计算的情况下获取用于对比解码的增强logits。
 
 **切入角度**：观察到当图像输入被扰动时（如加噪声），文本attention的熵上升而视觉attention的熵下降。直接选择TVER高的attention head就能模拟"visual distortion"效果，无需真的扰动图像。
 
-**核心idea一句话**：用text-to-visual entropy ratio筛选attention head构造textually-enhanced输出，只需一层额外attention计算就能实现与双重推理等效的对比解码。
+**核心 idea**：用text-to-visual entropy ratio筛选attention head构造textually-enhanced输出，只需一层额外attention计算就能实现与双重推理等效的对比解码。
 
 ## 方法详解
 
@@ -114,7 +114,7 @@ MME-Hallucination（LLaVA-1.5）：ONLY 635.55 vs 次优M3ID 598.11 (+37.44)
 - **自适应对比/协作切换**：不是简单地总做对比，而是根据距离判断——模型有信心时协作增强细节，不确定时对比压制幻觉。这捕捉了幻觉发生具有token-level动态性的本质。
 - **极致效率**：1.07×时间、0额外内存，是目前已知最高效的幻觉缓解方法。核心insight是：获取对比信号不需要跑完整模型两遍，只需要在一层中选择性地激活某些attention head。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在LLaVA-1.5、InstructBLIP、Qwen-VL上验证，未测试更新的大模型（InternVL、Qwen2-VL等）。
 - 超参数$\alpha_1, \alpha_2, \gamma$需要对不同模型做调整（LLaVA用$\gamma=0.2$，QwenVL用$\gamma=0.4$）。
 - 生成长度略有缩短（49.8 vs 55.0 token），可能遗漏了部分正确信息。

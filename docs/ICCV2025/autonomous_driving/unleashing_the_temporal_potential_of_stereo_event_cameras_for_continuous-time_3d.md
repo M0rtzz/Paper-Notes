@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unleashing the Temporal Potential of Stereo Event Cameras for Continuous-Time 3D Perception
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L} = \mathcal{L}_{depth}^{init} + \mathcal{L}_{depth}^{refine} + \mat
 - 连续时间检测能力（$\Delta\tau$ 可变）使系统可适配不同速度场景
 - 行人 AP3D 超越多模态融合方法是一个令人惊喜的结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 车辆 AP3D 仍不如 Ev-3DOD（23.47 vs 29.53），大物体的几何估计仍需 LiDAR 级精度
 - 仅在 DSEC-3DOD 一个数据集验证，泛化性有待更多数据集确认
 - 事件数据的语义信息本质上弱于 RGB，分类性能受限

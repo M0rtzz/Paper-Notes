@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Monitoring Decoding: Mitigating Hallucination via Evaluating the Factuality of Partial Response during Generation
 description: >-
@@ -121,7 +121,7 @@ MD 是一个 **无需训练** 的推理时框架，不涉及额外训练：
 2. **过度自信的本质**：模型对幻觉 token 的过度自信使得自一致性策略失效。MD 通过引入外部参考模型绕过了这一问题
 3. **效率与效果的平衡**：选择性 token 重采样 + 树搜索剪枝实现了比全长采样更好的效果和更低的开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖参考模型**：需要同架构的更大参考模型（如 70B），在实际部署中增加资源需求
 2. **知识覆盖**：若训练数据中不存在的事实信息，监控函数也无法检测。可通过引入外部知识库缓解

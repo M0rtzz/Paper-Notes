@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Balanced Classification with Theoretically Grounded Loss Functions
 description: >-
@@ -161,7 +161,7 @@ GCA损失的边距校准策略：
 4. **假设集的重要性**：论文揭示了Loss一致性分析中假设集(有界vs完备)的关键区别
 5. **不平衡程度的自适应**：GCA通过边距校准自适应不同的不平衡程度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **长尾识别场景**：未测试在极端长尾场景(>1000类)下的表现
 2. **与其他长尾方法的结合**：GLA/GCA能否与解耦训练、数据增强等方法互补

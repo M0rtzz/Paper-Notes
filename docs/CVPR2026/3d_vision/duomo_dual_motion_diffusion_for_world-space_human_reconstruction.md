@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DuoMo: Dual Motion Diffusion for World-Space Human Reconstruction
 description: >-
@@ -120,7 +120,7 @@ $$\mathcal{L}_{\text{World}} = \mathcal{L}_{\text{vertices}} + \mathcal{L}_{\tex
 - **Training-time contact loss** 比 post-hoc foot-locking 更优雅
 - 绕过参数模型直接生成 mesh 顶点，开辟了更通用的运动建模路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 图像特征提取耗时 30s（PromptHMR 编码器），是主要瓶颈
 - 世界空间模型输出根节点速度，长序列积分会累积误差（虽然有 guided sampling 缓解）

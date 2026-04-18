@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decoding Matters: Efficient Mamba-Based Decoder with Distribution-Aware Deep Supervision for Medical Image Segmentation
 description: >-
@@ -109,7 +109,7 @@ Dice 损失保证最终预测的空间重叠，MSDA 的 KL 散度损失在各解
 - MSDA 的窗口化 KL 散度是一个优雅的解决方案：不需要 resize GT，而是对 GT 做局部窗口统计来匹配低分辨率预测。
 - Mamba 在解码器中的应用比在编码器中更有效，因为解码器需要在上采样过程中保持全局一致性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持 2D 分割，3D 医学图像（如 CT/MRI 体数据）的扩展未被探讨。
 - 7 个数据集虽多但都是常用基准，没有在更新或更难的数据集上验证。

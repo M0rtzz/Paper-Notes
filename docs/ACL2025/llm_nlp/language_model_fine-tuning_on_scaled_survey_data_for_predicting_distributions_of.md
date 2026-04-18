@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Language Model Fine-Tuning on Scaled Survey Data for Predicting Distributions of Public Opinions
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**: prompt 方法无法有效"引导"LLM 到特定子群体的意见分布上；现有微调数据集规模太小（OpinionQA 仅约 500 题），不足以支撑有效微调。
 
-**本文要解决什么**: 如何让 LLM 准确预测多元子群体的意见**分布**（而非只是最可能的选项）。
+**本文目标**: 如何让 LLM 准确预测多元子群体的意见**分布**（而非只是最可能的选项）。
 
 **切入角度**: 大规模高质量调查数据天然适合微调——(1) 提供明确的子群体-响应对；(2) 经过后分层校准具有代表性；(3) 可以直接对分布建模。
 

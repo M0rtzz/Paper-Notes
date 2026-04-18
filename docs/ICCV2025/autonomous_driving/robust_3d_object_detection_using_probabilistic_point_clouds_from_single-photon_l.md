@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust 3D Object Detection using Probabilistic Point Clouds from Single-Photon LiDARs
 description: >-
@@ -121,7 +121,7 @@ $$NPD(p_i) = \frac{\sum_{p_j \in \mathcal{BQ}_{L,r}(p_i)} Pr(p_j)}{L}$$
 - **极致的效率-精度权衡**：95ms vs 1345ms(Score Denoising)，同时精度还更高→实际可部署。
 - **数据带宽友好**：PPC仅需每像素1个额外标量(概率)→~10s MB/s，远小于完整直方图读出的~10s GB/s。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **概率定义过于简单**：仅用峰值bin比例→忽略了直方图形状信息(如多峰、峰值宽度)。论文提及Cramér-Rao不确定性估计是未来方向。
 2. **阈值超参依赖**：NPD的α和FPPS的β需要手动选择→不同传感器/场景可能需要不同值。

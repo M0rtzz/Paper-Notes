@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Closer Look at Cross-Domain Few-Shot Object Detection: Fine-Tuning Matters and Parallel Decoder Helps
 description: >-
@@ -105,7 +105,7 @@ tags:
 - **从微调视角解决FSOD**：不依赖数据增强或大模型，仅靠更好的微调策略就获得显著提升，挑战了"大力出奇迹"的思路
 - **OOD分析的实用价值**：混合域测试集的构建方法为评估检测器的部署安全性提供了参考
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 并行层数(L-K)的选择是超参，目前可能需要在不同任务间手动调整
 - 渐进微调需要验证集来检测平台期，zero-shot或极端few-shot场景可能不适用
 - 仅基于MMGroundingDINO验证，其他DETR变体的适用性待确认

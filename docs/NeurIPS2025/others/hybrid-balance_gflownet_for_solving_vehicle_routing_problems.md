@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hybrid-Balance GFlowNet for Solving Vehicle Routing Problems
 description: >-
@@ -101,7 +101,7 @@ CVRP基准测试（Gap%相对于LKH）：
 - Depot引导推理巧妙利用了CVRP的结构特性，将探索集中在有意义的决策点
 - 框架通用性强——适用于AGFN（构造式）和GFACS（改进式）两类不同求解器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Depot引导推理仅适用于有仓库节点的VRP变体，对TSP等无depot问题不适用
 - DB的局部奖励定义（相邻节点欧氏距离）较简单，可探索更复杂的局部评价

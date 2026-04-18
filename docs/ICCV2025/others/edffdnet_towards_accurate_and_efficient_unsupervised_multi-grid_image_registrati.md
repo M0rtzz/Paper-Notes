@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration
 description: >-
@@ -60,7 +60,7 @@ EDFFDNet 包含三个主模块：(1) 多尺度特征提取器 (MFE)，基于 Res
 
 #### 1. **指数衰减自由形变 (EDFFD)**
 
-- **做什么**：用指数衰减函数替代三次 B 样条基函数来计算控制点对空间点的影响
+- **功能**：用指数衰减函数替代三次 B 样条基函数来计算控制点对空间点的影响
 - **核心公式**：
 
 $$\mathbf{x}' = \mathbf{x} + \sum_{m=0}^{M_i}\sum_{n=0}^{N_i} \Delta\mathbf{p}_{m,n} \exp(-r_{m,n}/(\theta\eta))$$
@@ -80,7 +80,7 @@ $$\beta^3(u) = \begin{cases} \frac{2}{3} - |u|^2 + \frac{|u|^3}{2}, & 0 \leq |u|
 
 #### 2. **自适应稀疏运动聚合器 (ASMA)**
 
-- **做什么**：替代 MLP 进行运动参数聚合，将密集交互转换为稀疏交互
+- **功能**：替代 MLP 进行运动参数聚合，将密集交互转换为稀疏交互
 - **核心结构**：两层分组线性层 (GLL) + 一个线性层
     - GLL 将输入特征 $\mathbf{F}_c \in \mathbb{R}^{C_c}$ 分为 $N_g$ 组
     - 每组独立经过线性变换：$\mathbf{F}'_{g,k} = \mathbf{W}_k(\mathbf{F}_{g,k}) + \mathbf{b}_k$
@@ -89,7 +89,7 @@ $$\beta^3(u) = \begin{cases} \frac{2}{3} - |u|^2 + \frac{|u|^3}{2}, & 0 \leq |u|
 
 #### 3. **渐进式相关策略**
 
-- **做什么**：全局 homography 阶段使用全局相关计算；局部细化阶段使用局部相关
+- **功能**：全局 homography 阶段使用全局相关计算；局部细化阶段使用局部相关
 - **全局相关**：patch-to-patch 相关，提取 $K \times K$ 密集 patch 作为卷积核
 
 $$\mathbf{C}^g_{(x_r,y_r,x_t,y_t)} = \sum_{i,j} \frac{\langle \mathbf{F}^{(d)}_{r,(x_r+i,y_r+j)}, \mathbf{F}^{(d)}_{t,(x_t+i,y_t+j)} \rangle}{\|\mathbf{F}^{(d)}_{r,(x_r+i,y_r+j)}\| \|\mathbf{F}^{(d)}_{t,(x_t+i,y_t+j)}\|}$$
@@ -166,7 +166,7 @@ UDIS-D 数据集 warp 精度对比：
 3. **渐进式相关的合理性**：全局搜索用于粗对齐、局部搜索用于精细化的设计遵循了由粗到细的经典范式
 4. **额外局部细化阶段的高效性**：EDFFDNet → EDFFDNet-2 仅增加 11.5ms warp 时间即获得 +0.56 dB PSNR 提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在 UDIS-D 上训练和主要评估**：虽然有跨数据集零样本测试，但训练数据的多样性有限
 2. **未处理动态场景**：仅针对静态场景的配准，未考虑运动物体

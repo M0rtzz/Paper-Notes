@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FC-Track: Overlap-Aware Post-Association Correction for Online Multi-Object Tracking
 description: >-
@@ -114,7 +114,7 @@ FC-Track 作为后处理插件嵌入标准在线 MOT 流程。在每帧的标准
 - 引入 ID switch duration 分析，比单纯计数 ID switch 更能反映跟踪质量
 - IoA 替代 IoU 的设计很有道理——对不对称遮挡（小目标被大目标盖住）更敏感
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在标准指标（HOTA、IDF1）上的提升很小（MOT17 上 HOTA 仅 +0.01），主要改善体现在 ID switch duration 分析中
 - 仅在 TrackTrack 上验证，应在 ByteTrack、BoT-SORT 等更多 baseline 上测试通用性
 - 重叠阈值 $\tau_{overlap}=0.8$ 相当严格，温和遮挡（IoA 0.3-0.8）可能漏掉

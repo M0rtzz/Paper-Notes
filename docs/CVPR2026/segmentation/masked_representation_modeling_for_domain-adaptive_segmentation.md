@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Masked Representation Modeling for Domain-Adaptive Segmentation
 description: >-
@@ -103,7 +103,7 @@ MRM 作为辅助任务插入现有 UDA pipeline。在分割模型的编码器 $E
 - MRM 与对比学习互补：对比学习增强编码器，MRM 同时增强编码器+解码器
 - 轻量设计：仅 1-2 个 Transformer 块，证明特征空间重建不需要深度模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖伪标签质量，伪标签噪声可能限制 MRM 的上限
 - 多尺度适配方案虽然高效，但仅使用最后一层特征进行重建，可能丢失浅层细节

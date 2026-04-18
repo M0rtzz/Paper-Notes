@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Frequency-Aware Token Reduction for Efficient Vision Transformer
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：减少 token 数量以提高效率 vs 保留高频信息以维持 ViT 表达能力，二者看似矛盾。
 
-**本文要解决什么？** 设计一种在 token reduction 中显式保护高频信息的方法，在提高效率的同时缓解 rank collapse。
+**本文目标** 设计一种在 token reduction 中显式保护高频信息的方法，在提高效率的同时缓解 rank collapse。
 
 **切入角度**：将 attention 矩阵分解为低频分量 $A^{LP} = \frac{1}{n}\mathbf{11}^T$ 和高频分量 $A^{HP} = A - A^{LP}$，根据 $A^{HP}$ 中每个 token 对高频贡献的大小选择保留/聚合。
 
-**核心idea一句话**：保留对输出高频分量贡献最大的 token，将低频 token 聚合为 DC token 保留零频信息。
+**核心 idea**：保留对输出高频分量贡献最大的 token，将低频 token 聚合为 DC token 保留零频信息。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ Proposition 3.1 证明：无论 pruning 还是 merging 都使 $\|H_f[SA(MX)]\|_F
 - **简洁高效的 HF/LF 分选**：仅用 attention 矩阵的列平均，零额外计算，就能有效区分高/低频 token
 - **精度提升的反直觉结果**：减少 token 反而提升精度，说明 rank collapse 是 ViT 的真实瓶颈，而非参数或容量不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅验证分类任务**：检测、分割等密集预测任务可能对低频信息更敏感
 - **reduction 层位置固定**（第4/7/10层）：目前硬编码，可能不是所有模型的最优选择
 - **$\omega_1, \omega_2$ 需要微调**：需要 30 epoch 微调，非完全 training-free

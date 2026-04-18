@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SeqAfford: Sequential 3D Affordance Reasoning via Multimodal Large Language Model
 description: >-
@@ -97,7 +97,7 @@ SeqAfford由三大组件构成：(1) 基于大规模3D表征学习的3D视觉编
 - **统一框架设计**：将推理（LLM世界知识）和分割（dense prediction）融合在同一模型中，避免了pipeline式方法的信息丢失
 - **数据构建巧妙**：利用4种模态组合prompt GPT-4o生成多样化指令，比之前对每类物体共享同一文本的方式更真实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在物体级别做affordance分割，尚未扩展到场景级别的fine-grained reasoning
 - 依赖ShapeLLM（7B）作为backbone，计算开销较大

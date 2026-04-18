@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Re-Depth Anything: Test-Time Depth Refinement via Self-Supervised Re-lighting
 description: >-
@@ -108,7 +108,7 @@ $$\mathbf{W}^*, \theta^* = \arg\min_{\mathbf{W}, \theta} \mathcal{L}(\hat{\mathb
 - **细节增强显著**：增强了球面纹理、阳台栏杆等细节，去除平坦面伪噪声
 - **理论优雅**：将 DreamFusion 的 SfS+SDS 范式从 text-to-3D 迁移到深度精细化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 偶尔出现幻觉边缘（如卡车上的贴纸被误认为几何特征）
 - 天空区域可能被错误延伸几何

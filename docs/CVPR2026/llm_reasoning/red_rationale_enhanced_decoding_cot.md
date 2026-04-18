@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rationale-Enhanced Decoding for Multi-modal Chain-of-Thought
 description: >-
@@ -98,7 +98,7 @@ GPT-4 高质量 rationale 使 RED 大幅提升（+4.70），随机 rationale 导
 - **与现有方法互补**：RED 可与 VCD 等反幻觉解码方法组合，形成更强的推理系统
 - **rationale 质量敏感性**：GPT-4 rationale 大幅提升、随机 rationale 大幅下降，证明 RED 确实实现了 rationale grounding
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **GPU 内存增加**：需要同时维护两个推理上下文（虽然推理速度更快，但内存占用更高）
 - **λ 超参数依赖**：最优 λ 因 rationale 类型（文本 vs JSON 场景图）和模型而异，需在验证集上调
 - **未深入分析根因**：rationale 被忽视的原因（位置偏差？注意力汇聚？视觉指令微调过拟合？）留给了未来工作

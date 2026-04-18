@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improved Last-Iterate Convergence of Shuffling Gradient Methods for Nonsmooth Convex Optimization
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：非光滑性使得标准分析技术（依赖梯度 Lipschitz 连续性）失效，而排列结构引入的梯度间相关性使分析复杂度远超独立采样的 SGD。
 
-**本文要解决什么**：回答 Liu & Zhou (2024b) 提出的开放问题——在非光滑（强）凸优化中，RR/SS 的 last-iterate 是否可以证明比 Proximal GD 更快？
+**本文目标**：回答 Liu & Zhou (2024b) 提出的开放问题——在非光滑（强）凸优化中，RR/SS 的 last-iterate 是否可以证明比 Proximal GD 更快？
 
 **切入角度**：利用 RR/SS 排列结构的精细分析，在步级（而非仅 epoch 级）建立递推不等式，提取出排列随机性带来的额外 $n^{-1/4}$ 或 $n^{-1/2}$ 加速因子。
 
-**核心 idea 一句话**：RR 的 last-iterate 达到 $\tilde{O}(GD_\star/(n^{1/4}\sqrt{K}))$——首次证明非光滑下 shuffling 比 Proximal GD 严格更快。
+**核心 idea**：RR 的 last-iterate 达到 $\tilde{O}(GD_\star/(n^{1/4}\sqrt{K}))$——首次证明非光滑下 shuffling 比 Proximal GD 严格更快。
 
 ## 方法详解
 

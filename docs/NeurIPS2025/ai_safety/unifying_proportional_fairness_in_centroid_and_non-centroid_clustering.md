@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unifying Proportional Fairness in Centroid and Non-Centroid Clustering
 description: >-
@@ -111,7 +111,7 @@ tags:
 - 理论结果非常完整：存在性上界、算法上界、下界三者形成了清晰的landscape
 - 半质心聚类模型的提出具有前瞻性：统一了两个独立的研究方向，且对应很自然的真实场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $(3+2\sqrt{3}) \approx 6.46$ 的多项式时间核近似因子仍有改进空间，理论下界仅为2
 - 非质心损失仅考虑了最大距离(max distance)，平均距离或其他聚合方式未涵盖
 - 实验仅使用小规模真实数据集验证，大规模设置的可扩展性未经测试

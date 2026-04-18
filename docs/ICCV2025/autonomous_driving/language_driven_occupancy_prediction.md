@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Language Driven Occupancy Prediction (LOcc)
 description: >-
@@ -104,7 +104,7 @@ LOcc分为两大部分：**语义传递标注管线**（生成伪GT）+ **OVO模
 - **框架泛化性极强**：兼容BEVFormer/BEVDet/BEVDet4D等多种主流模型
 - **伪GT质量接近人工标注**：有望大幅降低3D标注成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 管线依赖LVLM和OV-Seg模型的准确性
 - 词汇提取阶段需要逐帧LVLM推理，离线计算量大
 - 仅在nuScenes上验证，Waymo等未评估

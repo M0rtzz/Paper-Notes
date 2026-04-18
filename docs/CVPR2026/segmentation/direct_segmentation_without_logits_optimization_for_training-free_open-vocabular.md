@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Direct Segmentation without Logits Optimization for Training-Free Open-Vocabulary Semantic Segmentation
 description: >-
@@ -136,7 +136,7 @@ tags:
 - **最优路径 vs 最大速度的互补性**：前者对高频纹理敏感，后者对类间边界敏感
 - **Stable Diffusion作为特征提取器**：SD2的自注意力张量比CLIP/DINO的自注意力更适合构建patch间转移概率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖Stable Diffusion**：需要额外加载SD2模型用于自注意力提取，增加了推理时的内存和计算开销
 2. **Sinkhorn迭代的计算代价**：50次迭代的最优传输计算在大分辨率图像上可能较慢

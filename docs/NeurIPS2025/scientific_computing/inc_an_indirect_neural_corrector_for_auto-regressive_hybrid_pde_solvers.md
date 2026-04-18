@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] INC: An Indirect Neural Corrector for Auto-Regressive Hybrid PDE Solvers
 description: >-
@@ -78,7 +78,7 @@ tags:
 3. **架构无关性**：对任意NN和任意求解器都适用
 4. **混沌稳定性**：在正Lyapunov指数系统中优势更加明显
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 理论分析基于线性化+小扰动假设——强非线性区域需要更精细分析
 2. 要求求解器可微（以训练$\mathcal{G}_\theta$），限制了与黑箱求解器的兼容性
 3. 多步展开训练的内存需求高

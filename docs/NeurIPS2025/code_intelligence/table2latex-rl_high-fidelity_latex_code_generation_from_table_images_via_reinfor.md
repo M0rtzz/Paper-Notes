@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Table2LaTeX-RL: High-Fidelity LaTeX Code Generation from Table Images via Reinforced Multimodal Language Models
 description: >-
@@ -122,7 +122,7 @@ tags:
 3. **小模型+精准RL > 大模型+通用能力**：3B参数的专精模型全面胜过72B通用模型，对"是否一定需要大模型"这一问题给出了重要反例
 4. **复杂度分级评估**是对该领域评估方法的重要补充
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VSGRPO训练过程中每个LaTeX输出都需要渲染为PDF再转PNG用于CW-SSIM计算，是严重的训练瓶颈
 - 受限于GPU资源，RL仅在5,936个复杂表格上训练，更多数据可能带来更大提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D sans 3D Scans: Scalable Pre-training from Video-Generated Point Clouds
 description: >-
@@ -112,7 +112,7 @@ S3DIS实例分割上LAM3C超越仅使用真实扫描训练的Sonata-real。
 - **前馈重建模型的新应用**：π³/VGGT等模型原本用于重建本身，LAM3C首次将其输出作为3D-SSL的预训练数据——扩大了重建模型的应用范围
 - **对2D-3D关系的新理解**：视频蕴含的3D几何信息足以支撑3D表示学习，这为2D-3D联合预训练提供了新思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VGPC的噪声和缺失区域仍限制性能上界——更好的前馈重建模型(如VGGT的后续版本)可能进一步提升质量
 - RoomTours仅覆盖室内场景——室外场景的VGPC质量可能更差（大尺度、动态物体多、光照变化大）
 - 视频收集依赖YouTube搜索关键词→数据分布可能偏向特定地域和房产类型

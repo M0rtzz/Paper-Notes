@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RATE: Causal Explainability of Reward Models with Imperfect Counterfactuals
 description: >-
@@ -113,7 +113,7 @@ $$\widehat{\text{ATE}}_{\text{RATE}} = \frac{n_1}{n_0 + n_1} \widehat{\text{ATT}
 - 方法通用性强，可用于任何可通过 LLM 重写操控的文本属性
 - 区分 ATT/ATU/ATE 的做法提供了更细粒度的可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **重写质量无客观度量**：反事实重写的质量最终依赖主观判断（看生成结果是否合理），缺乏形式化验证手段
 2. **可加性假设的局限**：假设 2 要求 reward 关于重写误差是可加的，但真实 RM 可能存在属性间交互效应

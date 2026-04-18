@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LongVideo-R1: Smart Navigation for Low-cost Long Video Understanding
 description: >-
@@ -124,7 +124,7 @@ $$R = w_{\text{ans}} \cdot r_{\text{ans}} + w_{\text{loc}} \cdot r_{\text{loc}} 
 5. **数据构建策略巧妙**：利用 CG-Bench 的 grounding 标注逐级提示 GPT-5，在保证正确性的同时最小化 hint 泄露
 6. **全开源**：LRM 基于 Qwen3-8B，工具基于 Qwen2.5-VL 系列，完全可本地部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **均匀切分非最优**：视频树采用等长分割，语义相似内容可能落入相邻子片段，增加定位歧义
 2. **工具种类单一**：仅有 caption 和 QA 两个工具，缺少实例识别、片段分割等细粒度工具

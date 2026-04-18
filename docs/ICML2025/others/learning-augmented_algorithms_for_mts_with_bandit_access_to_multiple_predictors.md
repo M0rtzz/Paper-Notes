@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning-Augmented Algorithms for MTS with Bandit Access to Multiple Predictors
 description: >-
@@ -102,7 +102,7 @@ $$\|x_{t-1} - x_t\|_1 \leq \eta \cdot g_{t-1}^T x_{t-1}$$
 - **鲁棒化应用**：将经典 $\rho$-competitive 在线算法加入启发式集合后，组合算法在最坏情况下仍保持 $(1+o(1))\rho$-competitive，同时在好实例上可利用 ML 预测
 - **下界构造的技巧**：经典 Dekel et al. 下界无法直接使用，因为 MTS 算法具有非正常动作和 1-step look-ahead 两个额外优势，需要精心改造
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **纯理论工作**：缺少实验验证，未在具体 MTS 实例（如缓存、k-server）上评估实际性能
 - **参数需预知 OPT**：探索率 $\epsilon$ 依赖于未知的 $\text{OPT}_{\leq 0}$，虽可用 doubling trick 解决，但增加了常数因子

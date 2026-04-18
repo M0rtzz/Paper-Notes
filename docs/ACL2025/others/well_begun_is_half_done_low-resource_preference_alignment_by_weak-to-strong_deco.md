@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Well Begun is Half Done: Low-resource Preference Alignment by Weak-to-Strong Decoding
 description: >-
@@ -97,7 +97,7 @@ WSD 框架的核心思想是：用一个小型对齐模型（draft model）m 生
 - 90% 的模型切换发生在结构化回答或问题分析阶段，说明基座模型一旦识别到 "有帮助的风格"，便能自信地接管
 - 小模型对下游任务仅起引导作用而非替代作用，这与投机解码的精神相通但目标不同
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 草稿模型仅使用 DPO 训练，未探索更多数据准备和训练策略
 2. 模型切换标准仍有大量定制空间

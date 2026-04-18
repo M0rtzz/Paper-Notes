@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continuous Simplicial Neural Networks
 description: >-
@@ -102,7 +102,7 @@ $$\delta_{\mathbf{X}_k} \leq t_d \delta_{k,d} e^{t_d \delta_{k,d}}(\|\mathbf{x}_
 - **感受野可学习**：$t_d, t_u$ 可作为可学习参数，避免了离散方法中多项式阶数的超参搜索
 - **Shrec-16 上的显著优势**：MSE 较 SCCNN 降低了 50%+，展示了连续模型在网格处理中的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **EVD 开销大**：虽然通过截断特征值降低了复杂度，但对大规模单纯形复形仍需 $\mathcal{O}(K N^2)$ 的预处理
 - **作者提到的未来方向**：探索非负矩阵分解、Cholesky 分解或隐式 Euler 方法来替代 EVD

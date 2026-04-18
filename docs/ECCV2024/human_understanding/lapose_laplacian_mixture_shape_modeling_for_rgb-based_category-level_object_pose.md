@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L} = \lambda_{pose} \mathcal{L}_{pose} + \lambda_{3D}(\mathcal{L}_{3D
 - **尺度解耦设计**：SAP 不仅提升训练效率，还提供了更有意义的评估指标（NIoU），推动了领域指标标准化
 - 推理速度约 10 FPS，具备一定实时性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 绝对尺度 $d$ 由独立的 MobileNet 预测，与位姿估计完全解耦可能丢失有用的联合信息
 - 依赖 MaskRCNN 检测结果，检测失败直接导致后续全部失败

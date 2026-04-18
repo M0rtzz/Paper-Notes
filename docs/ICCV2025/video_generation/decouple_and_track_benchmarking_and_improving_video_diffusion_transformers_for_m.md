@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decouple and Track: Benchmarking and Improving Video Diffusion Transformers for Motion Transfer
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{M}(\mathcal{T}_i, \mathcal{T}_j) = \frac{1}{N} \sum_{n=1}^{N} [\alpha
 - 推理时选择性移除时序核（保留前 35%）是一个巧妙的工程设计，平衡了运动迁移和文本编辑
 - MTBench 的构建方法（距离加权采样 + 聚类难度分级）对后续基准建设有参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要对每个源视频单独微调 500 步（约 1 小时），无法做到零样本运动迁移
 - 仅在 49 帧视频上验证，更长视频的运动迁移效果未知

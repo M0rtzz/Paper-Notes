@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Kernel-based Unsupervised Embedding Alignment for Enhanced Visual Representation in Vision-language Models
 description: >-
@@ -124,7 +124,7 @@ Projection 方式导致零样本性能严重下降（-7~12%），直接特征对
 4. **理论保证完备**：Proposition 3.1 证明了随机优化的可行性，Proposition 3.2 给出了图文对齐偏移的显式上界
 5. **泛化性强**：除 CLIP+DINOv2 外，还验证了 SigLIP、DFN、MetaCLIP 等模型对的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模受限**：仅在 ImageNet-1K（128 万图像）上微调，更大规模数据（如 DataComp）可能带来更大提升
 2. **仅验证小模型**：MLLM 评估限于 LLaVA-7B 和 OpenFlamingo-3B，未扩展到 70B 级别

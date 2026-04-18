@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faithful Bi-Directional Model Steering via Distribution Matching and Distributed Interchange Interventions
 description: >-
@@ -98,7 +98,7 @@ $$\min_\Phi \mathbb{E}\left[D_\Phi^+ + D_\Phi^-\right]$$
 3. **保真度优势显著**：始终保持最低 KL 散度，在大模型上消除拒绝行为时几乎不影响 MMLU/TruthfulQA
 4. **安全案例说服力强**：在两个安全场景中展示了系统性控制能力，特别是消除复杂 CoT 后门
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **训练数据要求更高**：需要对比式四元组 $((x, y), (x^c, y^c))$，比 Lang. 和 PO 方法更严格
 2. **通用引导仍需 factor 调优**：unit factor 效果远低于 tuned factor（如 2B L10: 0.121 vs 0.631），限制了免调优优势
 3. **仅研究了 rank-1 引导向量**：与 LoRA/LoReFT 等低秩方法的兼容性未知

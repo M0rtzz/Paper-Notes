@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InfoCLIP: Bridging Vision-Language Pretraining and Open-Vocabulary Semantic Segmentation via Information-Theoretic Alignment Transfer
 description: >-
@@ -70,7 +70,7 @@ $\mathcal{L} = \mathcal{L}_{task} + \lambda_1 \mathcal{L}_c + \lambda_2 \mathcal
 - 方法与模型架构正交（只需要一个lightweight LPAM），可以嫁接到其他OVSS方法上
 - t-SNE可视化清晰展示了seen/unseen class的特征解纠缠效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 只基于CAT-Seg架构验证，未扩展到其他框架（如SAN、FC-CLIP）
 - LPAM使用固定的shared parameters，没有探索teacher/student使用不同LPAM的可能
 - 信息瓶颈的压缩程度由$\lambda_1$控制，但对不同场景的最优压缩程度可能不同

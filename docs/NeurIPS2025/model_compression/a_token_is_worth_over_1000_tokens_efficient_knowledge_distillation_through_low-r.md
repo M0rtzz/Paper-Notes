@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Token is Worth over 1,000 Tokens: Efficient Knowledge Distillation through Low-Rank Clone
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **切入角度**：不训练 student 的原始权重，而是训练一组低秩投影矩阵，每次前向传播时临时从 teacher 权重"生成" student 权重。
 
-**核心 idea 一句话**：用低秩投影矩阵同时实现软剪枝（权重压缩）和对齐（同一矩阵既生成权重又对齐激活），消除了信息丢失和对齐开销。
+**核心 idea**：用低秩投影矩阵同时实现软剪枝（权重压缩）和对齐（同一矩阵既生成权重又对齐激活），消除了信息丢失和对齐开销。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **FFN 激活的重要性被首次明确证实**：此前 feature-based 蒸馏主要关注 attention，本文的消融实验强有力地证明了 FFN 激活的关键作用，这个发现对整个蒸馏领域都有指导意义
 - **Alignment-free 的理论解释**：Lemma 1 不仅简化了方法设计，还提供了为什么投影矩阵能同时做两件事的数学解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **训练时需同时加载 teacher 和 student**：虽然只训练投影矩阵，但前向传播需要 teacher 权重，内存消耗大
 - **压缩比受限**：$d^T \to d^S$ 的维度压缩有上限，过大压缩比效果未知
 - **Teacher 质量依赖**：student 的上限由 teacher 决定，对弱 teacher 的效果未验证

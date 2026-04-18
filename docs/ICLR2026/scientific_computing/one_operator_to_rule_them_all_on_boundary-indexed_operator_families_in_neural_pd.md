@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers
 description: >-
@@ -98,7 +98,7 @@ tags:
 - 对"基础模型 for PDE"的热潮提出了冷静的结构性警示：仅靠扩大数据规模和模型容量无法解决边界泛化问题
 - 实验设计简洁精巧：通过控制变量（同一方程、同一 forcing、同一分辨率）精确隔离边界条件的影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在二维 Poisson 方程上实验，未扩展到抛物线、双曲或非线性 PDE
 - 未考虑时间依赖系统中边界条件与初始条件的交互

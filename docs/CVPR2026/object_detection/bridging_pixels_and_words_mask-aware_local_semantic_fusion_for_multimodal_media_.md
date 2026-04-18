@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging Pixels and Words: Mask-Aware Local Semantic Fusion for Multimodal Media Verification
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L} = \mathcal{L}_{bcls} + \alpha \mathcal{L}_{mcls} + \beta \mathcal{
 - BCV 的"审讯者"比喻直观且与实际效果吻合
 - 两种 Parser 的设计展示了开放性和受限性标签的互补价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 掩码-标签对的质量依赖于外部模型（OMG-LLaVA、GLIP、SAM2），错误会传播
 - 固定数量的掩码-标签对可能不适应所有场景（简单场景过多，复杂场景不足）
 - 计算开销随掩码-标签对数量线性增长

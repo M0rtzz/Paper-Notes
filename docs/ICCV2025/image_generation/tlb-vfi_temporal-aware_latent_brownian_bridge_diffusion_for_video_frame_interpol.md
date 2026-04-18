@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TLB-VFI: Temporal-Aware Latent Brownian Bridge Diffusion for Video Frame Interpolation
 description: >-
@@ -58,7 +58,7 @@ $$\hat{I}_n = M \odot \text{warp}(I_0) + (1-M) \odot \text{warp}(I_1) + \Delta$$
 
 #### 1. **隐空间时域特征提取**
 
-- **做什么**：在自编码器的编码器和解码器之间插入时域块，在隐空间提取帧间时序信息
+- **功能**：在自编码器的编码器和解码器之间插入时域块，在隐空间提取帧间时序信息
 - **核心思路**：使用共享的图像编码器分别编码每帧得到空间特征，然后通过 3D 卷积 + 时空注意力在隐空间提取时间关系。解码器端使用时空交叉注意力聚合将视频特征（$F \in \mathbb{R}^{C \times T \times H \times W}$）转换为单帧特征：
   $$V_{out} = \text{softmax}\left(\frac{QK^T}{\sqrt{C}}\right)V$$
   其中 $F_Q = F[t].\text{flatten}(1)$（中间帧特征），$F_{KV} = F.\text{flatten}(1)$（所有帧特征）。同时利用 $I_0, I_1$ 编码器的多层级特征通过 warp + 交叉注意力引导解码器。
@@ -66,7 +66,7 @@ $$\hat{I}_n = M \odot \text{warp}(I_0) + (1-M) \odot \text{warp}(I_1) + \Delta$$
 
 #### 2. **3D 小波特征门控**
 
-- **做什么**：在像素空间利用 3D 小波变换提取时域高频信息（运动变化区域），作为隐空间时域信息的补充
+- **功能**：在像素空间利用 3D 小波变换提取时域高频信息（运动变化区域），作为隐空间时域信息的补充
 - **核心思路**：对输入视频 $V=[I_0,I_n,I_1]$ 应用 3D 小波变换，使用低通滤波器 $[\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}]$ 和高通滤波器 $[-\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}]$ 在高度、宽度、时间三个维度的组合上提取 8 种频率图。两次小波变换分别捕捉：（1）$I_0$ 与 $I_n$ 之间、$I_n$ 与 $I_1$ 之间的时间信息；（2）全帧的时间信息。将编码后的频率特征 $f_w$ 通过门控机制融合：
   $$f = \sigma(f_w) \odot f_i + f_i$$
   其中 $\sigma$ 是 sigmoid，$f_i$ 是图像编码器的隐特征。
@@ -74,7 +74,7 @@ $$\hat{I}_n = M \odot \text{warp}(I_0) + (1-M) \odot \text{warp}(I_1) + \Delta$$
 
 #### 3. **重新设计的布朗桥扩散过程**
 
-- **做什么**：将布朗桥应用于 $\mathcal{E}(V)$（含 $I_n$ 的完整视频编码）和 $\mathcal{E}(\tilde{V})$（$I_n$ 替换为零的视频编码）之间，避免恒等映射问题
+- **功能**：将布朗桥应用于 $\mathcal{E}(V)$（含 $I_n$ 的完整视频编码）和 $\mathcal{E}(\tilde{V})$（$I_n$ 替换为零的视频编码）之间，避免恒等映射问题
 - **核心思路**：BBDM 的扩散过程：
   $$q(\mathbf{x}_t | \mathbf{x}_0, \mathbf{x}_T) = \mathcal{N}\left(\frac{t}{T}\mathbf{x}_0 + (1-\frac{t}{T})\mathbf{x}_T, \frac{t(T-t)}{T}\mathbf{I}\right)$$
   其中 $\mathbf{x}_0 = \mathcal{E}(V)$，$\mathbf{x}_T = \mathcal{E}(\tilde{V})$。采样过程中去噪网络预测 $\mathbf{x}_t - \mathbf{x}_0$。
@@ -135,7 +135,7 @@ $$\hat{I}_n = M \odot \text{warp}(I_0) + (1-M) \odot \text{warp}(I_1) + \Delta$$
 3. **2.3× 推理加速**：相比同类扩散方法在相同采样步数下更快（0.69s vs 1.62s）
 4. **困难样本上优势更大**：在 SNU-FILM 系列从 easy→extreme 的性能提升幅度递增，说明时域信息对大运动场景尤为关键
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理仍需 10 步扩散采样**：虽然已比同类方法快，但仍慢于非扩散方法（IFRNet 0.10s）
 2. **仅评估三帧插值**：对连续多帧插值（如 8× 插帧）的效果在补充材料中展示但未深入分析

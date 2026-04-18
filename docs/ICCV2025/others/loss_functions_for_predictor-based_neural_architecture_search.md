@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Loss Functions for Predictor-based Neural Architecture Search
 description: >-
@@ -127,7 +127,7 @@ tags:
 3. **WARP的引入**：将多标签图像标注领域的WARP损失引入NAS，效果显著
 4. **简洁有效的PW方法**：分段切换损失函数即可超越SOTA，实现简单但效果一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PW损失的切换阈值是固定的，依赖人工经验选择
 - 未探索更灵活的损失组合方式（如逐步增加加权强度而非硬切换）

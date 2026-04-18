@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faster Parameter-Efficient Tuning with Token Redundancy Reduction (FPET)
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：将 token 冗余压缩与 PET 结合——在 ViT 中间层一次性合并 ~50% 的 token，并设计可微的匹配策略使合并过程可被端到端优化。
 
-**核心idea一句话**：PET + 单层可微 token 合并 = 推理速度突破原始 backbone 的天花板。
+**核心 idea**：PET + 单层可微 token 合并 = 推理速度突破原始 backbone 的天花板。
 
 ## 方法详解
 
@@ -93,7 +93,7 @@ tags:
 - **即插即用设计**——可直接叠加到任何现有 PET 方法上（LoRA/AdaptFormer/Bi-LoRA等）
 - **可微 token 合并的工程巧思**——STE + 梯度截断的组合既保证可学习性，又避免了反向传播对特征的干扰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 VTAB-1K（每任务 1000 样本）上验证，未测试大规模数据集如 ImageNet
 - 固定在第 6 层合并 50%——不同任务可能需要自适应的合并位置和比例

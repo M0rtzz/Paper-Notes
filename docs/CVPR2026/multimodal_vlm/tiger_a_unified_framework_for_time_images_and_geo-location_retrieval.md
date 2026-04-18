@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TIGeR: A Unified Framework for Time, Images and Geo-location Retrieval
 description: >-
@@ -94,7 +94,7 @@ tags:
 - 软分类目标的设计巧妙：利用地理/时间的连续性，让邻近类共享概率
 - 自适应推理融合策略平衡了检索和分类信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 - R@1整体仍较低，地理时间检索本身极具挑战性
 - 训练时6种组合的前向传播计算量大
 - 数据来源限于固定摄像头(AMOS)，泛化到社交媒体图像的能力待验证

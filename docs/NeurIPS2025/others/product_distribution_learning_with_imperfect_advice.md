@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Product Distribution Learning with Imperfect Advice
 description: >-
@@ -113,7 +113,7 @@ $$\hat{\mathbf{p}} = \arg\min_{\|\mathbf{b}-\mathbf{q}\|_1 \leq r} \frac{1}{n}\s
 - 平衡性必要性的证明利用了 Gilbert-Varshamov 界和 Fano 方法的精妙结合。
 - 与同期 Gaussian 设定工作（Bhattacharyya et al. 2025）形成自然对比，展示了离散vs连续分布在建议框架下的本质差异。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 上界和下界之间仍有 gap（上界中的 $\tau$ 依赖为 $\tau^{-6}$，是否可进一步优化尚不清楚）。
 2. 仅限于乘积分布，未覆盖更复杂的分布族如贝叶斯网络或 Ising 模型。

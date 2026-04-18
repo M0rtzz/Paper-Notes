@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bootstrap3D: Improving Multi-view Diffusion Model with Synthetic Data
 description: >-
@@ -118,7 +118,7 @@ Bootstrap3D包含三个核心模块：
 5. **数据规模惊人**：生成了100万合成多视图图文对，量级远超现有3D数据集
 6. **生成速度**：Bootstrap3D生成单个3D物体仅需5秒，而MVDream(SDS)需要30分钟
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **稀疏视图重建模型也需要改进**：本文只改善了多视图扩散模型，但下游重建模型（GRM/InstantMesh）也只在Objaverse上训练，成为新的瓶颈
 2. **细微视图不一致性难以检测**：MLLM能判断明显的运动模糊，但微妙的视图不一致要到3D重建后才会暴露为模糊区域
 3. **TTR是缓解而非根治**：本质上是回避了合成数据的质量问题，更好的视频扩散模型可以从根本上解决

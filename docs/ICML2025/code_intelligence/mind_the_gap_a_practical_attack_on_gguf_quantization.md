@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mind the Gap: A Practical Attack on GGUF Quantization
 description: >-
@@ -80,7 +80,7 @@ tags:
 - 实际攻击向量清晰：上传→量化→后门激活
 - 对 LLM 供应链安全提出警示
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需配套防御方案（如量化前后行为一致性检查）
 - 良性拒绝攻击成功率较低
 - 攻击需要训练能力，有计算门槛

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning
 description: >-
@@ -128,7 +128,7 @@ Few-shot (10% data)：AR-VRM 45.6% vs GR-1 40.0%（**+5.6%**）
 - **类比推理的优雅设计**：可学习映射矩阵自动发现人手-机器人的功能对应关系，无需人工指定
 - **数据回放的巧妙用途**：微调时加入检索到的人类视频不仅提供动作引导，还防止 VLM 过拟合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 类比映射矩阵是全局共享的，不同任务可能需要不同的映射关系
 - 依赖 InterHand 的关键点检测质量，遮挡或快速运动下可能不稳定

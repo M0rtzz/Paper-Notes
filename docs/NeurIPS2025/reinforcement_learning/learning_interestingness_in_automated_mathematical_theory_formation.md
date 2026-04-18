@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Interestingness in Automated Mathematical Theory Formation
 description: >-
@@ -115,7 +115,7 @@ EvoAbstract 和 FunSearch 在所有起始配置上显著超越所有基线，其
 - EvoAbstract 的抽象学习机制类似于人类数学中提取"通用概念"的过程——从具体成功经验中抽象出可复用的模式
 - 产生规则 + 符号证明器的设计使得所有发现都有严格保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 策略模板限制了动作空间暴露，限制了可发现的复杂数学对象
 - "瓶颈实体"问题：关键概念（如素数）被发现时知识图谱已过大，阻碍后续有价值的操作
 - 缺乏实体等价性检查导致表示冗余

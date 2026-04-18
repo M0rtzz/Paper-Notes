@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding and Improving Adversarial Robustness of Neural Probabilistic Circuits
 description: >-
@@ -109,7 +109,7 @@ RNPC 在良性输入上与 NPC 持平甚至略优，验证了鲁棒性-准确率
 - 理论推导与实验验证的一致性很强，尤其是半径 $r$ 的消融实验完美匹配理论预测
 - 推理时间复杂度反而降低（$|V| \leq \prod_k |A_k|$）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 攻击传播（属性间虚假相关）在实际数据中普遍存在，RNPC 的优势会被削弱
 - 数据集较小且合成成分多，需在更大规模的真实数据集上验证
 - 属性空间的分区和半径依赖于数据的内在结构，需已知或可计算

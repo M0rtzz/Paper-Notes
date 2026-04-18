@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Next Semantic Scale Prediction via Hierarchical Diffusion Language Models
 description: >-
@@ -126,7 +126,7 @@ OpenWebText（DiT 架构，GPT-2 tokenizer，131B tokens）：
 - 随机扰动效果惊人（Gen PPL 降 62%），简单有效
 - ELBO 的课程学习解释很自然：cluster token 做簇内分类、mask token 做簇级分类
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验规模较小（170M/425M），7B+ 下表现待验证
 - 仅 1 层中间层级，多层级实验留作未来工作

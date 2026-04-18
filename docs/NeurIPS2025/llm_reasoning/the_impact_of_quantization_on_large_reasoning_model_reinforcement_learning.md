@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Impact of Quantization on Large Reasoning Model Reinforcement Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：什么时候做量化最好？是在 RL 训练过程中（QAFT/QLoRA），还是训练完后再做（PTQ）？两者的推理性能-内存效率权衡如何？
 
-**本文要解决什么**：系统评估不同量化策略（QAFT-STE、QLoRA、PTQ-AWQ、PTQ-BnB）在不同精度（4/8-bit）、不同模型规模（0.6B-8B）下对 LRM RL 训练效果的影响。
+**本文目标**：系统评估不同量化策略（QAFT-STE、QLoRA、PTQ-AWQ、PTQ-BnB）在不同精度（4/8-bit）、不同模型规模（0.6B-8B）下对 LRM RL 训练效果的影响。
 
 **切入角度**：用 Qwen3 系列（0.6B/1.7B/4B/8B）在 MATH 数据集上做 GRPO/drGRPO 训练，比较各种量化组合方案。
 
-**核心 idea 一句话**：RL 过程中的"量化冲击"（sudden quantization shock）会损害策略学习，延后量化（PTQ 或 QLoRA 冻结基模型权重）才是更好的选择。
+**核心 idea**：RL 过程中的"量化冲击"（sudden quantization shock）会损害策略学习，延后量化（PTQ 或 QLoRA 冻结基模型权重）才是更好的选择。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - **实践指导清晰**：给出了明确建议——全精度做 RL，然后用 PTQ 或 QLoRA 量化，避免 QAFT
 - **"量化冲击"假说**：RL 对量化噪声比 SFT 更敏感，因为 RL 依赖采样质量，量化导致的策略退化会通过 rollout 质量传导到奖励信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Workshop paper，实验规模有限**：只用了一个模型系列（Qwen3）、一个任务（数学推理），泛化性未验证
 - **未探索"先 QAT 再 RL"**：如果在预训练阶段就引入量化感知，再做 RL 可能效果不同
 - **QLoRA 在 8B 上异常**：QLoRA 4-bit 在 8B 上性能(0.556)反而低于 PTQ 4-bit(0.581)，原因未深入分析

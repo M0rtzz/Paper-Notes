@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Provable In-Context Vector Arithmetic via Retrieving Task Concepts
 description: >-
@@ -127,7 +127,7 @@ $$\mathbf{h}_\theta = \mathbf{W}_O \text{LN}(\mathbf{h}_{\theta,0}(\mathbf{T})) 
 4. **OOD 泛化的可组合性**：task vector 的锥组合支持字典漂移和分布漂移，呼应 "celebrity helps minority" 效应
 5. **连接 BMA 视角**：多 co-task prompt 下的混合向量 $\sum w_k \mathbf{a}_k$ 自然对应贝叶斯模型平均
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限单 token 事实召回**：明确声明不覆盖多 token 或复杂事实任务，适用范围有限
 2. **数据建模假设较强**：高低层概念正交、单层 Transformer、$\ell_2$ 层归一化（非标准 LayerNorm）等简化假设与实际 LLM 有距离

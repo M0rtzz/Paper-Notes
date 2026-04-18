@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BezierGS: Dynamic Urban Scene Reconstruction with Bézier Curve Gaussian Splatting
 description: >-
@@ -117,7 +117,7 @@ Waymo上PSNR提升1.87dB，Dyn-PSNR提升2.66dB；nuPlan上PSNR提升3.04dB，LP
 - 将传统标注框方法视为BezierGS的特例（偏移在物体坐标系中恒定、框位姿固定），展现了方法的统一性
 - 速度可通过Bernstein基函数解析求导获得，使速度约束自然嵌入框架中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仍需初始化阶段的物体感知（分组依赖3D检测或标注）
 - 三次Bézier曲线对极复杂轨迹（如U型转弯）可能需要分段表示

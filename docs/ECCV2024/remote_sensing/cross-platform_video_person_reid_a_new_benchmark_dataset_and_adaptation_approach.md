@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross-Platform Video Person ReID: A New Benchmark Dataset and Adaptation Approach
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{L}_{stage2} = \mathcal{L}_{v2sce} + \beta\mathcal{L}_{tri} + \gamma\m
 - **参数效率极高**：VSLA仅5.5%参数量即可适配基础模型，且集合级注意力天然对帧顺序不变
 - **数据集本身具有重要价值**：G2A-VReID是首个地空跨平台视频ReID数据集，包含2788个ID、185907张图像
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - G2A-VReID数据集规模虽大但场景类型有限（9个类别），未覆盖夜间、恶劣天气
 - 仅考虑了两个平台（地面+UAV），未扩展到多平台（如车载、穿戴式相机）

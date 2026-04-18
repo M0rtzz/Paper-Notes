@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Dialogue: A Profile-Dialogue Alignment Framework Towards General Role-Playing Language Model
 description: >-
@@ -95,7 +95,7 @@ Beyond Dialogue 框架包含三个核心阶段：
 3. **客观化评估体系**：将主观评估任务转为客观题，解决了角色扮演评估标准不一的问题
 4. **句子级对齐思路新颖**：受演员学习方法启发，通过理解"角色特质如何在对话中体现"来增强角色扮演能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据构建依赖 GPT-4o，成本虽低但仍需 API 调用
 - 仅验证了 7B 规模的模型，更大规模模型的效果未知

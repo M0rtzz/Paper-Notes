@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Uncertainty Estimation in LLMs: A Principled Single-Sequence Measure
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：对数评分规则必然需要对整个输出序列分布取期望（Shannon 熵），而该分布随序列长度指数增长，根本无法精确计算。有没有一种不需要遍历分布的 proper scoring rule？
 
-**本文要解决什么？**：(a) 为单序列不确定性度量提供理论依据；(b) 分析其近似的采样复杂度优势；(c) 给出最高效的实现方案。
+**本文目标**：(a) 为单序列不确定性度量提供理论依据；(b) 分析其近似的采样复杂度优势；(c) 给出最高效的实现方案。
 
 **切入角度**：探索 zero-one score 这一替代 proper scoring rule。在该规则下，偶然不确定性仅取决于最高概率序列的似然，不需要对全分布采样。
 
-**核心idea一句话**：用 zero-one scoring rule 替代 logarithmic scoring rule 导出不确定性度量，发现只需贪心解码序列的负对数似然即可。
+**核心 idea**：用 zero-one scoring rule 替代 logarithmic scoring rule 导出不确定性度量，发现只需贪心解码序列的负对数似然即可。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ G-NLL 不需要任何训练，是纯推理时方法。关键发现：不应对 G
 - **实用价值极高**：G-NLL 就是贪心解码的负对数似然，零额外计算成本，可以直接作为 LLM 部署中的不确定性信号。
 - 采样复杂度分析为不同不确定性度量的计算可行性提供了理论基准。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 贪心解码不一定找到真正的最高概率序列（NP-hard），只是上界近似
 - 仅关注偶然不确定性（aleatoric），未处理认知不确定性（epistemic）
 - 实验范围限于问答任务，未验证长文本生成场景

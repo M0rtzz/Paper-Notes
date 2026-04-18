@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimizing Diffusion Models for Joint Trajectory Prediction and Controllable Generation
 description: >-
@@ -125,7 +125,7 @@ ECM 的单步推理时间与 NNM 相当（111ms vs 113ms），但效果远优；
 3. 巧妙复用已有的预训练边际预测器（QCNet），不增加训练成本就获得了先验信息和参考轨迹
 4. OGD 和 ECM 是正交的两个加速模块，可以独立使用也可以组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - OGD 的性能依赖于边际轨迹预测器的精度；若边际预测不准，优化得到的先验也不准
 - 目前假设先验协方差为块对角（车辆间独立），忽略了联合分布中的跨车辆相关性

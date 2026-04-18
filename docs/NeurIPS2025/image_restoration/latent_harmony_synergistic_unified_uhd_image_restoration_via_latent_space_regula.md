@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Latent Harmony: Synergistic Unified UHD Image Restoration via Latent Space Regularization and Controllable Refinement
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**: 三重权衡——(1) 潜在空间泛化性 vs 重建保真度，(2) VAE 联合优化 vs 结构保持，(3) 输出的感知质量 vs 保真度。
 
-**本文要解决什么**: 系统性解决 VAE 在 UHD All-in-One 修复中的多重权衡挑战。
+**本文目标**: 系统性解决 VAE 在 UHD All-in-One 修复中的多重权衡挑战。
 
 **切入角度**: 从频域分析出发，发现高频信息是泛化与重建矛盾的核心，针对性地设计正则化和 LoRA 微调策略。
 
-**核心 idea 一句话**: 通过潜在空间正则化构建退化不变的泛化表征，用差异化高频 LoRA 分别优化编码器保真度和解码器感知质量。
+**核心 idea**: 通过潜在空间正则化构建退化不变的泛化表征，用差异化高频 LoRA 分别优化编码器保真度和解码器感知质量。
 
 ## 方法详解
 
@@ -145,7 +145,7 @@ $$L_{Stage1} = L_{VAE} + \lambda_{Inv} L_{Inv} + \lambda_{Eqv} L_{Eqv}$$
 - **极致效率**: 1.2M 参数、3.6G FLOPs 即可支持全分辨率 4K 推理
 - **通用 VAE 框架**: 可替换到其他标准分辨率修复方法中也有显著增益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LH-VAE 的训练需要配对的干净/退化图像，实际场景中并不总能获得
 - 高频判别器的训练可能引入对抗训练的不稳定性

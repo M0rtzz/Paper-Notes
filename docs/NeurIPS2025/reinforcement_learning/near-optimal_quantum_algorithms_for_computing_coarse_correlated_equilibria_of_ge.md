@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Near-Optimal Quantum Algorithms for Computing (Coarse) Correlated Equilibria of General-Sum Games
 description: >-
@@ -101,7 +101,7 @@ tags:
 - 统一 QRAM 从"存样本而非频率"的思路巧妙——将指数级存储压缩到多项式，且支持任意 MWU 实例的幅度编码构造。这个技术可能对其他量子在线学习算法也有价值
 - 下界证明简洁而有力——归约到无结构搜索的 direct product 是标准但有效的工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CCE 的 ε 依赖（$\varepsilon^{-2.5}$）比经典差 $\varepsilon^{-0.5}$——量子化乐观 MWU 可能改进但其高阶光滑性质对 Gibbs 采样噪声敏感
 - 时间复杂度比查询多 m 因子——来自每轮需对 m 个玩家做 Gibbs 采样
 - 仅考虑 normal-form 博弈——Bayesian 博弈和 extensive-form 博弈的量子算法是开放问题

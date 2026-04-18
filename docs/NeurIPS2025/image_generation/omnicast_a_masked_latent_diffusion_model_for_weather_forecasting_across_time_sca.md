@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniCast: A Masked Latent Diffusion Model for Weather Forecasting Across Time Scales
 description: >-
@@ -122,7 +122,7 @@ OmniCast 推理速度比 Gencast 快 **10-20 倍**（且使用更弱的硬件）
 - 同一模型统一中期和 S2S 两个时间尺度，在两者上均有竞争力
 - 近零偏差和优异的频谱保持是物理科学应用中至关重要的特性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 短期和中期预报仍不如专门优化的自回归方法（如 Gencast），存在中短期-长期性能权衡
 - S2S 实验使用较低分辨率（1.4°），是否能在高分辨率保持优势需验证

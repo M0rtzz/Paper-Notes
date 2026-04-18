@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConformalSAM: Unlocking the Potential of Foundational Segmentation Models in Semi-Supervised Semantic Segmentation with Conformal Prediction
 description: >-
@@ -126,7 +126,7 @@ ConformalSAM采用两阶段训练：
 - 两阶段策略的设计逻辑清晰：早期利用基础模型知识，后期避免过拟合SEEM噪声
 - 作为插件框架的通用性：可与AllSpark等SSSS方法自由组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 效果依赖于基础模型知识与目标任务的重叠度——ADE20K/Cityscapes等含新类别的数据集收益较小
 - CP校准需要标注数据，在极少标注场景（几十张）校准精度可能不足

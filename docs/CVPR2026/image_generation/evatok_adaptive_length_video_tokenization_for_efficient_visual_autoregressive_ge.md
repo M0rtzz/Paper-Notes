@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EVATok: Adaptive Length Video Tokenization for Efficient Visual Autoregressive Generation
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{vqgan}} + \lambda \mathcal{L}_
 - **直觉一致的分配**：运动剧烈/布局复杂的片段分配更多 token，重复/静态片段分配更少，与人类直觉一致
 - **训练-推理 gap 的系统性解决**：Stage 4 从头训练 tokenizer 仅使用路由器预测的分配，本质上消除了先前工作的 gap 问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅验证于 16 帧 128×128 的短视频，扩展到更长更高分辨率视频的效果未知
 - 路由器训练依赖 Stage 1-2 的大量预计算（100k 视频 × 625 种分配的遍历），上游开销较大

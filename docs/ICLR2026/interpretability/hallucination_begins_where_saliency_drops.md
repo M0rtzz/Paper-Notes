@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hallucination Begins Where Saliency Drops
 description: >-
@@ -114,7 +114,7 @@ $\alpha$（SGRS）和 $\beta$（LocoRE）的超参数消融（LLaVA-1.5-7B）：
 - **LocoRE 的实用性极高**: 无需训练、无需额外模型、无需梯度计算、即插即用、几乎无延迟——非常适合工业落地
 - **可视化分析非常有说服力**: 正确 token vs 幻觉 token 的显著性对比图直观清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **SGRS 的延迟开销**: 每个 token 需要额外的反向传播（30-40% 开销），不适合实时应用。论文也承认仅 LocoRE 是更实际的选择
 - **Failure Case**: 对于"高置信度的幻觉"（模型非常确定地输出了错误内容），显著性可能仍然很高，SGRS 无法检测。这与 OpenAI 发现的"模型会自信地犯错"一致

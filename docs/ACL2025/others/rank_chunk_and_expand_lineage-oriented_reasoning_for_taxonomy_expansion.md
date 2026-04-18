@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rank, Chunk, and Expand: Lineage-Oriented Reasoning for Taxonomy Expansion
 description: >-
@@ -139,7 +139,7 @@ LORex（图 2）分为四个模块：
 - **即插即用**：无需微调 LLM，用 8B 参数模型即可达到 SOTA，经济实惠
 - **迭代精炼**：检索-验证-重试的迭代机制，确保不因单次错误而丢失正确答案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 性能高度依赖排序器质量（"the method is only as good as its ranker"）
 - 当正确父节点排名较低时，多次迭代导致延迟和错误累积

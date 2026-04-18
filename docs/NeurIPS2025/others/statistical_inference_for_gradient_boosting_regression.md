@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Statistical Inference for Gradient Boosting Regression
 description: >-
@@ -134,7 +134,7 @@ $$\hat{\sigma}^{-2}\hat{d}_m^\top \hat{\Xi}_n^{-1} \hat{d}_m \sim \chi_m^2$$
 3. **实用的统计工具**：置信区间、预测区间、变量重要性检验——覆盖了实际应用的核心需求
 4. **Nyström近似使推断可扩展**：线性时间复杂度让方法对大数据集实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 理论保证依赖结构-值隔离、非适应性等假设，放松这些假设将扩大适用范围
 2. 收敛速率为 $n^{-1/(d+1)}$（1/2-Hölder光滑），对Lipschitz函数应可改进到 $n^{-2/(d+1)}$

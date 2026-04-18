@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Dynamic Theory of Mind: Evaluating LLM Adaptation to Temporal Evolution of Human States
 description: >-
@@ -109,7 +109,7 @@ tags:
 4. **渐进式问题设计精妙**：Understanding → Transformation-1/2/3 逐步升级，能精确定位模型在推理链中的断裂点
 5. **发现 "Lost in the Middle" 在 ToM 中的表现**：首次在社会认知任务中验证了该现象，为长上下文 ToM 推理研究提供重要证据
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **模型覆盖有限**：仅评估 10 个模型，缺少 Claude 家族和最新开源模型（如 Qwen2.5、DeepSeek-V3）
 2. **提示方法单一**：仅使用 vanilla 和 CoT，未尝试 Think-Twice、Self-Consistency 等可能更适合 ToM 的方法
 3. **心理状态类型可扩展**：仅覆盖信念/情感/意图/行为，未包含知识 (knowledge)、欲望 (desire) 等认知维度

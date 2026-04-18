@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fine-Grained Post-Training Quantization for Large Vision Language Models with Quantization-Aware Integrated Gradients
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：随着 token 在模型中逐层交互，模态边界逐渐模糊，同一模态内不同 token 的量化敏感度也存在巨大差异（massive activations、layer heterogeneity、sub-layer divergence、token variability 四个现象）。
 
-**本文要解决什么？** 如何在 token 级别精确估计量化敏感度，并利用这些信息指导更精细的 channel-wise equalization。
+**本文目标** 如何在 token 级别精确估计量化敏感度，并利用这些信息指导更精细的 channel-wise equalization。
 
 **切入角度**：从机械可解释性中的公理化归因出发，利用积分梯度量化每个 token 从量化参考到实际输入的敏感度。
 
@@ -97,7 +97,7 @@ tags:
 - **零额外推理开销**：QIG 仅在校准阶段计算，量化后的推理与基线完全相同
 - 对 SFT 梯度和注意力这两种直觉上应该有效的代理进行了系统性否定，增强了 QIG 的说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 校准集固定为 128 样本，未探索校准集选择对 QIG 的影响
 - QIG 的积分步数是超参数，论文未充分讨论其敏感性
 - 仅在 7B-26B 规模验证，更大模型（70B+）的效果未知

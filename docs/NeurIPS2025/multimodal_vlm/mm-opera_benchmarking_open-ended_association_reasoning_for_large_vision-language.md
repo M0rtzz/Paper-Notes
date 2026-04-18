@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MM-OPERA: Benchmarking Open-ended Association Reasoning for Large Vision-Language Models
 description: >-
@@ -116,7 +116,7 @@ tags:
 - ⭐⭐⭐⭐ **发现深刻**：保守推理 vs 关联灵活性的权衡、独特性瓶颈等洞察对模型改进有指导意义
 - ⭐⭐⭐ **多维度分析**：敏感性测试（图像替换、文本替换、顺序敏感性）+ 裁判验证 + 多样性分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 参考答案仅作为启发式基准，开放式评估仍依赖 LLM-as-a-Judge 的可靠性
 2. 人类基线基于大学生样本，可能不完全代表普遍人类关联推理水平
 3. $\alpha=0.9, \delta=0.9$ 的超参数选择缺乏系统消融

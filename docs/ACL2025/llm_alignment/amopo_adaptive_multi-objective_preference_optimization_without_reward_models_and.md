@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AMoPO: Adaptive Multi-objective Preference Optimization without Reward Models and Reference Models
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L}_{total} = \sum_{d \in D} w_d \cdot \mathcal{L}_d + \gamma_{ftx} \c
 - **维度感知prompt**将偏好维度信息编码到输入中，让模型在推理时也能根据prompt关注特定维度，实现一定程度的可控生成
 - 整个框架基于LLaMA-Factory构建，易于复现和扩展
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅在HelpSteer2数据集上验证，偏好维度固定为helpfulness/correctness/instruction_following，泛化到更多维度需要进一步验证
 - 高斯采样在batch较小时统计量不稳定，可能导致权重波动较大

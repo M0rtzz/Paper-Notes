@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TAB: Transformer Attention Bottlenecks enable User Intervention and Debugging in Vision-Language Models
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **关键痛点**：现有方法中，修改ViT内部的注意力值不会影响输出（如图1所示CLIP4IDC的注意力失效），说明注意力图仅是相关性而非因果性的。用户无法通过编辑注意力来调试或修正模型错误。
 
-**本文要解决什么**：构建一个注意力瓶颈，使得(1)注意力图精确反映每个patch的贡献，(2)可用真值框监督注意力，(3)用户可在测试时编辑注意力值并直接影响VLM输出。
+**本文目标**：构建一个注意力瓶颈，使得(1)注意力图精确反映每个patch的贡献，(2)可用真值框监督注意力，(3)用户可在测试时编辑注意力值并直接影响VLM输出。
 
 **核心insight**：通过移除skip connection并使用单头注意力，TAB层成为视觉信息流向语言模型的"阀门"——注意力全零时不传递任何视觉信息（模型默认输出"无变化"），注意力非零时精确控制哪些patch的信息传递。
 

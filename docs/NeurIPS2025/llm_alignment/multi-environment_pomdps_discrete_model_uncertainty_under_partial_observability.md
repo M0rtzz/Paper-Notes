@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Environment POMDPs: Discrete Model Uncertainty Under Partial Observability
 description: >-
@@ -125,7 +125,7 @@ $$V_{\mathsf{M}}^* = \max_{\pi} \min_{b \in B} V_{\mathsf{M}_b}^{\pi}$$
 3. **避免过度保守**：相比直接应用 RPOMDP 的矩形化处理，ME-POMDP 方法保持离散不确定性的精确建模
 4. **模型选择指导**：实验揭示了不同建模形式（PO-MEMDP vs MO-POMDP）的性能特征，为实际应用提供选型指南
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性有限**：当前方法在状态数 > 100 或环境数 > 5 时难以在合理时间内收敛
 2. **基准缺乏**：ME-POMDP 无现有标准基准，论文自建的基准覆盖有限

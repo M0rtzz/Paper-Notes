@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Styl3R: Instant 3D Stylized Reconstruction for Arbitrary Scenes and Styles
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L} = \begin{cases} \mathcal{L}_{photo}(\mathcal{G}^c), & \text{NVS预
 - **Content as Style洞察**：将内容图像视为特殊的风格图像，自然地让一个模型同时支持风格化和标准重建两种模式
 - **风格插值应用**：通过插值两张风格图像的style token，可实现平滑的风格过渡效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 风格化后的NVS指标略有下降（约1 dB PSNR），说明风格化和重建之间仍存在一定的权衡
 - 目前训练分辨率为256×256，高分辨率风格化质量有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Linear Transformers Implicitly Discover Unified Numerical Algorithms
 description: >-
@@ -138,7 +138,7 @@ EAGLE 在 $\kappa=10^4$ 时比 CG 快约 100 倍。
 3. **条件数对数依赖**：EAGLE 的 $\log\kappa$ 复杂度在迭代求解器中处于此前未探索的速度-精度权衡区域
 4. **对实际系统设计的启示**：低秩注意力约束不仅是效率trick，还自然诱导出合理的数据压缩（sketching）策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限线性注意力**：非线性注意力（softmax）下是否也能提取类似的统一算法尚不清楚
 2. **数值稳定性**：$\kappa > 10^8$ 时未经测试

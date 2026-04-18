@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond the Lower Bound: Bridging Regret Minimization and Best Arm Identification in Lexicographic Bandits
 description: >-
@@ -120,7 +120,7 @@ $$R^i(t) \leq \sum_{\Delta^i(a) > 0} \min_{j \in [m]} \left\{ \frac{(\Lambda^j(\
 2. **理论优雅性**：遗憾界中的 $\min_{j \in [m]}$ 自然地捕获了跨目标加速机制，某个目标的大间隔可以"帮助"其他目标加速淘汰
 3. **首次统一框架**：首个在词典序赌博机中同时处理 RM 和 BAI 的算法框架，填补了理论空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. LexElim-In 需要先验知识 $\lambda$（刻画目标间冲突程度），消除此依赖是重要的未来方向
 2. LexElim-Out 需要已知 $|\mathcal{O}_*(i)|$（各层最优臂集大小），实际中可能难以获取

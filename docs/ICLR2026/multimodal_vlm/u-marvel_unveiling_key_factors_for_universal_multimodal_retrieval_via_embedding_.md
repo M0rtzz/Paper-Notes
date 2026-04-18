@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] U-MARVEL: Unveiling Key Factors for Universal Multimodal Retrieval via Embedding Learning
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：多个看似无关紧要的细节（注意力方向、pooling策略、温度参数）可能对性能有决定性影响，但社区对此缺乏系统认知。
 
-**本文要解决什么？** (1) 嵌入提取：decoder-only→embedder的最优适配方式是什么？(2) 训练策略：InfoNCE的batch/lr/温度如何交互？硬负样本怎样避免崩塌？(3) 效率：能否将recall+rerank蒸馏成单模型，同时保持精度？
+**本文目标** (1) 嵌入提取：decoder-only→embedder的最优适配方式是什么？(2) 训练策略：InfoNCE的batch/lr/温度如何交互？硬负样本怎样避免崩塌？(3) 效率：能否将recall+rerank蒸馏成单模型，同时保持精度？
 
 **切入角度**：作者没有直接提方法，而是先实现一个通用pipeline，然后沿三条轴线系统消融，每步用实验证据推导出最优设计，最后组装成统一框架。这种"先理解再构建"的范式让每个设计决策都有数据支撑。
 
-**核心idea一句话**：通过系统消融发现被忽视的关键因子（bidir+mean、learnable temp、过滤硬负），将其整合为三阶段渐进训练框架+高效蒸馏，实现单模型SOTA。
+**核心 idea**：通过系统消融发现被忽视的关键因子（bidir+mean、learnable temp、过滤硬负），将其整合为三阶段渐进训练框架+高效蒸馏，实现单模型SOTA。
 
 ## 方法详解
 
@@ -126,7 +126,7 @@ U-MARVEL单模型63.2%已接近LamRA的双模型63.7%，验证了蒸馏策略的
 - **三个被忽视的因子**统一揭示：bidirectional+mean pooling、learnable temperature、filtered hard negative看似小改动，但累计带来6.6%的绝对提升（56.6→63.2），说明在MLLM嵌入学习中"魔鬼在细节中"
 - **高效蒸馏设计巧妙**：将蒸馏范围从$O(n^2)$的全similarity matrix缩小到$O(nk)$的top-k范围，计算量降到4.1%同时特征多样性增加26倍。这个思路可迁移到任何recall-then-rerank系统的知识蒸馏
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **模态覆盖有限**：仅支持文本和图像，未扩展到音频、视频（虽然零样本视频检索效果不错，但缺乏时序建模，reranker在视频上甚至退化）
 - **模型规模受限**：仅在7B模型上验证，更大（70B+）或更小（1B）模型上的表现未知

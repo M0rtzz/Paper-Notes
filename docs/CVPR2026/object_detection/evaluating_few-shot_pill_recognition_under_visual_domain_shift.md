@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Few-Shot Pill Recognition Under Visual Domain Shift
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：few-shot学习能否在跨域场景下保持有效？现有评估协议回避了最关键的部署挑战——训练数据（受控单药丸）和部署环境（混乱多药丸场景）之间存在系统性domain shift。标准的mAP指标在标注异构条件下也无法公平比较。
 
-**本文要解决什么？**
+**本文目标**
    - 跨数据集domain shift下few-shot适应的真实泛化能力如何？
    - base训练数据的视觉真实性vs数据量，哪个更影响few-shot表现？
    - 语义分类和定位性能在few-shot+遮挡条件下是否一致？
@@ -39,7 +39,7 @@ tags:
 
 **切入角度**：不追求架构创新，而是设计严格的跨域评估协议（CURE受控单药丸 vs MEDISEG真实多药丸 → 新部署环境），用classification-centric metrics替代传统mAP来公平评估。
 
-**核心idea一句话**：将few-shot fine-tuning重新定位为部署就绪性诊断工具，通过跨域+重叠压力测试暴露分类-定位解耦的系统性失败模式。
+**核心 idea**：将few-shot fine-tuning重新定位为部署就绪性诊断工具，通过跨域+重叠压力测试暴露分类-定位解耦的系统性失败模式。
 
 ## 方法详解
 
@@ -120,7 +120,7 @@ tags:
 - **分类-定位解耦的清晰揭示**：通过classification-centric metrics（而非仅mAP）和overlap压力测试，定量分离了语义识别和空间定位的不同失败模式。这一发现可迁移到所有密集/遮挡场景的目标检测评估中
 - **评估协议设计**：面对标注异构的务实做法——放弃AP、聚焦分类指标——值得在跨数据集评估中推广
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **作者承认的局限**：CURE全图bbox限制了定位指标的使用；非标准few-shot benchmark导致无法与其他方法直接对比；novel类别数受限于标注成本
 - **架构层面未探索**：仅用FsDet/Faster R-CNN，未尝试更强的few-shot检测器（如DeFRCN、FSCE等），也未比较不同backbone。不清楚观察到的分类-定位解耦是否与架构无关

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Rose by Any Other Name: LLM-Generated Explanations Are Good Proxies for Human Explanations to Collect Label Distributions on NLI
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：MJD Estimator 依赖人工解释才能有效工作，但人工解释是整个流程中最昂贵的瓶颈。
 
-**本文要解决什么？** LLM 生成的解释能否在质量上足以替代人工解释来近似 HJD？
+**本文目标** LLM 生成的解释能否在质量上足以替代人工解释来近似 HJD？
 
 **切入角度**：让 LLM 为每个 NLI 标签穷举所有可能的解释理由，然后根据人工标签分布选择对应数量的解释，构建标签-解释对输入 MJD Estimator。
 
-**核心idea一句话**：解释的来源（人工 vs LLM）不重要，重要的是解释的存在——"A rose by any other name would smell as sweet"。
+**核心 idea**：解释的来源（人工 vs LLM）不重要，重要的是解释的存在——"A rose by any other name would smell as sweet"。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ tags:
 - **成本大幅降低的实际路径**——从需要 100 名标注者/实例（ChaosNLI）降低到只需 4-5 个标签+LLM 自动生成解释，这使 HJD 方法在实际部署中可行。
 - **域外泛化有效**——方法不仅在有解释的数据集上有效，还成功推广到无解释（MNLI）和域外（ANLI）场景，增强了方法的实用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 NLI 任务上验证，其他标签变异显著的任务（如情感分析、毒性检测）未测试
 - 仍需少量人工标签（4-5 个/实例）做引导选择，完全无标签模式效果较差
 - 解释选择启发式（首选/最长）过于简单，可探索基于语义相似度的选择

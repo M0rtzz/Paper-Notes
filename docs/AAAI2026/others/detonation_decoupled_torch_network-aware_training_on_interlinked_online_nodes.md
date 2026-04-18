@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeToNATION: Decoupled Torch Network-Aware Training on Interlinked Online Nodes
 description: >-
@@ -159,7 +159,7 @@ FlexDeMo 采用**混合分片策略**：
 - **Sign 的重要性揭示**：梯度方向比幅度更重要这一发现有深远的优化理论启示
 - **全面的超参数分析**：为从业者提供了明确的调参指导
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **尚未利用异步通信**：CUDA streams 的重叠通信/计算潜力未被开发
 2. **未采用 FSDP2/SimpleFSDP**：新版 FSDP 可能进一步加速基础通信

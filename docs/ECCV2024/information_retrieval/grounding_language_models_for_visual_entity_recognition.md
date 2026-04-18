@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Grounding Language Models for Visual Entity Recognition
 description: >-
@@ -100,7 +100,7 @@ AutoVER = MLLM（基于 LLaVA/Vicuna）+ 多模态实体编码器 + 检索增强
 3. **对比+生成联合训练**兼顾检索精度和生成质量
 4. 硬负例挖掘策略（视觉+知识库双路）有效提升细粒度区分能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Entity unseen 子集准确率仍较低（21.7%），域外泛化仍是主要瓶颈
 - 实体数据库预缓存需要大量存储和 top-k 搜索开销

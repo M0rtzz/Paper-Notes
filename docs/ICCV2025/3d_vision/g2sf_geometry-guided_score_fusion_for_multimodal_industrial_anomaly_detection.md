@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] G2SF: Geometry-Guided Score Fusion for Multimodal Industrial Anomaly Detection
 description: >-
@@ -107,7 +107,7 @@ G2SF 采用冻结的 DINO（图像）和 Point-MAE（点云）提取特征，构
 - 完全保留原始特征信息（通过几何编码），不做特征压缩/自适应，是一个重要的设计选择
 - LSPN 结构简单但方向/位置双分支设计计算效率高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LSPN 作为 MLP 可能无法捕捉复杂的非线性方向依赖
 - 合成异常的质量和多样性可能限制 LSPN 的泛化能力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Fast Heuristic Search Approach for Energy-Optimal Profile Routing for Electric Vehicles
 description: >-
@@ -81,7 +81,7 @@ tags:
 3. **实用性强**：在1400万节点的真实路网上，profile搜索延迟仅百毫秒级，性能接近已知SoC的A*——意味着可以"免费"获得对所有SoC的规划结果
 4. **可扩展性好**：代码以C++实现，使用标准数据结构（二叉堆），易于集成到现有EV路径规划系统中
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **双向搜索不理想**：双向变体因路径匹配开销反而更慢，需要更高效的双向profile搜索策略
 2. **未结合预处理加速**：文中未使用Contraction Hierarchies等预处理技术，在超大规模网络上仍有加速空间
 3. **能量模型较简化**：仅考虑坡度和质量驱动的能耗，未建模交通状况、温度对电池、空调能耗等动态因素

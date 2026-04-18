@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlowMotion: Training-Free Flow Guidance for Video Motion Transfer
 description: >-
@@ -120,7 +120,7 @@ Latent prediction 引导仅比纯推理多 1.6 GB，而直接用 velocity 做引
 - **架构无关**：不依赖特定的 attention 结构或 U-Net/DiT 内部模块，已验证可泛化至 Wan2.1-1.3B 和 Wan2.2-5B
 - **Velocity regularization 设计精巧**：通过将速度分解为沿累积方向的投影和正交分量，衰减正交分量来抑制过对齐，思路简洁有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 运动表示仍是全局的 latent-level 对齐，缺乏对局部/区域运动的精细控制（如只迁移前景运动而保持背景自由）
 - 使用 latent prediction 作为运动表示会在一定程度上耦合外观信息，作者提到用干净 latent $z_0^{src}$ 替代可提升精度但会降低文本对齐和背景多样性——如何自适应平衡仍待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Hidden Attention of Mamba Models
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：Mamba模型在实践中表现优异，但其信息流动机制不透明——既不像传统SSM那样可以用固定卷积核解释（因为S6是时变/数据依赖的），也不像Transformer那样有显式的注意力权重可供分析。
 
-**本文要解决什么？** (1) 从理论上揭示Mamba的隐式注意力结构；(2) 基于此构建Mamba模型的可解释性工具；(3) 比较Mamba和Transformer在注意力机制上的异同。
+**本文目标** (1) 从理论上揭示Mamba的隐式注意力结构；(2) 基于此构建Mamba模型的可解释性工具；(3) 比较Mamba和Transformer在注意力机制上的异同。
 
 **切入角度**：作者观察到S6层是"数据控制的线性算子"（data-controlled linear operator），通过将时变递推公式展开为矩阵形式，可以得到一个输入依赖的下三角矩阵，其结构与因果自注意力矩阵高度类似。
 
-**核心idea一句话**：将S6层重新表述为 $y = \tilde{\alpha} x$ 的矩阵乘法形式，其中 $\tilde{\alpha}$ 是一个数据依赖的下三角矩阵，可以视为Mamba的"隐式注意力矩阵"。
+**核心 idea**：将S6层重新表述为 $y = \tilde{\alpha} x$ 的矩阵乘法形式，其中 $\tilde{\alpha}$ 是一个数据依赖的下三角矩阵，可以视为Mamba的"隐式注意力矩阵"。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ tags:
 - **隐式注意力矩阵数量惊人**：Mamba产生的注意力矩阵数量约为Transformer的 $DN/H \approx 100N$ 倍，但它们共享Q矩阵，仅通过K和H项区分。这种"大量轻量注意力矩阵"的结构或许是Mamba效率的关键
 - 论文同时提供了SSM模型注意力机制演化的理论分析（Theorem 5.1）：从S4（固定混合）→ GSS/Hyena（固定混合+对角数据控制）→ Selective SSM（数据控制非对角混合），揭示了"数据控制非对角混合器"是Mamba和Transformer共有的关键能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Mamba-Attribution的分割性能仍低于Transformer-Attribution，可能是因为直接从Transformer方法改编，未充分利用Mamba特有结构
 - 扰动实验中Mamba在负向扰动下一致低于Transformer，可能因为Mamba对patch遮挡更敏感，应尝试模糊而非删除的扰动方式

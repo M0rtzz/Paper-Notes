@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COLING-UniA at SciVQA 2025: Few-Shot Example Retrieval and Confidence-Informed Ensembling for Multimodal Large Language Models
 description: >-
@@ -146,7 +146,7 @@ $$\text{confidence} = \exp\left(\frac{1}{|T|}\sum_{t \in T} \log p(t)\right)$$
 3. **无需微调的竞争力**：证明了 MLLM 在科学图表理解上的强大 zero-shot 能力，暗示大量 chart-specific 微调可能不再必要
 4. **系统性的实验设计**：对所有配置组合进行了详尽评估，分析粒度细到每种问题类型 × 图表类型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **潜在数据泄露**：ACL-Fig 和 SciGraphQA 中的图像可能已在 MLLM 预训练中见过
 2. **不可回答问题评估偏差**：数据集中的不可回答问题有固定模式（多指模型无法获取的材料），可能不反映真实场景

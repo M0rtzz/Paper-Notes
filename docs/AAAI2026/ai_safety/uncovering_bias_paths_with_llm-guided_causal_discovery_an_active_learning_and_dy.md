@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncovering Bias Paths with LLM-guided Causal Discovery: An Active Learning and Dynamic Scoring Approach
 description: >-
@@ -147,7 +147,7 @@ Ground-truth: 2条直接路径（sex→income, race→income）、25条间接路
 - **跨规模泛化**：从15节点到221节点均保持最优F1，特别在大规模Neuropathic网络上LLM BFS完全失败时仍有效
 - **半合成基准**：为公平性敏感的CD评估提供了包含controlled ground-truth的可复现基准
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **Recall偏低**：保守策略导致Adult数据集Recall仅0.464，可能遗漏某些公平性相关的间接路径
 - **LLM依赖与可复现性**：基于GPT-4的推理存在随机性和版本差异，与Jiralerspong et al.的结果存在不一致，LLM-based CD的标准化评估协议仍缺失

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoPurify: A Data-Efficient Geometric Distillation Framework for Open-Vocabulary 3D Segmentation
 description: >-
@@ -123,7 +123,7 @@ InfoNCE 对比损失，温度 tau = 0.07，每场景 4096 锚点。
 - **类无关的几何先验**：学到的几何关联不依赖语义类别，跨数据集迁移极强
 - **数据选择策略**：基于 Shannon 熵的场景选择比随机选择更高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **mIoU vs mAcc 的权衡**：几何池化提升召回率但在边界处可能引起语义溢出
 2. **性能上界受 VLM 限制**：20 场景后即收敛，瓶颈在 VLM 语义质量

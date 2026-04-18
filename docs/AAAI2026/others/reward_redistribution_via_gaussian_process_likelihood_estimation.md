@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reward Redistribution via Gaussian Process Likelihood Estimation
 description: >-
@@ -163,7 +163,7 @@ GP-LRR 在所有四个环境中一致最优，在 HalfCheetah-v4 中优势尤为
 - **LOO 策略的巧妙设计**：在只有 episode 总回报的约束下，LOO 目标既利用了全部轨迹信息，又为 GP 似然提供了合理的"观测"数据。
 - **MSE 作为退化特例的证明**非常优雅：$\mathbf{K}_\phi = \mathbf{I}$（无相关性）$+ \sigma_\epsilon = 0$（无噪声）= 传统 MSE，清晰地解释了传统方法的不足。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算复杂度**：GP 训练的 $\mathcal{O}(M|\tau|^3)$ 复杂度限制了其在长轨迹任务上的应用。矩阵求逆虽可用 Cholesky 分解加速，但随轨迹长度增加仍是瓶颈。
 2. **实验规模有限**：仅在四个 MuJoCo 环境上测试，且作者承认并非所有环境都适合建模 state-action 相关性。缺乏对离散动作空间、高维观测空间的验证。

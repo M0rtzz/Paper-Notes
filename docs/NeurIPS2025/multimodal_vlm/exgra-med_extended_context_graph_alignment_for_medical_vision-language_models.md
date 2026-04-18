@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ExGra-Med: Extended Context Graph Alignment for Medical Vision-Language Models
 description: >-
@@ -130,7 +130,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{AR} + \alpha \cdot \mathcal{L}(\hat{V}_s, V
 3. **工程可行性高**：仅增加0.5h训练时间，且通过 IMLE 使组合优化可微，适用于大规模LLM训练
 4. **泛化性好**：扩展文本可用不同LLM生成（GPT-4/Gemini/Qwen），且 LoRA 微调下仍保持优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了 LLaVA 架构，未在 Flamingo 等其他架构上测试
 - 视觉编码器和LLM均非医学专用预训练，可探索使用 BiomedCLIP 等医学特化编码器
 - 扩展上下文依赖外部 LLM（GPT-4），存在幻觉风险（虽然用户研究显示质量可接受）

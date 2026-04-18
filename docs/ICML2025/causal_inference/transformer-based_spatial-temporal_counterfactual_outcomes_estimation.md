@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation
 description: >-
@@ -129,7 +129,7 @@ $$\mathcal{L} = -\sum_{i=1}^{|S|} \ln(\text{net}(s_i)) + \int_\Omega \text{net}(
 4. **鲁棒性好**：放松 Poisson 假设后性能不降，实用性强
 5. **真实实验有意义**：哥伦比亚冲突与森林损失的因果分析具有环境科学价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Poisson 点过程假设**：虽然消融实验表明放松后性能尚可，但更复杂的真实数据可能违反该假设（如聚集性点过程）
 2. **仅处理二值治疗**：每个位置治疗为 0/1，未推广到连续或多值治疗

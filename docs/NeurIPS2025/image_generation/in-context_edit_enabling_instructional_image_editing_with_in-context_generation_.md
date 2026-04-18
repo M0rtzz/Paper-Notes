@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ICEdit: Enabling Instructional Image Editing with In-Context Generation in Large Scale Diffusion Transformer
 description: >-
@@ -183,7 +183,7 @@ ICEdit（含推理缩放）VIE-Score 达到 **78.2**，超过商业模型 SeedEd
 4. **推理时缩放策略创新**：利用 rectified flow 模型"早期可判断"的特性，结合 VLM 评判，用极低计算代价（NFE=110 vs 350）获得接近全量搜索的效果。
 5. **MoE-LoRA 设计有效**：在注意力输出投影层引入多专家路由，用更少参数实现更好的多任务编辑能力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **物体移动失败**：涉及空间位置重定位的指令（如"把椅子移到角落"）效果差，源于训练数据中此类样本不足。
 2. **语义歧义**：T5 编码器的语义理解有限，难以处理多义词（如"mouse"既指鼠标又指老鼠），未来可整合 MLLM 模块提升语义保真度。

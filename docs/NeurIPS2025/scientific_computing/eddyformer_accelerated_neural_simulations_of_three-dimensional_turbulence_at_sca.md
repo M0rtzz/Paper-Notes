@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EddyFormer: Accelerated Neural Simulations of Three-Dimensional Turbulence at Scale
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：将 SEM（谱元法）作为 tokenization：粗元素作为 token，元素内用谱展开。序列长度仅为元素数 $N^3$，远小于总模态数 $N^3 M^3$。
 
-**核心 idea 一句话**：用谱元法做 tokenization + LES/SGS 双流架构，将湍流的多尺度特性显式建模到模型设计中。
+**核心 idea**：用谱元法做 tokenization + LES/SGS 双流架构，将湍流的多尺度特性显式建模到模型设计中。
 
 ## 方法详解
 
@@ -86,7 +86,7 @@ EddyFormer 将 PDE 初始条件用 SEM 插值，分成 LES stream（全局大尺
 - **SEM tokenization 非常巧妙**：把谱元法的粗元素作为 token，截断了 attention 输入规模
 - **域泛化**通过 attention masking 实现
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试各向同性湍流，各向异性、壁面紧围湍流未验证
 - 固定时间步长预测
 

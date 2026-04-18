@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Preconditioned Langevin Dynamics with Score-Based Generative Models for Infinite-Dimensional Linear Bayesian Inverse Problems
 description: >-
@@ -102,7 +102,7 @@ $$dX_t = S_\theta(X_t, \tau; \mu) dt + C\nabla_X \log \rho(y - AX_t) dt + \sqrt{
 - 误差分析的实用性：Theorem 3.1 给出了可验证的充分条件，让实践者判断给定分数近似是否能保证全局收敛
 - Proposition 2.1 的条件期望表示巧妙绕开了无穷维中密度不存在的问题，为后续分析奠定了坚实基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析依赖线性反问题假设和算子联合对角化假设，非线性反问题的最优预条件器推导仍是重要开放问题
 - 分数近似误差的结构假设（Assumption 1, 2）在实际深度学习模型中难以精确验证，需要发展更实用的误差估计方法
 - 仅展示了简单的验证性数值实验，缺乏真实高维成像反问题（如医学图像重建）的大规模定量比较

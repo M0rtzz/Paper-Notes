@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Learning–Based Estimation of Blood Glucose Levels from Multidirectional Scleral Blood Vessel Imaging
 description: >-
@@ -102,7 +102,7 @@ tags:
 - 从巩膜血管估计血糖是一个全新的临床应用场景。巩膜成像设备远比视网膜眼底相机便宜，且不需要散瞳，非常适合远程医疗和社区筛查。r=0.983的回归精度和Bland-Altman分析结果接近临床可用水平。
 - 多方向采集协议有坚实的生理学依据——微血管异常在空间上非均匀分布，消融实验验证了多视角的必要性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 单中心研究（445人，同一家医院），泛化性未经外部验证，设备和人群多样性不足
 - 混淆因素未充分控制：高血压、吸烟、贫血等也会影响巩膜血管形态

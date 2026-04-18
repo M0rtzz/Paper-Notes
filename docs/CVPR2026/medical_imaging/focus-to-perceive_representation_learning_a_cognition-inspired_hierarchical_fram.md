@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Focus-to-Perceive Representation Learning: A Cognition-Inspired Hierarchical Framework for Endoscopic Video Analysis
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{L}_{total} = \lambda_1 \mathcal{L}_{Rec} + \lambda_2 \mathcal{L}_{Ali
 3. **效率优势**：预训练时间仅 18.2h，比 EndoMamba（38.2h）少 52%，比 VideoMamba（55.4h）少 67%
 4. **TPAM 设计精巧**：将教师网络的全局先验与轻量注意力头的局部信息融合，使掩码学习具有自适应性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 单帧预训练变体因内窥镜常见伪影（运动模糊、光照闪烁、镜面反射）效果不佳
 - 未来可探索质量感知采样策略，避免低质量帧对训练的干扰

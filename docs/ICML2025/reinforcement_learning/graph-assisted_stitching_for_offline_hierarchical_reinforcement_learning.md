@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graph-Assisted Stitching for Offline Hierarchical Reinforcement Learning
 description: >-
@@ -120,7 +120,7 @@ $$\theta_{\text{TE}} = \cos\left(\psi(s_{\text{opt}}) - \psi(s_{\text{cur}}),\ \
 3. **统一的 $H_{\text{TD}}$ 参数**：一个超参数同时控制聚类间距、建边阈值、子目标采样距离和执行时的可达范围，保证了训练与测试的一致性
 4. **拼接能力极端场景验证**：在 antmaze-giant-stitch 这一需要拼接能力最强的任务上实现从 1.0 到 88.3 的突破
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **视觉环境性能仍有差距**：相比 state-based 环境，视觉环境整体性能偏低，作者承认缺乏针对高维视觉输入的表示学习
 2. **$H_{\text{TD}}$ 需要逐环境调优**：不同任务的最优 $H_{\text{TD}}$ 不同，缺乏自适应选择机制

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing the Comprehensibility of Text Explanations via Unsupervised Concept Discovery
 description: >-
@@ -122,7 +122,7 @@ ECO-Concept 由三个模块组成：
 - **可理解性的可操作化定义**：将"可理解性"操作化为"LLM 能否根据概念总结重建注意力分布"，这个定义既可量化又直觉合理
 - **不损害性能的可解释性**：打破了"可解释性必然牺牲精度"的常见假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **概念数量固定**：当前框架中概念数 M 不可在训练中自适应调整
 2. **依赖 API LLM**：使用 GPT-4o/4o-mini 评估概念，成本较高且受限于 API

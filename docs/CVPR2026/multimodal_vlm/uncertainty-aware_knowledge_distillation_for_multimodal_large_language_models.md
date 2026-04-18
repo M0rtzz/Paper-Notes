@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty-Aware Knowledge Distillation for Multimodal Large Language Models
 description: >-
@@ -97,7 +97,7 @@ $\min_{\theta,\phi} \mathcal{L}_{CE}(\theta) + g_\phi(h(x))\ell(\theta) - \frac{
 - 能量函数设计空间探索给出了有用的实践指南：Cosine-Probs最伺
 - 方法设计优雅，从理论推导到实现逻辑连贯
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实例级不确定性网络增加了参数和计算量
 - 实验主要基于MobileVLM，更大规模所师的验证较少
 - Laplace近似假设局部二次近似，在非凸损失上可能不够精确

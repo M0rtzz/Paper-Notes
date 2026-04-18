@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SEOE: A Scalable and Reliable Semantic Evaluation Framework for Open Domain Event Detection
 description: >-
@@ -143,7 +143,7 @@ SEOE 由两部分组成：**可扩展评估 benchmark** + **语义评估指标**
 4. **多版本发布有远见**：允许未来研究者根据需求选择偏向准确性或多样性的版本
 5. **定义分组模块的设计**：补偿了整合本体缺乏层级关系信息的不足
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 GPT-4o 的标注质量**：LLM 标注本身可能存在偏差，特别是对稀有或领域特定事件
 2. **英语为主**：benchmark 主要覆盖英语数据和事件本体，多语言场景未涉及

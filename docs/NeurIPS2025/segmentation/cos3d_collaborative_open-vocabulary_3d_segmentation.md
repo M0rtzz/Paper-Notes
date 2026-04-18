@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COS3D: Collaborative Open-Vocabulary 3D Segmentation
 description: >-
@@ -148,7 +148,7 @@ $$\mathcal{L}_{\text{ins}} = -\frac{1}{|\Omega|} \sum_{\Omega_j \in \Omega} \sum
 3. **Prompt 精炼策略巧妙**：将语言场的粗略相关性图作为 prompt 引导实例场做精细分割，类似 SAM 的 prompt 范式
 4. **边界质量显著提升**：定性结果显示分割物体边界更完整、伪影更少
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏推理能力**：文本对齐的语言场无法处理关系型query（如"桌子上面的杯子"）或多物体查询
 2. **离线设置**：当前框架需要完整的多视角图像集，未支持在线/增量场景

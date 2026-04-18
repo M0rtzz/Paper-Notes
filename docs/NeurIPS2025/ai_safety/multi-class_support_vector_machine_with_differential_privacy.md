@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Class Support Vector Machine with Differential Privacy
 description: >-
@@ -95,7 +95,7 @@ $$\hat{\mathbf{w}}_{t+1} = \hat{\mathbf{w}}_t - \eta_t \left\{ \frac{1}{n}\sum_{
 - **理论完备性**：从灵敏度分析、DP保证到收敛性和效用优势，提供了完整的理论链条
 - **实用性强**：方法可直接嫁接到已有的all-in-one SVM实现上，且兼容DP-SGD的各种改进技术（子采样、自适应优化等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Vehicle数据集上表现不佳，暴露出all-in-one SVM本身在某些数据上的基础性能不足
 - 仅考虑线性核，核化版本（如RBF核）的all-in-one DP-SVM值得探索

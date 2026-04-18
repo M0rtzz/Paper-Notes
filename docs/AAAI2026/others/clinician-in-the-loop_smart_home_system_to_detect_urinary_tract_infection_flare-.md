@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Clinician-in-the-Loop Smart Home System to Detect Urinary Tract Infection Flare-Ups via Uncertainty-Aware Decision Support
 description: >-
@@ -146,7 +146,7 @@ $$C(x_{\text{test}}) = \{p \in [0,1] \mid S(p, y'_{\text{test}}) \leq \hat{q}\}$
 3. **理论保证（共形预测的有限样本覆盖）与临床需求的对齐**：护士明确表示"如果有成功概率的证据会更放心使用"
 4. **从传感器到决策的完整闭环设计**：不仅检测，还通过SHAP解释为何模型给出此预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模极小**（117个样本，8个家庭），泛化性有待验证
 2. **假设数据可交换性**——时序数据可能违反此假设

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Representation Shift: Unifying Token Compression with FlashAttention
 description: >-
@@ -114,7 +114,7 @@ tags:
 - **模型无关性**: 不仅适用于 ViT，还可泛化到 CNN 和 SSM，是一种通用的 token 重要性度量。
 - **可视化直觉好**: 在 DeiT 中间层可视化 representation shift 时，能够自动捕获前景物体，类似显著性检测。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在视频任务中 UMT-B 的部分基准（MSVD、ActivityNet）上有一定性能下降，说明剪枝比例和层选择需要根据任务调整。
 - CNN 上的 token 剪枝由于卷积需要 2D 网格结构，只能采用行列级剪枝，灵活性不如 ViT。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-Correction is More than Refinement: A Learning Framework for Visual and Language Reasoning Tasks
 description: >-
@@ -127,7 +127,7 @@ $$\mathcal{L}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}[\log\sigma(\beta(\log\
 3. **类人学习行为**：VLM 类似于人类，能从"做对的事"和"做错的事"中同时学习
 4. **实用性强**：训练成本极低（单卡 1.5 小时），数据集完全自生成，无需外部标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 MCQ（多项选择题）上评估，未涉及开放式视觉问答、视频理解等更复杂任务
 2. SelfCorSet 中部分"成功纠正"可能是模型偶然猜对、推理过程仍有瑕疵（可靠性问题）

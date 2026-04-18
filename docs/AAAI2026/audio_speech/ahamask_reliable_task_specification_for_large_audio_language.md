@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AHAMask: Reliable Task Specification for Large Audio Language Models without Instructions
 description: >-
@@ -75,7 +75,7 @@ AHAMask 在 LALM 的 decoder-only LLM 骨干中，为每个注意力头引入一
 - 揭示了 LALM 中存在"声学功能通路"这一有趣的可解释性发现
 - 发现即使 base 模型（未做指令微调）也能通过 AHAMask 表现出甚至超越 instruct 模型的能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - ASR 任务的域外泛化仍有差距，单域训练的掩码可能捕获了过于细粒度的功能
 - 仅验证了 ASR+GR 的复合任务，更多任务组合（3+ 个任务）的可组合性未探索
 - 掩码的可组合性（布尔运算组合不同任务的掩码）仅做了初步探索

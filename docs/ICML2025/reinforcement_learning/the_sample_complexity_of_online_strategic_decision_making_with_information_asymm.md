@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Sample Complexity of Online Strategic Decision Making with Information Asymmetry and Knowledge Transportability
 description: >-
@@ -125,7 +125,7 @@ $$\tilde{O}\left(\sum_{h=1}^H B^2 d_{V,h} \tau_h C_h^f \log(|\mathcal{R} \times 
 - **丰富的实际动机**：合同设计（contract design）和实验设计（用 LLM 替代人类实验）案例生动展示模型的应用价值
 - **技术创新**：面对非 i.i.d. 数据，传统集中不等式失效，论文发展了新的快速鞅集中分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **需要已知目标分布 $\mathcal{P}^t$ 和反馈操纵分布 $F$**：这在实际中可能不易获得，虽然论文给出了合理性解释（如经济学中类型分布通常已知）
 - **纯理论贡献，无实验验证**：算法涉及优化置信集上的极大化等计算上可能 intractable 的步骤

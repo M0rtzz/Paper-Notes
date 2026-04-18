@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FADE: Frequency-Aware Diffusion Model Factorization for Video Editing
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 视频扩散模型（T2V）拥有丰富的时空先验知识，但其庞大的计算需求（数十个 transformer block 的 full-attention）使得将以往 T2I 编辑技术直接迁移变得不可行。
 
-**本文要解决什么**: 设计一种高效、灵活的视频编辑策略，能充分利用预训练 T2V 模型中的视频先验，支持外观和运动两类编辑。
+**本文目标**: 设计一种高效、灵活的视频编辑策略，能充分利用预训练 T2V 模型中的视频先验，支持外观和运动两类编辑。
 
 **切入角度**: 从频域视角分析 T2V 模型内部各 block 的功能分工，发现早期 block 负责勾勒低频空间布局和时间动态（sketching blocks），后期 block 精炼高频细节（sharpening blocks），基于此进行角色分解。
 
-**核心 idea 一句话**: 通过频率感知的 block 分解 + 频谱引导调制，只用少量 sketching blocks 提供低频结构引导，既降低计算开销，又释放了视频扩散先验的编辑潜力。
+**核心 idea**: 通过频率感知的 block 分解 + 频谱引导调制，只用少量 sketching blocks 提供低频结构引导，既降低计算开销，又释放了视频扩散先验的编辑潜力。
 
 ## 方法详解
 
@@ -54,17 +54,17 @@ tags:
 ### 关键设计
 
 **1. 频率感知的 T2V 模型分解（Frequency-Aware Factorization）**
-- **做什么**: 将 T2V 模型的 48 个 transformer block 分为 sketching blocks（前 4 层）和 sharpening blocks（后 44 层）。
+- **功能**: 将 T2V 模型的 48 个 transformer block 分为 sketching blocks（前 4 层）和 sharpening blocks（后 44 层）。
 - **核心思路**: 可视化分析发现 early blocks 的注意力图沿对角线密集对齐（主对角线=帧内空间结构，次对角线=帧间时间对应），spectrum 集中在低频，输出模糊——它们勾勒基础布局和运动。Late blocks 的注意力分布更稀疏均匀，处理高频纹理、颜色等细节。
 - **设计动机**: 利用这一功能分工，编辑时只需操作 sketching blocks 进行结构重建引导，sharpening blocks 自由生成细节，既高效（减少计算量）又灵活（不限制高频编辑）。
 
 **2. 频谱引导调制（Spectrum-Guided Modulation）**
-- **做什么**: 将 sketching blocks 的 attention 输出变换到频域，用低通滤波器提取低频成分，计算源视频与目标视频的低频差异作为引导信号。
+- **功能**: 将 sketching blocks 的 attention 输出变换到频域，用低通滤波器提取低频成分，计算源视频与目标视频的低频差异作为引导信号。
 - **核心思路**: 对 attention 输出 $\boldsymbol{F}_t$ 进行 3D DFT（空间 + 时间维度），得到 $\mathcal{F}_t$；低通滤波后计算频谱引导 $\mathcal{G}_t = \|\text{LP}(\mathcal{F}_t) - \text{LP}(\mathcal{F}_t^*)\|_2^2$；用 $\mathcal{G}_t$ 对 $\boldsymbol{z}_t$ 的梯度调制采样轨迹：$\boldsymbol{z}_{t-1} = \text{DDIM}(\boldsymbol{\epsilon}_\theta, \boldsymbol{z}_t, t, \boldsymbol{y}_{tgt}) - \lambda \text{Norm}(\nabla_{\boldsymbol{z}_t} \mathcal{G}_t)$。
 - **设计动机**: 在频域而非特征域进行引导，避免了直接注入 attention 特征导致的信息泄漏（源视频高频细节不当保留），仅保留低频结构（基础空间布局+时间运动），给高频细节留出编辑空间。
 
 **3. 双分支采样策略（Dual Branch Strategy）**
-- **做什么**: 在每个去噪步骤中，同时对源视频反转轨迹 $\boldsymbol{z}_t^*$ 和目标视频 $\boldsymbol{z}_t$ 运行 sketching blocks，使用相同的源提示 $\boldsymbol{y}_{src}$ 计算 attention 输出。
+- **功能**: 在每个去噪步骤中，同时对源视频反转轨迹 $\boldsymbol{z}_t^*$ 和目标视频 $\boldsymbol{z}_t$ 运行 sketching blocks，使用相同的源提示 $\boldsymbol{y}_{src}$ 计算 attention 输出。
 - **核心思路**: 源分支提供参考结构信息，目标分支使用编辑提示 $\boldsymbol{y}_{tgt}$ 进行完整去噪，两者的 sketching blocks 输出差异驱动频谱引导。
 - **设计动机**: 避免了 null-text optimization 的迭代开销，也不需要直接交换或混合 attention map，提供了更灵活的引导机制。
 
@@ -117,7 +117,7 @@ tags:
 - 同时支持外观和运动编辑的统一框架
 - 反直觉发现：使用更少的 block 做引导反而能获得更好的编辑效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 编辑性能依赖底层 T2V 模型的生成能力
 - 在严重遮挡场景下，需要高级时间推理能力，当前模型不足以应对

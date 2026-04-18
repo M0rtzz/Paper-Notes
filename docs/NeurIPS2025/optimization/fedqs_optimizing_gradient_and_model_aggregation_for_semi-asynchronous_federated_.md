@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedQS: Optimizing Gradient and Model Aggregation for Semi-Asynchronous Federated Learning
 description: >-
@@ -149,7 +149,7 @@ $$w_{i,e}^t = w_{i,e-1}^t - \eta_i^t \left[\sum_{r=1}^{e}(m_i^t)^r \nabla F_{i,e
 4. **极低额外开销**：客户端仅需额外一次相似度计算和两次比较，通信仅增加 1-bit 信号和几个浮点数
 5. **实验覆盖广**：CV（CIFAR-10）、NLP（Shakespeare）、真实世界（UCI Adult）三种任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 模型聚合模式下引入了少量振荡（oscillation）
 2. 引入了三个新超参数（$a, m_0, k$），增加了实现和复现难度

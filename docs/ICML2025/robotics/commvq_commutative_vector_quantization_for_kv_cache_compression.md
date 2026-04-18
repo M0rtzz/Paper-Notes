@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CommVQ: Commutative Vector Quantization for KV Cache Compression
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：逐标量量化在极低位宽下信息损失太大，需要向量级量化来保留更多信息。
 
-**本文要解决什么**：高效的向量级 KV cache 压缩。
+**本文目标**：高效的向量级 KV cache 压缩。
 
 **切入角度**：将每个 token 的 key/value 向量作为整体进行可加向量量化，减少量化误差。
 
@@ -99,7 +99,7 @@ LLaMA-3.1 8B 长上下文基准：
 - 从逐标量到向量级量化的范式转变在极低位宽下尤其关键
 - 1-bit KV cache 使长上下文 LLM 在消费级 GPU 上可用，实用意义巨大
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 码本训练需要校准数据
 - RoPE 可交换性要求特定码本结构，可能限制表达能力
 - 仅测试 LLaMA 系列模型

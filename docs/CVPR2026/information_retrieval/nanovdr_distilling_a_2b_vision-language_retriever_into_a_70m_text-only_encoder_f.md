@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NanoVDR: Distilling a 2B Vision-Language Retriever into a 70M Text-Only Encoder for Visual Document Retrieval
 description: >-
@@ -128,7 +128,7 @@ NanoVDR-S-Multi（69M）在 v2/v3 上超过 DSE-Qwen2（2B）和 ColPali（3B）
 - **跨语言 vs 跨模态瓶颈分析**：通过精心设计的控制实验（同语料不同语言查询），证明瓶颈在语言而非模态——这对多模态压缩研究有普遍指导意义
 - **13 GPU 小时的训练成本**：与动辄数百小时的 VLM 训练相比，极具实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 学生性能上限被教师模型限定，无法超越教师
 - 离线文档索引仍需完整 2B VLM，索引端成本未降低；教师压缩或渐进式索引是未来方向

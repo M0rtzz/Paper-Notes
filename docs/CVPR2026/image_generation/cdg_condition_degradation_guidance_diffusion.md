@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Guiding Diffusion Models with Semantically Degraded Conditions (CDG)
 description: >-
@@ -116,7 +116,7 @@ GenAI-Bench 组合推理（SD3.5）：CDG 在 Differentiation 上提升 +3.64，
 - 通过共模抑制效应的类比优雅解释了 CDG 的工作原理
 - 即插即用、零训练、近零开销，实用价值极高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CDG 在已使用引导蒸馏的模型（如 FLUX）上改进较小
 - $R_{\text{deg}}$ 虽然默认 1.0 效果好，但不同任务/风格可能需要微调

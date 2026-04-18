@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bigram Subnetworks: Mapping to Next Tokens in Transformer Language Models
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：Bigram预测 $P(w_i|w_{i-1})$ 是最简单的非平凡next-token预测，在整个输入空间上有定义。如果能找到实现bigram预测的子网络，它就是研究更复杂电路的理想基础。
 
-**核心idea一句话**：用连续稀疏化在冻结的LLM中搜索mask，找到仅占0.17%参数但能达到r=0.96 bigram相关的子网络，主要集中在第一个MLP层。
+**核心 idea**：用连续稀疏化在冻结的LLM中搜索mask，找到仅占0.17%参数但能达到r=0.96 bigram相关的子网络，主要集中在第一个MLP层。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **10M参数的普适常数**很有趣：暗示bigram预测的信息论复杂度约为10M参数，与模型规模无关
 - **第一层MLP的特殊角色**得到了精确量化：它不只是任意的初始处理，而是承担了从"我是什么token"到"下一个是什么token"的关键空间旋转
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试到1B规模——7B/70B模型中bigram子网络是否仍为~10M参数？
 - 连续稀疏化可能找不到全局最优mask——不同初始化可能得到不同子网络
 - 只研究了bigram（1-gram上下文）——能否推广到trigram、4-gram子网络？它们如何叠加？

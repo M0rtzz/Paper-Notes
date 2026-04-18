@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Information Processing of One-Dimensional Wasserstein Distances with Finite Samples
 description: >-
@@ -138,7 +138,7 @@ Wasserstein距离嵌入的径向排序与已知疏水性排序的相关性显著
 - **Isomap嵌入实验设计巧妙**：通过在人类神经脉冲数据上的嵌入可视化，直观展示了Wasserstein距离如何在同一空间中同时编码时间平移和速率变化
 - **氨基酸实验的生物学意义**：CYS（最强疏水性氨基酸）在Wasserstein嵌入中位于最外缘，而在KL嵌入中位置偏内，说明Wasserstein距离更好地捕获了长程接触导致的速率差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限一维分析**：虽然讨论了向Sliced Wasserstein距离的扩展，但核心理论推导严格限于一维情形
 2. **Poisson假设较强**：实际数据（如神经脉冲）并不完全符合Poisson假设，虽然实验表明结论在非Poisson设定下仍有效，但缺乏理论保证

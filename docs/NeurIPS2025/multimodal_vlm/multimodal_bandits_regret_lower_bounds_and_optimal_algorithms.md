@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multimodal Bandits: Regret Lower Bounds and Optimal Algorithms
 description: >-
@@ -42,7 +42,7 @@ tags:
 
 Graves-Lai 优化问题提供了信息论层面的遗憾下界和最优探索策略，但多模态情况下其约束集结构极其复杂，无法高效求解。没有可行的求解算法，就无法实现渐近最优的赌博机策略。
 
-### 4. 本文要解决什么
+### 4. 本文目标
 
 设计首个**计算可行**的算法来求解多模态赌博机的 Graves-Lai 优化问题，从而实现渐近最优的在线决策。
 
@@ -50,7 +50,7 @@ Graves-Lai 优化问题提供了信息论层面的遗憾下界和最优探索策
 
 通过系列子问题分解、极值位置的结构性质（Proposition 6）、离散化近似（Proposition 7）和动态规划（Proposition 8）逐步化解非凸约束的计算难题，最终用惩罚次梯度下降求解原问题。
 
-### 6. 核心 idea 一句话
+### 6. 核心 idea
 
 利用"混淆参数的极值必然在原始极值集合 $\mathcal{M}(\boldsymbol{\mu}) \cup \{k\}$ 中"这一关键结构性质，将指数级复杂度的搜索转化为树上的多项式时间动态规划。
 
@@ -68,7 +68,7 @@ Graves-Lai 优化问题提供了信息论层面的遗憾下界和最优探索策
 
 #### 模块1：约束集分解与简化
 
-**做什么**：将复杂非凸约束分解为可求解的子问题。
+**功能**：将复杂非凸约束分解为可求解的子问题。
 
 **核心思路**：
 
@@ -83,7 +83,7 @@ $$\inf_{\boldsymbol{\lambda} \in \mathcal{B}_k(m, \boldsymbol{\mu})} \boldsymbol
 
 #### 模块2：极值位置结构定理
 
-**做什么**：确定最优混淆参数的极值位置。
+**功能**：确定最优混淆参数的极值位置。
 
 **Proposition 6（关键结构结果）**：
 $$\mathcal{M}(\boldsymbol{\lambda}^\star) \subset \mathcal{M}(\boldsymbol{\mu}) \cup \{k\}$$
@@ -96,7 +96,7 @@ $$\mathcal{M}(\boldsymbol{\lambda}^\star) \subset \mathcal{M}(\boldsymbol{\mu}) 
 
 #### 模块3：离散化与动态规划
 
-**做什么**：在离散化空间上用 DP 精确求解子问题。
+**功能**：在离散化空间上用 DP 精确求解子问题。
 
 **Proposition 7（离散化精度保证）**：
 $$\boldsymbol{\eta}^\top d(\boldsymbol{\mu}, \tilde{\boldsymbol{\lambda}}) - \frac{\mathfrak{C}(\boldsymbol{\mu})}{n} \leq \min_{\boldsymbol{\lambda} \in \mathcal{B}_{k,k'}} \boldsymbol{\eta}^\top d(\boldsymbol{\mu}, \boldsymbol{\lambda}) \leq \boldsymbol{\eta}^\top d(\boldsymbol{\mu}, \tilde{\boldsymbol{\lambda}})$$
@@ -112,7 +112,7 @@ $$f_\ell(z, u) = \text{min obtainable value of } \sum_{j \in \mathcal{D}(\ell) \
 
 #### 模块4：惩罚次梯度下降
 
-**做什么**：求解原始 Graves-Lai 优化问题。
+**功能**：求解原始 Graves-Lai 优化问题。
 
 **核心思路**：将硬约束转为惩罚：
 $$h(\boldsymbol{\eta}) = \boldsymbol{\eta}^\top \boldsymbol{\Delta} + \gamma \max\left[1 - \min_{\boldsymbol{\lambda}} \boldsymbol{\eta}^\top d(\boldsymbol{\mu}, \boldsymbol{\lambda}), 0\right]$$
@@ -171,7 +171,7 @@ $$\sup_{\boldsymbol{\mu} \in \mathcal{F}_m} \frac{C_{loc}(m, \boldsymbol{\mu})}{
 5. **$\kappa$-peaked 概念**：为判断局部策略何时"足够好"提供了量化标准
 6. **理论与算法紧密结合**：不仅给出界，还给出可实现的算法并做实验验证
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 仅考虑**树图**结构，一般图上的多模态赌博机尚未解决
 2. 算法复杂度 $O(K^2 mnt)$ 对大规模问题（$K$ 很大）可能仍然昂贵

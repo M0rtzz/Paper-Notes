@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Bias in Generative Data Augmentation for Medical AI: a Frequency Recalibration Approach
 description: >-
@@ -111,7 +111,7 @@ $$\min_{\mathcal{A}} \mathcal{L} = \underbrace{\|x_i^R - \mathcal{A}(\hat{x}_i^R
 - **SHR 的统计替换策略巧妙**：不做一对一替换而用 Top-K 统计采样，既保证了分布级对齐又引入了合理的随机性。
 - **联合训练/推理中统一 FreRec 处理的建议切合实际**：由于自编码器不完美，对真实和合成图像统一处理可消除残余差异。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了分类任务，未涉及分割、检测等更复杂的下游任务，频率校准对这些任务的影响未知。
 - 彩色医学图像（如眼底照片）的校准效果不如灰度图像，说明方法对高维像素信息的处理能力有限。

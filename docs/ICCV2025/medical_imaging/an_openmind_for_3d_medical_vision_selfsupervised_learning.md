@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An OpenMind for 3D Medical Vision Self-supervised Learning
 description: >-
@@ -133,7 +133,7 @@ tags:
 5. **完整开源生态**：数据集、代码框架、所有checkpoint、集成nnU-Net，极具实用价值
 6. **数据质量元数据**（IQS）首次探索data-centric方法在3D医学SSL中的可行性
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅限脑MRI**：预训练数据全部是头颈部MRI，对CT、胸腹部等场景迁移效果待验证
 2. **分类实验不够可靠**：分类pipeline不如nnU-Net成熟，部分数据集接近随机（ABI~50% balanced accuracy）
 3. **数据过滤效果有限**：简单IQS过滤仅带来微弱提升，data-centric方法潜力未充分挖掘

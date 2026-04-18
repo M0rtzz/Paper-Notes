@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unsupervised Visual Chain-of-Thought Reasoning via Preference Optimization
 description: >-
@@ -100,7 +100,7 @@ UV-CoT在推理时模拟人类感知过程：给定原图和问题，先通过Co
 - 迭代学习+自动数据生成构成了"自我改进循环"，体现了online learning的精神
 - 评估时考虑当前+下一步影响的设计（$\gamma$参数）类似于强化学习中的时序差分思想
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前每步仅生成一个bounding box，多步推理的链长度和分支数受限
 - 数据生成需要80小时+训练60小时，效率可进一步提升

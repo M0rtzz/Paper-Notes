@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Make Your Training Flexible: Towards Deployment-Efficient Video Models
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：如何用一个模型同时满足不同计算预算的部署需求？简单降帧/降分辨率不是最优——同样的token数量下，应该选择信息最大化的token集合。
 
-**本文要解决什么？** 提出Token Optimization范式——在给定token预算下，从更好地采样的视频中选择最优token集合，使信息最大化。
+**本文目标** 提出Token Optimization范式——在给定token预算下，从更好地采样的视频中选择最优token集合，使信息最大化。
 
 **切入角度**：将灵活采样和token选择结合作为训练时的数据增强，使模型天然适应各种分辨率和token数量。同时提出Token Optimization的test-time策略来找到最优的采样-选择组合。
 
-**核心idea一句话**：用灵活采样+组动态token选择作为无成本的训练增强，使视频模型在各种计算预算下都能通过Token Optimization找到最优token集达到最佳性能。
+**核心 idea**：用灵活采样+组动态token选择作为无成本的训练增强，使视频模型在各种计算预算下都能通过Token Optimization找到最优token集达到最佳性能。
 
 ## 方法详解
 
@@ -125,7 +125,7 @@ tags:
 - **组动态选择器设计精巧**：分组确保时间覆盖，只选帧间变化大的token。简单但非常有效——既保证了信息量又避免了对快速运动的过拟合
 - **与LLM集成验证**：在chat-centric设置下的验证为Flux在MLLM中的应用打开了大门
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Token Optimization的最优配置搜索有一定开销（需在验证集上测试多种配置）
 - 灵活采样增加了数据预处理复杂度（需要支持多分辨率）
 - 当前使用InternVideo2-1B作为teacher，teacher质量限制了学生模型的上界

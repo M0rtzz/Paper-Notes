@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Losses Reweighting: Empowering Multi-Task Learning via the Generalization Perspective
 description: >-
@@ -123,7 +123,7 @@ CityScapes 上不同聚合策略的对比：
 - **理论贡献**：使用更一般的 PAC-Bayesian 界（支持有界损失而非仅 0-1 损失），不是 SAM 理论的简单推广
 - **模型无关性**：可以作为插件增强任何梯度式 MTL 方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 计算量约为基线方法的 2 倍（需在扰动后参数处额外做一次前向-反向传播）
 - 理论分析中对共享扰动的放松（从共用 $\epsilon_{sh}$ 到每任务独立 $\epsilon_{sh}^i$）可能不够紧

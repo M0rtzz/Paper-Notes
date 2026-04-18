@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RATE-Nav: Region-Aware Termination Enhancement for Zero-shot Object Navigation with Vision-Language Models
 description: >-
@@ -159,7 +159,7 @@ RATE-Nav 是一个零样本方法，不需要训练。使用：
 - **VLM 作为"区域评估器"的新角色**：不同于以往将 VLM 用于目标定位或路径规划，这里 VLM 用于判断"这个区域还值不值得继续探索"——更宏观的决策角色。
 - **case study 展示了 VLM 推理质量**：对于"床"目标，VLM 仅用 3 张客厅图片就能判断不存在；对于"椅子"，需要更多图片因为椅子在客厅出现概率较高——这种常识推理令人印象深刻。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **VLM 的空间描述受限于固定区域**：VLM 更自然的空间描述（如"前方"、"右转"）无法直接映射到区域级分割中。
 2. **仅在 Habitat 模拟器中验证**：未在真实世界机器人上测试，sim-to-real 差距可能显著。

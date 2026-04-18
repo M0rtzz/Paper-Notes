@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoLucy: Deep Memory Backtracking for Long Video Understanding
 description: >-
@@ -114,7 +114,7 @@ VideoLucy是一个无需额外训练的推理时Agent系统，直接利用现成
 - 提出EgoMem基准填补了超长视频（平均6.33小时）理解评测的空白
 - 迭代回溯机制提供了可解释的推理过程，增强了用户信任
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 迭代回溯的计算成本较高（每次迭代需要多次MLLM和LLM调用）
 - 最大迭代次数是固定的硬限制，更智能的停止条件有待研究

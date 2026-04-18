@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MapReduce LoRA: Advancing the Pareto Front in Multi-Preference Optimization for Generative Models
 description: >-
@@ -117,7 +117,7 @@ RaTE 提供了一种轻量级的推理时控制机制：
 - **推理时可控**：RaTE 提供了轻量级的推理时偏好调控，用户可以根据需求灵活调整各维度权重
 - **理论扎实**：progressive souping 的收敛性有严格的数学证明，不是纯经验的方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **LoRA 专家数量扩展性**：当偏好维度 $K$ 很大时，Map 阶段的计算和存储成本线性增长，需要探索更高效的专家共享机制
 2. **奖励模型质量的依赖**：方法的上限受限于奖励模型的质量，如果奖励模型本身有偏差，Pareto 前沿也会偏移
 3. **迭代合并的额外开销**：虽然每轮迭代可并行，但多轮迭代总计算量仍然不小（每轮都需要重新微调所有专家）

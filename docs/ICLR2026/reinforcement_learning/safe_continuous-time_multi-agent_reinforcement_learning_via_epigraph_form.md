@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safe Continuous-time Multi-Agent Reinforcement Learning via Epigraph Form
 description: >-
@@ -107,7 +107,7 @@ Critic总损失：$\mathcal{L}_{\text{Critic}} = \lambda_{\text{res}}\mathcal{L}
 - **$z^*$ 直接优化**：消除了先前方法的噪声源和执行时开销
 - **理论保证**（Theorem 3.3）：证明了epigraph HJB PDE的粘性解的存在唯一性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要学习动力学和代价网络（$f_\xi, l_\phi$），增加了模型复杂度
 - 值函数损失权重 $(\lambda_{\text{res}}, \lambda_{\text{tgt}}, \lambda_{\text{vgi}})$ 通过网格搜索确定，可考虑自适应方案

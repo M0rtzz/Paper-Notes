@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Medical Dialogue Generation through Knowledge Refinement and Dynamic Prompt Adjustment
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: 从知识图谱检索的实体存在大量噪声，且同一 Prompt 模板难以适配不同患者的多样化就诊情况。
 
-**本文要解决什么**: (1) 精炼检索到的知识以获得更准确的响应指导；(2) 动态调整系统 Prompt 以适配特定患者条件。
+**本文目标**: (1) 精炼检索到的知识以获得更准确的响应指导；(2) 动态调整系统 Prompt 以适配特定患者条件。
 
 **切入角度**: 引入隐变量建模进行知识精炼（过滤无关三元组），结合实体-行为联合预测，然后通过 Triplet Filter 和 Demo Selector 动态构建多组件 Prompt。
 
-**核心idea一句话**: 用 VAE 风格的隐变量精炼知识图谱检索结果，再通过动态调整 Prompt 的知识三元组和示例对话来提升医学对话的实体准确性和生成质量。
+**核心 idea**: 用 VAE 风格的隐变量精炼知识图谱检索结果，再通过动态调整 Prompt 的知识三元组和示例对话来提升医学对话的实体准确性和生成质量。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ MedRef 在 MedDG 上全面领先：比 GPT-4o 在 ROUGE-1 上高 **16.08%**，En
 - **Triplet Filter 的频率迭代过滤**简单有效——高频实体往往更核心，通过递增阈值自然筛选
 - **Demo Selector 的三步对齐**（实体→相似度→跨度）既保证了语义相关性，又控制了 Prompt 长度
 
-## 局限性/可改进方向
+## 局限与展望
 
 - MedRef 在 KaMed 上的 BLEU 分数略低于 HuatuoGPT-II 和 GPT-4o，作者解释为 KaMed 跨 100+ 科室太复杂，但也说明方法在超大知识范围时的局限
 - 知识图谱依赖 CMeKG（中文医学知识图谱），英文场景迁移需要替换知识源

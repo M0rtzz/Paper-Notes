@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] State-offset Tuning: State-based Parameter-Efficient Fine-Tuning for State Space Models
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：SSM 的循环结构使得 prompt-based 方法的影响随时间衰减，而 Transformer 的 Prefix-Tuning 在每层每步都有直接影响
 
-**本文要解决什么？** 为 SSM 设计利用其架构特性的 PEFT 方法
+**本文目标** 为 SSM 设计利用其架构特性的 PEFT 方法
 
 **切入角度**：直接修改 SSM 的隐藏状态（state），而非通过外部 prompt 间接影响
 
-**核心idea一句话**：在每个时间步直接给隐状态加一个可训练偏移 $h'$，消除了 Prefix-Tuning 的时间衰减问题
+**核心 idea**：在每个时间步直接给隐状态加一个可训练偏移 $h'$，消除了 Prefix-Tuning 的时间衰减问题
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ State-offset 用远少于 LoRA 的参数达到了更好的效果。
 - **理论分析清晰**：Prefix-Tuning 等价于 Initial State Tuning 的证明简洁有力，直接解释了为什么它在 SSM 上不行
 - **极简设计**：State-offset 每层只增加 $D \times H$ 个参数（$h'$），可能是 SSM 上最参数高效的 PEFT 方法之一
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在 Mamba 上验证**：其他 SSM 变体（RWKV、RetNet）的适用性未测试
 - **偏移量与位置无关**：在所有时间步用相同 $h'$，可能限制了对位置敏感任务的适应
 - **可与 LoRA 组合**：State-offset 用于 SSM 模块 + LoRA 用于线性层可能效果更好

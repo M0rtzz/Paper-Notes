@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Seeing Justice Clearly: Handwritten Legal Document Translation with OCR and Vision-Language Models
 description: >-
@@ -110,7 +110,7 @@ tags:
 4. **数据集贡献**: 构建了高质量的手写马拉地语法律文档数据集，经母语者翻译和法律专家审校
 5. **未来方向指引**: 提出混合 OCR-vLLM 流水线、领域特定微调、提示工程等具体研究方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模小**: 仅约60份文档，不足以支撑大规模定量评估
 2. **缺乏自动评测指标**: 翻译质量主要依赖人工评估，可重复性有限

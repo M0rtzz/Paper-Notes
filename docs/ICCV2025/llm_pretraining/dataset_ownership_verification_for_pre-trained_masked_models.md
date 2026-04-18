@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dataset Ownership Verification for Pre-trained Masked Models
 description: >-
@@ -118,7 +118,7 @@ $$\Delta\mathcal{R} = \{\overline{R'}_k - \overline{R}_k | k \in [1, K]\}$$
 4. **统计严谨**：基于配对 t 检验的假设检验框架提供了严格的统计保证，而非简单的阈值判断；
 5. **跨模态通用**：同时适用于视觉掩码模型（MAE、BEiT 等）和语言掩码模型（BERT 等）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要一个与可疑模型数据域无关的私有数据集 $\mathcal{D}_{pvt}$，若私有数据与公开数据过于相似，可能降低检测灵敏度；
 - Swin-B/L 的 p 值（0.03）接近 0.05 阈值，对某些架构的鲁棒性有待提升；

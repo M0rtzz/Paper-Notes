@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ad-hoc Concept Forming in the Game Codenames as a Means for Evaluating Large Language Models
 description: >-
@@ -103,7 +103,7 @@ tags:
 - **案例分析精彩**：展示o3-mini在抽象词游戏中目标9个词但暴露4个对手词导致失败的完整过程
 - **推理模型的优势与代价**：Deepseek-r1在策略上最激进但延迟111秒/查询(vs GPT-4o的0.81秒)
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅英文，多语言扩展有待进行
 - 未深入分析模型生成线索的内部推理过程

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Looking in the Mirror: A Faithful Counterfactual Explanation Method for Interpreting Deep Image Classification Models
 description: >-
@@ -119,7 +119,7 @@ Mirror-CFE 在所有数据集上同时达到最优或次优的接近性（L1/LPI
 - **三角测量损失**巧妙解决了 CFE 中的对抗样本问题，通过维持潜-像空间的距离比约束实现。
 - **SSC 模块**在保持忠实性（不微调分类器）的前提下解决了高分辨率生成的模糊问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅验证在全连接分类层的线性决策边界上；对于非线性决策边界（如深层特征空间中的非线性分类头）需要扩展。
 - 高分辨率数据集（如 CelebA-HQ 224×224）上的效果依赖 SSC 模块的设计，更大分辨率可能需要更精细的架构。

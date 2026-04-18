@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoHandICL: Egocentric 3D Hand Reconstruction with In-Context Learning
 description: >-
@@ -162,7 +162,7 @@ $$\mathcal{L} = \lambda_m \mathcal{L}_{mano} + \lambda_v \mathcal{L}_V + \lambda
 3. **MAE+ICL的结合设计精巧**：训练时部分掩码模拟推理时的信息缺失，为视觉ICL提供了通用范式
 4. **实用性强**：可作为插件增强现有手部重建方法（10-31%提升），且可提升EgoVLM的推理能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 每个查询仅检索一个模板，多模板ICL是否能进一步提升有待验证
 2. 需要VLM（72B参数）做检索预处理，数据预处理需4块A100，推理部署成本高

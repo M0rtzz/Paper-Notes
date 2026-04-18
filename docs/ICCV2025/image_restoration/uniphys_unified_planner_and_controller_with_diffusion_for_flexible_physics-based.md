@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control
 description: >-
@@ -49,26 +49,26 @@ UniPhys 的核心流程：
 
 1. **行为表示与统一建模**:
 
-    - **做什么**：将运动状态和动作编码到统一的行为序列中，用扩散模型同时预测未来状态和动作。
+    - **功能**：将运动状态和动作编码到统一的行为序列中，用扩散模型同时预测未来状态和动作。
     - **核心思路**：行为序列 $\mathbf{X} = \mathbf{x}_{1:T}$，其中 $\mathbf{x}_t = (\mathbf{s}^c_t, \mathbf{z}_t)$ 包含标准化状态（根轨迹、关节位置/速度/旋转等，共 398 维）和隐动作嵌入 $\mathbf{z}_t \in \mathbb{R}^{32}$。使用 PULSE 编码器将高维动作空间压缩到 32 维隐空间。
     - **设计动机**：直接建模高维动作空间困难，利用 PULSE 的正则化隐空间可以更高效地学习动作分布。同时预测状态使模型具备规划能力。
 
 2. **Diffusion Forcing 训练范式**:
 
-    - **做什么**：序列中每帧独立采样不同的噪声水平，而非传统扩散模型的全序列统一噪声。
+    - **功能**：序列中每帧独立采样不同的噪声水平，而非传统扩散模型的全序列统一噪声。
     - **核心思路**：训练时，序列 $\mathbf{X}^0$ 被腐蚀为 $\mathbf{X}^{\mathbf{k}} = (\mathbf{x}_1^{k_1}, \mathbf{x}_2^{k_2}, \cdots \mathbf{x}_T^{k_T})$，其中 $k_1, k_2, ..., k_T$ 独立随机采样。训练目标：
     $\mathcal{L}(\theta) = \mathbb{E}_{\mathbf{k}, \mathbf{X}^0}\left[\|\mathbf{X}^0 - \mathcal{M}_\theta(\mathbf{X}^{\mathbf{k}}, \mathbf{k}, \mathbf{c})\|^2\right]$
     - **设计动机**：传统自回归模型假设历史是完全干净的，但实际中历史预测包含误差，物理仿真器也会引入偏差。Diffusion Forcing 让模型学会从含不同噪声水平的历史中去噪生成，天然适应累积误差场景。
 
 3. **稳定化技巧**:
 
-    - **做什么**：在推理时，将已完全去噪帧的噪声指示器设为大于零的值 $n$，而非实际添加噪声。
+    - **功能**：在推理时，将已完全去噪帧的噪声指示器设为大于零的值 $n$，而非实际添加噪声。
     - **核心思路**：告诉模型过去的预测"略有噪声"（即使实际已完全去噪），防止模型过度自信地信任之前的预测。
     - **设计动机**：行为克隆中的分布漂移问题——如果模型观察到从未见过的状态（由累积误差导致），直接给予完全信任会加速发散。这个简单的技巧有效抑制了长程自回归生成中的不稳定性。
 
 4. **引导采样实现灵活控制**:
 
-    - **做什么**：通过文本条件和损失函数引导，在不重新训练的情况下适应多种控制任务。
+    - **功能**：通过文本条件和损失函数引导，在不重新训练的情况下适应多种控制任务。
     - **核心思路**：
         - **文本条件采样 (CFG)**：$\hat{\mathbf{X}}^0_c = \mathcal{M}_\theta(\mathbf{X}^{\mathbf{k}}, \mathbf{k}, \emptyset) + \lambda_c(\mathcal{M}_\theta(\mathbf{X}^{\mathbf{k}}, \mathbf{k}, \mathbf{c}) - \mathcal{M}_\theta(\mathbf{X}^{\mathbf{k}}, \mathbf{k}, \emptyset))$
         - **损失引导采样 (MCG)**：$\hat{\mathbf{X}}^0_l = \mathcal{M}_\theta(\mathbf{X}^{\mathbf{k}}, \mathbf{k}, \mathbf{c}) - \lambda_l \nabla_{\mathbf{X}^{\mathbf{k}}} \mathcal{G}(\hat{\mathbf{X}}^0)$
@@ -124,7 +124,7 @@ UniPhys 的核心流程：
 - **灵活的推理时配置**：同一模型通过调整去噪调度和引导强度即可适应不同任务，体现了扩散模型的灵活性
 - **数据集贡献**：构建并计划公开大规模物理角色状态-动作数据集，填补领域空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练仅用 BABEL 子集（4,875 序列），动作多样性受限
 - 推理时 MCG 需要多次采样估计梯度，计算代价较高

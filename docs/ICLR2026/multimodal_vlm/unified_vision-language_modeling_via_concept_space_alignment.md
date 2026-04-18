@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unified Vision-Language Modeling via Concept Space Alignment
 description: >-
@@ -99,7 +99,7 @@ tags:
 - LCM零样本视觉理解能力令人印象深刻，验证了共享嵌入空间的跨模态迁移潜力
 - 多语言能力是天然优势：Sonar原生支持1500种语言，v-LCM自动继承
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Dream-1k检索v-Sonar不如原始PE（63.3 vs 72.1），说明对齐可能损失某些特征
 - Vatex短字幕场景表现不及InternVL，受训练数据偏向详细字幕影响

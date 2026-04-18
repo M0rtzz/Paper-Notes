@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VDRP: Visual Diversity and Region-aware Prompt Learning for Zero-shot HOI Detection
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **Sparsemax for 概念检索**：相比 Softmax，Sparsemax 能给不相关概念精确的零权重，避免噪声干扰
 - **定量分析驱动设计**：先通过 diversity score 和 t-SNE 定量分析问题，再针对性设计方案，方法论值得学习
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 区域概念依赖 LLM 生成，概念质量受 LLM 能力限制
 - 组级方差的"相近动词组"定义依赖 CLIP 文本嵌入相似度，可能引入偏差
 - 仅在 HICO-DET 上评估，缺乏 V-COCO 等其他 HOI 基准验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attention Gathers, MLPs Compose: A Causal Analysis of an Action-Outcome Circuit in VideoViT
 description: >-
@@ -105,7 +105,7 @@ $$\text{Recovery}(\%) = \frac{\|\Delta_{patch}\|}{\|\Delta_{strike}\|} \cdot \te
 4. **方法论贡献**：展示了 delta analysis + activation patching 的组合方法，从信号定位到因果归因的完整分析流程
 5. **线性探针的失败案例**分析很有教育意义——100% 准确率反而说明探针在捕获表面特征，强调了因果干预方法的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **样本规模极小**：仅使用一对对比视频（strike vs. gutter），无法确认发现的电路是否推广到更多样本或更多动作类别
 - **单一架构**：仅在 ViViT-B 上验证，未测试 TimeSformer 等其他视频 Transformer

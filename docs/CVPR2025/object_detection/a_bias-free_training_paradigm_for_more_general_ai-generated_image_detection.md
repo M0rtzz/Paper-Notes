@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Bias-Free Training Paradigm for More General AI-generated Image Detection
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **自条件生成的优雅性**：利用扩散模型本身来构造训练数据——"用相同的模型家族制造假图来训练检测器"，自然保证语义对齐
 - **Inpainting增强的启发**：不只是简单数据增强，而是通过局部编辑模拟真实世界中的部分篡改场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅用SD2.1一种扩散模型生成训练假图，可能对非扩散架构（GAN等）泛化略弱
 - 对WildRF中Reddit来源（经过重度社交平台压缩）的检测仍有下降空间

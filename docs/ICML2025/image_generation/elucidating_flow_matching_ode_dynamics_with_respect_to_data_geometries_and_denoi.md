@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Elucidating Flow Matching ODE Dynamics via Data Geometry and Denoisers
 description: >-
@@ -109,7 +109,7 @@ $$\langle m_\sigma(x) - x, \text{proj}_\Omega(x) - x \rangle > 0$$
 4. **记忆化现象**：对离散测度分析表明，终端时间训练在解决memorization现象中起关键作用
 5. **实用启示**：终端阶段轨迹移动很小（$O(\sigma_t^{\zeta/2})$），暗示可以在终端阶段使用更少的采样步数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论常数不紧**：作为最坏情况界，理论常数可能远大于实际值
 2. **流形上的收敛速率**：当前 $O(\sqrt{\sigma_t})$ 可能不是最优的，子空间上的精确解暗示可能可以改进到 $O(\sigma_t)$

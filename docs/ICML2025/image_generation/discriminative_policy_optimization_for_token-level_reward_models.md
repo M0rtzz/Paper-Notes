@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Discriminative Policy Optimization for Token-Level Reward Models
 description: >-
@@ -120,7 +120,7 @@ $$p(\tau^w \succeq \tau^l) = \sigma\left[\beta\left(\frac{1}{N}\sum_{t=0}^{N-1}Z
 4. **训练效率跃升**：收敛速度提升 11-12×，大幅降低 RL 训练成本
 5. **奖励可视化**直觉清晰：Q-RM 精准定位关键 token（正确数值高分、错误数值低分），DPO-RM 则对换行符等噪声 token 敏感
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Assumption 3.3 的适用范围**：假设最优策略熵趋近于零在创意生成等多样性场景可能不成立
 2. **$\gamma$ 固定为常数**：实际上 $\gamma$ 随样本变化，固定常数是近似，对极端长度差异的偏好对可能不理想

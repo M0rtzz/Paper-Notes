@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GECKO: Gigapixel Vision-Concept Contrastive Pretraining in Histopathology
 description: >-
@@ -151,7 +151,7 @@ GECKO在EBV+MSI任务(k=10)上超TITAN 6.7%，尽管GECKO仅用~200 WSI预训练
 - **无监督临床应用**：GECKO-Zero模式下，病理学家可直接审查和修正概念级预测
 - **模态灵活性**：GECKO可无缝整合额外模态（Gene），不依赖但受益于它
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 概念集依赖任务先验（每个任务需定义概念），通用泛癌预训练需更大概念库
 - 仅在TCGA数据集上评估，缺少外部独立验证集  

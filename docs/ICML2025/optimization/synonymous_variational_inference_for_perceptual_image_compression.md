@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synonymous Variational Inference for Perceptual Image Compression
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L}_{\mathcal{X}}^{(l)} = \mathbb{E}\left[-\lambda_r^{(l)} \log p_{\ha
 4. **理论兼容性**：证明现有 R-D-P 框架是 SVI 推导结果的特例（重建集仅含一张图时退化）
 5. **DISTS 指标优势**：在更贴近人类感知的 DISTS 度量上优于同样使用 LPIPS 训练的 No-GAN 方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **感知损失替代不理想**：用 LPIPS 替代理论中的 KL 散度是近似，导致与 GAN 方案（HiFiC/MS-ILLM）仍有差距
 2. **低码率表现受限**：bpp < 0.10 时性能提升有限，等通道切分的层级划分策略可能不是最优

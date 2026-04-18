@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Function Induction and Task Generalization: An Interpretability Study with Off-by-One Addition
 description: >-
@@ -47,7 +47,7 @@ tags:
 
 ### 关键设计 1: Path Patching 电路发现
 
-- **做什么**：分别在 base prompt $x_{base}$ 和 contrast prompt $x_{cont}$ 上做前向传播，将 $M(\cdot|x_{base})$ 的部分激活替换到 $M(\cdot|x_{cont})$ 中，观察输出是否从 "3+3=7" 回退到 "3+3=6"。
+- **功能**：分别在 base prompt $x_{base}$ 和 contrast prompt $x_{cont}$ 上做前向传播，将 $M(\cdot|x_{base})$ 的部分激活替换到 $M(\cdot|x_{cont})$ 中，观察输出是否从 "3+3=7" 回退到 "3+3=6"。
 - **核心思路**：定义 logit 差值 $F(C, x) = C(y_{base}|x) - C(y_{cont}|x)$，用归一化的 relative logit difference $r = \frac{F(M', x_{cont}) - F(M, x_{cont})}{F(M, x_{cont}) - F(M, x_{base})}$ 量化替换效应，$r$ 越接近 $-100\%$ 表示该组件对 +1 函数贡献越大。
 - **设计动机**：path patching 可以精确追踪激活的因果路径，逐步定位从最终输出到上游组件的信息流。
 
@@ -66,7 +66,7 @@ tags:
 
 ### 关键设计 3: Function Vector 分析
 
-- **做什么**：构建 naive prompt（如 "2=2\n3=?"），将 FI head 的输出加到残差流中，观察模型 logit 变化，生成 $10 \times 10$ 热力图。
+- **功能**：构建 naive prompt（如 "2=2\n3=?"），将 FI head 的输出加到残差流中，观察模型 logit 变化，生成 $10 \times 10$ 热力图。
 - **核心思路**：每个 FI head 写出 +1 函数的不同"碎片"——例如 H39.7 促进 $x+1$，H28.6 抑制 $x-1$，H32.1 促进大于 $x$ 的数字，H24.9 抑制 $x$。多个头的输出聚合后实现完整的 +1 函数。
 - **设计动机**：验证 FI heads 确实承载了 +1 函数的因果效应，而非仅仅是统计相关。
 
@@ -124,7 +124,7 @@ tags:
 - **机制可组合性**：同一 FI 电路在加法偏移、MCQA 偏移、Caesar Cipher、八进制加法等差异巨大的任务中复用，说明模型内部存在通用的"函数偏移"模块。
 - **对评估的启示**：base-8 加法的分析揭示模型可能通过非预期的 shortcut 算法（先做十进制再 +2）获得部分正确率，纯准确率评估可能掩盖推理缺陷。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **电路不完美**：发现的电路未完全满足 faithfulness 和 completeness 标准（这两者与 minimality 往往互相制约）。
 2. **仅分析注意力头**：未深入分析 MLP 层的作用，也未拆解注意力头内部的 QK/OV 电路。

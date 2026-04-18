@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FineXtrol: Controllable Motion Generation via Fine-Grained Text
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{L}_i = -\log \frac{\exp(\text{sim}(\boldsymbol{z}_i, \boldsymbol{z}_j
 - 层级对比学习模块针对控制信号的三层结构设计了对应的数据增强策略，有效解决了预训练编码器对细粒度语义区分不足的问题
 - 零初始化连接确保训练初期不注入噪声，渐进式学习控制信号语义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 FineMotion 数据集提供与 ground-truth 对齐的细粒度标注，泛化到开放域文本控制的能力有待验证
 - 当前仅在 HumanML3D 数据集上验证，缺乏对更多动作数据集的评估
@@ -214,7 +214,7 @@ tags:
 - 参数量仅 23.39M（最少），推理速度 128.57s（最快）
 - 多部位联合控制时性能衰减极小，鲁棒性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 HumanML3D 上评估，数据集覆盖范围有限
 - 细粒度文本依赖 FineMotion 标注，获取成本不低
 - 6 部位粒度（head/body/四肢）仍较粗，未覆盖手指等精细部位

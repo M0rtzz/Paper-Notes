@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeRIS: Decoupling Perception and Cognition for Enhanced Referring Image Segmentation through Loopback Synergy
 description: >-
@@ -103,7 +103,7 @@ NSC增强效果：
 - NSC增强策略简单有效，通过三级过滤确保转换质量
 - 框架具有良好的可扩展性：可将BEiT3替换为Qwen2-7B等更强认知模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 感知分支使用的是384×384分辨率，更高分辨率可能进一步提升细粒度分割
 - 认知分支使用224×224低分辨率，可能丢失部分空间信息
 - NSC的转换概率Rc需要手动调优，自适应策略可能更好

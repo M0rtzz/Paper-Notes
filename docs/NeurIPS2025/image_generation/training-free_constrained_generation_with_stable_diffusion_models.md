@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training-Free Constrained Generation with Stable Diffusion Models
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **黑盒模拟器处理**：DPO 方法使得任何可查询的模拟器都能集成到约束优化中，大大拓展了适用范围
 - **首个将约束优化集成到 Stable Diffusion 采样过程的工作**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每步去噪需要额外的内部优化迭代，增加推理时间
 - 依赖解码器 D 的可微性和 Lipschitz 连续性假设

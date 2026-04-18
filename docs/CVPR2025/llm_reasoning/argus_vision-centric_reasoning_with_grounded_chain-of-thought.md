@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Argus: Vision-Centric Reasoning with Grounded Chain-of-Thought
 description: >-
@@ -31,11 +31,11 @@ Argus 提出了一种grounded visual CoT机制，通过让MLLM先预测与问题
 
 **核心矛盾**：认知科学区分了两种视觉注意力——刺激驱动的involuntary attention（自下而上，由图像中显著物体触发）和目标导向的voluntary attention（自上而下，由任务目标引导）。现有MLLM的ViT编码器对应前者，而LLM中的cross-attention隐式实现后者，但这种隐式目标导向注意力不够精确和可控。
 
-**本文要解决什么？** (1) 如何在MLLM中引入显式的语言引导视觉注意力？(2) 这种更显式的视觉关注是否能提升推理任务表现？
+**本文目标** (1) 如何在MLLM中引入显式的语言引导视觉注意力？(2) 这种更显式的视觉关注是否能提升推理任务表现？
 
 **切入角度**：借鉴认知科学中的voluntary attention概念，利用object-centric grounding（预测bounding box）作为视觉CoT的中间信号——先让模型找到"应该看哪里"，再让模型"仔细看那里"进行推理。
 
-**核心idea一句话**：用grounding预测的bounding box作为视觉CoT信号，通过RoI区域的视觉token重采样/重编码来实现显式的目标导向视觉注意力。
+**核心 idea**：用grounding预测的bounding box作为视觉CoT信号，通过RoI区域的视觉token重采样/重编码来实现显式的目标导向视觉注意力。
 
 ## 方法详解
 
@@ -117,7 +117,7 @@ CoT和Grounding的叠加效果：
 - **重采样策略的效率优势值得关注**：仅增加26个token就能显著提升推理效果，这比重编码1024个token高效得多，适合实际部署
 - **Grounding与推理的正反馈循环**：grounding数据提升box预测准确度 → 更好的CoT信号 → 更好的推理结果，这种协同效应是方法成功的关键
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了8B规模的LLM，未测试更大规模模型（如70B）能否进一步放大视觉CoT的收益
 - 视觉CoT训练数据稀缺，现有数据主要来自文本理解和科学问答场景，缺乏更多样化的视觉推理CoT标注

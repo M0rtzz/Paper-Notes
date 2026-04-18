@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MEGState: Phoneme Decoding from Magnetoencephalography Signals
 description: >-
@@ -96,7 +96,7 @@ MEGState 以 MEG 信号 $\mathbf{X} \in \mathbb{R}^{M \times T}$（$M$ 个传感
 - SSM 相比 Transformer 更适合连续高采样率信号(如 250Hz MEG)，因为其对序列长度的扩展性更好
 - 5 模型集成从 55.74 到 68.41 的巨大提升表明个体模型间存在较大互补性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在单个被试上验证，跨被试泛化能力未知
 - 论文内容偏短(会议短文)，方法描述相对简洁，缺少深入分析

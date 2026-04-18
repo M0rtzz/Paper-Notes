@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Textured 3D Regenerative Morphing with 3D Diffusion Prior
 description: >-
@@ -134,7 +134,7 @@ tags:
 - **频域分析指导改进**：通过低频/高频信号分析理解质量退化的原因，有针对性地提出增强策略
 - **跨类别morphing能力惊艳**：能在靴子和泰迪熊、南瓜和蘑菇等差异极大的物体之间生成语义合理的过渡
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 受限于底层3D生成模型的能力，复杂纹理3D物体的morphing仍具挑战
 - 未来可结合更先进的3D生成模型（如Trellis）提升保真度和多样性

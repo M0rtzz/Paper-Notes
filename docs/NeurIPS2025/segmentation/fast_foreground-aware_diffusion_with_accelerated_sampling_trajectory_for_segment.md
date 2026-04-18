@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FAST: Foreground-aware Diffusion with Accelerated Sampling Trajectory for Segmentation-oriented Anomaly Synthesis
 description: >-
@@ -101,7 +101,7 @@ MVTec-AD上使用Segformer的像素级分割精度对比：
 - 100倍加速使得方法适用于产线换型等实际工业场景
 - 可控异常合成（位置、形状、语义）为数据增强提供了灵活工具
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 掩码生成仍依赖真实异常掩码的几何增强或LDM合成，非完全自动化
 - 实验仅在MVTec-AD和BTAD上验证，未覆盖更多工业场景

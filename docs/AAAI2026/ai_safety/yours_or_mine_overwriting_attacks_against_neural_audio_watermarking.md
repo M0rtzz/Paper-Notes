@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking
 description: >-
@@ -186,7 +186,7 @@ $$x_w^{(N)} = (\mathcal{E}_N \circ \mathcal{E}_{N-1} \circ \cdots \circ \mathcal
 - **简洁有效**：白盒攻击只需一行代码 $x'_w = \mathcal{E}(x_w, m'_{adv})$，灰盒攻击用通用训练框架即可构建代理
 - **频谱可视化提供了直觉**：不同训练的模型在频谱上展现出相似的嵌入区域，直观解释了灰盒攻击有效性的原因
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估了三种水印方法**：虽然覆盖了三种不同嵌入范式，但新兴方法（如 XattnMark、SilentCipher）未被评估
 2. **未提出防御方案**：论文定位为"攻击论文"，但缺少对可能防御方向的深入讨论（如非对称水印、密钥绑定嵌入器等）

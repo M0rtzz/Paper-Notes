@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniLottie: Generating Vector Animations via Parameterized Lottie Tokens
 description: >-
@@ -54,7 +54,7 @@ OmniLottie 包含三个核心组件：
 ### 关键设计
 
 #### 1. Lottie Tokenizer
-- **做什么**：将 Lottie JSON 文件转换为结构化的命令-参数序列
+- **功能**：将 Lottie JSON 文件转换为结构化的命令-参数序列
 - **核心思路**：遍历 JSON 树结构，提取三类有意义的信息：
     - **形状命令（Shape Commands）**：如 `MOVE_TO(x, y)`、`BEZIER(cx1, cy1, cx2, cy2, x, y)` 等描述几何形状的指令
     - **动画函数（Animation Functions）**：如 `EASE_IN(start_frame, end_frame, start_val, end_val)` 描述关键帧插值
@@ -63,7 +63,7 @@ OmniLottie 包含三个核心组件：
 - **与之前方法的区别**：直接使用 JSON 文本训练的方法需要处理 ~10k+ token 的序列，Lottie Tokenizer 压缩到 ~1-2k token
 
 #### 2. OmniLottie 模型架构
-- **做什么**：基于预训练的 VLM（如 LLaVA），扩展 token 词表以包含 Lottie 命令 token，进行多模态指令到 Lottie 序列的自回归生成
+- **功能**：基于预训练的 VLM（如 LLaVA），扩展 token 词表以包含 Lottie 命令 token，进行多模态指令到 Lottie 序列的自回归生成
 - **核心思路**：
     - 在 VLM 的词表中加入 ~200 个 Lottie 特有 token（形状命令、动画函数名等）
     - 参数值（如坐标、颜色）使用量化后的数值 token 表示
@@ -72,7 +72,7 @@ OmniLottie 包含三个核心组件：
 - **多模态支持**：可以接受文本描述（"画一个弹跳的球"）、参考图像、草图等多模态输入
 
 #### 3. MMLottie-2M 数据集
-- **做什么**：构建大规模矢量动画数据集，包含 200 万专业设计的矢量动画
+- **功能**：构建大规模矢量动画数据集，包含 200 万专业设计的矢量动画
 - **核心思路**：从 LottieFiles 等平台收集专业设计师制作的 Lottie 动画，使用 VLM 自动生成文本描述和视觉标注
 - **规模**：200万动画 + 文本描述 + 视觉注释（关键帧截图）
 
@@ -108,7 +108,7 @@ OmniLottie 包含三个核心组件：
 - **实用价值极高**——生成的 Lottie 文件可以直接用于 App/Web 开发，无需后处理
 - **序列化格式设计的启发**——Lottie Tokenizer 的思路可以推广到其他结构化格式的生成（如 CAD、SVG、代码 AST）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅支持 Lottie 格式，未扩展到 SVG 动画或 CSS 动画
 - 复杂动画（如包含遮罩、混合模式、表达式的 Lottie）的生成质量尚需提升
 - 量化参数值引入了精度损失——微妙的动画曲线可能被量化粗化

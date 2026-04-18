@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning
 description: >-
@@ -149,7 +149,7 @@ $$\mathcal{L}(\mathcal{D}^k; \theta, \mathbf{P}_b) = -\sum_i \sum_j \log P(y_j |
 3. **执行验证的伪数据合成**：通过实际执行筛选合成查询，确保语义有效性
 4. **固定参数量**：无需随任务数增长参数，优于 C3/SAPT 等方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 每个任务仅 1000 训练样本 + 300 测试样本的低资源设定，未验证大规模场景
 2. 记忆大小固定为 5 个样本，可能在更复杂任务流中不足

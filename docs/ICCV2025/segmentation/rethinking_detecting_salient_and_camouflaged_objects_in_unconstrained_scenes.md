@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Detecting Salient and Camouflaged Objects in Unconstrained Scenes
 description: >-
@@ -130,7 +130,7 @@ ARM模块各组件的贡献（Overall Scenes）：
 - **CSCS指标填补空白**：现有指标无法衡量显著-伪装混淆，这个新指标让评估更有针对性
 - 参数效率极高——仅4.04M可训练参数
 
-## 局限性 / 可改进方向
+## 局限与展望
 - USC12K的Scene C数据中2617张来自网络采集，标注质量可能不如专业数据集
 - 当前模型将场景划分为严格的三类（显著/伪装/背景），未考虑"半伪装"等中间状态
 - 固定的类别权重比(1:4:6)可能不适用于所有数据分布

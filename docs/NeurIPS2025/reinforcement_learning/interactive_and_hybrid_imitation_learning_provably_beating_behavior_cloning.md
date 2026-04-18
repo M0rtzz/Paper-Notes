@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Interactive and Hybrid Imitation Learning: Provably Beating Behavior Cloning
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **$\mu$-可恢复性的实际意义**：这个条件捕捉了 "correction 比重来更有效" 的直觉——在自动驾驶、机器人操作等场景中，专家的即时校正远比完整演示更高效
 - **混合 IL 的理论基础**：首次为 "用离线数据暖启动 + 交互式微调" 这一常见实践提供了理论支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 确定性可实现假设较强（$\pi^E$ 确定且在 $\mathcal{B}$ 中），随机专家/不可实现情况未覆盖
 - 有限策略类假设（$|\mathcal{B}| = B$），连续策略空间（如神经网络）的推广需要更多工作
 - MuJoCo 实验规模较小（4 个环境），缺乏高维/真实场景验证

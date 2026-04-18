@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Time Reversal Symmetry for Efficient Robotic Manipulations in Deep Reinforcement Learning
 description: >-
@@ -108,7 +108,7 @@ tags:
 - 势基奖励塑形与时间反转的结合是自然而优雅的——成功轨迹的反转天然提供了"好的状态序列"，作为势函数的训练信号
 - 方法是对 SAC 的**正交增强**，可以与任何 off-policy 方法结合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要预先知道任务对关系（哪两个任务是时间反转的）——自动发现对称对是开放问题
 - 逆动力学模型在高维/高自由度系统中训练可能不稳定
 - PTR 的状态分解（哪部分可逆/不可逆）目前需要领域知识指定——自动分解值得研究

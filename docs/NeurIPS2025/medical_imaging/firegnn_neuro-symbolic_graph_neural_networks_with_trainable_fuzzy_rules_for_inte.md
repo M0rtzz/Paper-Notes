@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification
 description: >-
@@ -125,7 +125,7 @@ GCN 权重、模糊规则参数 $\{\theta_i, \alpha_i\}$、融合权重 $(W_r, W
 3. ⭐⭐ **通用性**：模糊规则模块可即插即用于 GCN/GAT/GIN 等多种 GNN backbone，不改变基础架构
 4. ⭐⭐ **辅助任务作为基准**：系统对比了两种注入拓扑信息的方式（模糊规则 vs 辅助任务），证明了符号推理的优越性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅三条规则**：拓扑描述子限于度、聚类系数、标签一致性三个；更复杂的图特征（如介数中心性、motif 计数）可能带来更多信息
 2. **数据集规模较小**：MedMNIST 数据集图像分辨率低（28×28），与真实临床场景的高分辨率医学图像差距大

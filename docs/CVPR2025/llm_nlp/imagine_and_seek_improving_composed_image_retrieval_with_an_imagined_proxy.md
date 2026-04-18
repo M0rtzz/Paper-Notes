@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Imagine and Seek: Improving Composed Image Retrieval with an Imagined Proxy
 description: >-
@@ -94,7 +94,7 @@ tags:
 - **LLM作为视觉推理器**：利用LLM的常识推理能力完成视觉想象
 - **即插即用**：方法与具体CLIP模型无关，可适配任何多模态基础模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖LLM的推理质量，复杂修改（如空间关系变换）可能想象不准确
 - BLIP2的图像描述可能遗漏关键视觉细节
 - LLM推理增加推理延迟

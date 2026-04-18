@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] How Does Sequence Modeling Architecture Influence Base Capabilities of Pre-trained Language Models?
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：混合领域预训练本质上是 in-distribution 评估，无法暴露架构差异。这导致一个错觉：Mamba 和 Transformer 基础能力相当。但换到 OOD 场景，差异可能显著。
 
-**本文要解决什么**：(1) 设计能揭示架构基础能力差异的评估方法；(2) 找出导致 stateful 架构基础能力退化的关键因素；(3) 提出避免退化的架构设计原则。
+**本文目标**：(1) 设计能揭示架构基础能力差异的评估方法；(2) 找出导致 stateful 架构基础能力退化的关键因素；(3) 提出避免退化的架构设计原则。
 
 **切入角度**：限定领域预训练（只用 cc+c4 训练）+ 跨领域测试（在 arxiv/github/stack 上测 OOD performance），在训练早期即可暴露架构差异。
 
-**核心 idea 一句话**：序列建模架构必须具备"全序列任意选择能力"（能看到全部序列、能计算真实关系、分布非均匀）才能保持基础能力不退化。
+**核心 idea**：序列建模架构必须具备"全序列任意选择能力"（能看到全部序列、能计算真实关系、分布非均匀）才能保持基础能力不退化。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ tags:
 - **反直觉发现**：Mamba 的标志性设计（data-dependent decay、conv）对基础能力无贡献——真正重要的是注意力机制的三个基本属性
 - **极简验证**：用 Top-1 选择（几乎是最简单的"全序列任意选择"实现）就能恢复基础能力，说明该原则不是充分条件而是必要条件
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **只评估了语言建模**：其他基础能力（如推理、代码生成）是否也遵循相同原则未验证
 - **Top-1 Selection 效率低于 Mamba**：Top-1 Chunk Selection 虽然比 full attention 快，但仍不如 Mamba 高效
 - **未探索混合架构**：hybrid attention-SSM 架构（如 Jamba）是否能兼得两者优势未讨论

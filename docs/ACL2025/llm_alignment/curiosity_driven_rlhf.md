@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Curiosity-Driven Reinforcement Learning from Human Feedback
 description: >-
@@ -145,7 +145,7 @@ UltraFeedback 训练的模型在 OOD 基准 MT-Bench 上的表现：
 - **自然衰减机制**：ICM 预测误差随训练进行自然衰减（新颖状态变得"无聊"），无需手动调度，天然符合好奇心驱动 RL 的理论直觉。
 - **模块化可插拔**：ICM 独立于策略模型训练，作为自监督组件可集成到任何 PPO-based 对齐框架中，实现复杂度低。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限 PPO 框架**：未探索与 DPO/GRPO 等无需 reward model 的对齐方法结合，泛化性未知。
 - **内在奖励尺度问题**：作者承认内在奖励尺度远大于外在奖励，需要将 $\eta$ 设为很小值。设计尺度更匹配的 ICM 可能带来更好性能。

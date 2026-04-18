@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-View Encoders for Performance Prediction in LLM-Based Agentic Workflows
 description: >-
@@ -102,7 +102,7 @@ Agentic Predictor 包含三个阶段：(a) 多视图工作流编码器将 Agent 
 - 多视图编码充分利用了 Agent 工作流的异构信息（结构、代码、语义）
 - 跨域预训练策略有效缓解标签稀缺问题，体现了自监督学习在新领域的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 FLORA-Bench 上验证，数据集覆盖面有限
 - 预测器对工作流变化的泛化能力需进一步验证

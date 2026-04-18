@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QiMeng-SALV: Signal-Aware Learning for Verilog Code Generation
 description: >-
@@ -93,7 +93,7 @@ $$\mathcal{L}(\pi_\theta;\pi_{\text{ref}}) = -\mathbb{E}\left[\log\sigma\left(\b
 - 巧妙利用 Verilog 语言的**硬件描述特性**（信号独立性）来设计 RL 方法
 - AST 信号提取具有通用性，可适用于其他硬件描述语言
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 信号验证依赖随机测试输入，可能遗漏特定边界条件下的错误
 - 仅在 Qwen2.5 Coder 7B 上验证，更大规模模型的效果未知

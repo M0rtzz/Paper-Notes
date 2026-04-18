@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ActionSwitch: Class-agnostic Detection of Simultaneous Actions in Streaming Videos
 description: >-
@@ -85,7 +85,7 @@ $$\mathcal{L} = CE(p_t, y_t) + \alpha \cdot \mathcal{L}_c(p_t, s_{t-1})$$
 - **Argmax 替代阈值设定**：彻底消除了手动调阈值的痛点，对类别数多的数据集尤其友好。
 - **推理速度 >500fps**：轻量 GRU+MLP 设计使得实时应用完全可行。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Switch 数量需预设**: 需要根据数据集特性手动选择 switch 数量，无法自适应确定当前帧的重叠动作数。可以引入动态 switch 分配机制。
 - **状态编码的歧义性**: 训练时假设 switch1 先激活、switch2 后激活来消除歧义，这在部分场景下可能引入系统偏差。
 - **分类器与提案生成完全解耦**: 虽然这是本文的设计理念，但类别信息可能对提案质量有帮助，是否可以做弱利用值得探索。

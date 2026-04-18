@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TINED: GNNs-to-MLPs by Teacher Injection and Dirichlet Energy Distillation
 description: >-
@@ -93,7 +93,7 @@ GLNN 仅用软标签蒸馏，忽略 GNN 层内部的细粒度知识。
 - **理论保证**：GP -> FC 近似的误差界
 - **超越教师**：MLP 学生在多个数据集上超越 GNN 教师
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试节点分类任务，图级和边级任务待验证
 - 对 GAT 等注意力 GNN 的适配性待研究

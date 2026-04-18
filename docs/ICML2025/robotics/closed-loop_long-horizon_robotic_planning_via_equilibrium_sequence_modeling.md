@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Closed-loop Long-horizon Robotic Planning via Equilibrium Sequence Modeling
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：自精炼的训练如何简单高效地实现？
 
-**本文要解决什么**：用简单的监督学习训练自精炼的 LLM 规划器。
+**本文目标**：用简单的监督学习训练自精炼的 LLM 规划器。
 
 **切入角度**：将自精炼视为不动点迭代 $x_{t+1} = f_\theta(x_t, c)$，理想计划是均衡点 $x^* = f_\theta(x^*, c)$。
 
@@ -103,7 +103,7 @@ VirtualHome-Env 基准：
 - 隐式微分实现了"无限深度的精炼过程可用有限内存训练"
 - 推理时计算扩展（inference-time scaling）是当前热点，本文提供了非 tree search 的新路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 不动点存在性和唯一性没有理论保证
 - VirtualHome 环境相对简单，真实机器人场景待验证
 - 世界模型的准确性是瓶颈

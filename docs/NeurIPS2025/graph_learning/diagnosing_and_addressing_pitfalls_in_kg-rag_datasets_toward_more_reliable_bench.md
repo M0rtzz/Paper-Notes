@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diagnosing and Addressing Pitfalls in KG-RAG Datasets: Toward More Reliable Benchmarking
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：在错误标注的数据上评测，97% Hit@1的模型可能只有48%是真正正确的——整个KGQA社区的进展评估可能不可靠。
 
-**本文要解决什么**：（a）量化和分类现有数据集的质量问题；（b）构建高质量、可验证的KGQA基准。
+**本文目标**：（a）量化和分类现有数据集的质量问题；（b）构建高质量、可验证的KGQA基准。
 
 **核心idea**：LLM引导子图扩展生成多跳问题 → SPARQL自动验证答案正确性 → 96.3%准确率的KGQAGen-10k。
 
@@ -103,7 +103,7 @@ KGQAGen三阶段：（1）从Wikipedia Vital Articles选种子实体，构建1-h
 - **错误分类系统化**：将标注错误分为三类（标注错误/答案过时/标注不完整），问题质量问题分为三类（歧义/过于简单/不可回答），为后续数据集质量研究提供了框架
 - **KGQAGen-10k的统计特性**：98% 问题需要 2-5 hop 推理，84% 包含 5-30 实体，61% 问题长度 16-30 词
 
-## 局限性 / 可改进方向
+## 局限与展望
 - KGQAGen依赖Wikidata，其他KG（如医疗/金融领域KG）需要适配
 - SPARQL生成本身可能有错误（虽然多轮修正降低了风险），从 15,451 初始生成到 10,787 验证通过（约 30% 被过滤）
 - 种子实体选择来自 Wikipedia Vital Articles，可能导致主题分布偏向 Arts (42.3%)

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Graph Matching Improves Retrieval Augmented Generation in Molecular Machine Learning
 description: >-
@@ -143,7 +143,7 @@ Top-1 准确率相比无 RAG 的 ICEBERG 提升 **47%**（0.189→0.278），相
 4. **消融实验设计严谨**：系统对比了无 RAG、朴素拼接、传统匹配、神经匹配等多种策略，清晰展示了各设计选择的贡献
 5. **应用潜力巨大**：当前 NIST 仅覆盖约 27K 化合物，MARASON 有望将模拟谱库扩展至 PubChem 的 1.11 亿化合物
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单参考分子检索**：当前仅检索 1 个最相似的参考分子，多参考融合策略可能进一步提升性能
 2. **依赖 ICEBERG-Generate**：碎裂 DAG 的质量受限于预训练的 ICEBERG-Generate 模型，碎片生成错误会传播到匹配环节

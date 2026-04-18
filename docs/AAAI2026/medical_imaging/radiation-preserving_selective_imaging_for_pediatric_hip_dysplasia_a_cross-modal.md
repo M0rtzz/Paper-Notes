@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Radiation-Preserving Selective Imaging for Pediatric Hip Dysplasia: A Cross-Modal Approach
 description: >-
@@ -130,7 +130,7 @@ tags:
 - **决策曲线显式暴露权衡**：通过辐射成本 $\lambda$ 和遗漏惩罚 $\mu$ 两个参数，将建模与政策分离，让辐射管理权掌握在临床团队手中。
 - **安全失效（fail-safe）设计**：对于不确定的病例自动转向 X 光而非冒险，单侧共形下界保证了覆盖控制。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据规模小**：标注数据仅 75 个受试者，校准集仅 7 个受试者（26 张超声），共形半径可能较宽。需要更大规模的多中心验证。
 2. **标注者为实习生**：测量标注由 trainee 完成而非资深专家，可能引入标注噪声。

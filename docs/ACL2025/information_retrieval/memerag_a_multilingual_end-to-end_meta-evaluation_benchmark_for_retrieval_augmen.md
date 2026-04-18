@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MEMERAG: A Multilingual End-to-End Meta-Evaluation Benchmark for Retrieval Augmented Generation
 description: >-
@@ -119,7 +119,7 @@ MEMERAG 的构建流程：
 3. **元评估框架设计完善**：prompt 选择和模型选择两个应用场景贴合实际需求，基准的使用方式清晰。
 4. **细粒度错误分析揭示语言差异**：不同语言的 LLM 犯不同类型的错误，这一发现对开发多语言 RAG 系统有直接指导意义。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语言覆盖有限**：只有 5 种语言，缺少中文、日文、阿拉伯文等重要语言，以及更多低资源语言。
 2. **评估 LLM 较少**：只测试了 4 个评估模型，缺少对微调过的专门忠实性评估器的测试。

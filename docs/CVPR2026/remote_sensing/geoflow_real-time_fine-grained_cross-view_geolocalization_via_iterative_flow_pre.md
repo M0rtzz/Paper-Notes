@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoFlow: Real-Time Fine-Grained Cross-View Geolocalization via Iterative Flow Prediction
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **概率位移而非确定性点预测**：von Mises-Fisher处理方向不确定性比简单向量回归更合理——方向是循环量(0°=360°)
 - **EfficientNet-B0的刻意选择**：用最小backbone证明方法本身的有效性而非依赖大模型→更令人信服
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前假设已知方向(heading)→扩展到3-DoF(x,y,θ)是重要方向
 - EfficientNet-B0的表达力可能在复杂城市场景中不足→更强backbone可能进一步提升
 - IRS的N和R的最优选择可能依赖场景→能否自适应？

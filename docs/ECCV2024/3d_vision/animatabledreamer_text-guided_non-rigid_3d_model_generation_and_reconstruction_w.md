@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnimatableDreamer: Text-Guided Non-rigid 3D Model Generation and Reconstruction with Canonical Score Distillation
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：想生成可动画化的非刚体 3D 模型，但 SDS 监督在 canonical space 和观测空间之间缺乏一致性桥梁
 
-**本文要解决什么？** (a) 如何从单目视频提取可复用的骨骼/蒙皮；(b) 如何在骨骼约束下用文本引导生成新的可动画 3D 模型
+**本文目标** (a) 如何从单目视频提取可复用的骨骼/蒙皮；(b) 如何在骨骼约束下用文本引导生成新的可动画 3D 模型
 
 **切入角度**：将变形场（warping field）作为 canonical space 和观测空间的桥梁，让扩散模型的梯度通过 warp 传回 canonical model
 
-**核心 idea 一句话**：Canonical Score Distillation——在被观测的变形姿态上计算扩散先验梯度，通过可微 warp 反传到 canonical 模型，确保所有姿态下的一致性
+**核心 idea**：Canonical Score Distillation——在被观测的变形姿态上计算扩散先验梯度，通过可微 warp 反传到 canonical 模型，确保所有姿态下的一致性
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 - **骨骼约束的两层设计**：语义关联（DINOv2 特征相似度）+ 形态关联（蒙皮权重重叠度）共同决定骨骼连接强度——比纯几何或纯语义的方式更鲁棒
 - **生成+重建统一框架**：同一套 CSD 技术既能用于从视频重建（增强不可见区域），又能用于从文本生成（保证动画一致性）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **显存消耗大**：CSD 需要从相机空间到 canonical 空间的长梯度链 + MVDream 同时处理 4 张图，显存需求高
 - **分辨率受限**：只能渲染 200×200，限制了细节质量
 - **仅限骨骼驱动的变形**：无法处理拓扑变化（如物体分裂）或布料等非骨骼驱动的变形

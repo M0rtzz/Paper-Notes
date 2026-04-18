@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Reality Check on Context Utilisation for Retrieval-Augmented Generation
 description: >-
@@ -111,7 +111,7 @@ tags:
 - **核心洞察**：研究RAG上下文利用时，使用合成数据得出的结论可能不可迁移——这对大量基于CounterFact的机制可解释性研究提出了质疑
 - **可迁移设计**：将所有数据统一为声明验证格式的方法可推广到其他RAG任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **任务范围有限**：仅基于事实验证任务，未验证结论是否迁移到开放域QA等其他RAG任务
 - **模型覆盖不足**：仅测试了两个开源模型（Pythia 6.9B, Llama 3.1 8B），未包含更大规模或商业模型

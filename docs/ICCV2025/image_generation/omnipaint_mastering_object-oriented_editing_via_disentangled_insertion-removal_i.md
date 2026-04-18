@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OmniPaint: Mastering Object-Oriented Editing via Disentangled Insertion-Removal Inpainting
 description: >-
@@ -171,7 +171,7 @@ OmniPaint 同样全面领先：FID 19.17（次优 PowerPaint 42.65），PSNR 23.
 5. **物理效果处理**：明确建模并处理反射、阴影、遮挡等复杂物理附属效果，而非仅仅聚焦于前景物体本身
 6. **极少配对数据**：相比 ObjectMate 等需百万配对样本的方法，OmniPaint 仅用 3K 配对样本即可达到 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单物体插入限制**：当前仅支持单参考物体的插入，多物体同时编辑场景未被涉及
 2. **CFD 指标依赖 SAM**：幻觉检测依赖 SAM 的分割质量，对于极小物体或模糊边界较难处理

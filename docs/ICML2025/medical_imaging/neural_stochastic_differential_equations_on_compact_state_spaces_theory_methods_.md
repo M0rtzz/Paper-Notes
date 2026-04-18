@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Stochastic Differential Equations on Compact State Spaces: Theory, Methods and Applications
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **平稳 SDE 推导**：闭式 drift = score function + diffusion correction，优雅且实用
 - **应用动机**：面向心理健康时间序列等需要紧空间建模的实际问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅验证了归纳偏置 (随机权重 NN)，未进行端到端任务训练
 - 不确定 WSP 的梯度表面对梯度优化是否友好
 - $w(z)$ 的超参数 $\alpha, \beta$ 的设置可能影响训练动态

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Risk and Cross Validation in Ridge Regression with Correlated Samples
 description: >-
@@ -131,7 +131,7 @@ $$R_g \simeq \underbrace{\kappa^2 \bar{\mathbf{w}}^\top(\boldsymbol{\Sigma}+\kap
 4. **重正化视角**：随机波动的效果被吸收为重正化岭参数 $\kappa$，即使 $\lambda \to 0$ 也可能有 $\kappa > 0$（隐式正则化）
 5. **对时间序列预测的直接指导**：精确量化了近期预测的乐观偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **高斯假设**：数据模型假设矩阵高斯分布，对非高斯时间序列（如金融收益的厚尾分布）的适用性还需验证
 - **线性模型**：限于岭回归，未扩展到核方法或神经网络

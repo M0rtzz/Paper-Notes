@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting 3D LLM Benchmarks: Are We Really Testing 3D Capabilities?
 description: >-
@@ -109,7 +109,7 @@ VLM 仅用单视角图像就全面超越 3D SOTA → 这些物体基准存在严
 - **原则设计有操作性**：四条原则具体可执行，通过 LLM 自动评估通过率来量化验证，而非停留在定性讨论。
 - **方法论的巧妙**：Oracle View 的 Best-of-N 设计通过多次采样取平均来控制随机性，既保证了上界估计的可靠性，又避免了过度乐观。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用 GPT-4o 和 Qwen2-VL-72B 两个 VLM，不能完全代表所有 VLM 的能力。
 - VLM 仅通过 few-shot 方式适配 3D 任务，而 3D LLM 在对应训练集上训练过，比较不完全公平。

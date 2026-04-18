@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniMRSeg: Unified Modality-Relax Segmentation via Hierarchical Self-Supervised Compensation
 description: >-
@@ -116,7 +116,7 @@ $$l^i(u,v) = -\log \frac{\exp(\text{sim}(\mathbf{f}_u^i, \mathbf{f}_v^i) / \tau)
 - **反向注意力的巧妙设计**：不是直接补偿，而是找到编码器"看不到"的区域再针对性补偿——这一逆向思维非常直觉且有效
 - **深入的消融分析**：从单阶段失败到三阶段成功的对比极具说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自监督预训练仅在各任务自身训练集上进行，未利用外部大规模数据
 - 3D U-Net基础架构相对简单，换用更强的骨干（如nnU-Net V2、SwinUNETR）可能获得进一步提升

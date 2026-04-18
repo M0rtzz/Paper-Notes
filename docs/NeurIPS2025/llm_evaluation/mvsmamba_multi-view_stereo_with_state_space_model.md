@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MVSMamba: Multi-View Stereo with State Space Model
 description: >-
@@ -109,7 +109,7 @@ MVSMamba基于coarse-to-fine范式，整体流程为：(1) FPN编码器提取多
 - 与MVSFormer++对比：性能相当(0.280 vs 0.281)但参数量少30倍(1.31M vs 39.48M)，推理速度快2倍(0.11s vs 0.23s)，GPU内存少40%(2.82G vs 4.71G)
 - 在Tanks-and-Temples Advanced上也取得SOTA，证明泛化性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Mamba是因果模型（仅利用前文信息），虽然通过四方向扫描缓解但仍非完全双向
 - 当前DM-module仅在最低分辨率部署，高分辨率下Mamba的效率优势可能更显著但未探索

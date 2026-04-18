@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Judge Q: Trainable Queries for Optimized Information Retention in KV Cache Eviction
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：KV cache剪枝的理想目标是保留对未来解码最重要的KV pair，但prefill时无法预知解码内容，而局部窗口是不充分的代理(proxy)。
 
-**本文要解决什么？** 设计一种能在prefill阶段近似"用真实解码token选KV"这个理论上界的方法，同时保持低训练成本。
+**本文目标** 设计一种能在prefill阶段近似"用真实解码token选KV"这个理论上界的方法，同时保持低训练成本。
 
 **切入角度**：既然理论上界是用解码token的注意力图来选KV，那就训练一组soft token让它们的注意力图逼近解码token的注意力图，作为解码token的代理。
 
-**核心idea一句话**：用可训练soft token模拟解码token的注意力分布来指导KV cache剪枝，只训练embedding层参数，开销极低。
+**核心 idea**：用可训练soft token模拟解码token的注意力分布来指导KV cache剪枝，只训练embedding层参数，开销极低。
 
 ## 方法详解
 
@@ -124,7 +124,7 @@ Critical KV Hit Rate（与理论上界的重合度）：
 - **soft token作为"探针"的思想**：将attention蒸馏与prompt tuning结合，soft token不是为了改变模型输出，而是为了"感知"哪些KV pair重要。这个思路可以迁移到其他需要全局感知的场景（如token pruning、层剪枝等）
 - **实验证明局部窗口的局限性**：通过prompt调整实验直接证明了局部窗口方法的脆弱性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在prefill阶段做一次性剪枝**：解码过程中新生成的token也在增长KV cache，Judge Q没有解决decoding阶段的动态剪枝问题（作者在结论中也提到了这个future work）
 - **对Full KV的差距仍然明显**：budget=128时Judge Q(35.90) vs Full KV(41.23)，差距5.33分。尤其在极低budget设置下信息丢失仍然严重
 - **soft token数量固定**：不同任务可能需要不同数量的soft token来捕获不同粒度的全局信息

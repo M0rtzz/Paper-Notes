@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraspXL: Generating Grasping Motions for Diverse Objects at Scale
 description: >-
@@ -137,7 +137,7 @@ ShapeNet测试集（完全未见物体）：
 - **课程学习的精妙设计**：静止→可移动的物体状态切换 + 目标→抓取的奖励权重切换，有效解决多目标冲突问题
 - **通用性**：同一框架无需修改即可支持MANO、Shadow、Allegro、Faive四种不同灵巧手
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持**刚体**物体抓取，不处理柔性物体（如布料、绳索）
 - 物体过大或过重时成功率下降（Large物体79%），需要考虑力矩约束

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bi-directional Contextual Attention for 3D Dense Captioning
 description: >-
@@ -127,7 +127,7 @@ BiCA 在 CIDEr@0.5 上超过 Vote2Cap-DETR++ **+1.98**，超过 Vote2Cap-DETR **
 4. **Context Query 设计**：用大半径（1.2 vs instance 的 0.3）的 set-abstraction 从非物体区域提取结构信息，有效编码场景的全局空间关系
 5. **Oral 论文**，在两个基准上全指标 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限室内场景**：在 ScanNet 数据集上训练和评估，泛化到大规模户外 3D 场景的能力未知
 2. **对点云质量依赖**：稀疏或有噪声的点云可能影响 context query 的质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Brain Decoding: Visual-Semantic Reconstructions to Mental Creation Extension Based on fMRI
 description: >-
@@ -112,7 +112,7 @@ NeuroCreat是一个**复用式神经解码模型（multiplexed neural decoding m
 4. **LLM + 脑解码的有效集成**：展示了大语言模型在脑信号理解中的潜力，不仅限于图像重建
 5. **统一框架**：单一模型同时完成重建、描述、创造三个任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **无公开代码**：严重限制可复现性和社区跟进
 2. **无arXiv预印本**：仅CVF Open Access，传播和引用受限
 3. **fMRI固有限制**：时间/空间分辨率低、被试特异性强、数据采集昂贵，限制了方法的实用性

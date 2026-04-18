@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PCoKG: Personality-aware Commonsense Reasoning with Debate
 description: >-
@@ -186,7 +186,7 @@ PCoKGM 全面超越 COMET 和大型LLM的1-shot推理，证明了人格信息和
 4. **数据集构建管线的可迁移性**：虽然基于MBTI框架，但管线设计可适配其他人格理论或角色属性
 5. **AMI分析的深层洞察**：自我感知维度（xAttr，AMI=0.512）比他人感知维度（oReact，AMI=0.115）与人格关联更强——这本身就是一个有趣的心理学发现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅考虑人格特质**，未涉及性别、职业、文化背景等其他影响推理的因素
 2. **MBTI的心理学效度存在争议**（test-retest reliability不稳定），构建在其上的知识图谱可能继承了这种局限

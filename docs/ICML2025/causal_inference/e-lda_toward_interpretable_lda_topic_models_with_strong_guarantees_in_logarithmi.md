@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time
 description: >-
@@ -127,7 +127,7 @@ E-LDA 非并行 Python 实现仅需 2-3 秒，约等于高度优化的 MALLET Ja
 5. **因果推断兼容**：首个能为下游因果推断提供近优保证的主题模型方法
 6. **实验全面碾压**：在后验概率和语义质量两个维度上全面超越 LDA、神经主题模型和 LLM 基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **候选集规模**：候选主题集 $|\Phi|$ 可能很大（等于词汇表大小或更多），虽然算法复杂度与 $|\Phi|$ 线性相关，但初始化矩阵 $\mathbf{M}$ 的空间需求为 $O(|D| \times |\Phi|)$
 2. **$\alpha \to \infty$ 假设**：去除 Dirichlet 先验的稀疏引导，改用显式基数约束；虽有理论动机但与标准 LDA 建模假设不同

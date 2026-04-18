@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MuRating: A High Quality Data Selecting Approach to Multilingual Large Language Model Pretraining
 description: >-
@@ -159,7 +159,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{pairwise}} + \lambda \cdot \ma
 3. **统一多源判断**：通过 Bradley-Terry 模型将不同评分器的异质输出统一为一致的质量分数，避免了手动选择"最佳"评分器的问题
 4. **实用的翻译策略**：使用 GPT-4o 进行翻译虽有成本，但只需在训练集构建时执行一次，推理时 MuRater 可以直接评估任何语言
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语言覆盖有限**：仅 17 种目标语言，排除了大量低资源语言
 2. **依赖 GPT-4o 偏差**：翻译和部分评分使用 GPT-4o 可能引入模型特有偏差

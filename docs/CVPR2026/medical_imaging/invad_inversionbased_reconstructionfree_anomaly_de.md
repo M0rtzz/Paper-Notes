@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InvAD: Inversion-based Reconstruction-Free Anomaly Detection with Diffusion Models
 description: >-
@@ -84,7 +84,7 @@ tags:
 - Plug-and-play设计：只改推理阶段，可直接嵌入任何扩散AD框架
 - 理论洞察深刻：分析了为什么低精度反转仍能有效检测异常，以及reverse-scoring问题的缓解
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍需3次NFE（函数估计），通过蒸馏压缩到1步是有前景的方向
 - 像素级定位性能略低于SOTA（pixel AP/F1不如OmiAD），因为特征空间16×16分辨率限制了精细定位
 - 依赖预训练backbone的质量——backbone对异常信息的压缩可能丢失小异常

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decouple to Reconstruct: High Quality UHD Restoration via Active Feature Disentanglement and Reversible Fusion
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L}_{\text{contrast}}^i = -\log \frac{\exp(s_{\text{pos}}^i / \tau_i)}
 3. **复数域可逆融合**：将不同尺度特征编码为复数的实部/虚部是很新颖的做法，既实现了跨尺度交互又保持了信息完整性；
 4. **极致轻量**：1M 参数即可处理 4K 图像，真正具备实用部署价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 三阶段训练流程较复杂（先 CleanVAE，再 CD²-VAE，最后整体复原网络），端到端训练可能更高效；
 - 需要同时拥有干净-退化配对数据来训练 CD²-VAE 的解耦机制；

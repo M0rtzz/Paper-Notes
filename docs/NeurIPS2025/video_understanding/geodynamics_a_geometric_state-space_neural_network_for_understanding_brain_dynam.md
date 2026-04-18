@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：FC矩阵的时间演化是SPD流形上的曲线，需在保持几何一致性前提下同时捕捉时空动力学。
 
-**核心idea一句话**：用黎曼几何的Frechet均值和正交群作用替换SSM中的欧几里得线性运算，使系统状态在SPD流形上几何一致地演化。
+**核心 idea**：用黎曼几何的Frechet均值和正交群作用替换SSM中的欧几里得线性运算，使系统状态在SPD流形上几何一致地演化。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **Stein距离的选择**：避免重复特征分解，计算效率高，实用的工程选择
 - **SPA注意力可解释性**：注意力权重对应脑区连接异常程度，将黑盒模型与临床解剖学知识对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仍依赖滑动窗口构建FC矩阵——可探索无窗口的连续时间FC构建
 - SPD流形上wFM优化是迭代的，高维FC矩阵(N=360)计算成本较高
 - 脑疾病分类绝对准确率仍不高（ADNI 56%、PPMI 72%）

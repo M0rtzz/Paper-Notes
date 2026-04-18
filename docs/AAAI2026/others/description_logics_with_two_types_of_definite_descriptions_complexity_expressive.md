@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Description Logics with Two Types of Definite Descriptions: Complexity, Expressiveness, and Automated Deduction
 description: >-
@@ -145,7 +145,7 @@ $$\{ι(\mathsf{building} \sqcap \forall \mathsf{tallThan}.\neg \mathsf{building}
 - **表列规则设计统一**：尽管两种DD语义不同，类似的表列规则足以处理两者
 - **$(cut_\iota^g)$ 规则的必要性**：通过具体的不可满足概念证明了该规则对完备性的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实现效率需要优化**：Python 实现未经系统性优化，存在较多超时
 2. **仅测试概念可满足性**：未测试包含本体的可满足性问题

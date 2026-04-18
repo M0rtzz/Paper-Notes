@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MGAudio: Model-Guided Dual-Role Alignment for High-Fidelity Open-Domain Video-to-Audio Generation
 description: >-
@@ -139,7 +139,7 @@ FAD降至0.40，相比次优MMAudio(0.71)提升43%。
 - **双角色设计实用**：不引入新的外部模型，仅充分利用已有CAVP编码器的两个分支
 - 131M参数远小于Diff-Foley(860M)和See&Hear(1099M)，但性能全面碾压
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对人类语音、歌唱等语言学复杂音频效果不佳，缺乏语音结构和音素感知
 - 视觉语义模糊时可能引入混淆（如同一画面可对应多种声音）

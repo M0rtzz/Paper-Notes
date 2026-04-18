@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SegQuant: A Semantics-Aware and Generalizable Quantization Framework for Diffusion Models
 description: >-
@@ -169,7 +169,7 @@ SegQuant 是纯 PTQ 框架，不引入额外训练损失。量化质量评估通
 - **DualScale 的硬件原生设计极为巧妙**：将极性分解 + 双 scale 量化转化为 BatchedGEMM + epilogue fusion，表面看是两次 GEMM，实际在单次 kernel launch 中完成并行，零自定义算子开销。这种"在已有硬件原语上做最大化利用"的思路值得借鉴。
 - **模块化架构**：Optimizer/Calibrator 可插拔替换，使 SegQuant 不仅是一个方法，更是一个可扩展的量化平台，新的 PTQ 技术可以直接集成。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **DualScale 理论 FLOPs 翻倍**：虽然通过 BatchedGEMM 并行化消除了延迟开销，但计算量仍是标准量化的 2 倍，对极端延迟敏感的推理场景可能仍有影响。可探索自适应策略——仅对极性不对称严重的层（如 AdaNorm）启用 DualScale。
 - **低比特改进有限**：W4A8 下相比 SVDQuant 的优势不如 W8A8 显著，极低比特（W4A4）场景仍有挑战。原因可能是 4-bit 下权重本身的量化误差成为瓶颈，仅靠激活端的改进不足以弥补。

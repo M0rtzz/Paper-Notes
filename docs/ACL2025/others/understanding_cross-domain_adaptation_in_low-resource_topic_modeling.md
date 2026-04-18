@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Cross-Domain Adaptation in Low-Resource Topic Modeling
 description: >-
@@ -122,7 +122,7 @@ k=10 时各数据集的 $C_V$ 分数：
 4. **Proposition 1 的优雅性**：将对抗训练的域判别器错误率与 $\mathcal{H}$-divergence 直接关联，为对抗对齐提供了理论保证
 5. **灵活的架构设计**：源域和目标域可以有不同的主题数量，增加了实际应用的灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目标域数据量固定为 1000 个实例，未探索更极端的低资源场景（如 100 个文档）
 - AG News 作为唯一源域，未充分探索源域选择对迁移效果的影响

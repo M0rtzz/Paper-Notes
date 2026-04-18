@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training
 description: >-
@@ -137,7 +137,7 @@ $$\mathbf{s}_{\mathbf{A}}(\mathbf{x}) = \frac{\mathbf{A}}{\sqrt{p}} \sigma\left(
 - **排除了简单解释**：通过 full-batch 实验证明记忆化延迟并非源于样本重复频率差异，而是损失景观的内在 $n$ 依赖性
 - **清晰的相图**：在 $(n, p)$ 平面上清晰划分三个区域，为模型设计和训练提供了全局视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅验证 SGD**：虽然附录中展示 Adam 也有类似现象，但未系统研究不同优化器如何影响两个时间尺度的绝对值
 - **无条件生成为主**：主实验基于无条件扩散模型，条件生成（如 classifier-free guidance）仅在合成数据上简要验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MambaIC: State Space Models for High-Performance Learned Image Compression
 description: >-
@@ -47,7 +47,7 @@ tags:
 ### 关键设计
 
 **1. SSM 上下文熵模型**
-- **做什么**: 在通道-空间上下文建模中嵌入 VSS (Visual State Space) block，增强侧信息表达
+- **功能**: 在通道-空间上下文建模中嵌入 VSS (Visual State Space) block，增强侧信息表达
 - **核心思路**:
     - 通道上下文 $\Psi_k$：用 VSS block + Conv 从已编码通道 $\hat{\mathbf{y}}^{<k}$ 提取通道特征 $\mathcal{F}_c$
     - 空间上下文 $\Phi$：用 VSS block + Conv 从已编码空间邻域 $\hat{\mathbf{y}}^k_{<i}$ 提取空间特征 $\mathcal{F}_s$
@@ -56,13 +56,13 @@ tags:
 - **设计动机**: SSM 在上下文模型中比 CNN/Transformer 更好地平衡效率和全局信息捕获（消融表明 SSM 比 CNN 提升 8.71% BD-rate，比 Transformer 提升 5.33% BD-rate）
 
 **2. 窗口局部注意力（Window-based Local Attention, WLA）**
-- **做什么**: 在参数聚合之后添加窗口内局部注意力，补充 SSM 的全局建模
+- **功能**: 在参数聚合之后添加窗口内局部注意力，补充 SSM 的全局建模
 - **核心思路**: 将 patch 划分为 $w \times w$ 小窗口 → 窗口内计算注意力 → 恢复原始排列
 - **最优窗口大小**: $8 \times 8$（实验对比 $6 \times 6$, $8 \times 8$, $10 \times 10$）
 - **设计动机**: SSM 擅长全局感受野，但局部空间冗余需要局部注意力来消除；两者互补使得 bitstream 更紧凑
 
 **3. SSM 非线性变换**
-- **做什么**: 用 VSS block 替换编解码器中的基础 block（含残差瓶颈结构）
+- **功能**: 用 VSS block 替换编解码器中的基础 block（含残差瓶颈结构）
 - **核心思路**: VSS block = LayerNorm + Linear + DW Conv + SiLU + SS2D，通过 cross-scan 和 merge 集成 2D 空间信息
 - **设计动机**: 在编解码阶段就建立全局依赖，提升潜在表示质量
 
@@ -126,7 +126,7 @@ tags:
 - 高分辨率场景下的稳定性是工业应用的关键卖点
 - 注意力图可视化清晰展示了 WLA 如何帮助关注语义相关的局部区域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据仅用 Flickr30k（31K 张），数据规模有限
 - 编码延迟（60.73ms）高于 ELIC（40.76ms），编码端效率有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tackling Resource-Constrained and Data-Heterogeneity in Federated Learning with Double-Weight Sparse Pack
 description: >-
@@ -176,7 +176,7 @@ $$PW_{i,j}^t = \begin{cases} \sum_{i=1}^{S_t} \frac{M_{i,j}^t}{M_j^{t+1}} PW_{i,
 4. **KL散度作为分布距离权重的引入**：补充了余弦相似度无法捕获的幅度信息
 5. **训练时间几乎无增加**：尽管引入了额外的打包和权重计算，训练时间基本不变
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在图像分类上验证**：未涉及目标检测、语义分割等更复杂的视觉任务
 2. **模型架构限制**：仅使用CNN和ResNet-18，对大型模型（如ViT）的表现未知

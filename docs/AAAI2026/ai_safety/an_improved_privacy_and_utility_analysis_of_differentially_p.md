@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Improved Privacy and Utility Analysis of Differentially Private SGD with Bounded Domain and Smooth Losses
 description: >-
@@ -80,7 +80,7 @@ $$\mathcal{O}\left(\max\left\{\frac{D^2 dL\log(1/\delta)}{\epsilon^2 n^2}, \frac
 - **隐私+效用的完整刻画**：不像之前工作只做隐私界或只做收敛分析，本文同时给出了匹配的双面结果
 - **"小D同时改善隐私和效用"**：这个结论非常实用——在实践中，适当约束参数范围是一种既简单又有效的策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **有界域假设的实用性**：虽然论文论证了有界域假设是合理的，但在实际深度学习中选择合适的D值仍不直观。作者提到可通过序列化约束子问题近似，但未提供具体方案
 - **强凸假设**：效用分析（Theorem 3.10）需要总体风险函数强凸，这在深度学习中通常不成立。非凸效用界仅提供了DPSGD-GC版本（借用Koloskova的结果），DPSGD-DC的非凸效用分析缺失
 - **非凸RDP界与D²成正比**：相比凸情况下的D线性依赖，非凸情况松了一个数量级，有进一步收紧的空间

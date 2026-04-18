@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Nonparametric Teaching for Graph Property Learners
 description: >-
@@ -116,7 +116,7 @@ GraNT 时间减半且 MAE 降低两个数量级。
 4. **理论完备**: 从结构感知梯度分析 → GNTK 收敛性 → 充分损失下降保证，形成完整理论链条。
 5. **与 MLP 非参数教学的优雅统一**: 卷积阶 $\kappa=1$ 时完美退化为 MLP 教学。
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅验证 GCN**: 未扩展到 GAT、GIN 等其他图神经网络，作者在结论中也承认这是未来工作。
 2. **选择比例 $m/N$ 的敏感性**: 论文未详细分析选择比例如何影响加速比与性能的权衡。
 3. **节点级实验仅用合成数据**: gen-reg/gen-cls 由 graphon 生成，缺乏真实大规模节点级 benchmark（如 ogbn-*）。

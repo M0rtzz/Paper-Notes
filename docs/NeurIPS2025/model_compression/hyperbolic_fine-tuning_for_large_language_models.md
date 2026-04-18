@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hyperbolic Fine-Tuning for Large Language Models
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **即插即用**：与 LoRA 相同的接口和参数量，可和 DoRA、AdaLoRA 等 LoRA 变体正交组合
 - **理论支撑**：Proposition 1 证明 HypLoRA 引入了范数依赖的高阶项，能捕捉层级关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在算术推理和常识推理上验证，代码生成、翻译、对话等任务效果未知
 - 可学习曲率的初始值仍需手动选择（0.5 或 1.0），不同任务最优值不同
 - $\delta$-hyperbolicity 分析在 prompt 级别进行，语料库级别可能有不同结论

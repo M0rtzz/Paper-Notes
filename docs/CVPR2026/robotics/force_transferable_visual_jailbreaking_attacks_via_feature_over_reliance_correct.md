@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FORCE: Transferable Visual Jailbreaking Attacks via Feature Over-Reliance CorrEction
 description: >-
@@ -160,7 +160,7 @@ $$S = \sum_{m=1}^{M} (w_m \cdot \mathbb{1}_{B_m})$$
 - **渐减正则化设计优雅**：浅层强正则深层弱，符合"问题集中在浅层"的诊断，用一个简洁的二次衰减公式实现
 - **评估覆盖面广**：三种架构类型（adapter-based、early-fusion、commercial）× 三个数据集 × 多种设置（多 query / zero-shot / blank init）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对 early-fusion MLLM 和商业模型的绝对 ASR 仍然很低（如 GPT-5 仅 2-3%），虽然相对提升大但距离实际 red-teaming 实用性仍有差距
 - 仅在 LLaVA-v1.5-7B 和 InstructBLIP 两个 source model 上验证，source model 多样性有限

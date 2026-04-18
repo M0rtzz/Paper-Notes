@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Explaining Grokking and Information Bottleneck through Neural Collapse Emergence
 description: >-
@@ -90,7 +90,7 @@ Grokking/IB压缩 ← 群体类内方差收缩 ← 经验类内方差收缩(RNC1
 - **Proposition 3.3 补全了 IB 第一阶段**：证明当网络初始状态丢失信息时拟合阶段是必要的，与第二阶段的分析形成完整闭环。
 - **多验证手段**：同时使用 MI 估计和 nHSIC 两种独立方法验证 IB 压缩行为，增强结论可靠性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论分析依赖特定假设：金字塔网络架构、光滑激活函数、特殊初始化条件，对 ReLU 等非光滑激活的适用性需进一步验证。
 - 实验主要在 MNIST 等相对简单的数据集和 MLP/小型CNN 上验证，大规模视觉模型（ResNet、ViT）上的 Grokking/IB/NC 三者关系有待探索。
 - 仅考虑带 weight decay 的梯度下降，对 Adam/AdamW 的理论分析尚未完成（实验用 AdamW 但定理基于 GD）。

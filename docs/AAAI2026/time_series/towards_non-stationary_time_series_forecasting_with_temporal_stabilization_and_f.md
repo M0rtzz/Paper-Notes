@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Non-Stationary Time Series Forecasting with Temporal Stabilization and Frequency Differencing
 description: >-
@@ -169,7 +169,7 @@ $$\mathcal{L} = \mathcal{L}_{\mathrm{task}} + \alpha \cdot \mathcal{L}_{\mathrm{
 3. **双域互补建模的系统性**：不是简单叠加时域和频域，而是各自处理完非平稳问题后再融合，逻辑清晰
 4. **KL约束的精妙设计**：通过最小化去除非平稳成分后各 patch 间的 KL 散度，间接确保专家学到的确实是非平稳成分
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **patch 长度的先验选择**：patch 划分策略需要预设长度，未探讨自适应 patch 方案
 2. **MoE 的专家数量**：论文使用 4 个专家，未讨论专家数量的影响和最优选择

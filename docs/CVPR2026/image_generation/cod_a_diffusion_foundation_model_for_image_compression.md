@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoD: A Diffusion Foundation Model for Image Compression
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{RF}} + \lambda \cdot \mathcal{L}_{\text{REPA}
 - 通过采样步数控制失真-感知权衡是一个零成本的附加能力，无需额外训练
 - 像素空间扩散的全面复兴：以往认为隐空间扩散全面优于像素空间，本文证明像素空间在高码率和宽范围方面有不可替代的优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅支持 512×512 分辨率，扩展到 2K+ 需要大幅增加计算成本
 - 与所有扩散编解码器一样，推理速度不满足实时编码需求（虽然单步蒸馏版本已接近实时）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RelaCtrl: Relevance-Guided Efficient Control for Diffusion Transformers
 description: >-
@@ -181,7 +181,7 @@ RGLC 和 Prior 2 的影响：
 3. **TDSM 的理论保证**：不仅设计了高效替代模块，还从理论上证明了其非局部建模能力的下界
 4. **极致效率**：7.38% 额外参数 + 8.61% 额外计算 = 超越 48%+ 参数的 PixArt-δ，效率比约 **6.5 倍**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CRS 需要先训练一个完整的 ControlNet（27 个控制块），这一前期分析的计算开销未被讨论
 - 目前的相关性分析基于 PixArt-α，其结论是否适用于 Flux、SD3 等其他 DiT 架构有待验证

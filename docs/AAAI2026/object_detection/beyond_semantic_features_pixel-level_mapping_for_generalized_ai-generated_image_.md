@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Semantic Features: Pixel-Level Mapping for Generalized AI-Generated Image Detection
 description: >-
@@ -134,7 +134,7 @@ $$T_c \sim \mathcal{U}(-1, 1)^{256}, \quad c \in \{0, 1, 2\}$$
 3. **随机映射实验**：优雅地验证了因果机制——关键不在于具体映射，而在于打破像素单调排列
 4. **频域分析透彻**：将频域能量分布可视化，直观展示了方法如何均衡低高频能量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅使用 ResNet-50 作为 backbone，未探索与预训练大模型（CLIP 等）的结合
 - 固定映射对所有样本使用相同变换，可能存在被对抗攻击利用的风险

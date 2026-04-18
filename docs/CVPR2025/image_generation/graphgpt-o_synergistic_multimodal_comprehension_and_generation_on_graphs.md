@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraphGPT-o: Synergistic Multimodal Comprehension and Generation on Graphs
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**: MLLM 处理线性序列，但 MMAG 的价值正在于其非线性的图结构关系。
 
-**本文要解决什么**: 让 MLLM 利用 MMAG 中的结构和语义信息，为目标节点生成匹配的图像和文本。
+**本文目标**: 让 MLLM 利用 MMAG 中的结构和语义信息，为目标节点生成匹配的图像和文本。
 
 **切入角度**: PPR 采样压缩子图 + 两级 Q-Former 编码图结构 + 图 token 注入 MLLM。
 
-**核心 idea 一句话**: 用 Personalized PageRank 采样关键邻居，层次化 Q-Former 编码节点模态和图结构，将图 token 注入 MLLM 实现图条件的多模态生成。
+**核心 idea**: 用 Personalized PageRank 采样关键邻居，层次化 Q-Former 编码节点模态和图结构，将图 token 注入 MLLM 实现图条件的多模态生成。
 
 ## 方法详解
 
@@ -133,7 +133,7 @@ $$\mathcal{L} = \mathcal{L}_{MLLM}^{GraphGPT-o} + \mathcal{L}_{SD}^{GraphGPT-o}$
 4. **应用场景丰富**: 电商推荐（产品生成）、虚拟艺术创作、社交网络内容推荐
 5. **PPR 采样**: 将图学习中成熟的 PPR 方法引入 MLLM 的子图选择，兼顾效率和效果
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 基于 DreamLLM + Stable Diffusion 1.x，生成图像质量受限于基础模型
 2. 仅在较小规模的三个数据集上验证，未在大规模图（百万节点级）上测试

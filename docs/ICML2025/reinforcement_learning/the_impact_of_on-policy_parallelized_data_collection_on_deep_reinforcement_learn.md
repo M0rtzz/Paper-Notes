@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Impact of On-Policy Parallelized Data Collection on Deep Reinforcement Learning Networks
 description: >-
@@ -36,7 +36,7 @@ tags:
    - $N_{\text{RO}}$ 引发**偏差-方差权衡**（长轨迹偏差小但方差大）
    - 训练 epoch 数需平衡样本效率与过拟合
 
-**本文要解决什么**：系统分析并行数据采集方式、网络可塑性、学习表示和样本效率之间的交互作用，给出实践指导。
+**本文目标**：系统分析并行数据采集方式、网络可塑性、学习表示和样本效率之间的交互作用，给出实践指导。
 
 **切入角度**：固定总环境交互步数（100M），在 PPO 和 PQN 上系统变化 $N_{\text{envs}}$ 和 $N_{\text{RO}}$，通过 weight norm、gradient kurtosis 等指标分析优化稳定性。
 
@@ -122,7 +122,7 @@ tags:
 - **Epoch 数的"安全扩展"**：在足够大的数据集下，可以放心增加训练遍数而不用担心性能崩溃，这为 PPO 的超参数调优提供了实用指导
 - 实验在 PPO 和 PQN 两种算法上验证，并扩展到不同网络架构，增强了结论的普适性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限 on-policy 算法**：结论基于 PPO（和 PQN），是否适用于 off-policy 算法（SAC、TD3）未验证
 - **环境有限**：仅在 Atari-10 上测试，连续控制（MuJoCo）、3D 环境的验证不充分

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FineTec: Fine-Grained Action Recognition Under Temporal Corruption via Skeleton Decomposition and Sequence Completion
 description: >-
@@ -164,7 +164,7 @@ MPJPE 降低 **23.4%**。
 3. **新数据集贡献**：构建了 Gym288-skeleton（288 类细粒度动作，38K 序列），极具挑战性
 4. **ICL 范式用于骨架补全**：借鉴 NLP 的 in-context learning 思想来处理序列恢复问题，思路新颖
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 骨架库使用固定的 Human3.6M 数据，未来可探索更自适应的数据驱动方法
 2. 动态/静态分组基于手动定义（Top-2 最高运动区域），可考虑学习化的分组策略

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Consistent Sampling and Simulation: Molecular Dynamics with Energy-Based Diffusion Models
 description: >-
@@ -182,7 +182,7 @@ MoE 将推理时间减半（仅需运行小模型进行模拟），但 FP 正则
 - **MoE 的双重作用**：不仅提高效率，还防止大 $t$ 区域过度正则化导致 iid 采样退化
 - **采样与模拟的统一**：同一模型可以同时提供热力学（iid 采样）和动力学（Langevin 模拟）信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在粗粒化小分子（≤10 原子）上验证，大蛋白质系统的可扩展性待验证
 - FP 正则化增加了约 6 倍的训练时间（弱残差公式仍需多次前向传播）

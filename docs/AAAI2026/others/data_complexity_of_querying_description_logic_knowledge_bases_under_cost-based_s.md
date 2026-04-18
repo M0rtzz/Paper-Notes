@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Data Complexity of Querying Description Logic Knowledge Bases under Cost-Based Semantics
 description: >-
@@ -163,7 +163,7 @@ $$\mathsf{core}(\mathcal{A}) = \mathsf{pc}(\mathcal{A}) \cup \{b \mid a \leadsto
 3. **一阶可重写性意味着实际可实施**：理论上可以将代价语义下的查询应答编译为标准SQL查询在数据库上执行
 4. **下界的改进（$k \geq 1$）**：证明了不可处理性并非高代价值才出现的伪象
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **AC$^0$结果不覆盖CQA$_c^k$**（被证明是coNP-完全的），限制了正面结果的适用范围
 2. **$\Delta_2^p$硬度依赖二进制编码权重**——一元编码时复杂度可能较低

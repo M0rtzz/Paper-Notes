@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Runtime Analysis of Evolutionary NAS for Multiclass Classification
 description: >-
@@ -126,7 +126,7 @@ $$\mathcal{F}(\boldsymbol{x}) = \frac{Ar_{tri} \cdot (\mathbb{I}_x + 2r) + Ar_{s
 4. **两层搜索空间设计**：cell 层 + block 层的编码方式与 ENAS 社区主流做法一致，增强了理论结果的实用性
 5. **漂移分析技术的扩展应用**：将乘法漂移分析从标准 EA 推广到 ENAS 的两层搜索空间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **问题过于理想化**：Mcc 基准中数据区域均匀分布在单位圆上，远离真实多类分类数据分布
 2. **仅分析 (1+1) 模式**：实际 ENAS 使用种群、交叉等更复杂策略，(1+1) 框架难以反映实际算法行为

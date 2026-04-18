@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HPFF: Hierarchical Locally Supervised Learning with Patch Feature Fusion
 description: >-
@@ -140,7 +140,7 @@ HPFF 由两个互补组件构成：
 3. **局部学习超越 BP 成为现实**：在 ImageNet 的 ResNet-152 和 ResNeXt-101 上，HPFF 使局部学习首次在性能上超过端到端 BP
 4. **CKA 与分层分析提供深刻洞察**：早期层降低分类精度 → 保留更多全局特征 → 后期层精度显著提高，这一发现挑战了"每层都要分类准确"的直觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仍依赖反向传播在局部模块内部计算梯度，未完全消除 BP
 - 级联级带来的额外辅助网络增加了模型参数量和计算量（虽然 PFF 部分弥补了内存问题）

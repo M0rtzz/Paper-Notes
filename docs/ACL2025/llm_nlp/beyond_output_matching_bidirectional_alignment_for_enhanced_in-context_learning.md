@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Output Matching: Bidirectional Alignment for Enhanced In-Context Learning
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **核心矛盾**: 现有蒸馏方法只教学生"输出什么"，却没教学生"偏好什么样的输入示例"——这导致学生无法像教师那样从不同质量的示例中受益。
 
-**本文要解决什么**: 如何通过对齐输入偏好来提升学生模型的 ICL 能力。
+**本文目标**: 如何通过对齐输入偏好来提升学生模型的 ICL 能力。
 
 **切入角度**: 类比 RLHF 中奖励模型学习"偏好哪些输出"，BiAlign 让学生学习"偏好哪些输入示例"。
 

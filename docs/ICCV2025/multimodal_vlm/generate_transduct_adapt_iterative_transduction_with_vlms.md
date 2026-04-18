@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GTA-CLIP: Generate, Transduct, Adapt — Iterative Transduction with VLMs
 description: >-
@@ -115,7 +115,7 @@ $$\mathcal{L} = -\frac{1}{N}\sum_i \mathbf{z}_i^\top \log(\mathbf{p}_i) - \sum_{
 - 属性空间的可视化（t-SNE）清晰展示了动态属性如何改善类间分离
 - 计算成本可控：CUB 12k 图像 200 类在单张 A100 上仅需 12-20 分钟
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **LLM 幻觉风险**：生成的属性可能不准确，虽然实验中未发现显著影响
 - **传导设定限制**：需要一次性获取全部测试图像，不适用于流式场景

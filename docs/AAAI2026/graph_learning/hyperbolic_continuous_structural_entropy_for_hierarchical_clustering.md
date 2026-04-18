@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hyperbolic Continuous Structural Entropy for Hierarchical Clustering
 description: >-
@@ -86,7 +86,7 @@ HypCSE 在全部 7 个数据集上 DP 指标排名第一，SE 指标在 4 个数
 - **端到端可微且可扩展**：树解码复杂度可降至 $O(n \log n)$
 - **理论基础扎实**：证明了 SE 与图导纳率的下界关系（Lemma 3），保证优化方向正确
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Spambase 数据集上对超参（$\tau$、$\eta_1$）敏感，说明层次结构模糊时 GSL 不稳定
 - CSE 目标中的 softmax 松弛引入近似误差，温度参数 $t_1$ 的最优选择依赖数据集

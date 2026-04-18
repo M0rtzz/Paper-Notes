@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Feasibility and Opportunity of Autoregressive 3D Object Detection
 description: >-
@@ -114,7 +114,7 @@ GRPO 主要提升 Recall（+1.5），F1 提升 0.9。
 - **直接适配 GRPO** 进行任务对齐的 RL 微调，F1 进一步提升
 - 遮挡严重场景下表现更好，体现了条件生成对 inter-object 依赖的建模优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理速度慢**：即使用 bf16 + KV cache，单场景仅 1-2 Hz（voxel backbone），远不满足实时要求
 - **Transformer/Mamba 编码器上有性能差距**：与 DSVT/LION 的 F1 差距约 2，说明自回归头尚未完全匹配非自回归 Transformer 头

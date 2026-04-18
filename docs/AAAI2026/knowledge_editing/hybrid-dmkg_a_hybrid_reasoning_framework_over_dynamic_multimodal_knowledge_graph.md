@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hybrid-DMKG: A Hybrid Reasoning Framework over Dynamic Multimodal Knowledge Graphs for Multimodal Multihop QA with Knowledge Editing
 description: >-
@@ -124,7 +124,7 @@ $$a_2 = \text{LVLM}(q_2, \tilde{v}, [a_2^{\text{link}}, C_2^{\text{link*}}], [a_
 - **参数无修改框架**：不需要修改LVLM参数，通过外部知识图谱实现知识更新，避免了catastrophic forgetting问题
 - **大幅超越基线**：在LLaVA上H-Acc比最强基线IKE高出13.52个百分点（29.90% vs 16.38%）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖外部组件较多**：需要LLM问题分解、CLIP检索模型、关系提取器、Wiki Linker等多个外部模块，系统复杂度高，任一模块失败可能导致级联错误
 - **H-Acc绝对值仍然较低**：即使是最好的结果（29.90%），说明多模态多跳推理仍远未解决，尤其在5-hop时H-Acc仅约5%

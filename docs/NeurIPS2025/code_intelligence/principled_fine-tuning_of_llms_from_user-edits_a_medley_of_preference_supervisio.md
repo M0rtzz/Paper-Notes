@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Principled Fine-tuning of LLMs from User-Edits: A Medley of Preference, Supervision, and Reward
 description: >-
@@ -123,7 +123,7 @@ tags:
 - **实用导向**: 用户编辑是真实应用中自然产生的数据，方法可直接应用
 - **简单有效**: 集成方法无需复杂架构，通过权重调整即可适应不同场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 集成方法需要验证集来调整权重，在数据稀缺时可能不稳定
 2. 当前假设用户编辑总是改善结果，未考虑错误编辑的情况

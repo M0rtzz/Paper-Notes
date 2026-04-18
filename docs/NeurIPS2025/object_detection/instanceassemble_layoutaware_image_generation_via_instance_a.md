@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InstanceAssemble: Layout-Aware Image Generation via Instance Assembling Attention
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：问题的根源在于，现有方法试图在全局注意力空间中同时处理所有实例的布局条件——这从结构上就无法避免不同实例之间的信息交叉干扰。传统的做法包括在全局 attention 中加入 layout mask 或 cross-attention 条件注入（如 GLIGEN 的 gated cross-attention、Layout Diffusion 的 cross-attention mask），但这些方法只是在"软约束"层面调节注意力分布，无法从根本上隔离不同实例的特征交互。
 
-**本文要解决什么？** 核心目标是：(1) 设计一种能在 DiT 注意力层中精确控制每个实例位置和内容的机制，且在密集布局下不发生特征串扰；(2) 支持文本和视觉两种模态的内容控制；(3) 实现为轻量级 LoRA 插件，保持与现有模型生态的兼容性；(4) 构建一套严格的密集布局评估体系。
+**本文目标** 核心目标是：(1) 设计一种能在 DiT 注意力层中精确控制每个实例位置和内容的机制，且在密集布局下不发生特征串扰；(2) 支持文本和视觉两种模态的内容控制；(3) 实现为轻量级 LoRA 插件，保持与现有模型生态的兼容性；(4) 构建一套严格的密集布局评估体系。
 
 **切入角度**：作者的核心观察是——如果我们能把全局注意力问题分解为多个局部的实例级注意力问题，让每个实例区域的 image token 仅与其对应的 layout 描述做交互，就能从结构上彻底消除跨实例的特征泄漏。这不是后处理修补，而是从注意力机制的"原子操作"层面进行隔离。
 
-**核心idea一句话**：在 DiT 的 Transformer 块中增加一个并行的"实例组装注意力"分支，将每个 bounding box 内的 image token 提取出来，仅与该实例的 layout hidden state 做 cross-attention，然后通过 scatter-add 将结果聚合回原始 hidden state，实现实例级的空间控制而不干扰全局 attention 流。
+**核心 idea**：在 DiT 的 Transformer 块中增加一个并行的"实例组装注意力"分支，将每个 bounding box 内的 image token 提取出来，仅与该实例的 layout hidden state 做 cross-attention，然后通过 scatter-add 将结果聚合回原始 hidden state，实现实例级的空间控制而不干扰全局 attention 流。
 
 ## 方法详解
 
@@ -127,7 +127,7 @@ InstanceAssemble 支持两种 DiT 骨架——Flux.1-dev（28步推理）、Flux
 
 - **DenseLayout 基准和 LGS 指标填补了重要的评估空白**。现有的 L2I 基准（如基于 COCO 的评估）布局密度较低（通常 3-5 个实例），无法暴露密集场景下的问题。DenseLayout 包含平均每张图 18 个实例的数据（5K 图像/90K 实例），而 LGS 评估不仅衡量空间定位准确性（IoU），还通过 VLM 自动判断颜色、纹理、形状是否与描述一致，比简单的 FID/AP 更全面
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算复杂度随实例数线性增长**。由于每个有效实例需要独立执行一次 attention 操作（包含 QKV 投影和全连接），当实例数非常大时（如 50 个 bbox，DenseLayout 基准支持最多 100 个），推理时间会显著增加。代码中的循环 `for k in range(valid_indices.size(0))` 是逐实例串行执行的，没有进行批处理优化，这在 GPU 并行计算能力得不到充分利用的同时还引入了 Python 循环开销。一个可能的改进是将所有实例的 attention 操作通过 padding + batched attention 来批处理执行，或者利用 CUDA 自定义算子实现并行化
 

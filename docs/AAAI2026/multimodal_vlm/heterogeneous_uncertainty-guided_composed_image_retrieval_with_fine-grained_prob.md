@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning
 description: >-
@@ -146,7 +146,7 @@ $$\mathcal{L}_{\text{HUG}} = \mathcal{L}_{\text{HC}} + \lambda_{\text{FC}} \math
 3. **理论保障**：动态加权的泛化误差上界证明，不仅是工程技巧，还有理论支撑
 4. **可解释性**：学到的不确定性分量可以映射到人类可理解的视觉概念
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理时间增加约3倍（21ms vs 7ms per query），在大规模检索场景中可能成为瓶颈
 - 32个高斯分量的数量是预设的（来自Q-Former的设计），是否有最优的分量数量值得探索

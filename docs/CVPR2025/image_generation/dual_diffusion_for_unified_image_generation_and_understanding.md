@@ -1,4 +1,4 @@
----
+﻿---
 title: "Dual Diffusion for Unified Image Generation and Understanding"
 conference: "CVPR 2025"
 arxiv: "2501.00289"
@@ -95,7 +95,7 @@ $$L_{\text{dual}} = L_{\text{image}} + \lambda_{\text{text}} L_{\text{text}}$$
 3. **强迁移能力**：利用 SD3 预训练权重和 T5 的 mask token，以极少的文本数据快速获得文本生成能力
 4. **架构对称性**：图像和文本分支在同一 Transformer 中对称处理，通过 cross-attention 自然交互
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **文本理解性能仍有差距**：与专门的 VLM (LLaVA-1.5, InternVL) 相比，VQA 性能仍有明显差距
 2. **未训练纯文本生成**：模型从未在纯文本数据上训练，限制了其语言建模能力

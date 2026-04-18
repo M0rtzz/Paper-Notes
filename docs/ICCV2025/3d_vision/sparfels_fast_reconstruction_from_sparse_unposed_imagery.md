@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sparfels: Fast Reconstruction from Sparse Unposed Imagery
 description: >-
@@ -129,7 +129,7 @@ Sparfels在多个数据集上的NVS指标（PSNR/SSIM/LPIPS）以及相机位姿
 3. **评估方法的改进**：针对无位姿设定提出屏幕空间depth/normal评估，避免了不可靠的相机对齐
 4. **高效CUDA实现**：方差计算通过修改泼溅核函数实现，增加的开销极小
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 极度稀疏（如2视图）时MASt3R初始化质量下降，重建精度受限
 2. 无纹理区域和重复纹理区域的对应关系可能不可靠

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Blind Noisy Image Deblurring Using Residual Guidance Strategy
 description: >-
@@ -112,7 +112,7 @@ $$\min_{K,L} \|K \otimes L - B\|_2^2 + \lambda P_l(L) + \mu P_k(K)$$
 - **通用插件**: RGS 可以作为即插即用模块提升任意基于粗到细框架的盲去模糊方法
 - **鲁棒性强**: 对未知噪声类型（高斯、泊松、混合）都有效，因为残差滤波是对噪声类型不敏感的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **不处理动态场景模糊**: 方法假设线性卷积退化模型（空间不变核），不适用于动态场景
 - **guided filter 是固定的**: 作者也提到 guided filter 可以被更强的滤波器替代，这是一个提升空间

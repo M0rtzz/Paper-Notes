@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CustomTex: High-fidelity Indoor Scene Texturing via Multi-Reference Customization
 description: >-
@@ -107,7 +107,7 @@ tags:
 - 支持写实和艺术风格（Van Gogh、Cyberpunk）
 - 推理高效：4K纹理仅2.4秒
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练耗时48小时（单GPU）
 - 仅生成diffuse albedo纹理，不生成PBR材质（normal/roughness/metallic map）
 - 依赖高质量UV展开

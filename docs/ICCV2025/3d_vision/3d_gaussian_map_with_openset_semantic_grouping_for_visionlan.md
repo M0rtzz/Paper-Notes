@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Gaussian Map with Open-Set Semantic Grouping for Vision-Language Navigation
 description: >-
@@ -107,7 +107,7 @@ tags:
 3. **多层级决策**：Multi-Level Action Prediction策略在不同空间粒度上进行推理，与人类导航时的"先全局规划、再局部执行"策略一致
 4. **延续性研究**：在同组VER（CVPR 2024）和BEV Scene Graph（ICCV 2023）基础上的自然演进，从体素→高斯的表示升级
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：在线构建3D高斯地图需要多视角观测和3DGS优化，实时性可能受限
 2. **代码未开源**：GitHub仓库仅有README，可复现性待验证

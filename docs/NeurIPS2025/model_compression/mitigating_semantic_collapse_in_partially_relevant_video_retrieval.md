@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Semantic Collapse in Partially Relevant Video Retrieval
 description: >-
@@ -147,7 +147,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{retrieval}} + \alpha \mathcal{L}_{\text{TCPL}
 - **知识蒸馏思路巧妙**：用冻结的基础模型作为 teacher 保持文本语义结构，成本低效果好
 - **层次化视频建模**：双分支架构天然适合处理视频中不同时间尺度的事件
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：双分支架构增加了约 40% 的参数量和计算量
 2. **强负样本挖掘**：论文未深入探讨跨视频语义相似样本的利用

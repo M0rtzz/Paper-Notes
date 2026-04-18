@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Moment- and Power-Spectrum-Based Gaussianity Regularization for Text-to-Image Models
 description: >-
@@ -136,7 +136,7 @@ $$\mathcal{L}_{\mathcal{N}(0,I)} = \sum_{n \in \mathcal{K}} \mathcal{L}_n + \lam
 - **Lemma 1的数学推导**为频谱正则化提供了坚实理论基础
 - **batch平均策略**巧妙地避免了NLL loss过度压缩频谱方差的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 损失值本身无法可靠指示潜在向量与真实标准高斯分布的接近程度
 - 继承了预训练生成模型的偏见和伪影

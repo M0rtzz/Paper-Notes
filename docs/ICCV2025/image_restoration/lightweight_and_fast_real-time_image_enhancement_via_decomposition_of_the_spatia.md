@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lightweight and Fast Real-time Image Enhancement via Decomposition of the Spatial-aware Lookup Tables
 description: >-
@@ -142,7 +142,7 @@ PPR10K数据集上也保持最优或次优PSNR。
 3. **4K分辨率下近乎零延迟增长**：480p和4K推理时间几乎相同（1.37ms vs 1.38ms），解决了高分辨率实时增强的核心痛点
 4. **可视化分析出色**：清晰展示了slicing和LUT transform各自的作用（局部调整 vs 颜色调整）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在图像增强任务上验证，可拓展到其他LUT应用（如超分辨率）
 - SVD的秩选择依赖经验实验，自适应秩选择可能更优

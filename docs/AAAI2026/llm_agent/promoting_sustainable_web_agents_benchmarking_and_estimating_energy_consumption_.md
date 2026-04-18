@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Promoting Sustainable Web Agents: Benchmarking and Estimating Energy Consumption Through Empirical and Theoretical Analysis
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：不同 Web Agent 的设计哲学导致能耗差距可达 10 倍以上，但这种差距对终端用户完全不透明。高能耗的 agent 并不必然带来更好的性能。
 
-**本文要解决什么**：量化不同 Web Agent 的能耗差异，让研究社区和用户意识到这一问题的紧迫性，并推动评测标准纳入能效维度。
+**本文目标**：量化不同 Web Agent 的能耗差异，让研究社区和用户意识到这一问题的紧迫性，并推动评测标准纳入能效维度。
 
 **切入角度**：同时从**实证测量**（直接基准测试开源 Agent）和**理论估算**（针对使用专有 LLM 的 Agent）两个互补角度进行分析。
 
@@ -49,19 +49,19 @@ tags:
 
 **模块一：实证基准测试（Empirical Benchmarking）**
 
-- **做什么**：在 Mind2Web benchmark 上运行 5 个开源 Web Agent（AutoWebGLM、MindAct、MultiUI、Synapse、Synatra），用 carbontracker 库直接测量 GPU 能耗。
+- **功能**：在 Mind2Web benchmark 上运行 5 个开源 Web Agent（AutoWebGLM、MindAct、MultiUI、Synapse、Synatra），用 carbontracker 库直接测量 GPU 能耗。
 - **核心思路**：修改原始 Agent 代码，在执行开始和结束处插入 carbontracker 标记，捕获实际 GPU 能耗。在 8 种 NVIDIA GPU（A100、RTX 3090、H100、H200、L40S 等）上各运行 5 次取平均。
 - **设计动机**：直接测量是最精确的方式，但前提是 Agent 和 LLM 都开源。通过多 GPU 多次运行确保结果稳定可靠。
 
 **模块二：理论能耗估算（Theoretical Estimation）**
 
-- **做什么**：对使用专有 LLM（如 GPT-4）的 Agent 进行能耗估算。核心公式为 $E_{action} = \bar{N} \cdot e_{token}$，其中 $\bar{N}$ 是每次动作的平均 token 数，$e_{token}$ 是每 token 能耗。
+- **功能**：对使用专有 LLM（如 GPT-4）的 Agent 进行能耗估算。核心公式为 $E_{action} = \bar{N} \cdot e_{token}$，其中 $\bar{N}$ 是每次动作的平均 token 数，$e_{token}$ 是每 token 能耗。
 - **核心思路**：分析 Agent 论文和开源代码，确定其内部流程（输入模态、预处理步骤、LLM 调用次数），然后分别估算每个 LLM 组件的 token 数和 per-token 能耗。对 GPT-4 基于泄露的 1.8T 参数 MoE 架构，推导 FLOP 并映射到 H100 GPU 性能。
 - **设计动机**：闭源 Agent 无法直接测量，但仍需提供某种比较手段。用 MindAct 同时进行测量和估算，可以评估估算方法的准确性。
 
 **模块三：碳排放换算与可视化**
 
-- **做什么**：将能耗乘以不同国家的碳排放因子（挪威 20g/kWh、美国 453g/kWh、澳大利亚 800g/kWh），换算为 CO₂ 排放量，并进一步转换为汽车行驶距离。
+- **功能**：将能耗乘以不同国家的碳排放因子（挪威 20g/kWh、美国 453g/kWh、澳大利亚 800g/kWh），换算为 CO₂ 排放量，并进一步转换为汽车行驶距离。
 - **核心思路**：使不同 Agent 的环境代价直观可感。
 - **设计动机**：能耗数字（kWh）对大多数人缺乏直觉，但"相当于开车 X 公里"的表述让影响易于理解。
 
@@ -111,7 +111,7 @@ tags:
 - **"预处理节能"的洞见**：Web Agent 能效的关键不在模型大小，而在于能否通过巧妙的预处理减少需要处理的 token 总量。
 - **碳排放换算**直观有力——将抽象的 kWh 转化为开车公里数。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论估算精度有限**：7 倍的高估表明当前方法仅能提供粗略量级参考。
 2. **完全闭源 Agent 无法评估**：如 OpenAI Operator、Google Mariner 由于没有任何技术细节公开，连估算都无法进行。

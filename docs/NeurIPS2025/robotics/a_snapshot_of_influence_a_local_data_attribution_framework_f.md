@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Snapshot of Influence: A Local Data Attribution Framework for Online Reinforcement Learning
 description: >-
@@ -90,7 +90,7 @@ tags:
 - **IIF的实用性**: 只增加极小计算开销（影响力计算约0.1-2秒/轮），却带来20-70%的样本效率提升和运行时间减少
 - **在RLHF上的扩展**: 设计了序列级目标函数 $f_{\text{seq}}$，成功扩展到LLM场景，总体运行时间减少4倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **优化器假设**: TracIn为SGD设计，但现代RL和LLM多用Adam。虽然实验中Adam下IIF仍有效，但缺乏理论保证
 - **算法覆盖范围**: 目前聚焦PPO，扩展到GRPO等LLM常用算法是重要方向
 - **缺乏反事实解释**: 局部归因无法回答"如果这条记录不存在会怎样"——部分因TracIn本身限制，部分因在线RL的循环依赖使反事实追踪极其困难

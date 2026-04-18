@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LexChronos: An Agentic Framework for Structured Event Timeline Extraction in Indian Jurisprudence
 description: >-
@@ -178,7 +178,7 @@ $$F_{i+1} = \text{FeedbackAgent}(J, E_{i+1})$$
 4. **法律AI的实用pipeline**：从数据集→抽取→评估→下游应用形成完整闭环
 5. **小模型的有效利用**：全部组件都使用<4B参数的模型，对资源受限的法律AI部署友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **合成数据集的代表性**：虽然验证了结构保真度，但合成判决与真实判决的语言复杂度、论证深度可能有差距
 2. **仅覆盖印度最高法院**：下级法院、仲裁庭、特殊法庭的判决结构可能不同

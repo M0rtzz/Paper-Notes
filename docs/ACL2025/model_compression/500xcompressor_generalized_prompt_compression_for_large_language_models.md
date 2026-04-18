@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 500xCompressor: Generalized Prompt Compression for Large Language Models
 description: >-
@@ -154,7 +154,7 @@ $$\mathcal{L}_F = -\sum_{j=1}^{n} \log P(a_j | H_C, q_{1:m}, a_{1:j-1}; \Theta_{
 - 将压缩 token 解读为"新的 LLM 语言"的视角有启发性（编码信息、传输信息、适应性评估三要素）
 - 只训练 LoRA 参数（~0.25%）即实现高压缩性能，参数效率极高
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预训练和微调仅在较小的 Arxiv 语料上进行，扩大训练数据有望进一步提升
 - 当前仅支持约 500 token 的输入长度，对更长文本的扩展需要验证

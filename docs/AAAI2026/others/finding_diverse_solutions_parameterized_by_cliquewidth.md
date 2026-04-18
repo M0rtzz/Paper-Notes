@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Finding Diverse Solutions Parameterized by Cliquewidth
 description: >-
@@ -120,7 +120,7 @@ $$\mathrm{Div}(S_1 \cup P_1, \ldots, S_r \cup P_r) = \mathrm{Div}(S_1, \ldots, S
 - **单调性概念的提出与验证**：形式化了"单调DP"的概念，声称文献中绝大多数cliquewidth上的DP都是单调的或可以轻易改造为单调的，并通过非单调DP的反例（Section 4.4）加以说明
 - **完整的MSO1构造性证明**：通过归约求值树重新证明了Courcelle定理的cliquewidth版本，并证明得到的DP满足单调性，这是一个技术上non-trivial的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限顶点问题**：当前框架仅适用于顶点子集问题，未扩展到边问题（如哈密顿回路），论文提出这是一个开放问题——cliquewidth参数化下哈密顿回路的多样化版本是否有XP算法？
 - **DivMin的额外开销**：DivMin度量需要 $d^{r^2}$ 的额外因子，是否可以消除是另一个开放问题

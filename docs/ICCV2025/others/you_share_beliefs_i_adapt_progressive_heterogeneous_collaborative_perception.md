@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] You Share Beliefs, I Adapt: Progressive Heterogeneous Collaborative Perception
 description: >-
@@ -140,7 +140,7 @@ tags:
 - **仅适配器训练的隔离性**：多agent协作时各适配器独立，避免了全模型微调的相互干扰——工程上非常实用。
 - **伪标签对结果不太敏感**：空间注意力机制提供了天然的鲁棒性，降低了对伪标签质量的依赖。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证LiDAR编码器**：PointPillars和SECOND的异构性相对有限，未验证跨模态(LiDAR vs Camera)场景。
 2. **仅模拟数据**：OPV2V基于CARLA模拟器，真实世界的噪声、通信延迟、定位误差等未充分考虑。

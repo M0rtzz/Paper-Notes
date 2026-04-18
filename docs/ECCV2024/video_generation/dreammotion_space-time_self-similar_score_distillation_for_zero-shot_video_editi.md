@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamMotion: Space-Time Self-Similar Score Distillation for Zero-Shot Video Editing
 description: >-
@@ -129,7 +129,7 @@ DreamMotion的优化策略由三个部分组成：
 3. **模型无关**：适用于级联和非级联两种框架，无需微调模型权重，真正的零样本方法
 4. **高效计算**：三个损失共享一次扩散前向/反向计算，计算开销可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 框架设计保持原始结构，**不适用于需要显著结构变化的编辑任务**（如改变物体姿态）
 - 依赖现成目标检测器提供编辑区域掩码

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BRIDGE: Multimodal-to-Text Retrieval via Reinforcement-Learned Query Alignment
 description: >-
@@ -105,7 +105,7 @@ $$\hat{\mathcal{D}}_k = \text{LENS}(\text{FORGE}(q_t, \text{GPT-4o}(q_v)), \math
 - 作为即插即用模块与任意检索器兼容，实用性极强
 - 证明了在某些场景下"理解图像内容"不如"理解检索意图"重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖 GPT-4o 进行图像描述，引入较高的 API 成本和延迟
 - FORGE 基于 7B 模型，推理开销大于直接编码查询
 - 视觉描述可能丢失细粒度视觉信息（如精确的 UI 布局）

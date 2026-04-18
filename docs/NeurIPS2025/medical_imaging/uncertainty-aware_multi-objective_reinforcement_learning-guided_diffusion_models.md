@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Uncertainty-Aware Multi-Objective Reinforcement Learning-Guided Diffusion Models for 3D De Novo Molecular Design
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}_{\text{PPO}} = -\mathbb{E}_{m \sim p_\theta}\left[\min\left(r(m) \
 - **完整的奖励工程**：reward boosting + diversity penalty + dynamic cutoff 三组件缺一不可，消融实验证据充分
 - **真实药物发现验证**：不止于生成指标，通过 MD 模拟和 ADMET 分析验证候选分子的实际药物潜力，与已知 EGFR 抑制剂对标
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **PubChem 大分子表现有限**：validity 仅 16.23%，主要受骨干扩散模型对复杂大分子的建模能力制约，非 RL 框架本身的问题
 - **代理模型依赖**: 奖励质量取决于代理模型的预测精度和不确定性校准，binding affinity 的 R² 仅 0.86-0.88
 - **属性独立性假设**: 多目标奖励假设各属性条件独立，但药物属性间往往存在相关性（如 QED 与 SAS 负相关）

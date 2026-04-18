@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Teacher to Student: Tracking Memorization Through Model Distillation
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：需要在保持任务性能的同时降低模型对训练数据的记忆化程度，尤其在涉及隐私敏感数据的场景中。
 
-**本文要解决什么**：系统研究不同知识蒸馏方法如何影响从微调教师模型到小学生模型传递过程中的记忆化行为。
+**本文目标**：系统研究不同知识蒸馏方法如何影响从微调教师模型到小学生模型传递过程中的记忆化行为。
 
 **切入角度**：将蒸馏视为一种隐式的隐私保护技术，通过比较 SFT、Word-Level KD、Sequence-Level KD 和 RKLD 四种方法的记忆化行为来验证这一假设。
 

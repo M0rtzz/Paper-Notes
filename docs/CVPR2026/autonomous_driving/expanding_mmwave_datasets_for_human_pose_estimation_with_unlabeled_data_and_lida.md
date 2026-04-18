@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EMDUL: Expanding mmWave Datasets for Human Pose Estimation with Unlabeled Data and LiDAR Datasets
 description: >-
@@ -129,7 +129,7 @@ $$L = L^{\text{lab}} + \lambda^{\text{con}} L^{\text{con}}$$
 - **闭式转换无需配对数据**：LiDAR→mmWave 转换不依赖任何配对的跨模态数据，只需独立的 LiDAR 数据集即可
 - **每 epoch 重新随机生成转换数据**：有效增加训练数据的多样性，类似在线数据增强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 点云转换管线依赖经验参数（阈值 $\gamma$、$\delta$ 等），对不同场景可能非最优——未来可探索自适应或可学习转换
 - UTCL 对复杂运动模式的建模还不够充分,可引入更精细的时序模型

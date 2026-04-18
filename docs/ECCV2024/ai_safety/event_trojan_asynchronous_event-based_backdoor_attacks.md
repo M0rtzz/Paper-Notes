@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Event Trojan: Asynchronous Event-Based Backdoor Attacks
 description: >-
@@ -143,7 +143,7 @@ $10 \times 10$ 为性能与隐蔽性的最佳平衡点。$1 \times 10$ 和 $5 \t
 4. **表示无关性**：攻击在事件流层面完成，对下游使用的表示方法无依赖
 5. **强鲁棒性**：在 SOTA 防御方法 Neural Polarizer 下仍保持 64% ASR，因恶意特征与良性特征在事件流中紧密交织
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **任务范围有限**：仅在分类任务上验证，未涉及语义分割、目标检测等更通用的事件任务
 2. **数据集规模小**：N-Caltech101 仅 4356 训练样本，在 Inception-V3 等模型上 mutable trigger 表现不佳

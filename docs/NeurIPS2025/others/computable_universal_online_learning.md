@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Computable Universal Online Learning
 description: >-
@@ -96,7 +96,7 @@ Separation 证明构造了一个"evil sequence"类：对每个 total 学习器 $
 - **与归纳推理理论的联系**：Projection Lemma 类似于 Blum & Blum (1975) 的 locking sequence 概念，建立了在线学习与归纳推理之间的桥梁
 - **evil sequence 构造精巧**：Separation Theorem 的对角化论证思路清晰，构造简洁而有力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限可数域**：假设域为 $\mathbb{N}$，虽有实践理由但限制了理论的一般性
 - **一般类的 realizable 刻画缺失**：对非 RE 的一般假设类，可计算 realizable 学习的精确刻画仍是 open problem

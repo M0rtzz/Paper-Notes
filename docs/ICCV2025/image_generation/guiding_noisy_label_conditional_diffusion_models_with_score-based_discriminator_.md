@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Guiding Noisy Label Conditional Diffusion Models with Score-based Discriminator Correction
 description: >-
@@ -127,7 +127,7 @@ SBDC在类条件指标（CW-FID、CW-Density、CW-Coverage）上全面超越TDSM
 - γ-gate机制的设计既提升了效果又减少了推理开销，是"少即是多"原则的很好体现
 - SiMix是一种新颖的Mixup变体，基于特征相似性而非随机配对，对判别器泛化有帮助
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在CIFAR-10等小尺度数据集上验证，缺乏大规模文本到图像模型（如Stable Diffusion）的实验
 - 噪声检测本身的准确率会影响最终效果，在极高噪声率下可能降级

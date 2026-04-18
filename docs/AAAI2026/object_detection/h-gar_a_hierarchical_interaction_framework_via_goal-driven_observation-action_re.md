@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation
 description: >-
@@ -119,7 +119,7 @@ H-GAR 在 8-step 生成下 Libero-10 FVD 49.01（UVA 51.10），Mouse Arrangemen
 4. **真实机器人验证充分**，4 类任务覆盖短时域/长时域/精细操控，长时域任务优势突出。
 5. FVD 与成功率的负相关分析提供了观测生成质量→操控性能的直接证据。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **领域分类不当**：本文核心是机器人操控/策略学习，而非 object detection，当前分类可能需要重新归类到 robotics。
 2. **计算开销**：层次化多阶段设计增加了推理复杂度，论文未讨论推理延迟，对实时控制场景可能存在瓶颈。

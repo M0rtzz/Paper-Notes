@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Flow from Generative Pretext Tasks for Neural Architecture Encoding
 description: >-
@@ -130,7 +130,7 @@ FGP 在 **27 个设置中的 23 个**胜出。ResGatedGCN + FGP 在 NB-101 上 P
 - Flow surrogate 不需要任何标签即可计算，天然适合无监督预训练。
 - 方法具有很好的通用性，可插入任意 GNN 编码器作为预训练步骤。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Flow surrogate 使用固定随机矩阵 $\mathbf{P}$ 和 $\mathbf{W}$，可能不是最优选择，可以探索可学习的初始化或多组随机采样的集成。
 - 目前只在 NAS-Bench 系列（主要是 CV 领域）上充分验证，NLP 和图学习等领域的结果放在附录中。

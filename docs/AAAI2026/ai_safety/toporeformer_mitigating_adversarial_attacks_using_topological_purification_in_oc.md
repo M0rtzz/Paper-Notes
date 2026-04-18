@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TopoReformer: Mitigating Adversarial Attacks Using Topological Purification in OCR Models
 description: >-
@@ -169,7 +169,7 @@ Freeze-Flow 训练范式：
 - **Freeze-Flow 训练技巧精巧**：通过控制梯度流向解决了多路径模型中辅助分支欠训练的常见问题
 - **隐式 Lipschitz 平滑性**：拓扑约束隐式地限制了潜表示对输入扰动的敏感度，提供了一种不依赖显式梯度正则化的鲁棒性来源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对 BPDA 攻击仍脆弱**：BPDA 可利用局部曲率绕过全局拓扑平滑性，ASR 仍高达 81%
 2. **评估数据集局限**：仅在 MNIST/EMNIST 等简单数据上验证，未在 CIFAR-10/ImageNet 等自然图像上测试

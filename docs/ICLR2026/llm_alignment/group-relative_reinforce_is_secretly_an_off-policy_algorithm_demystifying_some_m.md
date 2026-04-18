@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Group-Relative REINFORCE Is Secretly an Off-Policy Algorithm: Demystifying Some Myths About GRPO and Its Friends
 description: >-
@@ -118,7 +118,7 @@ tags:
 - **"IS 无用"的反直觉发现**：IS 通常被认为是 off-policy RL 的基础设施，但在 LLM 微调的语境下（策略变化通常不大，token-wise IS 本身就是偏的），IS 权重接近 1，校正效果可忽略。真正起作用的是 clipping 带来的隐式信赖域。这个洞察直接简化了工程实现
 - **统一框架的解释力**：将 GRPO（clipping 正则化）、OPMD（均方正则化）、AsymRE（KL 正则化）统一为 REINFORCE + 不同正则化形式，把三条独立的研究线索串成了一个故事。同时，RED-Drop 和 RED-Weight 对应第二条原则（数据分布塑造），完成了理论闭环
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **缺乏收敛保证**：off-policy 解释提供了正当性但没有给出 policy improvement 或收敛的形式化保证，需要未来工作在特定数据分布假设下建立
 - **纯 offline 设置的 trade-off 未解决**：扩大 clipping 范围在 offline 设置下可能导致不稳定，作者指出这是一个开放问题，可能需要自适应 clipping 策略（根据训练进度、off-policy 程度动态调整范围）

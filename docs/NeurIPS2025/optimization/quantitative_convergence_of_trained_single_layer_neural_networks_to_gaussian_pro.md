@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Quantitative Convergence of Trained Single Layer Neural Networks to Gaussian Processes
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{W}_2^2(f(x;\theta_t), G_t(x)) \leq r\left(\frac{a_1 \log n_1}{(\lambd
 - 揭示了宽度、输入维度、NTK最小特征值和训练时间之间的精确相互作用
 - 通过好事件/坏事件分区和辅助算子 $I_t(B)$ 的巧妙定义，优雅地处理了随机矩阵的可逆性问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅适用于浅层（单隐层）网络，扩展到深层网络是重要但困难的方向
 - 不适用于ReLU激活（需要Lipschitz连续性），虽然作者预期结论仍成立

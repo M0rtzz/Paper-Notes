@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Simple Baseline for Spoken Language to Sign Language Translation with 3D Avatars
 description: >-
@@ -93,7 +93,7 @@ tags:
 - **Sign Connector动态预测时长**：用4层MLP预测co-articulation持续帧数，比固定插值效果好很多，且几乎无额外开销
 - **副产品思路有启发性**：3D表示天然支持旋转增强和多视角输入，轻松为手语理解任务提供免费的数据增强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **数据稀缺性**：text-gloss对训练数据不足可能导致Text2Gloss翻译质量受限，大规模手语数据集的构建是瓶颈
 - **2D关键点伪标签质量**：3D估计依赖HRNet的2D关键点，若检测不准则3D结果也会退化；手语专用的2D检测器可能更好
 - **深度歧义未完全解决**：单目到3D的深度估计仍是开放问题，当前方法主要靠先验约束缓解

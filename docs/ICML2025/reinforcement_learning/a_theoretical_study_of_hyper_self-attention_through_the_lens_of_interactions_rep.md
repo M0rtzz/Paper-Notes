@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Theoretical Study of (Hyper) Self-Attention through the Lens of Interactions: Representation, Training, Generalization
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：将每个 token 视为一个"交互实体"（如 MARL 中的智能体、DNA 中的等位基因、图像中的像素块），token 之间的依赖关系可以统一建模为"成对交互函数"。这一抽象在多个领域中自然成立。
 
-**核心 idea 一句话**：Self-attention 本质上是成对交互的高效学习器——用正交嵌入将实体间的交互编码到注意力分数矩阵中，并在此理论基础上设计更强大的注意力变体。
+**核心 idea**：Self-attention 本质上是成对交互的高效学习器——用正交嵌入将实体间的交互编码到注意力分数矩阵中，并在此理论基础上设计更强大的注意力变体。
 
 ## 方法详解
 

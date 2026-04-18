@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VK-Det: Visual Knowledge Guided Prototype Learning for Open-Vocabulary Aerial Object Detection
 description: >-
@@ -166,7 +166,7 @@ $$\mathcal{L}_{proto} = \mathbb{E}_{(f(p), u)} P(f_{roi}(p_i), u)$$
 3. **原型学习替代文本嵌入**：有效缓解了文本幻觉问题，特别适合航空场景中类别名称可能模糊的情况
 4. **DOTA 上的巨大提升**：9.1% mAP^N 的提升说明方法在小目标密集场景中优势更大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 聚类数 k 的选择对性能敏感，k 过大可能将同类特征分散到不同聚类
 2. 两阶段训练流程增加了复杂度，可探索端到端方案

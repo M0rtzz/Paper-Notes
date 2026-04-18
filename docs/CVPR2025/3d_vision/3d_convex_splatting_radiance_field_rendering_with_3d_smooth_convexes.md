@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3D Convex Splatting: Radiance Field Rendering with 3D Smooth Convexes
 description: >-
@@ -88,7 +88,7 @@ tags:
 - 轻量版3DCS（16bit精度）用<15%内存即接近3DGS的视觉质量
 - Figure 11展示凸体能将树桩分解为有物理意义的凸形部件——不只是渲染技巧，还是场景理解的基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 渲染速度（25-33 FPS）低于3DGS（134 FPS），虽仍实时但差距明显，主要因为Graham Scan和凸包线段计算开销。每帧需要对所有可见凸体做2D凸包计算，复杂度$O(K\log K)$乘以凸体数量
 - 训练时间比3DGS长40-107%，主要开销在反向传播时需要对凸包计算做微分
 - 在室外自然场景（植被/天空等无明确边角的区域）SSIM/PSNR优势不大

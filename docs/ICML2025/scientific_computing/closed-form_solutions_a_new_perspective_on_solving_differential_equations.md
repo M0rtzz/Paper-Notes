@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Closed-form Symbolic Solutions: A New Perspective on Solving Partial Differential Equations
 description: >-
@@ -101,7 +101,7 @@ tags:
 - **离散时间模型**：受 FDTD 启发，用参数化表达式骨架处理时空 PDE，巧妙降维
 - **实际意义**：闭式解可精确外推到训练域之外，这是所有数值方法做不到的
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 Poisson 方程和热方程上验证，未涉及更复杂的非线性 PDE (如 Navier-Stokes)
 - 搜索空间随变量数和算子种类指数增长，可扩展性有待验证
 - 需要预先指定允许的运算符集合，这需要领域先验知识

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Fabrication of Reality and Fantasy: Scene Generation with LLM-Assisted Prompt Interpretation
 description: >-
@@ -170,7 +170,7 @@ RFNet 在 GPT4Score 上比 Stable Diffusion 提升 33%，在 Creativity & Imagin
 3. **双约束机制区别于传统 layout loss**：引导约束保真度 + 抑制约束减干扰，两者功能互补
 4. **LLM 弥补数据偏差**：利用 LLM 的知识和推理能力弥补扩散模型训练数据中对非常规场景的缺失
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 LLM 推理质量，LLM 理解错误会传播到生成结果
 - SAA 基于文本余弦相似度选择描述，可能不适用于高度抽象的概念

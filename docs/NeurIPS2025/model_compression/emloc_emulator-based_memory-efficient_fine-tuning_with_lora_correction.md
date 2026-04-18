@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EMLoC: Emulator-based Memory-efficient Fine-tuning with LoRA Correction
 description: >-
@@ -31,11 +31,11 @@ EMLoC 通过对原始模型做 activation-aware SVD 构建轻量级 emulator 进
 
 **核心矛盾**：LoRA/梯度 checkpointing 虽然减少了优化器和激活的内存，但模型参数本身的加载仍然存在，无法弥合微调与推理之间的内存差距。
 
-**本文要解决什么**：能否设计一种微调策略，让用户在和推理相同的内存预算下完成大模型微调？
+**本文目标**：能否设计一种微调策略，让用户在和推理相同的内存预算下完成大模型微调？
 
 **切入角度**：既然微调内存 = 模型参数 + 优化器 + 激活，那如果在微调时用一个压缩的低秩模型（emulator）替代原始模型，就能同时减少三个组件的内存。关键问题变为：如何保证在 emulator 上训练的 LoRA 能成功迁移回原模型？
 
-**核心idea一句话**：用 activation-aware SVD 压缩模型构建 emulator 做 LoRA 微调，再通过 LoRA 校正算法补偿压缩引入的不对齐。
+**核心 idea**：用 activation-aware SVD 压缩模型构建 emulator 做 LoRA 微调，再通过 LoRA 校正算法补偿压缩引入的不对齐。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ EMLoC 包含三个阶段：
 - **即插即用性**：EMLoC 不修改任何训练 pipeline，只需替换模型为 emulator，训练完做一次校正即可。与量化方法正交，可叠加使用
 - 将 SVD 重参数化用于子空间对齐的思路可迁移到其他需要跨模型迁移适配器的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖现成的 SVD 方法做压缩，这些方法面向推理行为保持而非微调动态保持，可能不是最优的 emulator 构建策略
 - 用标准 SVD 做 emulator 时对短时间微调（如 DreamBooth 500 步）效果略逊于直接微调
 - $\lambda$ 需要手动调参，未来可考虑自适应校正幅度

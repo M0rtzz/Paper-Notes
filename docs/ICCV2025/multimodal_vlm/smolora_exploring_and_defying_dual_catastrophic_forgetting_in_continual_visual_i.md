@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SMoLoRA: Exploring and Defying Dual Catastrophic Forgetting in Continual Visual Instruction Tuning
 description: >-
@@ -49,21 +49,21 @@ SMoLoRA基于混合LoRA专家（MoLoRA）框架，但引入了可分离路由机
 
 #### 1. 视觉理解模块——基于实例的路由
 
-- **做什么**：根据当前输入实例的整体视觉+文本特征，选择最适合的LoRA块处理视觉理解任务。
+- **功能**：根据当前输入实例的整体视觉+文本特征，选择最适合的LoRA块处理视觉理解任务。
 - **核心思路**：对当前层输入 $x_{l-1} \in \mathbb{R}^{d \times s}$ 沿序列维度取平均 $\text{Avg}(x_{l-1})$，然后通过路由矩阵 $R^{vu} \in \mathbb{R}^{M \times d}$ 计算每个LoRA块的激活权重：
   $G^{vu}(z^{vu}) = \text{softmax}(\text{top}_k(R^{vu} \cdot \text{Avg}(x_{l-1})))$
 - **设计动机**：视觉理解需要综合考虑图像内容和文本引导的关键信息，因此使用整个实例的平均特征作为路由依据。这使得相似的视觉理解任务（如不同VQA数据集）可以共享LoRA块，而差异大的任务（如分类vs.描述）使用不同块。
 
 #### 2. 指令遵循模块——基于指令嵌入的路由
 
-- **做什么**：根据当前任务指令的语义特征，选择对应的LoRA块处理指令理解和格式控制。
+- **功能**：根据当前任务指令的语义特征，选择对应的LoRA块处理指令理解和格式控制。
 - **核心思路**：用Sentence-BERT对指令文本 $X^{ins}$ 编码得到嵌入 $f_\sigma(X^{ins}) \in \mathbb{R}^{e \times 1}$，通过路由矩阵 $R^{if} \in \mathbb{R}^{(N-M) \times e}$ 计算激活权重：
   $G^{if}(z^{if}) = \text{softmax}(\text{top}_k(R^{if} \cdot f_\sigma(X^{ins})))$
 - **设计动机**：不同任务的指令格式差异（"Describe the image"vs."Answer with a single word"）是导致指令遵循遗忘的直接原因。用指令嵌入而非实例特征来路由，可以精确区分不同指令需求，让相同指令格式的任务复用LoRA块，不同格式的任务用不同块。
 
 #### 3. 自适应融合模块
 
-- **做什么**：动态加权融合视觉理解模块和指令遵循模块的输出。
+- **功能**：动态加权融合视觉理解模块和指令遵循模块的输出。
 - **核心思路**：分别计算两个模块的输出 $x_l^{vu}$ 和 $x_l^{if}$，通过可训练的重要性矩阵 $I^{vu}, I^{if} \in \mathbb{R}^{1 \times k}$ 计算融合权重 $[\alpha, \beta]^T = \text{softmax}(\text{concat}(I^{vu} x_l^{vu}, I^{if} x_l^{if}))$，最终输出 $\mathcal{F} = \alpha \circ x_l^{vu} + \beta \circ x_l^{if}$
 - **设计动机**：两个模块的贡献并不均等——某些任务更依赖视觉理解，某些更依赖指令遵循。自适应融合让模型根据具体输入动态调整两者权重，而非简单平均。
 
@@ -112,7 +112,7 @@ SMoLoRA在AP上超过次优方法Eproj 18.15%，BWT从-14.02提升到-3.23，几
 - **可分离路由思想**具有通用性——不仅适用于LoRA专家，还可推广到其他参数高效方法。
 - **MIF指标的设计**填补了现有CVIT评估中缺乏指令遵循能力度量的空白。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在LLaVA-v1.5-7B上实验，模型规模较小，更大模型（如13B/70B）上双重遗忘是否同样严重有待验证。
 - 路由策略使用固定的top-1选择，动态top-k或软路由可能带来进一步提升。

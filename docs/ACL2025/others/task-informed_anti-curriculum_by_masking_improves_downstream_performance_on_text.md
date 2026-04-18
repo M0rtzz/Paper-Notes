@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Task-Informed Anti-Curriculum by Masking Improves Downstream Performance on Text
 description: >-
@@ -115,7 +115,7 @@ RoBERTa 上也有一致提升，所有结果均通过 Cochran's Q 检验（p < 0
 3. **适用性广**：在掩码LM（BERT/RoBERTa）和自回归LM（GPT-2）上均有效
 4. **课程学习视角新颖**：首次明确将掩码率调度与反课程学习联系，并在微调阶段验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 没有通用的最优掩码率调度，K 和衰减形式需用户调优
 - 任务特定的 token 重要性函数设计可能在某些任务上不直观（如回归任务、多标签任务）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FunKAN: Functional Kolmogorov-Arnold Network for Medical Image Enhancement and Segmentation
 description: >-
@@ -126,7 +126,7 @@ U-FunKAN 不同通道配置对 BUSI 分割性能的影响：
 - 代码工程质量高：用 PyTorch Lightning + Ruff + YAML 配置管理实验，可复现性好
 - 同时解决增强和分割两个任务，展示了框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 函数空间上的 Kolmogorov-Arnold 扩展尚未形式化证明，目前仅为合理假设
 - FunKAN 骨干的参数量（2.2M）和计算量（3.11 GFLOPs）虽可接受但远高于原始 KAN（0.04M / 0.12 GFLOPs），轻量化优势减弱
 - 分割实验数据集规模较小（BUSI 647 张、GlaS 165 张、CVC 612 张），需在更大规模数据集上验证

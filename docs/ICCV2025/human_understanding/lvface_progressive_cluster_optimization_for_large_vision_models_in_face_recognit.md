@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LVFace: Progressive Cluster Optimization for Large Vision Models in Face Recognition
 description: >-
@@ -152,7 +152,7 @@ LVFace 采用标准 ViT 作为骨干网络，配合 MLP 头（两层 512-d FC + 
 4. **CSS 自动调度**：基于余弦相似度统计量自动判断阶段切换时机，避免手动调参
 5. **ViT 原生兼容性**：不修改骨干网络，保持与 VLM/LLM 的兼容性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CSS 的阈值 $\delta_1, \delta_2$ 仍是经验设定，不同数据集可能需要调整
 - 仅在闭集训练、开集测试的标准范式下验证，未探索更多应用场景

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlexHook: Rethinking Two-Stage Referring-by-Tracking in RMOT
 description: >-
@@ -78,7 +78,7 @@ FlexHook-best: HOTA 56.77 vs LaMOTer 48.45(+8.32)
 - **PCD的masked attention**: 让所有表达式-轨迹对共享轨迹特征做cross-attention，通过mask隔离语言分支——既实现了成对判别又获得了跨对对比学习的效果
 - **两阶段方法的回归**: 首次证明正确设计的两阶段RBT可以全面超越一阶段，且训练更快，对"是否需要端到端"的讨论有启发
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能仍部分依赖tracker质量(用弱tracker D-DETR+StrongSORT时HOTA从42.53降至40.73)
 - 参考点数M=10是手动选择的，自适应确定M可能更好
 - 仅在多目标追踪场景验证，单目标referring tracking未测试

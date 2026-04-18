@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unifying and Enhancing Graph Transformers via a Hierarchical Mask Framework
 description: >-
@@ -108,7 +108,7 @@ M3Dphormer 包含三个核心组件：
 - **理论指导实践**：Theorem 3.1 直接指导了掩码选择策略——不是简单叠加，而是需要自适应路由
 - **稀疏性利用**：双重计算方案是对图掩码稀疏性的精确利用，比 FlashAttention 更适合不规则图结构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析仅针对节点分类任务，图级和边级任务的推广待探索
 - 簇分割依赖 METIS，对极小图（如 Chameleon 仅 890 节点）敏感

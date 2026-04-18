@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JointDiff: Bridging Continuous and Discrete in Multi-Agent Trajectory Generation
 description: >-
@@ -103,7 +103,7 @@ $$\mathcal{L}_{\mathrm{joint}} = \mathcal{L}_{\mathrm{simple}}^{\mathbf{Y}} + \l
 - 多项式扩散 vs 吸收态扩散的对比分析具有广泛参考价值，表明持续修正机制在时序建模中优于一次性决定
 - 提供了统一的体育 benchmark（包含文本描述的 NFL + Bundesliga），有利于社区后续工作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设每个时间步都存在控球事件（稠密事件模式），扩展到稀疏事件（如犯规、射门）是未来方向
 - 当前仅在体育场景验证，更广泛的多智能体系统（自动驾驶、机器人协作）需进一步适配

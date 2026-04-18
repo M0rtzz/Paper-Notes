@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fast-ThinkAct: Efficient Vision-Language-Action Reasoning via Verbalizable Latent Planning
 description: >-
@@ -147,7 +147,7 @@ LIBERO 超越 ThinkAct-3B 6.6%，SimplerEnv 超 4.0%，延迟降低 7×。
 - **延迟降低极其显著**：6 个 latent token + 5 个 spatial token 并行预测，89.3% 延迟降低，从不可用（0.1Hz）变为实时可用
 - **Failure recovery 能力出色**：RoboFAC 上超越第二名 10.9-16.4 分，说明 latent 推理保留了理解错误和规划纠正的能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Verbalizer 基于预训练 LLM，继承了幻觉问题——verbalized 推理可能产生看似合理但不准确的描述（不影响 action 推理）
 - 仅在模拟环境评估，未展示真实机器人部署结果

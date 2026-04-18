@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aligning Text to Image in Diffusion Models is Easier Than You Think
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：标准 T2I 训练仅使用正样本对（matched image-text pairs）最小化去噪损失，从表征对齐角度看是次优的——缺少负样本对的对比信号来区分不同文本条件。
 
-**本文要解决什么？** 如何用最小的额外参数和计算开销提升已训练好的 T2I 模型的文本-图像对齐？
+**本文目标** 如何用最小的额外参数和计算开销提升已训练好的 T2I 模型的文本-图像对齐？
 
 **切入角度**：将扩散模型的去噪损失重新解释为 logit（条件似然），在此基础上构建 InfoNCE 风格的对比学习损失，结合 prompt tuning 中的 soft token 概念实现轻量微调。
 
-**核心idea一句话**：把去噪损失当 logit 做对比学习 + 只训练 soft text token = 用不到 1M 参数显著提升文本-图像对齐。
+**核心 idea**：把去噪损失当 logit 做对比学习 + 只训练 soft text token = 用不到 1M 参数显著提升文本-图像对齐。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ tags:
 - **Soft token = 扩散模型的 prompt tuning**：类似于 NLP 中的 prompt tuning 思想，但应用于生成模型的文本条件通道。极低参数量（<1M）使得任何人都可以在消费级 GPU 上微调大型 T2I 模型的对齐质量
 - **可直接叠加到任何现有方法上**：无论是 PnP 编辑还是 FlowEdit，SoftREPA 都是即插即用的，这种通用性非常实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **FID 在 SD3 上有上升**：更强的文本对齐可能牺牲了多样性/无条件图像质量，需要进一步分析 trade-off
 - **GenEval 的 Counting 任务上表现下降**（0.56 → 0.29 on SD3），说明对比学习可能不擅长需要精确计数的语义
 - **soft token 数量和层位置的影响**：论文只提到在 upper layers 使用，但具体的消融不够详细

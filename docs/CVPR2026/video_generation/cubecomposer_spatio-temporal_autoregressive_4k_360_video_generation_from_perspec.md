@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CubeComposer: Spatio-Temporal Autoregressive 4K 360° Video Generation from Perspective Video
 description: >-
@@ -91,7 +91,7 @@ tags:
 - 稀疏上下文注意力设计简洁高效，线性复杂度使长上下文可行
 - 4K360Vid数据集本身也是贡献（11K+视频带caption）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自回归逐面生成的总推理延迟较高，可探索减少扩散步数或流式生成
 - cubemap表示在极点附近仍有一定失真

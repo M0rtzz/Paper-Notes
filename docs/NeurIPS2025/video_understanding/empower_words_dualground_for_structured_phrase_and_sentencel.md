@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empower Words: DualGround for Structured Phrase and Sentence-Level Temporal Grounding
 description: >-
@@ -111,7 +111,7 @@ DualGround在两个基准上的MR和HD任务均达到SOTA。
 - **短语作为中间表示**：在词和句子之间引入短语层是合理的语义粒度
 - ACA的dummy tokens设计巧妙地解决了单token key序列的attention兼容性问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 短语数量N固定，对不同长度和复杂度的query不够灵活
 - 短语聚类完全基于特征空间相似性，未利用语法结构信息

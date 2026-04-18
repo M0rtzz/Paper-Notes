@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Agentified Assessment of Logical Reasoning Agents
 description: >-
@@ -92,7 +92,7 @@ Agentified Agent Assessment (AAA) = Assessor Agent(评估协议) + Agent Under T
 - **数据清洗的启示**: 用形式化定理证明器验证NLI数据集标签，比人工标注更可靠更可扩展
 - **False类的巨大提升**: 揭示了CoT在逻辑否定/矛盾推理上的根本局限——非形式化方法此处天花板有限
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在单一数据集(FOLIO 203例验证集)上验证，规模极小，统计功效有限
 - 仅比较了CoT和Auto-formalization两种agent，缺乏更多方法(如LINC/Logic-LM/SymbCoT)对比

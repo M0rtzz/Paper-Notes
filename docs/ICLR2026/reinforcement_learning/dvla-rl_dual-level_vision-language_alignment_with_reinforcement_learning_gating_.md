@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DVLA-RL: Dual-Level Vision-Language Alignment with Reinforcement Learning Gating for Few-Shot Learning
 description: >-
@@ -137,7 +137,7 @@ DVLA-RL 包含两个核心模块：
 3. 细粒度和跨域场景的大幅度提升（5-16%）说明该方法对域迁移和细微差异的捕捉尤为有效
 4. 设计轻量：RLA 模块仅增加少量参数，RL 训练稳定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 LLM（Qwen2.5-VL-32B）生成属性，推理时的 LLM 调用增加延迟
 2. 属性和描述可以预计算，但新类别仍需 LLM 推理

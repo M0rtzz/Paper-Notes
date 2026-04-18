@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Conformal Prediction in The Loop: A Feedback-Based Uncertainty Model for Trajectory Optimization
 description: >-
@@ -109,7 +109,7 @@ $$\sum_{\tau=t+1}^{T} \alpha_\tau \leq \alpha - \sum_{\tau=0}^{t} \beta_\tau$$
 - **IRA 的主动/非活跃约束分析**具有优雅的理论结构：紧缩→松弛的迭代在保持可行性的同时单调降低代价
 - 框架通用性强：适用于任何带联合概率约束的缩减时域优化问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要将标定集一分为二（$D_{cal}^1$ 和 $D_{cal}^2$），有效样本量减半
 - IRA 迭代增加计算时间，在实时性要求极高的场景可能受限
 - 分布偏移的扩展（Appendix G）依赖加权方案，对偏移程度的适应性有限

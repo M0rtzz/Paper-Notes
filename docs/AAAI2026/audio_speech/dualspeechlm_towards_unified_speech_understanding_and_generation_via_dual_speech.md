@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DualSpeechLM: Towards Unified Speech Understanding and Generation via Dual Speech Token Modeling
 description: >-
@@ -35,11 +35,11 @@ tags:
 
 **核心矛盾**：单一 token 类型无法满足理解（偏语义）和生成（偏声学）的不同信息需求，提升一方往往损害另一方。
 
-**本文要解决什么？** 在小规模数据下，实现语音理解和生成的相互增益而非相互冲突。
+**本文目标** 在小规模数据下，实现语音理解和生成的相互增益而非相互冲突。
 
 **切入角度**：从语音分词（tokenization）和语言建模（language modeling）两个维度分别提出创新——设计面向理解的分词器和双 token 建模框架。
 
-**核心idea一句话**：输入用高层语义 token（USToken）降低模态对齐难度并增强理解，输出用声学 token 保留声学细节确保高质量生成，二者在统一端到端框架中联合训练。
+**核心 idea**：输入用高层语义 token（USToken）降低模态对齐难度并增强理解，输出用声学 token 保留声学细节确保高质量生成，二者在统一端到端框架中联合训练。
 
 ## 方法详解
 
@@ -129,7 +129,7 @@ DualSpeechLM 包含两个核心模块：
 - USTokenizer 通过文本 LLM 的理解能力反向指导语音 token 的学习，是一种巧妙的跨模态知识蒸馏
 - 仅使用 1%（4.5K vs 570K）的数据就超越了之前的方法，数据效率提升惊人
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于 Phi3.5-3B（较小的 LLM），未在更大模型上验证
 - USTokenizer 仍依赖 Whisper 编码器的输出质量

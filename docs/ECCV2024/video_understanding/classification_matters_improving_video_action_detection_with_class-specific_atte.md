@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Classification Matters: Improving Video Action Detection with Class-Specific Attention
 description: >-
@@ -114,7 +114,7 @@ tags:
 3. **效率优势明显**：通过单次前向传播生成整个时空管，避免滑动窗口策略，推理速度远超 EVAD（19x）
 4. **消融实验充分**：逐一验证了 CDL、LDL、3D encoder、演员位置查询、特征聚合方式等组件的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **帧间信息交互缺失**：当前 decoder 由于内存限制不在帧之间交换信息，时间动态建模完全依赖 encoder
 2. **JHMDB 数据集表现略低于 EVAD**：作者推测因为 JHMDB 类别多样性低（仅21类），难以发挥类别查询的优势

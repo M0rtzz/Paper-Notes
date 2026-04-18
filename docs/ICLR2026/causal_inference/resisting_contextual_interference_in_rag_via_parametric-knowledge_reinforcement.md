@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Resisting Contextual Interference in RAG via Parametric-Knowledge Reinforcement
 description: >-
@@ -94,7 +94,7 @@ $$\mathcal{J}(\theta) = \lambda_{pk} J_{PK} + \lambda_{ck} J_{CK} + \lambda_{rpk
 - **泛化能力强**：在 2WikiMultiHopQA 和 MuSiQue 上未经微调即取得显著提升
 - **仅用 1% 错误上下文训练**仍优于 GRPO，说明学到的是真正的决策边界而非数据统计
 
-## 局限性 / 可改进方向
+## 局限与展望
 - S3（自冲突）和 S5（部分相关）场景提升相对有限，上下文内部矛盾的处理仍有空间
 - 未深入分析不同冲突比例（如 5 条检索结果中 1 条错 vs. 4 条错）下的敏感度
 - 联合采样使约一半 rollout 预算用于 query-only PK 轨迹，S1 正确上下文场景比 GRPO w/ RAG 略低（可通过调整 $\lambda_{ck}$ 权重缓解）

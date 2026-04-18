@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Metis-SPECS: Decoupling Multimodal Learning via Self-distilled Preference-based Cold Start
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：冷启动阶段如果学得太"深"（同时学格式+推理内容），会过拟合训练分布，反而限制了后续 RL 的探索空间和泛化能力。
 
-**本文要解决什么？** 设计更适合 RL 后续训练的冷启动策略——让冷启动只学"浅层"的格式/结构规范，把"深层"的推理能力留给 RL 阶段。
+**本文目标** 设计更适合 RL 后续训练的冷启动策略——让冷启动只学"浅层"的格式/结构规范，把"深层"的推理能力留给 RL 阶段。
 
 **切入角度**：提出 Generalization Factor (GF) 度量量化不同冷启动方法的泛化能力，发现 DPO-based 冷启动比 SFT-based 泛化更好，由此设计解耦学习框架。
 
-**核心idea一句话**：冷启动用 DPO 只学格式对齐（chosen/rejected 都答案正确但格式不同），推理能力交给 RL 学习——解耦学习目标避免 SFT 的过拟合陷阱。
+**核心 idea**：冷启动用 DPO 只学格式对齐（chosen/rejected 都答案正确但格式不同），推理能力交给 RL 学习——解耦学习目标避免 SFT 的过拟合陷阱。
 
 ## 方法详解
 
@@ -105,7 +105,7 @@ Stage 3 使用 GRPO，奖励函数 $R_{\text{total}} = R_{\text{format}} + R_{\t
 - 自蒸馏避免了 teacher-student 能力差距问题，GRPO-zero 作为中间体既提升了数据质量又保持了分布一致
 - DPO 与 RL 目标的对齐性解释了训练稳定性差异——SFT (模仿学习) → RL (奖励优化) 存在目标不连续，DPO (隐式奖励) → RL (显式奖励) 更连贯
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Stage 1 需要额外的 GRPO 预训练来生成 GRPO-zero，增加了计算开销
 - 偏好数据中的 rejected response 通过规则破坏格式构造，可能不反映真实的格式错误分布

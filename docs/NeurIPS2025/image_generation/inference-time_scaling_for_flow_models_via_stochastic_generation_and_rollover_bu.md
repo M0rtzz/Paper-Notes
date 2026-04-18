@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inference-Time Scaling for Flow Models via Stochastic Generation and Rollover Budget Forcing
 description: >-
@@ -192,7 +192,7 @@ Flow 模型（尤其是经过 rectification 微调的）在中间步骤的后验
 5. **Flow 模型的独特优势**: 由于 rectified flow 的轨迹更直，中间步后验均值更清晰，使得 Flow 模型在推理时扩展中的奖励估计比扩散模型更精准
 6. **完整的理论保证**: 通过 Fokker-Planck 方程严格证明了 SDE 转换保持边际密度不变，方法的正确性有坚实理论基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理开销**: 引入额外的推理时计算，当基础模型预测计算密集时可能成为瓶颈
 2. **安全风险**: 预训练模型可能在未经审核的数据集上训练，推理时扩展有被恶意利用生成不当内容的风险

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Private Evolution Converges
 description: >-
@@ -123,7 +123,7 @@ $$\mathbb{E}[W_1(\mu_S, \mu_{S_T})] \leq \tilde{O}\left(dD\left(\frac{\sqrt{\log
 - **数据依赖的界**（Prop 4.1）为理解PE在何时有效（聚类数据）何时失败（分散数据）提供了理论框架
 - **指导性的超参数选择**：$T = O(\log(n\varepsilon))$ 和 $n_s = O(n\varepsilon/\sqrt{T})$ 是实用的且在实验中得到验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **收敛率的维度灾难**：$\tilde{O}(d(n\varepsilon)^{-1/d})$ 在 $d \gtrsim \log(n)$ 时空洞，这是使用 $W_1$ 度量的固有限制
 - **理论Variation_API与实际不同**：理论使用多尺度高斯扰动，实际使用扩散模型等生成变异

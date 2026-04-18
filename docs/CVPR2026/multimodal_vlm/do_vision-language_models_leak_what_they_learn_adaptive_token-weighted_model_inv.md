@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Do Vision-Language Models Leak What They Learn? Adaptive Token-Weighted Model Inversion Attacks
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L} = \sum_{i=1}^{m}\beta_i \mathcal{L}_{inv}(M(\mathbf{t}, G(w), y_{<
 - **实际威胁验证**：在公开发布的 LLaVA-v1.6-7B 上成功重建名人面部，说明隐私风险真实存在。
 - **序列 vs. token 方法的深入分析**：不仅提方法还给出了为什么 token 级方法失效的机制性解释。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **白盒假设较强**：需要完整访问模型参数和注意力图，实际部署场景中 API 访问（黑盒）更常见。
 - **生成模型依赖**：需要在与隐私数据同域的公开数据上训练 StyleGAN，对新域或稀缺域的适用性受限。

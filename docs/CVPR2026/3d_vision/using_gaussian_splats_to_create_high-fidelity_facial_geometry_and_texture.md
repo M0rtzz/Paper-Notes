@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Using Gaussian Splats to Create High-Fidelity Facial Geometry and Texture
 description: >-
@@ -123,7 +123,7 @@ $$\mathcal{L}_{\text{reg}} = \sum_i \left\| \mathbf{z}_i - \frac{1}{|\mathcal{E}
 6. **端到端 MetaHuman 兼容**：输出直接可用于 UE5 标准管线，支持动画和重光照
 7. **text-driven 扩展**：演示了 ChatGPT 生成图像 → Veo 3 生成视频 → 管线重建的文本驱动资产创建
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **去光照精度有限**：无光舞台条件下仍难完全去除阴影，细粒度几何细节（如皱纹）在去光照过程中被牺牲
 2. **眼部重建困难**：眼睛和眼睑区域高斯重叠严重，分割粒度不够精细，需要更好的 landmark 预测

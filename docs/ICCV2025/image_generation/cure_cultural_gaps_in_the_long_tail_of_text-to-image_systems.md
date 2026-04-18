@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CURE: Cultural Gaps in the Long Tail of Text-to-Image Systems
 description: >-
@@ -117,7 +117,7 @@ $$\phi_{DIV} = LPIPS(n, \{n,c\}, \{n,r\}, \{n,c,r\})$$
 - 揭示了**生成纠缠**问题：使用与 T2I 系统共享训练数据的 VLM 评估会系统性高估性能
 - 评测覆盖了 64 个国家、6 个 T2I 系统、多种编码器/VLM，实验规模扎实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 以地理（国家）作为文化代理过于粗糙，未考虑宗教、语言等维度
 - PS 评分器对低质量 T2I 系统（如 SD 1.5）效果差，依赖 T2I 系统本身的覆盖质量

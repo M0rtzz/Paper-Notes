@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLIX: Cross-Lingual Explanations of Idiomatic Expressions
 description: >-
@@ -132,7 +132,7 @@ LLM 大幅超越微调模型，pipeline 策略一致优于 direct，few-shot 进
 - **Pipeline vs. Direct 的洞察**：分步策略更有效，因为 direct 策略需要模型同时处理理解和跨语言生成两个子任务
 - **翻译噪声分析**：通过编辑距离量化 Google Translate 的质量，德语 EPIE-ME 需要最多修正（归一化编辑距离 0.283），说明数据质量控制的必要性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据集规模有限**：EPIE-ME 仅 628 个习语，Oxford-ME 因版权无法公开
 - **语言覆盖不足**：仅支持英语→西/德两种目标语言，且均为资源丰富语言，对低资源语言的效果未知

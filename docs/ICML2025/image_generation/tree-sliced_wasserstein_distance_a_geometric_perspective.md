@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tree-Sliced Wasserstein Distance: A Geometric Perspective
 description: >-
@@ -84,7 +84,7 @@ tags:
 3. **实用性强**：与 SW 同等计算复杂度，可直接替换现有 SW 管线中的距离度量。
 4. **树度量的妙用**：利用树上 OT 的闭合解避免了通用高维 OT 的计算难题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前使用链式树结构（chain-like），更一般的树采样策略（如星形、随机树）的效果有待探索。
 - 分裂映射 $\alpha$ 目前是预设的，可考虑学习最优分裂映射。

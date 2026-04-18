@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PromptIQA: Boosting the Performance and Generalization for No-Reference Image Quality Assessment via Prompts
 description: >-
@@ -127,7 +127,7 @@ ISP Prompt（$n$ 对图像-分数对）→ Visual Encoder + Score Expansion → 
 - **10-shot 即可适配新需求**: 对比传统方法需要整个数据集微调，PromptIQA 仅需 10 个样本
 - **MOS/DMOS 自动识别**: 通过 prompt 中分数的排列模式自动区分 MOS 和 DMOS 语义，无需人工指定
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在 LIVE 和 CSIQ（DMOS 数据集）上性能略低于单数据集训练的模型，说明 DMOS 与 MOS 的分布差异仍未完全弥合
 - ISP prompt 需要预先标注几张样本（虽然只要 10 张），在完全无标注场景下不适用
 - Visual Encoder（MoNet）冻结了预训练权重，prompt 机制的改进空间可能受限于底层特征质量

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiCLIP: Bidirectional and Consistent Language-Image Processing for Robust Medical Image Segmentation
 description: >-
@@ -105,7 +105,7 @@ tags:
 - 在1%标注下仍大幅优于基线（+8~13%），说明文本信息能有效弥补标注不足
 - 噪声鲁棒性测试设计贴近临床实际（低剂量CT模拟减少辐射剂量场景、运动模糊模拟患者运动）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在COVID-19胸部CT两个数据集上验证，缺少MRI、超声等模态及其他解剖区域的实验，泛化性存疑
 - 文本来源和提示设计对性能的影响未系统分析——临床描述的质量和格式在实际中差异很大

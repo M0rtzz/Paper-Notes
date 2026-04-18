@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ConsistCompose: Unified Multimodal Layout Control for Image Composition
 description: >-
@@ -109,7 +109,7 @@ ConsistCompose 在所有指标上均取得最优。mIoU 提升 7.2%（78.1→85.
 - **大规模数据集贡献**：ConsistCompose3M 填补了布局+身份联合标注数据集的空白
 - **通用能力无损**：布局训练后 MMBench/GenEval 等通用指标持平甚至略优，证明统一训练不牺牲已有能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅支持 bounding box 级空间控制，不支持更精细的语义分割、关键点等空间描述
 - Coordinate-CFG 需要额外推理步骤（含/不含坐标的双路推理），增加了采样开销

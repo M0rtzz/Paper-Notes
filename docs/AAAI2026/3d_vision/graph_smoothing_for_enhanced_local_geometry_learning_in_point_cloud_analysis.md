@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis
 description: >-
@@ -72,7 +72,7 @@ GSPoint 采用层次化下采样架构，每个块包含两个核心模块：
 
 #### 1. 图平滑模块
 
-**做什么**：优化ball query构建的图结构，平衡边界点和交汇点的度分布。
+**功能**：优化ball query构建的图结构，平衡边界点和交汇点的度分布。
 
 **Step 1 - 对称邻接优化**：
 
@@ -106,7 +106,7 @@ $$\mathbf{S}_T = \sum_{t=0}^{T} (\alpha \tilde{\mathbf{A}})^t, \quad \alpha \in 
 
 #### 2. 局部几何学习模块
 
-**做什么**：在优化后的邻域上提取更丰富的几何特征。
+**功能**：在优化后的邻域上提取更丰富的几何特征。
 
 **2a. 自适应形状特征**：
 
@@ -199,7 +199,7 @@ $$\mathbf{x}_i^{(l+1)} = \mathcal{A}\left(\sigma\left(\psi'([\mathbf{x}_j^{(l)} 
 3. **柱坐标变换的设计有意义**：利用主成分方向建立规范坐标系，比直接使用欧氏坐标更能捕获各向异性结构
 4. **即插即用的通用性**：图平滑模块不依赖特定backbone，可广泛应用于各种图方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **von Neumann核需要计算 $\mathbf{S}_T$ 和Top-K选择**：引入额外计算开销，论文未详细分析效率
 2. **ModelNet40上提升相对有限**（+1.9%）：合成数据集相对简单，边界/交汇问题不突出

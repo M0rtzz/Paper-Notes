@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multivariate Gaussian Representation Learning for Medical Action Evaluation
 description: >-
@@ -108,7 +108,7 @@ tags:
 - **10维 action token 极度紧凑**：均值(3)+尺度(3)+四元数(4)=10维，将变长时序压缩为固定大小表示，计算效率极高
 - **数据集贡献**：CPREval-6k 的层级错误标注和关联规则分析揭示了 CPR 错误的传播链，有独立价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 高斯分量数 $K$ 是超参数，不同动作可能需要不同的 $K$
 - EM 算法非可微分，不能端到端训练 MGR 参数
 - 仅验证了 CPR 这一类高度重复性运动，对复杂自由运动的适用性未验证

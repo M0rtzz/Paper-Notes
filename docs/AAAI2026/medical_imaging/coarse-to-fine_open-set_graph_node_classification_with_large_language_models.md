@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Coarse-to-Fine Open-Set Graph Node Classification with Large Language Models
 description: >-
@@ -99,7 +99,7 @@ CFC 框架包含三个核心阶段：
 4. **理论支撑充分**：从子空间维度和决策边界平滑性角度证明了语义 OOD 样本的优势
 5. **设计精巧**：Easy-Reject/Hard-Reject 的双策略设计考虑了不同 ID 覆盖度场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 LLM 质量**：粗分类阶段严重依赖 GPT-4o 等强 LLM，开源模型（如 Llama2-7b）检测能力明显较弱
 2. **文本属性图限制**：非文本图需要额外的特征编码步骤将节点属性转为文本描述，增加了预处理复杂度

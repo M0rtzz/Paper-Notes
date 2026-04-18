@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning from Interval Targets
 description: >-
@@ -139,7 +139,7 @@ $$\min_{f \in \mathcal{F}} \max_{f' \in \widetilde{\mathcal{F}}_0} \mathbb{E}[\e
 4. 非渐进泛化界可直接指导有限样本实践
 5. Lipschitz MLP 的谱归一化实现简单，作为超参调节的"免费午餐"
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 假设区间一定包含真实标签——"嘈杂区间"（标签可能在区间外）未处理
 2. Theorem 4.1 中 $\Gamma(\tau)$ 依赖分布，某些分布下可能退化很大
 3. Minmax (reg) 需 GDA 交替优化，训练不如投影损失稳定

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive Rollout Allocation for Online RL with Verifiable Rewards (VIP)
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：需要在采样*之前*预测哪些 prompt 最有信息量（成功率接近 0.5 的 prompt 梯度方差最大），但成功率在训练过程中随模型更新而变化。
 
-**本文要解决什么？** 如何在固定计算预算下，最优地将 rollout 分配给 mini-batch 中的各个 prompt？
+**本文目标** 如何在固定计算预算下，最优地将 rollout 分配给 mini-batch 中的各个 prompt？
 
 **切入角度**：(1) 理论分析 Dr.GRPO 和 RLOO 的梯度方差与成功概率 $p$ 的关系——都正比于 $p(1-p)$；(2) 用高斯过程预测每个 prompt 的 $p$；(3) 用凸优化求解最优分配。
 
-**核心idea一句话**：用 GP 预测成功概率 → 预测梯度方差 → 凸优化最小化总梯度方差 → 自适应分配 rollout。
+**核心 idea**：用 GP 预测成功概率 → 预测梯度方差 → 凸优化最小化总梯度方差 → 自适应分配 rollout。
 
 ## 方法详解
 
@@ -89,7 +89,7 @@ tags:
 - **凸优化的闭式解**：分配问题虽然是整数规划，但连续松弛有高效闭式解（bisection + 贪心取整），实际部署零额外负担
 - **GP 是聪明的选择**：利用 prompt 嵌入的相似性进行信息共享——未见过的 prompt 可以通过相似 prompt 的历史结果预测
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 假设 $\sigma_Z^2$（投影梯度方差）对所有 prompt 相同——实际可能不成立
 - GP 的 kernel bandwidth 用 median heuristic 设定，可能不是最优
 - 仅在数学推理（RLVR 设置）上验证——RLHF 场景的奖励模型有噪声，分析可能需要修改

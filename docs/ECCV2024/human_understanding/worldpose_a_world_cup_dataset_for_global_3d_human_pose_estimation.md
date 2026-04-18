@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WorldPose: A World Cup Dataset for Global 3D Human Pose Estimation
 description: >-
@@ -115,7 +115,7 @@ SOTA方法在WorldPose上的表现：
 - **per-person vs全局误差的对比**: 给出了很有洞察力的分析，说明相对位置估计是核心瓶颈
 - 数据集规模惊人：250万3D姿态，120km行走距离，远超所有现有数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 严重依赖2D检测质量和静态摄像机布局，需要大量人工干预来修正误检和误跟踪
 - 仅包含男性赛事数据，性别代表性不足
 - 数据获取pipeline成本极高，难以大规模复制到其他场景

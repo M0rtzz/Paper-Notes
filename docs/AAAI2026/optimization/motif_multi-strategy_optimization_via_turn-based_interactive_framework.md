@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MOTIF: Multi-strategy Optimization via Turn-based Interactive Framework
 description: >-
@@ -59,7 +59,7 @@ MOTIF 采用两阶段优化流程：
 
 #### 1. **多策略优化问题建模**：将求解器设计统一为组合优化框架
 
-**做什么**：将求解器 $s$ 中的 K 个策略 $\Pi = (\pi_1, \pi_2, \ldots, \pi_K)$ 联合优化，最小化期望求解目标：
+**功能**：将求解器 $s$ 中的 K 个策略 $\Pi = (\pi_1, \pi_2, \ldots, \pi_K)$ 联合优化，最小化期望求解目标：
 
 $$\Pi^* = \arg\min_\Pi \mathbb{E}_{\mathbf{x} \sim \mathcal{X}_d}[F_d(\mathbf{x} | \Pi)]$$
 
@@ -72,7 +72,7 @@ $$\Pi^* = \arg\min_\Pi \mathbb{E}_{\mathbf{x} \sim \mathcal{X}_d}[F_d(\mathbf{x}
 
 #### 2. **竞争性蒙特卡洛树搜索 (CMCTS)**：回合制双代理搜索架构
 
-**做什么**：为每个策略构建竞争树，两个 LLM 代理交替出招，通过三种竞争算子生成新的策略实现。
+**功能**：为每个策略构建竞争树，两个 LLM 代理交替出招，通过三种竞争算子生成新的策略实现。
 
 **搜索流程**（标准 MCTS 四步）：
 
@@ -190,7 +190,7 @@ Innovation 新颖度最高但一致性最低；Learning 新颖度最低但一致
 3. **三算子设计**：Counter/Learning/Innovation 覆盖完整的行为谱，各有明确分工
 4. **实用性强**：在 ACO、GLS、Deconstruction-Repair 三种不同框架上验证，覆盖 TSP、CVRP、BPP 等 5 种 COP
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 LLM 的代码生成质量，使用更强 LLM（如 GPT-4o）可能效果更好
 2. 双代理交互增加了 LLM 调用次数，成本较高

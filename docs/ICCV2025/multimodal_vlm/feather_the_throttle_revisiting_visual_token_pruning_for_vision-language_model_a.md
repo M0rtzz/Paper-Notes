@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Feather the Throttle: Revisiting Visual Token Pruning for Vision-Language Model Acceleration
 description: >-
@@ -101,7 +101,7 @@ FEATHER 在定位上比 FastV **提升超过 5 倍**（5.9→35.6），比 Pyram
 - **赛车手类比精妙**: "feather the throttle" 直觉地解释了分阶段剪枝的策略——弯道入口温和，过弯心后激进。
 - **暴露 benchmark 盲点**: 发现多数 VLM 评测无法区分"看到了"和"理解了"，是对整个领域的重要警示。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅使用 LLaMA 2 7B 的单一 VLM，未验证在更大或更新模型（如 LLaVA-NeXT、Qwen-VL）上的效果。
 - 去除 RoPE 虽消除了位置偏差，但可能引入对注意力权重的非预期影响，更鲁棒的位置编码方案值得探索。

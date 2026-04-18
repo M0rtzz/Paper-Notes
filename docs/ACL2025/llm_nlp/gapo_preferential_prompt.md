@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GAPO: Learning Preferential Prompt through Generative Adversarial Policy Optimization
 description: >-
@@ -93,7 +93,7 @@ Generator 的目标函数是标准 PPO 形式，采用优势函数 $A_n = Q_\pi(
 - **GAN-PPO 的无缝集成**：传统 PPO 需要先训好 RM 再训 Generator，GAPO 让两者对抗训练，自动产生渐进难度的样本，省去了人工构造中间难度数据的繁琐步骤
 - **DPO系列方法的失败模式分析**：实验清晰展示了 DPO/SimPO/ORPO 在 preferential prompt 场景下的灾难性崩溃，为理解这些方法的局限性提供了有价值的实证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算开销大**：同时训练 Generator、Reward Model 和 Critic Model 的对抗过程，计算需求远高于 DPO 等直接优化方法，限制了大规模部署
 - **依赖基座模型能力**：GAPO 对基座模型的初始生成能力有要求——如果基座模型本身生成质量差，会影响 RM 的训练质量，形成恶性循环。更适合作为已有能力强的模型的增强工具

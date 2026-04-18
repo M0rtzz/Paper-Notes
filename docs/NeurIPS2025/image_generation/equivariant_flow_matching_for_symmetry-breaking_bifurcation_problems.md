@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Equivariant Flow Matching for Symmetry-Breaking Bifurcation Problems
 description: >-
@@ -115,7 +115,7 @@ g_tilde = argmin_{g_x in G_x} c(y_0, g_x * y_1)
 - **物理意义**：成功建模了屈曲梁的多解共存和 Allen-Cahn 方程的复杂分岔行为
 - **代码开源，可复现**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 离散群的 symmetric coupling 需要枚举所有群元素，对连续对称群（如 SO(3)）扩展困难
 - Allen-Cahn 问题上绝对误差仍较大（244），Laplacian 项的小波动导致残差敏感

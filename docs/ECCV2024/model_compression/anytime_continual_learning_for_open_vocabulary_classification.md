@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Anytime Continual Learning for Open Vocabulary Classification
 description: >-
@@ -119,7 +119,7 @@ $$\alpha_t(y) = \frac{c_t(y)}{c_t(y) + c_o(y) + \epsilon}$$
 4. **30 倍特征压缩**：逐图像注意力加权 PCA 是新颖且实用的思路，兼顾存储、速度和隐私
 5. **系统设计完整**：从训练、推理到存储全链路考虑，支持联邦学习等扩展场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅验证了分类任务，未扩展到检测、分割等更复杂任务
 - 树聚类的可扩展性实验规模有限，缺少百万级样本的验证

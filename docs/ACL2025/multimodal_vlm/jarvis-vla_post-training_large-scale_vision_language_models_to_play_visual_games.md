@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] JARVIS-VLA: Post-Training Large-Scale Vision Language Models to Play Visual Games
 description: >-
@@ -122,7 +122,7 @@ JARVIS-VLA在所有四类任务上均达到最优。特别是Craft和Smelt任务
 - **实用架构设计**：复用最低频token表示动作、非马尔可夫多帧观测、动作分块等工程决策合理且无需修改原始VLM架构
 - **全面开源**：代码、模型、数据集均开源，促进后续研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理速度受限**：7B参数量的VLA模型推理吞吐量远不及人类玩家的实时操作速率（40Hz+），论文建议未来集成MoE改善
 - **仍不及顶尖人类**：尽管达到SOTA，成功率仍低于90%以上的高水平人类玩家

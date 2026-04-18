@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking MLLM Itself as a Segmenter with a Single Segmentation Token
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **核心矛盾**：pixel-shuffle 压缩是 MLLM 高效处理的必要手段，但压缩导致的空间信息丢失是无解码器分割的根本瓶颈。
 
-**本文要解决什么**：证明单个 [SEG] token 足以实现高质量分割，瓶颈不在 token 数量而在特征分辨率。
+**本文目标**：证明单个 [SEG] token 足以实现高质量分割，瓶颈不在 token 数量而在特征分辨率。
 
 **切入角度**：压缩前的图像编码器特征保有完整分辨率，可以作为"预压缩特征"保留；LLM 处理后的特征带有更精细的语义区分度；两者互补。
 
@@ -102,7 +102,7 @@ tags:
 - **RFR/RFA 的设计哲学**：不增加新模块，而是巧妙利用 MLLM 中已有的信息（编码器特征、LLM 残差、pixel-shuffle 的逆操作），用"减法+加法"恢复丢失的信息
 - **对 MLLM 架构设计的洞察**：pixel-shuffle 压缩虽然对 VQA 友好，但对像素级任务是根本性障碍，未来 MLLM 设计需要考虑如何在压缩中保留空间信息
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前性能仍略低于最强的带解码器方法（如 u-LLaVA），有提升空间
 - RFA 中的 Pixel-Unshuffle MLP 引入了额外训练参数
 - 分割注意力掩码需要修改 LLM 的注意力计算，不完全是 plug-and-play

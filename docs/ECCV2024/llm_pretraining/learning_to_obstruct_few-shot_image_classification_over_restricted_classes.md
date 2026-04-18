@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Obstruct Few-Shot Image Classification over Restricted Classes
 description: >-
@@ -131,7 +131,7 @@ CLIP-based FSC 在 CIFAR100/ImageNet 上的 Δ@2（平均）：
 3. **跨方法迁移性令人惊喜**：用一种 FSC 方法训练的阻碍，对其他未见过的 FSC 方法同样有效，说明 LTO 确实修改了 backbone 中与受限类相关的特征表示
 4. **评估指标设计合理**：DropRatio@β 同时考虑了受限类的下降幅度和其他类的保持程度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. LTO 假设阻碍者知道 FSC 算法，虽然实验表明有跨方法迁移性，但对完全未知的微调策略效果未知
 2. 增加足够多的数据（4×）可以部分抵消阻碍效果，说明对数据充足的场景保护力有限

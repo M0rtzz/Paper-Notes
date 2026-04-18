@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Molecular Conformer Generation with SO(3)-Averaged Flow Matching and Reflow
 description: >-
@@ -124,7 +124,7 @@ $$\mathcal{L}_{\text{AvgFlow}}(\theta) = \mathbb{E}\left[\|v_t^\theta(x_t) - u_t
 4. **单步生成突破**：通过 Reflow+蒸馏，首次实现高质量单步分子构象生成，对大规模虚拟筛选具有实际价值
 5. **三阶段训练流水线**（AvgFlow → Reflow → Distill）设计清晰，各阶段解耦且可独立受益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：仅在 GEOM-QM9/Drugs 上验证，未测试更大规模或更复杂的分子（蛋白质、大环等）
 2. **Reflow 数据生成开销**：需要先用基础模型生成大量配对数据，增加了总训练成本

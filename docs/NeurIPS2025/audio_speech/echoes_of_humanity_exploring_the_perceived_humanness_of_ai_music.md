@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Echoes of Humanity: Exploring the Perceived Humanness of AI Music
 description: >-
@@ -106,7 +106,7 @@ tags:
 3. **混合方法分析**：定量RCCT + 定性扎根理论内容编码，双重视角揭示感知机制
 4. **反直觉发现**：相似配对反而更容易区分——当AI和人类歌曲风格接近时，细微的合成痕迹更突出
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **WEIRD偏见**：歌曲和参与者均偏向西方教育富裕民主(WEIRD)背景，未涵盖非西方音乐传统
 2. **仅限Suno模型**：AIM来源单一（Reddit r/SunoAI），未涵盖Udio等其他商业模型
 3. **30秒片段局限**：实验网站仅播放歌曲片段，未测试完整歌曲的感知

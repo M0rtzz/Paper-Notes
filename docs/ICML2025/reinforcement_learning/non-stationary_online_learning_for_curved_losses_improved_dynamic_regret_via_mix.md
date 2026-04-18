@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Non-stationary Online Learning for Curved Losses: Improved Dynamic Regret via Mixability
 description: >-
@@ -130,7 +130,7 @@ Fixed-share 等价于一个**两层在线集成**：
 5. **Algorithm 3 的 proper learning**：通过代理损失+投影步骤在一般 exp-concave 场景下实现 proper 预测，解决了已有方法无法在任意凸域上实现 proper 的问题
 6. **等价性定理（Theorem 2）**：揭示了 fixed-share 与 FLH 型算法在连续空间中的深层联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Improper learning**：Algorithm 1 在最小二乘和逻辑回归中是 improper 的（预测可能超出线性假设空间），不如 Baby & Wang (2022b) 和 Baby et al. (2023) 的 proper 方法
 2. **计算效率**：logistic loss 缺乏闭式更新，需要采样近似；一般 OCO 的投影步骤计算开销不明确

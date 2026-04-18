@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Large Language Model (LLM)-enabled In-context Learning for Wireless Network Optimization
 description: >-
@@ -169,7 +169,7 @@ $$a = \begin{cases} \text{随机动作}, & \text{if } rand < \epsilon \\ \text{L
 4. **零训练开销**：在网络动态变化频繁的场景下，免训练特性意味着极快的部署和适应速度
 5. **可解释性**：LLM 可以为其决策提供自然语言解释，有助于运营商理解复杂网络行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **场景简化**：仅考虑 3 个 SBS、4 个功率等级的小规模场景，大规模网络的可扩展性未验证
 2. **推理延迟**：LLM 推理时间可能无法满足毫秒级网络控制的实时性要求

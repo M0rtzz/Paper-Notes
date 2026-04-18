@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Robust Multimodal Large Language Models Against Modality Conflict
 description: >-
@@ -135,7 +135,7 @@ $$\pi_\theta^* = \arg\min_\theta \mathbb{E}[-\log \pi_\theta(\mathcal{A}|\mathca
 - **方法对比的公平性**：三种方法代表了从零成本到重训练的完整谱系，消融设计合理
 - **数据构建的巧妙**：用 LLM 基于文本信息生成答案（而非让 VLM 看图），避免了引入新的幻觉
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MMMC 数据集基于 Visual Genome 构建，场景多样性受限于该数据集的覆盖范围
 - RL 方法的奖励函数设计仍较简单，结合更精细的冲突检测奖励可能进一步提升

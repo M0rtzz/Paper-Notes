@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLEME2.0: Towards Interpretable Evaluation by Disentangling Edits for Grammatical Error Correction
 description: >-
@@ -107,7 +107,7 @@ CLEME2.0 的流程分为三步：
 - **兼顾可解释性与性能**：不仅提供了可解释的多维分析能力，综合分数还在与人工判断的相关性上取得了 SOTA
 - **编辑加权技术**：引入 similarity-based 和 LLM-based 两种加权方式，解决了传统指标忽视语义重要性的问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **语言局限**：目前仅在英语数据集上验证，对其他语言的有效性未经测试
 - **数据集局限**：实验主要基于 CoNLL-2014 共享任务的参考集，是二语学习者数据，缺乏多领域、多语种的验证
 - **可解释性未经人工验证**：虽然声称提供可解释评估，但缺乏专门的人工评估实验来验证其可解释性

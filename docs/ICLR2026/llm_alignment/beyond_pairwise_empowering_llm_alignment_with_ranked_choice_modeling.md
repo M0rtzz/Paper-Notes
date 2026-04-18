@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Pairwise: Empowering LLM Alignment With Ranked Choice Modeling
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：标注者提供的是多路比较/排名，但训练算法只能消化成对数据——信息浪费和结构扭曲是相互耦合的问题。
 
-**本文要解决什么？** 如何设计一个能直接利用 ranked choice（单选 best、top-k 排名）反馈的对齐框架？
+**本文目标** 如何设计一个能直接利用 ranked choice（单选 best、top-k 排名）反馈的对齐框架？
 
 **切入角度**：经济学/运筹学中的离散选择模型（discrete choice models）已有成熟理论来处理多选和排名数据。将 prompt 视为 context、response 视为 item、候选集视为 assortment，LLM 对齐可直接映射为选择模型的 MLE。
 
-**核心idea一句话**：用选择模型理论统一 LLM 偏好优化，DPO 只是 Bradley-Terry 的特例，还有 MNL 和 Mallows 等更强的选择模型可以用。
+**核心 idea**：用选择模型理论统一 LLM 偏好优化，DPO 只是 Bradley-Terry 的特例，还有 MNL 和 Mallows 等更强的选择模型可以用。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ RCPO 在 Llama-3-8B, Gemma-2-9B, Mistral-7B 上均一致优于或持平 DPO 和 
 - **Rank-based vs Utility-based 的对比洞察**：Mallows-RMJ 仅用序关系建模，比 MNL（依赖精确 reward 数值）更鲁棒。这一发现对 RLHF 实践有启示——当 reward model 噪声大时，rank-based 方法可能更优。
 - **信息效率**：直接用 top-k 排名训练比拆成 $\binom{K}{2}$ 对更高效且效果更好，这对偏好数据收集和标注策略有直接指导意义。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验主要在 7-9B 模型上进行，缺少更大模型的验证。
 - 排名反馈由 reward model 自动生成，未使用真实人类排名标注——reward model 的系统性偏差可能影响结论的外部有效性。
 - Mallows-RMJ 的 dispersion 参数 $\phi(x)$ 用 entropy proxy 估计，准确性未充分验证。

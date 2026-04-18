@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KBQA-o1: Agentic Knowledge Base Question Answering with Monte Carlo Tree Search
 description: >-
@@ -100,7 +100,7 @@ MCTS 四阶段：
 4. **自动标注 + 增量微调**大幅降低标注依赖，40-shot 即可接近甚至超越全监督方法
 5. 多模型通用的 plug-and-play 设计增强了方法的实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. MCTS 搜索带来的推理开销较大（N 次 rollout），在线部署延迟较高
 2. 仅在 Freebase 数据集上验证，对 Wikidata 等其他 KB 的泛化性未充分讨论
 3. 策略和奖励模型需要分别微调，训练管线较复杂

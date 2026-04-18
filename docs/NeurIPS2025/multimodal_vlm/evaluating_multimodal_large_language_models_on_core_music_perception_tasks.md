@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Multimodal Large Language Models on Core Music Perception Tasks
 description: >-
@@ -97,7 +97,7 @@ tags:
 2. **LogicLM适配音乐领域**：将神经-符号推理框架引入音乐认知评测，暴露了模型表面成功下的深层感知缺陷
 3. **实践意义**：当前系统不应宣称"音乐理解"——MIDI上的天花板表现不等于音频原生能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅测试3个模型，未包含专门的音乐基础模型（如 MusicGen、Jukebox 等）
 - 刺激材料规模较小（20-44段/任务），统计功效有限
 - 未考虑更复杂的音乐任务（如多声部分析、曲式结构、情感表达）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Scaling Video-Language Models to 10K Frames via Hierarchical Differential Distillation
 description: >-
@@ -103,7 +103,7 @@ $$\mathcal{L} = -\log P(A | \{\boldsymbol{h}_k^m | f_k \in \mathcal{K}\} \cup \{
 - **10K 帧处理能力**: 单 A100 处理约 2.7 小时视频，VideoNIAH 基准的提出填补了超长视频评测空白
 - **贪心 DKS 算法**: 先按相关性排序再过滤冗余，确保 query 相关性优先于多样性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DKS 依赖 CLIP 编码器计算帧-query 相似度，CLIP 本身的编码能力可能成为瓶颈
 - 非关键帧压缩为单个 token 可能丢失某些细粒度时序信息

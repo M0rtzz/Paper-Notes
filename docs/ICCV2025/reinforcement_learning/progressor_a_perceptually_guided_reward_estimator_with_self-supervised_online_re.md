@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Progressor: A Perceptually Guided Reward Estimator with Self-Supervised Online Refinement
 description: >-
@@ -109,7 +109,7 @@ Progressor在所有任务上一致优于所有基线，尤其在困难任务（P
 - **Push-Back策略优雅简洁**：仅通过一个衰减因子 $\beta$ 即可实现在线奖励精炼，无需额外的分类器网络
 - **从人类视频到机器人的零样本迁移**：在EPIC-KITCHENS上预训练后直接用于机器人任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设任务进度线性单调递增，不适用于循环观测的任务（如DeepMind Control Suite中的部分环境）
 - 进度估计为单峰预测，无法处理多路径任务

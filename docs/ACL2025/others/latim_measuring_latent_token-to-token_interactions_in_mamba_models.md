@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LaTIM: Measuring Latent Token-to-Token Interactions in Mamba Models
 description: >-
@@ -120,7 +120,7 @@ LaTIM 的核心思想是：将 Mamba 的前向计算重新排列，使得输出 
 - **可扩展性强**：LaTIM 不仅适用于 Mamba-1/2，原理上可以推广到 DeltaNet、mLSTM 等其他线性递推架构
 - **为 Mamba 的局限性提供了机理解释**：通过可视化揭示了 Mamba 在多 key 检索中的注意力分散问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 近似分解仍然存在误差，精确版本需要去除 SiLU 并重新训练
 - 评估主要集中在拷贝和翻译等 token 交互模式清晰的任务上，在更复杂任务中的可解释性质量有待人类评估验证

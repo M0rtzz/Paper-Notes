@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 4DSegStreamer: Streaming 4D Panoptic Segmentation via Dual Threads
 description: >-
@@ -132,7 +132,7 @@ nuScenes已知位姿streaming设置：
 - **即插即用**：可以为任意3D/4D分割方法赋予streaming能力，实用价值高
 - 首次系统化定义和评估了streaming 4D panoptic segmentation任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 位姿预测依赖Suma++，在极端运动场景下可能不够准确
 2. 光流预测的zeroFlow是蒸馏模型，精度有上限

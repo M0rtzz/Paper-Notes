@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HCF: Hierarchical Cascade Framework for Distributed Multi-Stage Image Compression
 description: >-
@@ -181,7 +181,7 @@ $$\eta^{\mathcal{M}}(\boldsymbol{\pi}) = \frac{1}{2}(RQS(\boldsymbol{\pi}, \bold
 4. **系统化的实验设计**：5种架构 × 3种数据集 × 多种量化频率，覆盖非常全面
 5. **策略空间的形式化**：将量化放置问题形式化为策略向量的优化问题，为未来的自适应策略选择奠定了基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证图像压缩**：作者提到未来将扩展到视频压缩，但当前工作未涉及
 2. **策略选择是枚举的**：当级别数增多时策略空间指数增长，需要自适应策略选择机制（如强化学习代理）

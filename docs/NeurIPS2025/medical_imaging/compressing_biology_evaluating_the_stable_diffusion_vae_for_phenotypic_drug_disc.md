@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compressing Biology: Evaluating the Stable Diffusion VAE for Phenotypic Drug Discovery
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：生成模型的下游生物学解释依赖于 VAE 的重建保真度——如果编码-解码过程丢失了细微的表型差异，那么整个生成管线的生物学价值就存疑。
 
-**本文要解决什么**：系统量化 SD-VAE 对 Cell Painting 图像的重建质量，特别关注生物信号是否被保留。
+**本文目标**：系统量化 SD-VAE 对 Cell Painting 图像的重建质量，特别关注生物信号是否被保留。
 
 **切入角度**：不仅使用像素级指标（MAE、SSIM、EMD），还引入特征空间指标（FID）、潜在空间指标（KLD）和基于信息检索的生物学指标（FR - Fraction Retrieved）进行多层次评估。
 
@@ -112,7 +112,7 @@ InceptionV3 在所有条件下均优于 OpenPhenom，后者可能受限于训练
 - **通用 vs 专用特征提取器的意外结果**：InceptionV3 全面超越了专门为 Cell Painting 训练的 OpenPhenom，暗示在当前公开可用的领域模型规模下，通用模型已足够好——简化了未来的评估流程
 - **多层次评估框架的完整性**：从像素到特征到生物学，层层递进的评估策略为后续显微镜图像生成模型评估树立了标准模板
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 5 通道拆分为两组 3 通道的做法比较 ad hoc，通道组合策略可能影响结果
 - 未微调 SD-VAE——虽然论文指出朴素微调已知无效，但领域自适应方法（如 EQ-VAE、REPA-E）值得尝试
 - 基于阴性对照的批次校正本身引入了一定程度的数据泄露风险

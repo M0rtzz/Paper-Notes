@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Trade-offs in Large Reasoning Models: An Empirical Analysis of Deliberative and Adaptive Reasoning over Foundational Capabilities
 description: >-
@@ -31,14 +31,14 @@ tags:
 
 **核心矛盾**：通过蒸馏或强化学习获取推理能力的过程，可能以牺牲模型原有的helpfulness和harmlessness为代价——这种trade-off在实际部署中至关重要但尚未被量化。
 
-**本文要解决什么？**
+**本文目标**
    - RQ1: LRM获取推理能力后，哪些基础能力受损最严重？
    - RQ2: 推理时的inference-time compute如何影响LRM在通用任务上的表现？
    - 能否通过控制推理模式来缓解基础能力下降？
 
 **切入角度**：通过在LRM的thinking过程中插入特殊token（如`<think></think>`），手动控制推理深度，实现Zero/Less/Summary三种自适应推理模式
 
-**核心idea一句话**：LRM的deliberative reasoning在提升专业推理的同时显著损害基础能力，而自适应推理模式（动态分配inference-time compute）是未来LRM发展的关键方向
+**核心 idea**：LRM的deliberative reasoning在提升专业推理的同时显著损害基础能力，而自适应推理模式（动态分配inference-time compute）是未来LRM发展的关键方向
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ s1.1-32B在IFEval上下降47.38%的同时推理成本增加250%！
 - **"Thought也不安全"的发现非常有价值**：即使response被safety filter过滤了，thinking过程中的unsafe content本身就是安全风险（可能被攻击者观察到或利用）。这对LRM safety alignment方向有重要启示
 - **自适应推理的简单有效性**：仅通过插入`</think>` token就能实现丰富的推理模式控制，方法极其简单但效果显著，为未来"think when needed"的adaptive inference提供了实践基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **评估范围有限**：只覆盖了general tasks、instruction following和safety，未涉及multi-modal、open-ended对话等更贴近真实应用的场景
 - **模型覆盖不够**：仅评估了特定checkpoint，对MoE架构或多模态LLM的适用性未知
 - **自适应推理是手动控制的**：Zero/Less/Summary-Thinking需要预先指定模式，未提出自动判断何时需要推理、推理多深的方法

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FastDINOv2: Frequency Based Curriculum Learning Improves Robustness and Training Speed
 description: >-
@@ -136,7 +136,7 @@ FastDINOv2 分为两个训练阶段：
 - **深入的频率分析**：系统性地按频率带分类腐蚀类型，建立了腐蚀-频率-偏置的完整分析框架
 - **规模友好**：方法在 ImageNet-100 和 ImageNet-1K 上均有效，适用于资源受限场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了 ViT-B**：更大模型（ViT-L/G）和更大数据集（LVD-142M）的效果未知
 2. **Stage 分割比是固定的**：75%/25% 是否对所有设置最优未深入探索

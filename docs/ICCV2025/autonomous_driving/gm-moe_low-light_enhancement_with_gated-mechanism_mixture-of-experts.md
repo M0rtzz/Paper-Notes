@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GM-MoE: Low-Light Enhancement with Gated-Mechanism Mixture-of-Experts
 description: >-
@@ -112,7 +112,7 @@ $$\text{PSNR loss} = -\frac{10}{\log(10)} \cdot \log(\text{MSE} + \epsilon)$$
 - 在5个benchmark上取得5个PSNR第一和4个SSIM第一，泛化性优异
 - 参数量19.99M，介于轻量和重量之间，平衡了性能和效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - LOLv2-Real上的SSIM（0.806）略低于DPEC（0.863）和SNR-Net（0.849），结构保持能力有待提升
 - 门控机制仅使用Softmax生成三个权重，缺少对具体像素或区域的空间自适应

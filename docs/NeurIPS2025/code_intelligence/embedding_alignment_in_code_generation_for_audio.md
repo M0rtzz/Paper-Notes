@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Embedding Alignment in Code Generation for Audio
 description: >-
@@ -106,7 +106,7 @@ $$\mathcal{L}_i = -\log \frac{\exp(\text{sim}(c_i, a_i) / \tau)}{\sum_{j=1}^N \e
 - **实用价值**：对齐后可以仅从代码嵌入推断音频相似性，为代码补全工具提供"音乐感知"能力，让 LLM 辅助 live-coding 时生成的候选代码更多样且有感知意义
 - **初步探索的思路值得借鉴**：先做消极实验（证明原始空间无相关性）再motivate 对齐模型，论证逻辑清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据规模有限**：仅基于 27 个 Sonic Pi 教程模板扩增，音乐风格和代码结构多样性不足
 - **仅支持 Sonic Pi**：未验证对其他音乐编程语言（SuperCollider、TidalCycles、Strudel）的泛化能力

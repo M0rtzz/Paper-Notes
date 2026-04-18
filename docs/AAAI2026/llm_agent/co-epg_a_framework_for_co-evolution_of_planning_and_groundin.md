@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Co-EPG: A Framework for Co-Evolution of Planning and Grounding in Autonomous GUI Agents
 description: >-
@@ -160,7 +160,7 @@ Co-EPG是一个自迭代训练框架，核心是建立Planning和Grounding之间
 - **数据效率极高**：仅用基准数据集的2.42%数据就超越了依赖大规模合成数据的AGUVIS，验证了"深度挖掘数据价值"比"粗暴堆数据"更有效
 - **跨平台泛化**：在Web（Mind2Web）、Mobile（AndroidControl）、Desktop（OmniACT）三类环境都有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅做了step-level评估**：论文只评估单步动作的准确率，没有做完整任务的端到端成功率评估（trajectory-level），而实际应用中需要连续多步都正确
 - **定位模型仍需大模型做奖励**：C-DREM依赖Qwen2.5-VL-72B和32B作为辅助奖励源，GRPO训练的计算开销很大（7 GPUs × 48小时）
 - **迭代收益递减**：从3轮迭代的数据看，提升幅度在逐渐减小（Iter1→2 vs Iter2→3），论文也没有探索更多轮次是否会饱和

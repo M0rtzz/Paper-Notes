@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Variational Autoencoder with Normalizing Flow for X-ray Spectral Fitting
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 物理潜在空间的强制约束确保了科学可解释性
 - 在 Apple M2 芯片上即可运行推断，部署门槛低
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前使用的物理模型过度简化（仅 3 个光谱成分），限制了参数精度
 - 训练数据仅来自 NICER（0.3-10 keV），波段覆盖有限
 - 损失函数权重尚未系统优化

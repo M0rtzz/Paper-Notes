@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Design Decisions for Dual Encoder-based Entity Disambiguation
 description: >-
@@ -138,7 +138,7 @@ VerbalizED 的 Dual Encoder 架构包含：
 - **标签语义化 + 无候选列表的优势互补**：语义化提供了丰富的实体表示，消除了对预编译候选列表的依赖，大幅提升了对罕见/overshadowed 实体的消歧能力
 - **迭代预测的诚实评估**：论文坦诚迭代策略效果不一致，给出了正反例分析，最终推荐基础架构而非迭代变体——这种诚实的实验态度值得赞赏
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 受计算资源限制，消融实验在 AIDA（小数据集）上进行，某些结论可能不完全推广到 ZELDA 规模
 2. 高度依赖 Wikidata 描述的可用性——对描述缺失的实体效果可能下降

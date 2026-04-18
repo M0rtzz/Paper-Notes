@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attention! Your Vision Language Model Could Be Maliciously Manipulated
 description: >-
@@ -145,7 +145,7 @@ $$\mathcal{L} = -\sum_{i=1}^{|y^*|} \log P(y^*_i | y^*_{<i}, x + \delta, p)$$
 - **海绵样本新发现**：首次展示VLM可被精确诱导生成极长输出，对推理服务有直接安全影响
 - **可视化效果直观**：GitHub上展示了LLaVA在各种攻击场景下的对比输出，效果令人印象深刻
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **白盒依赖**：完整攻击需要访问VLM的梯度信息，限制了实际威胁场景
 2. **迁移性不足**：跨模型迁移攻击成功率仍有提升空间

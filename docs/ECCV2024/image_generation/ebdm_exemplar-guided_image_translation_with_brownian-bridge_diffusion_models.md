@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EBDM: Exemplar-guided Image Translation with Brownian-bridge Diffusion Models
 description: >-
@@ -156,7 +156,7 @@ CLIP 作全局编码器反而大幅降低 SSIM（从 0.831 降到 0.632），因
 3. **Global + Local 的互补设计**：DINOv2 [CLS] 抓全局风格，Exemplar Network 抓局部纹理，双路径互补
 4. **Exemplar Attention 的空间自注意力融合**：解决了非对齐特征整合的核心挑战
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在人脸（CelebA-HQ）和时装（DeepFashion）数据集上验证，未测试更复杂的场景级任务
 2. 语义一致性分数（Tab. 4）在部分指标上不如 DynaST 等方法，可能因为布朗桥的随机性引入了一些变异

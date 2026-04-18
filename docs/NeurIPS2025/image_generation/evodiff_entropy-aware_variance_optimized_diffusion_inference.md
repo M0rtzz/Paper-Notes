@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EVODiff: Entropy-aware Variance Optimized Diffusion Inference
 description: >-
@@ -121,7 +121,7 @@ $$\eta_i = \text{Sigmoid}(|\eta_i^*|), \quad \zeta_i = \text{Sigmoid}(-(|\zeta_i
 - 无需额外训练或参考数据（不同于 DPM-Solver-v3）
 - 统一解释了 DPM-Solver 和 EDM Heun 迭代的加速机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设去噪步间估计噪声的独立性，实际中共享参数可能引入依赖
 - 理论分析主要基于高斯假设，对非高斯分布的适用性有待验证

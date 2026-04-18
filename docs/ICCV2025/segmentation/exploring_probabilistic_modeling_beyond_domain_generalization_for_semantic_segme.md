@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring Probabilistic Modeling Beyond Domain Generalization for Semantic Segmentation
 description: >-
@@ -115,7 +115,7 @@ ACDC 恶劣天气场景（Mask2Former Swin-L）：
 - 扩散过程仅 T=4 步，引入开销极小（单张 4090 可训练），实际增加的参数和计算量很小
 - 在恶劣天气场景的大幅提升（ACDC 上 +4.3 mIoU）展示了极强的实用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 伪目标域图像仅通过光度增强生成，增强策略的多样性受限
 - LDP 通道数固定为 c'=4，不同域偏移的复杂度可能需要自适应维度

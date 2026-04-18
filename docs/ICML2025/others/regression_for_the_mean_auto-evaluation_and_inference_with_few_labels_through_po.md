@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Regression for the Mean: Auto-Evaluation and Inference with Few Labels through Post-hoc Regression
 description: >-
@@ -107,7 +107,7 @@ $$Var[\hat{\mu}_{PPI}] - Var[\hat{\mu}_h] = \mathbb{E}[\lambda]^2 \cdot (\tfrac{
 4. **随机 $\lambda$ 分析**：首次将 $\lambda$ 视为随机变量分析 PPI 方差，揭示了先前被忽视的估计误差来源
 5. **LLM 评估应用场景自然**：生成模型自身生成的数据可直接作为无标签数据池，PPI 框架天然适配
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅聚焦均值估计**：未扩展到分位数、置信区间等更一般的统计推断任务
 2. **二分类假设**：方法主要针对 $h(X) \in \{0,1\}$，非二分类场景验证不足

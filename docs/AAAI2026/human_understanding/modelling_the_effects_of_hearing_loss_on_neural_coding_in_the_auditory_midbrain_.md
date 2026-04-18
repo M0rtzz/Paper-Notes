@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modelling the Effects of Hearing Loss on Neural Coding in the Auditory Midbrain with Variational Conditioning
 description: >-
@@ -132,7 +132,7 @@ $$\mathcal{L} = \mathcal{L}_{CE}(R, p(\hat{R})) + \alpha_{KL} D_{KL} + \alpha_{A
 - **从数据直接学习听力损失空间**：不依赖先验假设（如听力图），能捕捉"隐性听力损失"等复杂现象
 - **面向助听器的实际应用**：参数化模型可以训练补偿策略，通过人在回路优化为新用户快速定制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 样本内性能仍略低于动物特定 ICNet，尤其在正常听力动物上
 2. 未见动物的性能（26.9% FEVE）与样本内（50.7%）差距仍大，可能因通道对齐残差不泛化

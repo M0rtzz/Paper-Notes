@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Realism Control One-step Diffusion for Real-World Image Super-Resolution
 description: >-
@@ -162,7 +162,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{data} + \lambda_2 \mathcal{L}_{reg} + \lamb
 3. **余弦相似度的优越性**：通过 Spearman 相关系数分析，说明 CS 比 L1/MSE 更能捕捉高维潜在特征的退化信息
 4. **视觉提示 > 文本提示**：消除了对 VLM 的依赖，同时提升了保真度和真实感
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分组数 $n$ 固定为 3-4，更细粒度的分组是否能获得更好的控制效果值得探索
 - MEM 估计模块的精度直接影响自适应模式效果，目前用简单 MLP，可考虑更强的估计网络

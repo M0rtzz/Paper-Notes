@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Logical Expressiveness of Graph Neural Networks with Hierarchical Node Individualization
 description: >-
@@ -173,7 +173,7 @@ HEGNN的训练采用标准图学习流程：
 3. **IR范式的优雅迁移**：将图同构测试中的经典IR范式自然地转化为GNN架构
 4. **理论指导实践**：逻辑刻画可以帮助实践者选择合适复杂度的GNN变体
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **有界度假设**：逻辑表征定理要求图的度有界，对无界度图（如幂律图）不直接适用
 2. **计算可扩展性**：HEGNN-$k$ 的 $O(n^{k+1})$ 复杂度限制了高阶版本的实际使用

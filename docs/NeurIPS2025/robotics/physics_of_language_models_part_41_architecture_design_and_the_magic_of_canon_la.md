@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Physics of Language Models: Part 4.1, Architecture Design and the Magic of Canon Layers
 description: >-
@@ -127,7 +127,7 @@ Canon层组件消融（Figure 10）：
 4. **RoPE可以减少**：Canon使得仅用1/4 RoPE就能超越全量RoPE
 5. **合成任务的预测力**：合成实验的趋势在真实预训练中得到验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在学术规模验证，大规模（>1.3B/100B）的结果留待后续
 2. Canon层使用固定kernel size 4，动态自适应卷积的探索不足

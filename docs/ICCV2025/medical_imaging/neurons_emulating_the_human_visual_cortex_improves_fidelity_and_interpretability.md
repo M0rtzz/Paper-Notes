@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NEURONS: Emulating the Human Visual Cortex Improves Fidelity and Interpretability in fMRI-to-Video Reconstruction
 description: >-
@@ -158,7 +158,7 @@ $$\mathcal{L}_{total} = w_1 \mathcal{L}_{seg} + w_2 \mathcal{L}_{cls} + w_3 \mat
 - **利用 VLM 生成训练标签**：Qwen2.5-VL-72B + Grounded-SAM 自动构建所有子任务标签
 - **关键物体掩码增强**：推理时将掩码乘到条件信号上强调关键物体，简单有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 关键物体分割的 Dice 分数较低（35.63%），主要因为测试集中有大量未见类别
 2. fMRI 时间分辨率仅 2s，难以捕获快速视觉变化

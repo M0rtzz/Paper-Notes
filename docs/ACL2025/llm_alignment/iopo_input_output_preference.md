@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IOPO: Empowering LLMs with Complex Instruction Following via Input-Output Preference Optimization
 description: >-
@@ -161,7 +161,7 @@ $$\mathcal{L}_{\text{IOPO}}(\pi_\theta) = -\mathbb{E}_{i \sim D}\left\{\log\left
 4. **Trace 基准填补空白**：26 个约束维度、5 类约束类型、120K 训练数据，是目前最全面的复杂指令遵循基准
 5. **数据构建方法可扩展**：通过约束修改自动生成输入偏好对，无需额外人工标注
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练代价较高**：4x 显存 + 2.4x 训练时间（vs SFT），限制了在更大模型上的应用
 2. **训练集未经人工验证**：120K 训练集仅靠自动流程，可能存在噪声

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] To Code or not to Code? Adaptive Tool Integration for Math Language Models via Expectation-Maximization
 description: >-
@@ -110,7 +110,7 @@ $$\underset{(x_q, y_a)}{\mathbb{E}}\left[\text{clip}\left(\frac{\pi_\theta(y_a|x
 - **Prefix-guided generation的实用技巧**：简单的前缀引导即可诱导模型探索代码集成路径，无需复杂的reward shaping。
 - **实现极为高效**：仅7K query、8×A100、10小时即完成训练，对资源受限的研究者友好。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限数学领域**：未验证在科学推理、通用代码生成等其他需要工具集成的领域的泛化性。
 2. **未与o1-like长CoT模型对比**：论文明确排除了依赖test-time scaling的模型（如MCTS、长CoT），与DeepSeek-R1等的直接对比缺失。

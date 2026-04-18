@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models
 description: >-
@@ -191,7 +191,7 @@ $$\hat{\mathbf{W}}_i = \mathbf{W}_i + \mathbf{e}_t(t_i)$$
 3. **FTAR 数据集填补空白**：260K 规模的时间敏感音频指令数据集，涵盖三大核心时间推理任务
 4. **mIoU 指标在语音摘要上的创新应用**：首次用于衡量摘要的时间定位准确性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **METEOR 分数不如微调 Qwen2-Audio**：可能是基模型预训练时音频描述数据不够多样
 2. **SEM 对密集描述有轻微负面影响**：信息压缩可能丢失某些局部事件细节

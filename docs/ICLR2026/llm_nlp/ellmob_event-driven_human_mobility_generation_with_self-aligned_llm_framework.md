@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ELLMob: Event-Driven Human Mobility Generation with Self-Aligned LLM Framework
 description: >-
@@ -121,7 +121,7 @@ ELLMob 在所有事件场景中全面领先，台风场景 SI 提升 32.3%，COV
 3. **自对齐范式的创新**：将通用 LLM 自对齐从"纠错"转变为"冲突调和"，更符合事件移动场景的本质
 4. **实际价值明确**：对应急响应规划、交通管理等场景有直接应用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **地理范围有限**：仅在东京都市圈验证，虽补充了大阪实验但全球泛化性待考察
 2. **数据来源偏差**：基于 Twitter/Foursquare 签到数据，可能存在用户群体偏差

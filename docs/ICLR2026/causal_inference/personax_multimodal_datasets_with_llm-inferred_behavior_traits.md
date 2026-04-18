@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PersonaX: Multimodal Datasets with LLM-Inferred Behavior Traits
 description: >-
@@ -106,7 +106,7 @@ PersonaX 包含两个互补数据集：
 - LLM 选择过程系统严谨，评估了十个模型的八个维度指标
 - 隐私保护措施到位：不释放原始数据，仅释放嵌入+可逆变换
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **群体偏差**：AthlePersona 仅含男性运动员，CelebPersona 偏向富裕高知名度个体，不具普遍代表性
 - **缺乏时序稳定性**：行为特质是动态的，但数据从静态公开信息推断，没有纵向追踪
 - **LLM 推断的可靠性**：尽管多模型投票提高了鲁棒性，LLM 对行为特质的评估仍然是主观的

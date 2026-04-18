@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CstNet: Constraint-Aware Feature Learning for Parametric Point Cloud
 description: >-
@@ -138,7 +138,7 @@ CstNet 包含两个阶段：
 - 自建 Param20K 数据集填补了参数化 CAD 分类评测的空白
 - 旋转鲁棒性提升 26.17% 是非常亮眼的结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑 plane/cylinder/cone 三种 primitive，自由曲面的约束表示需要进一步研究
 - Param20K 数据集规模有限（75 类 ~20K 实例），工业场景复杂度可能更高

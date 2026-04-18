@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploratory Memory-Augmented LLM Agent via Hybrid On- and Off-Policy Optimization
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：参数更新能内化知识但缺乏探索动力；外部记忆能促进探索但无法扩展内在能力。二者各有局限，缺乏统一框架。
 
-**本文要解决什么？** 如何在 online RL 中让 LLM Agent 自主探索新环境，同时将探索获得的经验内化为模型参数？
+**本文目标** 如何在 online RL 中让 LLM Agent 自主探索新环境，同时将探索获得的经验内化为模型参数？
 
 **切入角度**：非参数记忆更新可以引导（bootstrap）参数更新——Agent 先通过记忆探索获得高质量轨迹，再通过 off-policy 更新将这些知识蒸馏到无记忆条件下的策略中。
 
-**核心idea一句话**：用自生成的记忆 tips 作为探索脚手架，通过混合 on/off-policy 更新将记忆增强的探索能力渐进式地内化到模型权重中。
+**核心 idea**：用自生成的记忆 tips 作为探索脚手架，通过混合 on/off-policy 更新将记忆增强的探索能力渐进式地内化到模型权重中。
 
 ## 方法详解
 
@@ -118,7 +118,7 @@ $$\mathcal{L} = \mathbb{E}\left[\frac{1}{NT}\sum_{i,t}\min(\rho_\theta^{(i,t)} A
 - **Token masking 稳定 off-policy 训练**：简单但有效地解决了 LLM off-policy 训练中重要性采样比爆炸的问题，可迁移到其他 off-policy LLM 训练场景。
 - **Few-shot 任务迁移**：训练后的模型获得了"用记忆探索"的元能力，在新任务上仅需几步就能适应，暗示 EMPO2 学到了通用的探索策略而非任务特定的模式。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 Qwen2.5-7B 上验证，未测试更大模型或不同架构
 - 记忆检索使用简单的余弦相似度，更先进的 RAG 机制可能进一步提升效果
 - 仅在文本交互环境（ScienceWorld、WebShop）验证，未涉及数学推理、代码生成等场景

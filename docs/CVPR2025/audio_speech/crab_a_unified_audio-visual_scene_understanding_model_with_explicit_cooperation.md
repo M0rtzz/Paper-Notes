@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Crab: A Unified Audio-Visual Scene Understanding Model with Explicit Cooperation
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：从数据和模型两方面实现显式任务间协作。
 
-**核心 idea 一句话**：显式推理数据集（AV-UIE） + 交互感知 LoRA（多头） = 统一音视频理解。
+**核心 idea**：显式推理数据集（AV-UIE） + 交互感知 LoRA（多头） = 统一音视频理解。
 
 ## 方法详解
 

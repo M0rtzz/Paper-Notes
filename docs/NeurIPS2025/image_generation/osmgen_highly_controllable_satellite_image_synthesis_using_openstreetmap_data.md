@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OSMGen: Highly Controllable Satellite Image Synthesis using OpenStreetMap Data
 description: >-
@@ -138,7 +138,7 @@ $$\mathcal{L}_{\text{diff}} = \mathbb{E}_{x_0, t, \epsilon} \left\| \epsilon - \
 - **双掩码设计**：通用掩码捕获高级概念（道路/水体/建筑），特定掩码区分细粒度 POI 子类型
 - **应用价值明确**：数据增强（解决标注稀缺）和城市规划可视化（编辑地图预览效果）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏定量评估指标**：论文以定性可视化为主，缺少 FID、IS 等标准生成质量指标
 2. **分辨率限制**：256×256 分辨率可能不足以满足精细城市规划需求

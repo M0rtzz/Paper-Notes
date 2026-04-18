@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Controllable Financial Market Generation with Diffusion Guided Meta Agent
 description: >-
@@ -151,7 +151,7 @@ $$\hat{r} = \frac{g_f r_t + g_c \bar{r} + g_n r_\sigma}{g_f + g_c + g_n}$$
 3. **Classifier-Free Guidance在金融领域的首次应用**：使模型同时支持无条件和条件生成
 4. **下游任务验证了生成环境的实用价值**：RL交易策略的性能提升证明了DigMA生成的订单流质量
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持单资产生成**：未考虑多资产间的相关性，未来需扩展到多资产联合生成
 2. **控制指标有限**（仅收益率、振幅、波动率），未支持更细粒度的场景控制如特定的价格走势形态

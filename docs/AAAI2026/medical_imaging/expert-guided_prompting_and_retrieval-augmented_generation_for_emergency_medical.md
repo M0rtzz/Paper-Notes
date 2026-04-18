@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering
 description: >-
@@ -101,7 +101,7 @@ Filter用AdamW优化器（weight decay 0.01），LoRA参数 $r=8, \alpha=16$，d
 - EMSQA是首个覆盖多认证等级、配有结构化KB和真实患者记录的EMS QA数据集，数据集本身具有长期基准价值。
 - RTF策略（先大范围检索再按属性过滤）略优于FTR策略（先过滤再检索），暗示检索与过滤的顺序对效果有微妙影响——先检索保留了跨领域相关文档的可能性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Filter分类器准确率有限（subject area miF≈80%），误分类会传播到后续模块，可探索不确定性感知的软过滤
 - 仅用Qwen3-4B做RAG实验，未在更大模型上验证ExpertRAG效果是否仍显著

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bayesian Neural Scaling Law Extrapolation with Prior-Data Fitted Networks
 description: >-
@@ -162,7 +162,7 @@ NSL-PFN快约4-5个数量级！
 4. **不确定性质量高**：在数据有限场景（如Bayesian active learning）中表现突出
 5. **Double descent的优雅处理**：通过在先验中包含Down-Up-Down模式，使模型"知道"上升后终将下降
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **先验设计需要领域知识**：手工设计三类函数族需要对缩放定律行为有深入理解
 2. **对简单缩放律可能过度建模**：在NMT/LM这种简单曲线上略逊于MCMC(M4)

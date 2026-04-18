@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoA-VLA: Improving Vision-Language-Action Models via Visual-Textual Chain-of-Affordance
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：机器人执行复杂操作需要理解物体在哪、怎么抓、放哪里、怎么移动这一连串问题，但现有VLA没有显式地建模这些中间推理步骤。
 
-**本文要解决什么**：设计一种结构化的affordance推理链，让VLA模型在预测动作前先推理出与任务相关的四类affordance，并将结果注入策略网络。
+**本文目标**：设计一种结构化的affordance推理链，让VLA模型在预测动作前先推理出与任务相关的四类affordance，并将结果注入策略网络。
 
 **切入角度**：从机器人affordance的经典概念出发，将其形式化为CoT推理链，并创新性地用文本+视觉双模态表示。
 
-**核心idea一句话**：用四类affordance（object/grasp/spatial/movement）构建推理链，以文本和视觉双格式注入VLA的diffusion策略头来指导动作生成。
+**核心 idea**：用四类affordance（object/grasp/spatial/movement）构建推理链，以文本和视觉双格式注入VLA的diffusion策略头来指导动作生成。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ LIBERO仿真benchmark：
 - **视觉-文本双模态注入**：不只是说出affordance（文本），还画出来（视觉叠加），两种模态通过FiLM注入diffusion head。这种设计可以迁移到任何diffusion-based VLA。
 - **动态选择减少冗余**：不是越多信息越好，冗余affordance反而是噪声。利用本体感知做简单的选择就能6x加速且不掉点。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖GPT-4o、Grounding DINO、SAM、CoTracker等多个外部模型生成affordance数据，pipeline较复杂。
 - 只在Franka单臂7任务+LIBERO上验证，任务多样性和规模有限。
 - 动态affordance选择基于本体感知的简单判断，更复杂的策略（如基于注意力的选择）可能更好。

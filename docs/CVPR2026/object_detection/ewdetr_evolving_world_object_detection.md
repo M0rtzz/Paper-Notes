@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EW-DETR: Evolving World Object Detection via Incremental Low-Rank DEtection TRansformer
 description: >-
@@ -70,7 +70,7 @@ VOC→Clipart具体数据：U-Recall在T1为77.35%、T2为78.23%；T2 Prev. Know
 - 可训练参数减少94-98%，发挥了参数高效微调在增量学习中的优势
 - FOGS指标设计合理，将三维性能压缩为单一可比较数值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - GSS（域泛化得分）仍然较低（14.02），说明跨域迁移是最大瓶颈
 - 实验规模偏小（Pascal VOC + 小域），真实大规模场景（COCO级别）下的表现待验证
 - 每个域只引入2-8个新类别，如果一次引入大量新类别效果未知

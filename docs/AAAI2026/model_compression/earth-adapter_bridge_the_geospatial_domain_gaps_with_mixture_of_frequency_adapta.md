@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Earth-Adapter: Bridge Geospatial Domain Gaps with Mixture of Frequency Adaptation
 description: >-
@@ -150,7 +150,7 @@ SS 均值超越 Rein **+1.2%**。
 3. **极致的参数效率**：仅 2.6M~9.6M 可训练参数即可在 DA 上获得 +9.0% 的巨大提升
 4. **统一三个设定**：一个方法同时适用于 SS、DA 和 DG，展示了良好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 频率截止参数 $\rho$ 固定，未自适应调整，不同场景的最优频率分界点可能不同
 - 仅在遥感图像上验证，自然图像中伪影特征不同，方法的泛化范围有待验证

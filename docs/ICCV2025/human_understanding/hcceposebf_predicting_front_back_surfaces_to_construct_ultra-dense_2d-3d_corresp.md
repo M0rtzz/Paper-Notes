@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HccePose(BF): Predicting Front & Back Surfaces to Construct Ultra-Dense 2D-3D Correspondences for Pose Estimation
 description: >-
@@ -107,7 +107,7 @@ IC-BIN数据集上不同编码方法消融（ADD(-S) AR%）：
 - 多直方图层级学习策略使训练更稳定，权重峰值从低级到高级逐步转移，实现了自然的课程学习
 - 方法框架通用性强，可以与不同backbone（ResNet34/EfficientNet-B4）配合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个物体需要单独训练一个网络（约24小时），不适合大规模场景（数百个物体）
 - 仅针对已知物体（seen objects），未涉及未知物体的位姿估计

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Doubly-Robust LLM-as-a-Judge: Externally Valid Estimation with Imperfect Personas
 description: >-
@@ -107,7 +107,7 @@ $$\beta_0 = \arg\min_\beta \{\mathbb{E}_s[C \cdot \beta(W^s)^2] - 2\mathbb{E}_t[
 - **实验设计科学**：PSF 框架系统地操控 persona 质量、协变量偏移和选择偏差三个维度，并开源供社区使用
 - **实际意义明确**：解决了当前 AI 安全评估中标注者群体代表性不足的真实痛点
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖**无概念漂移**假设（$P_s(Y|W) = P_t(Y|W)$），即相同特征的标注者对相同内容给出相同评分分布，现实中可能不成立
 - 内容嵌入采用 MiniLM-L6-v2 + UMAP 降维到 15 维，信息损失对估计质量的影响需更多分析
 - 实验中人工评分规模有限（DICES 仅 300 对话 × 25 评分），更大规模场景下的表现待验证

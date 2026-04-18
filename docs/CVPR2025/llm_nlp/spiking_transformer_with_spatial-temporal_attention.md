@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spiking Transformer with Spatial-Temporal Attention
 description: >-
@@ -76,7 +76,7 @@ tags:
 - 脉冲兼容的注意力保持SNN能效优势
 - 自适应膜参数增加了与生物的保真度
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 与ANN精度差距仍存在（约6-7%在ImageNet上）
 - 注意力的额外计算是否完全被SNN能效优势抵消需更严格分析
 - 对视频/事件驱动数据的时间注意力效果有待更多验证

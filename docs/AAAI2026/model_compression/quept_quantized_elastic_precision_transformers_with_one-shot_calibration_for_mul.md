@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QuEPT: Quantized Elastic Precision Transformers with One-Shot Calibration for Multi-Bit Switching
 description: >-
@@ -59,7 +59,7 @@ QuEPT的Pipeline为逐block重建：
 ### 关键设计
 
 #### 1. **Multi-Bit Token Merging (MB-ToMe)**
-- **做什么**：在多位宽优化过程中融合不同位宽的token特征，维持跨精度的平衡性能
+- **功能**：在多位宽优化过程中融合不同位宽的token特征，维持跨精度的平衡性能
 - **核心思路**：探索了三种策略：
     - Case 1（随机选择）：每个token随机选一个位宽的特征 → 质量不稳定
     - Case 2（均匀融合）：三个位宽组1:1:1加权融合 → 丢失高位宽细节
@@ -70,7 +70,7 @@ $$X_k' = \begin{cases} X_k^H, & \text{if } k \in \Phi \\ \lambda_1 X_k^H + \lamb
 - **设计动机**：鲁棒token的高精度特征应被保留作为结构支撑，不稳定token通过融合维持特征连续性。合并不相似的token会导致更均匀的数值分布，对不同位宽更鲁棒
 
 #### 2. **Multi-Bit Cascaded LoRA (MB-CLoRA)**
-- **做什么**：通过层次化的LoRA参数共享结构，建立不同位宽之间的协同关系
+- **功能**：通过层次化的LoRA参数共享结构，建立不同位宽之间的协同关系
 - **核心思路**：所有位宽共享统一的LoRA参数 $A \in \mathbb{R}^{r \times q}$ 和 $B \in \mathbb{R}^{p \times r}$，通过级联截取不同rank:
 $$R^{(b)} = B_{[:,:r_b]} A_{[:r_b,:]}$$
   rank分配遵循级联模式：低位宽用更多rank
@@ -78,7 +78,7 @@ $$r_b = \begin{cases} r_h & b \in \mathcal{B}_H \\ r_h + r_m & b \in \mathcal{B}
 - **设计动机**：低位宽量化误差更大，需要更多补偿能力。级联结构使低位宽的补偿矩阵自然包含高位宽的参数作为前导子矩阵，建立继承关系。高精度梯度可以自然扩散到低精度对应项
 
 #### 3. **权重裁剪参数联合优化**
-- **做什么**：与LoRA参数同时优化权重裁剪阈值
+- **功能**：与LoRA参数同时优化权重裁剪阈值
 - **核心公式**：
 $$s_w^b = \frac{\alpha_b \times \max(W + B_b A_b) - \beta_b \times \min(W + B_b A_b)}{2^{b-1}}$$
 - **设计动机**：LoRA参数更新过程中量化权重持续变化，固定裁剪阈值不再最优。裁剪机制处理权重异常值造成的大幅误差，为LoRA创造更平滑的误差信号
@@ -158,7 +158,7 @@ QuEPT在ViT-S上W4A4比ERQ高6.2%，训练时间仅为PTMQ的1/26。
 4. **弹性到混合精度的无缝转换**：通过层敏感度+DP算法即可将弹性量化转为混合精度，无需重新训练
 5. **训练效率极高**：ViT-S仅17分钟，是PTMQ的1/26
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未显式处理LLM中的异常值(outlier)，与SpinQuant等outlier缓解技术结合可能进一步提升
 2. 极低位宽(如W2)性能仍有限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ProxyFL: A Proxy-Guided Framework for Federated Semi-Supervised Learning
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L} = \underbrace{\mathcal{L}_s + \alpha \mathcal{L}_u + \beta \mathca
 - 犹豫类别集合是一个优雅的设计——不用单一伪标签硬编码，而是保留不确定性，让对比学习自然处理
 - GPT 模块的服务器端调优开销极低（约等于推理一张图），实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在图像分类任务上验证，未扩展到检测、分割等更复杂任务
 - 实验仅涉及 Label-at-All-Client 场景，Labels-at-Partial-Clients 等其他 FSSL 场景未覆盖

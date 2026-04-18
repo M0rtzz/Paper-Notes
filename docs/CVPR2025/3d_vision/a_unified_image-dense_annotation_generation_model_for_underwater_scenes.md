@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified Image-Dense Annotation Generation Model for Underwater Scenes
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L} = \mathcal{L}_{mse}^I + \mathcal{L}_{mse}^D + \mathcal{L}_{mse}^M$
 - 仅用14K训练样本+LoRA微调就实现了如此大的性能提升，说明方法有效利用了预训练知识
 - 水下场景数据合成的关键洞察：文本条件比深度图条件更灵活，能覆盖更多场景变体
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 深度图真值由Depth Anything生成（伪标签），深度精度受限于单目深度估计模型的能力
 - 当前仅支持深度和语义掩码两种标注类型，可以扩展到法向量、表面法线等
 - 训练数据规模较小（14K），可能限制了生成多样性

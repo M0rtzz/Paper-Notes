@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LingOly-TOO: Disentangling Reasoning from Knowledge with Templatised Orthographic Obfuscation
 description: >-
@@ -111,7 +111,7 @@ GPT-5按难度（$M_{obf}$）：Breakthrough=0.81, Round 2=0.31
 - 人类RCT验证混淆仅造成5.7%下降而模型下降11%+，性能差主要因知识依赖而非认知惩罚
 - $M_{rob}$揭示推理脆弱性：GPT-5从0.48降到0.29
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 严格Exact Match可能低估部分正确推理——但部分分数会虚假膨胀基线
 - 仅覆盖自然语言模态的归纳/演绎推理，不涉及视觉或数学

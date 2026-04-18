@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dora: Sampling and Benchmarking for 3D Shape Variational Auto-Encoders
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：紧凑的 latent 表示（少量 codes）和精细的几何重建（锐边保持）之间存在矛盾。均匀采样无法有效分配计算资源到几何复杂区域。
 
-**本文要解决什么？** 如何在大幅减少 latent codes 数量的同时保持甚至提升锐边区域的重建质量？
+**本文目标** 如何在大幅减少 latent codes 数量的同时保持甚至提升锐边区域的重建质量？
 
 **切入角度**：提出显著边缘导向的采样策略，在几何复杂区域密集采样，配合专门的 dual cross-attention 分别处理均匀和边缘采样点。
 
-**核心idea一句话**：通过二面角检测锐边并密集采样，用 dual cross-attention 分别编码均匀与显著区域信息，以极紧凑的 latent 表示实现精细 3D 重建。
+**核心 idea**：通过二面角检测锐边并密集采样，用 dual cross-attention 分别编码均匀与显著区域信息，以极紧凑的 latent 表示实现精细 3D 重建。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - **Dora-Bench 的分层评测**：按几何复杂度分层是合理的，不同方法在不同复杂度上表现可能完全不同
 - Dual Cross-Attention 思路可推广到其他需要区分重要/普通区域的任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 二面角阈值 $\tau=30°$ 是固定的，自适应阈值可能更好
 - SES 依赖于输入 mesh 质量，对噪声 mesh 可能产生错误的显著边检测
 - 仅在 Objaverse 上训练，泛化到其他 3D 数据集的能力未验证

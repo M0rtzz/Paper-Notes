@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AS-Bridge: A Bidirectional Generative Framework Bridging Next-Generation Astronomical Surveys
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：Brownian Bridge 在两个端点间定义随机插值过程，天然适合建模两个观测域间的概率关系。
 
-**核心idea一句话**：用双向 Brownian Bridge 扩散过程建模巡天间的条件分布，并利用对 OOD 稀有天体重建失败来实现无监督异常检测。
+**核心 idea**：用双向 Brownian Bridge 扩散过程建模巡天间的条件分布，并利用对 OOD 稀有天体重建失败来实现无监督异常检测。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ tags:
 - 稀有事件检测完全无监督——利用模型对分布外样本的系统性重建失败，无需异常标签。提出"发现导向"评估指标（FPR@lowTPR、AUPR）替代工业异常检测的高召回指标
 - $\epsilon$-prediction 等价性证明将 BB 训练与最大似然原则桥接，仅 3 行证明即完成
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 完全基于模拟数据（SLSim），simulation-to-reality gap 不可避免——需在真实 LSST/Euclid 数据发布后重新验证
 - 64×64 分辨率对实际科学分析过低，需扩展到更高分辨率

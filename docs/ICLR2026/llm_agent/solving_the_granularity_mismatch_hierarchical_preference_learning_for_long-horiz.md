@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Solving the Granularity Mismatch: Hierarchical Preference Learning for Long-Horizon LLM Agents
 description: >-
@@ -104,7 +104,7 @@ HPL 在参考策略的探索数据上构建三个层次的偏好对：① 轨迹
 - 3×3 **双层课程**的设计很实用——同时考虑任务复杂度和样本难度两个维度
 - 理论保证（方差改善 $O(T/\log(1/\varepsilon))$）为实践提供了数学支撑
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖冻结参考策略的一次性探索收集数据，非在线 RL
 - Monte Carlo rollout 数量有限（$M=5$），每步估计方差仍可能较大
 - 语义分割依赖 GPT-4o，增加成本和外部依赖

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FACT-AUDIT: An Adaptive Multi-Agent Framework for Dynamic Fact-Checking Evaluation of Large Language Models
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **自适应性强**：每个目标LLM获得不同的测试场景和数据量（如GPT-4o 990条 vs Llama3-8B 1200条），真正实现model-centric评估
 - **人工评估充分**：600样本的质量保证研究 + 与Pinocchio/LLMFake的对比人工评估，在多样性、覆盖度等6个维度均领先
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Agent Controller偏差**：以GPT-4o作为agent controller（生成数据+评估），其自身知识偏见不可避免，类似人类评审的认知偏差
 - **信息更新滞后**：agent controller缺乏动态获取新信息的能力，无法适应快速变化的知识环境，未来需整合RAG技术
 - **只审计不改进**：框架能发现弱点但目前没有提供模型改进机制，未来可结合偏好优化（DPO等）生成训练数据

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 7DGS: Unified Spatial-Temporal-Angular Gaussian Splatting
 description: >-
@@ -90,7 +90,7 @@ $$\Sigma_{cond} = \Sigma_p - \Sigma_{p,(t,d)} \Sigma_{(t,d)}^{-1} \Sigma_{p,(t,d
 - **视角依赖效果突破**：在7DGS-PBR上的心脏/云/火焰等场景，4DGS完全无法处理的视角依赖效果被7DGS有效捕获
 - **灵活降配**：去掉AGR可达400+FPS，适合对速度更敏感的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - AGR的MLP增加了计算开销（FPS从376降到175）
 - 在Technicolor等真实数据上优势相对较小
 - 7D协方差有28个独立参数（Cholesky下三角），训练不如3DGS稳定

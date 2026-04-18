@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhyGaP: Physically-Grounded Gaussians with Polarization Cues
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L} = \mathcal{L}_{\mathrm{rgb}} + \lambda_1 \mathcal{L}_{\mathrm{pol}
 - **GridMap 实用高效**：52 个锚点相机 + 距离加权融合，在不需要场景特定参数的前提下解决间接光照，开销可控且易于 GPU 并行。
 - **支持部分偏振输入**：仅用两个普通 RGB 相机加线偏振片即可采集数据，不依赖专用偏振相机。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **金属表面建模不足**：金属的 pBRDF 涉及复数折射率和相位项，当前模型可能不准确。
 - **GridMap 对极端形状受限**：高度不规则的物体或多次互反射的强镜面场景仍有困难。

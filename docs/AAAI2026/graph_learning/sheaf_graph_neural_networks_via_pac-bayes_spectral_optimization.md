@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sheaf Graph Neural Networks via PAC-Bayes Spectral Optimization
 description: >-
@@ -81,7 +81,7 @@ SGPC 包含三大模块：(1) OT + WE Lift 学习 sheaf 限制映射；(2) SVR-A
 - **模块设计优雅**：OT → Sheaf → SVR-AFM → PAC-Bayes 四阶段层层递进
 - **同质 + 异质图两手抓**：AFM 分支的可学习频率系数自动适配
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - OT 和 JKO 步骤的计算开销较大，对大规模图可能成为瓶颈
 - $\beta$-Dirichlet 后验的固定点求解器收敛速度依赖先验参数选择

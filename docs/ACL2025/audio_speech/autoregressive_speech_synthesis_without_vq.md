@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Autoregressive Speech Synthesis without Vector Quantization
 description: >-
@@ -35,11 +35,11 @@ MELLE 提出了一种基于连续 mel-spectrogram 帧的自回归语言模型 TT
 
 **核心矛盾**：离散 token 范式天然不适合音频这种连续信号——离散化本身就是信息有损压缩，而连续表示（如 mel-spectrogram）保留更丰富的声学细节。但连续值 token 面临两大难题：如何定义训练目标（无法用交叉熵）？如何在连续空间实现采样（无法用 top-p）？
 
-**本文要解决什么？** 在自回归语音合成中用连续值 mel-spectrogram 帧完全替代离散量化 token，解决训练目标和采样机制两大挑战。
+**本文目标** 在自回归语音合成中用连续值 mel-spectrogram 帧完全替代离散量化 token，解决训练目标和采样机制两大挑战。
 
 **切入角度**：从 mel-spectrogram 重建的语音在 WER 和说话人相似度上都优于 EnCodec 重建的语音，证实连续表示保真度更高。作者借鉴 VAE 的变分推断来实现连续空间的采样。
 
-**核心 idea 一句话**：用回归损失替代交叉熵、用 VAE 式变分推断替代 top-p 采样，实现单阶段自回归连续 mel-spectrogram 预测的 TTS 模型。
+**核心 idea**：用回归损失替代交叉熵、用 VAE 式变分推断替代 top-p 采样，实现单阶段自回归连续 mel-spectrogram 预测的 TTS 模型。
 
 ## 方法详解
 
@@ -127,7 +127,7 @@ MELLE 是一个 decoder-only 的自回归语言模型，输入是 BPE 文本 tok
 - **KL 散度以真值为中心**：不同于标准 VAE 使用 $\mathcal{N}(0, I)$ 作为先验，MELLE 用 $\mathcal{N}(\boldsymbol{y}_t, I)$，既提供正则化又加速收敛，算是优化捷径。
 - **单阶段 vs 两阶段**：省去 NAR 第二阶段的复杂性，模型更简洁、推理更快，存储需求更低。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **vocoder 质量限制**：使用开源 HiFi-GAN（仅 LibriTTS 585h 训练），如果用更强的 vocoder（大规模数据训练），效果还能进一步提升
 - **仅英文评测**：实验只在 LibriSpeech 上做，多语言能力未验证
 - **仅 mel-spectrogram**：没探索 VAE latent states 等其他连续表示，潜在的更好表示空间可能存在

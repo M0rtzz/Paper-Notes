@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Instance-Optimal Cluster Recovery in the Labeled Stochastic Block Model
 description: >-
@@ -113,7 +113,7 @@ IAC 无需训练。在似然改进阶段使用经验估计的标签概率 $\hat{
 - **计算效率的数量级提升**：从 $n$ 次谱聚类降至 1 次，整体复杂度从 $\Omega(n^2)$ 降至 $\mathcal{O}(n(\log n)^3)$，使大规模图可实际运行
 - **分析新工具**："良行"节点集 $H$ 的三条件定义，将实例最优性的证明分解为两个独立部分（$H$ 内全部正确 + $H$ 外节点数匹配下界），是一种优雅的分析框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 假设簇数 $K$ 固定（不随 $n$ 增长），不适用于簇数随图规模增长的场景——Gao et al. (2017) 允许 $K$ 依赖 $n$
 - 限于稀疏regime $\bar{p} = \mathcal{O}(\log n / n)$，不覆盖稠密图——Gao et al. 的保证也适用于稠密regime

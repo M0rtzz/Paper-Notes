@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaHuman: Animatable Detailed 3D Human Generation with Compositional Multiview Diffusion
 description: >-
@@ -99,7 +99,7 @@ AdaHuman是一个两阶段pipeline：
 - **Visibility-aware组合**基于view coverage和alpha梯度的两个简单准则，有效避免了naïve合并的伪影问题
 - 在松散衣物的重姿态上表现出色，能生成逼真的衣物形变效果
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 手部和手臂等遮挡严重区域的局部细化效果较差，容易产生伪影
 - 动画能力仍依赖SMPL的skinning weights对齐，面部表情、手势和衣物形变受限
 - 推理时间约70秒（A100），相比前馈方法（LHM等秒级推理）较慢

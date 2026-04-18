@@ -1,4 +1,4 @@
-# DKDM: Data-Free Knowledge Distillation for Diffusion Models with Any Architecture
+﻿# DKDM: Data-Free Knowledge Distillation for Diffusion Models with Any Architecture
 
 **会议**: CVPR 2025  
 **arXiv**: [2409.03550](https://arxiv.org/abs/2409.03550)  
@@ -19,7 +19,7 @@
 
 **切入角度**：将 DKDM 目标推导为教师和学生反向过程分布之间的 KL 散度，理论上等价于有数据训练目标。动态迭代策略通过 shuffle-denoise 增广提高训练数据多样性。
 
-**核心idea一句话**：用教师模型的反向分布替代数据后验推导无数据蒸馏目标 + 动态迭代 shuffle-denoise 增广训练多样性。
+**核心 idea**：用教师模型的反向分布替代数据后验推导无数据蒸馏目标 + 动态迭代 shuffle-denoise 增广训练多样性。
 
 ## 实验关键数据
 

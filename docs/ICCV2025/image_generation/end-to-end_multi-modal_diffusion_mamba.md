@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] End-to-End Multi-Modal Diffusion Mamba
 description: >-
@@ -152,7 +152,7 @@ $$L_{total} = L_{rec}^{img} + L_{rec}^{txt} + \beta L_{KL} + \lambda L_{se}$$
 - **Score Entropy Loss**：统一了连续（图像）和离散（文本）模态的生成目标，比 Markov 链方法更高效
 - **同时生成多模态**：不像其他模型先生成文本再生成图像，MDM 可以同时输出图像和对应描述
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 7B 参数量较大，对于端到端模型来说部署成本不低
 - 图像描述指标（如 Flickr30K CIDEr 62.4）与专用模型（如 GPT-4V 55.3 虽低但评价体系不同）相比仍有提升空间

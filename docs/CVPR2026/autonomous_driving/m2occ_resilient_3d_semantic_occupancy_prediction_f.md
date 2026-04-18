@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] M²-Occ: Resilient 3D Semantic Occupancy Prediction for Autonomous Driving with Incomplete Camera Inputs
 description: >-
@@ -83,7 +83,7 @@ tags:
 - **评估协议完善**：覆盖确定性单视角失效和随机多视角丢弃，是好的benchmark设计
 - **诚实的分析**：明确指出对小物体的局限性，并给出合理解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 小物体重建质量下降明显：MMR依赖边界重叠区域，分辨率不足以捕捉远距离小物体的细节
 - Multi-Proto策略在缺失条件下不如Single-Proto，说明在不完整观测下原型路由机制需改进
 - 仅验证了SurroundOcc作为baseline，是否对其他占据预测方法（如BEVFormer、TPVFormer）通用有待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Actor-Critic for Continuous Action Chunks: A Reinforcement Learning Framework for Long-Horizon Robotic Manipulation with Sparse Reward
 description: >-
@@ -81,7 +81,7 @@ AC3 建立在 DDPG 风格的 off-policy actor-critic 框架之上。输入是多
 - 架构极简（MLP+GRU），不依赖 Transformer 或扩散模型，推理 2.9ms，3倍快于 CQN-AS——非常适合实时控制部署
 - 用**少量**演示（BiGym 仅 10 条）就能通过在线 RL 超越纯模仿学习的上限
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **未在真实机器人上验证**：全部实验在仿真 benchmark 上完成，sim-to-real gap 未知
 - **Chunk 长度固定**：$C$ 是手工设定的超参数，不同复杂度的子任务可能需要不同的 chunk 长度，自适应 chunk 长度是一个自然的扩展方向
 - **Goal Network 依赖刚性阈值**：锚点奖励的阈值 $m$ 和奖励值 $a$ 是手工调的，鲁棒性有待验证

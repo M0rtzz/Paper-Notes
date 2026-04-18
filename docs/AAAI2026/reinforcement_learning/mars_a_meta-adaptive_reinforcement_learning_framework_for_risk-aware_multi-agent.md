@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MARS: A Meta-Adaptive Reinforcement Learning Framework for Risk-Aware Multi-Agent Portfolio Management
 description: >-
@@ -122,7 +122,7 @@ MARS 采用两层架构：
 - **三维风险信号**：环境风险函数融合投资组合集中度、杠杆率和模拟波动率，比简单价格惩罚更全面
 - **MAC 训练目标设计巧妙**：类似 Sharpe 比率的公式让 MAC 同时追求高收益和低风险
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅验证了股票市场，未涉及其他资产类别（如加密货币、外汇、商品期货）
 2. Safety-Critic 的环境风险函数权重（40%-30%-30%）基于敏感性分析固定，可能不适用于所有市场

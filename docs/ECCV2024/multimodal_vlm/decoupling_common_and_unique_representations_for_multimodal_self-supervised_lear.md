@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decoupling Common and Unique Representations for Multimodal Self-supervised Learning
 description: >-
@@ -163,7 +163,7 @@ $$\mathcal{L} = \mathcal{L}_{com} + \mathcal{L}_{uni} + \mathcal{L}_{M1} + \math
 4. **跨架构泛化性好**：ResNet-50 和 MiT-B2/B5 均获提升，且预训练权重可直接迁移到 SOTA 监督模型 CMX。
 5. **嵌入空间稀疏性**：解耦至 50% 独有维度时性能无显著下降，暗示共有空间存在大量冗余。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **全局固定比例**：整个数据集共享同一 common/unique 比例，未考虑不同样本间模态独有信息量的差异（如某些场景云层多、独有信息比例应更高）。
 2. **需要网格搜索最佳比例**：大数据集上的搜索成本高，虽然 ~80% 通常可行，但缺乏自适应策略。

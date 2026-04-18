@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GTP-4o: Modality-Prompted Heterogeneous Graph Learning for Omni-Modal Biomedical Representation
 description: >-
@@ -53,7 +53,7 @@ GTP-4o 框架分四步：(1) 数据处理和特征提取获得四种模态的嵌
 
 #### 1. **异构图嵌入 (Heterogeneous Graph Embedding)**
 
-**做什么**：将多模态特征统一映射到异构图空间，显式区分不同模态节点和不同跨模态关系。
+**功能**：将多模态特征统一映射到异构图空间，显式区分不同模态节点和不同跨模态关系。
 
 **核心思路**：定义异构图 $\mathcal{G}=\{\mathcal{V}, \mathcal{E}, \mathcal{A}, \mathcal{R}\}$，其中节点属性集 $\mathcal{A}=\{G, I, C, T\}$ 对应基因组学、病理图像、细胞图谱和文本四种模态，边关系属性集 $\mathcal{R}=\{\text{express}, \text{depict}, \text{atomize}, \text{intra-modal}\}$ 由领域知识定义。节点映射函数 $\tau(v)=a \in \mathcal{A}$，边映射函数 $\varphi(e)=r \in \mathcal{R}$。
 
@@ -61,7 +61,7 @@ GTP-4o 框架分四步：(1) 数据处理和特征提取获得四种模态的嵌
 
 #### 2. **模态提示补全 (Modality-Prompted Completion)**
 
-**做什么**：当某种模态缺失时，通过图提示机制生成幻觉节点来补全图嵌入，使缺失表征逼近完整表征。
+**功能**：当某种模态缺失时，通过图提示机制生成幻觉节点来补全图嵌入，使缺失表征逼近完整表征。
 
 **核心思路**：包含两级提示：
 
@@ -76,7 +76,7 @@ $$v^P \leftarrow v^P + \sum_{i=1}^{N_B} w_i \cdot v_i^{P_B}$$
 
 #### 3. **知识引导层次化聚合 (Knowledge-guided Hierarchical Aggregation)**
 
-**做什么**：在补全后的异构图上进行全局邻域发现和局部多关系特征聚合。
+**功能**：在补全后的异构图上进行全局邻域发现和局部多关系特征聚合。
 
 **核心思路**：分为全局和局部两层：
 
@@ -143,7 +143,7 @@ $$\text{SHA}(e,j) = \frac{v_s^{K,j} \cdot e^K_{v_s \to v_t} \cdot v_t^{Q,j}}{\sq
 2. **图提示补全思路新颖**：借鉴prompt learning的思想应用到图补全场景，通过可学习的幻觉节点在训练中自适应弥补缺失信息
 3. **元路径嵌入领域知识**：将"基因→图像→细胞"等生物学因果关系编码为图信息传播路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **合成文本描述存在噪声**：因数据集无真实临床报告，使用 MiniGPT-4 生成文本描述，可能引入数据噪声
 2. **数据集规模较小**：仅在TCGA的两个子集（769和417个患者）上验证，泛化性有待更大规模数据验证

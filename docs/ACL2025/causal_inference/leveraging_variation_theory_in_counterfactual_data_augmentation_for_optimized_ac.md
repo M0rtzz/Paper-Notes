@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Variation Theory in Counterfactual Data Augmentation for Optimized Active Learning
 description: >-
@@ -120,7 +120,7 @@ tags:
 - **模型无关性**：Llama 3.3与GPT-4o表现相当，不依赖特定闭源LLM
 - **深入消融分析**：揭示符号过滤单独使用反而有害的反直觉现象并给出合理解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **依赖预定义patterns**：neuro-symbolic patterns定义需领域专家参与，限制自动化和泛化性
 - **LLM生成成本**：流水线需大量LLM调用（分离+候选生成+反事实生成+LLM判别），计算成本不可忽视

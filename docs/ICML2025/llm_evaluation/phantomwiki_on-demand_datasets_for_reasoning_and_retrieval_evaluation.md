@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PhantomWiki: On-Demand Datasets for Reasoning and Retrieval Evaluation
 description: >-
@@ -141,7 +141,7 @@ PhantomWiki 本身是评测工具而非训练方法。但论文探索了在 Phan
 - **模板文章看似简单实则聪明**：约 160 tokens 的模板文章避免了 LLM 改写带来的幻觉问题，同时保持了生成速度和成本优势。
 - **可扩展到百万级**：n=1M 的宇宙（接近 Wikipedia 传记条目规模）仅需约 4 小时即可在普通 CPU 上生成。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **文本过于模板化**：当前文章风格单一（"The job of David is a farmer"），与真实 Wikipedia 差距较大。虽然 LLM 改写引入了幻觉风险，但一致性保持的改写方法值得探索。
 2. **关系类型有限**：目前仅包含家庭关系和友谊关系，缺少职业关系、师生关系等现实世界中的复杂社会关系。

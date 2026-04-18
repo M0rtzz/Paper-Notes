@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] High-Resolution Spatiotemporal Modeling with Global-Local State Space Models for Video-Based Human Pose Estimation
 description: >-
@@ -147,7 +147,7 @@ tags:
 - **STS6D 的多方向扫描设计精巧**：统一/空间/时间三种扫描各捕获不同语义，互补性强
 - **极低训练成本**：冻结 backbone + 仅训练 9.8M 参数，单卡 TITAN RTX 即可训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. backbone 权重完全冻结，可能限制在特定领域的适应性
 2. 时间跨度固定为 δ=2（5帧），更长时间范围可能进一步提升

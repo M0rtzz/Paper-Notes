@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Navigation Instruction Generation with BEV Perception and Large Language Models
 description: >-
@@ -128,7 +128,7 @@ R2R val unseen 上的组件消融：
 - 在室内 (R2R, REVERIE) 和室外 (UrbanWalk) 场景均取得显著提升，验证了方法的通用性
 - 生成的指令可实际用于指导导航 agent (HAMT/DUET)，验证了指令的实际可用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - BEV 编码器需要 3D 检测任务的预训练数据，对新场景的适应性需要验证
 - 当前仅在模拟器数据集上验证，真实物理环境的表现有待探索

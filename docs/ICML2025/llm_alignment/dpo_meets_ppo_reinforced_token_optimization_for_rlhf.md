@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DPO Meets PPO: Reinforced Token Optimization for RLHF
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：PPO 需要密集的逐步奖励信号才能高效学习，但人类偏好标注天然是句子级的，难以直接获取 token 级反馈。
 
-**本文要解决什么**：（1）建立 RLHF 的 token-level MDP 理论框架；（2）找到从偏好数据中提取 token-wise 奖励的实用方法；（3）改进 PPO 在 RLHF 中的表现。
+**本文目标**：（1）建立 RLHF 的 token-level MDP 理论框架；（2）找到从偏好数据中提取 token-wise 奖励的实用方法；（3）改进 PPO 在 RLHF 中的表现。
 
 **切入角度**：发现 DPO 训练的模型天然隐含了 token 级奖励信息（$r^*(s_h, a_h) = \beta \log \frac{\pi_{dpo}(y_h|x, y_{1:h-1})}{\pi_{ref}(y_h|x, y_{1:h-1})}$），可以提取出来指导 PPO 训练。
 
@@ -113,7 +113,7 @@ RTO 是一个两阶段框架：
 - **核心洞察精彩**："DPO 模型隐含了 token-wise 奖励"这一观察虽然事后看很自然，但将其系统化地用于 PPO 训练是重要贡献
 - 数据效率优势意味着 RTO 在数据稀缺场景下也能工作，拓宽了适用范围
 
-## 局限性 / 可改进方向
+## 局限与展望
 - DPO 模型作为 $\pi_\beta^*$ 的近似可能不准确，尤其在分布外区域
 - 仍需训练一个额外的 DPO 模型，增加了总计算量（虽然论文声称整体成本相当）
 - 实验主要在 Llama-3-8B 上验证，对更大模型的效果仍待确认

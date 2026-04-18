@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deterministic Bounds and Random Estimates of Metric Tensors on Neuromanifolds
 description: >-
@@ -92,7 +92,7 @@ tags:
 - **统一框架**: 将FIM的分析、确定性近似和随机估计纳入同一理论框架，FIM、eFIM、MC估计都可在此框架下比较
 - **核空间视角新颖**: 回到低维概率单纯形做完整分析，再推广到高维，避免了直接处理巨大矩阵
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数值实验仅在DistilBERT上进行，缺乏大规模模型（如GPT级别）的验证
 - 没有展示Hutchinson估计器在实际优化算法中的性能提升
 - 高级方差缩减技术（如Hutch++）未被探索

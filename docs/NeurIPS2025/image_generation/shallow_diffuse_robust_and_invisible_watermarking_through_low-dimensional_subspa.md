@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shallow Diffuse: Robust and Invisible Watermarking through Low-Dimensional Subspaces in Diffusion Models
 description: >-
@@ -122,7 +122,7 @@ Shallow Diffuse 的 PSNR 比 Tree-Ring 高 **18.88 dB**，比 RingID 高 **21.22
 - 理论分析（Theorem 1 & 2）为一致性和可检测性提供了严格保证
 - 整个方法无需训练（training-free），只需现成的扩散模型即可使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 水印容量有限（当前设计嵌入单个密钥，多密钥识别在附录中讨论但场景受限）
 - DDIM 反转的精度影响检测质量，尤其对高 CFG 强度或超长推理步数的模型

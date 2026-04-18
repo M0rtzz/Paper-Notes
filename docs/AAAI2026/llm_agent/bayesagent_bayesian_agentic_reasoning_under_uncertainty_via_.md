@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BayesAgent: Bayesian Agentic Reasoning Under Uncertainty via Verbalized Probabilistic Graphical Modeling
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：LLM Agent 需要整合多源信息（可能有噪声），但缺少检测信息不一致和校准不确定性的机制。传统贝叶斯方法需要大量领域专家知识来设计概率模型，不适用于通用 Agent 场景。
 
-**本文要解决什么？** (1) 如何让 LLM Agent 自动发现隐变量结构？(2) 如何在无需专家知识的前提下做贝叶斯推理？(3) 如何校准 Agent 的置信度输出？
+**本文目标** (1) 如何让 LLM Agent 自动发现隐变量结构？(2) 如何在无需专家知识的前提下做贝叶斯推理？(3) 如何校准 Agent 的置信度输出？
 
 **切入角度**：LLM 本身具备丰富的世界知识和推理能力，可以通过自然语言提示来模拟 PGM 的核心原理——结构发现、后验推断和预测，而无需显式的分布参数化。
 
-**核心idea一句话**：用自然语言提示引导 LLM 模拟概率图模型推理，绕过专家建模，实现 Agent 的隐变量推断和不确定性校准。
+**核心 idea**：用自然语言提示引导 LLM 模拟概率图模型推理，绕过专家建模，实现 Agent 的隐变量推断和不确定性校准。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ $$\mathcal{L}(\boldsymbol{\pi}(\lambda)) = \mathcal{L}_c(\boldsymbol{\pi}(\lambd
 - Dirichlet 先验 + 可微校准损失的组合优雅地解决了"如何融合 LLM 先验与采样频率"的问题，且有理论保证。
 - 负控制实验设计精巧：通过随机打乱 A-OKVQA 的 rationale 构造噪声条件，清楚展示了隐变量如何帮助检测多源信息的不一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - vPGM 的图结构完全由 LLM 生成，质量依赖于 LLM 的能力，不同 LLM 可能发现不同的隐变量——缺乏结构验证机制。
 - BayesVPGM 仅适用于分类任务（Categorical 输出），开放式生成任务无法使用 Dirichlet 后验。
 - 多次查询 LLM（M=3）带来额外的计算开销，对于实时 Agent 场景可能不现实。

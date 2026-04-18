@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Combining the Best of Both Worlds: A Method for Hybrid NMT and LLM Translation
 description: >-
@@ -102,7 +102,7 @@ tags:
 3. **正样本筛选的双条件设计精巧**：同时要求NMT差且LLM更好，避免引入更差的LLM翻译
 4. **实际工业部署友好**：来自华为翻译服务中心，方案面向真实生产环境，成本敏感
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **互补性依赖**：当NMT与LLM能力完全对等时，融合无法带来提升，方法前提是两者在不同场景有差异化优势
 2. **决策器需要大量标注数据训练**：JDM需要100万条双语数据分别跑NMT和LLM获取训练信号，前期成本不低

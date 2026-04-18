@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation
 description: >-
@@ -122,7 +122,7 @@ VSM 在与 Oracle 的相关性上远超所有现有指标。
 - **解耦思路清晰**：语义分支和视觉分支共享骨干但使用独立聚合网络，损失设计直觉
 - VSM 度量同时支持量化和定位，这是现有所有指标都不具备的能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **特征解耦不完全**：视觉特征可能仍然携带语义信息，实现跨类别的纯视觉匹配仍有困难
 - **空间分辨率受限**：扩散模型特征的空间分辨率限制了对细粒度不一致性的检测能力

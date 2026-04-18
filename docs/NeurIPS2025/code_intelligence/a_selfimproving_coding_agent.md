@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Self-Improving Coding Agent
 description: >-
@@ -85,7 +85,7 @@ SICA的核心循环类似ADAS但有本质区别：
 - 异步Overseer是保证长时安全自主运行的优雅方案
 - 展示了"scaffolding-only"改进（不改模型权重）的上限和局限
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **路径依赖严重**：早期差的改进idea会影响后续所有迭代的idea质量，variance很高
 - **成本高**：15轮迭代花费$7,000，且单次meta-improvement约需1小时
 - **推理任务改进有限**：对已经很强的reasoning model（o3-mini），Agent scaffolding的边际收益很小甚至为负

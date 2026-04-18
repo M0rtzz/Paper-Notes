@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Redefining Experts: Interpretable Decomposition of Language Models for Toxicity Mitigation
 description: >-
@@ -145,7 +145,7 @@ $$\text{TPH}(T,P) = \frac{2 \cdot T \cdot \frac{1}{1+|P|}}{T + \frac{1}{1+|P|}}$
 - **TPH指标设计合理**：用调和平均统一评估安全性和流畅性，避免了"杀死模型换取零毒性"的虚假安全
 - **Eigen-choice的可解释性**：每个特征向量对应一个语义决策轴（如"粗鲁"、"直白"），使LLM从黑盒变为可解读的语义轴集合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析了lm_head最终层，未探索不同层的SVD分解及语义方向的演化
 - 评估限于≤7B规模的模型，更大模型的表现未知

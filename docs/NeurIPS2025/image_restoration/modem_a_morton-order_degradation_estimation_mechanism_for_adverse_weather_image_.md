@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoDEM: A Morton-Order Degradation Estimation Mechanism for Adverse Weather Image Restoration
 description: >-
@@ -105,7 +105,7 @@ MODEM 采用两阶段训练策略：
 - **Morton 扫描的局部性保持**：相比 raster/连续/局部扫描，Z-order curve 在 1D 展开后能更好保持 2D 空间邻近性
 - **双重退化先验的互补性**：全局先验提供"什么类型的天气"，局部先验提供"这个位置如何退化"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 两阶段训练增加了整体训练成本
 - Morton 编码要求图像尺寸为 2 的幂次（实际中需要 padding）

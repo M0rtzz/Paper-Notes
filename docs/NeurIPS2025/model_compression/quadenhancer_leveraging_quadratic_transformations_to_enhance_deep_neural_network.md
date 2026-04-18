@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] QuadEnhancer: Leveraging Quadratic Transformations to Enhance Deep Neural Networks
 description: >-
@@ -103,7 +103,7 @@ $$\mathbf{z} = (\mathbf{\Lambda}\tilde{\mathbf{y}}) \odot \tilde{\mathbf{y}} + \
 - **即插即用**：可无损应用于 ViT、GPT-2、LLaMA 等不同架构，兼容 LoRA 等参数高效微调方法。
 - **数值稳定性设计精巧**：通过排除平方项、仅使用交叉项，避免了 FP16 精度下的溢出问题。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验规模偏小（ViT-M/T 是很小的模型，WikiText-2 也是小型语料），需要在更大规模上验证。
 - 仅探索了 $k=1$ 的情况，未系统研究不同带宽 $k$ 的影响。

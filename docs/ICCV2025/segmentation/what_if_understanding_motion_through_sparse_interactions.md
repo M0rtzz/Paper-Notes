@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What If: Understanding Motion Through Sparse Interactions
 description: >-
@@ -127,7 +127,7 @@ $$\mathcal{L} = -\log p_\theta(\mathbf{f}(\mathbf{q})|\mathcal{P}, \mathcal{I}) 
 - **运动部件分割从运动理解中自然涌现**：无需额外标注或模块，仅靠 KL 散度即可量化部件关联，概念优雅
 - query-causal attention 的设计大幅减少训练开销，可复用于其他稀疏条件预测任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在卡通/动画图像上泛化较差（训练数据主要是真实视频）
 - 有时会错误地将物体阴影与物体运动耦合

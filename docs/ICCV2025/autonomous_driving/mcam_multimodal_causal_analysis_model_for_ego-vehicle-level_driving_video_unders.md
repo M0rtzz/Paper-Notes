@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MCAM: Multimodal Causal Analysis Model for Ego-Vehicle-Level Driving Video Understanding
 description: >-
@@ -126,7 +126,7 @@ MCAM 包含三个组件：
 - **因果解耦策略**：将视频特征投影为不同的因果成分（状态/环境/动作/危险），使因果推理可解释
 - 首次将因果分析结构引入自车级别视频理解任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集标注存在噪声（CoVLA 由 LLaMA-7B 生成标签，存在错误标注），影响模型上限
 - DSDAG 的状态定义较为简化，未建模复杂的多车交互因果链

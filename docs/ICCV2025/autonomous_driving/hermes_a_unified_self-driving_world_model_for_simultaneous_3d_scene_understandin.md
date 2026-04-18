@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hermes: A Unified Self-Driving World Model for Simultaneous 3D Scene Understanding and Generation
 description: >-
@@ -106,7 +106,7 @@ Hermes 在 3s 点云生成上 Chamfer Distance 为 1.17，比 ViDAR 降低 32.4%
 - BEV 表征作为桥梁解决了多视角 token 爆炸和几何保持两个问题
 - 当前帧点云预测作为辅助任务免费正则化 BEV 编码，不增加推理开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 未探索感知任务（检测、分割等）在统一框架中的集成
 - 未支持未来图像生成（仅支持点云），融合图像生成是重要扩展方向

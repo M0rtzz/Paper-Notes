@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hyperbolic-PDE GNN: Spectral Graph Neural Networks in the Perspective of A System of Hyperbolic Partial Differential Equations
 description: >-
@@ -103,7 +103,7 @@ $$\mathbf{X}(t_{m+1}) = (2\mathbf{I} + \tau^2 P(\mathbf{L}, t_m)) \mathbf{X}(t_m
 3. **异质图上优势明显**：传统谱 GNN 在异质图上表现差，双曲 PDE 范式可带来 5-18% 的大幅提升
 4. **物理直觉**：双曲 PDE 描述波动传播，信息沿特征向量方向以有限速度传播，比热方程（扩散）模型更符合消息传递的局部性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **同质图增益有限**：在 Cora/CiteSeer 等同质图上提升 1-2%，与异质图上的大幅提升形成对比
 2. **部分增强失效**：Hyperbolic-BernNet 在某些数据集上不如原始 BernNet（如 Cora 88.52→88.34），说明并非所有多项式基底都与双曲 PDE 范式兼容

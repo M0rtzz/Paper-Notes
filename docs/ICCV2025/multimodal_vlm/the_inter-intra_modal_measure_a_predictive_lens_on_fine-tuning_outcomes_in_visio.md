@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Inter-Intra Modal Measure: A Predictive Lens on Fine-Tuning Outcomes in Vision-Language Models
 description: >-
@@ -138,7 +138,7 @@ IIMM 与"微调增益/零样本误差"的相关性：
 - **有界且极值有意义**：IIMM ∈ [-1,1]，不像 GBC 那样无界——高 IIMM 直接告诉你"微调值得但要小心遗忘"
 - **揭示了 PEFT 方法的遗忘特征**：LoRA 在 IIMM 高时可能非常危险，而 CLIP-Adapter 的"保守"设计反而是优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预测线性模型需要先在几个基准上微调来拟合——未来可否找到完全不需要参考微调结果的方法？
 - 实验仅涵盖分类任务，未验证在检测、分割、VQA 等其他下游任务上的有效性

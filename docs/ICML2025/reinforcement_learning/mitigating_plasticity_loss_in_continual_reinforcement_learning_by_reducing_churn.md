@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mitigating Plasticity Loss in Continual Reinforcement Learning by Reducing Churn
 description: >-
@@ -140,7 +140,7 @@ C-CHAIN 的 churn 减少梯度对学习动态有两重作用：
 4. **实验覆盖全面**：24 个环境横跨离散/连续动作、低维/高维观测、不同物理引擎，说服力强
 5. **代码开源**：GitHub 公开可复现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外计算开销**：每步需要额外前向传播参考 batch 并计算 churn 损失，增加约 30-50% 的计算量
 2. **$\lambda$ 超参数敏感性**：churn 减少损失的权重需要调优，不同环境的最优值可能不同

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TextShield-R1: Reinforced Reasoning for Tampered Text Detection
 description: >-
@@ -156,7 +156,7 @@ TextShield-R1 相比全量微调基线：分类 +9.0%，OCR +23.3%，定位 +39.
 - **TFR 基准的贡献独立且重大**：45K+ 图像、16 种语言、10 种篡改技术、3 种 OOD 设置、含推理解释标注——一次性解决了之前基准的七个缺陷
 - 五种奖励函数的组合设计体现了对任务的深入理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖外部 OCR 引擎（OCR 矫正阶段），引入了额外的推理延迟
 - 仅在 Qwen2.5-VL-7B 上验证，更大/更小模型的效果未知

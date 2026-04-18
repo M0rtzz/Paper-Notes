@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COIN: Control-Inpainting Diffusion Prior for Human and Camera Motion Estimation
 description: >-
@@ -147,7 +147,7 @@ COIN在W-MPJPE上比PACE提升33%（380.0→254.5），比WHAM提升49%。
 - **自演化控制信号**：动态更新控制条件形成正反馈循环，是解决初始估计不准问题的优雅方案
 - **人-场景深度一致性**：利用场景点云的遮挡关系来标定相机尺度，是SLAM与人体重建结合的巧妙桥梁
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本**：10步DDIM去噪在每次优化迭代中都要执行，整体优化较慢
 2. **依赖SLAM质量**：如果DROID-SLAM在复杂场景中失败，整个管线会受影响

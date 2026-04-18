@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Banyan: Improved Representation Learning with Explicit Structure
 description: >-
@@ -162,7 +162,7 @@ $$\mathcal{L}_{\text{CE}}(\mathbf{w}, \hat{\mathbf{w}}) = -\frac{1}{N}\sum_{n=1}
 - **对角化的深远影响**：借鉴线性 RNN 的思路用于树结构，不仅减参还提性能，暗示"沿结构的记忆衰减"是一个普适的好归纳偏置
 - **名字的隐喻**：模型取名 Banyan（榕树），因为榕树有多个根（对应纠缠图的多根结构）且节点可在不同分支间共享——兼具诗意和技术贴切性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **词级相似度弱项**：在 SimLex-999 上表现较差（14.65），因为模型需要同时建模 similarity 和 relatedness，而 SimLex 严格排除 relatedness
 2. **分类任务无优势**：SST-2 和 MRPC 上 Banyan 与 baseline 持平，说明分类可能更依赖参数化的上层分类器而非表示质量本身

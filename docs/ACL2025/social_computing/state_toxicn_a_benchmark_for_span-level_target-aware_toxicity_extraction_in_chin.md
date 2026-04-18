@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] STATE ToxiCN: A Benchmark for Span-level Target-Aware Toxicity Extraction in Chinese Hate Speech Detection
 description: >-
@@ -145,7 +145,7 @@ tags:
 3. **标注质量保证充分**：多样化标注者、交叉验证、专家仲裁的组合确保了数据质量
 4. **仇恨俚语分析有价值**：揭示了中文仇恨言论中独特的语言现象（谐音、拆字等），对检测系统设计有指导意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数据规模相对较小（8K 帖子），可能不足以覆盖中文仇恨言论的所有形式
 2. 仅来自知乎和贴吧两个平台，可能存在平台特异性偏差

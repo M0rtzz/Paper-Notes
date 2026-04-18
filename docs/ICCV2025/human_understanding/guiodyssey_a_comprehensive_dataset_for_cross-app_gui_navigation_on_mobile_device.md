@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GUIOdyssey: A Comprehensive Dataset for Cross-App GUI Navigation on Mobile Devices
 description: >-
@@ -130,7 +130,7 @@ tags:
 - 历史重采样器是一种轻量但有效的设计——单层交叉注意力即可实现性能与效率的良好平衡
 - 数据集覆盖了折叠屏和平板等新设备类型，前瞻性较好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Success Rate 仍然很低（域内最高 11.61%），15+ 步的长序列任务中错误累积严重
 - 仅使用离线评估（AMS），未进行在线实机交互评估，可能高估实际能力

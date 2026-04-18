@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Opinion: Towards Unified Expressive Policy Optimization for Robust Robot Learning
 description: >-
@@ -138,7 +138,7 @@ $$\mathcal{L}(\hat{T}) = -\mathbb{E}_{(s,a,s')\sim\mathcal{D}\cup\mathcal{D}_{\t
 - **自适应扰动机制**：分歧不足时自动增大扰动，形成负反馈调节环路，防止子策略收敛到相似模式
 - **扩散增强数据的 KL 过滤**：确保合成轨迹与真实动力学一致，避免引入错误的增强数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 D4RL 模拟基准上评估**：缺乏真实机器人实验验证
 - **hammer-human 和 relocate-human 性能大幅落后 Uni-O4**：某些任务上的退化原因未分析

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Consistent Time-of-Flight Depth Denoising via Graph-Informed Geometric Attention
 description: >-
@@ -119,7 +119,7 @@ GIGA-ToF 在 MAE 上超越第二名至少 **37.9%**，在 TEPE 上超越至少 *
 - 将 ToF 物理成像模型（噪声分布）与图信号处理先验结合起来通过算法展开构建网络，兼具性能和可解释性
 - 计算效率适中（0.027s/帧），远优于传统 WMF（24.3s/帧），具有实际部署价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅考虑前一帧作为参考帧，更早帧的信息未被充分利用
 - 帧间图的邻域大小固定为 q=7，可能不适用于所有运动幅度

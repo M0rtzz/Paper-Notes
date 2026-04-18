@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VGGT-Det: Mining VGGT Internal Priors for Sensor-Geometry-Free Multi-View Indoor 3D Object Detection
 description: >-
@@ -155,7 +155,7 @@ VGGT-Det 在 ARKitScenes 上优势更大，washer (+16.3)、refrigerator (+32.2)
 5. **内存高效**: 额外内存仅 3.57 GB，远低于 MVSDet 的 13.81 GB，实用性强
 6. **验证充分**: 通过训练损失动态分析深入验证了 AG 和 QD 各自的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **小型/薄型物体检测困难**: TV、stove 等小型嵌入式物体在所有方法上表现都差，SG-Free 设定下更加严峻
 2. **VGGT 编码器冻结**: 未探索微调或部分解冻 VGGT 编码器是否能带来更大提升

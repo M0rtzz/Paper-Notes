@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GeoCAD: Local Geometry-Controllable CAD Generation with Large Language Models
 description: >-
@@ -127,7 +127,7 @@ GeoCAD 在文本-CAD 一致性指标上大幅领先：
 4. 标注规模达 221k，为后续工作提供了可参考的数据构建范式
 5. 在 prompt 中加入几何约束这一简单改进，相比 FlexCAD 带来了巨大的性能提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **仅支持 SEM（草图-拉伸）范式**：未扩展到 CSG 或 B-rep 等其他 CAD 表示
 2. **依赖 DeepCAD 数据集**：数据规模和多样性可能限制泛化
 3. **VLLM 标注质量受限**：复杂零件的标注质量取决于 VLLM 的视觉理解能力

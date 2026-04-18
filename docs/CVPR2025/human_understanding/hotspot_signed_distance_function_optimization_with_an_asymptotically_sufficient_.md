@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HotSpot: Signed Distance Function Optimization with an Asymptotically Sufficient Condition
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：利用 screened Poisson 方程的解与距离函数之间的经典关系（热传导→距离的 Varadhan 公式）——距离函数的渐近行为等价于特定 Poisson 方程的解。
 
-**核心idea一句话**：screened Poisson 方程的解提供渐近充分条件 → 替代 Eikonal 作为 SDF 优化目标。
+**核心 idea**：screened Poisson 方程的解提供渐近充分条件 → 替代 Eikonal 作为 SDF 优化目标。
 
 ## 方法详解
 
@@ -82,7 +82,7 @@ PDE 残差损失 + 表面拟合损失（点云约束）。理论分析证明 $\k
 - **热方程与距离的经典联系的现代应用**——将 Varadhan 公式引入深度学习
 - **"免费"的表面积惩罚**——PDE 结构本身就惩罚虚假表面，无需额外正则化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - $\kappa$ 的选择影响收敛速度和精度平衡
 - 计算 Laplacian（二阶导数）的成本比一阶 Eikonal 更高
 - 理论保证是渐近的（$\kappa \to \infty$），有限 $\kappa$ 下是近似

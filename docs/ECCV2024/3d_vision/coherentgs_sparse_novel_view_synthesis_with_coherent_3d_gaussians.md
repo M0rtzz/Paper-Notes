@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoherentGS: Sparse Novel View Synthesis with Coherent 3D Gaussians
 description: >-
@@ -150,7 +150,7 @@ $$\Sigma^*,\phi^*,\mathbf{c}^* = \arg\min \sum_{\mathbf{p}} \mathcal{L}(R(\mathb
 4. **多重采样策略**：看似简单但解决了稀疏输入下高斯仅覆盖像素中心导致的半透明问题
 5. **渐进式TV策略**：先全局平滑再恢复细节，是结构化从粗到细优化的good practice
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **每像素单高斯限制**：无法处理透明/半透明物体（如玻璃），因为一条射线上只有一个高斯
 2. 依赖单目深度质量，若深度估计严重不准确则结果受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mimir: Improving Video Diffusion Models for Precise Text Understanding
 description: >-
@@ -28,9 +28,9 @@ Mimir 提出一个端到端训练框架，通过精心设计的 Token Fuser 将 
 1. **领域现状**：当前文本到视频（T2V）扩散模型通常使用 CLIP 或 T5 作为文本编码器，这些 encoder-based 模型的文本理解能力有限，难以精确理解复杂的空间关系、数量、颜色和时序动作等细节。
 2. **现有痛点**：Decoder-only LLM（如 Phi-3.5、LLaMA）具有远超 encoder 的文本理解和推理能力，但其特征分布与已建立的 T2V 模型不兼容——(1) 特征尺度差异巨大（T5 特征集中在 [-0.5, 0.5]，Phi-3.5 超出 [-1, 1]）；(2) 特征波动性——decoder-only 模型对同一输入的多次编码可能产生不同特征（因其生成特性），直接融合会导致训练崩溃。
 3. **核心矛盾**：如何在利用 decoder-only LLM 的推理能力的同时，保持 T2V 模型已有的视频先验，避免特征分布不兼容导致的训练不稳定。
-4. **本文要解决什么？** 实现 encoder 和 decoder-only LLM 的异构文本特征的无损融合，让 T2V 模型同时享有稳定的视频先验和精确的文本理解。
+4. **本文目标** 实现 encoder 和 decoder-only LLM 的异构文本特征的无损融合，让 T2V 模型同时享有稳定的视频先验和精确的文本理解。
 5. **切入角度**：不把 LLM 重新训练为 encoder（会损失推理能力），而是设计专门的融合模块，用 Zero-Conv 实现渐进式融合 + 用语义稳定器抑制特征波动。
-6. **核心idea一句话**：用 Token Fuser（Zero-Conv 无损融合 + Semantic Stabilizer 语义稳定）桥接 T5 encoder 和 Phi-3.5 decoder-only LLM 的异构特征。
+6. **核心 idea**：用 Token Fuser（Zero-Conv 无损融合 + Semantic Stabilizer 语义稳定）桥接 T5 encoder 和 Phi-3.5 decoder-only LLM 的异构特征。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ Mimir 在标准 T2V 扩散模型（3D Causal VAE + DiT）基础上，增加 deco
 - **指令 token + 可学习锚点**：利用 LLM 的指令遵循能力生成属性特定的语义引导，同时用可学习 token 做视觉-语言空间的桥梁，两者互补。这种设计可推广到任何需要融合异构特征的场景。
 - **首次在视频扩散模型中集成 decoder-only LLM**：之前只有图像生成领域尝试过（如 LiDiT、SANA），但都是简单的 adapter 方案。Mimir 的 Token Fuser 解决了视频生成中时序建模带来的额外复杂性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅使用 Phi-3.5 mini（3.8B参数），更大的 LLM 可能带来更好的文本理解但也增加计算开销，权衡关系未探索。
 - 训练数据为 500K 视频，规模相对有限，更大规模数据可能进一步提升效果。
 - 4个固定的指令 prompt 是手工设计的，可能并非最优；可以探索自动搜索或自适应指令。

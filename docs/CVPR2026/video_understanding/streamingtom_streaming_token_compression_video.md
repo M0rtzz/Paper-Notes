@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StreamingTOM: Streaming Token Compression for Efficient Video Understanding
 description: >-
@@ -94,7 +94,7 @@ tags:
 
 - 核心贡献在于识别"pre-LLM和post-LLM是两个独立瓶颈需分别解决"这一洞察。帧对齐group抽象连接两阶段，使token缩减和存储优化解耦但协调——设计优雅且有实际意义。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 4-bit量化在极端精度要求场景可能引入质量损失
 - 基于相邻帧余弦相似度的分类在快速运动场景可能遗漏关键变化

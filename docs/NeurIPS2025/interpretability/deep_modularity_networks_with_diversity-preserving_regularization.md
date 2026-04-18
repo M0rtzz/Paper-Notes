@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Modularity Networks with Diversity-Preserving Regularization
 description: >-
@@ -111,7 +111,7 @@ $$L^{\text{entropy}} = -\frac{1}{n} \sum_{v=1}^{n} \sum_{i=1}^{k} C_{vi} \log(C_
 3. **不损害结构指标**：添加正则化几乎不影响 Conductance 和 Modularity，说明方法兼顾了图结构与特征空间
 4. **严格的统计验证**：使用配对双尾 t 检验在相同种子下对比，比单纯报告均值更有说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对特征稀疏图效果有限**：在 Cora、CiteSeer、PubMed 上改进不显著，说明方法依赖于节点特征的丰富性
 2. **超参数敏感性**：三个权重 $W_{\text{dist}}, W_{\text{var}}, W_{\text{entropy}}$ 和阈值 $\epsilon$ 需要针对每个数据集调优

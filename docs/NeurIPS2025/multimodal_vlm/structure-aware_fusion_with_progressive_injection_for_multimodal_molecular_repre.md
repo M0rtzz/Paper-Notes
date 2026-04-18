@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Structure-Aware Fusion with Progressive Injection for Multimodal Molecular Representation Learning
 description: >-
@@ -154,7 +154,7 @@ MuMo 对构象噪声展现了显著更强的鲁棒性（σ=0.5Å 时仅下降 4%
 - **构象鲁棒性**: 这是实际药物发现中非常重要的属性
 - **SSM 在分子领域的应用**: 展示了 Mamba 架构在分子表示学习中的潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **构象生成方法**: 目前使用 RDKit 生成 3D 结构，可以探索更先进的构象生成方法
 2. **预训练**: 未使用大规模预训练，结合自监督预训练可能进一步提升性能
@@ -301,7 +301,7 @@ MuMo 在 LD50 任务上取得了 **27% 的显著提升**（0.615 → 0.782），
 - **Mamba 骨干的合理选择**: SMILES 序列可以很长，SSM 的线性复杂度相比 Transformer 更合适
 - **全面的实验**: 29 个基准任务，覆盖 ADMET 和 MoleculeNet 两大标准集
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **构象生成方法的影响**: 不同的 3D 构象生成工具（RDKit vs. ETKDG vs. 力场优化）可能影响结果，但论文未充分分析
 2. **大分子适用性**: SMILES 对于蛋白质等大分子表示能力有限

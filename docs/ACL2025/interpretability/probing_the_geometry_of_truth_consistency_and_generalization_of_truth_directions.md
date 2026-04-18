@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probing the Geometry of Truth: Consistency and Generalization of Truth Directions
 description: >-
@@ -140,7 +140,7 @@ $$\underset{\Phi}{\arg\min} \frac{1}{M} \sum_{i=1}^{M} J(\Phi, \boldsymbol{h}_i,
 - **实际应用演示**：选择性QA场景展示了探针的实用价值——无需修改模型即可提升回答可靠性
 - **实验设计严谨**：随机化模型实验排除了探针"自造"真值方向的可能性；含错误示例的few-shot实验揭示了探针的鲁棒性机制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **"真实性"定义模糊**：探针可能捕获的是人类广泛共识而非客观事实，对超人类AI系统的适用性存疑
 - **仅测试短文本QA**：未涉及长文本QA、指令遵循等更复杂场景

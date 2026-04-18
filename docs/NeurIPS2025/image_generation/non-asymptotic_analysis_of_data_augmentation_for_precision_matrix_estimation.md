@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Non-Asymptotic Analysis of Data Augmentation for Precision Matrix Estimation
 description: >-
@@ -106,7 +106,7 @@ $$P\left(\left|L(\hat{\Omega}) - \mathbb{E}[L(\hat{\Omega})]\right| > t\right) \
 - **新型确定性等价工具**：处理依赖样本的广义预解矩阵，可推广到其他高维统计问题
 - **实用价值**：理论界可直接用于选择最优的人工样本比例，无需交叉验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅考虑线性收缩至单位矩阵的情形，更一般的收缩目标（如对角矩阵）未覆盖
 - DA 模型限于高斯或类高斯生成模型，深度生成模型（如 VAE/GAN）生成的人工样本未纳入分析

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Aligning the True Semantics: Constrained Decoupling and Distribution Sampling for Cross-Modal Alignment
 description: >-
@@ -78,7 +78,7 @@ CDDS 采用细粒度方法，整体包含三部分：约束解耦（Constrained 
 - 自适应软阈值稀疏化避免了固定 top-k 的粗暴截断。
 - 方法可即插即用：分布采样模块可应用于其他跨模态方法并带来提升。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **计算开销大**: 相关语义识别（Eq.5）需在每个 batch 中执行，复杂度 $O(N^2)$，作者尝试全数据集预计算或随机采样均导致明显性能下降。
 - 仅在图文检索任务上验证，未探索其他跨模态任务（如图像描述生成、VQA、文本到图像生成等）。
 - 解耦的语义/模态分量缺乏可解释性分析（虽有 t-SNE 可视化但较浅层）。

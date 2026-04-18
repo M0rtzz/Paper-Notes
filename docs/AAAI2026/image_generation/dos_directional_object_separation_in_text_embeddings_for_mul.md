@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DOS: Directional Object Separation in Text Embeddings for Multi-Object Image Generation
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **利用CLIP本身的缺陷来修复** — 因果掩码导致信息混淆是CLIP的固有缺陷，但作者用对比prompt巧妙地"以毒攻毒"，利用同样的混合机制提取分离方向
 - **自适应强度设计严谨** — 用42+36个描述词构建物体属性profile，基于Pearson相关性+shifted sigmoid实现物体对级别的细粒度控制
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖CLIP编码器**: 对非CLIP编码器（如T5）的嵌入未做处理，可能限制在仅用T5的模型上的效果
 - **物体解析依赖**: 需要正确识别prompt中的物体名词及其位置
 - **属性绑定未重点解决**: 主要解决对象忽略/融合，对"红帽子蓝外套"这类属性绑定问题关注较少

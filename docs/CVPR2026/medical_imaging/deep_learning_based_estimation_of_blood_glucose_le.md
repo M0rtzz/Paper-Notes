@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Learning–Based Estimation of Blood Glucose Levels from Multidirectional Scleral Blood Vessel Imaging
 description: >-
@@ -100,7 +100,7 @@ tags:
 - 多方向采集协议的设计有生理学依据——不同象限的巩膜血管对高血糖的响应确实不同
 - MRFO+Transformer的级联"去冗余→建关联"设计在多视角融合场景中很有参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 单中心数据集（长沙爱尔眼科），445人样本量有限，泛化性存疑
 - 排除了眼表疾病患者，但实际临床中糖尿病患者常伴随眼表异常
 - 未与现有无创方法（PPG、热成像）做直接对比

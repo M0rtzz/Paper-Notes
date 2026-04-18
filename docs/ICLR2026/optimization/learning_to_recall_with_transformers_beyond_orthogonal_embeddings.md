@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Recall with Transformers Beyond Orthogonal Embeddings
 description: >-
@@ -133,7 +133,7 @@ tags:
 - **对实际 LLM 设计的暗示**：在固定计算预算下，增大嵌入维度 vs 增加训练数据 vs 缩短上下文窗口之间存在最优权衡
 - **将 Transformer 的"记忆能力"从经验直觉提升到精确理论**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅分析单层单头 Transformer**：实际 LLM 是多层多头的，层间交互和多头协作可能改变容量缩放
 2. **早期阶段分析**：未覆盖训练的全局收敛行为，后期阶段可能有不同的动力学

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure
 description: >-
@@ -89,7 +89,7 @@ LLM存在一个基本的泛化失败——反转诅咒：训练时学到"Tom Smi
 - 纠缠性的梯度分析简洁有力：$\Delta a = -\eta\|\alpha\|^2 \frac{\partial L}{\partial a} - \eta \alpha^T\beta \frac{\partial L}{\partial b}$，清楚展示了交叉污染
 - 参数化前向链推理是一个令人印象深刻的应用，展示了反转能力的深层价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - JEPA需要先验知识来定位概念位置，不是自动化的解决方案
 - 记忆层假设每个独特名字对应独特概念，同义词场景下会阻碍学习
 - 实验在可控的合成数据上进行，与真实世界LLM预训练的差距需要弥合

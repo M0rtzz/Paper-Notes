@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion-Driven Two-Stage Active Learning for Low-Budget Semantic Segmentation
 description: >-
@@ -133,7 +133,7 @@ $$\theta^* = \arg\min_\theta -\frac{1}{|\mathcal{L}|}\sum_{(x,y)\in\mathcal{L}} 
 3. **两阶段解耦设计巧妙**：覆盖性和不确定性各司其职，1+1>2的效果
 4. **eDALD中额外熵项的作用**：仅需一个独立噪声样本，计算开销极小但效果显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. DALD基于扩散骨干的随机噪声注入，仅适用于扩散模型，不具通用性
 2. MaxHerding阶段对每张图像的所有像素计算成对相似度，计算成本较高

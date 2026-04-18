@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continuous Chain of Thought Enables Parallel Exploration and Reasoning
 description: >-
@@ -35,14 +35,14 @@ CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 tok
 
 **核心矛盾**：离散采样的决策不可逆性导致单条推理链容易"滚雪球"累积错误，而弥补手段（多次采样）又带来巨大计算开销
 
-**本文要解决什么？**
+**本文目标**
    - 如何让模型在单次推理中同时追踪多条推理路径？
    - 连续 token 的并行追踪能力有多强？与离散多次采样有何理论关系？
    - 如何训练和推理连续 token 模型？
 
 **切入角度**：将 LM 在每步的 softmax 输出不进行离散采样，而是直接作为连续 token（所有词表 embedding 的加权组合）送入下一步。这个"叠加态"自然编码了多条路径的信息。
 
-**核心idea一句话**：连续 token 是词表 embedding 的凸组合，天然实现并行路径追踪，其效果理论上等价于 K 条独立离散 CoT 的聚合——一次前向传播顶 K 次采样。
+**核心 idea**：连续 token 是词表 embedding 的凸组合，天然实现并行路径追踪，其效果理论上等价于 K 条独立离散 CoT 的聚合——一次前向传播顶 K 次采样。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 tok
 - **"一次前向 ≈ K 次采样"的理论保证 (Proposition 3)** 是非常有力的结果——直接将 CoT2 与 self-consistency 建立了量化等价关系，赋予了连续 token 清晰的实际意义。
 - **将 RL 扩展到连续动作空间用于 LLM**：传统 GRPO/PPO 在离散 token 空间操作，CoT2 的 MTS 策略巧妙地通过"采样+平均"在连续空间中引入可控噪声，使 policy gradient 方法可用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在合成任务（MNNS、ProntoQA、ProsQA）上验证，未在真实 NLP 任务或大规模 LLM 上测试
 - Assumption 1（Markov 性 + 线性叠加）在实际 Transformer 中可能不严格成立
 - 连续 token 无法直接解读为自然语言，丧失了 CoT 的可解释性

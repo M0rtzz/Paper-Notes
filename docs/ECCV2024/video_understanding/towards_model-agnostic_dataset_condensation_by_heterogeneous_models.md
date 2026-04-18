@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Model-Agnostic Dataset Condensation by Heterogeneous Models
 description: >-
@@ -122,7 +122,7 @@ $$\mathcal{L}_{\text{MD}}(\mathbf{x}) = \text{MSE}(\text{SSD}(f_{\theta_1}(\math
 - **无需超参搜索的梯度平衡**：GBM 通过历史梯度自适应调节，避免了手动设置损失权重
 - **SSD 的通用性**：空间-语义分解可适配任意带有空间特征的模型架构（不限于 CNN 和 ViT）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 CIFAR-10 上进行了充分实验，需要在更大规模数据集（ImageNet 等）上验证
 2. 目前仅使用两个模型，可以探索三个或更多异构模型的组合

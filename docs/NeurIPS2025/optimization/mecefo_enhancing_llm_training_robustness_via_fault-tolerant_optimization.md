@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MeCeFO: Enhancing LLM Training Robustness via Fault-Tolerant Optimization
 description: >-
@@ -107,7 +107,7 @@ MeCeFO 采用**邻居代做**（Neighbor-Do-Both, NDB）策略：当一个节点
 - **理论与实验一致**: 收敛率匹配标准 SGD，实验也确认了几乎无质量损失。
 - 无故障时不引入任何开销，只在故障发生时才启用近似策略——这是相对于 Bamboo 的根本优势。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 使用了逐迭代的故障模拟设置，与真实集群故障模式可能有差异。
 - 实验限于 32 GPU 集群（4 节点），未在超大规模（100k GPU）集群上验证。

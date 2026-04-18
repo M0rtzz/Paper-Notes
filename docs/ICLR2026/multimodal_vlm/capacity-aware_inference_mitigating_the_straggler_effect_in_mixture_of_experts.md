@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Capacity-Aware Inference: Mitigating the Straggler Effect in Mixture of Experts
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：这就是 **Straggler Effect**——MoE 层的延迟由最重负载专家决定（$L \propto \max(\{N_i\})$），而非平均负载。现有方案（如 DeepSeek-V3 复制高负载专家）需要额外GPU资源。
 
-**本文要解决什么？** 在推理时不增加 GPU 资源的前提下，通过智能 token 调度缓解 Straggler Effect，提高推理速度。
+**本文目标** 在推理时不增加 GPU 资源的前提下，通过智能 token 调度缓解 Straggler Effect，提高推理速度。
 
 **切入角度**：两个互补策略——对高负载专家设容量上限丢弃低重要性 token；对低负载专家扩展候选集接收溢出 token。
 
-**核心idea一句话**：用 gating score 作为重要性指标限制高负载专家的 token 数，同时将溢出 token 重路由到同一 GPU 上的低负载专家，实现负载均衡和速度提升。
+**核心 idea**：用 gating score 作为重要性指标限制高负载专家的 token 数，同时将溢出 token 重路由到同一 GPU 上的低负载专家，实现负载均衡和速度提升。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ MoE 推理时，router 为每个 token 选择 top-k 专家。Capacity-Aware Infe
 - **gating score 尾部平坦的发现**：Figure 8 展示 top-k 之后的专家 gating score 衰减平缓，为重路由提供了理论支撑——被路由到"次优"专家的 token 其实匹配度也不差
 - **丢弃少量 token 的巨大加速**：在 Mixtral 上丢弃 12% 溢出 token 获得 85% 加速，说明 Straggler Effect 的长尾分布特性使得少量干预即可获得巨大收益
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **未考虑 token 丢弃对生成质量的影响**：评估仅在分类/选择题 benchmark 上进行，未测试开放式文本生成时丢弃 token 是否导致输出连贯性问题
 - **静态容量因子**：$\gamma$ 是全局固定的。不同层、不同输入可能需要不同的容量策略——自适应 $\gamma$ 可能效果更好
 - **仅测试推理场景**：在训练时的 Token Drop 和推理时的区别未深入探讨，且与训练时辅助损失的交互未研究

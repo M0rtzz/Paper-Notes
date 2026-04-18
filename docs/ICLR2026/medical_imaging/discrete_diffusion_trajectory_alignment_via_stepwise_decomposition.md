@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Discrete Diffusion Trajectory Alignment via Stepwise Decomposition
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L}(\theta) = -\mathbb{E}_{t,\mathbf{c},\mathbf{x}_0,q(\mathbf{x}_t|\m
 4. **跨领域验证**：在 DNA 设计、蛋白质工程、语言建模三个差异巨大的领域均一致优于基线
 5. **迭代标注**：仅需少量额外标注（相比 DRAKES 的 128k，SDPO 用 15k 就达到更高奖励）即可持续提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **蛋白质任务中 Success Rate 略低于 DRAKES**（75.5% vs 78.6%），说明在 scRMSD 维度上仍有优化空间
 2. **因式化后验近似**（$\hat{p}_\theta(\mathbf{x}_0|\mathbf{x}_t)=\prod_i \hat{p}_\theta(\mathbf{x}_0^{(i)}|\mathbf{x}_t)$）忽略了 token 间的依赖关系，可能在长序列上引入误差

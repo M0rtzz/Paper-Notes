@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Dynamics under Environmental Constraints via Measurement-Induced Bundle Structures
 description: >-
@@ -116,7 +116,7 @@ tags:
 - mCBF的Lipschitz条件提供了安全保证优雅退化（graceful degradation）的形式化——不是非此即彼，而是安全概率随噪声平滑变化
 - 理论保证（指数收敛+概率安全界限）和实验性能同时优秀
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 全部实验在仿真中完成，缺少真实世界硬件验证
 - 纤维丛框架假设已知测量映射h(x)的函数形式，实际中传感器特性可能未知

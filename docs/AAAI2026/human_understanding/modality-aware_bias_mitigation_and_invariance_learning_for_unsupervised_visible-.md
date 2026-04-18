@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Modality-Aware Bias Mitigation and Invariance Learning for Unsupervised Visible-Infrared Person Re-Identification
 description: >-
@@ -138,7 +138,7 @@ $$\mathcal{L}_{glb}^v = -\sum_{i=1}^{N_b} \frac{1}{|P(z_i)|} \sum_{p \in P(z_i)}
 - **与 camera-aware 方法互补**：当相机标签可用时，可同时处理模态偏差和相机偏差
 - **子集聚类的巧妙应用**：通过简单的随机采样解决过聚类，同时节省计算
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖于 DBSCAN 的 eps 参数，不同数据集需要手动调整
 2. 子集聚类在小数据集（如 RegDB）上效果一般，非通用策略

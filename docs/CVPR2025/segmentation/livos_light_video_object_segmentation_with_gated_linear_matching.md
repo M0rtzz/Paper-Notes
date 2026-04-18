@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiVOS: Light Video Object Segmentation with Gated Linear Matching
 description: >-
@@ -49,17 +49,17 @@ tags:
 ### 关键设计
 
 **1. 线性匹配——从 softmax 到递推状态**
-- **做什么**: 将 softmax 匹配 $\mathbf{V}_{t+1} = \text{Softmax}(\mathbf{K}_{t+1}\mathbf{K}_{1:t}^T)\mathbf{V}_{1:t}$ 改写为核函数近似 $\phi(\mathbf{K}_{t+1})\mathbf{S}_t$。
+- **功能**: 将 softmax 匹配 $\mathbf{V}_{t+1} = \text{Softmax}(\mathbf{K}_{t+1}\mathbf{K}_{1:t}^T)\mathbf{V}_{1:t}$ 改写为核函数近似 $\phi(\mathbf{K}_{t+1})\mathbf{S}_t$。
 - **核心思路**: 利用矩阵乘法结合律，将 $\sum_i \phi(\mathbf{K}_{t+1})\phi(\mathbf{K}_i)^T\mathbf{V}_i$ 重新分组为 $\phi(\mathbf{K}_{t+1}) \cdot \sum_i \phi(\mathbf{K}_i)^T\mathbf{V}_i$。定义状态 $\mathbf{S}_t = \mathbf{S}_{t-1} + \phi(\mathbf{K}_i)^T\mathbf{V}_i$，$\mathbf{S}_t \in \mathbb{R}^{C_k \times C_v}$ 为恒定大小。核函数 $\phi$ 使用行级 softmax。
 - **设计动机**: 状态 $\mathbf{S}_t$ 是无关时空的 2D 矩阵，大小仅取决于特征维度（$64 \times 256$），与视频长度和分辨率无关。
 
 **2. 门控线性匹配（Gated Linear Matching）**
-- **做什么**: 在状态更新中引入数据相关的遗忘门 $\mathbf{G}_t$，选择性保留或丢弃历史信息。
+- **功能**: 在状态更新中引入数据相关的遗忘门 $\mathbf{G}_t$，选择性保留或丢弃历史信息。
 - **核心思路**: $\mathbf{S}_t = \mathbf{G}_t \odot \mathbf{S}_{t-1} + \phi(\mathbf{K}_i)^T\mathbf{V}_i$。门 $\mathbf{G}_t = \alpha_t \mathbf{1}^T$ 通过低秩参数化实现，$\alpha_t \in (0,1)^{C_k}$ 由深度卷积 + 空间求和 + Sigmoid 从图像编码器特征提取。
 - **设计动机**: 纯线性匹配无选择机制，在长序列中性能退化；门控提供了类似 GRU/LSTM 的遗忘能力，在场景变化、遮挡等场景中能主动丢弃过时信息。
 
 **3. 外部记忆融合**
-- **做什么**: 复用 Cutie 的 sensory memory（元素加法融合低级时序信息）和 object memory（交叉注意力融合高级对象语义）。
+- **功能**: 复用 Cutie 的 sensory memory（元素加法融合低级时序信息）和 object memory（交叉注意力融合高级对象语义）。
 - **核心思路**: 线性匹配输出的 readout 依次与 sensory memory 和 object transformer 交互，补充恒定状态压缩丢失的信息。
 - **设计动机**: 恒定状态压缩了时空信息，外部记忆提供互补的高频和语义信息。
 
@@ -108,7 +108,7 @@ tags:
 - 门控线性匹配的低秩参数化设计简洁高效
 - 为长时间高分辨率视频基础模型的发展铺平了道路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 恒定状态存在信息压缩损失，在短视频标准精度上仍有差距
 - 门控参数化采用最简单的低秩形式，可探索更丰富的参数化

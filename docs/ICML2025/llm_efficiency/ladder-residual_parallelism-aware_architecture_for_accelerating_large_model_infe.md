@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ladder Residual: Parallelism-Aware Architecture for Accelerating Large Model Inference
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：现有通信优化方案（如 Flux、CoCoNet）依赖底层 kernel 融合或自定义编译器，难以跨硬件迁移，且受限于模型架构的固有顺序依赖（h_{i+1} 依赖 x_i 的通信结果）。
 
-**本文要解决什么**：通过模型架构层面的修改（而非底层系统优化）来解耦通信和计算，实现通信延迟的隐藏。
+**本文目标**：通过模型架构层面的修改（而非底层系统优化）来解耦通信和计算，实现通信延迟的隐藏。
 
 **切入角度**：基于 Transformer 中激活变化缓慢的观察（每层更新 h_i(x) 的范数相对残差 x 较小），用"陈旧"输入代替最新输入不会显著影响质量。
 
@@ -115,7 +115,7 @@ Ladder Residual 修改 Transformer 的残差连接方式：每个模块（Attent
 - 后训练适配路线非常实用——现有模型只需轻微调整即可获得加速
 - 30% 更大的 Ladder Transformer 性能优于同 FLOP 的标准 Transformer，说明用加速换更大模型是有效策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 3.5B 规模下 Ladder Transformer 比 Standard 略差 (平均准确率差 1.2 点)
 - 更激进的 Ladder 适配（20 层）导致性能下降，最优适配层数需要探索
 - Prefill 阶段加速有限（因为 prefill 计算密集度高，通信占比小）

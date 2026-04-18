@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DynFocus: Dynamic Cooperative Network Empowers LLMs with Video Understanding
 description: >-
@@ -108,7 +108,7 @@ DynFocus分三部分：(1) 视觉+文本编码器提取特征；(2) 动态协作
 - **token效率极高**：在MLVU上DynFocus用的token数远少于竞争方法，但性能最优
 - 框架通用，视觉编码器可替换为其他clip-based编码器
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对ego-centric视频（如ER任务）效果较弱，需要针对性的ego视频数据
 - DPC-KNN聚类的超参数（近邻数C等）需要手动设置

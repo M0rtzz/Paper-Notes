@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HiFo-Prompt: Prompting with Hindsight and Foresight for LLM-based Automatic Heuristic Design
 description: >-
@@ -91,7 +91,7 @@ HiFo-Prompt 通过引导式Prompt合成（Guided Prompt Synthesis）构建每轮
 - Insight Pool 的生命周期管理（提取→检索→信用分配→裁剪）设计精巧，类比强化学习中稀疏奖励的处理
 - 探索-利用的显式控制通过自然语言"设计指令"实现，是参数调优的符号替代方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 种群动态的判断依赖多个手工阈值（停滞=3、进步=2、多样性=0.3），缺乏自适应调节
 - 实验基模型仅为 Qwen2.5-Max，不同LLM对Prompt策略的响应可能差异显著
 - Insight Pool 中洞见的语义相似度仅用 Jaccard 度量，可能遗漏语义相近但词汇不同的重复洞见

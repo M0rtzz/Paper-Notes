@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TokenBridge: Bridging Continuous and Discrete Tokens for Autoregressive Visual Generation
 description: >-
@@ -121,7 +121,7 @@ TokenBridge颠覆了传统"在tokenizer训练中引入量化"的范式，改为*
 - **置信度引导生成**：不需要额外控制模块，直接利用离散预测的分类概率做前景/背景分离式生成。
 - **对齐LLM范式**：全程使用标准分类预测+交叉熵损失，天然适配LLM的next-token prediction框架，有利于统一多模态建模。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖预训练VAE质量**：方法的上限受限于底层VAE的表示能力，VAE的缺陷会直接传递。但反过来说，VAE的改进也能直接带来收益。
 - **仅验证了256×256分辨率**：更高分辨率的生成效果未知。
 - **维度级AR增加延迟**：虽然比扩散头快6倍，但每个空间位置需要16步顺序预测，仍然比直接单步分类慢。减少通道数（如用SDXL 4ch VAE）或探索部分并行是优化方向。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Backdoor Attacks on Open Vocabulary Object Detectors via Multi-Modal Prompt Tuning
 description: >-
@@ -114,7 +114,7 @@ TrAP 在 GLIP-T 上同样有效，Aquarium 数据集 ASR 达 0.96，验证方法
 4. **极低参数开销**：仅 0.2M 参数（prompt + meta-net），远低于 fine-tuning 的 21-36M，却能实现更高 ASR
 5. **同时提升干净数据性能**：被攻击模型的 BmAP 显著高于零样本基线，增加了后门的隐蔽性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 6 个相对小规模的 ODinW 数据集上验证，缺少大规模通用数据集（如 COCO/LVIS）的评估
 - 防御分析较浅，只测试了 3 种推理时防御，未探索 prompt-level 或 feature-level 的专用防御

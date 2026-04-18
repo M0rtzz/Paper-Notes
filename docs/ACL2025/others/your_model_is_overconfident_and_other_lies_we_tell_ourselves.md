@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Your Model is Overconfident, and Other Lies We Tell Ourselves
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 多模型池策略的设计（异构 vs 同构）展示了实验结论的敏感性
 - 对主动学习、数据筛选等依赖"模型困难度"的应用场景有重要警示意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 NLI 和情感分析任务上验证，未覆盖生成式任务或更多 NLP 任务
 - 所有模型均为编码器类（BERT、1B LLM），未探索大规模生成式 LLM 的行为

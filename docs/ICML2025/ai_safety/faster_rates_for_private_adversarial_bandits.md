@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Faster Rates for Private Adversarial Bandits
 description: >-
@@ -129,7 +129,7 @@ tags:
 4. **下界分析的精妙**：Lemma 11 的"两实例"构造——在损失结构变化时，DP 算法需要 1/ε 次探索才能"察觉"，优雅地解释了速率中 √ε 的来源
 5. **首次建立 bandit 设定下中心/本地 DP 的分离**
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限 oblivious 对手**：效用保证不适用于 adaptive 对手，后者需要不同的 DP 定义和分析
 2. **无加法分离**：未实现 O(√(KT) + poly(K)/ε) 形式的后悔界，即 T 和 ε 的加法分离

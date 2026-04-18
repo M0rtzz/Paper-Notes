@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph
 description: >-
@@ -103,7 +103,7 @@ $$\mathcal{L}_{\text{total}} = \lambda_{\text{ISM}} \mathcal{L}_{\text{ISM}} + \
 - **蒸馏而非叠加**：多 LoRA 的师生蒸馏策略比简单加法融合更有效地解决了知识干扰问题
 - **语义先行**：先提升语义理解再优化几何精度的渐进式设计逻辑清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自建数据集规模较小（每类仅20张），泛化性有待验证
 - 190分钟的生成时间仍然较长，实际工业应用需要进一步加速

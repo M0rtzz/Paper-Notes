@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AfroBench: How Good are Large Language Models on African Languages?
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：全球7000+语言中90%被NLP社区忽视，非洲语言的NLP技术差距亟需量化和缩小。
 
-**本文要解决什么**：构建最全面的非洲语言LLM评测基准，并系统性地揭示当前LLM在非洲语言上的能力边界。
+**本文目标**：构建最全面的非洲语言LLM评测基准，并系统性地揭示当前LLM在非洲语言上的能力边界。
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ Few-shot效果(GPT-4o, 0-shot vs 5-shot)：
 - **质性分析有说服力**：展示了Ghomálá'语变音符号还原中0-shot vs 5-shot的巨大差异(ChrF从21.4到81.6)，以及数学推理中few-shot帮助模型用目标语言正确推理
 - **实用价值**：建立了持续更新的leaderboard，已追加GPT-4.1, Gemini-2.0-Flash, LLaMa 4等新模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据透明度不足导致无法评估数据污染
 - 评估成本高（GPT-4o和Gemini-1.5各约$2500）限制了模型覆盖

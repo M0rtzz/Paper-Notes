@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Representation Learning for Spatiotemporal Physical Systems
 description: >-
@@ -95,7 +95,7 @@ tags:
 4. **DISCO 和 JEPA 都是潜空间预测模型**: 两个最佳方法的共同特征是在潜空间操作，揭示了核心设计原则
 5. **有代码**: 提供了完整的实验代码
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估了 3 个物理系统，覆盖范围有限（均为 2D PDE 系统）
 - JEPA 编码器为 3D CNN，未探索 ViT 架构的 JEPA
 - 下游任务仅限参数估计，未探索分类（如层流 vs 湍流）等其他科学任务

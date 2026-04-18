@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TReMu: Towards Neuro-Symbolic Temporal Reasoning for LLM-Agents with Memory in Multi-Session Dialogues
 description: >-
@@ -104,7 +104,7 @@ TReMu基于记忆增强LLM-Agent的三阶段流程（记忆化→检索→响应
 3. **基准构建方法可复用**：四步pipeline（提取→链接→生成→质控）为其他领域构建推理评测基准提供了模板
 4. **消融实验清晰分离贡献**：通过MemoChat/Timeline/CoT/符号推理的组合对比，清楚展示每个组件的增量收益
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在多选QA设置下评估**：未测试生成式对话场景，多选题可能低估实际应用中的时间推理难度
 2. **依赖闭源LLM**：仅测试了GPT系列，开源模型（如Llama-3-70B）因上下文长度限制和指令遵循能力不足而无法适配

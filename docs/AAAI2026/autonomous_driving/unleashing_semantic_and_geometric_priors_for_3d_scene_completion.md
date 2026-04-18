@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unleashing Semantic and Geometric Priors for 3D Scene Completion
 description: >-
@@ -94,7 +94,7 @@ Foundation Encoder → Decoupled Semantic/Geometric Pathways → Hybrid View Tra
 - **AAF 各向异性融合**：认识到驾驶场景的 3D 结构具有方向性差异（前后 vs 左右 vs 上下），axis-specific 设计合理
 - **Foundation Model 的深度利用**：不是简单替换 backbone，而是设计了完整的利用管线
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Foundation Encoder 冻结使用，参数量大（DepthAnythingV2-L 335M），部署成本高
 - 仅验证 stereo 输入场景，单目设置下该框架适用性未知
 - GCA 中的全局 attention 矩阵 $\mathbf{M}^g \in \mathbb{R}^{HW \times HW}$ 在高分辨率下计算量大

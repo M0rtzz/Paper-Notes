@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Merge-Friendly Post-Training Quantization for Multi-Target Domain Adaptation
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：从误差屏障（error barrier）理论出发，将量化噪声显式引入误差屏障分析框架，推导出影响融合质量的两个关键因素：(1) 损失曲面的曲率（Hessian 敏感度）和 (2) 量化模型间的权重距离。
 
-**核心 idea 一句话**：在后训练量化过程中加入面向融合的正则化约束，使量化模型"天生"适合被融合。
+**核心 idea**：在后训练量化过程中加入面向融合的正则化约束，使量化模型"天生"适合被融合。
 
 ## 方法详解
 

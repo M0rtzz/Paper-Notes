@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gradient Extrapolation for Debiased Representation Learning
 description: >-
@@ -136,7 +136,7 @@ GERNE vs Resampling 的方差分析表明：GERNE 通过可控的损失方差帮
 - 超越简单平衡：通过外推可以模拟"反转偏差"的采样，这是 Resampling 无法实现的
 - 可控损失方差的理论分析为理解为什么外推比等效采样更好提供了新视角
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - $\beta$ 的最优值对数据集敏感，尤其当 $c$ 较大时可行范围窄
 - 未知属性情况依赖 ERM 预训练模型的质量来生成伪属性

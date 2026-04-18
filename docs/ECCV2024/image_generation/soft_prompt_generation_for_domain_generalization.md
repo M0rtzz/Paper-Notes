@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Soft Prompt Generation for Domain Generalization
 description: >-
@@ -115,7 +115,7 @@ SPG 包含两阶段训练和一个推理阶段：
 4. 两阶段训练策略巧妙：域提示标签作为"教师"指导 CGAN 学习域知识
 5. 方法简洁易实现：基于 CGAN 这种经典模型即可取得 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - CGAN 训练不稳定性需要梯度裁剪等技巧
 - 仅使用 CGAN 作为生成模型，更强的生成模型（扩散模型等）可能效果更好

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Lightweight Optimal-Transport Harmonization on Edge Devices
 description: >-
@@ -140,7 +140,7 @@ $$L_{total} = L_{labels} + \alpha \cdot L_{content}$$
 4. 提供了完整的理论误差分析，证明线性映射的有效条件
 5. 构建了首个带像素精确 mask 的 AR 合成图像数据集
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 在 iHarmony4 标准指标上不如 SOTA（MSE 较高），但作者认为这是曝光偏差导致的指标失真
 2. 深色物体处理效果差（颜色分布集中于色域边界）
 3. 不适合视频协调（帧间预测可能跳变），目前仅用指数移动平均缓解

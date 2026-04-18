@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fine-Grained DINO Tuning with Dual Supervision for Face Forgery Detection
 description: >-
@@ -164,7 +164,7 @@ $$\mathcal{L} = \lambda_0 \mathcal{L}_{bce} + \lambda_1 \mathcal{L}_{ftc}$$
 3. **参数效率极高**：3.5M 参数，单卡 4090 训练
 4. **DFDC 上 +10.84 的提升**：在最困难基准上证明鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖 FF++ 训练，未探索更大训练集
 2. 训练需伪造类型标签，某些实际场景可能不可用

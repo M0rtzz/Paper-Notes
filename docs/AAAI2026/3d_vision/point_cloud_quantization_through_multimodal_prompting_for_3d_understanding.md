@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Point Cloud Quantization through Multimodal Prompting for 3D Understanding
 description: >-
@@ -55,7 +55,7 @@ PCQ 框架包含三个核心模块：
 
 #### 1. **自适应提示调优（Adaptive Prompt Tuning）**
 
-**做什么**：在冻结的文本编码器前添加可学习提示向量，使文本原型可以适应下游数据集。
+**功能**：在冻结的文本编码器前添加可学习提示向量，使文本原型可以适应下游数据集。
 
 冻结文本编码器 $\mathcal{F}_\mathcal{T}$ 保留预训练语义，引入 $m$ 个可学习 prompt token：
 
@@ -69,7 +69,7 @@ $$\mathbf{h}^T_k = \mathcal{F}_\mathcal{T}(\mathbf{T}_k), \quad \mathbf{T}_k = [
 
 #### 2. **原型引导的可微量化（Prototype-Guided Differentiable Quantization）**
 
-**做什么**：将连续视觉特征离散化到文本原型空间，增强可解释性并减少类间特征重叠。
+**功能**：将连续视觉特征离散化到文本原型空间，增强可解释性并减少类间特征重叠。
 
 核心挑战在于**离散-连续鸿沟**：文本通过离散、可解释的token编码结构化语义，而视觉特征本质上是连续的。硬量化不可微，阻碍端到端训练。
 
@@ -87,7 +87,7 @@ $$\mathbf{v}_i = \sum_{k=1}^K y_{ik} \mathbf{h}^T_k$$
 
 #### 3. **跨模态特征融合（Cross-Modal Feature Fusion）**
 
-**做什么**：将原始点云几何特征与量化后的高级语义特征融合。
+**功能**：将原始点云几何特征与量化后的高级语义特征融合。
 
 $$\mathbf{f}_i = \text{FFN}(\text{CrossAttention}(\mathbf{h}^P_i, \mathbf{v}_i)) + \mathbf{h}^P_i$$
 
@@ -178,7 +178,7 @@ $$\mathcal{L}_{\text{Sep}} = \sum_{i \neq j} \exp(-\|\mathbf{h}^T_i - \mathbf{h}
 3. **Gumbel-Softmax 的巧妙运用**：在保持离散语义的同时实现端到端可微优化。
 4. **双重正则化的互补性分析**：紧凑性和分离性损失单独使用效果有限甚至有害，但联合使用产生协同效应。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 需要预训练的视觉-语言模型作为基础，对无预训练场景不直接适用。
 2. 原型数量等于类别数 $K$，对于细粒度或开放集场景可能不够灵活。

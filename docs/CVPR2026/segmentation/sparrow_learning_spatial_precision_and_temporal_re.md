@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPARROW: Learning Spatial Precision and Temporal Referential Consistency in Pixel-Grounded Video MLLMs
 description: >-
@@ -93,7 +93,7 @@ SPARROW作为即插即用模块分别适配到VideoGLaMM、UniPixel和GLUS三个
 - BOX+SEG粗到细的双提示范式为视频MLLM的精确定位提供了新范式
 - 即插即用设计使方法可立即应用于任何现有视频MLLM，降低了采用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 - TSF的离线数据构建依赖GroundingDINO和CLDTracker的质量——检测/追踪失败会引入噪声监督
 - Stage 2的proposer预训练使用大规模检测数据集，可能限制在资源受限场景的复现
 - 仅在RVOS和GCG任务上评估，扩展到视频QA、moment retrieval等任务的效果待验证

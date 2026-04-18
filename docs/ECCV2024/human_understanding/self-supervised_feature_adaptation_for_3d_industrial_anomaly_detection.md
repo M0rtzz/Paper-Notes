@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-supervised Feature Adaptation for 3D Industrial Anomaly Detection
 description: >-
@@ -134,7 +134,7 @@ $$\mathcal{L}_{LSFA} = \mathcal{L}_{IFC} + \lambda \mathcal{L}_{CLC}$$
 3. **Local-to-global 设计哲学**：无论是跨模态对齐还是模态内紧凑性，都从局部和全局两个粒度进行优化，确保多尺度信息的充分利用
 4. **推理零开销**：与 M3DM 相比，LSFA 在推理阶段不引入额外模块，仅更换了特征提取器后的 adaptor 权重
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. adaptor 结构仅使用单层 Transformer encoder，可能在更复杂场景下表达能力不足
 2. 记忆库大小需要手动调节，不同类别的最优值可能不同

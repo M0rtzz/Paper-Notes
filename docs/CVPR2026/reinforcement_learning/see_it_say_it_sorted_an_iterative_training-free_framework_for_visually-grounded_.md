@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] See It, Say It, Sorted: An Iterative Training-Free Framework for Visually-Grounded Multimodal Reasoning in LVLMs
 description: >-
@@ -96,7 +96,7 @@ ECRD在冻结的LVLM外层包一个轻量级监督框架：每步解码时，（
 - 自适应混合权重 $\alpha_i = p_{(1)}$ 的设计极简但有效：不需要学习的超参数，完全基于base分布的置信度自动调整干预强度。这种"模型自信时不干预、模型犹豫时强干预"的原则在其他模型纠错场景中也很有启发性。
 - 用文本而非像素作为证据表示是关键设计选择——保持了模型原生的token空间，避免了反复图像编码，同时让证据可在整个链条中复用。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Visual Decider（GRIT/Qwen2.5-VL-3B）本身也可能产生幻觉，当前框架没有对决策器输出做验证
 - 不确定性阈值 $\delta$ 需要预设，不同任务/模型的最优阈值可能不同

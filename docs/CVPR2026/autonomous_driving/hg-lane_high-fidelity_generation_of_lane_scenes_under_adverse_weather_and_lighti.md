@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HG-Lane: High-Fidelity Generation of Lane Scenes under Adverse Weather and Lighting Conditions without Re-annotation
 description: >-
@@ -148,7 +148,7 @@ Control Information Fusion相比单一控制信号提升明显。Stage-II对nigh
 - **全部使用预训练模型，无需fine-tune**：ControlNet和InstructPix2Pix均使用公开预训练权重，复现门槛低，且不依赖车道场景的训练数据
 - **Snow +38.8%说明数据缺口的影响**：原始数据集中最缺乏的类别提升最大，充分证明数据不均衡是当前车道检测的核心瓶颈之一
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **生成多样性受限于Canny边缘**：控制图以原图的Canny边缘为基础，生成图像的场景布局与原图高度一致。无法生成"全新场景"的极端天气图像，多样性受限于原始数据集的场景分布
 2. **Stage-II仅处理night/dusk**：其他天气条件（如rain+night组合）未设计专门的refinement流程。多种恶劣条件叠加的场景（如雪夜、雾夜）可能需要更复杂的多阶段处理

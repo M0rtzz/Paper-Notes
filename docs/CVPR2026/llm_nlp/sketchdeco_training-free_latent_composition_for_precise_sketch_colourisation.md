@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SketchDeco: Training-Free Latent Composition for Precise Sketch Colourisation
 description: >-
@@ -124,7 +124,7 @@ SketchDeco采用两阶段的分治策略（图2）：
 4. **CFG不稳定性的优雅解决**：exceptional prompt技术通过移除prompt信息使反演更稳定，是ODE反演领域的实用技巧
 5. **实际工作流友好**：支持交互式预览和种子切换，15-20步在消费级GPU上完成，适合实际创意工作流
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基于Stable Diffusion v1.5，生成质量受限于基础模型能力；升级到SDXL或SD3可能带来更大提升
 - 蒙版需手动绘制（如用Photoshop），自动语义分割生成蒙版可降低使用门槛

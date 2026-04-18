@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attention, May I Have Your Decision? Localizing Generative Choices in Diffusion Models
 description: >-
@@ -115,7 +115,7 @@ ICM（Implicit Choice-Modification）分为三步：
 - 线性探针方法避免了 prompt injection 的混淆效应，提供了更纯粹的内部机制视角
 - 实验设计严谨：通过训练探针区分隐式/显式生成来验证两种机制的差异
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Steering 强度 $\alpha$ 需要针对每个场景逐个调整，缺乏自动化
 - 对于多属性同时去偏（如性别+年龄+种族）的效果未充分探讨
 - 线性探针假设属性在激活空间中是线性可分的，对更复杂的概念可能不成立

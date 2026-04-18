@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Hardness of Approximating Distributions with Tractable Probabilistic Models
 description: >-
@@ -96,7 +96,7 @@ tags:
 - **精确→近似的无缝推广**：Sauerhoff函数从逻辑电路的精确分离优雅地推广到概率电路的近似分离
 - **推理保证的精确刻画**：清晰地界定了近似建模能和不能保证哪些推理查询的近似
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅考虑布尔变量，连续变量或混合变量的情况未覆盖
 - 指数级分离的TV距离阈值（1/16）较小，更大阈值下的结果未知
 - 没有提供构造性的近似算法或实际可行的解决方案

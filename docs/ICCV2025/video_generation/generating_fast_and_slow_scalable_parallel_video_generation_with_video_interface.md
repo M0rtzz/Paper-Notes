@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generating, Fast and Slow: Scalable Parallel Video Generation with Video Interface Networks
 description: >-
@@ -111,7 +111,7 @@ tags:
 - **动态万能表征**：global tokens 每步重新计算，而非静态锚点，优雅降级
 - **Stop Gradient 设计**：共享 chunk 之间不传递梯度，避免 chunk 间干扰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - VIN 仅通过生成任务学习表征，未利用下游任务（如分割、深度）的监督信号
 - 超出原始 patch 输入之外的模态（深度、3D 信息）尚未探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LoRA-Edit: Controllable First-Frame-Guided Video Editing via Mask-Aware LoRA Fine-Tuning
 description: >-
@@ -93,7 +93,7 @@ $$\mathcal{L} = \mathbb{E}_{t,\mathbf{x}_0,\mathbf{x}_1}\left[\|v_\theta(\mathbf
 - 松散 mask 优于精确 mask 的发现有趣且实用——pixel-perfect 不必要
 - 参考帧仅在训练时使用（不在推理时输入），提供了外观指导的灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每个视频需独立 LoRA 训练（100-200步），非即时生成
 - 用户需手动或半自动提供 mask 和交互阶段
 - 编辑帧的获取依赖外部图像编辑工具

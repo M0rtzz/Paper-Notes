@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SGD Jittering: A Training Strategy for Robust and Accurate Model-Based Architectures
 description: >-
@@ -110,7 +110,7 @@ $$\text{regularization} = \mathbb{E}\left\|\sum_{i=0}^{K-1} \eta(1-\eta)^{K-1-i}
 4. **医学影像价值**：在 MRI 肿瘤 OOD 数据上的显著优势对临床安全性至关重要
 5. **SPGD 扩展**：进一步提出随机近端梯度下降（SPGD）变体，适用于近端算法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论限于去噪问题**：Theorem 7.4 和 7.5 的证明假设前向模型为恒等映射（去噪），对一般逆问题的理论仍需补充
 2. **仅分析平均攻击**：理论保证仅覆盖 average-case robustness，对 worst-case 攻击的理论分析缺失

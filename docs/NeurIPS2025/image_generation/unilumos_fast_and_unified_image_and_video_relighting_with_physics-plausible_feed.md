@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniLumos: Fast and Unified Image and Video Relighting with Physics-Plausible Feedback
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L} = \lambda_0 \mathcal{L}_0 + \lambda_1 \mathcal{L}_{\text{fast}} + 
 - **路径一致性学习解决了反馈-效率矛盾**：RGB域监督需要高质量输出，但多步去噪计算昂贵，路径一致性学习优雅地将两者统一
 - **LumosBench提供了光照评估新范式**：基于VLM的属性级评估比像素指标更能捕捉光照控制的细粒度表现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖预训练几何估计器（如Lotus）的质量，在极端场景下估计可能不准
 - 六维光照标注依赖VLM自动生成，可能存在标注偏差

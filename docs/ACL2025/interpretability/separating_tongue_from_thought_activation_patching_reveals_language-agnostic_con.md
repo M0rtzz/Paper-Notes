@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Separating Tongue from Thought: Activation Patching Reveals Language-Agnostic Concept Representations in Transformers
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **定义生成实验**：从单 token 预测扩展到多 token 生成，增强了发现的实用意义
 - **与并行工作的有趣对比**：Fierro et al. (2025) 在事实回忆任务中观察到相反的层序——先概念后语言——说明不同任务可能有不同的处理流水线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅研究了简单概念（单词级翻译），复杂概念或语言特有概念（如"Waldeinsamkeit"）尚未探索
 - 需要更细粒度的探测来确定概念在多大程度上可以特化到特定语言

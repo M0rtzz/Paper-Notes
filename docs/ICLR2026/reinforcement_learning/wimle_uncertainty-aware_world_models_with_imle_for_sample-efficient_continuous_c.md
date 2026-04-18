@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WIMLE: Uncertainty-Aware World Models with IMLE for Sample-Efficient Continuous Control
 description: >-
@@ -32,11 +32,11 @@ WIMLE将隐式最大似然估计（IMLE）扩展到model-based RL，学习能捕
 
 **核心矛盾**：需要多模态世界模型但不能太慢（diffusion model迭代采样慢不适合online RL），需要不确定性加权但不能改变Bellman不动点。
 
-**本文要解决什么**：(1) 如何高效学习多模态世界模型？(2) 如何估计和利用预测不确定性？(3) 不确定性加权是否影响value function收敛？
+**本文目标**：(1) 如何高效学习多模态世界模型？(2) 如何估计和利用预测不确定性？(3) 不确定性加权是否影响value function收敛？
 
 **切入角度**：用IMLE——一步生成、mode-covering、低数据高效——替代Gaussian或diffusion世界模型，通过ensemble+多latent采样估计总预测方差，逆方差加权synthetic transitions。
 
-**核心idea一句话**：IMLE世界模型提供多模态mode-covering预测 + ensemble×latent不确定性估计 + 逆方差加权保证最优Bellman收敛。
+**核心 idea**：IMLE世界模型提供多模态mode-covering预测 + ensemble×latent不确定性估计 + 逆方差加权保证最优Bellman收敛。
 
 ## 方法详解
 
@@ -113,7 +113,7 @@ WIMLE由三部分组成：(1) IMLE训练的随机世界模型集成；(2) 基于
 - **长horizon稳定性**：传统MBRL在rollout变长时退化，WIMLE通过不确定性加权自然降低远步预测的影响，实现稳定的长horizon rollout
 - **全方差分解**：同时捕获epistemic和aleatoric不确定性，即使完美世界模型（纯aleatoric）也能通过加权避免随机性引入的bias
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Ensemble of 7 models增加了计算和内存开销（虽然并行训练高效）
 - IMLE的assignment step虽然无梯度但增加了实现复杂度
 - Rollout horizon作为超参需per-task调整

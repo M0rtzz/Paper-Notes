@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Unified Perspective on Adversarial Membership Manipulation in Vision Models
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **梯度几何的统一视角**：用梯度范数塌缩同时解释攻击机制和提供防御手段，理论与实践完美结合
 - **实用的防御方案**：AR-MIA可无缝集成到现有MIA中，且攻击者面临固有trade-off无法绕过
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前假设白盒访问（攻击者和检测者都有），黑盒场景的MFA和MFD有效性有待更深入研究
 - λ超参需要对不同数据集和指标进行校准
 - 仅在分类模型上验证，扩展到生成模型（如扩散模型）的隐私审计是重要方向

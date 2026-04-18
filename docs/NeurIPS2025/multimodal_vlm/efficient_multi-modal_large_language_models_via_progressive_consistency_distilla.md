@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Multi-modal Large Language Models via Progressive Consistency Distillation
 description: >-
@@ -159,7 +159,7 @@ KV缓存减少 **88.9%**，FLOPs减少 **83.9%**，实际加速约 **1.6×**。
 3. **自蒸馏设计简洁**：教师和学生共享权重，无需维护额外模型
 4. **渐进式学习有理论直觉**：每一步最优点偏移较小，类似课程学习的思想
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅在LLaVA-v1.5（7B）上验证，更大模型（13B+）和更新架构（LLaVA-Next等）的适用性待验证
 2. TCD和LCD目前独立使用，联合使用的效果未探索

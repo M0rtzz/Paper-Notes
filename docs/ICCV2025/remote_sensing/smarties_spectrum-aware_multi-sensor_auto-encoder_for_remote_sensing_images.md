@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SMARTIES: Spectrum-Aware Multi-Sensor Auto-Encoder for Remote Sensing Images
 description: >-
@@ -131,7 +131,7 @@ EuroSAT 场景分类 Top-1 准确率：
 - **添加新传感器零成本**：只需定义对应波长范围的新投影层，无需修改骨干架构
 - **跨传感器 token 混合**思路简洁有效，启发了其他多模态学习场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 投影插值仅限于预训练频谱范围内（不支持外推），如 X 波段雷达等频段可能需要额外学习
 - 未涉及时序建模，对遥感变化检测等需要多时相分析的任务尚需扩展

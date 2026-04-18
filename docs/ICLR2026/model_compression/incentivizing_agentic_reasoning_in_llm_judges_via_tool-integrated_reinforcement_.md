@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Incentivizing Agentic Reasoning in LLM Judges via Tool-Integrated Reinforcement Learning
 description: >-
@@ -94,7 +94,7 @@ TIR-Judge 基于多轮工具集成推理(TIR)构建评判轨迹 $s_k = \{r_1,c_1
 - 三维度奖励设计（正确性×格式×工具质量）的乘法结构巧妙，避免了简单加权的调参困难
 - TIR-Judge-Zero 不依赖蒸馏的纯自举训练挑战了"需要强教师冷启动"的常见假设
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在安全/通用域强制不使用工具可能过于简单，某些安全评估场景也可能受益于工具
 - 多轮工具调用上限设为3可能限制了复杂评估任务的能力
 - 实验主要在推理相关benchmark上表现最佳，在开放式对话评判上的优势需更多验证

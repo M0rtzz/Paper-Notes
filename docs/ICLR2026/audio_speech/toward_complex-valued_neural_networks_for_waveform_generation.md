@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Toward Complex-Valued Neural Networks for Waveform Generation
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **块矩阵计算**巧妙利用了复值运算的结构化特性——将看似低效的复值需求转化为与实值相当的计算成本
 - 初步实验（合成复值分布 GAN）验证了 CVNN 在复域建模上的理论优势，为后续声码器设计提供了控制实验支持
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CVNN 层的参数量约为 RVNN 的 2×（实部+虚部各需独立权重），虽然块矩阵优化了计算，但内存开销仍较高
 - 仅与 Vocos 做了严格公平对比，与更多声码器（如 BigVGAN v2、Descript Audio Codec）的比较
 - 相位量化的级别 $N_q$ 如何选择？不同数值对质量的影响未做系统消融

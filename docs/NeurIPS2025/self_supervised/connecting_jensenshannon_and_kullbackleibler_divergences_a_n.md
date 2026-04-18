@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Connecting Jensen-Shannon and Kullback-Leibler Divergences: A New Bound for Representation Learning
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **完整的理论链路**：从CE loss → JSD VLB → KLD下界 → MI保证，每一步都有严格的数学推导和明确的gap刻画。这为整个JSD基于的表示学习方法族（Deep InfoMax、SMILE等）提供了一直缺失的理论根基
 - **Logit-like的$\Xi$函数形态**：下界函数$\Xi$类似于Logit函数，在JSD接近0时近线性（$\Xi(x) \approx 2x$，退化为Pinsker），在JSD接近$\log 2$时快速增长趋向无穷，完美捕获了高MI区JSD饱和但KLD仍在增长的行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 理论贡献为主，缺乏在大规模视觉SSL任务（如SimCLR/BYOL在ImageNet上的训练）中的直接应用验证
 - $\Xi$函数虽有平滑近似但无闭式表达，需要数值求解或近似
 - 下界毕竟是下界——在某些场景下估计值可能显著低于真实MI（尤其当判别器次优时gap叠加）

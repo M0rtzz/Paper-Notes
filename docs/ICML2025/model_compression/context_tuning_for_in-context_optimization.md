@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Context Tuning for In-Context Optimization
 description: >-
@@ -139,7 +139,7 @@ $$\Theta_{\text{CT}}^* = \arg\min_{\Theta_{\text{CT}}} \sum_{i=1}^{k} -\log p_\p
 - **ICO 框架的统一视角**：将 ICL、Prompt Tuning、TTT 统一到一个优化目标下，清晰地揭示了它们的联系与区别，具有理论启发性。
 - **Leave-One-Out Masking 的自适应性**：在示例充足时有效防止信息泄露；在示例极少时（如 ARC）反而应关闭，体现了对任务特性的细粒度理解。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅在分类/选择题型上验证**：生成式任务（摘要、翻译、开放式问答）的效果未知。
 2. **依赖 few-shot 示例质量**：KV cache 初始化本质上放大了 ICL 对示例选择的敏感性。

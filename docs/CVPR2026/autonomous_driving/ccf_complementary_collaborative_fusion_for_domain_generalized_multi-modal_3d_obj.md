@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CCF: Complementary Collaborative Fusion for Domain Generalized Multi-Modal 3D Object Detection
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：试验分析发现，训练中 3D query 与 2D query 的匹配比例达到 37.5:1，2D query 几乎得不到监督信号。即使 2D 检测器提案质量在跨域场景下保持较高（2D AP 优于 3D 投影），2D query 的 3D mAP 仅为 18.44%（vs 3D query 的 67.75%）。
 
-**本文要解决什么**：重新平衡双分支检测器中的模态利用，使相机分支在 LiDAR 退化时能发挥更大作用。
+**本文目标**：重新平衡双分支检测器中的模态利用，使相机分支在 LiDAR 退化时能发挥更大作用。
 
 **切入角度**：从监督不平衡、深度初始化不准确、融合阶段过度依赖 LiDAR 三个维度入手。
 
@@ -99,7 +99,7 @@ tags:
 - QDL 的"三次并行解码"设计巧妙避免了 shortcut learning，推理无额外开销。
 - 互补掩码的设计灵感来自真实世界的异步模态退化模式，具有很强的物理直觉。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 nuScenes 上实验，未验证 Waymo 等更大规模数据集。
 - 互补掩码的 GridMask 模式是固定的，可考虑学习自适应掩码模式。

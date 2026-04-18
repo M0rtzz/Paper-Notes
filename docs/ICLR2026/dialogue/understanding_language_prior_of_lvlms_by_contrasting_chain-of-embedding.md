@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Understanding Language Prior of LVLMs by Contrasting Chain-of-Embedding
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L}(x, y; \theta) = -\log F_\theta(y|x) - \lambda \cdot \text{TVI}(l^*
 - TVI在所有模型和数据集上一致优于visual attention和output divergence两种代理指标
 - 理论分析将表征散度与KL散度联系起来，提供了信息论解释
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要白盒访问模型内部状态，无法应用于闭源API
 - VIP的选取依赖人工设定阈值 $\tau$（虽然附录给出了自动选择方法）

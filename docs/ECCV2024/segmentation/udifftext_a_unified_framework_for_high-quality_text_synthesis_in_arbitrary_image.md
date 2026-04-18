@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UDiffText: A Unified Framework for High-quality Text Synthesis in Arbitrary Images via Character-aware Diffusion Models
 description: >-
@@ -122,7 +122,7 @@ TextSeg 上 SeqAcc-Recon：93%（vs TextDiffuser 68%），LAION-OCR 上 SeqAcc-E
 - **推理时 latent refinement**：通过梯度优化 noised latent 解决 catastrophic neglect，是一种不需要重训练的推理增强策略
 - **轻量字符编码器**：相比 ByT5（20B）用 302M 参数就实现了有效的字符级编码，设计简洁实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当图像背景较简单时，模型依赖视觉上下文渲染文字的能力受限
 - 当前只能处理最多 12 个字符的短文本，无法生成长段落或长文档

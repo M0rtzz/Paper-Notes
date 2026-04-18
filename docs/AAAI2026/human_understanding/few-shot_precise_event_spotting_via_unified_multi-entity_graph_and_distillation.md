@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Few-Shot Precise Event Spotting via Unified Multi-Entity Graph and Distillation
 description: >-
@@ -155,7 +155,7 @@ UMEG-Net 在所有 5 个数据集上对所有基线取得一致优势。UMEG-Net
 3. **无参数时序模块**：零参数代价替代多尺度时序卷积，在少样本场景下减少过拟合
 4. **蒸馏利用未标注数据**：优雅地利用领域数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 依赖关键点检测质量（虽蒸馏版不需要）
 2. 人-球连接方式需手动设计，缺乏通用性

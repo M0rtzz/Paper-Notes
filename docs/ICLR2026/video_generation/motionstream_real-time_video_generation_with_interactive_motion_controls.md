@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MotionStream: Real-Time Video Generation with Interactive Motion Controls
 description: >-
@@ -37,11 +37,11 @@ tags:
 
 **核心矛盾**：交互式创作体验要求"实时+因果+无限长度"，三者与扩散模型的"慢+双向+有限长度"范式根本冲突。
 
-**本文要解决什么？** 将运动控制视频生成从"渲染等待"模式变为"实时创作"模式——用户画轨迹即时看到结果。
+**本文目标** 将运动控制视频生成从"渲染等待"模式变为"实时创作"模式——用户画轨迹即时看到结果。
 
 **切入角度**：从三个层面同时突破——(1) 轻量化teacher架构降低baseline开销；(2) 联合引导嵌入蒸馏消除多次NFE；(3) 注意力沉降+训练时模拟推理分布消除长视频漂移。
 
-**核心idea一句话**：通过"高效teacher → 因果蒸馏 → 注意力沉降外推训练"的流水线，实现运动控制视频的实时无限流式生成。
+**核心 idea**：通过"高效teacher → 因果蒸馏 → 注意力沉降外推训练"的流水线，实现运动控制视频的实时无限流式生成。
 
 ## 方法详解
 
@@ -115,7 +115,7 @@ Teacher训练：Flow matching loss $\mathcal{L}_{\text{FM}} = \mathbb{E}_{z_0,z_
 - **训练时模拟推理分布**：与TalkingMachines等方法的关键区别——self-rollout中使用与推理完全相同的rolling KV cache + attention sink，消除train-test mismatch，这是长视频稳定性的核心保证
 - **联合引导的互补性**：纯轨迹引导→僵硬2D平移；纯文本引导→跟不上轨迹；$w_t=3.0, w_m=1.5$ 的联合引导→自然运动+精确跟踪
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 固定attention sink锚定初始帧→不适合场景完全切换的应用（如游戏世界探索），需要动态refresh anchor
 - 极速/物理不合理轨迹导致时间不一致或外观扭曲
 - Wan 2.1 (1.3B)比Wan 2.2 (5B)在保持源结构方面更好——更大backbone未必更robust

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator
 description: >-
@@ -86,7 +86,7 @@ tags:
 - Lin et al. (2024) 证明 Joint Fisher = Standard Fisher，为本文提供理论基础
 - 可能促进 Fisher Merging 等方法被更广泛采用（如 mergekit 可直接集成）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Squisher 是 empirical Fisher 的近似，而非 standard Fisher
 - EMA 引入时间偏差，对训练过程中参数变化大的场景可能有影响
 - 仅适用于 Adam 系列优化器

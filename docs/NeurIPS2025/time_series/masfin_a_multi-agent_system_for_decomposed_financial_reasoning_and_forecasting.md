@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MASFIN: A Multi-Agent System for Decomposed Financial Reasoning and Forecasting
 description: >-
@@ -90,7 +90,7 @@ Coordinator Agent 接收预测任务 → 分配给多个专家 Agent（Macro Age
 - **分治思想**：金融预测的多维度特性天然适合多 agent 分工，每个 agent 可以使用最适合的提示和工具。
 - **可解释预测**：最终预测附带完整的推理链，用户可以理解和验证预测依据。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - API 调用成本高（多个 agent×多轮对话）
 - 各 agent 之间缺乏迭代交互（目前是单轮分析→综合）

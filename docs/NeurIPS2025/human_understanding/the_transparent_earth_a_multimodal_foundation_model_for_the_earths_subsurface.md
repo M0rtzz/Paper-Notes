@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Transparent Earth: A Multimodal Foundation Model for the Earth's Subsurface
 description: >-
@@ -111,7 +111,7 @@ Transparent Earth采用编码器-解码器Transformer架构，核心流程为：
 3. **随机采样训练策略**：随机化观测数量和可用模态，天然实现缺失数据鲁棒性
 4. **跨模态信息增益显著**：多模态融合带来的误差减少远超同模态增加观测数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅8种模态，离全面覆盖地下属性还有距离
 - 某些模态的空间分辨率较低（如地幔温度5°×5°），可能限制精细预测

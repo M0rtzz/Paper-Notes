@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Group Orthogonal Low-Rank Adaptation for RGB-T Tracking
 description: >-
@@ -151,7 +151,7 @@ GOLA 比 LoRA 提升 1.2%/0.9%（PR/SR）且可训练参数减少 23%。
 3. **推理无额外开销**：参数合并策略保证推理速度与原始 LoRA 一致（125fps）
 4. **强通用性**：GOLA-B 和 GOLA-L 两种规模变体均表现优异，且离线分区策略不影响训练流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 关键秩数 k 和分组数 n 需要超参搜索，缺乏自适应机制
 2. 聚类基于固定的 constrained k-means，可探索更灵活的动态分组方法

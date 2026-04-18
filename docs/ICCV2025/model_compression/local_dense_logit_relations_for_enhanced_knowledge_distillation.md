@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Local Dense Logit Relations for Enhanced Knowledge Distillation
 description: >-
@@ -123,7 +123,7 @@ CIFAR-100 异架构蒸馏（ResNet32×4→ShuffleNetV1）：
 - **递归解耦的信息密度**：$d$ 个类产生 $\frac{d(d-1)}{2}$ 个类对，提供了远比单一 KL 散度丰富的关系信息
 - **知识完整性保障**：RNTK 损失确保未被选中的尾部类知识不被遗忘，体现了设计的周全性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 递归深度 $d$ 的选择需要调优，过大会引入不必要的低排名类对
 - 计算复杂度为 $O(d^2)$，当 $d$ 较大时可能带来额外开销
 - ADW 中的超参数（$\epsilon = 1.50, \delta = 2.0, \lambda = 0.05$）为手动设定，自适应学习可能更优

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedSWA: Improving Generalization in Federated Learning with Highly Heterogeneous Data via Momentum-Based Stochastic Controlled Weight Averaging
 description: >-
@@ -138,7 +138,7 @@ $$m \leftarrow m + \gamma \frac{1}{s} \sum_{i \in \mathcal{S}} (c_i^+ - m)$$
 4. **动量更新克服 SCAFFOLD 延迟问题**：对 SCAFFOLD 全局变量更新延迟的分析和改进具有实际意义
 5. **实验覆盖全面**：3个数据集 × 4种网络 × 3种异质性程度 × 10种基线，共55+组实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅测试图像分类**：未在 NLP、推荐系统等其他 FL 应用场景验证
 2. **客户端参与率固定为 10%**：未探讨极低参与率（如 1%）下的表现

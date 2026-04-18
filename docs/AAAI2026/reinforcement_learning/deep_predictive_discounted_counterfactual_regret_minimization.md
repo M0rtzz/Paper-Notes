@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep (Predictive) Discounted Counterfactual Regret Minimization
 description: >-
@@ -149,7 +149,7 @@ VR-DeepDCFR+和VR-DeepPDCFR+在大多数游戏中收敛速度最快。
 3. **理论严谨**：Theorem 1和2提供了采样估计的无偏性证明，算法设计有坚实理论基础
 4. **工程简洁**：运行时间与DREAM相当，额外开销极小，实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. PDCFR+的优势预测假设变化缓慢（用当前迭代预测下一迭代），可考虑RNN捕捉时序依赖
 2. 仅在两人零和博弈中验证，多人/非零和场景的扩展未探索

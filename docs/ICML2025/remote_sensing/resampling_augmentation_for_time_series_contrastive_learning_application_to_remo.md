@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Resampling Augmentation for Time Series Contrastive Learning: Application to Remote Sensing
 description: >-
@@ -136,7 +136,7 @@ $$
 5. 从论文结果看，复杂掩码建模并非唯一正道。
 	在一些任务上，轻量对比框架可取得更高性价比。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前实验主要是农业分类场景，任务类型还可扩展到变化检测、灾害监测等。
 

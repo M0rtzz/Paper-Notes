@@ -1,4 +1,4 @@
----
+﻿---
 title: "DualPM: Dual Posed-Canonical Point Maps for 3D Shape and Pose Reconstruction"
 conference: "CVPR 2025"
 arxiv: "2412.04464"
@@ -99,7 +99,7 @@ $$\mathcal{L}_P = \frac{1}{|M|}\sum_{\boldsymbol{u} \in M} c_P(\boldsymbol{u})\|
 4. **数据效率极高**：1-2 个合成模型的训练数据即可超越使用大规模真实数据训练的方法，证明了表示选择比数据量更重要
 5. **canonical 点图作为特征**：发现 $Q$ 本身就是一个优秀的特征图，比 DINOv2 特征更适合作为 $P$ 预测的条件
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **类别特定模型**：每个动物类别需要单独训练，虽有初步的零样本跨类能力但不完善
 2. **仅验证四足动物**：未扩展到人体、鸟类等其他可变形物体类别

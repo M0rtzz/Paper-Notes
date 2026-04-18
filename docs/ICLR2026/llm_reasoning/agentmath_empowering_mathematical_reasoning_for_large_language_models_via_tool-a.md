@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AgentMath: Empowering Mathematical Reasoning for Large Language Models via Tool-Augmented Agent
 description: >-
@@ -90,7 +90,7 @@ AgentMath-30B-A3B（仅3B激活参数）在AIME24/25上超越OpenAI-o3-mini (87.
 - **MoE模型的惊人效率**：30B-A3B模型仅用3B激活参数就接近671B参数模型的性能，说明工具增强策略可以大幅弥补参数量的不足
 - **部分Rollout的精妙设计**：将超长轨迹分解为可管理的片段，既解决了长尾延迟问题，又不损害性能（accuracy~70%在不同N设置下保持一致）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 235B规模模型由于算力限制仅进行了SFT，未做RL训练，可能还有更大提升空间
 - 目前仅关注数学竞赛基准测试，未验证在科学推理、工程计算等更广泛场景的泛化性
 - 复合奖励函数中的工具使用奖励设计相对简单，可能无法精细引导最优的工具调用时机

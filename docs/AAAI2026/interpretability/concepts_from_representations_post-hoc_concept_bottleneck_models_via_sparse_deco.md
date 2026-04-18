@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations
 description: >-
@@ -138,7 +138,7 @@ $$\mathbf{I}_i = \hat{\mathbf{I}}_i + \epsilon_i = \sum_{j=1}^m w_j^i \mathbf{c}
 - **概念选择算法的无监督特性**使其天然适用于零样本/少样本场景，这是对现有 CBM 的重要拓展
 - 利用 CLIP 多模态对齐性质将视觉嵌入分解为文本概念嵌入的线性组合，理论基础扎实（有 Gandelsman 等人的前序工作支持）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖通用 MLLM 的描述能力**：对领域特定图像（如皮肤病变）描述不精确，导致 HAM 数据集上性能下降
 2. **残差丢弃带来信息损失**：虽然残差项影响较小，但理论上不为零

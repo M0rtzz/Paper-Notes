@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaussian Blending: Rethinking Alpha Blending in 3D Gaussian Splatting
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：所有方法都使用标量alpha blending——将alpha和transmittance作为标量（每像素一个值）计算。这导致前景splat会完全遮挡本不应被遮挡的背景splat，因为忽略了像素内的空间遮挡关系。当采样率变化时，这种误差被放大。
 
-**本文要解决什么？** 在不牺牲实时性能的前提下，将像素内的空间变化纳入alpha blending过程，消除erosion和dilation伪影。
+**本文目标** 在不牺牲实时性能的前提下，将像素内的空间变化纳入alpha blending过程，消除erosion和dilation伪影。
 
 **切入角度**：观察到Gaussian splat在2D screen space上形成连续表面，其合并后的transmittance可以用简单的2D uniform distribution近似。通过动态追踪这个distribution的window范围，就能高效建模空间遮挡。
 
-**核心idea一句话**：将标量alpha blending替换为空间分布alpha blending——transmittance不再是一个数，而是像素内的一个spatial window
+**核心 idea**：将标量alpha blending替换为空间分布alpha blending——transmittance不再是一个数，而是像素内的一个spatial window
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ Multi-scale Blender数据集（×1训练，×1/2~×1/8测试）的PSNR结果：
 - **Uniform distribution近似transmittance**的假设虽然粗糙但有效——因为Gaussian splat确实倾向于聚集形成连续表面，合并后的alpha分布趋近uniform。这个观察很有insight
 - **Drop-in replacement设计**非常实用：无需重新训练模型，只替换渲染kernel就能在任意3DGS方法上获得多尺度抗锯齿
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Uniform distribution近似在半透明物体上可能不准确**：烟雾、玻璃等场景的alpha分布远非uniform
 - **Window作为方形（axis-aligned rotation ≤45°）的简化**可能在某些极端splat分布下引入误差
 - **只在Blender和Mip-NeRF 360上评估**：缺少更大规模真实场景（如城市级重建）的验证

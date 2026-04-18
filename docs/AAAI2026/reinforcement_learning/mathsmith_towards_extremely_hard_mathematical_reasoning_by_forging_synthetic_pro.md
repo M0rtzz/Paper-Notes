@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MathSmith: Towards Extremely Hard Mathematical Reasoning by Forging Synthetic Problems with a Reinforced Policy
 description: >-
@@ -130,7 +130,7 @@ MathSmith 包含三个核心阶段：
 - **弱点聚焦机制**：由于每道题可追溯到概念集，可以针对模型薄弱的概念定向生成变体题目，迭代提升。这种可追溯性是框架的独特优势
 - **HC vs Hard 的权衡**：一致性奖励看似"降低难度"，实际上大幅提高了可用率（从85%到95%），使大规模合成更实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 推理轨迹长度作为难度度量只是启发式的，并不必然等于"真正有助于提升推理能力的难度"
 2. 在 GSM8K 等简单文字题上性能偶尔下降，说明过重的推理可能对简单任务产生负面影响

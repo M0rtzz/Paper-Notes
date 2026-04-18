@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sharp Eyes and Memory for VideoLLMs: Information-Aware Visual Token Pruning for Efficient and Reliable VideoLLM Reasoning
 description: >-
@@ -117,7 +117,7 @@ SharpV是一个两阶段即插即用框架：
 3. **视觉信息退化假说**：揭示了VideoLLM中跨模态信息流的规律——LLM主要在浅层处理视觉信息
 4. **极低复杂度**：时空评分和相似度计算均为 $O(n \cdot d)$，剪枝过程本身几乎不引入额外开销
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 对细微视觉细节（如微表情）可能存在信息损失，可探索更细粒度的Token剪枝
 2. 视觉退化现象缺乏严格的理论框架，深层Token变换机制有待进一步研究
 3. 超参数（$w$, $M$）虽然鲁棒，但缺乏自动搜索机制

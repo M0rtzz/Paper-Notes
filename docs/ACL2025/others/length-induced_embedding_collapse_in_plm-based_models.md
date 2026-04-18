@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Length-Induced Embedding Collapse in PLM-based Models
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：**为什么**长文本嵌入性能差？不是简单的信息量过大——而是长文本嵌入之间变得过于相似，失去区分度。
 
-**本文要解决什么**：(a) 定义并验证 Length Collapse 现象；(b) 从频域理论角度给出机制性解释；(c) 提出缓解方法。
+**本文目标**：(a) 定义并验证 Length Collapse 现象；(b) 从频域理论角度给出机制性解释；(c) 提出缓解方法。
 
 **切入角度**：将 self-attention 在频域分析为低通滤波器（沿用 Wang et al., 2022 对 ViT 的分析），证明滤波率与序列长度 $n$ 的关系。
 
@@ -98,7 +98,7 @@ tags:
 - **理论预测与实验完美对应**：Theorem 3 预测 $\sigma_a$ 随 $n$ 递减，Figure 7 实验验证；Corollary 4 预测 cosine similarity 随 $n$ 增加，Figure 1(c) 验证
 - **对 RAG/长文本检索有直接价值**：长文档检索中长文本嵌入退化是实际瓶颈，TempScale 提供了简单有效的缓解
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **高斯假设**：Theorem 3 假设 query/key 为高斯分布，实际 PLM 中可能不完全满足
 - **仅单一超参 $\tau$**：全局统一的温度；可以考虑层级或头级别的自适应温度
 - **未考虑因果注意力（decoder-only）**：分析针对双向 attention（encoder），causal attention 的 Length Collapse 需要额外研究

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PseudoMapTrainer: Learning Online Mapping without HD Maps
 description: >-
@@ -135,7 +135,7 @@ PseudoMapTrainer 包含两个阶段：
 4. **众包数据的潜力释放**：Multi-trip 模式和半监督预训练策略为利用海量众包行车数据铺平了道路，这在工业界具有巨大实用价值
 5. **模块化设计**：伪标签生成（Mask2Former + RoGS）与在线模型训练（MapVR）完全解耦，可以方便地替换任一模块
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **伪标签生成成本**：虽然不需要 HD Map，但 Gaussian Splatting 重建仍需要较高计算资源，每个场景需独立优化
 - **语义类别受限**：当前仅处理 6 个道路相关类别，未覆盖红绿灯、交通标志等更复杂的地图元素

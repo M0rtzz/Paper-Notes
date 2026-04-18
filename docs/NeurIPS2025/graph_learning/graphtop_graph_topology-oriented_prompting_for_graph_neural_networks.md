@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GraphTOP: Graph Topology-Oriented Prompting for Graph Neural Networks
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：如何通过修改图拓扑来实现 prompting？边选择是离散优化问题，难以直接用梯度下降。
 
-**本文要解决什么？**：设计 topology-oriented 的 graph prompting 框架，让预训练 GNN 模型通过拓扑修改适配下游节点分类任务。
+**本文目标**：设计 topology-oriented 的 graph prompting 框架，让预训练 GNN 模型通过拓扑修改适配下游节点分类任务。
 
 **切入角度**：将 topology prompting 建模为 edge rewiring 问题，通过 Bernoulli 重参数化 + Gumbel-Softmax 松弛到连续概率空间。
 
-**核心 idea 一句话**：学习每条边的存在概率作为拓扑 prompt，通过 Gumbel-Softmax 使其可微训练，用熵正则化保证松弛紧密性和图稀疏性。
+**核心 idea**：学习每条边的存在概率作为拓扑 prompt，通过 Gumbel-Softmax 使其可微训练，用熵正则化保证松弛紧密性和图稀疏性。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ tags:
 - **Gumbel-Softmax + 熵正则化的搭配很巧妙**：用 Gumbel-Softmax 实现可微边选择，用熵正则化保证训练后边概率趋向确定性，推理时拓扑稳定。
 - **理论保证**：基于 CSBM 模型证明 topology prompting 可增大类间距离，是严格的理论支撑。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅支持节点分类**：当前框架聚焦于节点级任务，图级和边级任务的拓扑 prompt 设计待探索
 - **5-shot 设定**：极低标注量下效果好，但全监督场景下是否仍有优势未验证
 - **子图约束带来的信息损失**：$\rho=2$ 的限制可能错过重要的长程连接

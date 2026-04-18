@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MIL-PF: Multiple Instance Learning on Precomputed Features for Mammography Classification
 description: >-
@@ -95,7 +95,7 @@ MIL-PF 分为两个阶段：
 - **MIL 问题形式化**: 对乳腺 X 线 MIL 问题的嵌套层次结构（bag → image → tiles → ROIs）和双流信号（全局组织 vs 局部病灶）做了清晰的形式化定义
 - **工程友好**: 5-7 分钟训练 + 36 次运行选优 的范式，让超参数搜索和模型选择变得极其高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 检测精度受 tile 大小限制（448/518px），小病灶定位不准，可考虑多尺度 tile 或更细粒度的分割
 - 全局流和局部流采用简单拼接的后期融合，未建模两者间的交互——早期或中间融合可能带来提升

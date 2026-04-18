@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Predictive Feature Caching for Training-free Acceleration of Molecular Geometry Generation
 description: >-
@@ -109,7 +109,7 @@ $$F_{\text{AB}(j)}(x_{t+k}) = \sum_{i=1}^{j} (-1)^{i+1} \binom{j}{i} F(x_{t+k+i}
 - **反直觉的质量提升**：缓存不仅不降低质量，在能量和应变指标上反而有所改善，可能是因为缓存的平滑效果类似某种正则化
 - **实际影响力大**：将生成1万个分子的时间从14分钟降至2分钟，对药物发现的大规模采样有直接意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要在SemlaFlow一个模型上验证，扩展到其他分子生成模型（如GeoDiff、MDM）待确认
 - 缓存间隔D和预测器阶数的超参数选择缺乏自适应机制（类似TeaCache的思路可引入）

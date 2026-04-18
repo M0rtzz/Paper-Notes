@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cut Less, Fold More: Model Compression through the Lens of Projection Geometry
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：剪枝移除权重导致参数空间的轴对齐投影损失了方向信息，而折叠保留了合并方向但缺乏理论保证表明这种保留在什么程度上是有益的。
 
-**本文要解决什么？** 建立剪枝和折叠的统一投影理论框架，严格证明折叠在参数重建和功能保持上的优越性。
+**本文目标** 建立剪枝和折叠的统一投影理论框架，严格证明折叠在参数重建和功能保持上的优越性。
 
 **切入角度**：将两种压缩方法视为参数空间中的正交投影，剪枝对应坐标轴对齐子空间，折叠对应聚类结构子空间。
 
-**核心idea一句话**：剪枝是 $\mathbf{C}_p = \begin{pmatrix} I & 0 \\ 0 & 0 \end{pmatrix}$ 的坐标投影，折叠是 $\mathbf{C}_f = \mathbf{U}_f(\mathbf{U}_f^\top \mathbf{U}_f)^{-1}\mathbf{U}_f^\top$ 的聚类投影，后者保留更多参数方向信息，重建误差 $\|\mathbf{W} - \mathbf{W}_f\|_F^2 \leq \|\mathbf{W} - \mathbf{W}_p\|_F^2$。
+**核心 idea**：剪枝是 $\mathbf{C}_p = \begin{pmatrix} I & 0 \\ 0 & 0 \end{pmatrix}$ 的坐标投影，折叠是 $\mathbf{C}_f = \mathbf{U}_f(\mathbf{U}_f^\top \mathbf{U}_f)^{-1}\mathbf{U}_f^\top$ 的聚类投影，后者保留更多参数方向信息，重建误差 $\|\mathbf{W} - \mathbf{W}_f\|_F^2 \leq \|\mathbf{W} - \mathbf{W}_p\|_F^2$。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ tags:
 - 1000+ checkpoint 的大规模实验设计系统性极强，首次揭示了上游训练超参对压缩效果的细粒度影响
 - 折叠本质上是"合并相似方向"而非"删除坐标"，这个几何直觉对未来设计新压缩方法有启发
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论保证需要秩差 $k_f = k_p + 1$，虽然实际影响可忽略但不是严格 matched-size 比较
 - 对 ViT 和 LLaMA 仅压缩 FFN 块，注意力层的折叠未探索

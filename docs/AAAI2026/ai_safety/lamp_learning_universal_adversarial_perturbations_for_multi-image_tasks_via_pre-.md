@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LAMP: Learning Universal Adversarial Perturbations for Multi-Image Tasks via Pre-trained Models
 description: >-
@@ -76,7 +76,7 @@ $$\mathcal{L}_{adv}^{ctg} = -\frac{1}{LH}\sum_{l}\sum_{h}\sum_{i \in \mathcal{C}
 - **Position-invariant 攻击**：通过 index-attention suppression 使攻击不依赖图像位置
 - **强迁移性**：在 surrogate 模型上训练的 UAP 可跨 7+ 不同架构的目标模型有效攻击
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在开源模型上验证，未测试 GPT-4V、Gemini 等闭源模型
 - 扰动预算 $\epsilon=12/255$ 相对较大，对更严格预算下的表现未充分探讨
 - 防御仅测试了 query-based defense，未评估更强的对抗训练防御

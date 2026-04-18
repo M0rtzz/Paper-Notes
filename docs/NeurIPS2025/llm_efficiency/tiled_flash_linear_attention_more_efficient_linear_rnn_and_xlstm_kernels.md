@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tiled Flash Linear Attention: More Efficient Linear RNN and xLSTM Kernels
 description: >-
@@ -36,11 +36,11 @@ tags:
 
 **核心矛盾**：块大小两难——小块导致 IO 瓶颈，大块超出 SRAM 容量
 
-**本文要解决什么？** 突破 SRAM 对块大小的限制，实现任意大块大小的高效线性 RNN 内核
+**本文目标** 突破 SRAM 对块大小的限制，实现任意大块大小的高效线性 RNN 内核
 
 **切入角度**：在 FLA 的单层序列并行（块间）基础上，引入第二层序列并行（块内 tiling），类比 FlashAttention 2 的分块思想
 
-**核心idea一句话**：TFLA = Flash Linear Attention（块间并行）+ Flash Attention 2 的 tiling 思想（块内并行）
+**核心 idea**：TFLA = Flash Linear Attention（块间并行）+ Flash Attention 2 的 tiling 思想（块内并行）
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ TFLA 包含两个核心内核：
 - **算术强度驱动的设计理念**：从 Roofline 模型视角出发，通过增大块大小提升 FLOP/byte 比率来克服 GPU 内存墙，为未来内核设计提供定量指导。
 - **规范化层的信息门控角色**揭示了 RMS norm 在门控 RNN 中不仅仅是稳定化工具，这对理解其他 gated 架构有启发。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **规模验证不足**：最大模型为 1.4B，7B+ LLM 上的效果未知
 - **上下文长度有限**：实验最长 8192 tokens，>100K 场景未验证
 - **仅针对 mLSTM 架构实验**：虽然理论可扩展到 RetNet/GLA，但缺乏实证

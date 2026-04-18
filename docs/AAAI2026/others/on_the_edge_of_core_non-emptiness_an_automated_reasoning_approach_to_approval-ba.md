@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Edge of Core (Non-)Emptiness: An Automated Reasoning Approach to Approval-Based Multi-Winner Voting
 description: >-
@@ -115,7 +115,7 @@ MILP 在不同 $(m,k)$ 参数下的最优值：
 4. **猜想推翻与最小反例**：不仅推翻了已有猜想，还精确定位了反例存在的最小参数值，并提供了人可读的反例证明
 5. **博弈论视角**：将核非空问题解读为对抗性团队博弈（adversarial team game），与合作博弈理论中的 least core 概念建立联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算可扩展性有限**：MILP 包含 $2^m + 1$ 个连续变量和 $\binom{m}{k} \cdot \sum_{l=1}^{k} \binom{m}{l}$ 个二元变量，当 $k \approx m/2$ 时超多项式增长。$m=8, k=4$ 时 72 小时未收敛
 2. **未证明一般情况**：虽然实验和部分理论均指向 MILP 最优值为 $\frac{-1}{k(k+1)}$（暗示核总是非空），但一般情况的证明仍然开放

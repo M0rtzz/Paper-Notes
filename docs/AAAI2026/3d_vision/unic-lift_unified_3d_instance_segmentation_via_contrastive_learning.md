@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UniC-Lift: Unified 3D Instance Segmentation via Contrastive Learning
 description: >-
@@ -172,7 +172,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{rendering} + \lambda_{cluster} \mathcal{L}_
 3. **训练加速 20-30 倍**：从 15-20 小时缩短至 40 分钟，使得方法具有实际应用价值。
 4. **下游应用**：高质量的 3D 分割直接支持物体提取和场景编辑，展示了方法的实用性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **嵌入维度限制实例数量**：$d=12$ 维嵌入理论上最多支持 $2^{12} = 4096$ 个实例，对极大规模场景可能不够。
 2. **仅限静态场景**：未扩展到动态场景。

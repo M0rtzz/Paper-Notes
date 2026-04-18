@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Perception Characteristics Distance: Measuring Stability and Robustness of Perception System in Dynamic Conditions under a Certain Decision Rule
 description: >-
@@ -110,7 +110,7 @@ PCD 的核心思路是：将感知输出（IoU × 置信度）建模为距离 $x
 4. **受控数据集**：SensorRainFall 是唯一在高度受控环境下采集的公开感知评估数据集，排除了混淆变量
 5. **统计方法扎实**：采用惩罚样条 + 序贯方差变化点检测，有理论支撑的异方差建模
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：SensorRainFall 仅 1,231 张图像、2 个目标类别，场景多样性不足
 2. **仅在自有数据集验证**：未在 nuScenes、KITTI 等主流数据集上验证 PCD 的泛化性

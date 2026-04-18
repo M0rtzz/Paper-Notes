@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] An Analysis of Causal Effect Estimation Using Outcome Invariant Data Augmentation
 description: >-
@@ -95,7 +95,7 @@ tags:
 - **"DA 永不更差"定理**：Theorem 3 给出了使用 DA 的强理论保证
 - **实用洞察**：DA 的因果减偏效果取决于 DA 是否沿虚假特征方向操作——这需要领域知识
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论结果限于线性高斯设置，非线性推广尚未完成
 - IVL 的正则化参数 $\alpha$ 选择需要实践经验或交叉验证，缺乏自动选择机制

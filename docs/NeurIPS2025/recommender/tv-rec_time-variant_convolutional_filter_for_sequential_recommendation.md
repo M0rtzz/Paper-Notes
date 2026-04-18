@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TV-Rec: Time-Variant Convolutional Filter for Sequential Recommendation
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = -\sum_{t} \log \frac{\exp(s_{y_{t+1}})}{\sum_{j} \exp(s_j)}$$
 - **注意力的替代者**: 证明时变卷积可以完全替代自注意力，且更高效
 - **简洁高效**: 模型参数少、速度快、效果好，工程友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 图移位算子的设计目前较为简单，可探索更丰富的图结构
 2. 滤波器阶数 $K$ 的选择需要调参

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DreamRunner: Fine-Grained Compositional Story-to-Video Generation with Retrieval-Augmented Motion Adaptation
 description: >-
@@ -163,7 +163,7 @@ SR3A 模块（无 LoRA 注入版本）应用到 CogVideoX-2B/5B 上：
 5. 在 T2V-CompBench 上部分维度超过闭源模型，证明开源模型 + 好设计可缩小差距
 6. 计算量大幅下降（3~4 GPU hours vs 6K），实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **性能受限于骨干模型**：基于 CogVideoX-2B/5B，如果骨干在罕见组合或复杂运动上能力不足，DreamRunner 也会继承这些弱点
 2. **奇偶层分离是 heuristic**：手动指定偶数层为空间、奇数层为时间缺乏理论依据，虽然消融表明有效但对其他架构的泛化性存疑

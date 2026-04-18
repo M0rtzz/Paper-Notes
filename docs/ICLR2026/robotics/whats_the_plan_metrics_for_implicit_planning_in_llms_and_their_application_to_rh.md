@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What's the Plan? Metrics for Implicit Planning in LLMs and Their Application to Rhyme Generation and Question Answering
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：隐式规划的重要性（关乎 LLM 能力理解和安全）vs 研究方法的复杂性和不可扩展性。
 
-**本文要解决什么？** 用简单可扩展的方法定量研究隐式规划——在多个模型、多个任务上系统性验证。
+**本文目标** 用简单可扩展的方法定量研究隐式规划——在多个模型、多个任务上系统性验证。
 
 **切入角度**：韵律诗和问答是隐式规划的理想探针——目标 token 的性质和位置可从通用原则预测，但不由紧邻前文确定。
 
-**核心idea一句话**：mean activation difference steering 在正确位置注入足以操纵前向和后向规划，无需训练 CLT 或 SAE。
+**核心 idea**：mean activation difference steering 在正确位置注入足以操纵前向和后向规划，无需训练 CLT 或 SAE。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **韵律是完美的规划探针**：必须提前计划押什么韵→中间词必须语义兼容→这正是前向+后向规划的定义。问答中冠词选择是类似的但更简单的证据
 - **对 AI 安全的直接含义**：隐式规划 = 模型有"意图尚未表达"的内部状态→理解和监控这些状态对 alignment 至关重要
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Steering 成功率不完美——在弱模型上 steered 韵律率显著低于 baseline，说明规划表示的提取有噪声
 - 仅研究韵律和问答两个案例——更复杂的规划场景（如代码生成、长程推理）需要进一步验证
 - Mean activation difference 是粗糙方法——不区分规划具体词 vs 规划韵族的不同层次

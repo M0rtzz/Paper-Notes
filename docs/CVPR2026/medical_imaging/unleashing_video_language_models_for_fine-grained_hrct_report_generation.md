@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unleashing Video Language Models for Fine-grained HRCT Report Generation
 description: >-
@@ -130,7 +130,7 @@ CoT 显著提升 recall，DPO 进一步提升 precision 并抑制幻觉，二者
 3. **冻结编码器的启示**：LoRA 微调不带来额外增益这一发现令人惊讶，暗示 VideoLM 的视觉特征已具备足够的泛化性，域适配的关键在语言引导层面而非视觉表示层面
 4. **结构化 CoT 数据集贡献**：CT-RATE-AB 将原始报告重组为 region-abnormality 格式并经人工校验，有助于社区后续研究
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **单一数据集验证**：仅在 CT-RATE（胸部 CT）上评估，未验证对腹部、头颅等其他部位 CT 的泛化能力
 - **依赖 GPT-4o**：报告结构化和硬负样本构造均依赖 GPT-4o，引入额外成本和潜在偏差，且可能限制方法的可复现性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Automated Multi-Agent Workflows for RTL Design
 description: >-
@@ -171,7 +171,7 @@ VeriMaAS 在 token 成本上接近轻量级 CoT，远低于 SelfRefine（约 2×
 - **Training-free 的工作流自动化**：与需要梯度更新的微调方法不同，VeriMaAS 通过统计阈值校准实现工作流优化，极大降低了领域适配成本
 - **从通用→专业的 bridge**：本文展示了如何将通用的多智能体工作流方法（MaAS, AFlow）适配到专业硬件设计领域，关键是找到领域特有的反馈信号
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 控制器目前采用简单的级联策略和百分位阈值，未来可探索树搜索或 RL 策略以实现更细粒度的工作流决策
 2. 当前仅使用开源 Yosys + OpenSTA，扩展到商业 EDA 工具和工业 PDK 可能释放更大的 PPA 优化潜力

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SE(3)-Equivariant Diffusion Policy in Spherical Fourier Space
 description: >-
@@ -91,7 +91,7 @@ $$\text{SFiLM}(h_l|\gamma_l,\beta_l) = \gamma_l^T h_l \frac{h_l}{\|h_l\|} + \bet
 3. SFiLM 设计精巧，支持高阶等变条件化
 4. 支持单臂和双臂操作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - EquiformerV2 编码器计算成本仍较大
 - 球面表示对非刚体变形的适用性有限

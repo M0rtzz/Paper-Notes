@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PromptMoE: Generalizable Zero-Shot Anomaly Detection via Visually-Guided Prompt Mixing of Experts
 description: >-
@@ -163,7 +163,7 @@ $$\mathcal{L}_{\text{total}} = \underbrace{\text{BCE}(s, c)}_{\text{分类}} + \
 3. **正常/异常路由模式的可解释性**：正常状态的稳定路由 vs 异常状态的动态路由提供了直觉上的合理性和可解释性
 4. **实现简洁**：CLIP 完全冻结，仅训练轻量的 VGMoP 模块，在 RTX 3090 上即可训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 虽然代码声称可用，但原论文中未提供 GitHub 链接，复现可能存在障碍
 2. 训练仅在 MVTec AD 上进行（在 MVTec AD 本身评估时用 VisA 训练），辅助训练集的选择对性能有多大影响未充分讨论

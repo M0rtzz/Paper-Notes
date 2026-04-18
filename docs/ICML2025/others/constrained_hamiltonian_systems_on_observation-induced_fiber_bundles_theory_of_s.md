@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability
 description: >-
@@ -132,7 +132,7 @@ $$L(\lambda, \epsilon) = L_0(\epsilon) + \lambda L_1(\epsilon)$$
 4. **工作区域设定的工程合理性**：避免奇异构型的局部化处理既保证理论严格性，又符合实际系统的物理限制
 5. **Toda 晶格可积性保持**：明确给出了观测扰动下保持可积结构的临界条件 $\epsilon_{\text{crit}}$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **确定性不确定性假设**：当前框架仅处理确定性观测不确定性，无法直接处理 Wiener 过程等真正的随机噪声，需发展随机微分几何
 2. **局部化限制**：理论严格性主要在避免奇异构型的工作区域内保证，向全局理论的推广需要解决复杂的拓扑和几何问题

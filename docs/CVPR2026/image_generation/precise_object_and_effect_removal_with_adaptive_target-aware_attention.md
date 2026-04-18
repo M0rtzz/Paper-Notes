@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Precise Object and Effect Removal with Adaptive Target-Aware Attention
 description: >-
@@ -108,7 +108,7 @@ ObjectClear 基于 SDXL-Inpainting 构建。输入为 $\langle z_t, I_{in}, M_o,
 - **SVDS 的空间异质去噪**思路可泛化——在任何需要区域差异化处理的扩散编辑任务中，都可以在不同区域使用不同去噪强度
 - **数据集构建流程**（像素差分提取效果掩码 + alpha blending 模拟合成）是一套可复用的工具链
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练分辨率限于 512×512，面对高分辨率实际应用需要额外适配
 - 物体掩码依赖外部分割模型（DINO+SAM），掩码质量直接影响结果
 - 对于非常复杂的多光源场景（如多物体交叉阴影），效果掩码的自动提取可能不够准确

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoFu: Scale-Aware Modulation and Fourier Fusion for Multi-Subject Video Generation
 description: >-
@@ -63,7 +63,7 @@ MoFu 基于 DiT（Diffusion Transformer）骨干网络，集成三个组件：
 
 #### 1. Scale-Aware Modulation (SMO) — 尺度感知调制
 
-**做什么**：从文本提示中提取主体间的相对尺度关系，并注入到生成过程中。
+**功能**：从文本提示中提取主体间的相对尺度关系，并注入到生成过程中。
 
 **核心思路**：
 
@@ -90,7 +90,7 @@ $$\hat{\mathbf{F}} = \gamma \odot \mathbf{F} + \beta, \quad \mathbf{F}_{out} = \
 
 #### 2. Fourier Fusion — 傅里叶融合
 
-**做什么**：将多张参考图像融合为排列不变的统一表示。
+**功能**：将多张参考图像融合为排列不变的统一表示。
 
 **核心思路**：
 
@@ -122,7 +122,7 @@ $$\mathbf{F}_{\text{fused}} = \text{IFFT}(\mathcal{F}^{\text{HF}} + \mathcal{F}^
 
 #### 3. Scale-Permutation Stability Loss (SPSL)
 
-**做什么**：联合监督尺度一致性和排列不变性。
+**功能**：联合监督尺度一致性和排列不变性。
 
 **尺度损失**（Scale Loss）：
 - 根据参考 mask 的面积比自适应加权标准 MSE 损失：
@@ -198,7 +198,7 @@ $$\mathcal{L}_{\text{perm}} = \frac{1}{P} \sum_{p=1}^{P} \|F(\mathcal{R}_p) - F(
 4. **MoFu-Bench 填补空白**：首个专门评估尺度一致性和排列不变性的多主体视频基准
 5. **工程细节扎实**：数据构建从 15M 到 1M 的多阶段过滤，评估指标覆盖 6 个维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **强调空间推理可能限制时间建模**：高度动态场景中的精细时序交互可能表现不佳
 2. **依赖高质量参考输入**：参考图像稀疏或噪声大时性能可能下降

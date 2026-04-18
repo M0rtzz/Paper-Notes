@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Disco4D: Disentangled 4D Human Generation and Animation from a Single Image
 description: >-
@@ -99,7 +99,7 @@ Disco4D 采用自底向上的构建方式：(1) 使用 SMPL-X 参数化模型表
 - **非人体专用数据集训练**：利用通用扩散模型，无需人体特定数据集训练
 - **丰富的编辑能力**：支持服装移除、换色、材质修改、跨人物服装迁移
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 初始 SMPL-X 估计的精度会影响后续所有步骤的质量
 - 宽松服装（如长裙）和复杂配饰的建模仍具挑战性

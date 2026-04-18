@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Attribution-Guided Model Rectification of Unreliable Neural Network Behaviors
 description: >-
@@ -150,7 +150,7 @@ Rank-one编辑的优化目标为约束最小二乘：$\min_\Lambda \|v^* - f_l(k
 - **不增加推理成本**：与P-ClArC/A-ClArC添加artifact module不同，本文直接编辑权重，模型架构和推理开销完全不变
 - **BlockMNIST可视化佐证**：IG归因热力图直观展示了benign模型将归因分配到null patch（泄漏），而rectified模型归因集中在digit区域（Fig. 5），提供了可解释性证据
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **需要clean-corrupted pair**：修复前提是知道哪个样本被corrupted并拥有其clean版本，实际中可能需要额外的后门检测步骤（如SpRAy、SPECTRE）
 - **线性关联假设**：Rank-one编辑将每层视为线性关联记忆，对高度非线性层可能不够精确
 - **仅验证分类任务**：对目标检测、分割、生成等任务的适用性未探索

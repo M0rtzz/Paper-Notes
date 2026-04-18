@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow
 description: >-
@@ -137,7 +137,7 @@ SPAM 标签训练下游跟踪器 vs GT 标签（MOT17 验证集）：
 - **域差距分析提供了标注优先级指导**：检测 > 关联 > ReID，这个结论对跟踪领域的数据采集有直接指导意义
 - 自训练 loop（合成预训练 → 伪标签 → 重训练）形成了无需人工标注的强力基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 标注器本身不生成新检测——如果检测器漏检，只能通过低置信阈值弥补，无法完全恢复
 - 对极端密集场景（如 MOT20）GNN_node 的假阳性过滤可能不够充分

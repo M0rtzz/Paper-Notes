@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] IE-SRGS: An Internal-External Knowledge Fusion Framework for High-Fidelity 3D Gaussian Splatting Super-Resolution
 description: >-
@@ -163,7 +163,7 @@ IE-SRGS在所有数据集上均达到最佳性能，且接近HR上界。相比ba
 3. **阈值 $T$ 鲁棒性强**：$T$ 在0.3-0.9范围内性能稳定，不需要精细调参
 4. **框架设计模块化**：外部SR模型和内部3DGS backbone均可替换，是一个通用框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 额外训练内部3DGS模型增加了总训练时间（约增加40%）
 - 掩码阈值 $T$ 对合成和真实场景需要不同设置

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PubSub-VFL: Towards Efficient Two-Party Split Learning in Heterogeneous Environments via Publisher/Subscriber Architecture
 description: >-
@@ -115,7 +115,7 @@ PubSub-VFL通过三层设计解决上述问题：(1) 使用Pub/Sub架构实现**
 - **理论保证完备**: 提供了收敛性证明和差分隐私兼容性证明
 - **端到端的系统优化**: 从架构设计到超参数自动选择形成完整的解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅支持两方学习场景，未扩展到多方VFL
 - 动态规划的系统画像参数需要通过经验实验确定，自动化程度有限

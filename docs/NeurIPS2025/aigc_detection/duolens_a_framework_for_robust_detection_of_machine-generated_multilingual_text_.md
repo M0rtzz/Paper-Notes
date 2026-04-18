@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DuoLens: A Framework for Robust Detection of Machine-Generated Multilingual Text and Code
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **切入角度**：微调 encoder-only 模型（RoBERTa/CodeBERT 变体），用双编码器融合互补表示。
 
-**核心idea一句话**：对于 AI 内容检测的二分类任务，精心微调的 SLM 在准确率和效率上均远超 LLM。
+**核心 idea**：对于 AI 内容检测的二分类任务，精心微调的 SLM 在准确率和效率上均远超 LLM。
 
 ## 方法详解
 
@@ -90,7 +90,7 @@ tags:
 - **SLM > LLM 的反直觉结论**：在二分类任务上，编码器模型的归纳偏置天然适配，LLM 的生成能力反而成了累赘。这对 AIGC 检测社区是重要提醒
 - **数据集工程**：精心平衡语言和标签分布是关键——现有数据集的不平衡是造成检测器泛化差的主因
 
-## 局限性 / 可改进方向
+## 局限与展望
 - BERT 模型 512 token 限制，长文本需要分块
 - Encoder-only 模型无法提供逐句级别的检测解释
 - 多语言文本数据集存在语言不平衡

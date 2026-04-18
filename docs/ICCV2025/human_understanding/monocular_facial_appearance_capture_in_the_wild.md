@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Monocular Facial Appearance Capture in the Wild
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L} = \mathcal{L}_{img} + \lambda_{mask}\mathcal{L}_{mask} + \lambda_{
 - 结果令人信服：定性比较中漫反射/高光分离明显优于 FLARE，重照明效果接近工作室级别
 - 实际应用价值高：只需一段简单的头部旋转视频即可获得可用于VFX管线的面部资产
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖头部姿态估计的准确性，不精确的姿态会严重影响重建质量
 - 当面部在所有帧中都处于极端阴影时无法恢复外观

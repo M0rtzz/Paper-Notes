@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pap2Pat: Benchmarking Outline-Guided Long-Text Patent Generation with Patent-Paper Pairs
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **评估指标设计细致**：将事实性、覆盖率和风格解耦为独立指标，比单一 ROUGE 分数信息量大得多。SCALE 的 BM25 预筛 + 采样策略也使其可扩展到超长文档
 - **微调导致幻觉增加的发现**：这提供了一个重要警示——在专业领域微调 LLM 可能学到风格但牺牲事实准确性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集规模受限于论文开放许可证的限制（仅 1.8k 对），扩展需要学术出版界更广泛的开放获取
 - COPGen 各块独立生成可能导致块间连贯性不足，未来可引入块间依赖建模

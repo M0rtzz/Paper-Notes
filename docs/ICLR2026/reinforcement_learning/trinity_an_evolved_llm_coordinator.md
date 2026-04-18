@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Trinity: An Evolved LLM Coordinator
 description: >-
@@ -32,11 +32,11 @@ Trinity设计了一个轻量级coordinator（0.6B SLM + ~10K可训练参数的he
 
 **核心矛盾**：Coordinator需要足够的语义理解力来正确分配任务，但又不需要（也不应该）像底层agent那样强大。如何用最少的参数学到最有效的coordination策略？
 
-**本文要解决什么**：(1) 如何从小模型的内部表示中提取足够的语义信号用于coordination？(2) 如何在极端参数预算（~10K）下优化coordination策略？(3) 如何设计有效的多轮协作模式？
+**本文目标**：(1) 如何从小模型的内部表示中提取足够的语义信号用于coordination？(2) 如何在极端参数预算（~10K）下优化coordination策略？(3) 如何设计有效的多轮协作模式？
 
 **切入角度**：利用SLM隐藏状态（而非生成文本）作为上下文表示，用极轻量级head做routing决策，通过进化策略而非RL进行优化。
 
-**核心idea一句话**：小模型的hidden states包含足够的语义信号，一个<20K参数的head就能协调多个顶级LLM超越任何单一模型。
+**核心 idea**：小模型的hidden states包含足够的语义信号，一个<20K参数的head就能协调多个顶级LLM超越任何单一模型。
 
 ## 方法详解
 
@@ -112,7 +112,7 @@ LiveCodeBench SOTA: **86.2% pass@1**（V1 train → V6 test）。
 - **进化策略 vs RL的niche**：在高维、弱耦合、稀疏奖励、高per-step成本的特定regime下，CMA-ES理论和实证上优于policy gradient——打破了"RL万能"的思维定式
 - **三角色设计的优雅性**：T/W/V分工将coordinator从complex skill acquisition中解放出来，只需做assignment
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖闭源API的LLM pool，成本和延迟是实际部署瓶颈
 - Coordinator的SLM仍需推理每轮的完整transcript，对很长对话可能有效率问题
 - 三角色的prompt设计是hand-crafted的，role自动化发现值得探索

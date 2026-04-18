@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Language in the Flow of Time: Time-Series-Paired Texts Weaved into a Unified Temporal Narrative
 description: >-
@@ -84,7 +84,7 @@ tags:
 - **通用性强**：兼容 9 种主流时间序列模型（Transformer/Linear/Frequency-based），支持预测和插补两类任务
 - **度量实用**：TT-Wasserstein 可预判文本对建模的潜在增益，指导实际应用决策
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 文本编码器固定为预训练 LM（GPT-2），未探索端到端微调文本编码器的效果
 - MLP 映射维度 $d_{\text{mapped}}$ 需手动设定，虽然实验表明不太敏感，但缺乏自动选择机制
 - 当文本质量极低（如随机打乱）时，TaTS 可能略差于纯数值模型，虽然论文提供了丢弃低质量文本的缓解策略，但未实现自动检测

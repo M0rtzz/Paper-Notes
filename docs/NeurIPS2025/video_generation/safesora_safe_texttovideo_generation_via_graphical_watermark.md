@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Safe-Sora: Safe Text-to-Video Generation via Graphical Watermarking
 description: >-
@@ -118,7 +118,7 @@ FVD从次优的154.35降到3.77（**降低97.6%**），水印PSNR提升4.5dB+，
 - **复用latent特征**做相似度匹配，几乎零额外计算，工程上很优雅
 - **跨backbone泛化**：在UNet-based（VideoCrafter2）和DiT-based（Open-Sora）上均work
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅支持静态图形水印**：当前只能嵌入logo/图标等静态图像水印，不支持动态视频水印（如动画序列、时间动态模式），这是作者明确承认的局限
 - **分辨率和帧数的泛化性**：实验固定在320×512分辨率、8帧，对高分辨率长视频的效果待验证
 - **退化层模拟的真实性**：用3D CNN近似H.264是常见做法，但实际视频传播中的退化更复杂（社交平台压缩、截屏重录等）

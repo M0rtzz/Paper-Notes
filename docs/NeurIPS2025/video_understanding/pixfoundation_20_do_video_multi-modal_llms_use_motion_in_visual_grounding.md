@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PixFoundation 2.0: Do Video Multi-Modal LLMs Use Motion in Visual Grounding?
 description: >-
@@ -98,7 +98,7 @@ Sa2VA★ 微调版本采用 LoRA 微调视觉编码器，在 MoCentric-Bench 合
 - **自动数据合成**：利用 VLM + LLM 自动生成虚假运动和反转运动，成本低且可扩展。
 - **弱点明确**：SOTA 方法（Sa2VA）在运动中心任务上性能大幅下滑（51.5→28.5），这个发现将推动视频 MLLM 向真正的运动理解发展。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MoCentric-Bench 规模较小（32-152 对象），需更大规模验证
 - 微调仅在前 5 帧处理，可能不足以充分利用运动

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaDiffSR: Adaptive Region-Aware Dynamic Acceleration Diffusion Model for Real-World Image Super-Resolution
 description: >-
@@ -72,7 +72,7 @@ tags:
 - **轻量回归器替代实时IQA计算**是很实用的工程trick，使整个方案在推理时几乎零额外开销
 - 区域分类（稳定/增长/饱和）可动态切换的设计增强了鲁棒性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 作者承认：DM-based SR仍远慢于CNN/GAN方法，动态跳步只是减少了扩散模型内部的冗余计算
 - 静态网格切片与原始"前景/背景"设计意图不一致——未来可探索更细粒度的语义区域划分
 - 信息增益阈值$\tau$和跳步间隔是固定的超参数，不同数据集可能需要不同设置

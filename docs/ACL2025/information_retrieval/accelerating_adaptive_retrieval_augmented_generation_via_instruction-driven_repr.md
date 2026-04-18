@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Accelerating Adaptive Retrieval Augmented Generation via Instruction-Driven Representation Reduction of Retrieval Overlaps
 description: >-
@@ -30,7 +30,7 @@ tags:
 
 **现有痛点**：A-RAG的多轮交互机制加剧了RAG固有的效率问题。**核心矛盾在于**：相邻轮次的检索结果存在大量重叠（实验发现约60-80%的文档在相邻轮次中重复出现），但现有方法每轮都从头处理所有检索内容，导致大量冗余计算。
 
-**本文要解决什么**：消除A-RAG中因检索结果重叠而产生的冗余表示计算，同时加速自回归解码过程。
+**本文目标**：消除A-RAG中因检索结果重叠而产生的冗余表示计算，同时加速自回归解码过程。
 
 **切入角度**：分别在prefilling和decoding两个阶段引入加速机制——prefilling阶段通过缓存复用和指令引导消除重叠文档的冗余表示，decoding阶段利用检索文档构建近似语言模型实现并行生成。
 
@@ -108,7 +108,7 @@ DRAGIN+IDR² 在 LLaMA2-7B 上的具体延迟（2WikiMultihopQA, n=3）：
 - **IDGR的创新**：用自然语言指令解决KV cache复用中的信息冲突问题，巧妙利用了LLM的指令遵循能力
 - **IGPG的效率**：利用RAG场景的特殊性（生成与检索文档高度相关），零成本构建draft模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅适用于开源LLM，不适用于仅支持文本接口的LLM API
 - KV cache存储带来额外显存开销，对超长文档可能成为瓶颈

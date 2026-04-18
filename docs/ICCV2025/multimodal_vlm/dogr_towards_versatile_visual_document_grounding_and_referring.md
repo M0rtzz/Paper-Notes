@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DOGR: Towards Versatile Visual Document Grounding and Referring
 description: >-
@@ -123,7 +123,7 @@ DOGR 在 grounding 性能上大幅领先：$F1_{all}$ 在 $G_a$ 上达到73.0，
 - **揭示关键问题**：首次系统性地展示了MLLM在文档grounding上的能力缺陷，数据量化了差距
 - **PDF的 Merge Strategy** 在保证完整性的同时恢复阅读顺序，具有实际工程价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 模型依赖于高质量的预渲染和重渲染数据，对野外真实文档图像的泛化可能受限
 - PDF处理中 PyMuPDF 无法定位的文本只能回退为纯文本，存在标注覆盖不完整的问题

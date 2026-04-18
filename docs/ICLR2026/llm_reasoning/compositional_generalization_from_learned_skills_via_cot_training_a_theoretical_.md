@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Compositional Generalization from Learned Skills via CoT Training: A Theoretical and Structural Analysis for Reasoning
 description: >-
@@ -35,13 +35,13 @@ tags:
 
 **核心矛盾**：CoT 为什么能让模型从 ID 泛化扩展到 OOD 泛化？是只学了"what to think"（正确答案），还是学了"how to think"（推理方法）？
 
-**本文要解决什么？**
+**本文目标**
    - (Q1) CoT 训练是否提升 ID 和 OOD 泛化？理论原理是什么？
    - (Q2) 这种泛化能力在模型内部如何实现？
 
 **切入角度**：将 CoT 分解为 $P(Y|X) = \sum_C P(Y|X,C) \cdot P(C|X)$，其中 $C$ 是推理链。CoT 训练显式学习 $P(C|X)$ 和 $P(Y|X,C)$，而无 CoT 训练只学 $P(Y|X)$。
 
-**核心idea一句话**：CoT 训练教会模型"如何思考"——通过将复杂问题分解为已学简单技能的组合（$P(C|X)$ + $P(Y|X,C)$），从而将 OOD 问题拉近到 ID 分布，实现系统性泛化。
+**核心 idea**：CoT 训练教会模型"如何思考"——通过将复杂问题分解为已学简单技能的组合（$P(C|X)$ + $P(Y|X,C)$），从而将 OOD 问题拉近到 ID 分布，实现系统性泛化。
 
 ## 方法详解
 
@@ -107,7 +107,7 @@ tags:
 - **浅层提取中间结果**的发现是对 Transformer 推理机制的重要补充——CoT 训练本质上是在教模型更高效地利用深度，将不同推理步骤分配到不同层。这解释了为什么 CoT 训练增大了模型的"有效深度"。
 - **少数据加速泛化的反直觉发现**有很强的实践指导意义——RFT/SFT 不需要大量 CoT 数据，少量高质量 CoT 数据可能比大量数据更快激发泛化能力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 主要在合成数据（entity-relation）上验证，真实 NLP 任务的验证仅在附录中
 - 仅分析两跳推理，多跳（>3 步）场景的组合电路结构待研究
 - 信息论界是上界，可能不紧——实际泛化可能比理论预测更好或更差

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FloE: On-the-Fly MoE Inference on Memory-constrained GPU
 description: >-
@@ -116,7 +116,7 @@ FloE 由三个核心模块组成：专家混合压缩、稀疏性预测器、系
 4. **系统工程完整**：从算法到 Kernel 到传输协议全栈优化，端到端加速真实可感知
 5. **消费级 GPU 可部署**：11GB VRAM 即可运行 Mixtral-8×7B，极大降低 MoE 使用门槛
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 仅在 Mixtral-8×7B 上做了完整评估，对 DeepSeek-V2/V3 等更新 MoE 架构的泛化性有待验证
 2. 当前仅支持 single-batch 推理（延迟敏感场景），高吞吐批量推理未覆盖
 3. inter-expert 预测器需要训练，扩展到新模型时有额外成本

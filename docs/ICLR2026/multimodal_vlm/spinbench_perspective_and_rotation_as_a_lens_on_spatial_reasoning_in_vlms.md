@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SpinBench: Perspective and Rotation as a Lens on Spatial Reasoning in VLMs
 description: >-
@@ -136,7 +136,7 @@ SpinBench 围绕**视角转换（perspective taking）**这一核心挑战设计
 
 4. **实用价值**：对具身 AI 的直接指导——参考框架推理或旋转理解的失败可能导致导航、操纵和其他安全关键任务中的崩溃。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **空间概念覆盖不全**：尚未覆盖其他重要空间概念，如包含关系（in）、支撑关系（on）、垂直关系（above/below）。
 

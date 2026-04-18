@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLaVA-Critic: Learning to Evaluate Multimodal Models
 description: >-
@@ -117,7 +117,7 @@ LLaVA-Critic的构建分为两步：(1) 数据收集——为Pointwise评分和P
 - **对称聚合消除位置偏差**：通过所有有序对打分并取 $r_i = \sum a_{ki} - \sum a_{il}$ 的设计，巧妙地消除了pairwise评估中常见的位置偏差问题
 - **分数+理由的双重训练**：不仅训练模型给分数，还训练给理由，使评估过程透明且可验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据依赖GPT-4o生成分数和理由，存在蒸馏天花板
 - Pointwise评估中不同Benchmark的分数标准不统一（1-10 vs 1-5），跨Benchmark泛化需要更统一的设计

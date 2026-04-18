@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Technical Debt in In-Context Learning: Diminishing Efficiency in Long Context
 description: >-
@@ -90,7 +90,7 @@ Transformer使用GPT-2架构，训练目标为 $\mathcal{L}(\theta) = \mathbb{E}
 - **Theorem 4.3的两个必要条件均不现实**：保持恒定低效要么需要"过剩风险可忽略"（对所有prompt长度），要么需要"互信息边际不递减"——两者在大多数学习场景中都不成立
 - **ICL可能缺乏一致性和渐近效率**：这是原理性学习算法（如BIC选择器）的标志性质，ICL的缺失意味着它在功能上更接近一种"固定容量"的特征提取器而非真正的学习算法
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 基于合成元ICL设置，虽有文献支持其洞察可迁移到真实LLM，但直接验证仍是重要未来方向
 - GPT-2架构较小，可能无法完全反映现代大模型的ICL能力
 - 仅考虑回归任务，分类和更复杂的推理任务中ICL的效率模式可能不同

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] vCache: Verified Semantic Prompt Caching
 description: >-
@@ -157,7 +157,7 @@ $$\Pr(\mathbf{vCache}(x) = r(x) \mid \mathcal{D}) \ge 1 - \delta$$
 4. **优雅的概率框架**：将 explore/exploit 决策形式化为在正确性概率约束下的最优化问题
 5. **理论+实践统一**：既有 Theorem 4.1 的理论保证，又在大规模基准上验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **长回复需 LLM-as-a-judge 判断等价**（Algorithm 1 L8），引入额外 LLM 调用（但可异步执行不影响延迟）
 2. **依赖 i.i.d. 假设**：若 prompt 分布发生突变，保证可能暂时失效

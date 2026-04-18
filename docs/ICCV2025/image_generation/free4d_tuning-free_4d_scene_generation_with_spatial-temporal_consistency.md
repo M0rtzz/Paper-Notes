@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Free4D: Tuning-free 4D Scene Generation with Spatial-Temporal Consistency
 description: >-
@@ -142,7 +142,7 @@ Image-to-4D 对比：
 - **粗到精策略**：先用高置信度视图建立粗表示，再通过调制融入额外信息，有效抑制不一致性传播
 - **渐进式点云聚合**：简洁有效的跨帧信息融合策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 生成质量依赖于预训练视频生成模型和 ViewCrafter 的能力上限
 - 点云重建在薄结构或高度反射表面可能不准确

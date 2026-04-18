@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Prompt Engineering: Robust Behavior Control in LLMs via Steering Target Atoms
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：LLM 的高维表示中知识高度纠缠（polysemanticity/superposition），直接 steering 会误伤非目标知识。
 
-**本文要解决什么？** 在 SAE 解耦的高维稀疏空间中精确定位目标原子组件，实现精细粒度的行为控制。
+**本文目标** 在 SAE 解耦的高维稀疏空间中精确定位目标原子组件，实现精细粒度的行为控制。
 
 **切入角度**：用 SAE 将隐状态投射到高维稀疏空间，通过正负样本的激活差异（幅度+频率双重筛选）定位目标原子，映射回原始空间得到精炼的 steering vector。
 
-**核心 idea 一句话**：在 SAE 解耦空间中按幅度和频率筛选目标原子，获得比直接 steering 更精确的行为控制向量。
+**核心 idea**：在 SAE 解耦空间中按幅度和频率筛选目标原子，获得比直接 steering 更精确的行为控制向量。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ tags:
 - **Steering > Prompting 的系统性验证**：不只是经验观察，通过 STA 实现了公平对比框架
 - **SAE 从 toy task 到实际安全任务的突破**：首次在安全解毒和推理控制等实际场景中验证有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖预训练好的 SAE——SAE 质量直接影响效果
 - 超参 $\alpha, \beta, \lambda$ 的选择缺乏理论指导
 - MMLU/GSM8K 有 1-4 个点的下降——副作用未完全消除

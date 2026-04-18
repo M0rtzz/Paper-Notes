@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] High-order Equivariant Flow Matching for Density Functional Theory Hamiltonian Prediction
 description: >-
@@ -139,7 +139,7 @@ $$\mathcal{L}_{\text{FT}} = \mathbb{E}\left[\|\tilde{\boldsymbol{\epsilon}}(\mat
 4. **实用价值突出**：不仅预测精度大幅提升，还能直接加速工业级 DFT 计算（SCF 初始化加速 54%）
 5. **实验全面**：覆盖 MD17 + QH9 两个主流基准，多种数据划分（id/ood/geo/mol），含消融、方差分析和下游 SCF 加速验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **ODE 求解开销**：flow matching 需要多步 ODE 求解（文中用 3 步），比单次前向的回归方法慢；未来可探索一步生成（如 consistency model）
 2. **分子规模有限**：实验仅覆盖最多 29 个原子的气相分子，对周期性固体、大分子系统的可扩展性未验证

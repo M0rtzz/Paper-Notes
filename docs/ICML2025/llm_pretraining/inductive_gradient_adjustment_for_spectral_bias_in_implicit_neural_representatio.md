@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inductive Gradient Adjustment for Spectral Bias in Implicit Neural Representations
 description: >-
@@ -123,7 +123,7 @@ $$\tilde{\bm{S}_e} = \sum_{i=\text{start}}^{\text{end}} \frac{\tilde{\tilde{\lam
 4. **高效采样**：通过归纳泛化将 $O(N^2)$ 的 eNTK 计算降到 $O(n^2)$（$n \ll N$），使百万级数据点可行。
 5. **两个定理**提供严格的渐近保证：eNTK → NTK 等价性（Thm 3.1）；归纳泛化误差界（Thm 3.2）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外计算开销**：每步需在采样子集上计算 eNTK 及其特征分解，虽然 $n \ll N$ 但仍有非零 overhead。
 2. **理论分析局限于两层网络**：Theorem 3.1/3.2 基于两层网络分析，深层网络的严格保证尚未给出。

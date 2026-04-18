@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Grounding Foundational Vision Models with 3D Human Poses for Robust Action Recognition
 description: >-
@@ -128,7 +128,7 @@ tags:
 3. **cross-attention 优于简单融合**：消融实验清楚表明 cross-attention 比 early/late fusion 更能捕获跨模态的复杂关系
 4. **架构简洁可复现**：4 层融合 Transformer、共同维度 512、标准组件堆叠，实现难度适中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖冻结的特征提取器**：V-JEPA 2 和 CoMotion 均作为固定特征提取器使用，未进行端到端微调，特征可能不是最优
 2. **数据集规模偏小**：InHARD 仅 14 类工业动作，UCF-19-Y-OCC 仅 19 类 1732 视频，泛化性有待在更大规模数据集（如 Kinetics-400、AVA）上验证

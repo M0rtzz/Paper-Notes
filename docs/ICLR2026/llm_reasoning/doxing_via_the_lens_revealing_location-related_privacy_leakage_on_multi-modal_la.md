@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Doxing via the Lens: Revealing Location-related Privacy Leakage on Multi-modal Large Reasoning Models
 description: >-
@@ -102,7 +102,7 @@ tags:
 - **数据集高质量**：用 iPhone 在真实场景中拍摄，包含反射面等创新类别，远超现有低分辨率 Street View 数据集
 - **攻击链完整**：从风险定义→数据集→评估→线索分析→攻击框架→防御评估，研究链条完整
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 数据集主要来源于加州，虽然补充了 50 张美国其他州的图片进行泛化验证，但国际场景覆盖不足
 2. 防御方案的探索相对初步，仅测试了 Llama Guard4、手动模糊和对抗噪声三种方法

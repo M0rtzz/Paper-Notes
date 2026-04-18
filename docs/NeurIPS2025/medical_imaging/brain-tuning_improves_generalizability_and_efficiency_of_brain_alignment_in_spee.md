@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Brain-tuning Improves Generalizability and Efficiency of Brain Alignment in Speech Models
 description: >-
@@ -98,7 +98,7 @@ tags:
 4. **强跨数据集泛化**：在完全不同的 Narratives 数据上仍有显著提升
 5. **系统的消融和基线对比**：涵盖训练目标、LoRA rank、数据量扩展等多个维度
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 仅关注语言相关脑区，未扩展到非语言区域或特定功能脑区
 2. 实验仅限英语，受限于大规模公开 fMRI 数据集的语言覆盖
 3. 训练损失的设计仍有探索空间，尤其在小数据场景下 Correlation loss 表现更好，暗示可能存在更优的混合损失

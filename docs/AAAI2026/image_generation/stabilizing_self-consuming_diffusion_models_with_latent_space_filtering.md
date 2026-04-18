@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stabilizing Self-Consuming Diffusion Models with Latent Space Filtering
 description: >-
@@ -128,7 +128,7 @@ $$\xi(\theta) \leq \frac{1}{2\sigma^2(\sigma^2+1)} \varsigma(r\sin^2\theta)$$
 - **OLE的U型发现**：揭示去噪过程中表示质量的先升后降规律，与representation quality的unimodal trajectory一致
 - **兼容多种训练范式**：可嵌入纯合成循环或累积循环中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **假设类别固定**：未考虑continual learning或unlearning场景中类别动态变化
 - **probing classifier依赖初始模型**：若初始模型质量不佳，评估基准失效

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Neuron Explanations: A Unified Framework with Sanity Checks
 description: >-
@@ -116,7 +116,7 @@ $$\text{Decrease Acc} = \frac{1}{|K|} \sum_{k \in K} \mathbb{1}[\Delta s(k) < -\
 4. **Top-and-random 采样有害**：被 Bills et al. (2023) 等广泛使用的 T&R 采样使 Correlation 降级为类似 Recall 的行为，无法检测过于泛化的解释
 5. **实际失败模式的直接关联**：Extra Labels → 解释过泛化（描述"动物"但神经元只响应"狗"）；Missing Labels → 解释过特化（描述"黑猫"但神经元响应所有猫）
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 合理性检验是**必要而非充分条件**——通过测试不等于评估完美，可能存在其他未捕获的失败模式
 2. 仅关注 **input-based 解释**，未覆盖 output-based 解释（如对模型输出的影响）
 3. 仅评估**标量激活**单元，不含注意力头等更大组件的解释

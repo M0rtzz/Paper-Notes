@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning to Tell Apart: Weakly Supervised Video Anomaly Detection via Disentangled Semantic Alignment
 description: >-
@@ -184,7 +184,7 @@ UCF-Crime上细粒度提升尤为显著（AVG +3.39%），证明DCSA在困难场
 4. **重建解码器第一层去残差连接**的设计细节虽小但关键——防止异常信息通过残差连接泄漏到重建结果中
 5. 在单卡4090上即可训练，计算预算友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SG-NM仅在训练时使用，推理时不使用重建分支——是否可以在推理时也利用重建误差作为辅助判断？
 - 候选正常帧选择依赖检测分支的初始异常分数——early training阶段分数不准可能影响DNP质量

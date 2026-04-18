@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Upcycling Instruction Tuning from Dense to Mixture-of-Experts via Parameter Merging
 description: >-
@@ -119,7 +119,7 @@ UpIT包含四个阶段：
 - **泛化性好**：在LoRA-based和FFN-based两种场景都有效
 - **遗传算法的巧妙应用**：选差异最大的"父母"进行"参数交叉+DARE突变"生成新专家，类比生物演化
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验仅在Llama 2 7B和Sheared Llama 2.7B上进行，更大模型（70B+）的效果待验证
 - checkpoint保存间隔的选择（每0.25 epoch）似乎未充分消融
 - 路由初始化使用PPL选择数据，假设PPL低=专长，但PPL对不同任务的区分度可能不同

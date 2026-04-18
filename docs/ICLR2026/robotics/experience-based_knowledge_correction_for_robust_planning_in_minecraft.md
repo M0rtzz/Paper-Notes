@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Experience-based Knowledge Correction for Robust Planning in Minecraft
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：LLM 的语言理解能力强但事实知识不可靠，需要外部机制而非 prompting 来纠正知识。
 
-**本文要解决什么？** 如何在仅有二值反馈（成功/失败）的情况下，算法化地修正 LLM 的规划知识？
+**本文目标** 如何在仅有二值反馈（成功/失败）的情况下，算法化地修正 LLM 的规划知识？
 
 **切入角度**：将知识纠正从"让 LLM 自己修正"转为"用算法修改外部知识库"。
 
-**核心idea一句话**：算法化知识管理（用成功经验修正依赖图 + 用失败经验过滤无效动作）优于 LLM 自我纠正。
+**核心 idea**：算法化知识管理（用成功经验修正依赖图 + 用失败经验过滤无效动作）优于 LLM 自我纠正。
 
 ## 方法详解
 
@@ -91,7 +91,7 @@ XENON = Adaptive Dependency Graph (ADG) + Failure-Aware Action Memory (FAM) + Co
 - **算法 > Prompting 的范式**：当问题的本质是知识错误而非推理错误时，算法化修正（外部记忆+统计更新）远优于自然语言反思。
 - **小模型 + 好知识管理 > 大模型 + 差知识**：7B 模型 + XENON 打败 GPT-4V + oracle，说明知识管理策略比模型规模更重要。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 性能受底层控制器能力限制——STEVE-1 无法执行某些复杂动作导致 Redstone 类完全失败。
 - RevisionByAnalogy 有多个超参数需调优。
 - 仅在 Minecraft 验证（附录有家务任务初步实验）。

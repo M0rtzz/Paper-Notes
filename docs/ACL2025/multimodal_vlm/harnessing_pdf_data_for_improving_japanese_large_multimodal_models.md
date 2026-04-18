@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Harnessing PDF Data for Improving Japanese Large Multimodal Models
 description: >-
@@ -122,7 +122,7 @@ tags:
 - **自动化管道虽不完美但有效**：即使 OCR 和配对存在误差，只要后续指令生成策略得当，仍能产出高质量训练数据
 - **PDF-style text 实验巧妙**：通过 GPT 生成理想化的配对文本作为"上限实验"，证明了如果提取技术更好，图文对方式也大有潜力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 GPT-4o-mini 生成指令数据和 PDF-style text，引入了 API 成本和潜在的质量偏差
 - 仅在 LLaVA1.5 框架上实验，未验证对更先进架构（如 Qwen-VL2、InternVL）的泛化性

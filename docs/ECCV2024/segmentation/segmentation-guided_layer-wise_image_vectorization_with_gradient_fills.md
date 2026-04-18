@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Segmentation-Guided Layer-Wise Image Vectorization with Gradient Fills
 description: >-
@@ -143,7 +143,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{SG}} + \lambda\mathcal{L}_{\text{Xing}}, \qua
 3. **Model-free 设计**：整个流水线基于经典图像处理（Otsu、形态学操作、分水岭）+ 可微渲染优化，无需训练数据
 4. **层级分解的实用性**：逐步添加的有序路径天然形成可编辑的图层结构，支持下游的颜色替换等编辑操作
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅支持径向渐变（radial gradient），未覆盖线性渐变和锥形渐变
 2. 对于极其复杂的真实照片，Bézier 路径数可能需要很多才能达到满意效果

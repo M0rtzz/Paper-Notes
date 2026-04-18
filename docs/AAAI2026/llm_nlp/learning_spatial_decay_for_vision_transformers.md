@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Spatial Decay for Vision Transformers
 description: >-
@@ -98,7 +98,7 @@ ImageNet-1K 上标准训练，300 epochs，AdamW 优化器。结合 RoPE 和 Loc
 - 首次将 LLM 领域的数据依赖衰减成功适配到 2D 视觉 Transformer，桥接了 NLP 和 CV 的注意力机制设计。这说明 LLM 中的注意力创新可以系统性地迁移到视觉任务
 - 空间-内容融合框架的设计很优雅——通过平均两位置的门控向量保证对称性，再乘以距离保留几何先验。这种"先验 × 自适应"的范式可推广到其他需要结构先验的场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在 Tiny/Small/Base 三个规模上改进幅度有限（+0.1~0.3%），大规模下是否有更大收益未知
 - FLOPs 有所增加（尤其是 Base 规模从 9.7G 到 10.8G），需要进一步优化效率
 - 只在 ImageNet-1K 分类和 DiT 生成上验证，缺少检测、分割等下游任务的评估

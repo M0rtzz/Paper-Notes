@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Zero-Shot Robustness of Vision Language Models Via Confidence-Aware Weighting
 description: >-
@@ -116,7 +116,7 @@ CAW使用冻结的原始CLIP模型和可微调的目标CLIP模型（仅微调图
 - 整体方法轻量——无需额外的文本生成、注意力机制或复杂的多阶段训练
 - 内存效率优于PMG-AFT和TGA-ZSR，对资源受限场景更友好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在分类任务上验证，未扩展到检测、分割等更复杂的下游任务
 - 文中主要针对 $\ell_\infty$ 范数扰动，对 $\ell_2$ 等其他攻击类型的鲁棒性未充分讨论

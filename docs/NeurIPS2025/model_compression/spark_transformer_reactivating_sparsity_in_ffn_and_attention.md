@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spark Transformer: Reactivating Sparsity in FFN and Attention
 description: >-
@@ -117,7 +117,7 @@ Spark Transformer 包含两个组件：Spark FFN 和 Spark Attention。两者基
 - **FFN 与 Attention 的统一视角**：将两者都视为键值查找表，用统一框架引入稀疏性
 - 该技术对 MoE 的 routing 机制也可能适用（避免排序的 O(d log d) 开销）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 目前仅在 Gemma-2 2B 上验证，更大规模模型（如 7B/70B）上的效果有待验证
 - Statistical Top-k 的高斯假设在训练后可能不精确（虽然实验证明仍近似成立）
 - CPU/GPU 上的加速实现可能需要针对不同硬件平台做定制优化

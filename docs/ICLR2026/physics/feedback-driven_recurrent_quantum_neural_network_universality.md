@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Feedback-driven Recurrent Quantum Neural Network Universality
 description: >-
@@ -88,7 +88,7 @@ $$\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$$
 - **比经典 RNN 条件更弱**：所需 Sobolev 光滑性条件 $s > \frac{N+d}{2}+4$，弱于经典 RNN 所需的 $s > N+d+3$
 - **与硬件兼容**：基于 uniformly controlled gates 的电路已有高效分解方案和 Rydberg 原子实现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限理论分析**：缺少数值验证，无法评估实际 NISQ 设备上的表现
 - **Barron 型条件限制**：定量界仅适用于傅里叶变换充分可积的函数，对粗糙或非收缩动力学尚无误差率

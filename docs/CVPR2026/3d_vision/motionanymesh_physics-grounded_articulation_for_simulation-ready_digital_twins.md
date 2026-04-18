@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MotionAnymesh: Physics-Grounded Articulation for Simulation-Ready Digital Twins
 description: >-
@@ -89,7 +89,7 @@ tags:
 - 双罚轨迹验证机制（碰撞+脱轨）的物理直觉非常强——正确的滑动轴应该既不穿透也不脱轨
 - 87%物理可执行性几乎是最强基线（46%）的两倍，端到端Real-to-Sim-to-Real机器人操作验证了实用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖GPT-4o作为VLM核心，推理成本较高，单个复杂物体可能需要多轮VLM调用
 - SP4D从单张图像推断运动先验，对极度复杂/嵌套结构（如多级齿轮箱）可能不足

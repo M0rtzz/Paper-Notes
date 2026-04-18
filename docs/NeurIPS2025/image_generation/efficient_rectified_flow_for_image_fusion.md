@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Rectified Flow for Image Fusion
 description: >-
@@ -99,7 +99,7 @@ $$\mathcal{L}_{fusion} = \lambda_{int}\mathcal{L}_{int} + \lambda_{SSIM}\mathcal
 3. **极强的多任务泛化能力**：同一模型在 IVIF/MEF/MFF 三类任务上均达到 SOTA 水平
 4. 参数量仅 65.57M，远小于 DDFM/CCF 的 552.81M
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仍依赖通用图像生成任务预训练的 Rectified Flow 模型，非为融合任务专门设计，可能限制融合质量的进一步提升
 2. 第一阶段 VAE 训练仅在 LLVIP 和 MSRS 两个红外可见光数据集上进行，对其他模态的适配能力有待验证

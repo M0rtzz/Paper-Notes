@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ORPO-Distill: Mixed-Policy Preference Optimization for Cross-Architecture LLM Distillation
 description: >-
@@ -154,7 +154,7 @@ $$L_{ORPO} = L_{SFT} + \lambda \cdot L_{OR}$$
 4. **方法极其简洁**：不需要 reward model、不需要 PPO 训练、不需要白盒访问，实现成本低
 5. **K=8 的经验发现**对后续工作有实用参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了多选 QA 任务**：依赖 ground truth label 判断正负样本，开放式生成任务需要额外的验证器
 2. **教师模型仅 7B**：未测试更大教师（如 70B）的效果上限

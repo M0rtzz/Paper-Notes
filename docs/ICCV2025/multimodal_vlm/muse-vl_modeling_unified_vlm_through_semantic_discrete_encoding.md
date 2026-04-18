@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MUSE-VL: Modeling Unified VLM through Semantic Discrete Encoding
 description: >-
@@ -149,7 +149,7 @@ SDE 比 VQGAN 提升 +26.2% (AVG)，比 SEED/LaVIT 提升 +6.4~7.5%。
 4. **语义编码的可视化**：论文展示了相同 codebook ID 对应相同语义概念（如猫耳朵、草莓），直观证明了离散编码确实捕获了高层语义
 5. **Scale-up 特性良好**：从 7B 到 32B，从 256 分辨率到 384，性能持续提升，符合 scaling law
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **生成分辨率有限**：目前最高 384×384，离散 token 为 27×27 = 729 个，对比扩散模型的 1024 分辨率差距明显
 2. **图像重建质量的权衡**：SDE 的 rFID (2.26) 与纯重建方法 LLamaGEN (2.19) 基本持平，但在更高分辨率或更复杂场景下语义约束是否会影响重建细节尚不清楚

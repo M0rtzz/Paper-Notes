@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reprojection Errors as Prompts for Efficient Scene Coordinate Regression
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **迭代式掩码更新**形成了一个 curriculum learning 的效果：模型先学简单区域，再逐步扩展到更困难的区域
 - 展示了 **foundation model (SAM) 作为工具模型**在下游任务中的即插即用价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 ACE 架构上验证**: 未扩展到 DSAC* 或其他 SCR backbone
 - **SAM 运行开销**: EfficientViT-SAM 虽然轻量，但每 5 epoch 需要对所有训练图生成掩码

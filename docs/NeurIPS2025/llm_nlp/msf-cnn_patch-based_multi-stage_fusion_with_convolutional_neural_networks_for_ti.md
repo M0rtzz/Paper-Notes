@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] msf-CNN: Patch-based Multi-Stage Fusion with Convolutional Neural Networks for TinyML
 description: >-
@@ -142,7 +142,7 @@ RAM 压缩比：msf-CNN 相比 Vanilla 减少 87%–96%，相比 MCUNetV2/Stream
 4. **搜索空间剪枝**：从指数级 $O(2^{V-2})$ 降至多项式 $O(V^3)$，使大型网络的优化在 PC 上数秒内完成
 5. **迭代算子设计**：全局池化和全连接层的迭代化实现简单有效，可无缝接入融合块
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅支持 CNN**：当前仅处理卷积神经网络，不支持注意力机制和 RNN
 2. **缓存策略单一**：仅实现 H-Cache 方案，未集成 2D Cache（StreamNet 使用）等更灵活的缓存策略

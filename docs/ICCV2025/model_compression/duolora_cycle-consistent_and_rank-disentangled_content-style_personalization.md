@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DuoLoRA: Cycle-Consistent and Rank-Disentangled Content-Style Personalization
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L} = \lambda_{layer\_prior} \mathcal{L}_{layer\_prior} + \lambda_{cyc
 - **循环一致性的巧妙引入**：将 CycleGAN 的域间循环一致性思想迁移到 LoRA 合并问题中，是一种优雅的跨领域方法迁移
 - **参数效率惊人**：0.07M 参数 vs ZipLoRA 的 1.33M，降低 19 倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方法设计高度依赖 SDXL 架构的层先验知识，迁移到其他扩散模型可能需要重新分析
 - 循环一致性损失增加了训练时间（6.38 分钟 vs ZipLoRA 的 5.48 分钟）
 - 目前仅在 text-to-image 扩散模型上验证，未扩展到 video 或 3D 生成

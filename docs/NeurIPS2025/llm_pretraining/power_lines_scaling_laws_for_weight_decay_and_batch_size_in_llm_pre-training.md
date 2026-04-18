@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Power Lines: Scaling Laws for Weight Decay and Batch Size in LLM Pre-training
 description: >-
@@ -141,7 +141,7 @@ $$B_{\text{crit}}(D_{\min}) = c_{B_{\text{crit}}} \cdot D_{\min}^{m_{B_{\text{cr
 4. **$B_{\text{crit}}$ 估算新范式**：不依赖特定 LR schedule，可用于任意优化器和 schedule
 5. **所有实验在 Cerebras CS-3 上完成**，数百模型的大规模验证确保了结论的可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅使用 GPT2-like 架构和 SlimPajama 数据，未验证在其他架构（如 MoE）或数据上的适用性
 2. 结论依赖 μP 参数化 — 对不使用 μP 的训练设置，幂律系数可能不同

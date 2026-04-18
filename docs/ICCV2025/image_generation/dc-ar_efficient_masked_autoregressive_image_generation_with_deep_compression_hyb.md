@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DC-AR: Efficient Masked Autoregressive Image Generation with Deep Compression Hybrid Tokenizer
 description: >-
@@ -145,7 +145,7 @@ GenEval 基准：
 - **设计哲学清晰**：离散 token 负责结构（少量步数），连续残差 token 负责细节（仅需 MLP head），各司其职
 - **2D 空间结构保持**是关键决策——牺牲少量压缩率换来跨分辨率能力和训练效率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - GenEval 的 Count 和 Color Attribution 得分不如 Show-o，复杂组合语义理解待加强
 - T5-base 作为文本编码器相对较小（109M），可能限制了 text-image 对齐的上限

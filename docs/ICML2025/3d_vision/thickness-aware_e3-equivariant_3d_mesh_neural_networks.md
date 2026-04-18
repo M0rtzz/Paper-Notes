@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks
 description: >-
@@ -154,7 +154,7 @@ $$\mathbf{z}_i^{(l+1)} \leftarrow f_{\text{thick}}^V(\mathbf{z}_i^{\text{surf},(
 - **可学习阈值**：用 sigmoid 软阈值替代硬阈值，$\tau$ 端到端学习，自动区分"厚度"和"宽度"。
 - **计算效率**：GPU 显存仅 3,714 MB，约为 EMNN 的一半，适合工业大规模网格。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对称性问题**：当形状关于三个主轴完全对称时，PCA 方向不确定（$\mathbf{b}_i \cdot \mathbf{v} = 0$），坐标变换失效。作者承认此情况在实际工业几何中罕见。
 2. **数据集单一**：仅在注塑成型数据集上验证（28 种几何体），泛化到其他工业场景（航空航天结构件、复合材料等）有待验证。

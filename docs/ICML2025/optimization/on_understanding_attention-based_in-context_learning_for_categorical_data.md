@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On Understanding Attention-Based In-Context Learning for Categorical Data
 description: >-
@@ -114,7 +114,7 @@ $$f_{j,k+1} = f_{j,k} + \frac{\alpha}{N} \sum_{i=1}^N \left[ w_{e,y_i} - \mathbb
 4. **效率启示**：GD 模型用 8K 参数 + FF 即可匹配 6M 参数 Transformer 的语言生成质量，暗示 Transformer 的大量参数可能存在冗余
 5. **FF 的重要性**：实验揭示 feedforward 层对 Transformer 性能的关键贡献——GD 模型本身不含 FF，加上 FF 后性能跳跃性提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **语言实验受限**：仅在 Tiny Stories 等简单语料上测试单层模型，未验证在大规模真实语言建模中的可扩展性
 2. **GD 模型的结构性限制**：query 只能用位置 embedding（不含 token 信息），与真实 Transformer 存在差异

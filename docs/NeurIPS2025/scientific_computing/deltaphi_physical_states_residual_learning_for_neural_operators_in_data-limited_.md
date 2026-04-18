@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DeltaPhi: Physical States Residual Learning for Neural Operators in Data-Limited PDE Solving
 description: >-
@@ -113,7 +113,7 @@ $$\mathcal{L} = \frac{1}{N} \sum_{i=1}^{N} \| \mathcal{N}_\theta(a_i, a_{k_i}) -
 - **即插即用的实用性**：作为外部 wrapper，DeltaPhi 不修改任何 backbone 的内部结构，仅改变输入/输出的构造方式和训练管线，工程集成成本极低。
 - **训练/推理的差异化策略**：训练时随机近邻（正则化 + 多样性）、推理时最近邻（最小残差），体现了对方法理论基础的深入理解。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对相似度度量的依赖**：余弦相似度在高维函数空间中不一定是最优度量，尤其当输入具有多尺度结构时。可探索学习型检索器（learned retrieval）或基于物理量的距离度量。
 2. **大数据集下的边际效益递减**：当训练数据充足时，直接学习已有足够表达能力，残差学习的优势可能变弱。未来可研究自适应切换策略。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] XLinear: A Lightweight and Accurate MLP-Based Model for Long-Term Time Series Forecasting with Exogenous Inputs
 description: >-
@@ -75,7 +75,7 @@ $$[E'_{\text{exo}}, X''_{\text{glob}}] = \sigma(\text{Linear}_4(\phi(\text{Linea
 - 训练速度比 TimeXer 等高效 Transformer 快 30% 以上
 - 在含 exogenous inputs 的真实场景（溶解氧、水温、作物产量）中表现优异
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 模型结构较简单，在极复杂的长程依赖场景可能不如深层 Transformer
 - 仅考虑单向因果（exogenous → endogenous），未建模双向交互
 - Input length 固定为 96，未充分探索不同 look-back window 的影响

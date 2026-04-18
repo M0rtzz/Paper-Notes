@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Transfer Learning for Video-language Foundation Models
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L} = \mathcal{L}_{CE} + \alpha \mathcal{L}_{CC}$$
 - **LLM生成描述+知识蒸馏**将大语言模型的知识有效注入到下游任务中，是"LLM as teacher"的一个好范例
 - 方法通用性强，可同时适配CLIP和ViCLIP
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 一致性约束依赖LLM生成质量，N增大后幻觉问题限制了其可扩展性
 - 仅在ViT-B/16上验证，更大规模模型上的效果尚不确定

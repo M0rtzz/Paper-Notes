@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Measuring Model Performance in the Presence of an Intervention
 description: >-
@@ -112,7 +112,7 @@ NPW 本身不涉及模型训练，而是一种评估方法。其 nuisance parame
 - **临床实际影响**：对于正在进行 RCT 评估 AI 模型的医院，NPW 可直接降低所需样本量和试验成本
 - **泛化性**：基于 Bayes 规则的推导不依赖 AUROC 特定性质，可推广到任意二分类指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅适用于 RCT 设置（干预随机分配），无法处理观察性研究中的确定性干预分配
 - NPW 依赖 nuisance parameter 的估计质量，不同应用场景估计难度差异较大

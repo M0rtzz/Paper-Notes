@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Few-Shot Learning from Gigapixel Images via Hierarchical Vision-Language Alignment and Modeling
 description: >-
@@ -107,7 +107,7 @@ $$\mathcal{L}_{\text{HTCL}} = \frac{1}{N}\sum_{i=1}^{N}\left(-\frac{1}{|\mathcal
 3. ⭐⭐ **一致的大幅领先**：在 3 个数据集 × 3 个 VLM × 多个 shot 设置下全面超越所有基线
 4. ⭐⭐ **方法设计合理**：每个组件（MSA, TGDF, HTCL）都有充分消融验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：构建和处理层级异构图（尤其 16× 高尺度 patch 扩展）会带来显著的内存和计算成本
 2. **文本依赖 GPT-4o**：层级文本描述质量依赖 LLM 生成，对不同癌种的泛化性需要更多验证

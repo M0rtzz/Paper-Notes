@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Seg-VAR: Image Segmentation with Visual Autoregressive Modeling
 description: >-
@@ -104,7 +104,7 @@ $$\mathbb{E}_{q_\phi(z|c)}[\log p_\theta(c|z)] - D_{KL}(q_\phi(z|c), p_\psi(z|x)
 - **Seglat 的 RGB 图像表示**：将分割掩码表示为 RGB 图像，使其可以利用已有的图像生成预训练模型
 - **通用性**：同一架构在语义/实例/全景三种分割任务上都取得 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **推理速度**：Seg-VAR (Swin-L) 仅 3.2 fps，远慢于 Mask2Former 的 4.0 fps，部分源于自回归解码的固有开销
 - **内存消耗**：由于图像生成模型的记忆特性，内存成本高于 Transformer 分割模型

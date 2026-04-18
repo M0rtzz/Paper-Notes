@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Motion Prior Distillation in Time Reversal Sampling for Generative Inbetweening
 description: >-
@@ -128,7 +128,7 @@ $$\mathcal{L} = \frac{1}{\sigma_t^2} \|\hat{x}_{0,c_{\text{start}}} - (\hat{x}_{
 4. **无需训练**：纯推理时方法，在单张 RTX 4090 上运行
 5. **用户研究的说服力**：伪影检出率降至 8.93%，不真实运动仅 9.88%，远优于基线
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 SVD 上验证，未扩展到 Wan、CogVideoX 等更新的视频模型
 2. 蒸馏比例 $\gamma$、re-noising 步数 $k$、插值尺度 $\lambda$ 需要手动调参

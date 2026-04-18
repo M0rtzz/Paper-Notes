@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Synthesizing Images on Perceptual Boundaries of ANNs for Uncovering and Manipulating Human Perceptual Variability
 description: >-
@@ -147,7 +147,7 @@ $$\mathcal{L}_{surr} = \mathcal{L} + \max((1 - f_{surr}(x))^2, 0.5)$$
 - **扩散先验的巧妙使用**：解决了决策边界区域图像噪声严重的长期问题，使生成图像在保持边界特性的同时足够自然
 - **大规模人类实验验证**：246 名被试、116,715 次试验的规模在同类研究中属顶尖水平
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **文化偏差**：训练数据来自特定群体，可能无法充分捕捉文化差异导致的感知变异。未来需招募不同文化背景的被试
 2. **任务范围有限**：仅聚焦物体识别任务，未涉及相似性判断、情感识别、视觉注意等更复杂的视觉现象

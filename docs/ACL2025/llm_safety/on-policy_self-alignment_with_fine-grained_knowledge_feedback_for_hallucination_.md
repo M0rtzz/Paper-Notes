@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On-Policy Self-Alignment with Fine-grained Knowledge Feedback for Hallucination Mitigation
 description: >-
@@ -147,7 +147,7 @@ $$r_{\text{info}} = \beta \log(\mu + \max(\epsilon, \sum_i^N g(k_{\text{info}}^i
 - **幻觉雪球效应的考量**：在奖励设计中通过信息量加权真实性奖励，使关键语句的错误受到更大惩罚——这比简单的均匀奖励更贴近实际
 - **信息量防止退化**：防止模型学会"不说话就不犯错"的退化策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 主要针对事实性知识，对更广泛领域的幻觉（如推理幻觉）尚未验证
 2. 现有评测基准范围有限，可能无法完全捕捉幻觉的复杂性

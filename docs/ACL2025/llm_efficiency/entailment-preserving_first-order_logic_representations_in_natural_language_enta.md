@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Entailment-Preserving First-order Logic Representations in Natural Language Entailment
 description: >-
@@ -115,7 +115,7 @@ tags:
 - 迭代learning-to-rank的框架通用性强，可扩展到其他执行引导的生成任务
 - 任意性（arbitrariness）分析深刻——这是LLM做FOL生成的根本障碍，本文提供了量化指标和解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 即使是最好的T5-Iter5，EPR也仅7.4%（EntailmentBank），距理论上限（EPR@16-Oracle≈31%）仍有很大差距
 - 使用T5-base（220M），未探索更大模型的潜力
 - 数据集缺乏linguistically controlled minimal pairs，可能遗漏细粒度语义差异

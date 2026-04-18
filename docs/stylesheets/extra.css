@@ -90,6 +90,27 @@
   gap: 0.35rem;
 }
 
+/* 语义大类分组容器：组之间留竖向间距 */
+.conf-card .area-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.conf-card .area-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.conf-card .area-group-label {
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color--lighter);
+  letter-spacing: 0.05em;
+  text-transform: none;
+  opacity: 0.85;
+}
+
 .conf-card .area-tag {
   display: inline-block;
   background: var(--md-default-fg-color--lightest);

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reference-Free Image Quality Assessment for Virtual Try-On via Human Feedback
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L} = -q_{ij}\log p_\theta - (1-q_{ij})\log(1-p_\theta) + \sum_{k}\|\P
 4. **首次对 14 个 VTON 模型做统一 benchmark**：涵盖 GAN/UNet-Diffusion/DiT/商业模型，结果显示传统指标与人类感知存在系统性偏差
 5. **合成数据增强管道完整**：LoRA+FLUX.1-dev 生成 + GPT 过滤 + 人工审核，服装-人物对扩展 1.9 倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **三级标注粒度较粗**：仅 3 个等级可能无法捕捉细粒度质量差异，更细的连续评分或多维打分可能更优
 2. **相关性指标与人类仍有差距**：SRCC=0.750 vs 人类 0.760，R²=0.489 vs 0.536，绝对值预测仍有提升空间

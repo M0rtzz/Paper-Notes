@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VIKING: Deep Variational Inference with Stochastic Projections
 description: >-
@@ -99,7 +99,7 @@ VIKING（Variational Inference with Kernel- and Image-spaces of numerical Gauss-
 - **随机交替投影的创新**: 巧妙地将后验更新与 ELBO 优化融合在一起，使之兼容小批量训练。
 - 玩具回归实验直观展示了 VIKING 的优越性——IVON 的后验样本无法反映边界处的不确定性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 核空间投影的计算成本较高，每个训练步需要多次共轭梯度迭代。
 - 仅用两个标量可能过于简化——在大型模型上可能需要更灵活的核/像空间方差结构。

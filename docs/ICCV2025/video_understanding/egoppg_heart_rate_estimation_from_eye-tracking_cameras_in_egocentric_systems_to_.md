@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] egoPPG: Heart Rate Estimation from Eye-Tracking Cameras in Egocentric Systems to Benefit Downstream Vision Tasks
 description: >-
@@ -113,7 +113,7 @@ PulseFormer以眼部追踪视频（连续帧差分标准化）和IMU数据为输
 - 数据集egoPPG-DB（13小时，25参与者）包含丰富的日常活动和HR变化，贡献了ground-truth PPG和ECG双重验证
 - 下游任务验证有说服力：HR信息确实能提升视觉任务性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 数据集规模相对有限（25参与者），人口统计学多样性有待扩展
 - 高心率（如骑车113 bpm）下MAE仍较高（12.91 bpm），可能需要更好的高HR建模
 - 当前仅在EgoExo4D的技能评估上验证了下游效果，可探索更多下游任务（如情绪识别、注意力检测）

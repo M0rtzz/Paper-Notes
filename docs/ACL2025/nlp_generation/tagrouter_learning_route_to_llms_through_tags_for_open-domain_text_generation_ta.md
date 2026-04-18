@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TagRouter: Learning Route to LLMs through Tags for Open-Domain Text Generation Tasks
 description: >-
@@ -183,7 +183,7 @@ TagGenerator 的训练策略包括三部分。
 - 论文对成本问题的处理比较务实。很多 routing 工作只强调性能，而这篇工作明确把成本阈值 $\theta$ 纳入决策逻辑，因此更接近真实产品系统。
 - 一个很有启发的点是：tags 不只是 TagRouter 的中间表示，还是一种能迁移到其他 routing 方法上的“增强特征层”。这说明论文提出的可能不是单一算法，而是一种更通用的 routing 视角。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作者承认当前 TagGenerator 主要覆盖中文和英文，因为 BCUQ 以这两种语言为主，多语种泛化能力有限。
 - 评测主要依赖 LLM-as-a-judge。虽然作者用 50 个样本验证了与人工评估的一致性较高，但这个规模仍然偏小，结论更像“可接受”而非“完全可靠”。

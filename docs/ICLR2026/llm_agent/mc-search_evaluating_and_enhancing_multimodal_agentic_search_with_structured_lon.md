@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MC-Search: Evaluating and Enhancing Multimodal Agentic Search with Structured Long Reasoning Chains
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：实际查询通常是模糊且复杂的，需要多步、跨模态、知识密集的推理。但没有合适的 benchmark 来评估 MLLM 是否真正能进行长链、结构化的多模态搜索推理。
 
-**本文要解决什么**：(a) 构建首个支持长推理链（≥4跳）的多模态 agentic RAG benchmark；(b) 提供逐步标注和多种推理拓扑；(c) 设计过程级评估指标；(d) 利用验证过的推理链改善开源模型。
+**本文目标**：(a) 构建首个支持长推理链（≥4跳）的多模态 agentic RAG benchmark；(b) 提供逐步标注和多种推理拓扑；(c) 设计过程级评估指标；(d) 利用验证过的推理链改善开源模型。
 
 **切入角度**：从 Wikipedia 知识库出发构建多模态知识集群，设计 5 种有代表性的推理拓扑结构（串行/并行、图像启动/文本启动/多图分叉等），通过 HAVE 过滤确保每个推理步骤既必要又非冗余。
 
@@ -115,7 +115,7 @@ Search-Align 使用标准的 next-token prediction loss 在对话式推理 trace
 - **过程级指标填补空白**：HPS 和 RD 可以精确定位模型是"检索不够"还是"检索过多"，对调试 agentic RAG 系统非常实用
 - **模态偏差的发现很有启发**：无图线索时图像检索几乎为零，说明模型还远未具备"根据问题需要主动选择模态"的能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 知识库基于 Wikipedia，领域覆盖有限（未涉及科学、数学等专业领域）
 - 数据生成依赖 Gemini-2.5-Flash，引入了模型特定偏差
 - 评估仅用 6 个 MLLM，未包含更强的推理模型（如 GPT-5 系列、Gemini-2.5-Pro with thinking）

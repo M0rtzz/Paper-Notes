@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Empowering Semantic-Sensitive Underwater Image Enhancement with VLM
 description: >-
@@ -98,7 +98,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{recon}} + \lambda_{\text{align
 - **利用 VLM 避免标注瓶颈**：不需要像素级语义标注，通过 VLM+CLIP 的零样本能力自动生成语义引导，解决水下场景标注匮乏问题
 - **揭示了一个重要问题**：UIE 领域的"增强悖论"——视觉质量好的增强结果可能对机器理解有害
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 VLM（LLaVA）和 CLIP（BLIP）的质量，若退化严重导致 VLM 识别失败则引导图不可靠
 - 训练时增加了 VLM+BLIP 的前向传播开销（虽然推理时语义图可预计算缓存）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Routing, Cascades, and User Choice for LLMs
 description: >-
@@ -111,7 +111,7 @@ $$J_i(s, q) = C_i(s, q) + P(1 - S_i(s, q))$$
 - Throttling分析揭示了LLM订阅模式中provider的道德风险，有政策含义
 - 论文本身使用LLM辅助完成（附录A详细记录），构成meta层面的自洽验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析两个模型的情况，实际部署可能涉及更多模型的路由
 - 假设用户能观察provider的级联策略且采用平稳放弃策略，实际中路由策略对用户不透明

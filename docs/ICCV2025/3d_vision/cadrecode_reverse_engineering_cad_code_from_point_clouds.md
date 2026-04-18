@@ -1,4 +1,4 @@
-# CAD-Recode: Reverse Engineering CAD Code from Point Clouds
+﻿# CAD-Recode: Reverse Engineering CAD Code from Point Clouds
 
 **会议**: ICCV 2025  
 **arXiv**: [2412.14042](https://arxiv.org/abs/2412.14042)  
@@ -35,7 +35,7 @@
 - **跨模态桥接**: 从点云到代码的翻译，连接3D感知和程序化建模
 - **可解释性**: Python代码输出天然可读可编辑，比参数序列更实用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 限于sketch-extrude这类基本CAD操作
 - 复杂CAD模型可能需要更长的代码序列
 

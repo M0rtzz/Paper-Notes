@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Probably Approximately Global Robustness Certification
 description: >-
@@ -140,7 +140,7 @@ $$\Pr_{\mathcal{D}}\big(\mathbf{rob}_f(X) < \rho \mid \mathbf{conf}_f(X) \geq \k
 4. **分布偏移鲁棒性**：理论上刻画了在近似分布下采样时保证的退化程度，增强了实际可用性。
 5. **理论优雅**：巧妙地将高维鲁棒性认证问题压缩到二维质量空间，利用 ε-net 的经典理论实现了计算与统计效率的统一。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 iid 采样假设**：实际中难以从数据真实分布精确 iid 采样，论文用高斯噪声近似可能引入偏差。
 2. **保证强度有限**：$\epsilon/p_{\min}$ 的比值可能较大（如 PGD 实验中为 1%），对安全攸关场景可能不够严格。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model-Behavior Alignment under Flexible Evaluation: When the Best-Fitting Model Isn't the Right One
 description: >-
@@ -116,7 +116,7 @@ tags:
 - **收缩到标量矩阵的正则化**虽是小改动但很实用，避免了标准方法的退化问题
 - **实验设计类比"知识蒸馏"**——候选模型作为"学生"尝试模仿"教师"（数据生成模型）的行为
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅限行为数据（THINGS odd-one-out），神经数据（fMRI/EEG）可能有不同的权衡特性
 - 模型恢复的量化结果依赖于特定的候选模型集（20个模型）

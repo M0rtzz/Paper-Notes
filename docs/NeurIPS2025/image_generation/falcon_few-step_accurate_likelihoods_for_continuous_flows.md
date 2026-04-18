@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FALCON: Few-step Accurate Likelihoods for Continuous Flows
 description: >-
@@ -114,7 +114,7 @@ $$\log p_t(x_t) = \log p_s(x_s) - \log |\det \mathbf{J}_{X_u}(x_s)|$$
 4. **高效实现**：利用 JVP 一次调用同时计算前向传播和梯度，$\mathcal{L}_{\text{cfm}}$ 和 $\mathcal{L}_{\text{avg}}$ 可合并为单一损失
 5. **统计一致性**：配合 SNIS 重加权，生成样本在理论上收敛到真实 Boltzmann 分布
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可逆性非完美**：实践中 $\mathcal{L}_{\text{inv}}$ 只能被近似最小化，cycle-consistency 误差仍会影响似然估计精度
 2. **分子系统规模有限**：最大测试系统为 hexa-alanine（6 个残基），距离蛋白质等真实大规模系统仍有较大差距

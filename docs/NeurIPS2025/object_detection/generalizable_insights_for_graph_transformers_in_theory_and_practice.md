@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalizable Insights for Graph Transformers in Theory and Practice
 description: >-
@@ -35,14 +35,14 @@ tags:
 
 **核心矛盾**：如何在保持标准注意力兼容性的同时，达到等价于特殊注意力机制的理论表达力？即 GT 的表达力能否完全通过 PE 选择来控制？
 
-**本文要解决什么？**
+**本文目标**
    - 设计使用标准注意力的通用 GT，理论表达力匹配 GD-WL
    - 在大规模实验中系统比较不同 PE 的实际效果
    - 验证 GT 能否学到可迁移的表示
 
 **切入角度**：利用 Lindemann-Weierstrass 定理（数论中关于指数数线性独立性的经典结果）证明标准 softmax 注意力可以实现多重集的单射编码——这是 GD-WL 等价性的关键瓶颈。
 
-**核心 idea 一句话**：标准 softmax 注意力 + 合适的 PE = GD-WL 等价表达力，GT 的表达力可完全解耦为 PE 选择问题。
+**核心 idea**：标准 softmax 注意力 + 合适的 PE = GD-WL 等价表达力，GT 的表达力可完全解耦为 PE 选择问题。
 
 ## 方法详解
 
@@ -120,7 +120,7 @@ GDT 基于标准 Transformer 编码器层，支持两种 token 化：
 - PE 选择等价于表达力控制，大幅简化 GT 设计空间
 - Few-shot k-NN 超越全监督 SOTA 说明 GDT 学到可迁移的图语义
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 注意力偏置与 FlashAttention2 不兼容
 - 二次复杂度对超大图不可行
 - 仅 4 种 PE，更多 PE 待探索

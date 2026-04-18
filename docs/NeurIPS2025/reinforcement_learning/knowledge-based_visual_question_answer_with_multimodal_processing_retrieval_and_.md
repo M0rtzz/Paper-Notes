@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Knowledge-based Visual Question Answer with Multimodal Processing, Retrieval and Filtering
 description: >-
@@ -34,7 +34,7 @@ tags:
 
 **核心矛盾**：需要细粒度的信息提取以精准检索，同时又要过滤海量检索结果中的噪声。
 
-**本文要解决什么**：设计更精准的多模态检索和更有效的结果过滤机制。
+**本文目标**：设计更精准的多模态检索和更有效的结果过滤机制。
 
 **切入角度**：让 VLM 自主决定使用哪些视觉工具（captioning、grounding、flipping）来处理输入，并用 RL 训练 VLM 学会过滤检索结果中的无关信息。
 
@@ -156,7 +156,7 @@ Wiki-PRF 在大规模知识库下的性能衰减明显更慢。
 - **工具调用的灵活性**：VLM-PRF 自主推理使用哪些工具、以什么顺序调用，比硬编码管线更灵活
 - **RL > SFT 的清晰实证**：RL 在缺乏中间步骤标注的情况下显著优于 SFT，验证了 RL 在 RAG 任务中的独特价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 工具集目前较小（captioning/grounding/flipping 三种），扩展更多工具（如 OCR、图表解析）可能进一步提升
 - 检索器（EVA-CLIP 8B）是冻结的，联合训练检索器和 VLM-PRF 可能带来额外收益

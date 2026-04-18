@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adversarial Combinatorial Semi-bandits with Graph Feedback
 description: >-
@@ -179,7 +179,7 @@ $$\mathbb{E}[\mathsf{R}] \leq S\sqrt{T \log(K/S)} + 2\sqrt{\alpha S T \log(K/S) 
 3. **理论工具的跨领域迁移**：核心引理（Lemma 1）来自 matroid 理论中的 dependent randomized rounding (Chekuri et al., 2009)，将其成功应用于 bandit 分析是一个巧妙的跨领域连接
 4. **时变图的自然扩展**：算法无需修改即可处理时变反馈图 $\{G_t\}$，只需将证明中固定的 $\alpha$ 替换为 $\alpha_t$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **一般决策子集**：当 $\mathcal{A}_0 \subsetneq \mathcal{A}$ 且不满足交换性质时，负相关不可实现，算法退化。对一般 $\mathcal{A}_0$ 的最优算法仍为开放问题
 2. **弱可观测图**：仅在随机奖励设定下给出 ETC 算法的 $T^{2/3}$ 界，对抗设定下的弱可观测图尚未解决

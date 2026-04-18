@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Metadata Conditioning Accelerates Language Model Pre-training
 description: >-
@@ -140,7 +140,7 @@ MeCo 解锁了推理时的可控性——在 prompt 前加上特定 URL（真实
 
 5. **对 PPL 指标的警示**：实验结果再次提醒社区，PPL 下降不等于下游任务提升，评估预训练质量应关注下游 benchmark。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **URL 元数据依赖 CommonCrawl**：对于非网页来源的语料（如书籍、代码），没有天然的 URL 信息。虽然可以用模型生成主题作为替代，但效果和通用性有待进一步验证。
 

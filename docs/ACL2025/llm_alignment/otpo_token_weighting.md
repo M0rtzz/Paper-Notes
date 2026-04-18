@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal Transport-Based Token Weighting for Enhanced Preference Optimization
 description: >-
@@ -49,25 +49,25 @@ OTPO 利用无平衡最优传输（UOT）在 chosen/rejected 回复的 token 表
 
 **1. 代价矩阵构建**
 
-- **做什么**：为 chosen（m 个 token）和 rejected（n 个 token）序列的每对 token 计算语义距离
+- **功能**：为 chosen（m 个 token）和 rejected（n 个 token）序列的每对 token 计算语义距离
 - **核心思路**：提取最后一层 hidden states，计算欧氏距离得到 m x n 的代价矩阵
 - **设计动机**：最后一层表示包含最丰富的语义信息；欧氏距离简单高效且在高维空间中区分度好
 
 **2. 无平衡最优传输求解**
 
-- **做什么**：在 chosen 和 rejected 的 token 之间寻找最优的语义匹配方案
+- **功能**：在 chosen 和 rejected 的 token 之间寻找最优的语义匹配方案
 - **核心思路**：求解带熵正则化和 KL 边际松弛的传输问题，允许边际分布偏离均匀分布
 - **设计动机**：使用 UOT 而非标准 OT，因为 chosen/rejected 序列长度通常不同，UOT 允许部分传输（不要求总量守恒），自然处理长度差异
 
 **3. Token 权重导出**
 
-- **做什么**：从传输计划中提取每个 token 的重要性权重
+- **功能**：从传输计划中提取每个 token 的重要性权重
 - **核心思路**：chosen 的 token i 的权重为传输计划第 i 行的边际和，rejected 类似。归一化后应用于 DPO 的对数概率计算
 - **设计动机**：传输计划中被大量"传输"到对方 token 的 token 是语义上与偏好差异最相关的——它们代表了 chosen/rejected 之间的关键区分点
 
 **4. 统一框架解释**
 
-- **做什么**：证明 DPO/SimPO/SamPO/LDDPO 都是 OTPO 在特定权重退化下的特例
+- **功能**：证明 DPO/SimPO/SamPO/LDDPO 都是 OTPO 在特定权重退化下的特例
 - **核心思路**：DPO = 均匀权重 1/m；SimPO = 长度归一化权重；SamPO = 采样概率权重；LDDPO = 长度差异调制权重。OTPO 是最一般的上下文感知权重
 - **设计动机**：统一视角不仅提升了理论理解，也表明之前方法的启发式修正都可以被 OT 的最优解"自动发现"
 
@@ -112,7 +112,7 @@ OTPO 利用无平衡最优传输（UOT）在 chosen/rejected 回复的 token 表
 - **统一框架的解释力**：将多种启发式修正统一为 token 权重的特例，既有理论洞察又有实践指导——未来新的偏好优化方法可以直接在权重设计空间中探索
 - **即插即用**：OTPO 只需在 DPO 训练循环中加一个 UOT 求解步骤，额外计算开销可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - UOT 求解器（Sinkhorn 迭代）增加了每步训练的计算成本，对于超长序列可能成为瓶颈
 - 代价矩阵基于当前模型的 hidden states，训练初期模型表示质量不高时权重可能不准确

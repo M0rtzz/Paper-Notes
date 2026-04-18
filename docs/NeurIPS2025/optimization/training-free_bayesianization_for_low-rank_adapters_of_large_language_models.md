@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training-Free Bayesianization for Low-Rank Adapters of Large Language Models
 description: >-
@@ -55,14 +55,14 @@ tags:
 
 1. **低秩各向同性高斯变分分布**：
 
-    - **做什么**：定义一个单参数的变分分布族
+    - **功能**：定义一个单参数的变分分布族
     - **核心思路**：将全权重空间的各向同性高斯 $\sigma_q^2 I$ 投影到低秩子空间。具体地，对 $B$ 做 SVD：$B = U \text{diag}(d) V^\top$，重组为 $B' = U \text{diag}(d)$，$A' = V^\top A$。对 $A'$ 的每个元素施加高斯噪声：$\Omega_{ij} = \sigma_q / d_i$
     - **Theorem 4.1** 证明这等价于全权重空间中的低秩退化高斯分布：$\Sigma_q = \sigma_q^2 I_n \otimes \begin{bmatrix} I_r & \\ & 0_{m-r} \end{bmatrix}$
     - **设计动机**：单参数 $\sigma_q$ 使得方差最大化问题可用简单搜索求解，存储效率从 $O(rn)$ 降至 $O(r)$。通过 SVD 分解利用奇异值反向缩放噪声确保投影一致性
 
 2. **方差最大化搜索**：
 
-    - **做什么**：确定最优 $\sigma_q$
+    - **功能**：确定最优 $\sigma_q$
     - **核心思路**：$\max \sigma_q$ s.t. $|l(\mathcal{D}|B', M, \Omega(\sigma_q)) - l(\mathcal{D}|B, A)| \leq \epsilon$
     - 使用二分搜索在 $[\sigma_{q_{\min}}, \sigma_{q_{\max}}]$ 范围内找到满足约束的最大 $\sigma_q^*$
     - 可用并行网格搜索 + 分段线性插值加速
@@ -70,7 +70,7 @@ tags:
 
 3. **TFB 等价于广义变分推断（Theorem 4.2）**：
 
-    - **做什么**：为 TFB 提供理论基础
+    - **功能**：为 TFB 提供理论基础
     - **核心思路**：在 Assumption 4.1（NLL 在 $[0, \epsilon_0)$ 上局部凸）和先验标准差 $\sigma_p > \epsilon_0$ 条件下，TFB 的方差最大化问题与广义变分推断 $\min_{\sigma_q} l_\mathcal{D}(\sigma_q) + \lambda \text{KL}[q(W|\sigma_q) \| P(W)]$ 有相同的最优解
     - 当 $\lambda = 1/|\mathcal{D}|$ 时退化为标准变分推断
     - **设计动机**：表明 TFB 不是简单的启发式，而是有变分推断的理论保证
@@ -146,7 +146,7 @@ TFB 在不做任何训练的情况下，ECE（校准误差）大幅下降：MLE 
 3. **即插即用**：可直接应用于 Hugging Face 上的任何 LoRA 适配器，无需重训练
 4. **低秩投影的数学优雅性**：通过 SVD 奇异值反缩放实现全权重空间各向同性，是关键的技术洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 二分搜索在非单调区域可能找不到全局最优 $\sigma_q$，但实践中近似最优已足够
 - 大分布偏移下准确率可能略有下降

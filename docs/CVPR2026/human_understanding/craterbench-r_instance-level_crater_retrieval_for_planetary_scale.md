@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CraterBench-R: Instance-Level Crater Retrieval for Planetary Scale
 description: >-
@@ -123,7 +123,7 @@ tags:
 - **无训练token聚合的通用性**：不限于陨石坑→任何需要在冻结ViT特征上做高效检索的场景(遥感变化检测/场景去重/地理定位)都适用
 - **GeoAI的方法论贡献**：late interaction + 确定性压缩 + 两阶段搜索 的pipeline是domain-agnostic的
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 每ID仅2个视图→更多视图可能让有监督方法重新有效
 - 当前仅Mars CTX→月球/其他行星的泛化待验证
 - 种子token选择基于attention→其他显著性指标可能更优

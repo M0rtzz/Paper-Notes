@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fed-ADE: Adaptive Learning Rate for Federated Post-adaptation under Distribution Shift
 description: >-
@@ -51,25 +51,25 @@ $$\eta_c^t = \eta_{\min} + (\eta_{\max} - \eta_{\min}) \cdot \mathcal{S}_c^t$$
 
 ### 关键设计一：Uncertainty Dynamics Estimation
 
-- **做什么**：通过追踪模型预测不确定性的时间变化来捕捉 label distribution shift。
+- **功能**：通过追踪模型预测不确定性的时间变化来捕捉 label distribution shift。
 - **核心思路**：计算当前批次数据的平均 softmax 向量 $\mathbf{q}_c^t = \frac{1}{|\mathbf{x}_c^t|} \sum_{x} \mathcal{H}(\theta_c; x)$，然后用余弦距离衡量连续两个时间步之间的变化：$\mathcal{S}_{\text{unc}}^t = 1 - \cos(\mathbf{q}_c^{t-1}, \mathbf{q}_c^t)$。
 - **设计动机**：平均 softmax 向量是无标签的类级别置信度摘要，充当熵代理；批次级平均消除了单样本随机性；仅需缓存上一步的 $\mathbf{q}_c^{t-1}$，内存开销仅为 $O(|\mathcal{I}|)$（类别数）。
 
 ### 关键设计二：Representation Dynamics Estimation
 
-- **做什么**：在嵌入空间捕捉 covariate shift 级别的特征漂移。
+- **功能**：在嵌入空间捕捉 covariate shift 级别的特征漂移。
 - **核心思路**：计算 $\ell_2$ 归一化后的批次平均特征向量 $\mathbf{z}_c^t = \frac{1}{|\mathbf{x}_c^t|} \sum_x \frac{h_{\psi_c}(x)}{\|h_{\psi_c}(x)\|_2}$，再用缩放余弦距离：$\mathcal{S}_{\text{rep}}^t = \frac{1}{2}(1 - \cos(\mathbf{z}_c^{t-1}, \mathbf{z}_c^t))$。
 - **设计动机**：$\ell_2$ 归一化确保余弦距离只反映方向变化而非尺度差异；$\frac{1}{2}$ 缩放将范围从 $[0,2]$ 归一到 $[0,1]$，与 uncertainty 信号对齐；完全无标签、本地计算，内存开销仅 $O(d)$（特征维度）。
 
 ### 关键设计三：无监督风险估计
 
-- **做什么**：在无标签情况下估计每个客户端的期望风险，作为模型更新的优化目标。
+- **功能**：在无标签情况下估计每个客户端的期望风险，作为模型更新的优化目标。
 - **核心思路**：利用 Black-box Shift Estimation (BBSE) 方法，通过服务器预计算的混淆矩阵 $\mathbf{M}$ 和客户端的伪标签分布 $\mathbf{Q}_{c,\hat{y}}^t$ 来估计当前标签分布：$\mathbf{Q}_{c,y}^t \approx \mathbf{M}^{-1} \mathbf{Q}_{c,\hat{y}}^t$，进而得到无监督风险估计 $\widehat{\mathcal{F}}_c^t(\theta_c)$。
 - **设计动机**：将有监督的风险分解为类别级子风险的加权和，其中权重（标签分布）可通过 BBSE 无监督估计，初始子风险可用预训练数据的经验估计替代。
 
 ### 关键设计四：理论保证（Dynamic Regret Bound）
 
-- **做什么**：证明 Fed-ADE 的自适应学习率在非平稳环境下达到 min-max 最优 dynamic regret。
+- **功能**：证明 Fed-ADE 的自适应学习率在非平稳环境下达到 min-max 最优 dynamic regret。
 - **核心结论**：选择 $\eta^* = \Theta(T^{-1/3} \bar{\mathcal{S}}_c^{1/3})$ 时，动态遗憾满足 $\mathbb{E}[\text{Reg}_T] = \mathcal{O}(\bar{\mathcal{S}}_c^{1/3} T^{2/3})$，匹配无监督 label shift 下在线学习的 min-max 最优界。
 - **设计动机**：理论分析表明累积漂移代理 $\bar{\mathcal{S}}_c$ 可以准确近似真实分布漂移（Theorem 1 & 2），为自适应学习率提供理论依据。
 
@@ -109,7 +109,7 @@ $$\eta_c^t = \eta_{\min} + (\eta_{\max} - \eta_{\min}) \cdot \mathcal{S}_c^t$$
 4. **跨模态泛化**：在图像（Tiny ImageNet, CIFAR-10/100, CIFAR-C）和文本（LAMA）基准上均表现优异，证明方法不依赖特定模态。
 5. **对预训练分布不敏感**：当预训练数据服从高斯或指数衰减分布（而非均匀分布）时，Fed-ADE 仍保持稳定性能。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **两个信号的等权组合**：$\mathcal{S}_c^t = \frac{1}{2}(\mathcal{S}_{\text{unc}}^t + \mathcal{S}_{\text{rep}}^t)$ 是简单平均，未根据当前漂移类型自适应加权，可能比自动选权（如注意力机制）逊色。
 2. **仅验证了 label shift 和 covariate shift**：未涉及 concept drift（$P(y|x)$ 变化）、prior probability shift 等更复杂的漂移类型。

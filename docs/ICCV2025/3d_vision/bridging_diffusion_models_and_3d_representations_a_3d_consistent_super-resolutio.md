@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bridging Diffusion Models and 3D Representations: A 3D Consistent Super-Resolution Framework
 description: >-
@@ -116,7 +116,7 @@ tags:
 - **评估指标全面**：首次引入MEt3R（3D一致性度量）和FID到3D超分评估中
 - 对比StableSR的可视化展示了"先SR再3D"vs"SR与3D交织优化"的本质区别
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个扩散去噪步都需训练3DGS，计算成本较高
 - 仅评估了×4和×2上采样，更大倍率（如×8）未验证

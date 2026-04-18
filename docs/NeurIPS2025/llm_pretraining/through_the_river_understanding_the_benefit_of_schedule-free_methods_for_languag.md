@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Through the River: Understanding the Benefit of Schedule-Free Methods for Language Model Training
 description: >-
@@ -132,7 +132,7 @@ SF-GD 在二次目标函数上的稳定性阈值为 $\lambda_1(H) > \frac{2}{(1-
 3. **实用价值高**：SF 方法无需预设训练预算、无需衰减调度、无需额外内存，是大规模持续训练的理想选择
 4. **简洁优雅的改进**：仅引入一个参数 $C$ 就同时解决了动量敏感性和大 batch 两个问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **实验规模有限**：仅在 124M 参数模型上验证，未在更大规模（如 7B+）上实验
 2. **理论简化假设**：central flow 分析依赖简化假设（如 $c_t = 1/t$ 可忽略），在深度学习中的验证仍待完善

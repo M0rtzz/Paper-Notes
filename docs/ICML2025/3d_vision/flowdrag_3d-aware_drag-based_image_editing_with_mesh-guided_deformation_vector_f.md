@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlowDrag: 3D-aware Drag-based Image Editing with Mesh-guided Deformation Vector Flow Fields
 description: >-
@@ -112,7 +112,7 @@ FlowDrag 的 pipeline 分三个阶段：
 - 对网格简化和扩散采样步数均具鲁棒性（DepthMesh reduction ratio 0.001-1.0 稳定，DiffMesh 10-40 步稳定）
 - ICML 2025 Spotlight，审稿人认可其在几何一致性编辑上的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 可行拖拽距离受限于网格变形稳定范围，极大幅度编辑可能失败
 - 主要支持刚性编辑（旋转/平移/姿态），非刚性编辑（缩放/弯曲/内容创建）不适用

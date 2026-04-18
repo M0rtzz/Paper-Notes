@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Ranked from Within: Ranking Large Multimodal Models Without Labels
 description: >-
@@ -111,7 +111,7 @@ LMM 生成答案时每个 token 都有 softmax 概率分布。利用这些概率
 - **不确定性即质量信号**：模型"知道自己不知道什么"，softmax 概率是最佳无监督代理
 - **规模化验证**：47 模型 × 9 基准确保结论的统计可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试 VQA 任务，对更开放的生成任务（对话、摘要）的适用性待验证
 - softmax 概率可能受 temperature/top-p 等采样参数影响，论文未消融

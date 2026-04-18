@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoRFT: Incentivizing Video Reasoning Capability in MLLMs via Reinforced Fine-Tuning
 description: >-
@@ -116,7 +116,7 @@ VideoRFT 遵循标准的两阶段 RFT 方案：
 - 语义一致性奖励的设计理念——**选择性对齐**——非常优雅：仅对推理中与视觉内容直接对应的部分计算一致性，既不限制抽象推理也不惩罚问题解析，只要求视频描述要忠实。
 - CoT 数据的对比分析有说服力：VideoRFT-CoT-102K 的 token 分布比 Video-R1 更长且更动态化（高频词为"video"、"happen"、"first"等时序词汇），反映了更深层的视频理解。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 语义一致性奖励依赖 SigLIP 的文本-视觉对齐质量，对于 SigLIP 覆盖不好的领域（如科学图表）效果可能有限。
 - 通过正则表达式定位"视频描述段"过于启发式——假设第一个句号后就是视频描述，对不规则推理输出可能失效。

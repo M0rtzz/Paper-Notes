@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Gaussian Splatting from Defocused and Motion-blurred Monocular Videos
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{rec}} + \mathcal{L}_{\text{geo}} + \mathcal{L
 3. **极高效率**：1 小时训练 + 65 FPS 渲染，比 NeRF 方案快 48×
 4. 未见视角合成策略有效缓解单目视频过拟合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 2D 先验（深度估计、分割），先验误差会传播
 - 大幅非刚性运动模糊场景仍会失败

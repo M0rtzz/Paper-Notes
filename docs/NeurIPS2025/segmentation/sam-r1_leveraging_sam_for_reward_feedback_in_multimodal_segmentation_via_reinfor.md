@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SAM-R1: Leveraging SAM for Reward Feedback in Multimodal Segmentation via Reinforcement Learning
 description: >-
@@ -125,7 +125,7 @@ SAM-R1 的工作流程：
 - 3K 样本即可达到强性能的数据效率极为惊人
 - 论文坦诚报告了多个失败尝试（移除 KL 约束崩溃、负参考点生成失败），提供了宝贵的负面结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SAM 参数冻结，信息流单向——无法根据推理模型的需求自适应调整分割策略
 - 模型难以生成有意义的负参考点，RL 框架未能激励这种能力

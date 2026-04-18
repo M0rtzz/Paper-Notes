@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TEMPLE: Incentivizing Temporal Understanding of Video LLMs via Progressive Pre-SFT Alignment
 description: >-
@@ -95,7 +95,7 @@ tags:
 - "先 DPO 再 SFT"的逆序策略是一个很有启发性的发现——传统观点认为需要先学基础能力再做对齐，但对于视频时间理解这种需要精确感知的能力，先通过偏好学习建立正确的感知基础反而更有效。这个洞察可能适用于其他需要"先学会看再学会说"的多模态任务
 - 三种时间扰动策略（丢帧、乱序、反转）精确针对 Video LLM 的已知弱点设计，且通过难度因子统一控制，简洁优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅用 detailed captioning 作为 DPO 任务，未扩展到 QA、时间定位等其他视频理解任务
 - 扰动策略相对简单（clip 级而非 frame 级），可能无法捕获更细粒度的时间依赖
 - 视频筛选管线对场景检测工具（TransNetV2）的质量有依赖

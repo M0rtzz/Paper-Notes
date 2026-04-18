@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Open-Ended Visual Recognition with Large Language Model
 description: >-
@@ -200,7 +200,7 @@ OSM 在6个数据集上评估 mask 分类准确率（Acc）和词表外预测比
 4. **MaskQ-Former 的 mask-context 双查询设计**：平衡了目标区域精确特征和上下文信息，参数共享设计高效优雅
 5. **NIV 分析**：通过可视化 NIV 案例发现 OSM 的预测（如 "monitor"）常常比GT标注（如 COCO 中统一标注为 "tv"）更准确，揭示了固定词表标注的固有偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **准确度-泛化权衡**：训练越久模型越倾向保守预测（低 NIV），如何在保持准确性的同时维持开放生成能力是未解决的问题
 2. **计算开销**：冻结 LLM (Vicuna-7B) 推理时需要自回归生成类名，速度远慢于简单的嵌入匹配

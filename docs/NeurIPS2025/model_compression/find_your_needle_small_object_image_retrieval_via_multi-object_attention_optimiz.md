@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Find your Needle: Small Object Image Retrieval via Multi-Object Attention Optimization
 description: >-
@@ -118,7 +118,7 @@ $$\hat{v}_c = \arg\max_{v_c} \sum_i \text{IoU}(E(v_c \cdot v_i), m_i) + \alpha \
 3. **实用性强**：最终使用单一全局特征向量（512D 或 768D），与标准检索流程完全兼容，无需额外存储
 4. **LeGrad 的巧妙应用**：将可解释性工具反向用于特征优化，思路新颖
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 OVD 质量**：如果目标检测器漏检（如 IoU=0.9 时 VoxDet 仅 63% 召回率），会导致目标无法编码进全局表示
 2. **高密度场景退化**：当 OVD 检测超过 25 个目标时，特定小目标可能被弱化

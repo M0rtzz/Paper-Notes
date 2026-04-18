@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bipartite Ranking From Multiple Labels: On Loss Versus Label Aggregation
 description: >-
@@ -117,7 +117,7 @@ $$\gamma(x) = \sum_{k \in [K]} \eta^{(k)}(x)$$
 - **实用指导价值高**：对于有多个标签源的排序场景（信息检索、推荐系统、医学诊断），建议采用标签聚合 + 线性代价 $c = |y - y'|$。
 - **代价函数的选择至关重要**：均匀代价 $c=1$ 的标签聚合不保证 Pareto 最优（Proposition 5.3），而线性代价 $c=|y-y'|$ 则可（Proposition 5.4）。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅处理二值标签**：虽然聚合后的标签是多值的，但起始标签限制为 $\{0,1\}$，未扩展到连续评级。
 - **未提出新算法**：偏理论分析，实验直接用已有的 AUC 优化方法（逻辑/hinge 代理损失）。

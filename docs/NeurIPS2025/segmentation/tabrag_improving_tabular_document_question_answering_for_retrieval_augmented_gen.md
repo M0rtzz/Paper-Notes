@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TabRAG: Improving Tabular Document Question Answering for Retrieval Augmented Generation via Structured Representations
 description: >-
@@ -136,7 +136,7 @@ TabRAG 的优势在不同 LLM 骨干下保持一致。
 - **模块化设计**: 每个组件可以独立替换和升级
 - **实际应用价值高**: 金融、医疗、法律等领域大量文档包含关键表格数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Workshop 论文**: 评估规模可能有限
 2. **VLM 依赖**: 依赖强大的 VLM 模型，推理成本较高

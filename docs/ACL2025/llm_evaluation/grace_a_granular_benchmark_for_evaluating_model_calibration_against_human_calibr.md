@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GRACE: A Granular Benchmark for Evaluating Model Calibration Against Human Calibration
 description: >-
@@ -143,7 +143,7 @@ $$\text{CalScore}_q = 1 - r(\mathbb{E}_t[(1-h_t) g_t c_t])$$
 3. **对抗性出题的有效性**：GPT-4在GRACE上直到看到90%+的线索才达到50%准确率，而在TrickMe等旧基准上60%线索就有80%准确率。这为校准评估提供了更具区分度的测试场景
 4. **社区参与的附带价值**：现场竞赛不仅收集了高质量数据，还激发了非研究者对AI的兴趣和参与
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **任务形式局限**：GRACE仅涵盖事实性问答场景，未扩展到开放式生成、多轮对话等更广泛的NLP任务
 - **CalScore不够全面**：作为基线指标，CalScore未捕捉所有形式的不确定性和错校准

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LACA: Improving Cross-lingual Aspect-Based Sentiment Analysis with LLM Data Augmentation
 description: >-
@@ -126,7 +126,7 @@ LACA (LLM Augmented Cross-lingual ABSA) 是一个两阶段框架：
 4. **框架通用性强**：同时支持 encoder、encoder-decoder 和 decoder-only 三类模型架构
 5. **实际可行性**：XLM-R + LACA 在无目标语言标注数据的情况下接近有监督水平
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 LLM 在目标语言的生成质量**：对于 LLM 训练数据中覆盖较少的语言（如土耳其语），生成质量可能下降
 2. **计算成本**：使用 LLaMA 70B 进行数据生成成本较高

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] POA: Pre-training Once for Models of All Sizes
 description: >-
@@ -118,7 +118,7 @@ $$\mathcal{L}_S = \lambda \mathcal{L}_{IS} + (1-\lambda)(\mathcal{L}_{ES1} + \ma
 - **同视图蒸馏的洞见**：从已有的好表征蒸馏比直接做跨视图表征学习更有效，特别是对小模型
 - **通用性强**：适用于 ViT、Swin Transformer、ResNet 三种主流架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅在 ImageNet-1K 上验证，未在更大数据集（ImageNet-22K、LAION）上测试
 - 弹性设计主要覆盖宽度和深度两个维度，未考虑 patch size、分辨率等其他弹性维度

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] scMRDR: A Scalable and Flexible Framework for Unpaired Single-Cell Multi-Omics Data Integration
 description: >-
@@ -88,7 +88,7 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{recon}} + \beta\mathcal{L}_{\te
 3. **掩码损失实用**：简洁地解决不同组学特征覆盖差异这一核心问题
 4. **生物学验证**：空间位置插补发现了新的空间变异基因
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对抗损失（min-max优化）增加训练难度和不稳定性
 - 将所有模态映射到基因水平（如scATAC的peak聚合为gene activity score）可能损失信息
 - 超参数$\beta, \lambda, \gamma$间的权衡仍需靠经验调试

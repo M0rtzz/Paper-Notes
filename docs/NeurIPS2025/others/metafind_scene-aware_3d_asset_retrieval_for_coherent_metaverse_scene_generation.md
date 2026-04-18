@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MetaFind: Scene-Aware 3D Asset Retrieval for Coherent Metaverse Scene Generation
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L}_{layout} = \frac{1}{2}(\mathcal{L}_{layout}^{q2g} + \mathcal{L}_{l
 - 双边语义关系（物理关系 + LLM 生成的功能关系）丰富了图的表达能力
 - 迭代式场景组合策略使检索结果随场景演化动态适应，类似于人类布置房间的过程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 资产描述依赖 GPT-4o 生成，可能引入语言偏差和幻觉
 - 目前仅在室内单房间场景上评估，开放世界泛化能力未经验证

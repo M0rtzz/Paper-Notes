@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Fly-CL: A Fly-Inspired Framework for Enhancing Efficient Decorrelation and Reduced Training Time in Pre-trained Model-based Continual Representation Learning
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：去相关（decorrelation）对分类精度至关重要，但高效的去相关方法缺乏。
 
-**本文要解决什么？** 设计一种计算高效且有效的去相关框架。
+**本文目标** 设计一种计算高效且有效的去相关框架。
 
 **切入角度**：从果蝇嗅觉回路获得灵感——PN→KC 的稀疏扩展投影+KC→MBON 的降维投影构成了高效的去相关机制。
 
-**核心idea一句话**：模拟果蝇嗅觉三阶段——稀疏随机扩展投影+top-k激活稀疏+流式岭回归分类——实现渐进去相关。
+**核心 idea**：模拟果蝇嗅觉三阶段——稀疏随机扩展投影+top-k激活稀疏+流式岭回归分类——实现渐进去相关。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ tags:
 - 理论分析扎实——两个定理分别证明稀疏投影的信息保持性和 top-k 退化界
 - 实用性强——计算效率显著提升，适合边缘计算和实时场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 - top-k 中的 $k$ 值需要调参
 - 投影矩阵是固定随机的，自适应学习可能进一步提升
 - 仅验证了图像分类任务，其他模态待探索

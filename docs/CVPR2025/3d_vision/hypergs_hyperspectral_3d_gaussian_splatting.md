@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HyperGS: Hyperspectral 3D Gaussian Splatting
 description: >-
@@ -46,18 +46,18 @@ tags:
 ### 关键设计
 
 **1. 高光谱压缩自编码器**
-- **做什么**: 使用 1D 卷积 + Squeeze-Excitation 块构建对称 AE，将高维光谱数据压缩到低维潜在表示。
+- **功能**: 使用 1D 卷积 + Squeeze-Excitation 块构建对称 AE，将高维光谱数据压缩到低维潜在表示。
 - **核心思路**: 编码器通过 max-pooling 压缩光谱维度，解码器通过上采样还原；不使用 skip connection，确保解码器可独立工作。
 - **损失函数**: Huber Loss $L_{ae} = L_{Huber}(C^*(p), Dec(Enc(C^*(p))))$，对异常值鲁棒，处理不同相机的信噪比差异。
 - **设计动机**: 潜在空间既降低 3DGS 优化的计算开销，又封装相机的光谱灵敏度，为误差提供有界上限。
 
 **2. 深度感知自适应密度控制**
-- **做什么**: 改进 3DGS 的 split/clone 标准，用深度缩放函数 $h(d,i) = (|\mathbf{E}_d \mathbf{X}_i| / (\beta_{field} \times R))^2$ 调节梯度影响。
+- **功能**: 改进 3DGS 的 split/clone 标准，用深度缩放函数 $h(d,i) = (|\mathbf{E}_d \mathbf{X}_i| / (\beta_{field} \times R))^2$ 调节梯度影响。
 - **核心思路**: 通过深度平方缩放 NDC 梯度，减少近相机 Gaussians 的高梯度假信号，使密度控制在高光谱的宽动态范围下更稳定。
 - **设计动机**: 高光谱数据通道多、值范围大，传统固定阈值的 3DGS 密度控制无法有效工作，近距离 Gaussians 在多视角下易产生不一致分裂。
 
 **3. 像素级光谱高斯剪枝**
-- **做什么**: 对每个 Gaussian 计算像素级光谱重要性分数 $\mathcal{I}[g_i, p, d] = (1 - |C^*_d(p) - Dec(f_i)|) \alpha_i T_i$，保留在任意像素 Top-K 内的 Gaussians。
+- **功能**: 对每个 Gaussian 计算像素级光谱重要性分数 $\mathcal{I}[g_i, p, d] = (1 - |C^*_d(p) - Dec(f_i)|) \alpha_i T_i$，保留在任意像素 Top-K 内的 Gaussians。
 - **核心思路**: 不按平均分数剪枝（会过度去除），而按"是否在某像素的 Top-K 重要度内"决定保留。
 - **设计动机**: 跨视角剪枝会导致过度修剪，丢失光谱细节；像素级方法保证每个像素都有足够的光谱表达能力。
 
@@ -118,7 +118,7 @@ $$L_d(p) = (1-\lambda)(\beta L_{CB}(p) + L_{CS}(p)) + \lambda L_{SSIM}(p)$$
 - Huber Loss 训练 AE + Charbonnier+Cosine 训练 3DGS 的损失函数设计针对光谱特性优化
 - 像素级 Top-K 剪枝策略比传统平均/总量剪枝更适合高维数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要预训练 AE，增加了额外步骤
 - 依赖 COLMAP 进行灰度 SfM，可能在纹理不足场景失败

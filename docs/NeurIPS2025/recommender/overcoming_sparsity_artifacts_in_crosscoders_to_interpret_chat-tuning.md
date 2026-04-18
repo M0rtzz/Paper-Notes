@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Overcoming Sparsity Artifacts in Crosscoders to Interpret Chat-Tuning
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: L1 正则化在鼓励稀疏表示的同时，会产生两类伪影：(1) **Complete Shrinkage**——当某个概念在 base 模型中贡献较弱但在 chat 模型中贡献较强时，L1 会将 base decoder 范数直接压至零，虚假地标记为 chat-only；(2) **Latent Decoupling**——一个本应为共享的概念被 L1 损失等价地拆分为一个 chat-only + 一个 base-only 潜变量对，因为两种表示的 L1 损失完全相同。
 
-**本文要解决什么**: 如何诊断和消除 Crosscoder 中由 L1 损失引发的虚假 chat-only 潜变量归因，并找到真正由 chat-tuning 引入的可解释概念。
+**本文目标**: 如何诊断和消除 Crosscoder 中由 L1 损失引发的虚假 chat-only 潜变量归因，并找到真正由 chat-tuning 引入的可解释概念。
 
 **切入角度**: 从训练损失函数的理论分析出发，揭示 L1 损失的内在缺陷，然后设计诊断工具（Latent Scaling）和替代训练方案（BatchTopK）。
 
-**核心idea一句话**: 用 BatchTopK 损失替代 L1 损失训练 Crosscoder，从根源上消除缩减偏差，使 decoder 范数差异成为 chat 特异性的可靠度量。
+**核心 idea**: 用 BatchTopK 损失替代 L1 损失训练 Crosscoder，从根源上消除缩减偏差，使 decoder 范数差异成为 chat 特异性的可靠度量。
 
 ## 方法详解
 
@@ -116,7 +116,7 @@ $$\mathcal{L}_{\text{BatchTopK}}(\mathcal{X}) = \frac{1}{n}\sum_i \left[\frac{1}
 - **Template token 的关键角色**: 揭示了 chat 模型的独特行为很大程度上通过 template token 编码，与并行研究（Leong et al., 2025）相互验证
 - **两种 Crosscoder 捕获等量信息但组织方式不同**: L1 和 BatchTopK 在全量替换时达到几乎相同的 KL 降低，但 BatchTopK 将 chat-specific 信息清晰地组织在 Δnorm 高的潜变量中，而 L1 将其混杂在所有潜变量中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **单一模型规模**: 仅在 Gemma 2 2B 上实验，更大模型（如 7B、70B）是否面临相同问题待验证
 - **仅关注 chat-only 潜变量**: base-only 和 shared 潜变量（尤其是 base/chat decoder 余弦相似度较低的潜变量）未深入分析，这些可能编码了更微妙的微调效果
@@ -229,7 +229,7 @@ tags:
 - **从工具缺陷到科学发现**：通过修复工具问题，获得了关于 chat-tuning 如何修改模型行为的具体洞察
 - **因果验证提升可信度**：不仅找到可解释的特征，还验证了它们的因果效力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在 Gemma 2 2B base/chat 单个模型对上进行，结论是否泛化到更大模型或其他微调方式需验证
 - BatchTopK 虽然缓解了两类伪影，但可能仍存在未被识别的其他类型偏差

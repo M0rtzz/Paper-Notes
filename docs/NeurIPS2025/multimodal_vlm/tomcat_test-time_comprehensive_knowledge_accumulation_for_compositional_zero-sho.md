@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TOMCAT: Test-time Comprehensive Knowledge Accumulation for Compositional Zero-Shot Learning
 description: >-
@@ -100,7 +100,7 @@ tags:
 - **自适应更新权重的设计直觉清晰**：已见组合更新少、未见组合更新多，这是一种隐式的难度感知
 - **多模态原型互补**：文本原型编码语义知识、视觉原型编码视觉模式，两者对齐后更强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 优先队列中伪标签可能错误，尤其在早期测试样本较少时
 - KAM 参数量随组合数线性增长，组合空间极大时（open-world 上万组合）可能有内存问题
 - 假设测试样本是在线流式到来的，批量测试场景需要调整

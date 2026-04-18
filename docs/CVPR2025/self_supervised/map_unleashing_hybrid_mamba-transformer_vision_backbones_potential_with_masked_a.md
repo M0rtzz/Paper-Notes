@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAP: Unleashing Hybrid Mamba-Transformer Vision Backbone's Potential with Masked Autoregressive Pretraining
 description: >-
@@ -50,12 +50,12 @@ tags:
 ### 关键设计
 
 **1. 混合网络架构 HybridNet (MMMTMMMT)**
-- **做什么**: 以 3 个 Mamba 层 + 1 个 Transformer 层为一个单元，重复 8 次，共 32 层。
+- **功能**: 以 3 个 Mamba 层 + 1 个 Transformer 层为一个单元，重复 8 次，共 32 层。
 - **核心思路**: 在多种混合排列中（MMMMMMTT、TTMMMMMM、TMMMTMMM、MMMTMMMT）进行从头训练比较，MMMTMMMT 表现最佳（83.12%）。
 - **设计动机**: 开头的 Mamba 层负责序列特征提取，穿插的 Transformer 层增强局部特征建模和长程依赖，平衡了局部特征提取和上下文建模增强。
 
 **2. Masked Autoregressive 解码策略**
-- **做什么**: 对随机遮罩后的图像，用 Transformer Decoder 按行级自回归方式重建，每步同时预测一行内所有被遮罩 token。
+- **功能**: 对随机遮罩后的图像，用 Transformer Decoder 按行级自回归方式重建，每步同时预测一行内所有被遮罩 token。
 - **核心思路**: 损失函数 $\mathcal{L} = -\sum_{i=1}^{M}\sum_{j \in \mathbf{M}_i} \log p(\mathbf{x}_{ij} | \mathbf{x}_{i,j \notin \mathbf{M}_i}, \mathbf{r}_{<i})$。行内预测是 MAE 风格（双向），行间预测是 AR 风格（因果）。
 - **设计动机**: 选择行作为子区域是因为大多数 Mamba 实现的默认扫描顺序是行优先（Row-first），AR 顺序必须与 Mamba 扫描顺序一致才能获得最大收益（实验验证：一致时 +2.9，不一致时仅 +0.2）。
 
@@ -144,7 +144,7 @@ tags:
 - **广泛的适用性**: MAP 不仅适用于自定义 HybridNet，还能提升 MambaVision 等现有混合框架
 - **50% 最优遮罩比例**: 在 MAE 的 75% 和 AR 的 20% 之间取得平衡，是由混合架构需求自然推导出的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 混合架构在相同设置下仍未超越纯 Transformer + MAE（MAP 的重点在于释放混合架构的潜力）
 - 当前行级分区较简单，更精细的聚类策略理论上可获得更好结果

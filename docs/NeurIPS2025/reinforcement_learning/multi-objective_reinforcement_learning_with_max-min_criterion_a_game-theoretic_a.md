@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Objective Reinforcement Learning with Max-Min Criterion: A Game-Theoretic Approach
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 3. **核心矛盾**: max-min MORL 的 min 非线性使得标准 Bellman operator 不适用；直接优化导致 one-hot 权重向量在最差维度间剧烈振荡，只能保证 average-iterate 收敛。
 
-4. **本文要解决什么**: 设计一个高效、理论可证明收敛的 max-min MORL 算法，具有 last-iterate 收敛保证且计算高效。
+4. **本文目标**: 设计一个高效、理论可证明收敛的 max-min MORL 算法，具有 last-iterate 收敛保证且计算高效。
 
 5. **切入角度**: 利用 max-min = min-max 的等式（在熵正则化下成立），将问题转化为两人零和博弈的 Nash 均衡求解，并引入对 adversary 的熵正则化来稳定训练。
 
-6. **核心idea一句话**: 通过对权重向量 $w$ 添加熵正则化 $H(w)$，既可获得 $w$ 更新的闭式解 (softmax)，又避免权重振荡从而实现 last-iterate 收敛。
+6. **核心 idea**: 通过对权重向量 $w$ 添加熵正则化 $H(w)$，既可获得 $w$ 更新的闭式解 (softmax)，又避免权重振荡从而实现 last-iterate 收敛。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ tags:
 - 将 MORL 公平性问题优雅地转化为博弈论框架，使大量博弈论工具可直接复用
 - ARAM 的自适应参考向量是介于"均匀关注所有目标 (ERAM)"和"只关注最差目标 (GGF-PPO)"之间的优雅折中
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - ARAM 的理论分析留作未来工作，目前仅有 ERAM 的收敛证明
 - tabular 理论限制：收敛证明依赖 softmax 策略参数化的闭式 NPG，深度 RL 场景的理论保证未建立

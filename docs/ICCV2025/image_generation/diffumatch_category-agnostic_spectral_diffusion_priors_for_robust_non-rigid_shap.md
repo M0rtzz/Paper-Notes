@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiffuMatch: Category-Agnostic Spectral Diffusion Priors for Robust Non-rigid Shape Matching
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L}_{total}(C_{raw}) = \mathcal{L}_{proper}(C_{raw}) + \mathcal{L}_{SD
 - **符号无关性处理**巧妙：通过对绝对值 $|C|$ 建模绕过功能映射固有的符号歧义问题。
 - **极强的跨类别泛化**：仅在人体形状上训练，即可匹配动物等完全不同形态的3D形状。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对高度非等距形状或部分形状的处理能力有限（功能映射方法的普遍短板）。
 - 扩散模型仅在人体上训练，缺乏多样性；使用更丰富的注册数据有望进一步提升。

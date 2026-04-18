@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Vivid4D: Improving 4D Reconstruction from Monocular Video by Video Inpainting
 description: >-
@@ -125,7 +125,7 @@ $$\mathcal{L} = \sum_{j=1}^N \sum_{t=1}^T (\lambda_r \mathcal{L}_\text{IV}^{t,j}
 3. **锚点视频机制**：简单的通道拼接实现了对原始视频时空信息的有效利用，3D U-Net自然学习到跨视角的时空对应关系
 4. **IV RGB损失的实用性**：用3×3邻域最小值替代严格的逐像素L1，优雅地处理了深度误差引起的亚像素错位
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖COLMAP获取初始相机位姿，对于纯动态场景（如手持晃动+物体运动）可能失败
 - 修复模型的训练数据量（5K视频）相对有限，可能限制修复质量的上限

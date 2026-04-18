@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AquaSentinel: Next-Generation AI System Integrating Sensor Networks for Urban Underground Water Pipeline Anomaly Detection via Collaborative MoE-LLM Agent Architecture
 description: >-
@@ -82,7 +82,7 @@ MoE专家中HydroNet最优（MAE 0.0085），STGCN次优。
 - **RTCA的工程实用性**: 双阈值+持续性确认的设计简单但极为实用——工业界常面临"灵敏度vs误报率"的权衡，RTCA提供了一个很好的解决框架
 - **成本意识**: 整个设计以"最少传感器、最低成本"为目标，面向老旧基础设施改造
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **泄漏场景是仿真**: 110个泄漏是PCSWMM模拟的，真实世界泄漏未发生（部署期间管网正常）
 - **仅测试下水道**: 供水管网和下水管网的水力特性不同，方法在供水管网的适用性未验证
 - **网络规模小**: 仅23个节点的校园网络，城市级（数千节点）的扩展性未证明

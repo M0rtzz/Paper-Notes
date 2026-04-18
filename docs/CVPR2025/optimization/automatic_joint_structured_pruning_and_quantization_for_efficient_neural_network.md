@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Automatic Joint Structured Pruning and Quantization for Efficient Neural Network Training and Compression
 description: >-
@@ -40,7 +40,7 @@ tags:
    - 用部分投影 SGD 将离散比特约束转化为连续优化问题
    - 用白盒优化替代黑盒搜索
 
-**核心 idea 一句话**：QADG 统一搜索空间 + 投影 SGD 约束满足 + 可解释剪枝-量化关系 = 一键联合压缩。
+**核心 idea**：QADG 统一搜索空间 + 投影 SGD 约束满足 + 可解释剪枝-量化关系 = 一键联合压缩。
 
 ## 方法详解
 
@@ -125,7 +125,7 @@ GETA 接受任意 DNN 和目标压缩率作为输入，输出联合剪枝+量化
 - **一次训练**：消除多阶段流程的工程复杂度
 - **架构通用**：QADG 自动处理任意网络拓扑
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 极端压缩率下精度下降仍较大
 - QADG 构建需要静态图分析，对动态图支持有限
 - 目前仅验证了分类任务，检测/分割等下游任务待验证

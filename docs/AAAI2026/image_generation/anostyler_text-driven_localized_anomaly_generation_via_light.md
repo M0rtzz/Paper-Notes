@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnoStyler: Text-Driven Localized Anomaly Generation via Lightweight Style Transfer
 description: >-
@@ -91,7 +91,7 @@ AnoStyler由三个阶段组成：
 - **掩码加权的patch损失**: 用掩码覆盖率做soft weighting是一个简单但有效的局部化策略
 - **Meta-Shape Priors**: 三种几何原语覆盖了线状（划痕）、点状（斑点）和自由形（扩散）等不同异常形态，比Perlin噪声更符合真实异常
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **每张图像独立训练**: 虽然轻量，但每生成一张异常图像都需要75步优化，无法实现前馈推理的即时生成
 - **CLIP语义局限**: CLIP对工业缺陷的理解有限（如"contamination"、"thread"等特定缺陷类型），文本引导的精确度受CLIP预训练数据分布影响
 - **掩码与真实异常位置不对齐**: 生成的掩码是随机的几何形状，与真实缺陷的出现位置无关（如螺丝的缺陷更可能在螺纹处）

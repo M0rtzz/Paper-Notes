@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Long-Tail Temporal Action Segmentation with Group-wise Temporal Logit Adjustment
 description: >-
@@ -135,7 +135,7 @@ Breakfast 上逐步添加组件（MSTCN backbone）：
 - 时序因子的设计非常精巧：在时间窗口内正常调整，窗口外通过比值保持一致性，既不过度抑制也不引入假阳性
 - 即插即用：G-TLA 只修改分类层，可直接搭载到 MSTCN、ASFormer、DiffAct 等任意 backbone
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要活动标签（或聚类结果）来确定分组，增加了先验信息需求
 - 时序约束 $S_{bf}[c]$ 和 $S_{af}[c]$ 从训练数据统计得到，对于训练集中未出现的新顺序可能失效

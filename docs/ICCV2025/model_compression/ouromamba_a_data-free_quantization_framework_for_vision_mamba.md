@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] OuroMamba: A Data-Free Quantization Framework for Vision Mamba
 description: >-
@@ -104,7 +104,7 @@ OuroMamba 包含两个阶段：OuroMamba-Gen（合成数据生成）和 OuroMamb
 - 无数据场景下反而优于数据驱动方法，说明针对模型特性设计的合成数据比通用真实数据更有效
 - 混合精度 GEMM kernel 的 INT4+INT8 融合流水线实现了真正的落地加速
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 动态异常值检测假设内联分布在校准后保持稳定，未来模型若内联值波动大需额外研究
 - 目前仅实现了特定精度组合（W4A4O8）的 kernel，更多精度组合的 kernel 支持有待完善

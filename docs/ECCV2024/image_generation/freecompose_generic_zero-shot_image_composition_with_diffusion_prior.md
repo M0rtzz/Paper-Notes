@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FreeCompose: Generic Zero-Shot Image Composition with Diffusion Prior
 description: >-
@@ -156,7 +156,7 @@ $$\text{Attention}(Q, K_i, V_i), \text{if } t > T \text{ and } l > L$$
 3. **Mask-guided KV 操作**：在自注意力层面通过掩码控制语义信息流的思路新颖，且可扩展到其他需要空间控制的任务
 4. **多样化应用**：除基础合成外，还可用于对象风格化和多角色定制等下游任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **对象身份保持不如训练型方法**：图像和谐化中为了更好的融合效果，降低了前景 perceptual loss 权重，导致身份保持略逊于 DucoNet
 2. **运行速度偏慢**：每个阶段需要数百步优化迭代，实时应用受限

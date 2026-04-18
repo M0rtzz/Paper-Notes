@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment
 description: >-
@@ -103,7 +103,7 @@ $$R_t^{\text{response}} = N \cdot R \cdot L \cdot G \cdot F$$
 - 双层奖励设计精巧：Profile Reward 做"显式画像监督"，Response Reward 做"隐式行为监督"，二者互补缺一不可。
 - 3B 小模型通过 RLPA 训练可以媲美甚至超越 GPT-4o 等大模型，说明"正确的训练范式"比"模型规模"更重要。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前假设单用户单线程交互，未考虑多用户、多会话、跨领域场景。
 - 模拟用户与真实用户之间可能存在行为分布差距（sim-to-real gap）。

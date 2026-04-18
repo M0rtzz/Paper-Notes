@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Geminio: Language-Guided Gradient Inversion Attacks in Federated Learning
 description: >-
@@ -129,7 +129,7 @@ Geminio分为两个阶段：
 - **隐蔽性设计**：模型参数自然、不修改架构、可在任意轮次发起、不影响正常训练
 - **防御困难**：现有的梯度剪枝、噪声注入、参数检查均无法有效防御，揭示了严重的安全隐患
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 依赖VLM（如CLIP）的文本-图像对齐质量，对特定领域的查询可能不够精确
 - 攻击成功率随batch增大而逐渐下降，对超大batch（>512）的效果未知
 - FedAvg下需要控制客户端学习率，实际FL系统中客户端可能有自己的学习率设置

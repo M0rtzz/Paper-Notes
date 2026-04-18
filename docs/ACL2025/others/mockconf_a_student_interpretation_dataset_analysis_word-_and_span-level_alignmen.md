@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MockConf: A Student Interpretation Dataset: Analysis, Word- and Span-level Alignment and Baselines
 description: >-
@@ -146,7 +146,7 @@ tags:
 - **接力传译与多轨传译的分析**：发现接力传译更容易（已预简化）、多轨传译的长度差异平均仅 2%。
 - **详尽的评估指标设计**：为传译对齐任务定义了从分割到标签的完整指标体系。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据来自学生传译员，质量和策略可能与专业译员不同
 - 标注者一致性较低，跨标注者的变异性影响数据可靠性

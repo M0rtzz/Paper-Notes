@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting the Data Sampling in Multimodal Post-training from a Difficulty-Distinguish View
 description: >-
@@ -122,7 +122,7 @@ tags:
 - 实验设计极为系统：穷举了所有SFT+GRPO的难度组合，排除了偶然性
 - PISM的设计灵感类似于**对抗鲁棒性评估**——通过扰动输入测量模型的依赖程度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在Qwen2.5VL-7B上验证，需要更多模型的泛化性验证
 - PISM需要大量推理（每样本10个遮蔽比例×10次重复=100次推理），计算成本较高

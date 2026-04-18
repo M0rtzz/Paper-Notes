@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaSTaR: Adaptive Data Sampling for Training Self-Taught Reasoners
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **切入角度**：两个自适应原则——多样性（优先欠训练样本）+ 课程（模型弱时多采简单样本）。
 
-**核心 idea 一句话**：用分层最小堆按"上次采样时间+难度"排序观测，同时用训练准确率 $\alpha$ 作课程调节器自动平衡难度。
+**核心 idea**：用分层最小堆按"上次采样时间+难度"排序观测，同时用训练准确率 $\alpha$ 作课程调节器自动平衡难度。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ tags:
 - **分层最小堆的数据结构选择**：将多样性（$\tilde{t}_i$）和难度（$w_i$）编码在分层堆中，O(log N) 的采样效率
 - **对 STaR 训练动态的深入分析**：发现了训练频率不平衡的持久性问题（72%/91% 保持不变），这个 observation 对理解 STaR 系统很有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅 outcome verification**：只检查最终答案正确性，未使用 PRM（process reward model）
 - **$\alpha^2$ 的选择**：课程函数 $f(\alpha) = \alpha^2$ 是人工选择，可能存在更优形式
 - **未与 RL-based 方法比较**：AdaSTaR 关注 SFT/STaR 管线，未与 GRPO 等 RL 方法直接对比

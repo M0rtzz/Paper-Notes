@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlashTex: Fast Relightable Mesh Texturing with LightControlNet
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: 现有方法要么快但不可重光照（如Text2tex），要么可重光照但极慢（如Fantasia3D需5000次迭代共30分钟）。速度与质量和可重光照性之间存在根本性的权衡困境。
 
-**本文要解决什么？**: 同时解决速度、质量和可重光照三大问题。在保持高质量纹理的同时，将光照与材质属性（albedo、metallic、roughness等）解耦，且将生成时间压缩到约4分钟。
+**本文目标**: 同时解决速度、质量和可重光照三大问题。在保持高质量纹理的同时，将光照与材质属性（albedo、metallic、roughness等）解耦，且将生成时间压缩到约4分钟。
 
 **切入角度**: 从ControlNet架构出发，通过引入光照条件图像作为额外控制信号来实现光照感知的文本到图像生成，再结合参考视图引导的优化策略大幅减少SDS迭代次数。
 
-**核心idea一句话**: 用一个以三种预定义材质渲染图为条件的LightControlNet实现光照可控生成，配合多视图视觉提示和仅400次迭代的SDS优化实现快速可重光照纹理生成。
+**核心 idea**: 用一个以三种预定义材质渲染图为条件的LightControlNet实现光照可控生成，配合多视图视觉提示和仅400次迭代的SDS优化实现快速可重光照纹理生成。
 
 ## 方法详解
 
@@ -49,26 +49,26 @@ FlashTex采用两阶段pipeline：**Stage 1**通过多视图视觉提示（Multi
 
 1. **LightControlNet（光照控制网络）**:
 
-    - **做什么**: 在ControlNet基础上引入光照控制能力，使生成的图像能指定特定光照环境。
+    - **功能**: 在ControlNet基础上引入光照控制能力，使生成的图像能指定特定光照环境。
     - **核心思路**: 条件图像由三种预定义材质渲染图拼合而成：(1) 非金属+不光滑；(2) 半金属+半光滑；(3) 纯金属+极光滑。三张渲染图叠合为三通道条件图像 $I_{\text{cond}}(L, C)$。这三种材质涵盖了从漫反射到高光反射的完整范围，能充分编码光照信息。
     - **训练**: 使用Objaverse中40K物体，每个物体12个视角、6种环境光照随机采样，共480K训练对。
     - **设计动机**: 仅用一种材质渲染不足以控制光照方向和强度，三种互补材质能完整描述光照-几何交互效果。
 
 2. **蒸馏编码器（Distilled Encoder）**:
 
-    - **做什么**: 对Stable Diffusion的图像编码器进行蒸馏加速。
+    - **功能**: 对Stable Diffusion的图像编码器进行蒸馏加速。
     - **核心思路**: 移除编码器中的注意力模块，在COCO数据集上训练以匹配原始编码器输出。蒸馏后的编码器运行速度提升5倍，整体pipeline加速约2倍。
     - **设计动机**: 原始SD编码器占SDS前向/反向过程近50%的时间，成为性能瓶颈。
 
 3. **多视图视觉提示（Multi-view Visual Prompting）**:
 
-    - **做什么**: 将4个规范视角的条件图像拼成 $2 \times 2$ 网格作为单张图像输入LightControlNet。
+    - **功能**: 将4个规范视角的条件图像拼成 $2 \times 2$ 网格作为单张图像输入LightControlNet。
     - **核心思路**: $I_{\text{ref}} = \text{ControlNet}(I_{\text{cond}}(L^*, C^*), y)$，其中 $C^*$ 为前、后、左、右4个规范视角，$L^*$ 为固定光照。
     - **设计动机**: 独立生成4张图像会导致外观不一致（Figure 5）。将4张拼合为网格后，扩散模型利用训练数据中类似网格图的先验，自然产生风格一致的4视图。这是一个关键洞察——利用了Stable Diffusion训练集中的数据分布特性。
 
 4. **纹理优化（Texture Optimization）**:
 
-    - **做什么**: 基于参考视图和SDS联合优化，生成解耦光照的PBR材质纹理。
+    - **功能**: 基于参考视图和SDS联合优化，生成解耦光照的PBR材质纹理。
     - **核心思路**: 使用多分辨率哈希网格 $\beta$ + 两层MLP $\Gamma$ 表示3D纹理：$(k_c, k_m, k_r, k_n) = \Gamma(\beta(p))$，分别输出base color、metallicness、roughness和bump向量。通过nvdiffrast可微渲染器渲染为2D图像，同时优化重建损失和SDS损失：
         - 重建损失：$\mathcal{L}_{\text{recon}} = \|I_{\text{ref}} - \mathcal{R}(\Gamma(\beta(\cdot)), L^*, C^*)\|_2 + \mathcal{L}_{\text{perceptual}}$
         - SDS损失：使用LightControlNet作为扩散模型，随机采样视角和光照
@@ -116,7 +116,7 @@ FlashTex采用两阶段pipeline：**Stage 1**通过多视图视觉提示（Multi
 - **少次数SDS的可能性**: 通过参考视图提供强先验，将SDS迭代从5000(Fantasia3D)降至400(10×提速)
 - **PBR材质输出**: 直接输出metallicness/roughness/base color等PBR参数，便于下游渲染引擎直接使用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 某些OOD网格仍存在光照烘焙问题
 - 材质图有时未完全解耦为可解释的metallicness/roughness

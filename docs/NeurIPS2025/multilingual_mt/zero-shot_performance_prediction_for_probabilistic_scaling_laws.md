@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Zero-Shot Performance Prediction for Probabilistic Scaling Laws
 description: >-
@@ -186,7 +186,7 @@ Ground truth: $-0.056c + 3.51$。
 5. **极小数据有效**：仅 29 条学习曲线 × 11 点就能做出有意义的预测，这对资源受限的研究者非常重要
 6. **模型选择直觉**：MaGP 用潜变量捕捉任务相关性，DHGP 靠层次发现聚类——当任务间有强相关时 MaGP 胜出
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：最大仅 30 条曲线，未在真正大规模（如 Chinchilla 规模）场景验证
 2. **仅限 NLP**：虽然框架通用，但只在 NLP 任务上测试

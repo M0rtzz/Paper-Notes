@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CarePilot: A Multi-Agent Framework for Long-Horizon Computer Task Automation in Healthcare
 description: >-
@@ -113,7 +113,7 @@ CarePilot(基于7B模型)在Task Accuracy上超越GPT-5约15%。
 - **Actor-Critic的医疗适配**：Critic不仅评估对错，还提供"怎么修正"的反馈——这对安全关键的医疗场景尤为重要
 - **步级准确度≠任务成功**：这个发现对所有长视界Agent研究都有警示——不能仅看单步指标
 
-## 局限性 / 可改进方向
+## 局限与展望
 - CareFlow仅覆盖5个开源医疗软件——商业系统(Epic, Cerner)的泛化有待验证
 - Actor和Critic基于同一模型可能导致"盲点一致性"——不同模型做Actor和Critic可能更好
 - 当前迭代仿真训练依赖参考轨迹——真实部署中需要不依赖参考的在线学习方案

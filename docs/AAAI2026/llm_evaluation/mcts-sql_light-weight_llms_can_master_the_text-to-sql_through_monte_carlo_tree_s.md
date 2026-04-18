@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MCTS-SQL: Light-Weight LLMs can Master the Text-to-SQL through Monte Carlo Tree Search
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：小模型单次生成不够好，但可以通过多次搜索和精化来弥补——需要一种高效的搜索策略。
 
-**本文要解决什么？** 让1.5B参数的模型通过MCTS搜索达到大模型级别的Text-to-SQL性能。
+**本文目标** 让1.5B参数的模型通过MCTS搜索达到大模型级别的Text-to-SQL性能。
 
 **切入角度**：MCTS天然适合SQL生成——SQL有明确的正确性验证（执行结果匹配），可以作为搜索的奖励信号。
 
-**核心idea一句话**：Schema剪枝 + 初始生成 + MCTS精化 + 前缀缓存 = 小模型的强Text-to-SQL。
+**核心 idea**：Schema剪枝 + 初始生成 + MCTS精化 + 前缀缓存 = 小模型的强Text-to-SQL。
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ tags:
 - **前缀缓存**对任何多轮LLM推理场景都有迁移价值
 - 1.5B超GPT-3.5证明了"搜索比模型大小更重要"在SQL场景的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MCTS搜索增加了推理延迟（尽管前缀缓存缓解到53%减少）
 - 对不可执行验证的任务（如自然语言生成）不直接适用——SQL的唯一性是MCTS反馈的前提
 - BIRD评估可能有数据泄漏风险

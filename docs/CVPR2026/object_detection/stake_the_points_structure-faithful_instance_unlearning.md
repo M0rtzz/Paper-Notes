@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stake the Points: Structure-Faithful Instance Unlearning
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L}_{\text{reg}} = \frac{1}{2} \sum_i I_i \cdot (\psi_i^{\text{unl}} -
 - **表征一致性极佳**：Grad-CAM 和表征余弦相似度分析显示，保留样本的表征几乎未受遗忘过程影响
 - **无需保留集**：仅依赖预训练模型和遗忘集，更贴近真实应用场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 CLIP 和 GPT-4o 生成锚点，对模型和提示的选择可能影响效果，且增加了部署成本
 - 代理集通过对抗样本近似保留集，当遗忘样本数量较少时近似质量可能不足

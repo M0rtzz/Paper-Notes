@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoMo: Learning Continuous Latent Motion from Internet Videos for Scalable Robot Learning
 description: >-
@@ -124,7 +124,7 @@ CALVIN ABC→D 基准：
 - **MSE + S-PCFC 评估体系**提供了无需昂贵策略评估的快速诊断工具
 - 联合训练的简洁性是重要工程价值：一阶段统一训练 vs 多阶段复杂流程
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 LIBERO 和 CALVIN 上验证，泛化到更复杂的真实世界场景有待探索
 - 隐运动维度扩展的上限和最优维度选择缺乏理论指导

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Measuring Social Biases in Masked Language Models by Proxy of Prediction Quality
 description: >-
@@ -126,7 +126,7 @@ BERT、RoBERTa 等掩码语言模型（MLM）在各种 NLP 任务上取得了 SO
 - **BSRT 的实用价值**：模型比较函数可以直接评估重训练对偏见的影响，对偏见缓解研究非常实用
 - **严谨的统计验证**：使用 Shapiro-Wilk 正态性检验、McNemar 检验等统计方法确认结果的可靠性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限英文**：CPS 和 StereoSet 都是英文数据集，其他语言的偏见分析需要新的基准
 2. **仅限 MLM 架构**：只评估了掩码语言模型（BERT/RoBERTa），不适用于自回归模型（GPT 系列）

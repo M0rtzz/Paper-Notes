@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Joint Optimization of Neural Radiance Fields and Continuous Camera Motion from a Monocular Video
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**: 逐帧独立优化位姿需要直接估计 camera-to-world 的大变换，这在优化初期极易陷入局部最优；而视频的时间连续性信息未被充分利用。
 
-**本文要解决什么**: 无需任何先验（无深度、无初始位姿），仅从单目视频的 RGB 图像和相机内参联合优化相机运动和 3D 场景。
+**本文目标**: 无需任何先验（无深度、无初始位姿），仅从单目视频的 RGB 图像和相机内参联合优化相机运动和 3D 场景。
 
 **切入角度**: 将离散位姿优化转化为连续运动估计——用 MLP 预测每个时刻的角速度和线速度，通过积分得到任意两帧间的相对变换。
 
@@ -52,17 +52,17 @@ tags:
 ### 关键设计
 
 **1. 连续相机运动建模**
-- **做什么**: 用 MLP 将时间 $t$ 映射为 $(\boldsymbol{\omega}(t), \mathbf{v}(t)) \in \mathbb{R}^6$，通过 Euler 方法积分得到旋转矩阵和平移向量。
+- **功能**: 用 MLP 将时间 $t$ 映射为 $(\boldsymbol{\omega}(t), \mathbf{v}(t)) \in \mathbb{R}^6$，通过 Euler 方法积分得到旋转矩阵和平移向量。
 - **核心思路**: $\mathbf{R}_{t\to t+l} = \prod_{u=0}^{U-1} \psi(\boldsymbol{\omega}(t+u\Delta t)\Delta t)$，$\mathbf{t}_{t\to t+l} = \sum_{u=0}^{U-1} \mathbf{v}(t+u\Delta t)\Delta t$，步长 $\Delta t = l/U$，使用 10 个子区间。
 - **设计动机**: 将大运动分解为无穷小增量的累积，极大简化了大范围运动的学习。不同于逐帧独立优化或 SLAM 式的相邻帧相对变换，连续建模天然支持跨帧约束和平滑性。
 
 **2. 时间依赖 NeRF**
-- **做什么**: NeRF 以 $(\mathbf{x}, t)$ 为输入预测 SDF $s(\mathbf{x},t)$ 和颜色 $\mathbf{c}(\mathbf{x},t)$，在每个时刻 $t$ 的局部相机坐标系下定义场景。
+- **功能**: NeRF 以 $(\mathbf{x}, t)$ 为输入预测 SDF $s(\mathbf{x},t)$ 和颜色 $\mathbf{c}(\mathbf{x},t)$，在每个时刻 $t$ 的局部相机坐标系下定义场景。
 - **核心思路**: 训练初期位姿噪声大时，每个时刻的 NeRF 只需解释邻近帧的局部场景——这比在全局坐标系下用噪声位姿训练更稳定。
 - **设计动机**: 避免了早期噪声位姿导致 3D 点映射到全局坐标系后的累积误差。时间依赖设计还使得 SDF flow 约束成为可能。
 
 **3. SDF Flow 与运动一致性约束**
-- **做什么**: 利用 SDF 时间导数与相机运动的线性关系约束场景和运动的一致性：$\mathcal{L}_{flow} = \left|\frac{\partial s}{\partial t} + (\boldsymbol{\omega} \times \mathbf{x} + \mathbf{v})^T \mathbf{n}\right|$。
+- **功能**: 利用 SDF 时间导数与相机运动的线性关系约束场景和运动的一致性：$\mathcal{L}_{flow} = \left|\frac{\partial s}{\partial t} + (\boldsymbol{\omega} \times \mathbf{x} + \mathbf{v})^T \mathbf{n}\right|$。
 - **核心思路**: 对于静态场景，表面点的 SDF 在相机运动下满足刚体约束，SDF 的时间变化率等于相机速度在表面法线上的投影。
 - **设计动机**: 这个物理约束强制每个时刻的场景表面变化与相机运动一致，防止时间依赖 NeRF 在各时刻独立"漂移"。
 
@@ -126,7 +126,7 @@ $$\mathcal{L} = \mathcal{L}_{rgb} + \lambda_1 \mathcal{L}_{eik} + \lambda_2 \mat
 - 完全 prior-free，却在位姿和深度上大幅超越依赖深度先验的方法
 - 两阶段训练策略合理：先学准运动，再精修完整场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅适用于静态场景，动态物体会违反刚体假设
 - 基于 NeRF 的方法训练速度较慢

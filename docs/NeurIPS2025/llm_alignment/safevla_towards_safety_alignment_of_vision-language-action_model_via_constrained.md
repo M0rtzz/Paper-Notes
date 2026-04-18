@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning
 description: >-
@@ -120,7 +120,7 @@ CC 平均下降 **83.58%**，SR 平均提升 **+3.85%**。
 3. **Safety-CHORES 基准**：精心设计的安全关键场景，比现有基准更能暴露 VLA 漏洞（CC 高出 2 倍）
 4. **Sim-to-Real 验证**：在物理机器人平台上成功部署
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Sim-to-Real 仅验证了 Safety-PickUp 单一任务
 2. 安全谓词需要人工设计，自动化安全规范提取是重要方向

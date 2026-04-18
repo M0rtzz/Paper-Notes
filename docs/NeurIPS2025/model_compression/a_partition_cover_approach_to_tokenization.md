@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Partition Cover Approach for Tokenization
 description: >-
@@ -83,7 +83,7 @@ GreedTok用同样token数的文本训练（DCLM约20%数据），在11个benchma
 - **MIP形式化的灵活性**：可以自然地向目标函数中注入新的约束（如公平性、下游任务目标），这是BPE/Unigram做不到的
 - **实际可用**：C++实现+Python绑定+HuggingFace集成，编码速度700-800K words/s/thread，wiki 10K词表11分钟构建
 
-## 局限性 / 可改进方向
+## 局限与展望
 - GreedTok选词的理论复杂度$O(|\mathbf{T}|\cdot k \cdot \sum|W|)$高于BPE的$O(k \cdot \sum|W|)$，虽然lazy evaluation实际大幅加速，但对超大规模语料仍有计算瓶颈（14.3M unique words时34分钟/160GB RAM）
 - 缺少GreedTok的正式近似比证明（仅有经验$0.9(1-1/e)$保证）
 - 预训练实验仅限于1B参数模型和BPE对比，未验证更大模型或与Unigram的预训练对比

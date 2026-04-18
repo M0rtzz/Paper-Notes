@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AstaBench: Rigorous Benchmarking of AI Agents with a Scientific Research Suite
 description: >-
@@ -33,7 +33,7 @@ AI2 团队针对现有科研 Agent 基准的 5 大方法学缺陷，构建了首
 
 **切入角度**：作者团队背靠 Semantic Scholar / Asta 已部署系统（108M+ 摘要、12M+ 全文论文），具备独特优势：(1) 拥有生产级的文献搜索 API 可直接作为受控工具；(2) 已部署 Asta Agent 积累了大量真实用户请求，可用于构建贴近实际需求的问题集。
 
-**核心idea一句话**：从方法论层面系统修复科研 Agent 评估的 5 大缺陷，构建覆盖全流程、工具可控、基线充分的标准化 Agent 评估平台。
+**核心 idea**：从方法论层面系统修复科研 Agent 评估的 5 大缺陷，构建覆盖全流程、工具可控、基线充分的标准化 Agent 评估平台。
 
 ## 方法详解
 

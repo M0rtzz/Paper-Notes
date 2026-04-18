@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MAD-Avatar: Motion-Aware Animatable Gaussian Avatars Deblurring
 description: >-
@@ -77,7 +77,7 @@ L = L1(合成模糊帧, 观测模糊帧) + L_reg(帧间位姿连续性正则)。
 - **360°混合曝光相机系统构建**: 实际搭建了12台同步相机(4模糊+8清晰)的benchmark，对该方向有持续价值
 - **iPhone Demo展示泛化性**: 从单目iPhone视频+TRAM做SMPL估计也能工作，说明方法实用性较好
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 基于SMPL，无法处理手持物体和宽松服装的运动模糊
 - 在sRGB空间做平均而非线性辐射空间，高对比度区域会有物理不准确
 - 无法恢复几何(法向/BRDF)，因为基于3DGS表示

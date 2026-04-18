@@ -1,4 +1,4 @@
----
+﻿---
 title: "DocoPilot: Improving Multimodal Models for Document-Level Understanding"
 description: "提出高质量文档级数据集Doc-750K和原生多模态文档理解模型Docopilot，无需RAG即可处理长文档的跨页依赖"
 tags: ["document-understanding", "multimodal-llm", "long-context", "dataset", "knowledge-distillation"]
@@ -24,11 +24,11 @@ tags: ["document-understanding", "multimodal-llm", "long-context", "dataset", "k
 
 **核心矛盾**：高质量的文档级多模态数据集极度稀缺（标注成本高、构建流程缺失），而没有好的训练数据，就无法训练出原生的长上下文文档理解模型，只能依赖有缺陷的 RAG。
 
-**本文要解决什么？** (1) 如何高效构建大规模高质量的文档级多模态训练数据？ (2) 如何在不依赖 RAG 的情况下训练原生的文档级 MLLM？
+**本文目标** (1) 如何高效构建大规模高质量的文档级多模态训练数据？ (2) 如何在不依赖 RAG 的情况下训练原生的文档级 MLLM？
 
 **切入角度**：作者利用学术论文的结构化特性（论文有标题、摘要、实验节等明确结构），设计了一套自动化数据构建流水线，从 Sci-Hub、arXiv、OpenReview 等来源提取真实的问答对，避免了人工标注的高成本。
 
-**核心idea一句话**：通过构建大规模高质量文档级数据集 Doc-750K，结合工程优化（多模态数据打包 + Ring Attention + Liger Kernel）训练原生文档 MLLM，在文档理解任务上同时超越 RAG 方法的准确性和效率。
+**核心 idea**：通过构建大规模高质量文档级数据集 Doc-750K，结合工程优化（多模态数据打包 + Ring Attention + Liger Kernel）训练原生文档 MLLM，在文档理解任务上同时超越 RAG 方法的准确性和效率。
 
 ## 方法详解
 
@@ -96,7 +96,7 @@ Docopilot-8B 在 MM-NIAH 上超越 InternVL2-8B +19.9 点，超越 InternVL2-26B
 - **工程优化三件套的组合**使得长文档训练从不可行变为可行，且这套方案完全可复用于其他需要长上下文训练的多模态任务
 - **OpenReview 审稿数据的利用**：直接将真实的审稿问答作为训练数据，既保证了问题的深度和多样性，又是零标注成本的高质量数据来源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **数据偏向学术论文**：Doc-750K 主要来自 Sci-Hub/arXiv/OpenReview，对商业文档（合同、财报）、法律文件、多语言文档的覆盖不足
 - **基准测试局限**：MM-NIAH 等基准主要测试"大海捞针"式的信息检索能力，对复杂推理（如跨页因果推理、多步计算）的评估尚不充分

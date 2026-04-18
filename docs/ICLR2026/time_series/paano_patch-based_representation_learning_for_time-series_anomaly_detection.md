@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PAANO: Patch-Based Representation Learning for Time-Series Anomaly Detection
 description: >-
@@ -162,7 +162,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{triplet}} + \lambda \cdot \mathcal{L}_{\text{
 3. **视觉→时序的成功迁移**：patch-based 表示学习 + 记忆库的范式（类 PatchCore）在时序领域同样有效
 4. **严格评估的重要性**：去除 point adjustment 和阈值调优后，方法排名大幅变化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 半监督设定假设训练数据全为正常，无法处理已知少量标注异常的场景
 - patch 大小 $w$ 为固定超参，不同类型异常可能需要不同窗口

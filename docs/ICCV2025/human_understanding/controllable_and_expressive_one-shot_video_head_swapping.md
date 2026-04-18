@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Controllable and Expressive One-Shot Video Head Swapping
 description: >-
@@ -113,7 +113,7 @@ tags:
 - **3DMM+Mediapipe结合**：取两者之长——3DMM的解耦能力+Mediapipe的表现力——解决了单一方案的局限
 - 支持表情编辑（不仅迁移），为实际影视后期制作提供了更大灵活性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 定量评估指标有限，缺少FID/LPIPS等图像质量指标
 - 肩部以下的身体-头发交互在极端姿态下可能仍有伪影
 - 依赖Mediapipe的稳定性，极端角度或遮挡下可能失效

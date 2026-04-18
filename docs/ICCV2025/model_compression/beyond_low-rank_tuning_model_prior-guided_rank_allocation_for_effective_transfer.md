@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Low-Rank Tuning: Model Prior-Guided Rank Allocation for Effective Transfer in Low-Data and Large-Gap Regimes
 description: >-
@@ -125,7 +125,7 @@ SR-LoRA的流程极其简洁：（1）计算预训练模型每个目标层权重
 - 参数空间和特征空间的双重分析（Figure 6和Figure 7）为理解LoRA秩的影响提供了深入视角
 - 方法即插即用，可与其他LoRA改进组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 稳定秩需要计算SVD（至少是谱范数和Frobenius范数），对超大模型可能有开销
 - 主要在视觉模型（ViT/Swin）上验证，LLM场景未充分探索
 - 稳定秩在预训练后"基本不变"的假设在不同预训练方法间是否成立需要更多验证

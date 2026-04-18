@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MLDebugging: Towards Benchmarking Code Debugging Across Multi-Library Scenarios
 description: >-
@@ -124,7 +124,7 @@ tags:
 - **深入的模型行为分析**：按库使用场景（通用算法、数据处理、网络通信等）和库流行度分析 LLM 能力。
 - **发现了蒸馏推理模型的局限**：这一反直觉发现对 CoT 蒸馏研究有参考价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据主要由模型自动生成，虽经人工校验但与真实 bug 仍有差异，未来可引入更多真实数据
 - 评测流程需要配置大量外部依赖和复杂环境，耗时较长

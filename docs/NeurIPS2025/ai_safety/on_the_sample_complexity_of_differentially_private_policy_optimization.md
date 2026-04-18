@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] On the Sample Complexity of Differentially Private Policy Optimization
 description: >-
@@ -118,7 +118,7 @@ $$\mathbb{P}[\mathcal{M}(D) \in S] \leq e^\varepsilon \cdot \mathbb{P}[\mathcal{
 - **NPG的归约视角**：将DP-NPG/DP-REBEL归约为隐私回归问题，可直接复用隐私估计/监督学习中的成熟结果
 - **新的隐私最小二乘引理**（Lemma 2）：基于指数机制的隐私LS结果，适用于序列化自适应数据，可能具有独立研究价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅限单程采样**：当前结果聚焦于one-pass设定，多次遍历场景下的样本复杂度可能更优
 - **缺乏大规模实验**：仅在CartPole-v1上做了概念验证，未在LLM-RLHF、医疗等实际隐私敏感场景中评估

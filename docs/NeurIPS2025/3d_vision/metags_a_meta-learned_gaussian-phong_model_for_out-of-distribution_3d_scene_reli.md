@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting
 description: >-
@@ -117,7 +117,7 @@ MetaGS在合成数据上平均PSNR比NRHints高约3-9dB，比GS3高约2-8dB。
 - 将不同光照条件视为多任务学习的"任务"，在内循环适应后用跨任务验证来约束泛化，这一meta-learning范式可推广到其他3D场景理解任务
 - 阴影的BVH光线追踪是可微的但又物理正确，兼顾了梯度训练和正确性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑直接光照，未建模间接光照和全局光照传输
 - Phong模型对强次表面散射或各向异性反射材质建模能力有限

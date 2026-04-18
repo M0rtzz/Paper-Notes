@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Spectral Gaps and Spatial Priors: Studying Hyperspectral Downstream Adaptation Using TerraMind
 description: >-
@@ -97,7 +97,7 @@ $$\hat{w}_{j,k} = \frac{\phi_k(\lambda_j)}{\sum_{m=1}^{C_{in}} w_{m,k}}$$
 3. 实验设计严谨——10 次随机种子重复，涵盖从"简单"到"极难"的四个任务梯度。
 4. 对 Hyperview-1 回归结果的深入分析（土壤光谱学视角）展示了跨学科的洞察力。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅研究了 TerraMind 一个 GFM，结论可能具有模型特异性，需在其他 GFM（如 DOFA）上验证。
 2. 通道适配仅限于简单的选择/加权策略，未探索可学习的光谱投影或适配器。

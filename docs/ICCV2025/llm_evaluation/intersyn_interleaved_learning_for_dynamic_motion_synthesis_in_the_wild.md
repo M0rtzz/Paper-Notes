@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] InterSyn: Interleaved Learning for Dynamic Motion Synthesis in the Wild
 description: >-
@@ -102,7 +102,7 @@ InterSyn 包含两个阶段：
 - **REC 模块的对称设计**：通过两步精修（先修 $u_x$，再用 $\phi_x$ 反向微调 $u_y$），隐式建模了交互的双向依赖
 - **与 FreeMotion 的关键差异**：FreeMotion 通过条件运动分布统一单人和多人生成，但分开处理两种模态；InterSyn 在统一潜在空间中联合编码，实现无缝转换
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在双人交互上训练和评测，多人（>2人）扩展仅通过推理阶段的 coordinator 设计实现，质量未知
 - 交错最多 2 段时效果最好，限制了生成的复杂度

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DGS-LM: Faster Gaussian-Splatting Optimization with Levenberg-Marquardt
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：ADAM作为一阶方法，每步只利用梯度方向信息，收敛需要数千次迭代才能到达局部最优；而二阶方法（如LM）通过求解法方程近似二阶更新，理论上可以用少得多的迭代次数收敛，但在3DGS场景下面临数百万高斯参数×高分辨率图像的Jacobian矩阵过大无法显式存储的挑战。
 
-**本文要解决什么**：如何将LM优化器高效应用于3DGS，在GPU上实现可扩展的Jacobian-向量积计算？
+**本文目标**：如何将LM优化器高效应用于3DGS，在GPU上实现可扩展的Jacobian-向量积计算？
 
 **切入角度**：利用3DGS高斯原语的稀疏性——每个像素只受少量高斯贡献，Jacobian矩阵极度稀疏——设计缓存友好的per-pixel-per-splat并行策略，将中间梯度缓存一次后在PCG迭代中复用。
 
-**核心idea一句话**：通过梯度缓存+per-pixel-per-splat CUDA并行化实现矩阵无关PCG求解，将LM嫁接到3DGS优化的第二阶段，仅需5次LM迭代替代10K次ADAM迭代。
+**核心 idea**：通过梯度缓存+per-pixel-per-splat CUDA并行化实现矩阵无关PCG求解，将LM嫁接到3DGS优化的第二阶段，仅需5次LM迭代替代10K次ADAM迭代。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ tags:
 - **两阶段策略**精准利用了一阶和二阶优化器各自的优势：ADAM擅长从差初始化快速进展+完成densification，LM擅长在好初始化附近快速收敛。这种"粗调+精调"范式具有通用价值。
 - **加权批次合并**（公式8）巧妙地用 $\text{diag}(\mathbf{J}^T\mathbf{J})$ 作为权重，本质上让对当前批次图像贡献大的高斯参数获得更大的更新权重，保证了跨批次更新方向的物理一致性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **显存开销大**：完整方案需约53GB GPU显存（vs 基线6-11GB），限制了在消费级GPU上的应用
 - **初始化依赖**：必须用ADAM先跑20K步，LM从头训练反而更慢，两阶段切换点的选择是启发式的
 - **densification阶段未优化**：LM目前只优化固定数量高斯的参数，如何在densification过程中也使用二阶信息是开放问题
@@ -226,7 +226,7 @@ $$(J^T J + \lambda_{\text{reg}} \cdot \text{diag}(J^T J)) \Delta = -J^T F(\mathb
 - **SSIM梯度的巧妙处理**: 只对中心像素反传梯度保持光线独立性，使SSIM可以无缝集成到并行PCG中
 - **残差权重预计算**: 将 $(\partial r/\partial c)^2$ 提取到核外计算，避免核内额外全局内存读取，使L1/SSIM残差的计算开销几乎与L2相同
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **GPU内存消耗大**: 梯度缓存使内存从6-11GB增至53GB，高分辨率/大规模场景可能需要CPU offloading
 2. **仍依赖ADAM做densification**: 两阶段设计意味着第一阶段仍需较长时间；若能将densification集成到LM中（仅5-10次迭代难以支持140次densification），可进一步加速

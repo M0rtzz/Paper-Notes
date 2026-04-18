@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MotionFollower: Editing Video Motion via Lightweight Score-Guided Diffusion
 description: >-
@@ -150,7 +150,7 @@ $$\nabla_{z_t^e} \log q(F_t^e, F_t^r | z_t^e) = \frac{d\mathcal{L}_{fg}}{dz_t^e}
 4. **长视频与大相机运动**：MotionEditor 在 600 帧长视频和大幅相机运动场景中出现严重退化，MotionFollower 凭借一致性引导有效应对
 5. **两阶段训练 + 混合训练策略**：第二阶段 40% 概率退化为图像训练，有效防止时序层训练破坏单帧编辑能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖姿态检测质量**：PoCtr 依赖 DWPose 提取姿态，当姿态检测失败（严重遮挡、非常规姿态）时编辑质量可能下降
 2. **分辨率限制**：训练和测试均在 512×512，未探索高分辨率（1024+）场景的可扩展性

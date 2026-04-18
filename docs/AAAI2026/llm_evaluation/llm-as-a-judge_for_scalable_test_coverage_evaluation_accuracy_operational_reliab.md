@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM-as-a-Judge for Scalable Test Coverage Evaluation
 description: >-
@@ -106,7 +106,7 @@ LAJ（LLM-as-a-Judge）框架：接收Jira需求+Gherkin测试脚本→通过rub
 - **ECR@1指标的通用价值**：该指标可迁移到任何LLM生产系统——首次成功率直接影响用户体验和成本
 - **"小模型胜大模型"的反直觉发现**：在结构化评估任务上，过多推理反而引入噪声
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 基准仅针对Kill Bill平台的API测试，领域泛化性未验证
 - 仅评估Gherkin格式的验收测试，单元测试和集成测试未覆盖

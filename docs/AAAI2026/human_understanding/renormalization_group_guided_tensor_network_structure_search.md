@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Renormalization Group Guided Tensor Network Structure Search
 description: >-
@@ -106,7 +106,7 @@ RGTN 在 RE=0.1 时比 SVDinsTN 压缩率好 2.96×（Bunny）和 1.60×（Knigh
 - **连续化离散搜索**：边门控 + 温度退火将离散拓扑搜索转为连续梯度优化，类似 NAS 中的 DARTS 思路但在物理启发下更自然
 - **指数级理论加速**：搜索复杂度从 $\Omega(\exp(N^2))$ 降至 $\mathcal{O}(\log I \cdot \log(1/\epsilon))$，并给出了严格的收敛和逃离局部最小保证
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多尺度策略中的超参数（尺度数、每尺度步数）需手动调整，未实现自适应
 - 下采样-上采样算子采用固定的 2 的幂次，对非均匀结构数据可能不是最优
 - 视频补全在 Silent 数据上劣于 SVDinsTN，说明对某些数据特性仍有敏感性

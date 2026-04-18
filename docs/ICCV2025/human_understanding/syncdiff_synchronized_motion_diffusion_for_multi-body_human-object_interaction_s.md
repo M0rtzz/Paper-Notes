@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SyncDiff: Synchronized Motion Diffusion for Multi-Body Human-Object Interaction Synthesis
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L} = \lambda_{dc}\mathcal{L}_{dc} + \lambda_{ac}\mathcal{L}_{ac} + \l
 - 显式同步策略有严格的数学推导支撑（等价于最大似然采样），而非启发式设计
 - 频域分解是一个优雅且有效的方案，解决了高频语义被低频运动掩盖的普遍问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 显式同步步骤引入额外计算开销（每 50 步执行一次）
 - 当前仅在 mocap 数据集上验证，未涉及真实场景下的在线部署

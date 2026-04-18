@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LaScA: Language-Conditioned Scalable Modelling of Affective Dynamics
 description: >-
@@ -137,7 +137,7 @@ LaScA 的完整流水线：
 4. **跨数据集一致性**：在实验室级（SEWA）和野外级（Aff-Wild2）数据集上均有效
 5. **Otsu 阈值选特征**：简单但有效的无监督显著性估计，避免了学习门控的额外复杂度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 所有编码器完全冻结，选择性微调可能进一步提升性能
 2. SEWA 实验受限于预提取声学特征（无原始音频访问），未能评估端到端音频模型

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] See&Trek: Training-Free Spatial Prompting for Multimodal Large Language Model
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **Balanced-TopK 的设计巧妙**：通过时间分段+去重，在有限帧预算下最大化信息量，该策略可迁移到视频理解的其他场景
 - **运动重建作为"免费特征"**：经典 CV 的 VO 管线为 MLLM 提供了一种结构化的空间先验，相比端到端学习更可靠
 
-## 局限性 / 可改进方向
+## 局限与展望
 - VO 基于特征匹配，在纹理贫乏或快速运动场景下会失败
 - Balanced-TopK 依赖 YOLO 的检测能力，对 YOLO 不认识的物体类别无能为力
 - 方法只适用于视频输入，无法处理单图空间推理

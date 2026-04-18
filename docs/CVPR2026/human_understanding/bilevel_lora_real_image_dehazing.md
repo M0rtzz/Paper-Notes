@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bilevel Layer-Positioning LoRA for Real Image Dehazing
 description: >-
@@ -94,7 +94,7 @@ tags:
 
 - CLIP作为无监督去雾损失的"裁判"是巧妙的跨模态应用——通过正负文本方向差定义语义轨迹，可推广到其他恢复任务。双层优化自动搜索LoRA层将PEFT从人工选层决策中解放出来。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 无参考评估指标（FADE/MUSIQ）可靠性有限，缺少配对全参考评估
 - 仅在去雾任务验证，未探索去雨/去噪等扩展

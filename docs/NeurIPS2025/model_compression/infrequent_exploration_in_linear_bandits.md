@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Infrequent Exploration in Linear Bandits
 description: >-
@@ -108,7 +108,7 @@ $$\mathcal{R}_{\text{INFEX}}(T) \leq \mathcal{R}_{\mathsf{Alg}}(f(T)) + G_{\text
 - **实践价值**：在安全关键场景（医疗、金融）中，将探索限制在 1%-20% 的时刻内同时保持理论保证，极具应用价值
 - **LinTS 新 regret 界**：Theorem 2 首次给出 LinTS 的 instance-dependent 界，独立于本文的 INFEX 框架也有价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 分析要求最小 gap $\Delta > 0$ 且最优臂唯一，不直接推广到线性上下文 bandit（臂集随时间变化）
 - $\omega(\log T)$ 阈值针对确定性调度表；自适应调度可能更优但分析困难
 - 仅验证了 instance-dependent regret，minimax regret（$O(\sqrt{T})$）情况下的最优探索策略是开放问题

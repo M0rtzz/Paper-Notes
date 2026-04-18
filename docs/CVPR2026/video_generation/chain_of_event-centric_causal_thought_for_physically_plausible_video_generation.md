@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Chain of Event-Centric Causal Thought for Physically Plausible Video Generation
 description: >-
@@ -111,7 +111,7 @@ PhyGenBench 上整体性能 0.66，超越前 SOTA PhysHPO 8.19%。
 - **双模态协同提示**（语义+视觉）比单纯的语言提示能更好地约束物理过渡的连续性
 - 框架与视频生成模型解耦，可即插即用到不同的视频扩散模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **组合物理法则失败**：当场景受多个物理法则共同支配时，基础模型的组合物理推理能力不足导致生成失败
 - 依赖外部 LLM（GPT-OSS-20B）和图像编辑模型（Qwen-Image-Edit），pipeline 复杂度较高

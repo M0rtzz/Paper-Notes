@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Hierarchically Structured Neural Bones for Reconstructing Animatable Objects from Casual Videos
 description: >-
@@ -102,7 +102,7 @@ $$\mathcal{L} = \mathcal{L}_{recon} + \mathcal{L}_{cycle} + \mathcal{L}_{bone} +
 4. **更少控制点更好效果**：用更少的骨骼数量达到甚至超越使用大量控制点的基线方法
 5. **用户友好的操控接口**：层次化骨骼支持粗到细操控，用户可交互式增删控制点
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练耗时较长（每个深度 20k 迭代，2×RTX 3090 每阶段约 3 小时），多阶段训练累计时间可观
 2. 子骨骼数量（每父骨骼 2 个）为手动设定，未根据运动复杂度自适应调整

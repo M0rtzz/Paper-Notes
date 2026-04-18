@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reward-free World Models for Online Imitation Learning
 description: >-
@@ -133,7 +133,7 @@ $$\mathcal{L}_{pen} = \sum_{t=0}^{H} \lambda^t \left[ \mathbb{E}_{(\hat{\mathbf{
 5. **数据效率**：仅需 5-10 条专家轨迹即可实现专家级性能，展示了出色的样本效率
 6. **模态无关设计**：从状态输入到视觉输入只需更换编码器，架构高度灵活
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **专家数据获取**：仍需从训练好的 TD-MPC2 模型采样专家轨迹，真实场景中获取高质量专家演示可能困难
 2. **计算开销**：MPPI 规划需要多轮迭代采样和 roll out，推理成本高于纯策略方法

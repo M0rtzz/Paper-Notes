@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Shortcut to Induction Head: How Data Diversity Shapes Algorithm Selection in Transformers
 description: >-
@@ -31,14 +31,14 @@ tags:
 
 **核心矛盾**：训练数据中的位置信号和语义信号同时存在，梯度下降会同时学到两者。关键在于两种信号的**相对强度**取决于数据分布的结构，但这种依赖关系此前没有被精确量化。
 
-**本文要解决什么？** 
+**本文目标** 
    - 给出数据多样性的精确度量（max-sum ratio）
    - 证明存在一个phase transition：多样性高于阈值→induction head，低于阈值→位置捷径
    - 给出最优预训练分布的闭式解
 
 **切入角度**：设计了一个最小化的trigger-output copying任务，序列中有一个特殊的trigger token出现两次，模型需要在第二次出现时输出第一次出现后面的token。这个任务足够简单以支撑严格理论分析，又足够丰富以展现两种机制的竞争。
 
-**核心idea一句话**：预训练数据中trigger距离的多样性通过稀释位置信号来倾斜attention权重向induction head方向，当max-sum ratio低于 $\Theta(N_{\text{trg}}^{-1})$ 时发生phase transition。
+**核心 idea**：预训练数据中trigger距离的多样性通过稀释位置信号来倾斜attention权重向induction head方向，当max-sum ratio低于 $\Theta(N_{\text{trg}}^{-1})$ 时发生phase transition。
 
 ## 方法详解
 
@@ -108,7 +108,7 @@ tags:
 - **最优预训练分布的闭式解**有实际指导意义：$q_\ell \propto \ell$ 的线性分布非常违反直觉（通常人们会用均匀分布），但它在理论上是最优的。
 - 揭示了**context length与OOD泛化的trade-off**：仅仅增加上下文长度多样性可能需要指数级的范围才够，而适当偏向更长的上下文则更高效。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅限单层Transformer + 一步梯度下降**：虽然三层实验定性支持结论，但理论本身的strong assumptions限制了其直接推广到实际LLM的能力
 - **Trigger-output任务过于简化**：实际语言中的induction head需要处理更复杂的模式匹配，不仅是精确复制
 - **只考虑绝对位置编码**：RoPE、ALiBi等相对位置编码下，位置捷径的形式可能完全不同，结论是否成立未知

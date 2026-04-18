@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Base Models Know How to Reason, Thinking Models Learn When
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：thinking model 是"学会了新的推理方法"还是"学会了在正确时机使用已有方法"？
 
-**本文要解决什么？** 提供因果证据证明基座模型已具备推理能力
+**本文目标** 提供因果证据证明基座模型已具备推理能力
 
 **切入角度**：用 SAE 无监督聚类发现推理类别，再用 steering vector 在基座模型上激活对应能力
 
-**核心idea一句话**：预训练教会模型"如何推理"，后训练（RLVR）教会模型"何时推理"
+**核心 idea**：预训练教会模型"如何推理"，后训练（RLVR）教会模型"何时推理"
 
 ## 方法详解
 
@@ -99,7 +99,7 @@ GSM8K 和 MATH500 上的混合模型性能
 - **极简因果验证**：仅用 15 个 vector steer 12% 的 token 就有显著效果，是极强的因果证据
 - **跨架构跨训练方法泛化**：在 Qwen、Llama、蒸馏型、RLVR 型上都有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 混合模型依赖 thinking model 的 SAE 分类器——实际部署时仍需 thinking model
 - 仅在数学推理任务（GSM8K/MATH500）上验证，代码/逻辑推理未测试
 - Qwen2.5-Math-1.5B 的 gap recovery 为 0%（基座已很强），说明基座足够强时 steering 无额外收益

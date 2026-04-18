@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PT2-LLM: Post-Training Ternarization for Large Language Models
 description: >-
@@ -101,7 +101,7 @@ PT2-LLM 包含两个核心组件：非对称三值量化器（ATQ）和结构相
 - AGA 的关键设计决策：冻结 $\mathbf{T}$ 仅更新网格参数，有效避免过拟合
 - SSR 的直觉精辟："异常值之间不再是异常值"
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 1.58-bit 精度仍与 FP16 有较大差距（如 LLaMA-7B 平均精度 45% vs 62%）
 - SSR 每步重新计算相似度有一定开销

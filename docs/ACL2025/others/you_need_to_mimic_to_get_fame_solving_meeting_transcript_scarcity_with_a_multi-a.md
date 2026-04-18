@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] You need to MIMIC to get FAME: Solving Meeting Transcript Scarcity with Multi-Agent Conversations
 description: >-
@@ -121,7 +121,7 @@ MIMIC 本身不涉及训练，使用 GPT-4o 作为骨干 LLM，利用其 128k to
 - 投票机制让会议长度由参与者自决，而非人为设定固定轮次
 - 首次提供英德双语并行会议语料
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 知识源仅来自 Wikipedia，主题多样性受限
 2. 合成语音特征（如填充词模式）可能仍不完全自然

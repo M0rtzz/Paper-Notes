@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Stabilizing Policy Gradients for Sample-Efficient Reinforcement Learning in LLM Reasoning
 description: >-
@@ -100,7 +100,7 @@ CAPO 在 GRPO 的基础上增加一个轻量级数据筛选层：每次梯度更
 - **通用性强**：CAPO 的 token 筛选机制可叠加在任何策略梯度方法上，且理论保证不依赖于具体的优势函数形式——Dr.CAPO 和 ReinCAPO 的成功验证了这一点
 - **理论与实践的紧密对应**：Theorem 5.1 的单调改进保证在实验中被精确验证——CAPO 的 $m_F$ 始终在阈值以下
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 Qwen2.5-Math-7B（7B 规模）上验证，更大模型和更长训练 schedule 待测试
 - 阈值 $\delta_H, \delta_F, \delta_H^{high}$ 需要根据具体 MDP 和基础策略调参
 - Last-layer 近似在更深层可能信息不足，扩展到多层曲率估计是自然方向

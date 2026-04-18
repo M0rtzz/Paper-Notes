@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unifying Re-Identification, Attribute Inference, and Data Reconstruction Risks in Differential Privacy
 description: >-
@@ -109,7 +109,7 @@ $$P[\text{attack success}] \leq g(f, \beta, \varepsilon)$$
 - **理论优雅**: f-DP 框架比 ε-DP 更自然地刻画隐私-效用权衡
 - **可调节性**: 实践者可根据具体威胁模型调整基线风险
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. f-DP 的 trade-off function 对非专业人员理解门槛较高
 2. 实验主要在文本分类任务上验证，其他领域的验证不足

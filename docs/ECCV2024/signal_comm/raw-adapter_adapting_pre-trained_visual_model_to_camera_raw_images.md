@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAW-Adapter: Adapting Pre-trained Visual Model to Camera RAW Images
 description: >-
@@ -128,7 +128,7 @@ $$parameters = FFN\left(softmax\left(\frac{\mathbbm{q} \cdot \mathbbm{k}^T}{\sqr
 - **通用性强**：框架可适配各种检测器（RetinaNet、Sparse-RCNN）和分割器（Segformer），以及不同大小的 backbone
 - 将 NLP/CV 领域的 adapter 思想巧妙应用于 RAW-sRGB 域适配问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 不同光照条件（正常/暗/过曝）需要**分别训练**，无法用统一模型处理多种光照
 - 仅在 CNN 骨干（ResNet、MIT）上验证，ViT 等 Transformer 架构的适配效果未探索

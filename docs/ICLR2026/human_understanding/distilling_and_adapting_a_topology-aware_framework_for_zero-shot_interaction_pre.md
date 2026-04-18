@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distilling and Adapting: A Topology-Aware Framework for Zero-Shot Interaction Prediction in Multiplex Biological Networks
 description: >-
@@ -159,7 +159,7 @@ MBN中的交互预测是多标签分类任务。MoE框架中：
 3. **模块化设计合理**：序列→拓扑→跨层→预测的流水线使各组件贡献可分离、可消融
 4. **自建5个高质量基准数据集**：填补了MBN评估标准化的空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 未整合**3D结构数据**（蛋白质/化合物的三维结构），限制了精细化建模
 2. 零样本仅实现实体级别泛化，对全新交互类型的泛化尚未验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training Dynamics of In-Context Learning in Linear Attention
 description: >-
@@ -123,7 +123,7 @@ $$\tau \dot{v}_i = \lambda_{m+1}^2 v_i^2 - \lambda_{m+1}^3 \left(1 + \frac{1 + \
 4. **标量 ODE 简化**：将高维梯度流动态成功简化为一维常微分方程，且与数值仿真高度吻合，是非常优雅的理论工具
 5. **跨越理论与实践**：结果在 softmax attention 中也得到定性验证，增强了理论发现的实际意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限线性注意力**：虽然 softmax 实验定性一致，但理论分析严格依赖去掉 softmax 后的线性结构，无法直接推广到标准 Transformer
 2. **单层注意力**：仅研究了单层注意力，未涉及多层 Transformer 中的层间交互和残差连接

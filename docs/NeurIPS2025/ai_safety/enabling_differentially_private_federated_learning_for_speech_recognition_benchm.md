@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enabling Differentially Private Federated Learning for Speech Recognition: Benchmarks, Adaptive Optimizers and Gradient Clipping
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**: DP要求对模型更新添加标定噪声以保护隐私，但噪声量与裁剪常数 $C$ 成正比，而降低 $C$ 又会引入裁剪偏差。深层模型中不同层的梯度量级差异极大，**全局统一裁剪**无法适配——小梯度层被过度裁剪，大梯度层则噪声不足。
 
-**本文要解决什么**: 建立首个端到端ASR中FL+DP的竞争性基准和实用训练配方，尤其在大规模用户群体（数百万）下实现可用的隐私-效用权衡。
+**本文目标**: 建立首个端到端ASR中FL+DP的竞争性基准和实用训练配方，尤其在大规模用户群体（数百万）下实现可用的隐私-效用权衡。
 
 **切入角度**: 从理论和实证两个维度，系统分析逐层裁剪（per-layer clipping）与层级自适应梯度归一化（LAMB优化器的trust ratio），证明二者协同可有效缓解裁剪偏差和跨层梯度异质性。
 
-**核心idea一句话**: 将全局裁剪预算 $C$ 按层重新分配（$C_h = C/\sqrt{H}$ 或按维度分配），配合LAMB的逐层trust ratio，实现DP噪声总量不变但信噪比逐层优化。
+**核心 idea**: 将全局裁剪预算 $C$ 按层重新分配（$C_h = C/\sqrt{H}$ 或按维度分配），配合LAMB的逐层trust ratio，实现DP噪声总量不变但信噪比逐层优化。
 
 ## 方法详解
 
@@ -53,7 +53,7 @@ tags:
 
 #### 1. 逐层裁剪（Per-Layer Clipping）
 
-- **做什么**: 将模型梯度按层分解 $\mathbf{g} = (\mathbf{g}_1, \mathbf{g}_2, \ldots, \mathbf{g}_H)$，对每层独立裁剪
+- **功能**: 将模型梯度按层分解 $\mathbf{g} = (\mathbf{g}_1, \mathbf{g}_2, \ldots, \mathbf{g}_H)$，对每层独立裁剪
 - **核心公式**: 两种变体
     - "uniform": $C_h = C / \sqrt{H}$
     - "dim": $C_h = C \sqrt{d_h / \sum_{i=1}^{H} d_i}$
@@ -62,13 +62,13 @@ tags:
 
 #### 2. LAMB自适应中央优化器
 
-- **做什么**: 用层级trust ratio $R_h$ 缩放每层的学习率
+- **功能**: 用层级trust ratio $R_h$ 缩放每层的学习率
 - **核心思路**: $R_h = \|\theta_h\| / \|\Delta_h\|$，自动平衡不同层的梯度尺度差异
 - **设计动机**: FL中深层梯度异质性被"分歧蓄积"放大，LAMB的逐层自适应恰好与per-layer clipping互补——信噪比、裁剪偏差、梯度方差同时在层级被控制
 
 #### 3. 种子模型初始化（Seed Model）
 
-- **做什么**: 先在中心化小数据（如LibriSpeech 100h）上预训练种子模型，再用FL+DP微调
+- **功能**: 先在中心化小数据（如LibriSpeech 100h）上预训练种子模型，再用FL+DP微调
 - **效果**: 显著降低WER，即使种子数据和FL数据有严重domain shift（如用LS种子训练CV数据）
 
 ### 损失函数/训练策略
@@ -127,7 +127,7 @@ $$\frac{\kappa}{T}\sum_{t=0}^{T-1}\mathbb{E}[\|\nabla\mathscr{L}(\theta^{(t)})\|
 4. **LAMB+per-layer clipping的协同效应**：两者都在层级操作，共同缓解跨层梯度异质性
 5. **实用性强**: 提供了完整的训练配方（种子模型→FL+DP微调），代码开源
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **人口规模要求高**: 需要数百万用户才能获得有意义的隐私保证（$\varepsilon < 10$）
 2. **仅限CTC模型**: 未验证在attention-based encoder-decoder（如Whisper）上的效果

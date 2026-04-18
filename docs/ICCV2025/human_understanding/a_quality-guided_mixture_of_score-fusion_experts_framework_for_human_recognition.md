@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Quality-Guided Mixture of Score-Fusion Experts Framework for Human Recognition
 description: >-
@@ -103,7 +103,7 @@ QME 包含三个阶段的 pipeline：(1) 各模态预训练骨干网络提取特
 - **可扩展性强**：框架对模型组合、模态类型和相似度度量方式无特定要求，即插即用
 - Score Triplet Loss 直接对齐训练目标和评估指标（TAR@FAR），是一个值得借鉴的技巧
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 专家数量固定为 $Z=2$（对应两个模态），扩展到更多模态时 MoE 设计可能需要调整
 - QE 依赖预训练模型的中间特征，如果骨干模型更换则需要重新训练 QE
 - 论文未探讨模态完全缺失时的处理策略（如某帧完全没有人脸检测结果）

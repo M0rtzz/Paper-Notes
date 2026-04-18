@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WAVE: Weighted Autoregressive Varying Gate for Time Series Forecasting
 description: >-
@@ -136,7 +136,7 @@ tags:
 4. **对EMA/门控机制的深刻分析**：指出指数衰减对TSF中稳定周期模式的破坏性，解释了为什么gated linear attention单独使用不如linear attention——这一洞察对该领域后续研究有启发
 5. **参数共享保持公平性**：通过共享$\mathbf{W}_q$和设$\mathbf{W}_v^{MA}=\mathbf{I}$，消除了"性能提升来自参数增加"的质疑
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限通道独立模式**：未探索与多变量预测模型（如iTransformer的跨变量注意力）结合，可能错失变量间重要的相关性信息
 2. **仅验证TSF任务**：WAVE注意力是否适用于NLP、音频等通用序列建模任务尚未验证

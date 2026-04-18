@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CADDreamer: CAD Object Generation from Single-view Images
 description: >-
@@ -99,7 +99,7 @@ tags:
 - 方法支持5种基元类型，比 sketch-extrude 方法（仅平面+圆柱）更通用
 - 几何优化中的"缝合"思想可推广到其他需要恢复几何关系的任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 受限于单视图输入的固有信息不足，极端遮挡或复杂视角下可能无法检测所有基元
 - 图像数量和分辨率限制了对极精细几何特征的检测

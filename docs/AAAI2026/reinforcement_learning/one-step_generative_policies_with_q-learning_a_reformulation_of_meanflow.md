@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One-Step Generative Policies with Q-Learning: A Reformulation of MeanFlow
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **切入角度**：MeanFlow允许一步生成（通过平均速度场），但原始形式的"速度估计→积分"解耦设计在Q-learning中不稳定。关键是将MeanFlow重新形式化为单步残差映射。
 
-**核心idea一句话**：用残差形式 $g(a_t,b,t)=a_t-u(a_t,b,t)$ 重新形式化MeanFlow，合并速度估计和动作生成为一个前向传播
+**核心 idea**：用残差形式 $g(a_t,b,t)=a_t-u(a_t,b,t)$ 重新形式化MeanFlow，合并速度估计和动作生成为一个前向传播
 
 ## 方法详解
 
@@ -78,7 +78,7 @@ tags:
 - **一个简单的残差重新形式化解决了flow policy + Q-learning的核心困难**：不需要BPTT、不需要蒸馏、不需要多步推理
 - **早期训练稳定性的解决方案很实用**：通过zero init保证输出在有效范围内
 
-## 局限性 / 可改进方向
+## 局限与展望
 - MeanFlow原本是为图像生成设计的，迁移到RL可能还有未探索的优化空间
 - 仅在offline/offline-to-online验证，纯online RL未测试
 

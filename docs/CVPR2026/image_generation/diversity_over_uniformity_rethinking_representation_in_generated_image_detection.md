@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diversity over Uniformity: Rethinking Representation in Generated Image Detection
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L} = \mathcal{L}_{\mathrm{CSP}} + \lambda_1 \mathcal{L}_{\mathrm{CIB}
 - **HSIC去相关**：用核方法度量特征独立性，比简单正交约束更灵活，能捕捉非线性依赖
 - **信息纯化+多样性双管齐下**：CIB 去噪 + AFCL 去相关，二者互补缺一不可
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 SD v1.4 上训练，未验证在更大规模多源训练时的优势是否保持
 - 多阶段特征数 $N$ 的选择对结果的影响未深入讨论

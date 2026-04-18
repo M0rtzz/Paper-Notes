@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Better Chain-of-Thought: A Reflection on Effectiveness and Faithfulness
 description: >-
@@ -129,7 +129,7 @@ QUIRE 在 Gemma2-9B 上同样有效，ProntoQA FBS 从 60.5 提升至 69.5。
 3. **不忠实机制的解释**：发现模型"绕过" CoT 直接从问题提取信息，为理解 LLM 推理黑箱提供重要线索
 4. **QUIRE 的理论对偶性**：AAE Recall ← Cl.6（主动召回缺失信息），IG Vote ← Cl.2/Cl.4（用信息增益评价质量）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限白盒模型**：IGA 需梯度信息，无法用于 GPT-4 等闭源模型
 2. **缺少理论证明**：忠实性→有效性只有实验支撑

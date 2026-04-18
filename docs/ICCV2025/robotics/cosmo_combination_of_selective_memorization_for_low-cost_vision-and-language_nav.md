@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] COSMO: Combination of Selective Memorization for Low-cost Vision-and-Language Navigation
 description: >-
@@ -149,7 +149,7 @@ COSMO 采用混合架构设计哲学："SSM 负责选择性记忆，Transformer 
 - **6.5× 参数缩减 + 10.7× FLOPs 缩减**：在边缘设备部署具有重大实际意义
 - **节点编码器改进**：将拓扑地图构建前移到节点编码阶段，减少了跨模态编码器的参数需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. RSS 和 CS3 的状态空间维度（N=16）是手动设定的，更大的状态空间可能带来进一步提升
 2. COSMO 在 REVERIE test split 的 SPL 指标与 DUET 几乎相同（36.12 vs 36.06），在导航效率上改进不够明显

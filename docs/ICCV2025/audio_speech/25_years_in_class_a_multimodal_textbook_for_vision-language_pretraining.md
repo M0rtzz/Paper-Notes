@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 2.5 Years in Class: A Multimodal Textbook for Vision-Language Pretraining
 description: >-
@@ -101,7 +101,7 @@ tags:
 - In-sample Image SIM指标显示教材内图片相关性（0.686）是OBELICS（0.345）的两倍，且随图片数量增加保持稳定
 - 每样本平均10.7张图片和1297个token，远超MMC4（5.7张/417 token）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 数据集主要覆盖基础学科教育类视频，对通用领域VQA的zero-shot提升有限（需few-shot才显优势）
 - ASR精化依赖大型LLM（Qwen2-72B），处理75K视频的计算成本较高

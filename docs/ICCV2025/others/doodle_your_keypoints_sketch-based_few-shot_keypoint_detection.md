@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Doodle Your Keypoints: Sketch-Based Few-Shot Keypoint Detection
 description: >-
@@ -140,7 +140,7 @@ Animal Kingdom 数据集结果（5 类超类，1-shot）：
 3. **辅助关键点策略**的半监督增强效果惊人，为少样本任务提供了通用的数据增强范式
 4. 证明了草图作为"唯一可行源数据"的可行性，开辟了新的研究方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 使用合成边缘图（PiDiNet/HED/Canny）代替真实草图训练，实际用户草图差异可能更大
 2. 仅在动物数据集上评估，人工制品或机械部件等领域的泛化性未验证

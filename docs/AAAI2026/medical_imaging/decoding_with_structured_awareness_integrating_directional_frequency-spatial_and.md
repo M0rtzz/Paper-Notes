@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decoding with Structured Awareness: Integrating Directional, Frequency-Spatial, and Structural Attention for Medical Image Segmentation
 description: >-
@@ -187,7 +187,7 @@ tags:
 3. **跳跃连接的深层次优化**：SMMM 通过空间显著性掩码替代简单加法，减少冗余信息传递
 4. **跨多个数据集验证**：在腹部多器官、皮肤病变、心脏分割三类任务上均取得最优或接近最优
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - HD95 在 Synapse 数据集上不是最优（18.91 vs HiFormer-B 的 14.70），说明边界精度仍有提升空间
 - 参数量从 25M 增长到 42.5M（+70%），计算从 11.85 增长到 18.29 GMac（+54%），效率有代价

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Federated Learning against Byzantine Attacks and Data Heterogeneity via Aggregating Normalized Gradients
 description: >-
@@ -104,7 +104,7 @@ Fed-NGA 的聚合时间仅约为无鲁棒保障的 FedAvg 的 3 倍。
 - **同时解决两个挑战**：归一化天然地同时抵御 Byzantine 攻击和缓解数据异质性
 - **全面实验验证**：覆盖三个数据集、三种模型、五种攻击类型，在准确率和效率上均有优势
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 零最优性间隙的理论保证依赖于类型 II 假设（假设 3.5、3.6），要求梯度归一化后的误差和异质性有界，在实际训练后期梯度接近零时可能不满足
 - 收敛速率 $\mathcal{O}(1/T^{1/2-\delta})$ 略慢于标准 SGD 的 $\mathcal{O}(1/\sqrt{T})$，其中 $\delta \in (0, 1/2)$ 引入了额外的次优因子

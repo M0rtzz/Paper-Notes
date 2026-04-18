@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Decoding Rewards in Competitive Games: Inverse Game Theory with Entropy Regularization
 description: >-
@@ -119,7 +119,7 @@ $$D(\mathcal{R}, \hat{\mathcal{R}}) \lesssim \frac{1}{\sqrt{T}}\left(\sqrt{S(m+n
 4. **MLE 扩展**：放宽了频率估计器要求所有状态被充分覆盖的强假设，使方法更具实用性
 5. **$\mathcal{O}(T^{-1/2})$ 最优收敛速率**：所有理论保证均达到经典经验风险极小化的最优统计速率
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **线性参数化假设较强**：现实博弈的奖励/转移函数往往是非线性的，限制了方法的表达能力
 2. **仅限零和博弈**：未覆盖一般和博弈（general-sum game）或多人博弈

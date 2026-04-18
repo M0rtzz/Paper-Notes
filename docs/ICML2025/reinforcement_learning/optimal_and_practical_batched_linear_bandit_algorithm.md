@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimal and Practical Batched Linear Bandit Algorithm
 description: >-
@@ -140,7 +140,7 @@ $$\mathcal{R}(T) = \mathcal{O}\left(\sqrt{dT}\left(\sqrt{\log(KT)} \wedge \sqrt{
 - **正则化的关键作用**：正则化不仅是技术手段（保证矩阵可逆），更是实现跨批次信息积累分析的核心杠杆——这一洞见可推广到其他在线学习问题
 - **消除策略的稳健性**：相比 Ren et al. 的激进消除，BLAE 的消除更保守——结合 G-最优设计的方差控制，有效避免了过早剔除最优臂的致命错误
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **固定特征假设**：BLAE 针对固定特征（plain linear bandit）设计和优化，未直接处理 contextual 设定中的时变特征；推广到时变特征需要额外机制
 2. **$\log\log T$ 因子**：虽然批次复杂度已达 $\mathcal{O}(\log\log T)$ 的最低水平，但遗憾界中仍含 $\log\log T$ 因子，能否完全消除仍是开放问题

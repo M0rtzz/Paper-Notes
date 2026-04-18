@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ARGenSeg: Image Segmentation with Autoregressive Image Generation Model
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：分割需要密集像素级输出，但LLM原生只做token级预测——如何让LLM"生成"分割mask而不依赖外部decoder？
 
-**本文要解决什么**：让MLLM通过自回归图像生成直接产生分割mask，不需要任何额外分割头。
+**本文目标**：让MLLM通过自回归图像生成直接产生分割mask，不需要任何额外分割头。
 
 **切入角度**：将分割视为一种特殊的图像生成——生成的"图像"就是目标物体的mask。
 
@@ -99,7 +99,7 @@ tags:
 - **通用VQ-VAE vs 专用tokenizer**：HiMTok需要训练专门的mask tokenizer，ARGenSeg使用通用VQ-VAE——更通用、可扩展到其他生成任务。
 - **冻结tokenizer的重要性**：冻结VQ-VAE保证分割质量完全取决于MLLM的理解能力，这是与"理解驱动分割"理念一致的关键设计。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 输出分辨率固定为256×256，高分辨率分割可能需要更多尺度。
 - VQ-VAE重建质量是性能上限——更好的tokenizer可能进一步提升。
 - 实例分割和全景分割的评测不如referring segmentation充分。

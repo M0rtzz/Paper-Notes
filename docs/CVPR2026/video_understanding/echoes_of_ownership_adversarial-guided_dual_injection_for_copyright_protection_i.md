@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Echoes of Ownership: Adversarial-Guided Dual Injection for Copyright Protection in MLLMs
 description: >-
@@ -143,7 +143,7 @@ AGDI 在所有 base model × fine-tune 方式组合上全面领先。LoRA avg AG
 - **不修改模型参数**：trigger 仅在图像侧优化，不影响 base model 性能，适合 post-deployment 场景
 - **实验覆盖全面**：2 个 base model × 2 种 fine-tune × 5 个下游数据集，外加剪枝/合并/量化/输入变换/系统提示等鲁棒性测试
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - PGD 优化 1000 步 × 1000 个 trigger 查询，trigger 生成成本不低，未讨论加速方案
 - 扰动预算 $\epsilon=16/255$ 在视觉上可能不够隐蔽，论文缺少用户感知实验（如 human study）

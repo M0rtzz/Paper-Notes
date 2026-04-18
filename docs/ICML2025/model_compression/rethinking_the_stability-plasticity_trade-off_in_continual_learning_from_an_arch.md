@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking the Stability-Plasticity Trade-off in Continual Learning from an Architectural Perspective
 description: >-
@@ -129,7 +129,7 @@ Dual-Arch 在参数减少 **87%** 的极端情况下仍可超越原始基线（D
 4. **推理无开销**：推理阶段仅用 Sta-Net，FLOPs 仅为原始的 46%
 5. **实验设计规范**：公平对比了多方法×多数据集×多任务划分，消融实验彻底验证了各组件贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **训练时间增加**：双网络串行训练导致 1.39×~1.77× 训练开销，无法并行化是硬伤
 2. **架构设计依赖经验**：Sta-Net/Pla-Net 的具体设计（层数、通道数）基于 ResNet 手工调整，缺乏自动化搜索

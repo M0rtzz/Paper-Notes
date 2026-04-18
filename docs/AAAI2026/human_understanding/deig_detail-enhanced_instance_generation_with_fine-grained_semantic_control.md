@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DEIG: Detail-Enhanced Instance Generation with Fine-Grained Semantic Control
 description: >-
@@ -151,7 +151,7 @@ $$\hat{\mathbf{A}} = \text{Softmax}\left(\frac{\mathbf{QK}^T}{\sqrt{d}} + \mathb
 3. **实例掩码注意力设计完备**：三类注意力交互（V-V/I-V/I-I）分别处理，视觉间不加掩码保持保真度的决策经实验验证
 4. **评估创新**：DEIG-Bench 填补了人体实例多属性评估的空白，引入的 MAA 指标更贴合实际需求
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 材质和纹理的生成提升幅度有限，这类抽象语义的建模仍是开放问题
 2. InstDiff-Bench 上空间对齐（AP）略低，密集区域的实例掩码注意力可能过度限制交互

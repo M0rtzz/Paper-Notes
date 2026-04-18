@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pancakes: Consistent Multi-Protocol Image Segmentation Across Biomedical Domains
 description: >-
@@ -122,7 +122,7 @@ Pancakes 在所有 7 个 held-out 数据集上超越基线，通常领先 20+ Di
 - **两种实际应用场景**：(1) 新协议的快速分割——选择最匹配的候选协议；(2) 探索性群体分析——发现与临床结局关联的候选分割区域
 - **与交互式分割的互补**：可作为 ScribblePrompt 等的初始化，减少人工交互次数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 生成的协议是"模型发现的合理分割"，不一定对应临床上已有的标准协议
 - 训练依赖 Megamedical 数据集，对极端新领域的泛化能力待验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Broadband Ground Motion Synthesis by Diffusion Model with Minimal Condition
 description: >-
@@ -109,7 +109,7 @@ $$\mathcal{L}_{ours} = \mathbb{E}_{(X^{src}, X^{tgt}, \vec{c}_{tgt}), \epsilon, 
 4. **震级操控能力**：修改条件中的 $M_L$ 即可生成不同震级的波形，频谱分析显示角频率和地震矩 $M_0$ 变化趋势符合理论预期。
 5. **单 GPU 可训练**：在单 GPU 上即可完成训练，计算效率高。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **区域局限**：模型在各区域数据上独立训练，尚未实现全球统一模型，跨区域泛化能力未验证。
 - **条件有限**：最小条件集虽降低使用门槛，但可能限制了极端场景（如超大震级外推）的生成质量。

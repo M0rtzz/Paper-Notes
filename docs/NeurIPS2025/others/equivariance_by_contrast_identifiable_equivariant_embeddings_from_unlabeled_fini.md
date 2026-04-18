@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions
 description: >-
@@ -115,7 +115,7 @@ $$\hat{\mathbf{R}}_{n+m}' = \begin{pmatrix} \hat{\mathbf{R}}_n & \mathbf{0} \\ \
 - ⭐ 理论完备：从非线性ICA的判别形式出发证明线性可辨识性和群表示可辨识性
 - Acc(G) 指标可在无真实潜变量的情况下使用，提供了实际可用的模型选择准则
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在 idSprites 上存在内容分类准确率下降（74%），表明内容-风格分离仍有改进空间
 - 理论假设要求数据满足"充分多样性"条件，对小数据场景的适用性需要验证

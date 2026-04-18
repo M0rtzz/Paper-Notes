@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Weight Decay may matter more than μP for Learning Rate Transfer in Practice
 description: >-
@@ -88,7 +88,7 @@ $$\frac{\|\Delta \mathbf{Y}\|}{\|\mathbf{Y}\|} = \frac{\alpha_{\Delta W}}{\alpha
 - 指出矩阵级优化器（如 Muon）可能从根本上绕过对齐问题，解释了其对预热需求低的特性
 - 为实践者提供明确指导：使用 μP 时必须搭配独立权重衰减
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅针对 AdamW 优化器进行深入分析，SGD 和其他优化器的结论需进一步验证
 - 实验规模虽涵盖多个宽度比，但未达到真正的超大规模（>10B 参数）验证

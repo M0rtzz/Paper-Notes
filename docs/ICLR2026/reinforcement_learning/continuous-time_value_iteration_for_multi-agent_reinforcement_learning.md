@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Continuous-Time Value Iteration for Multi-Agent Reinforcement Learning
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：连续时间 RL（CTRL）通过 HJB PDE 替代 Bellman 递归可以避免时间离散化问题，但现有 CTRL 几乎只有单智能体工作。多智能体场景因维度灾难（状态维度随智能体数指数增长）和非平稳性（其他智能体同时学习）使得 HJB 求解极其困难。
 
-**本文要解决什么？** 如何将 HJB-based 的连续时间 RL 扩展到多智能体协同场景？
+**本文目标** 如何将 HJB-based 的连续时间 RL 扩展到多智能体协同场景？
 
 **切入角度**：用 PINN 近似 HJB 的 viscosity solution（克服维度灾难），并引入 VGI 模块确保价值梯度的准确性（解决 PINN 残差损失无法保证梯度精度的问题）。
 
-**核心idea一句话**：PINN + VGI 双管齐下，在连续时间多智能体系统中精确学习价值函数及其梯度。
+**核心 idea**：PINN + VGI 双管齐下，在连续时间多智能体系统中精确学习价值函数及其梯度。
 
 ## 方法详解
 
@@ -95,7 +95,7 @@ Critic 总损失：$\mathcal{L}_{total} = \mathcal{L}_{res} + \lambda_{anchor}\m
 - **VGI 的梯度空间 Bellman 展开**：将轨迹上的梯度传播与全局 PDE 约束结合，是一个优雅的设计。收缩映射收敛证明提供了理论保障
 - **对离散时间方法局限性的清晰诊断**：通过变时间间隔实验和解析 LQR 对比，直观展示了离散化引入的偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅处理协作（cooperative）场景（基于 HJB），竞争或混合动机场景需要 HJI 方程，留作未来工作
 - 确定性系统假设——随机动力学需要引入随机 HJB（SHJB）
 - PINN 的训练稳定性仍需仔细调参（激活函数、损失权重平衡）

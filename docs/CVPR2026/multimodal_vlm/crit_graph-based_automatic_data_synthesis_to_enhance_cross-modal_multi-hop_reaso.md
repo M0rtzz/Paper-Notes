@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CRIT: Graph-Based Automatic Data Synthesis to Enhance Cross-Modal Multi-Hop Reasoning
 description: >-
@@ -124,7 +124,7 @@ CRIT Benchmark 结果（CoT 评测，EM/F1）：
 3. **单模态过滤设计巧妙**：用 3 个不同 LLM 分别验证文本和视觉模态，确保问题确实需要跨模态推理
 4. **管道高度可扩展**：从标注图像扩展到视频帧和科学论文，仅需适配图结构构建阶段
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 科学论文域表现仍然较低（15.9% EM），长文本 + 复杂图表的精确跨模态对齐仍是挑战
 - 图结构构建依赖已有的场景图标注（GQA）或密集字幕标注（ActivityNet），完全无标注场景的适用性有待验证

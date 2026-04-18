@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Less is More: Unlocking Specialization of Time Series Foundation Models via Structured Pruning
 description: >-
@@ -102,7 +102,7 @@ tags:
 - 稀疏性分析（注意力头输出范数 + FFN 激活概率）提供了直觉基础
 - 时间序列的非平稳性使得持久有效的特征稀少，这是剪枝特别适合 TSFM 的根本原因
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 剪枝比例需要为每个数据集调优，增加了部署成本
 - 目前使用全局统一的剪枝策略，未考虑层级差异（浅层 vs 深层）

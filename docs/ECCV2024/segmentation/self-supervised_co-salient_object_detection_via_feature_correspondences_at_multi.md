@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Self-supervised Co-salient Object Detection via Feature Correspondences at Multiple Scales
 description: >-
@@ -120,7 +120,7 @@ SCoSPARC 分为两个阶段：
 3. **置信度自适应阈值**：简单但有效的思路——将预测置信度和分割阈值挂钩，优于固定阈值 0.5，可推广到其他二值分割任务
 4. **Group TokenCut Baseline**：将单图像 TokenCut 推广到图像组的 baseline 实验设计值得学习，清晰展示了方法各组件的增益来源
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分辨率受限**：ViT-B/8 的 patch 大小为 8×8，推理分辨率为 224×224，对小物体分割精度有限（patch 大小增大到 16 后性能显著下降）
 2. **Dense CRF 推理开销**：20 FPS→4 FPS 的速度下降主要来自 CRF 后处理，可考虑端到端可训练的 CRF 替代方案

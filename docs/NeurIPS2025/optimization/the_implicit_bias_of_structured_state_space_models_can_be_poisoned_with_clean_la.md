@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] The Implicit Bias of Structured State Space Models Can Be Poisoned With Clean Labels
 description: >-
@@ -121,7 +121,7 @@ tags:
 4. **对 SSM 安全性的警示**：随着 Mamba 等 SSM 的广泛部署，其隐式偏置的脆弱性需要引起重视
 5. **跨架构的启示**：该分析方法可能推广到其他序列模型的隐式偏置分析
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论结果限于线性 SSM**：虽然实验验证了非线性设定，但严格理论证明仅适用于线性模型
 2. **教师-学生设定较理想化**：真实场景中数据分布更复杂，不完全由低维教师生成

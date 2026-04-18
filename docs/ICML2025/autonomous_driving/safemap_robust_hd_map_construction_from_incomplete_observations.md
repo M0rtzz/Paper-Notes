@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SafeMap: Robust HD Map Construction from Incomplete Observations
 description: >-
@@ -155,7 +155,7 @@ $$L = L_{\text{map}} + \lambda_1 L_{\text{Rec}} + \lambda_2 L_{\text{Cor}}$$
 4. **完整场景也有提升**：虽然主要面向不完整观测，SafeMap 在完整观测下也能提升性能，说明重建模块增强了模型的特征表达能力
 5. **首次系统研究**：首个针对 HD Map 构建任务在不完整多视角数据下的鲁棒框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅处理相机模态**：未涉及多传感器融合（如 LiDAR-Camera 融合）场景下的传感器失效问题
 2. **单帧重建**：未利用时序信息，如果引入历史帧可能进一步提升重建质量

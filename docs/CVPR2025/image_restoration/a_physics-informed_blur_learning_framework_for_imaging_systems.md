@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Physics-Informed Blur Learning Framework for Imaging Systems
 description: >-
@@ -39,7 +39,7 @@ tags:
 
 **切入角度**：将 Seidel 基分解为新型波前基，使每个基仅影响单一 SFR 方向；结合课程学习从中心到边缘逐步优化。
 
-**核心 idea 一句话**：解耦基 + 课程学习 + MLP 代理模型 = 无需镜头参数的高精度 PSF 估计。
+**核心 idea**：解耦基 + 课程学习 + MLP 代理模型 = 无需镜头参数的高精度 PSF 估计。
 
 ## 方法详解
 
@@ -120,7 +120,7 @@ $$\text{PSF}(H, \lambda) = |\mathcal{F}(A(\mathbf{p}) \exp(i \frac{2\pi W(H, \la
 - 两阶段分离单色和色差，降低优化难度
 - 对实际成像系统（Edmund 镜头 + onsemi 传感器）验证了有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 广视场下色差校正仍不完善
 - 目前仅处理 PSF 引起的模糊，未考虑运动模糊
 - 需要受控环境标定（棋盘格）

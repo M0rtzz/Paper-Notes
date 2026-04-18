@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EnCompass: Enhancing Agent Programming with Search Over Program Execution Paths
 description: >-
@@ -38,7 +38,7 @@ tags:
 
 **切入角度**：从概率编程的"模型与推理分离"范式获得灵感——概率编程将模型定义和推理算法分离，类似地，agent 编程也应将工作流和搜索策略分离。
 
-**核心idea一句话**：推理时策略本质是对非确定性程序执行路径的搜索，用 `branchpoint()` 标记不确定点，让框架自动构建搜索树。
+**核心 idea**：推理时策略本质是对非确定性程序执行路径的搜索，用 `branchpoint()` 标记不确定点，让框架自动构建搜索树。
 
 ## 方法详解
 
@@ -97,7 +97,7 @@ EnCompass 是一个 Python 框架，实现 PAN 编程模型。程序员用 `@enc
 - **统一视角**：将 BoN、beam search、refinement、self-consistency 统一为"搜索执行路径树"的不同策略，概念上非常优雅
 - **概率编程的 agent 版本**：PAN 之于 agent 编程，如同 Stan/PyMC 之于概率推理——分离模型和推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅适用于 "program-in-control" 风格 agent，不适用于 LLM 自主决策工具调用的场景（如 SWE-Bench、WebArena）
 - 案例研究规模较小（MIT OCW 作业仓库），未在大规模工业级 agent 上验证
 - 搜索空间随 branchpoint 数指数增长，需要好的 pruning/scoring 策略

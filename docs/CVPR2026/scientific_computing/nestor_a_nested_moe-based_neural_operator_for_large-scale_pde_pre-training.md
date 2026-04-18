@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] NESTOR: A Nested MOE-based Neural Operator for Large-Scale PDE Pre-Training
 description: >-
@@ -51,7 +51,7 @@ NESTOR 采用自回归预测框架：输入最近 $T$ 帧 PDE 状态 $u_{t-T+1:t
 
 #### 1. 时空编码（Spatio-Temporal Encoding）
 
-**做什么**：将多帧 PDE 输入编码为统一的隐表示。
+**功能**：将多帧 PDE 输入编码为统一的隐表示。
 
 **核心思路**：输入 $x \in \mathbb{R}^{B \times C \times H \times W}$ 先划分为不重叠的 patch $X_p \in \mathbb{R}^{B \times N \times C \times P_H \times P_W}$，经线性映射和位置编码后得到 $X \in \mathbb{R}^{B \times N \times D}$。然后重排为 $X \in \mathbb{R}^{B \times X \times Y \times T \times C}$，通过可学习权重矩阵在时间维度压缩：
 
@@ -61,7 +61,7 @@ $$Y = \sum_{t=1}^{T} W_t X_t, \quad Y \in \mathbb{R}^{B \times X \times Y \times
 
 #### 2. Image-level MoE（全局专家选择）
 
-**做什么**：基于输入样本的全局特征，动态选择最适合当前 PDE 类型的专家网络。
+**功能**：基于输入样本的全局特征，动态选择最适合当前 PDE 类型的专家网络。
 
 **核心思路**：采用 Top-$k$ 路由策略。对输入特征做全局平均池化得到 $\bar{x}_b \in \mathbb{R}^C$，经线性层生成专家分数，softmax 归一化后选取概率最高的 $k$ 个专家：
 
@@ -79,7 +79,7 @@ $$w_{b,i} = \frac{p_{b,i}}{\sum_{j \in \mathcal{I}_b} p_{b,j}}, \quad i \in \mat
 
 #### 3. Token-level Sub-MoE（局部专家选择）
 
-**做什么**：在每个 image-level 专家内部，对每个 token（空间位置）选择最适合的局部专家。
+**功能**：在每个 image-level 专家内部，对每个 token（空间位置）选择最适合的局部专家。
 
 **核心思路**：替代 Flash Attention 中的 FFN 层。同样采用 Top-$k$ 路由，但路由粒度为 token 级别而非 image 级别。每个专家是标准 MLP：
 
@@ -93,7 +93,7 @@ $$\text{ExpertMLP}(x) = W_2 \sigma(W_1 x + b_1) + b_2$$
 
 #### 4. 嵌套架构的"宏观分类-微观分区"机制
 
-**做什么**：image-level MoE 和 token-level Sub-MoE 形成层级协作。
+**功能**：image-level MoE 和 token-level Sub-MoE 形成层级协作。
 
 **核心思路**：
 - **宏观层**：image-level MoE 根据 PDE 类型自适应选择专家组合（如 NS 方程激活 Expert 0+1，SWE 激活 Expert 2+3）
@@ -158,7 +158,7 @@ PDEBench 六个子任务上的消融（FT-500，Avg L2RE↓）：
 3. **可解释性分析充分**：Table 5 的专家激活频率统计和 Figure 5 的 token 级别空间热图，清晰展示了 MoE 的功能分化
 4. **大容量低成本**：83M 总参数但仅 16.67% 激活率，为 PDE 神经算子的高效扩展提供了思路
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **预训练阶段部分数据集不占优**：FNO-ν 1e-5 和 1e-4 上预训练性能不如 DPOT，说明嵌套 MoE 在数据有限时可能过拟合到特定专家
 2. **NS-cond 和 PDE Arena-NS 表现较弱**：这两个数据集上 Ours-FT500 与 DPOT-FT500 基本持平甚至略差

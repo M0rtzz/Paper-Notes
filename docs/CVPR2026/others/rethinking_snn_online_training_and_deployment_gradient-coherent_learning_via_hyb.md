@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model
 description: >-
@@ -101,7 +101,7 @@ SECA 注意力模块效果（CIFAR-100, ResNet-18）：78.45% → 79.33%（+0.88
 3. **Mem-BN 的可重参数化设计**：训练时引入额外归一化，推理时零开销融入膜参数，工程上非常实用
 4. **10× 参数压缩 + 精度提升**：通过 1-bit/1.5-bit 权重压缩和 HD-LIF 的信息传递能力，实现了看似矛盾的目标
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 训练速度比 vanilla LIF 略慢（37.93s vs 20.52s/epoch），可学习参数增多带来了额外开销
 2. 目前仅在 ResNet 和 VGG 骨干上验证，未扩展到 Transformer 类 SNN 架构

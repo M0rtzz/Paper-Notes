@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GazeGaussian: High-Fidelity Gaze Redirection with 3D Gaussian Splatting
 description: >-
@@ -143,7 +143,7 @@ GazeGaussian在视线精度上略优于GazeNeRF（6.622° vs 6.944°），头部
 - **距离权重机制**：基于到landmark距离的影响权重平滑过渡表情和位姿控制，避免硬分界
 - **表情引导渲染器提升泛化**：通过cross-attention注入被试信息，解决了3DGS-based方法通常面临的单人限制
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练仍需要14.4K图像，数据效率有提升空间
 - 眼球旋转表示将scaling约束为球形，可能对非球形眼部结构建模不够精确

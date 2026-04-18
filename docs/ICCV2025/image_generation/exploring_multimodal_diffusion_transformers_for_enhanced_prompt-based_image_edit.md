@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploring Multimodal Diffusion Transformers for Enhanced Prompt-based Image Editing
 description: >-
@@ -113,7 +113,7 @@ $$\mathbf{q}\mathbf{k}^T = \begin{bmatrix} \mathbf{q}_i\mathbf{k}_i^T & \mathbf{
 - 设计的编辑方法在计算效率上极具优势——仅需对Top-5块计算全注意力，其余可使用SDPA优化
 - 无需token mapping的prompt编辑方式，大大提升了适用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 编辑性能高度依赖于注意力图质量，对于模型本身就无法生成的语义可能失败
 - 真实图像编辑的效果受限于反演技术的质量

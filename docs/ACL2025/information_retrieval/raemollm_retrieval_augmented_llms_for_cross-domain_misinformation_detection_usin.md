@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAEmoLLM: Retrieval Augmented LLMs for Cross-Domain Misinformation Detection Using In-Context Learning Based on Emotional Information
 description: >-
@@ -121,7 +121,7 @@ RAEmoLLM 包含三个模块，形成完整的检索增强推理流水线：
 - **充分的统计验证**：通过 t-test 和 PCA 可视化严谨地验证了情感信息与虚假信息类别之间的统计关联，增强了方法的理论基础
 - **广泛的 LLM 兼容性**：在 9 种不同 LLM（从 1B 到 GPT-4o）上验证有效，说明框架的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **PHEME 数据集上表现相对较弱**：短文本谣言检测任务中，微调模型有时优于 RAEmoLLM，可能因为短文本的情感信号不够丰富
 2. **情感 LLM 的依赖**：框架核心依赖 EmoLLaMA-chat-7B 的嵌入质量，如果情感 LLM 在新语言/领域表现不佳可能影响效果

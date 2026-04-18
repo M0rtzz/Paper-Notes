@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion-VLA: Generalizable and Interpretable Robot Foundation Model via Self-Generated Reasoning
 description: >-
@@ -152,7 +152,7 @@ $$L = L_{diff} + \alpha \cdot L_{ntp}$$
 
 4. **轻量级跨形态迁移**：仅更换最后一层 MLP 即可适配新机器人形态（如从 Franka 到 AgileX 双臂），知识复用效率高。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **缺乏仿真实验对比**：论文主要在真实机器人上评估，缺少与更多 baseline 在标准仿真基准（如 CALVIN、RLBench）上的对比。
 2. **推理数据依赖 GPT-4o**：预训练阶段的推理标注需要 GPT-4o 生成，成本较高且可能引入噪声；未来可探索自动化或更廉价的推理数据获取方式。

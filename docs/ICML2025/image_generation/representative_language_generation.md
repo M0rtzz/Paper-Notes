@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Representative Language Generation
 description: >-
@@ -96,7 +96,7 @@ $$\|\mathcal{G}(x_{1:t})|_{\mathcal{A}} - \overline{x_{1:t}}|_{\mathcal{A}}\|_{\
 3. **连接生成理论与公平性理论**：将多校准（multicalibration）、结果不可区分性（outcome indistinguishability）等公平性概念与生成理论桥接
 4. **形式化了模式坍塌问题**：代表性约束本质上是对模式坍塌的理论刻画，为实际应对提供理论基础
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **纯理论框架**：所有结果均在形式化的理论设置下，缺乏与实际生成模型（如 GPT、扩散模型）的实验验证
 2. **可数空间假设**：实际应用中样本空间通常是连续的（如图像空间），可数假设的适用性有限

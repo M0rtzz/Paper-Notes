@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] x2-Fusion: Cross-Modality and Cross-Dimension Flow Estimation in Event Edge Space
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L}_{align} = \lambda_{2D} \cdot \mathcal{L}_{align}^{2D} + \lambda_{3
 2. 将融合从"异构空间逐对对齐"简化为"同质空间内权重分配"
 3. 边缘强度作为对齐权重——在边缘处精确对齐，非边缘处放松约束
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 事件编码器预训练增加了训练流程复杂度
 2. 冻结事件编码器可能限制了自适应能力

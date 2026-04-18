@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FreqPolicy: Efficient Flow-based Visuomotor Policy via Frequency Consistency
 description: >-
@@ -147,7 +147,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{fm}} + \mathcal{L}_{\text{freq
 4. **实验覆盖广泛**：93 个仿真任务 + 3 个真实任务，涵盖 2D/3D 输入，还验证了作为 VLA 头的泛化能力
 5. **推理速度极快**：93.5 Hz 的真实机器人推理频率，远超多步方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅验证了 flow matching**：核心思想应可扩展到 diffusion-based 策略，但论文未做验证
 2. **计算开销翻倍**：频率一致性损失需要对两个随机样本做前向传播，训练成本约为基本 FM 的两倍

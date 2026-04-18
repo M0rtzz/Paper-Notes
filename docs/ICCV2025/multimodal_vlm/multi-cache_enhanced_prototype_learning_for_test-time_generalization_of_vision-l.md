@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multi-Cache Enhanced Prototype Learning for Test-Time Generalization of Vision-Language Models
 description: >-
@@ -119,7 +119,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{entro}} + \lambda \cdot \mathcal{L}_{\text{al
 - **最小化侵入式设计**：MCP 完全无训练，MCP++ 仅优化残差参数（一步梯度更新），极其轻量
 - **多源信息融合推理**：文本语义匹配 + 视觉原型对比 + 缓存特征检索的三路 logits 组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 预测权重 $\alpha_1, \alpha_2, \alpha_3$ 需要针对每个下游任务搜索最优组合，不够自动化
 - 缓存大小固定（每类10个），可能不适合类别数极多的场景（如 ImageNet 1000 类需维护 30000 个缓存条目）

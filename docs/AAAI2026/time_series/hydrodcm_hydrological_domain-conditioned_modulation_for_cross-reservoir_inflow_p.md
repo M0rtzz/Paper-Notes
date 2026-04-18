@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HydroDCM: Hydrological Domain-Conditioned Modulation for Cross-Reservoir Inflow Prediction
 description: >-
@@ -128,7 +128,7 @@ HydroDCM 在所有预测日上一致优于所有 DG 基线，整体 NSE 仅比 O
 - **"先去后加"策略**：对抗训练去除域偏差 + FiLM 重新注入域信息，比单纯的不变特征学习更灵活
 - **计算高效**：FiLM 适配器参数极少，推理时仅需一次前传，适合实时预报
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **目标域仅 3 个水库**：评估规模偏小，需要在更大流域（如全美 CAMELS 数据集的 671 个流域）上验证
 2. **空间元属性仅 3 维**：仅用经纬度+海拔，未包含更丰富的流域特征（如集水面积、年均降水、土壤类型等）

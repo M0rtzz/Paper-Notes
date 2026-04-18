@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dataset Enhancement with Instance-Level Augmentations
 description: >-
@@ -112,7 +112,7 @@ tags:
 - **隐私保护附加价值**：同一pipeline天然支持数据匿名化，且不影响下游任务性能
 - **独立重绘策略**巧妙地避免了潜空间反复编解码的噪声累积问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方法性能上限受修复模型和ControlNet能力约束，小/遮挡物体有时被直接去除
 - 依赖于text-to-image扩散模型的域（真实场景），无法直接扩展到卫星/医学等特殊域
 - ControlNet的深度/边缘控制在复杂场景中偶有不精确，可能导致标注-图像不一致

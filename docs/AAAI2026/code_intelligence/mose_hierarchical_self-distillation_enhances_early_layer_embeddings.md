@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MoSE: Hierarchical Self-Distillation Enhances Early Layer Embeddings
 description: >-
@@ -162,7 +162,7 @@ tags:
 4. SynthCoNL 数据集的构建方法可推广：利用代码翻译模型低成本生成跨语言训练对
 5. 模块化设计给用户极大的灵活性：从 160M 到 1B 参数按需选择
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 计算资源限制了超参调优和预训练消融实验的充分性
 2. 使用合成代码翻译数据微调的影响尚不明确
 3. 与 OpenAI Embedding 差距仍大（81.0 vs 91.9 MRR），闭源模型规模和训练数据不透明

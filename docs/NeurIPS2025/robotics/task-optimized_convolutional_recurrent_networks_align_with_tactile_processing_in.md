@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Task-Optimized Convolutional Recurrent Networks Align with Tactile Processing in the Rodent Brain
 description: >-
@@ -137,7 +137,7 @@ tags:
 - **强验证**：在完全不同的实验条件（训练用被动接触，评估用主动须动）和新物体上仍饱和神经可变性
 - **PyTorchTNN开源库**：支持大规模时序神经网络探索
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 现有触觉神经数据集**严重受限于刺激多样性**——仅6种刺激（凹/凸×3距离），是噪声天花板较低的原因
 - 动物间一致性的统计平均（0.18）远低于最大配对一致性（1.34），暗示需更多动物和刺激扩展数据集

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MacVQA: Adaptive Memory Allocation and Global Noise Filtering for Continual Visual Question Answering
 description: >-
@@ -192,7 +192,7 @@ Max-Similarity策略比随机的效果显著更好，验证了基于相似度的
 4. **两种测试范式**（标准+新组合）的设计全面评估了模型的保留和泛化能力
 5. 超参数分析揭示了任务类型与最优模态权重的关联——为实际应用中的自适应策略提供了依据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Faster R-CNN作为视觉特征提取器相对过时，是否可以用更现代的ViT或CLIP视觉编码器？
 - 10个任务的任务序列是固定的，不同任务顺序对结果的影响未分析

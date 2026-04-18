@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards a Universal Image Degradation Model via Content-Degradation Disentanglement
 description: >-
@@ -138,7 +138,7 @@ IDA 和 IDEN 的效果（LPIPS↓）：
 - **应用价值大**：作为 plug-in 将非盲恢复转为盲恢复，无需改变恢复方法本身
 - **IDA 层设计精妙**：以远小于空间变化卷积的计算代价实现了更强的表达能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练数据的退化类型和组合仍是有限的合成数据，对更极端的真实退化泛化能力待验证
 - 恢复实验仅在人脸图像（FFHQ）上做，因底层 GAN 限制；DPS 实验因算力受限只有定性结果

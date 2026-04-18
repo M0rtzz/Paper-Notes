@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PACE: Pretrained Audio Continual Learning
 description: >-
@@ -160,7 +160,7 @@ PACE 在 SSLAM 骨干上同样保持优势，验证骨干无关性。
 - **三阶段渐进式框架**：FSA→MSA→冻结自然平衡可塑性与稳定性
 - **LoRA 减法构建"遗忘模型"**：利用参数算术近似历史表示子空间，优雅高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. LoRA 减法假设近似性：减去 LoRA ≠ 精确遗忘，高 rank/强适应场景可能偏差较大
 2. 边界检测依赖临时模型 $\theta_{temp}$ 质量

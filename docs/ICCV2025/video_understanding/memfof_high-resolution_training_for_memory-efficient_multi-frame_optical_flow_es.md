@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MEMFOF: High-Resolution Training for Memory-Efficient Multi-Frame Optical Flow Estimation
 description: >-
@@ -124,7 +124,7 @@ MEMFOF 基于 SEA-RAFT 架构扩展为三帧输入。给定连续三帧 $I_{t-1}
 2. 高分辨率训练策略解决了一个长期被忽视的问题：低分辨率数据集训练 → 高分辨率推理的 domain gap，特别是大运动区域的欠拟合
 3. 视频序列处理时的特征图/相关体积复用策略，使得实际批处理场景下效率进一步提升
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 三帧设计限制了时序信息的利用深度，未来可探索更长时序记忆机制
 - 1/16 分辨率对小物体或细微运动的分辨能力可能有损失，论文未充分讨论这一 failure case

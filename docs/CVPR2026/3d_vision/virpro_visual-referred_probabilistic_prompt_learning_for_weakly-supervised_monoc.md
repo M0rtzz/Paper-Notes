@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection
 description: >-
@@ -160,7 +160,7 @@ VirPro+GGA+PGD 较 GGA+PGD 在 Moderate 上提升 **+3.76 $\text{AP}_{\text{3D}}
 3. **Max pooling 融合的简洁性**：对概率 prompt 用无参数的 max pooling 反而优于复杂的 MLP 融合，符合 "less is more" 设计哲学
 4. **隐空间可视化验证**：通过场景间质心距离分布和聚类指标，定量展示了概率 prompt 对隐空间结构的改善
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **RoI 质量瓶颈**：概率 prompt 质量受限于2D检测器的 RoI 准确度，当2D检测不准时视觉线索有偏
 2. **矩形框假设**：使用矩形框裁剪 RoI 特征不可避免引入背景噪声，真实物体很少是完美矩形

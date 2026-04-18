@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LangSAMP: Language-Script Aware Multilingual Pretraining
 description: >-
@@ -30,11 +30,11 @@ tags:
 
 **核心矛盾**：使用语言 embedding 会使模型依赖语言 ID 输入（推理时不便）；不使用则损害表示的语言中立性。
 
-**本文要解决什么？** 如何在不影响推理灵活性的前提下，利用语言和文字 embedding 提升多语言表示的质量？
+**本文目标** 如何在不影响推理灵活性的前提下，利用语言和文字 embedding 提升多语言表示的质量？
 
 **切入角度**：把语言/文字 embedding 放在 Transformer 输出端而非输入端——预训练时用于辅助 MLM 解码，微调时完全不需要，模型主干可照常作为通用编码器。
 
-**核心 idea 一句话**：在输出端加语言/文字 embedding 分担解码负担，让 Transformer 主干学到更语言中立的表示。
+**核心 idea**：在输出端加语言/文字 embedding 分担解码负担，让 Transformer 主干学到更语言中立的表示。
 
 ## 方法详解
 
@@ -92,7 +92,7 @@ tags:
 - 语言/文字 embedding 作为副产物可用于源语言选择，这种"一石二鸟"的设计很实用
 - 覆盖 500+ 语言的评估非常全面，对低资源语言研究有直接贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 encoder-only 模型（XLM-R）上验证，未扩展到 decoder-only 或 encoder-decoder
 - 需要可靠的语言 ID 检测作为预训练输入（错误的语言标签可能引入噪声）
 - 绝对提升幅度在 NER/POS 等序列标注任务上较小

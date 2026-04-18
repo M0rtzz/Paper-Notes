@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GDFusion: Rethinking Temporal Fusion with a Unified Gradient Descent View for 3D Semantic Occupancy Prediction
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：将 RNN 隐状态更新 $h^t = Ah^{t-1} + Bx^t$ 重新读作梯度下降 $h^t = h^{t-1} - \eta \nabla \mathcal{L}^t$——隐状态大小固定且包含所有历史信息的压缩摘要。
 
-**核心idea一句话**：RNN = 梯度下降 → 用固定大小隐状态融合场景/运动/几何三种时序线索 = 内存高效的时序占用预测。
+**核心 idea**：RNN = 梯度下降 → 用固定大小隐状态融合场景/运动/几何三种时序线索 = 内存高效的时序占用预测。
 
 ## 方法详解
 
@@ -78,7 +78,7 @@ tags:
 - **RNN=梯度下降的重释**——提供了理解时序融合的新视角，每步更新就是在对历史做一次"梯度修正"
 - **即插即用**——可直接用在 BEVDetOcc/FlashOCC 等多种方法上
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要相机自运动变换矩阵
 - 运动估计假设平滑运动
 - 场景自适应在推理时需要少量迭代

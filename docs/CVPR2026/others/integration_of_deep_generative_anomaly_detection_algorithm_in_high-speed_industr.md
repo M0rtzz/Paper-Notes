@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Integration of Deep Generative Anomaly Detection Algorithm in High-Speed Industrial Line
 description: >-
@@ -88,7 +88,7 @@ tags:
 - 热力图可视化为操作员提供直观的缺陷定位解释，满足 GMP 要求的可追溯性
 - 区域分级阈值策略和多帧投票机制是实际部署中的重要工程经验
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 缺少与 PaDiM、PatchCore、EfficientAD 等公开方法在公开数据集上的对比（作者以 NDA 为由推迟）
 - 仅报告了点估计指标，缺少置信区间（作者也承认将在扩展分析中补充）
 - flag/top body 区域的 TNR 较低（90-91%），假拒绝率可能影响产线效率

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BIPro: Zero-shot Chinese Poem Generation via Block Inverse Prompting Constrained Generation Framework
 description: >-
@@ -127,7 +127,7 @@ BIPro 显著缩小了 AI 与人类诗歌的差距。
 3. **块生成模型的价值再发现**：GLM 系列后续版本（ChatGLM、GLM-4）放弃了块生成特性，本文证明这一特性在约束生成中有独特价值
 4. **零样本无需训练**：完全不需要诗歌领域数据训练，仅靠推理时策略就能超越领域特定系统
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算复杂度高**：生成一首诗约需 7000 个 token（直接生成仅 50），是 $O(mk)$ 倍的开销
 - **缺乏自动化评估**：诗歌质量评估完全依赖人类专家，难以大规模评估和快速迭代

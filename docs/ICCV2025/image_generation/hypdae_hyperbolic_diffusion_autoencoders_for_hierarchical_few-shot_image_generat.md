@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] HypDAE: Hyperbolic Diffusion Autoencoders for Hierarchical Few-shot Image Generation
 description: >-
@@ -136,7 +136,7 @@ $r_\mathbb{D} = 5.5$ 时达到最佳 FID-LPIPS 权衡；更小半径增加多样
 - **两阶段设计**巧妙避开了联合端到端训练的困难，也免去了大规模标注数据的需求。
 - 预训练 SD + CLIP 的组合使方法在极少数据下也能生成高质量图像。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Stage II 的 Transformer 解码器（30 层）规模偏大，可探索更轻量的映射网络。
 - VGGFaces 数据集分辨率低（64×64）导致 FID 异常，切换到 FFHQ 虽然解决了但引入了领域偏移。

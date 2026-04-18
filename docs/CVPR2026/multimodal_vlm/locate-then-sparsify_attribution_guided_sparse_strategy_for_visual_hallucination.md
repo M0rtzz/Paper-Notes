@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Locate-then-Sparsify: Attribution Guided Sparse Strategy for Visual Hallucination Mitigation
 description: >-
@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：幻觉缓解和泛化能力保持之间的 trade-off——过强引导减少幻觉但损害通用能力，过弱引导则效果不足。
 
-**本文要解决什么**：如何精准定位幻觉相关层并差异化地施加引导，只在"该调"的地方调？
+**本文目标**：如何精准定位幻觉相关层并差异化地施加引导，只在"该调"的地方调？
 
 **切入角度**：借鉴参数定位技术，通过因果干预量化每层对幻觉输出的贡献，得到层级归因分数。
 
@@ -97,7 +97,7 @@ tags:
 - 在缓解幻觉的同时显著保持甚至提升泛化能力（LLaVA-Bench detailness 4.72→4.92）
 - LTS-FS(VTI) 在 LLaVA-1.5-7B 上将 CHAIR-S 从 47.4 降至 35.8，降幅达 24.5%
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 归因计算需要对每层逐头干预，大模型（>13B）上的归因开销较大且需要 GPU 显存
 - 双粒度数据集的构建依赖已有幻觉基准（POPE、CHAIR、Antidote），域外场景的适用性需验证
 - 当前仅在 LLaVA 和 Qwen-VL 系列上验证，更多架构（如 InternVL、Gemma）的适配性值得探索

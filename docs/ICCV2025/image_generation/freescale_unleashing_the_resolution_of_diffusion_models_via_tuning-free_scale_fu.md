@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FreeScale: Unleashing the Resolution of Diffusion Models via Tuning-Free Scale Fusion
 description: >-
@@ -117,7 +117,7 @@ FreeScale 由三个组件构成：
 - 灵活的区域细节控制（空间变化的 $\alpha$）和局部语义编辑能力（Fig. 4-5）展示了实用价值
 - 首次实现 8K 文本到图像生成是一个引人注目的里程碑
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在 UNet 结构模型（SDXL、VideoCrafter2）上验证，DiT 架构模型（FLUX）的自注意力机制不同，可能需要调整
 - 高斯模糊的核大小是固定的超参数，自适应选择可能带来进一步提升
 - 8K 推理虽然在单 GPU 上可行，但时间开销仍然较大

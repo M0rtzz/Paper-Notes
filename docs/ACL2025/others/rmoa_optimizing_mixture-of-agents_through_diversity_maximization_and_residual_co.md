@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RMoA: Optimizing Mixture-of-Agents through Diversity Maximization and Residual Compensation
 description: >-
@@ -136,7 +136,7 @@ RMoA 是一个纯推理框架，无需训练。关键超参数：
 - 自适应终止机制同时解决了效率和幻觉两个问题
 - 框架的模型无关性（从 7B 到 GPT-4o 均有效）体现了良好的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销仍较高**：虽然相比 MoA 有所优化，但多层多 Agent 的推理成本仍然显著
 2. **残差提取依赖 prompt 工程**：残差提取智能体的效果受 prompt 设计影响

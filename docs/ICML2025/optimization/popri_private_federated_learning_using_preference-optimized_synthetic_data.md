@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] POPri: Private Federated Learning using Preference-Optimized Synthetic Data
 description: >-
@@ -120,7 +120,7 @@ $$\min_\Psi \mathbb{E}_{x, y_\omega, y_r} \left[ -\log \sigma \left( \tau \log \
 4. **隐私-效用帕累托改进**：在强隐私（ε=1）下仍能大幅超越基线，且通信/计算成本低于 DP-FL
 5. **LargeFedBench 有实用价值**：大规模、持续更新、避免污染的联邦基准填补了社区空白
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅评估文本任务**：方法依赖 LLM 生成合成数据，未验证图像/表格等模态
 2. **LLM 依赖**：需要服务器端部署 LLaMA-3-8B 级别的 LLM，对服务器算力有要求

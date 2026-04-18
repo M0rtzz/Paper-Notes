@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sequentially Auditing Differential Privacy
 description: >-
@@ -116,7 +116,7 @@ tags:
 - 并行运行多个 $\varepsilon$ 水平的检验可以从单个观测流中估计隐私下界，这对实践非常有用
 - 白盒 DP-SGD 审计的设置（梯度投影到 canary 方向）使得每个训练步都产生一个样本，完美契合序贯框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 大 $\varepsilon$ 区间的审计能力不足（$\Delta^2$ 太小导致样本复杂度过高）
 - 依赖固定的相邻数据集对，理想情况应自适应寻找最坏情况对

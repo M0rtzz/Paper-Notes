@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Exploration of Incremental Synthetic Non-Morphed Images for Single Morphing Attack Detection
 description: >-
@@ -118,7 +118,7 @@ $$S_{(SMDD,j)} \subset D_{SMDD}, \quad |S_{(SMDD,j)}| = m < n$$
 - **实际部署导向**：选用轻量级架构（2.9M-7.7M参数），适合移动端和边境检查等资源受限场景
 - **多变形工具覆盖**：四种不同质量的变形工具（FaceFusion/FaceMorpher/OpenCV/UBO）+ GAN生成，覆盖实际攻击的多样性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Workshop论文篇幅限制**：个别实验细节和分析深度不够，如缺乏对合成数据域偏移(domain shift)的定量分析
 - **合成数据生成方式单一**：仅使用SMDD（StyleGAN2-ADA），未探索其他生成方法（如扩散模型）
 - **缺少最新backbone**：未测试Vision Transformer或更新的高效架构

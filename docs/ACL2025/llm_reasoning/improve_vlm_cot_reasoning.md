@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improve Vision Language Model Chain-of-thought Reasoning
 description: >-
@@ -33,9 +33,9 @@ tags:
 
 **核心矛盾**：VLM需要CoT推理能力，但(a)高质量CoT数据极度匮乏，(b)仅在短答案上训练的模型泛化不到需要详细推理的任务，(c)CoT推理的质量需要进一步校准。
 
-**本文要解决什么？** 解决VLM CoT推理数据的匮乏问题并提升推理质量。
+**本文目标** 解决VLM CoT推理数据的匮乏问题并提升推理质量。
 
-**核心idea一句话**：先蒸馏CoT数据做SFT教会模型推理，再用DPO利用模型自生成的推理正负样本对来校准推理质量。
+**核心 idea**：先蒸馏CoT数据做SFT教会模型推理，再用DPO利用模型自生成的推理正负样本对来校准推理质量。
 
 ## 方法详解
 

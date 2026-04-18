@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GASP: Efficient Black-Box Generation of Adversarial Suffixes for Jailbreaking LLMs
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **切入角度**：把离散token优化转化为连续潜在空间的贝叶斯优化。训练一个SuffixLLM把后缀编码到连续空间，用高斯过程建模后缀的"攻击效果"，用acquisition function引导搜索，再用ORPO偏好优化微调SuffixLLM。
 
-**核心idea一句话**：在SuffixLLM的嵌入空间中做贝叶斯优化搜索对抗后缀，比离散token搜索高效得多且自然保持可读性。
+**核心 idea**：在SuffixLLM的嵌入空间中做贝叶斯优化搜索对抗后缀，比离散token搜索高效得多且自然保持可读性。
 
 ## 方法详解
 
@@ -106,7 +106,7 @@ GASP包含四个模块：(A) 在AdvSuffixes数据集上预训练SuffixLLM；(B) 
 - **LBO + ORPO的交替优化闭环**：LBO发现好后缀 → ORPO微调SuffixLLM → 新的SuffixLLM提供更好的嵌入空间和候选后缀 → LBO更高效搜索。这种自我增强循环是GASP持续改进的关键
 - **GASPEval的21维评估**比二值"是否拒绝"更精细，能区分不同程度的有害输出
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对**强对齐模型**（LLaMA-3/3.1）ASR@1仍然低（6-11%），需要多次尝试才能成功
 - SuffixLLM需要为每个TargetLLM做LBO+ORPO适配，不具备开箱即用的跨模型迁移能力
 - 预训练数据AdvSuffixes依赖无审查LLM生成——如果无审查LLM不可用，数据构建受限

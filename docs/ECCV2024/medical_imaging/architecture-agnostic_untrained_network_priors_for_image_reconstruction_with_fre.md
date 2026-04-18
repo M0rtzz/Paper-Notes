@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Architecture-Agnostic Untrained Network Priors for Image Reconstruction with Frequency Regularization
 description: >-
@@ -134,7 +134,7 @@ $$\min_{\Theta, K} \mathcal{L}(\mathbf{y}; \mathbf{AG_\Theta(z)}) + \lambda \sum
 4. **域外泛化优势**：无监督方法天然避免了有监督方法的分布偏移问题，域外 PSNR 超过 U-Net 约 2 dB
 5. **与 early stopping 互补**：本文方法可与自验证 early stopping 结合，进一步缩短重建时间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **超参数调节**：高斯模糊的 $\{s, \sigma\}$、Kaiser 窗的 $\{M, \beta\}$ 需针对不同数据集和加速倍率调节（膝关节和脑部使用不同超参数），尚未实现完全自动化
 2. **评估范围有限**：主要在 MRI 重建上验证，自然图像的去噪和修复实验较为简略

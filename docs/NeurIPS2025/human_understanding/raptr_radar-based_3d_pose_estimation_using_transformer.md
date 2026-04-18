@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAPTR: Radar-Based 3D Pose Estimation Using Transformer
 description: >-
@@ -91,7 +91,7 @@ RAPTR接收多视角雷达热图（水平-深度 $\mathbf{Y}_{\text{hor}} \in \m
 - 伪3D注意力在3D空间统一处理采样点，比逐视图独立注意力更优雅且可扩展
 - 多人场景下的鲁棒性（18.99cm vs 33.19cm）表明DETR式query匹配适合雷达人体感知
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 3D模板假设固定的人体骨架比例，不适应儿童或特殊体型
 - 仅在两个室内数据集上验证，室外/非受控环境未评估

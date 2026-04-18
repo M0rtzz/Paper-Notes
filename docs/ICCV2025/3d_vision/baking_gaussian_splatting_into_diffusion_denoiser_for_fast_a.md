@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Baking Gaussian Splatting into Diffusion Denoiser for Fast and Scalable Single-stage Image-to-3D Generation and Reconstruction
 description: >-
@@ -87,7 +87,7 @@ DiffusionGS是一个单阶段3D扩散模型。输入一张干净条件视图和N
 - **RPPC设计精巧**：用参考点替代力矩向量，直觉清晰且满足光场理论，有效提升深度感知
 - **速度极快**：推理仅~6秒，比DMV3D快5倍以上
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 训练成本较高（32-64×A100），不易复现
 - 像素对齐高斯的数量固定为$(N+1)HW$，对于复杂场景可能不够灵活（无自适应密度控制）
 - 当前分辨率256×256（微调到512），对高分辨率应用仍有提升空间

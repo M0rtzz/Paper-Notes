@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FORCE: Transferable Visual Jailbreaking Attacks via Feature Over-Reliance CorrEction
 description: >-
@@ -103,7 +103,7 @@ $$\ell_{\text{reg}} = \frac{1}{N}\sum_{n=1}^{N}\sum_{l=1}^{L} \lambda_l \cdot \f
 - **频谱视角的创新**：揭示攻击优化过程中高频依赖的反常增长趋势，并通过简洁的频谱重缩放有效修正
 - **实用性**：无需访问目标模型参数，可直接用于闭源MLLM的红队评估
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对闭源商业模型（GPT-5、Claude-Sonnet-4）绝对ASR仍然很低（1-2%），实际威胁有限
 - 仅在LLaVA-v1.5-7B作为源模型进行评估，更大/更多源模型组合值得探索

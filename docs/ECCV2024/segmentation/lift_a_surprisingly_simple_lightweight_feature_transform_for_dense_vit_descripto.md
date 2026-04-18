@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiFT: A Surprisingly Simple Lightweight Feature Transform for Dense ViT Descriptors
 description: >-
@@ -127,7 +127,7 @@ LiFT 在所有任务、所有分辨率上全面超越基线方法。尤为突出
 - **全卷积即插即用**：完全卷积设计使 LiFT 可处理训练时未见过的任意分辨率输入，实际部署灵活度很高
 - **与 FeatUp 的互补**：LiFT 兼具 FeatUp-JBU 的前馈高效性和 FeatUp-Implicit 的特征锐度，是当前最佳的实用特征密集化方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. LiFT 单次仅实现 $2\times$ 上采样，极高倍率需递归应用，可能引入误差累积
 2. 图像路径使用浅层 CNN，可以探索更强的图像编码方式（如 ConvNeXt 轻量版）

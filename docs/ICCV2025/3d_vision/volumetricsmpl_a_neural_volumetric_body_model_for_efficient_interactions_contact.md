@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VolumetricSMPL: A Neural Volumetric Body Model for Efficient Interactions, Contacts, and Collisions
 description: >-
@@ -128,7 +128,7 @@ Adam 优化器，学习率从 $10^{-4}$ 退火到 $10^{-5}$，15 个 epoch（450
 3. **SDF vs 占据函数**的实证比较非常有说服力——光滑梯度在碰撞优化中质的飞跃
 4. NBW 的设计简洁而有效，从 ResFields 借鉴的权重混合思路值得在其他条件生成任务中推广
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 基于 SMPL 的运动链分割，对非标准体型或极端姿态的泛化有待验证
 2. 训练仍需 20 小时，虽然推理快但训练成本不低

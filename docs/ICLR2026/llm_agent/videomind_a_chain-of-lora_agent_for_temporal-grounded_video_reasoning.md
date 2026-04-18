@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VideoMind: A Chain-of-LoRA Agent for Temporal-Grounded Video Reasoning
 description: >-
@@ -153,7 +153,7 @@ Chain-of-LoRA 以 4.2G 内存达到了与 16.6G 的 All-Distributed 完全相同
 3. **Timestamp Decoder的精度优势**：相比直接用语言模型生成时间戳文本，专用解码器+特征金字塔的设计在定位精度上有本质提升
 4. **Zoom-in验证策略**：模拟人类"回看确认"的行为，通过扩展边界+特殊标记增强模型的边界感知能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **各角色需要独立优化和准备训练数据**：虽然LoRA轻量，但整体训练流程仍然复杂
 2. **缺少音频模态**：当前仅处理视觉和文本，未利用视频中的音频信息

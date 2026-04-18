@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TreeCut: A Synthetic Unanswerable Math Word Problem Dataset for LLM Hallucination Evaluation
 description: >-
@@ -103,7 +103,7 @@ TreeCut 将每道数学应用题建模为一棵树：
 - **覆盖前沿模型**：评估了包括 o3-mini 在内的最新推理模型，揭示了其特殊的幻觉偏差模式
 - **简洁优雅的形式化**：用树+剪边的数学框架统一了问题生成和不可解性验证
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅覆盖线性算术应用题**：不涉及几何、概率、代数方程等更广泛的数学领域，生成的题目类型单一
 2. **仅评估 zero-shot 和 few-shot CoT**：未探索 self-consistency、tool-augmented reasoning 等更高级的推理框架

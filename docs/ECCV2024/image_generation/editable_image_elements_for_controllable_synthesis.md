@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Editable Image Elements for Controllable Synthesis
 description: >-
@@ -60,7 +60,7 @@ tags:
 
 #### 1. **图像元素提取（Image Elements）**
 
-**做什么**：将图像 $\mathbf{x} \in \mathbb{R}^{H \times W \times 3}$ 分解为 $N=256$ 个不相交的连续 patch 集合 $\mathbf{A} = \{\mathbf{a}_1, ..., \mathbf{a}_N\}$。
+**功能**：将图像 $\mathbf{x} \in \mathbb{R}^{H \times W \times 3}$ 分解为 $N=256$ 个不相交的连续 patch 集合 $\mathbf{A} = \{\mathbf{a}_1, ..., \mathbf{a}_N\}$。
 
 **核心思路**：修改 SLIC 算法，在 SAM 特征空间中操作。以 $16 \times 16$ 均匀间隔的查询点起始，结合 SAM 的语义亲和力图 $\mathbf{s}(m,n)$ 和欧氏空间距离 $\mathbf{d}(m,n)$，对每个像素 $m$ 分配到查询元素 $n$：
 
@@ -72,7 +72,7 @@ $$g(m) = \arg\max_{n \in \{1,...,N\}} [\mathbf{s}(m,n) - \beta \cdot \mathbf{d}(
 
 #### 2. **内容编码器（Content Encoder）**
 
-**做什么**：将每个 patch 的外观编码为与空间位置解耦的 embedding。
+**功能**：将每个 patch 的外观编码为与空间位置解耦的 embedding。
 
 **核心思路**：采用与 Stable Diffusion KL-autoencoder 相同架构的卷积编码器（4 层下采样），所有 patch 统一 resize 到相同尺寸后输入编码器，确保尺寸信息被解耦。编码器通过联合训练轻量 Transformer 解码器 $\mathcal{D}_{\text{light}}$（8 层自注意力 + 4 层交叉注意力）来优化：
 
@@ -84,7 +84,7 @@ $$\mathcal{E}^* = \arg\min_{\mathcal{E}} \min_{\mathcal{D}_{\text{light}}} \ell_
 
 #### 3. **扩散解码器（Diffusion Decoder）**
 
-**做什么**：基于编辑后的图像元素生成真实感图像。
+**功能**：基于编辑后的图像元素生成真实感图像。
 
 **核心思路**：在 Stable Diffusion v1.5 的 UNet 中，在每个已有的文本交叉注意力层后插入新的交叉注意力层 $\theta_{\mathcal{S}}$，以图像元素为 key/value。文本和图像元素两个交叉注意力的输出等权相加到自注意力特征上。训练目标：
 
@@ -146,7 +146,7 @@ $$\mathcal{L}_{SD}^{\text{new}} = \mathbb{E}_{\mathbf{z}, \epsilon \sim \mathcal
 - **Random Partition 训练策略**：巧妙的洞察——条件修复的概率应独立于图像元素分割方式，因此用随机分割代替实际分割进行 dropout 训练
 - 连接了超像素分割和扩散模型编辑两个领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **重建质量非完美**（PSNR 22.98）：编辑高分辨率用户图片仍有挑战
 - **外观 embedding 不可编辑**：当前方法支持空间编辑但不支持风格编辑

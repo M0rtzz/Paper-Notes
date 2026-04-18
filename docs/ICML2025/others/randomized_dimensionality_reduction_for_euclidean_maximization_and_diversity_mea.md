@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Randomized Dimensionality Reduction for Euclidean Maximization and Diversity Measures
 description: >-
@@ -98,7 +98,7 @@ $$t = O\!\left(\varepsilon^{-2}\,\lambda\,\log \frac{1}{\varepsilon}\right)$$
 4. **阈值现象**：$(1+\varepsilon) \to \sqrt{2}$ 的尖锐跳变是全新发现，揭示了降维在最大化问题上的本质行为
 5. **1-median 与最大匹配的联系**（Lemma 4.2）巧妙利用 Tverberg 图，具有独立理论价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅考虑高斯 JL 映射（$i.i.d.$ 高斯矩阵），未讨论稀疏 JL 等更高效变体
 - 实验规模较小（$n=1000$），未在大规模真实应用场景中验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Q2E: Query-to-Event Decomposition for Zero-Shot Multilingual Text-to-Video Retrieval
 description: >-
@@ -135,7 +135,7 @@ Q2E 系统（图 2）包含四个核心模块：
 - **零样本 plug-and-play**：无需微调，可直接替换底层编码器（MultiCLIP/InternVideo2），实用性强
 - **全局最大策略**：对事件-描述匹配使用全局最大而非平均，有效降低 LLM 幻觉的负面影响
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **计算开销大**：需运行多个大模型（LLM、VLM、ASR、翻译器），推理时间和成本高
 - **LLM 幻觉风险**：事件分解和字幕精炼过程中可能产生虚假信息

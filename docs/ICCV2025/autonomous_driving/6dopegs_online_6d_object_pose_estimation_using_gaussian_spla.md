@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 6DOPE-GS: Online 6D Object Pose Estimation using Gaussian Splatting
 description: >-
@@ -122,7 +122,7 @@ tags:
 4. **选用2DGS而非3DGS的决策有理有据**：surfel表示提供更好的表面几何约束
 5. **完整的实时系统验证**：包含真实场景ZED2相机的实时演示
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **HO3D上ADD绝对分数仍低于BundleSDF**（84.33 vs 89.56）：手遮挡导致监督信号不足，高斯优化受限
 2. **高斯光栅化的梯度计算不如神经场的可微光线投射精确**：作者计划探索高斯表示的ray casting方法
 3. **Gaussian Object Field未直接集成到在线位姿图优化中**：仅传递优化后的位姿，存在进一步耦合的空间

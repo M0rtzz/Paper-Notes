@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LUMINA: Detecting Hallucinations in RAG System with Context-Knowledge Signals
 description: >-
@@ -143,7 +143,7 @@ Lumina在HalluRAG上跨模型均超过0.9 AUROC，比ReDeEP最高提升 +13%。
 3. **无监督但强过有监督**：与训练二分类器的SAPLMA竞争性能，某些情况下超越
 4. **跨模型泛化**：用小模型检测大模型的幻觉成为可能，大幅降低部署成本
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 对Llama2-13B在上下文噪声下性能下降 >0.1，需进一步分析
 - 当前假设检索文档相关且充分，极端低质量检索场景未充分评估

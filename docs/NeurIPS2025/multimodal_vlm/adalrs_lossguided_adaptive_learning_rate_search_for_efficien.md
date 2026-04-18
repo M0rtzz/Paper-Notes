@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaLRS: Loss-Guided Adaptive Learning Rate Search for Efficient Foundation Model Pretraining
 description: >-
@@ -97,7 +97,7 @@ tags:
 - **多场景验证**：LLM/VLM、不同规模、不同初始LR、预训练/继续训练
 - **显著节省**：50%训练成本节省对大模型预训练意义重大
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 初始 LR 过大时方法失效——参数已被破坏性更新污染，仅靠降 LR 无法修复
 - 仅保证收敛到 $e$-邻域而非精确最优，$e$ 的大小取决于估计质量
 - 继续预训练中大 LR 下无法消除灾难性遗忘

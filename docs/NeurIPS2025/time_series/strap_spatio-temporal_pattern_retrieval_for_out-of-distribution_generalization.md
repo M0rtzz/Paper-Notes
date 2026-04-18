@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] StRap: Spatio-Temporal Pattern Retrieval for Out-of-Distribution Generalization
 description: >-
@@ -99,7 +99,7 @@ StRap 遵循"显式存储 + 检索融合"的范式：
 - Plug-and-play 设计使得 StRap 可作为通用增强模块附加到现有 STGNN 上
 - 理论分析证明了模式提取和检索机制在分布偏移下的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 模式库大小会随数据积累增长，需要剪枝或压缩策略
 - 键提取涉及图拓扑计算（如最短路径、曲率），对大图可能有效率瓶颈

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Better Estimation of the Kullback-Leibler Divergence Between Language Models
 description: >-
@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：MC 估计器只用采样的完整字符串计算 log-ratio，浪费了前向传播已经产生的每个位置上完整的 next-token 分布信息。
 
-**本文要解决什么？** 在零额外计算开销下显著降低 KL 估计方差。
+**本文目标** 在零额外计算开销下显著降低 KL 估计方差。
 
 **切入角度**：Rao-Blackwell 化——在每个位置 $n$ 对 next-token 分布求精确 KL（$|\bar{\Sigma}|$ 个 token 的求和），而非只用采样到的那个 token。
 
@@ -106,7 +106,7 @@ KL < 5 区域：RB 模型占 Pareto 前沿的 **95%**！
 - **非负性是免费赠品**：MC 可能为负（导致 RLHF 不稳定），Schulman 方法牺牲方差换非负。RB 既非负又低方差
 - 对 RLHF 开源库（trl/OpenRLHF 等）有直接可使用的改进——代码片段已提供
 
-## 局限性 / 可改进方向
+## 局限与展望
 - RLHF 实验仅在 GPT-2 上验证（计算资源限制导致需要训练 36 个模型做显著性检验）
 - 词表大小 $|\bar{\Sigma}|$ 很大时精确 KL 计算仍有开销（虽然远小于前向传播）
 - 假设 $KL(p \| q) < \infty$（实践中可能不满足）

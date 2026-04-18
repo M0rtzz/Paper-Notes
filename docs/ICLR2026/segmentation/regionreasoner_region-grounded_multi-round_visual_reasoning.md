@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RegionReasoner: Region-Grounded Multi-Round Visual Reasoning
 description: >-
@@ -93,7 +93,7 @@ tags:
 - **统一检测和分割**：无任务特定头，检测用 bbox JSON、分割用 point_2d JSON，同一框架同一训练
 - **RegionDial-Bench**：首个同时覆盖检测和分割的多轮推理基准，支持逐轮评估和参考传播
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 基准规模较小（RefCOCO+ 仅 715 图/2355 轮），更大规模和更多样场景的泛化性待验证
 - 关键词匹配方式（lemma + 停用词移除 + 名词过滤）较粗糙，在语义丰富但词汇多样的场景中可能遗漏真实一致性
 - 仅在 7B 规模验证，更大模型（如 72B）可能不需要如此结构化的约束即可实现多轮稳定推理

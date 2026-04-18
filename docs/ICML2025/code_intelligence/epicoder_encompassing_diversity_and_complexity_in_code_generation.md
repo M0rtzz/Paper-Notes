@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EpiCoder: Encompassing Diversity and Complexity in Code Generation
 description: >-
@@ -133,7 +133,7 @@ EpiCoder-Qwen-7B 在 7B 规模实现了 SOTA 平均表现，BCB-Hard Completion 
 4. **提出 XFileDep 基准**：填补了文件级代码生成评估的空白，包含 466 个跨文件依赖问题
 5. **频率估计的巧妙设计**：用兄弟节点平均频率估计新进化特征的频率，简单但有效地保持了分布一致性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **特征树构建依赖强LLM**：整个 pipeline 依赖 GPT-4o 进行特征提取和进化，成本较高
 2. **仓库级生成尚为概念验证**：虽然展示了50+文件仓库的生成案例，但尚未进行系统量化评估

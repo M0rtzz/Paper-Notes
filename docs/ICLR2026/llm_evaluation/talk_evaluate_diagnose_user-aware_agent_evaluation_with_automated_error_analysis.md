@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Talk, Evaluate, Diagnose: User-aware Agent Evaluation with Automated Error Analysis
 description: >-
@@ -29,9 +29,9 @@ tags:
 - **领域现状**：LLM Agent日益用于自动化各种工作流，但评估框架碎片化——每个领域用独立方法（数据库查询、正则匹配等）判定成功。
 - **现有痛点**：(1) 缺乏跨领域统一评估方法；(2) 不系统考虑用户角色对Agent表现的影响；(3) 评估止步于metrics报告，缺乏诊断和可操作的改进建议。
 - **核心矛盾**：Agent行为受用户交互影响巨大 vs 评估时用户角色不被控制。
-- **本文要解决什么**：构建统一的、用户感知的、可诊断的Agent评估框架。
+- **本文目标**：构建统一的、用户感知的、可诊断的Agent评估框架。
 - **切入角度**：Talk(用户模拟)+Evaluate(评估)+Diagnose(诊断)三阶段统一。
-- **核心idea一句话**：有效的Agent评估不仅需要正确性，还需要对话质量、效率和系统性的错误诊断。
+- **核心 idea**：有效的Agent评估不仅需要正确性，还需要对话质量、效率和系统性的错误诊断。
 
 ## 方法详解
 
@@ -42,17 +42,17 @@ Talk→用可复用persona模板模拟expert/non-expert用户与Agent交互。Ev
 ### 关键设计
 
 **设计1：通用可复用Persona模板**
-- **做什么**：解耦用户persona和任务指令，提供与任务/Agent无关的通用expert/non-expert模板。
+- **功能**：解耦用户persona和任务指令，提供与任务/Agent无关的通用expert/non-expert模板。
 - **核心思路**：$u = f(p, i)$，persona prompt $p$和task instruction $i$组合。同一任务改变persona即可测试用户影响。包含反思+回应两步过程。
 - **设计动机**：现有方法persona与任务紧耦合，无法隔离用户行为的独立影响。
 
 **设计2：Grading Notes + 效率指标**
-- **做什么**：将所有子目标（工具调用、响应内容等）统一为自然语言检查项；提出MaxProgressRate@k、MaxAUC@k、MaxPPT@k等指标。
+- **功能**：将所有子目标（工具调用、响应内容等）统一为自然语言检查项；提出MaxProgressRate@k、MaxAUC@k、MaxPPT@k等指标。
 - **核心思路**：progress(i) = 已达成grading notes占比；MaxProgressRate@k取k次试验中最高progress的期望。AUC评估早期进展效率，PPT评估每轮进展率。
 - **设计动机**：success rate太粗粒度；需要捕捉部分进展和对话轮次效率。
 
 **设计3：自动化错误发现**
-- **做什么**：两步错误分析——低级错误识别+语义聚类。
+- **功能**：两步错误分析——低级错误识别+语义聚类。
 - **核心思路**：对judge不一致的子目标，用LLM提取具体错误描述(low-level)；再对所有低级错误做语义聚类得到高级错误类别。分析judge方差和agent方差分别反映judge不可靠性和agent不稳定性。
 - **设计动机**：报告metrics→发现错误→提供改进建议的闭环。
 
@@ -94,7 +94,7 @@ Talk→用可复用persona模板模拟expert/non-expert用户与Agent交互。Ev
 2. Persona解耦的idea简洁但影响深远——隔离用户因素是公平评估的前提。
 3. 从评估到诊断到改进的完整闭环，不止于"报告分数"。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. Grading notes的构建仍需人工，自动化程度有限。
 2. 仅两种persona(expert/non-expert)，更细粒度的用户建模未探索。

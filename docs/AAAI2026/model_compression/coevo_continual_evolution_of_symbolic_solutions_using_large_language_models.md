@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models
 description: >-
@@ -172,7 +172,7 @@ CoEvo在Oscillation 2和E. coli Growth上比LLM-SR好**数个数量级**。
 - **知识库的收集-管理-复用闭环**：summarization从好解中提取知识，management防止知识膨胀，reuse在正确时机注入知识
 - **Oscillation 2案例**堪称亮点：发现了人类研究者也可能忽视的非传统解路径
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 实验仅覆盖4个AI Feynman问题，规模偏小，泛化性有待更多benchmark验证
 2. 知识库的容量设置（30条）较为经验性，缺乏理论指导

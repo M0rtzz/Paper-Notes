@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] XIFBench: Evaluating Large Language Models on Multilingual Instruction Following
 description: >-
@@ -115,7 +115,7 @@ $$\text{RFR}^{(l)}=\frac{\sum_{i}\sum_{r}e^{(l)}_{i,r}}{\sum_{i}|\mathcal{R}_{i}
 - **多维度洞察**：系统分析了语言资源、约束类别、指令复杂度、文化特异性四个维度对多语言指令遵循的影响，提供了此前缺乏的细粒度认知
 - **高质量数据集**：经约束级翻译验证+人工质检，跨语言不一致率<1.4%，需求质量>93.3%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **语言覆盖有限**：仅6种语言，缺少韩语、日语、葡萄牙语等重要语种
 - **依赖GPT-4o评估**：评估协议依赖特定LLM作为裁判，其偏见可能影响结果

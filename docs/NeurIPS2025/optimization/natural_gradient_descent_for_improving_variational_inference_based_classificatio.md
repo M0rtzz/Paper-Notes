@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Natural Gradient Descent for Improving Variational Inference Based Classification of Radio Galaxies
 description: >-
@@ -106,7 +106,7 @@ tags:
 - 自然梯度下降利用参数空间的黎曼几何，为 VI 优化提供了更「自然」的方向
 - 实验虽小但**分析深入**，每个发现都有具体的物理应用意义
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在小规模 LeNet 和小数据集上验证，需要在更大架构/数据上确认
 - 近 OoD 检测能力下降是重要缺陷，限制了在需要检测不同望远镜数据偏移的场景中的应用

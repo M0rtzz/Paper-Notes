@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ForensicZip: More Tokens are Better but Not Necessary in Forensic Vision-Language Models
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：语义显著性与取证证据反相关——语义剪枝像低通滤波器，保留了"好看的"内容但丢弃了"有问题的"痕迹。在高压缩比下，取证性能急剧下降。
 
-**本文要解决什么？** 如何在极端压缩（90% token 丢弃）下保留微妙的非语义取证证据？
+**本文目标** 如何在极端压缩（90% token 丢弃）下保留微妙的非语义取证证据？
 
 **切入角度**：生成管道再逼真，也会违反帧间物理连续性。在 token 空间中，这表现为局部纹理/结构的"Birth"（凭空出现）和"Death"（突然消失）。
 
-**核心 idea 一句话**：用 Birth-Death 最优传输检测帧间物理不连续性作为取证信号，替代语义显著性作为 token 保留准则。
+**核心 idea**：用 Birth-Death 最优传输检测帧间物理不连续性作为取证信号，替代语义显著性作为 token 保留准则。
 
 ## 方法详解
 
@@ -103,7 +103,7 @@ OT 求解开销 $O((T-1) \cdot I_{sk} \cdot (N+1)^2)$，Sinkhorn 20 轮，在 LL
 - **Birth-Death OT 的 slack node 设计**非常巧妙：把"没有前驱"从一个匹配失败转变为一个可量化的信号。类比：标准 OT 像是"所有快递都必须签收"，Birth-Death OT 允许"这个包裹没人寄"——更真实地建模了伪造过程。
 - **Training-free 且即插即用**：不需要重训任何模型，直接作为 inference-time 插件，实际部署价值高。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **只在特定 forensic MLLM 上验证**：需要测试更多 backbone 和更多伪造类型
 - **静态图像 fallback 较弱**：单张图片只能用空间 outlier 检测，没有时域 OT 信号

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SceneGraphLoc: Cross-Modal Coarse Visual Localization on 3D Scene Graphs
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L} = \alpha \cdot \mathcal{L}_{\text{static}} + (1 - \alpha) \cdot \m
 - **知识蒸馏式设计**：映射阶段将多模态信息蒸馏到固定大小嵌入中，推理时无需访问原始模态数据，实现了存储与速度的双重优势。
 - **时序鲁棒性**：利用同一场景不同时间的扫描作为正样本，使模型对环境变化具有鲁棒性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当查询图像中可见物体种类少（如主要是墙面）时，定位容易失败，因为缺乏足够的判别性信息。
 - 在 ScanNet 上使用 SceneGraphFusion 预测的场景图时，由于实例分割不精确和缺少属性标注，性能有所下降。

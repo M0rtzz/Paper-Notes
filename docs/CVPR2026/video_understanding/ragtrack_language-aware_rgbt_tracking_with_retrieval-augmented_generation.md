@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] RAGTrack: Language-aware RGBT Tracking with Retrieval-Augmented Generation
 description: >-
@@ -106,7 +106,7 @@ LasHeR 属性级分析显示：全遮挡（TO）+10.7% PR，出视野（OV）+5.
 3. **RAG 范式新颖**：首次将检索增强生成引入 RGBT 跟踪，动态知识库 + 推理 token 传播实现持续时序推理
 4. **MLLM 动态描述生成**：克服静态语言标注的局限，跨帧自适应更新目标描述
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理开销**：每帧调用 QWen2.5-VL-3B 生成描述，实时性受限，论文未报告 FPS
 2. **文本标注依赖 MLLM 质量**：自动生成的文本可能存在幻觉，虽经人工校验但扩展到更大规模数据集时成本高

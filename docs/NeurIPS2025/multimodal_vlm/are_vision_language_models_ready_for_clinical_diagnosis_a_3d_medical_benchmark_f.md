@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are Vision Language Models Ready for Clinical Diagnosis? A 3D Medical Benchmark for Tumor-centric Visual Question Answering
 description: >-
@@ -118,7 +118,7 @@ DeepTumorVQA 基准的构建流程：
 - **可复现性强**：基于17个公开数据集构建，数据集已通过HuggingFace公开发布
 - **实用启示**：表明单纯扩大2D预训练数据不足以解决3D医学理解问题，需要专门的3D架构和训练策略
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅覆盖腹部CT**：未包含胸部、头颈部等其他解剖区域
 2. **评测VLM数量有限**：仅测试了4个模型，未包含GPT-4V等通用VLM

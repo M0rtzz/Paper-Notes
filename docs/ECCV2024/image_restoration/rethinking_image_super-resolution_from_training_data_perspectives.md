@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Rethinking Image Super-Resolution from Training Data Perspectives
 description: >-
@@ -125,7 +125,7 @@ tags:
 4. **普适性强**：方法适用于所有测试的 SR 模型（3 个 CNN + 2 个 Transformer），不依赖特定架构
 5. **实际意义大**：未来可以轻松从任何大规模图像数据集中自动筛选 SR 训练数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目标过滤的阈值（θ=100/18）是手动设定的，未提供自动选择策略
 - 仅在 ×4 SR 上验证，未覆盖 ×2、×8 等其他倍率

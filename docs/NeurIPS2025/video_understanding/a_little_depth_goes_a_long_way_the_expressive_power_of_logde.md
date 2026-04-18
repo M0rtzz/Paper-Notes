@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Little Depth Goes a Long Way: The Expressive Power of Log-Depth Transformers
 description: >-
@@ -86,7 +86,7 @@ tags:
 - 深度 vs 宽度 vs CoT 的三方比较非常清晰：O(log n) 深度 > 超对数 CoT > 多项式宽度，为"推理时计算"策略选择提供理论依据
 - 理论预测与实验高度吻合（r² > 0.93），且给出了可操作的定量关系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **averaging-hard attention 假设**：实际 softmax attention 是 soft 的，理论构造依赖最大值精确匹配，实际中可能需要更大的 temperature 才能近似
 - **O(log n)-bit 精度假设**：虽然比有限精度合理，但实际 float16/bfloat16 可能不满足；论文承认 mixed-precision 模型不够

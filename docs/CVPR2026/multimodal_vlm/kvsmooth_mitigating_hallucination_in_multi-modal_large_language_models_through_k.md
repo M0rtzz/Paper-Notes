@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] KVSmooth: Mitigating Hallucination in Multi-modal Large Language Models through Key-Value Smoothing
 description: >-
@@ -107,7 +107,7 @@ $$\hat{V_t^l} = (1-\tilde{\lambda}_t^l) V_t^l + \tilde{\lambda}_t^l V_{t-1}^l$$
 - **提出sink度概念**：行熵作为连续实时sink指标，比传统列求和更高效，无需多步回溯。
 - **广泛验证**：覆盖3个模型（LLaVA-1.5/MiniGPT-4/InstructBLIP）× 4个基准（CHAIR/OPOPE/AMBER/Object HalBench），结果一致。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **超参数模型相关**：$\lambda_{\text{ref}}$ 对不同模型需分别调优（0.9/0.5/0.7），缺乏自动选择方案。
 - **仅评估7B模型**：未验证在更大规模（13B/70B）或更新架构（如Qwen2.5-VL）上的表现。

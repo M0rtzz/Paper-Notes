@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Imaging Interiors: An Implicit Solution to Electromagnetic Inverse Scattering Problems
 description: >-
@@ -121,7 +121,7 @@ $$\mathcal{L} = \lambda_{\text{data}} \mathcal{L}_{\text{data}} + \lambda_{\text
 - **INR的天然优势**：连续表示的分辨率灵活性天然解决了离散化的诅咒
 - **随机采样**增强了模型对空间位置的全面覆盖
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 每个目标需单独优化（case-by-case），无法批量推理
 - 优化迭代数仍有一定计算开销（4K次迭代）

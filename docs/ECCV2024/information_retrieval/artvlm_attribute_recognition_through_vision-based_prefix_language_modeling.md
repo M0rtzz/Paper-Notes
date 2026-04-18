@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ArtVLM: Attribute Recognition Through Vision-Based Prefix Language Modeling
 description: >-
@@ -137,7 +137,7 @@ tags:
 - **轻量微调策略**：只学习每个类别的bias和scale两个参数，极其高效
 - **长尾属性表现突出**：利用预训练知识而非拟合数据集分布，因此在罕见属性上表现更好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 使用CoCa Base模型（ViT-B/16, 224分辨率），模型规模较小，未探索更大模型的效果
 - 生成式检索需要对每个候选属性计算一次前向传播，当候选集很大时效率较低

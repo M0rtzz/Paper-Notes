@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Open-World Generation of Stereo Images and Unsupervised Matching
 description: >-
@@ -125,7 +125,7 @@ GenStereo 在 PSNR 上提升约 10 dB，SSIM 提升近一倍。
 - **伪视差优于 GT 视差**的发现意义重大：说明 MDE 模型的密集深度比 LiDAR 稀疏深度更适合生成任务
 - 为无监督立体匹配提供了一条新路径：用单目图像 + 深度估计生成训练数据，避免了昂贵的双目标定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 推理速度受限于扩散模型的多步采样（未报告推理时间）
 - 分辨率限于 512×512 或 768×768，不适合高分辨率应用

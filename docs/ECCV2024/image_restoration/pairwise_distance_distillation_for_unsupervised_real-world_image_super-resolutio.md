@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 专用+通用模型的组合利用了两种模型的互补优势
 - 方法不需要退化估计或复杂的合成增强
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要一个预训练的通用模型作为教师，方法效果部分依赖教师质量
 - 成对距离蒸馏需要在每个批次内计算距离矩阵，增加了计算开销

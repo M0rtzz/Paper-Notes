@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization
 description: >-
@@ -59,20 +59,20 @@ tags:
 
 #### 1. 离散流匹配韵律-声学(DFPA)模块
 
-- **做什么**：联合建模韵律和声学token的分布
+- **功能**：联合建模韵律和声学token的分布
 - **核心思路**：基于DiT架构的去噪器，输入当前去噪目标 $\mathbf{x}_t$（韵律+声学token拼接），条件包括内容潜在表示 $\tilde{\mathbf{h}}_c$、说话人嵌入等。优化目标为：
   $$\mathcal{L}_{\text{DFM}} = -\sum_{i \in \mathcal{T}} \mathbb{E}_{t \sim \mathcal{U}[0,1]} [\log p_{1|t}(\mathbf{x}_1^i | \mathbf{x}_t, \mathbf{c}; \theta)]$$
 - **设计动机**：FACodec将语音属性解耦为可独立控制的token，DFM比自回归模型能更好捕获表现力丰富的韵律变化
 
 #### 2. FaPro（面部表情→韵律映射）
 
-- **做什么**：从面部视频帧提取全局韵律先验 $\tilde{\mathbf{z}}_p \in \mathbb{R}^{m \times L \times D}$
+- **功能**：从面部视频帧提取全局韵律先验 $\tilde{\mathbf{z}}_p \in \mathbb{R}^{m \times L \times D}$
 - **核心思路**：面部特征 $\mathbf{v}_{\text{face}}$ → 上采样对齐到语音长度 → ConvNeXt V2增强时序建模 → $m$ 层FFT迭代提取各RVQ码本的韵律表示
 - **设计动机**：面部表情与语音韵律有强相关性，全局韵律（情感、语速、语调）主要由面部表情决定
 
 #### 3. Synchronizer（双重对齐同步器）
 
-- **做什么**：桥接文本、视频、语音三个模态间的gap
+- **功能**：桥接文本、视频、语音三个模态间的gap
 - **核心思路**：
     - **视频-文本对齐**：唇部特征作为query、音素特征作为key/value的cross-attention，利用MFA对齐矩阵 $\mathcal{M}_{VT}$ 施加对比损失 $\mathcal{L}_{VT}$
     - **时长正则化**：通过MAS将注意力权重转为音素-帧时长，按时长复制音素嵌入后上采样到语音长度
@@ -82,7 +82,7 @@ tags:
 
 #### 4. CCTA（内容一致性时序适配）
 
-- **做什么**：从TTS域迁移语义内容知识，保持语言一致性
+- **功能**：从TTS域迁移语义内容知识，保持语言一致性
 - **核心思路**：用预训练TTS权重初始化，冻结投影层和内容头，用Synchronizer替换TTS中的时长预测。添加蒸馏损失保持师生特征一致性：
   $$\mathcal{L}_{\text{distill}} = \frac{1}{B} \sum_{i=1}^{B} [1 - \cos(\phi(\mathbf{z}_t^{(i)}), \phi(\mathbf{z}_c^{(i)}))]$$
 
@@ -134,7 +134,7 @@ $$\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{align}} + \lambda_1 \mathcal{L
 2. **Synchronizer的双重保险**：先做视频-文本对齐，上采样后再做语音-文本对齐修正，比单层对齐更鲁棒
 3. **首次将离散流匹配(DFM)应用于视频配音**，证明了DFM在跨模态语音生成中的有效性
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **SECS分数不突出**：说话人相似度指标不如一些基线，虽然作者归因于评估偏差（基线模型与SECS计算共享说话人编码器），但仍是改进空间
 2. **依赖MFA外部工具**：需要Montreal Forced Aligner提供音素-帧对齐信息作为训练监督

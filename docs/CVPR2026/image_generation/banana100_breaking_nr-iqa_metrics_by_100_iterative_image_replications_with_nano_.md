@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Banana100: Breaking NR-IQA Metrics by 100 Iterative Image Replications with Nano Banana Pro
 description: >-
@@ -117,7 +117,7 @@ Banana100 通过让 Nano Banana Pro 迭代复制图像 100 次来系统性研究
 - 失败模式分类（子对象/对象/图像级）为未来改进提供了清晰靶向
 - 仅大 VLM-based 指标成功检测 → NR-IQA 领域需要范式更新
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 初始图像仅 13 张，且全为 AI 生成——真实照片（有压缩伪影）的结论可能不同
 - 未包含 Mean Opinion Score（MOS）标注，因此无法用 PLCC/SRCC 评估 NR-IQA 排名
 - 黑盒 API 模型的可重复性有限

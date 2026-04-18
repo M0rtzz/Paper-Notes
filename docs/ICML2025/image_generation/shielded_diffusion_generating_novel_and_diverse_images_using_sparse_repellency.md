@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Shielded Diffusion: Generating Novel and Diverse Images using Sparse Repellency
 description: >-
@@ -135,7 +135,7 @@ $$\Delta' = \lambda \cdot \Delta$$
 4. **可扩展至百万级屏蔽集**：配合近似最近邻搜索，可屏蔽 120 万张图像
 5. **跨批次一致性**：通过累积历史生成图像为参考集，即使 batch size 较小也能保证大量图像间的多样性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **屏蔽重叠问题**：当多个屏蔽球重叠且轨迹恰好落入重叠中心时，排斥力可能相互抵消；严格保证需要二次规划
 2. **L2 距离局限**：当前在 VAE 潜空间中用 L2 距离度量相似性，不一定反映语义相似性；可考虑在 DINOv2 等语义空间中操作

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generative Value Conflicts Reveal LLM Priorities
 description: >-
@@ -159,7 +159,7 @@ Personal-Protective 价值集合上：
 4. **6 维过滤设计严谨**：确保场景既是真正困境又具部署现实性
 5. **14 个目标模型的广泛评估**：涵盖 OpenAI/Anthropic/Meta/Google/Allen AI 等多家
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **单轮交互**：仅模拟单次用户-LLM 交互，多轮对话可能揭示更多
 2. **LLM 模拟用户**：模拟用户是否能代表真实人类行为仍是开放问题

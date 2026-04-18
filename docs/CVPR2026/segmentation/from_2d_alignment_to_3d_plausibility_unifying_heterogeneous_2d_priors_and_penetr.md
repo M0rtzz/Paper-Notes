@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From 2D Alignment to 3D Plausibility: Unifying Heterogeneous 2D Priors and Penetration-Free Diffusion for Occlusion-Robust Two-Hand Reconstruction
 description: >-
@@ -91,7 +91,7 @@ tags:
 - 将去穿透建模为条件生成任务（而非后处理优化），更好地建模了可行交互的流形
 - IoU 检测门控避免了对非穿透样本的冗余扩散推理
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - FAE 依赖 Sapiens 基础模型质量，其在极端遮挡下的先验可能不可靠
 - 极端运动模糊下额外 2D 信息可能变得不可靠，作者自己也指出未来可引入时序处理缓解

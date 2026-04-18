@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Function Spaces Without Kernels: Learning Compact Hilbert Space Representations
 description: >-
@@ -162,7 +162,7 @@ $$L(f_{\hat{c}_\lambda}) \lesssim \hat{L}_m(f_{\hat{c}_\lambda}) + \tilde{\mathc
 3. **理论贡献扎实**：截断高斯PAC-Bayes技术本身具有独立价值，可用于其他无界损失场景
 4. **实验设计有层次**：从已知维度的多项式验证到实际动力学系统，逐步展示方法的有效性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 停止阈值 τ 仍是**启发式**的，缺乏非启发式的基选择准则
 2. 渐进式训练本质上是串行的，在大规模问题上效率受限

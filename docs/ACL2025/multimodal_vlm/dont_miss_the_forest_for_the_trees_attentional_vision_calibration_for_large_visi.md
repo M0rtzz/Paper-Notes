@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Don't Miss the Forest for the Trees: Attentional Vision Calibration for Large Vision Language Models
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：在 Transformer 中，高注意力权重理应对应最相关的 token。但作者发现 LVLM 中存在严重的**注意力错位**——即使在纯色图像上，模型仍将大部分注意力集中在少数 patch 上。在真实图像中，仅 **3.7%** 的 "blind token" 与物体区域重叠，但 **23.2%** 的总注意力被分配给了它们。
 
-**本文要解决什么**：识别并量化 blind token 现象，提出无需训练的解码时方法来缓解由注意力错位导致的视觉幻觉。
+**本文目标**：识别并量化 blind token 现象，提出无需训练的解码时方法来缓解由注意力错位导致的视觉幻觉。
 
 **切入角度**：从注意力分布分析入手，发现 blind token 的存在，然后通过零化实验验证其对预测的实际影响，最后设计对比解码策略重新平衡注意力影响。
 
-**核心 idea 一句话**：通过识别注意力权重异常高但语义无关的 "blind token"，在解码时对比原始 logits 和仅含 blind token 的 logits，抵消其不良影响以减轻幻觉。
+**核心 idea**：通过识别注意力权重异常高但语义无关的 "blind token"，在解码时对比原始 logits 和仅含 blind token 的 logits，抵消其不良影响以减轻幻觉。
 
 ## 方法详解
 
@@ -157,7 +157,7 @@ AvisC 在 InstructBLIP 上提升尤为显著：Random 设置 F1 提升 **+5.92**
 - **免训练即插即用**：不修改模型参数和注意力机制，可直接应用于任何 LVLM
 - **与 ViT Register Token 研究呼应**：blind token 与 Darcet et al. (2023) 发现的异常高范数 token 相呼应，暗示这是 Transformer 架构的深层特性
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. 需要额外的前向传播计算偏置 logits，推理速度约降低 30-50%
 2. 假设 blind token 完全无信息，但它们可能在某些情况下携带全局上下文

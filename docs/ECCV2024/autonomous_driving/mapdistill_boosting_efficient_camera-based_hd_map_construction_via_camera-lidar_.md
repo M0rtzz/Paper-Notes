@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MapDistill: Boosting Efficient Camera-based HD Map Construction via Camera-LiDAR Fusion Model Distillation
 description: >-
@@ -56,7 +56,7 @@ MapDistill 采用教师-学生架构：
 
 #### 1. 双 BEV 变换模块 (Dual BEV Transform)
 
-**做什么**：将多视角相机特征转换到两个不同的 BEV 子空间，模拟教师模型的双模态（相机+LiDAR）BEV 特征。
+**功能**：将多视角相机特征转换到两个不同的 BEV 子空间，模拟教师模型的双模态（相机+LiDAR）BEV 特征。
 
 **核心思路**：
 - **子空间1**：使用 GKT（基于注意力的2D-to-BEV变换）生成 $\mathbf{F}_{C_{sub1}}^S \in \mathbb{R}^{H \times W \times C}$
@@ -67,7 +67,7 @@ MapDistill 采用教师-学生架构：
 
 #### 2. 跨模态关系蒸馏 ($\mathcal{L}_{relation}$)
 
-**做什么**：让学生模型学习教师模型中相机与 LiDAR 之间的跨模态注意力关系。
+**功能**：让学生模型学习教师模型中相机与 LiDAR 之间的跨模态注意力关系。
 
 **核心思路**：
 - 教师端：计算相机-到-LiDAR 注意力 $A_{c2l}^T$ 和 LiDAR-到-相机注意力 $A_{l2c}^T$
@@ -83,7 +83,7 @@ $$\mathcal{L}_{relation} = D_{KL}(A_{c2l}^T || A_{c2l}^S) + D_{KL}(A_{l2c}^T || 
 
 #### 3. 双层特征蒸馏 ($\mathcal{L}_{feature}$)
 
-**做什么**：在统一 BEV 空间中同时对齐低层和高层特征表示。
+**功能**：在统一 BEV 空间中同时对齐低层和高层特征表示。
 
 **核心思路**：
 - 低层蒸馏：对齐融合 BEV 特征 $\mathcal{L}_{low} = \text{MSE}(\mathbf{F}_{fused}^T, \mathbf{F}_{fused}^S)$
@@ -95,7 +95,7 @@ $$\mathcal{L}_{feature} = \mathcal{L}_{low} + \mathcal{L}_{high}$$
 
 #### 4. Map Head 蒸馏 ($\mathcal{L}_{head}$)
 
-**做什么**：让学生模型的最终预测（地图元素分类 + 点位位置）逼近教师模型的输出。
+**功能**：让学生模型的最终预测（地图元素分类 + 点位位置）逼近教师模型的输出。
 
 **核心思路**：以教师预测作为伪标签监督学生：
 
@@ -172,7 +172,7 @@ $$\mathcal{L} = \mathcal{L}_{map} + \lambda_1 \mathcal{L}_{relation} + \lambda_2
 - **部署友好**：所有蒸馏损失仅在训练阶段存在，推理时完全不增加计算开销
 - **全面消融**：对每个损失组件、每种蒸馏关系、每个 BEV 变换组合都做了详尽消融
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 训练需要同时运行教师和学生模型，**训练成本较高**
 - 学生骨干固定为 ResNet18，未探索更轻量的架构（如 MobileNet）或 NAS 搜索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FlexEvent: Towards Flexible Event-Frame Object Detection at Varying Operational Frequencies
 description: >-
@@ -148,7 +148,7 @@ FlexEvent 在频率变化时的鲁棒性极为突出：
 - **伪标签的质量保证**：FlexTune 中的时间一致性校准（双向增强 + 轨迹修剪）确保高频伪标签的可靠性，避免自训练中常见的噪声累积问题
 - **实用性强**：FlexTune 为离线步骤，不增加推理开销；整体框架在两块 A5000 上一天训练完成，具有良好的可复现性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **RGB 帧依赖**：在极端光照（如完全黑暗）下 RGB 帧质量下降，融合可能反而引入噪声；纯事件模式的 fallback 机制值得探索
 - **伪标签上界**：FlexTune 的高频伪标签质量受限于教师模型在低频上的初始性能，存在天然的性能上界

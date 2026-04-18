@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Evaluating Deepfake Detectors in the Wild
 description: >-
@@ -28,7 +28,7 @@ tags:
 
 **现有痛点**：(1) 现有benchmark不反映真实世界的deepfake质量——DFDC/FaceForensics数据集中的deepfake质量远低于当前生成方法；(2) 检测器在现有benchmark上表现近乎完美，但实际部署效果未知；(3) 欺诈者常使用JPEG压缩、降分辨率、GPEN/CodeFormer增强等后处理来绕过检测。
 
-**本文要解决什么？** 在真实世界条件下系统评估开源deepfake检测器的实际能力，揭示当前检测技术与实际需求之间的巨大差距。
+**本文目标** 在真实世界条件下系统评估开源deepfake检测器的实际能力，揭示当前检测技术与实际需求之间的巨大差距。
 
 **切入角度**：使用当前最流行的零样本face-swapping模型（SimSwap、Inswapper/roop）生成新数据集，结合真实欺诈者常用的后处理手段进行评估。
 
@@ -88,7 +88,7 @@ tags:
 - 公开发布50万+高质量deepfake数据集和完整评估代码，为后续研究提供基础设施
 - 分人种/性别/年龄段的FairFace评估揭示了检测器的公平性问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅评估face-swapping类deepfake，未覆盖全脸合成（如StableDiffusion生成人脸）
 - 仅使用SimSwap和Inswapper两个生成器，未覆盖DeepFaceLab等faceset-based方法
 - 未探索针对增强攻击的防御策略或对抗训练方案

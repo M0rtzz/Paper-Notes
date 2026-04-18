@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SuperCLIP: CLIP with Simple Classification Supervision
 description: >-
@@ -133,7 +133,7 @@ CLIP用100%长caption训练性能大幅下降（45.7→30.0），但SuperCLIP的
 3. **DualCaption策略巧妙**：对比损失用短caption保持粗粒度对齐，分类损失用长caption提取细粒度语义，避免了需要精心调参的混合比例
 4. **batch size鲁棒性**：分类损失天然不依赖batch size，为资源受限的训练场景提供了实用方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 分类监督仅从文本到视觉编码器方向，未探索从图像到文本编码器方向的增强
 - IDF权重在训练前预计算，未能动态适应训练过程中的语义分布变化

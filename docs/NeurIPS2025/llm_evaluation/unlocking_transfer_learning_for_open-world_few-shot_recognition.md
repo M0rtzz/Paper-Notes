@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unlocking Transfer Learning for Open-World Few-Shot Recognition
 description: >-
@@ -116,7 +116,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{CE}} + \lambda \mathcal{L}_{\text{open}}$$
 - **极低额外开销**: 仅 1.5% 训练增量就实现 SOTA
 - **实用策略**: 伪开集样本的生成不需要额外数据
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前在 workshop paper 层面，实验规模有限
 2. 在更大规模数据集（如 ImageNet 完整版）上的验证不足

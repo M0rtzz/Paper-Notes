@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Personality-guided Public-Private Domain Disentangled Hypergraph-Former Network for Multimodal Depression Detection
 description: >-
@@ -143,7 +143,7 @@ P3HF 包含三个核心模块：(1) 人格引导的特征门控，利用 LLM 生
 3. **交互决定论的计算化**：将社会认知理论中的个人-环境-行为三元交互转化为公私域解耦的技术方案
 4. **10%+ 的巨大提升**：在竞争激烈的抑郁检测任务上实现如此显著的提升非常少见
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 仅在 MPDD-Young 一个数据集上验证，缺少 DAIC-WOZ 等其他主流数据集的实验
 2. 依赖 GPT-4 生成人格描述，增加了部署成本和隐私风险

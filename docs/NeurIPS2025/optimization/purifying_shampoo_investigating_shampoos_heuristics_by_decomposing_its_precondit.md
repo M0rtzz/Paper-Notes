@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Purifying Shampoo: Investigating Shampoo's Heuristics by Decomposing its Preconditioner
 description: >-
@@ -100,7 +100,7 @@ $$\frac{\|\hat{\Lambda}_{\mathbf{L}_t} - \text{diag}(\hat{\Lambda}_{\mathbf{L}_t
 - **AdamW→EShampoo的超参数迁移**：这对实际部署至关重要，降低了采用新优化器的调参成本
 - **"冻结特征基仍强于AdamW"**的发现令人惊讶且有实践价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 主要实验在小/中等规模模型上进行，缺少大语言模型上的充分验证（仅有3.24亿参数的Llama 3分析）
 - 自适应更新频率在某些工作负载（如ImageNet ViT）上略微变差，说明问题相关的最优策略尚待探索

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Miburi: Towards Expressive Interactive Gesture Synthesis
 description: >-
@@ -93,7 +93,7 @@ Miburi 构建在 Moshi（语音-文本基础模型）之上，直接利用其内
 - **RVQ 分层编码**: 区分粗粒度大幅运动和精细手指手势，多体区独立编码尊重不同身体部位与语音的关联差异
 - **Gumbel-Softmax 桥接离散采样与连续损失**: 使对比学习可在离散 token 空间上端到端训练
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 用户研究显示与真实动作数据相比仍有差距
 - 面部表情质量（Facial-MSE 7.77）相较专用模型还有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dense-SfM: Structure from Motion with Dense Consistent Matching
 description: >-
@@ -104,7 +104,7 @@ tags:
 - **特征+坐标双路径**: Transformer 处理外观特征，高斯过程处理空间位置，两种信息源互补
 - **与 MASt3R-SfM 的对比**: MASt3R-SfM 在 ETH3D 三角化上表现很差（accuracy@2cm 仅43.9%），说明端到端方法在精确三角化上仍有差距
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要训练 Gaussian Splatting 模型增加计算开销
 - 双向稠密匹配本身计算量大（每对图像需要两次前向传播）

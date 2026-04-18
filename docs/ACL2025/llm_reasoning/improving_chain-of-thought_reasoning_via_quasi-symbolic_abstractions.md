@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Chain-of-Thought Reasoning via Quasi-Symbolic Abstractions
 description: >-
@@ -123,7 +123,7 @@ QuaSAR将推理过程结构化为四元组 $(\mathcal{Q}, \mathcal{S}, \mathcal{
 - **科学哲学视角的理论动机**：Kitcher的统一解释理论为方法提供了优雅的理论支撑
 - **两种应用模式（ICL + Demonstration微调）**使方法的适用范围很广
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 方法仅在英语任务上验证，多语言泛化未知
 - 对于不需要符号化的纯自然语言理解任务（如情感分析），QuaSAR的额外步骤可能是overhead
 - 小模型直接用QuaSAR ICL效果不稳定，说明方法对模型能力有下限要求

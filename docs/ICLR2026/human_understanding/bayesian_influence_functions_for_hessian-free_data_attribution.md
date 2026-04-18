@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Bayesian Influence Functions for Hessian-Free Data Attribution
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：需要一个既理论合理（不依赖 Hessian 可逆性）又计算可行（能扩展到数十亿参数）的数据归因方法。
 
-**本文要解决什么？** 能否用贝叶斯推断框架彻底绕开 Hessian，同时保持或超越经典 IF 的归因质量？
+**本文目标** 能否用贝叶斯推断框架彻底绕开 Hessian，同时保持或超越经典 IF 的归因质量？
 
 **切入角度**：将经典 IF 的 Hessian 逆替换为局部后验分布上的协方差估计，利用 SGLD 采样实现。
 
-**核心 idea 一句话**：$\text{BIF}(z_i, \phi) = -\text{Cov}_\gamma(\ell_i(\boldsymbol{w}), \phi(\boldsymbol{w}))$——影响就是训练损失与目标可观测量在局部后验下的负协方差。
+**核心 idea**：$\text{BIF}(z_i, \phi) = -\text{Cov}_\gamma(\ell_i(\boldsymbol{w}), \phi(\boldsymbol{w}))$——影响就是训练损失与目标可观测量在局部后验下的负协方差。
 
 ## 方法详解
 

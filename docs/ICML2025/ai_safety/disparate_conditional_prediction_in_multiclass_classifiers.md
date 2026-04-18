@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Disparate Conditional Prediction in Multiclass Classifiers
 description: >-
@@ -141,7 +141,7 @@ $$\min_{\boldsymbol{\beta}, \{\mathbf{M}_a\}} \sum_{a \in \mathcal{A}} w_a \sum_
 - **非凸优化的实用解法**：顺序 LP 巧妙绕过非凸非光滑困难，每步子问题都是高效可解的标准 LP
 - **从二分类到多类的自然扩展**：数学上干净优雅，保持了原始度量的全部理想性质
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算可扩展性**：类别数 $k$ 和子群体数 $|\mathcal{A}|$ 增大时 LP 规模快速增长
 2. **局部最优**：顺序 LP 只保证收敛到局部最优，缺乏全局保证

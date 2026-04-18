@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Inference-Aware Prompt Optimization for Aligning Black-Box Large Language Models
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：最优 prompt 会随推理策略和预算而变化。作者发现在 MATH 上，Prompt A 在 $N=1$ 准确率 65% 优于 Prompt B 的 62%，但 MV 下 $N=10$ 时 Prompt B 升至 ~77% 而 Prompt A 降至 ~63%。这是因为 MV 放大了单查询正确率分布的非线性效应。
 
-**本文要解决什么？** 如何在有限计算预算下，联合优化 prompt 和推理规模，同时考虑用户对多目标的偏好权衡？
+**本文目标** 如何在有限计算预算下，联合优化 prompt 和推理规模，同时考虑用户对多目标的偏好权衡？
 
 **切入角度**：将问题建模为上下文最优臂识别（contextual best-arm identification），其中每个"臂"是 (prompt, 推理规模 $N$) 的组合，"上下文"编码用户偏好和预算约束。
 
-**核心idea一句话**：推理感知的 prompt 优化——让训练阶段模拟推理策略（BoN/MV）的非线性聚合效应，从而选出在实际部署配置下最优的 prompt-规模组合。
+**核心 idea**：推理感知的 prompt 优化——让训练阶段模拟推理策略（BoN/MV）的非线性聚合效应，从而选出在实际部署配置下最优的 prompt-规模组合。
 
 ## 方法详解
 
@@ -102,7 +102,7 @@ IAPO（Inference-Aware Prompt Optimization）框架定义臂 $a = (p, N) \in \ma
 - **免超参数设计**：PSST 无需调参，批量查询可利用 API 折扣，对实际部署非常友好。
 - **上下文感知的策略学习**：IAPO 不只输出一个最优配置，而是为每个上下文（用户偏好+预算）输出对应的最优策略，实现了个性化对齐。
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅考虑 BoN 和 MV 两种推理策略，未涉及更复杂的 tree search 或 parallel thinking。
 - Prompt 集合 $\mathcal{P}$ 需要预先给定，未与 prompt 生成/搜索方法（如 OPRO）结合。
 - 上下文空间 $\mathcal{C}$ 是离散有限的，连续偏好空间需要函数逼近。

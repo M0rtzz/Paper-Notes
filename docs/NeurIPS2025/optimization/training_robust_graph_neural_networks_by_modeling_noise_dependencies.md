@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training Robust Graph Neural Networks by Modeling Noise Dependencies
 description: >-
@@ -124,7 +124,7 @@ $$\mathcal{L}_{\text{final}} = \mathcal{L}_{\text{cls-enc}} + \lambda_1 \mathcal
 - **实用的新数据集**：基于Amazon评论数据构建的Auto和Garden数据集模拟了电商场景中的DANG，为后续研究提供了实用benchmark
 - **消融设计精巧**：通过逐步移除DGP中的因果边，清晰展示了每条依赖关系的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - DANG未考虑 $X \leftarrow A$（图结构噪声反过来影响节点特征）的反向依赖，这在某些场景中也很自然
 - 训练复杂度较高（需要同时推断三个隐变量），在大规模图上可能受限

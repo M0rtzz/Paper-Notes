@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval
 description: >-
@@ -104,7 +104,7 @@ $$\text{Gap}(t) = \frac{\log(1 + f_p(t))}{\max_w \log(1 + f_p(w))} \cdot \left[\
 - 实验设计严谨，使用10组不同规模的 Directed 和 Non-Directed 语料进行系统对比
 - 在高风险领域（心理健康）中，强调合成文档仅为概念验证，实际内容仍需专家撰写
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **人群偏差**：论坛用户偏年轻化（学业压力、身份认同），不代表知识库目标的全年龄段用户
 - **缺乏人工评估**：所有评估依赖 LLM-as-a-Judge，未经临床专家验证，可能忽略治疗框架或情感适当性等专业维度

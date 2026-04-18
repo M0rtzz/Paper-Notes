@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From RAG to Memory: Non-Parametric Continual Learning for Large Language Models
 description: >-
@@ -152,7 +152,7 @@ HippoRAG 2 不涉及端到端训练。其核心算法为 **Personalized PageRank
 3. **DSPy 自动 prompt 优化的实际应用**：识别记忆模块的 prompt 不是手工设计，而是用 MIPROv2 自动调优，展示了 prompt 工程自动化在 RAG 系统中的落地可能
 4. **权重因子 0.05 的非直觉发现**：段落节点的重启概率需要大幅缩小（×0.05），说明在 PPR 中概念级信号远比上下文级信号重要，段落节点更多起"锚定"而非"主导"作用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算开销**：离线索引需要 LLM 执行 OpenIE 抽取，在线检索需要 LLM 做三元组过滤，相比纯向量 RAG 成本显著增加
 2. **关联推理的退化趋势**：持续学习实验中多跳 QA 性能随语料扩展持续下降，HippoRAG 2 和 NV-Embed-v2 下降速率相似，说明 KG 结构并未根本解决信息过载问题

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Deep Research Brings Deeper Harm
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **现有指标失效**：StrongREJECT 完全无法区分安全模型和危险模型在 DR 场景中的行为差异，说明需要专门的智能体安全评估体系
 - **学术伪装的强大效果**：仅将问题改写为学术风格就能突破几乎所有防线，暴露了 DR 系统对"学术查询"的信任偏差
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅测试开源 DR 框架**：商业 DR 系统（OpenAI Deep Research、Gemini Deep Research）可能有更强的安全措施，未被评估
 - **DeepREJECT 依赖 LLM 评判**：用 LLM 评估 LLM 生成内容的危害性可能存在偏差
 - **防御方案缺失**：论文主要揭示问题，但未提出有效的防御方案

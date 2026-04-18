@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FEDTAIL: Federated Long-Tailed Domain Generalization with Sharpness-Guided Gradient Matching
 description: >-
@@ -91,7 +91,7 @@ FedTAIL 提出了一个联邦域泛化框架，通过梯度一致性正则化、
 - 曲率感知权重 $\gamma_c$ 利用 Hessian 最大特征值自动识别欠训练的尾部类
 - 框架各模块解耦，可灵活组合
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Hessian 最大特征值的计算成本较高，论文未详细讨论效率
 - 实验主要在中小规模数据集上验证，大规模联邦场景待验证
 - 假设各客户端使用相同模型架构，异构场景未涉及

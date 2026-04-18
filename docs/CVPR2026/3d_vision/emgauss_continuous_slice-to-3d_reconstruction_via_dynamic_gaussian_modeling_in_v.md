@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EMGauss: Continuous Slice-to-3D Reconstruction via Dynamic Gaussian Modeling in Volume Electron Microscopy
 description: >-
@@ -145,7 +145,7 @@ $$\Delta\mu_i, \Delta S_i, \Delta o_i = \Phi_\theta(\mu_i, t)$$
 3. **连续生成能力**：可在任意深度合成插值切片，这是基于离散帧插值方法无法实现的
 4. **高斯属性的精细控制**：对哪些属性随时间变化、哪些固定做了仔细设计，体现了对问题本质的深入理解
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 在噪声较大的输入切片中，高斯基元数量可能显著增长，导致内存消耗过大
 2. 可以在重建流水线前加入轻量去噪模块来稳定优化

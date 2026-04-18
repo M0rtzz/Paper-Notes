@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LIGHTHOUSE: Fast and Precise Distance to Shoreline Calculations from Anywhere on Earth
 description: >-
@@ -136,7 +136,7 @@ ESA WorldCover V2 是目前永久水体标注精度最高的全球10米地表覆
 4. **工程导向的设计哲学**：始终优先延迟而非存储，例如不压缩 BallTree、使用 h5 单点查询
 5. **曼德博分形几何的呼应**：论文引用了曼德博关于海岸线复杂度无穷的经典论述，点明高分辨率带来的误差放大问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分辨率非均匀**：ESA 部分为10m，但 OSM 补充区域分辨率不一致（南极洲约35m）
 2. **时间动态性**：海岸线随海平面上升、冰川消退等不断变化，数据集是某一时间点的快照

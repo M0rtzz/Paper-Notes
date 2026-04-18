@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distribution Alignment for Fully Test-Time Adaptation with Dynamic Online Data Streams
 description: >-
@@ -137,7 +137,7 @@ DA 损失提供稳定的优化方向（所有批次对齐到同一目标），EM
 - **极简即强大**：仅优化 BN 仿射参数的 L1 损失就能 SOTA，不需要教师网络、记忆库、伪标签等复杂组件
 - **分析透彻**：对 TTBN 失效机制的分析（Eq.2-3 推导 + 特征方差可视化）非常有说服力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要部署前在源域数据上预计算特征统计量（一次性开销），但从严格 "source-free" 角度看仍需源数据访问（虽然 EATA、RMT 等方法也有类似需求）
 - 域偏移检测依赖窗口大小和阈值 $\tau$ 超参数，极端快速的域变化可能检测滞后

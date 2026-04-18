@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Manual-PA: Learning 3D Part Assembly from Instruction Diagrams
 description: >-
@@ -133,7 +133,7 @@ Pipeline 分三个阶段：
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

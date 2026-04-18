@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Limits Virtual Agent Application? OmniBench: A Scalable Multi-Dimensional Benchmark for Essential Virtual Agent Capabilities
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **核心矛盾**: 如何在保证任务质量的同时实现大规模、多场景、多维度的 Agent 评估？人工标注质量高但不可扩展，自动生成可扩展但质量难控。
 
-**本文要解决什么**: 构建一个既可扩展又能多维评估虚拟 Agent 能力的基准。
+**本文目标**: 构建一个既可扩展又能多维评估虚拟 Agent 能力的基准。
 
 **切入角度**: 利用图（graph）结构表示任务——每个节点为原子操作（subtask），边为依赖关系。通过子任务组合自动合成可控复杂度的复合任务。
 
@@ -126,7 +126,7 @@ Pipeline:
 - **多维评估填补空白**: 首次系统地从 10 个能力维度诊断 Agent
 - **训练价值**: 图结构数据不仅用于评估，还能高效训练 Agent
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 自动合成的任务可能缺乏真实用户任务的"自然性"
 - 10 个能力维度的划分是否完备有待讨论
 - 目前聚焦于 UI 操作任务，API 调用型 Agent 未覆盖

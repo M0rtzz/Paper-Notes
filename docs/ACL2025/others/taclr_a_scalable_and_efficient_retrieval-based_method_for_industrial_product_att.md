@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification
 description: >-
@@ -127,7 +127,7 @@ $$\mathcal{L}_a = -\log \frac{\exp(s(i, v_a^+)/\tau)}{\exp(s(i, v_a^+)/\tau) + \
 3. **效率与效果兼顾**：单次编码 + Faiss 索引的在线推理架构适合高负载工业场景
 4. **可扩展性强**：共享编码器设计使模型能泛化到新增的类目和值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - WDC-PAVE 上 TACLR 与 RAG 基线差距不大（72.6 vs 77.2），小数据集场景下优势有限
 - 仅支持文本输入，未整合多模态信息（如产品图像）

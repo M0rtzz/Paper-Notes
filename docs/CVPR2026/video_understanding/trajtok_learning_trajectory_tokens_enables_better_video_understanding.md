@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TrajTok: Learning Trajectory Tokens Enhances Video Understanding
 description: >-
@@ -119,7 +119,7 @@ TrajAdapter 在 V-JEPA2 上将 K400 准确率从 85.1% 提高到 **88.0%**（+2.
 - **长视频优势突出**：TrajVLM 在 LongVideoBench 上比 PatchVLM 高 **+8.8%**，在 LVBench 上高 **+5.4%**，轨迹 token 天然适合长程推理。
 - **参数与效率优异**：整个 tokenizer 仅 46M 参数（ViT-Large 的 1/7），推理 FLOPs 与最优 token merging 方法相当。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **像素级分割精度欠佳**：轻量设计 + 低分辨率输出导致小物体遗漏、背景过度合并和边界不精确，不适用于需精确 mask 的任务（如实例分割评测）。
 2. **ImageNet 性能略低**：单物体简单场景下分割器产生过少 token，限制细粒度判别能力。

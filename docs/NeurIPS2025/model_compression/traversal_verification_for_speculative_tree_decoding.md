@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Traversal Verification for Speculative Tree Decoding
 description: >-
@@ -113,7 +113,7 @@ Traversal Verification 是一个即插即用的验证模块，替换现有推测
 - 即插即用设计使得所有现有推测解码系统都能受益，无需改变草稿生成或模型架构
 - 随着推测解码系统趋向更大更深的树（如 Sequoia 用 768 节点），Traversal Verification 的优势将更加显著
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自底向上遍历可能引入额外计算开销（需要维护和更新所有链的接受率），目前吞吐量提升低于理论接受长度提升
 - 目前仅用于 temperature sampling，greedy decoding 下效果未知

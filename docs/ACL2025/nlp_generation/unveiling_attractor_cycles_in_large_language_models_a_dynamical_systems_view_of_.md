@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unveiling Attractor Cycles in Large Language Models: A Dynamical Systems View of Successive Paraphrasing
 description: >-
@@ -119,7 +119,7 @@ tags:
 - **可逆性是关键**：论文指出任务的可逆性（即输出可再次变回输入）是产生极限环的根本原因
 - **实用影响**：打破吸引子循环可直接改善数据增强效果（+1.3% AG News准确率）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 实验基于简单释义prompt，复杂/特定prompt下的行为需进一步验证
 - 逆困惑度收敛的根本原因尚未充分解释（数学层面）
 - 未分析不同languages/domains对周期性的影响差异

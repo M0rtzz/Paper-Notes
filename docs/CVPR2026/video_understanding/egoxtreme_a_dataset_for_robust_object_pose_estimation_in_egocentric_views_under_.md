@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EgoXtreme: A Dataset for Robust Object Pose Estimation in Egocentric Views under Extreme Conditions
 description: >-
@@ -136,7 +136,7 @@ EgoXtreme 是一个数据集贡献型工作，核心包括：（1）三个挑战
 4. **实验设计巧妙**：使用 GT bounding box 来解耦检测误差，专注评估位姿估计本身的鲁棒性
 5. **时间建模的重要性**：Hybrid temporal 策略的成功暗示了未来应该发展基于视频的位姿估计方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限室内**：依赖 OptiTrack 动捕系统，无法在户外采集真实数据
 2. **缺乏手部标注**：极端运动模糊下手部标注困难，但手-物交互对理解第一人称操作非常重要

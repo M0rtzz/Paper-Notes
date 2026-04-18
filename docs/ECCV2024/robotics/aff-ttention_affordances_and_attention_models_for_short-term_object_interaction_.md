@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AFF-ttention! Affordances and Attention models for Short-Term Object Interaction Anticipation
 description: >-
@@ -34,11 +34,11 @@ tags:
 
 **核心矛盾**：STA 需要同时理解高分辨率空间细节（检测物体位置）和时序动态（预测未来动作），但现有方法在这两个维度上的融合是浅层的
 
-**本文要解决什么？** (a) 如何更好地融合图像和视频特征用于 STA？(b) 如何利用环境中的交互先验来约束预测？
+**本文目标** (a) 如何更好地融合图像和视频特征用于 STA？(b) 如何利用环境中的交互先验来约束预测？
 
 **切入角度**：从两个互补方向出发——结构化的 attention 融合（STAformer）+ 基于人类行为规律的 affordance 先验（Environment Affordances + Interaction Hotspots）
 
-**核心 idea 一句话**：用 frame-guided temporal pooling + dual cross-attention 实现精细的图像-视频融合，再用 affordance 数据库和交互热点从语义和空间两个层面约束预测
+**核心 idea**：用 frame-guided temporal pooling + dual cross-attention 实现精细的图像-视频融合，再用 affordance 数据库和交互热点从语义和空间两个层面约束预测
 
 ## 方法详解
 
@@ -110,7 +110,7 @@ tags:
 - **后处理模块的模型无关性**：Environment affordance 和 interaction hotspot 都是后处理，可以即插即用到任何 STA 模型上（论文在 StillFast 和 STAformer 上都验证了），这大幅提升了实用价值
 - **视觉+文本双路检索 affordance**：用 visual similarity 找外观相似的场景，用 cross-modal similarity 找功能相似但外观不同的场景（如不同国家的厨房），这个双路策略很巧妙
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Affordance 数据库需要大量训练数据标注**：构建 zone 需要训练 Siamese 网络和聚类，对新域的泛化可能受限
 - **后处理方式非端到端**：affordance 和 hotspot 模块作为后处理无法反向传播优化，如果集成到训练循环中可能效果更好
 - **时间复杂度**：KNN 检索 affordance 数据库在推理时增加了额外计算，论文没有讨论实时性

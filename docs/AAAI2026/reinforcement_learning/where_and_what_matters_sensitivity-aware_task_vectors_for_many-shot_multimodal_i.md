@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Where and What Matters: Sensitivity-Aware Task Vectors for Many-Shot Multimodal In-Context Learning
 description: >-
@@ -160,7 +160,7 @@ $$\mathcal{L}_{\text{policy}} = -\sum_{i=1}^{N} \sum_{k=1}^{K} \log p_{i_k}^{(k)
 3. **实用性极强**：单 GPU（<20GB）端到端运行，不需要任何模型微调，推理速度等同零样本
 4. **搜索效率提升极大**：位置搜索时间从 100 分钟降至 1.5 分钟，降低 98.5%
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 敏感位置的Top-K 选择需要预先确定 K 值，不同任务的最优 K 可能不同
 2. 聚类是离线一次性完成的，无法动态适应新数据分布

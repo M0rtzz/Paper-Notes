@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Neural Green's Functions
 description: >-
@@ -111,7 +111,7 @@ tags:
 - 低秩近似的有效性说明**大多数 PDE 的 Green 函数是低秩的**——这与物理直觉一致（远处的影响衰减快）
 - 比 Transolver（同骨干）误差降低 13.9%——纯粹是**框架设计**的贡献
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅适用于密算子承认特征分解的线性 PDE**（如 Poisson、Biharmonic），非线性 PDE（如 Navier-Stokes）不直接适用
 - Dirichlet 边界条件——Neumann 或混合边界条件需要修改 Green 函数的边界项
 - 3D 体网格的点云表示和质量矩阵预测在超高分辨率时可能有精度问题

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CompleteMe: Reference-based Human Image Completion
 description: >-
@@ -124,7 +124,7 @@ CompleteMe在身份一致性指标（CLIP-I, DINO, DreamSim）上全面领先，
 3. **解耦全局+局部**：CLIP全局语义 + Reference U-Net局部细节的双轨设计
 4. **实用的benchmark**：构建了417组包含显著姿态差异的测试集
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **训练数据规模有限**：仅4万对训练数据
 2. **基于SD1.5**：基座模型较老，升级到SDXL/SD3可能获得质量提升

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Learning Cross-View Object Correspondence via Cycle-Consistent Mask Prediction
 description: >-
@@ -97,7 +97,7 @@ tags:
 - TTT 策略是**首次**成功应用于跨视角对应任务，且带来一致性提升
 - 数据增强策略（同视角配对、放松时间对齐）简单但有效，值得借鉴
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Ego Query 性能略逊于 O-MaMa（41.95 vs 42.57），外中心目标的小物体分割仍有提升空间
 - TTT 在推理时需要额外的梯度更新步骤，增加时延

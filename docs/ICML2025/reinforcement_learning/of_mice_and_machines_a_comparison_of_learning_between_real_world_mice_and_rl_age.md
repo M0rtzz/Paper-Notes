@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Of Mice and Machines: A Comparison of Learning Between Real World Mice and RL Agents
 description: >-
@@ -116,7 +116,7 @@ $$TD_{\text{target}} = r_t + \gamma \left( Q(s_{t+1}, \pi(s_{t+1})) - \alpha \te
 3. **86.1% vs 20.9%的重叠率提升**是一个令人印象深刻的结果，且等待行为和步数几乎完美匹配小鼠
 4. LLM也缺乏生物对齐行为这一发现具有广泛启示意义：无论训练方式如何，当前AI系统在风险感知上存在根本缺陷
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **靠墙行为仍有差距**：VP-TDMPC-2改善了覆盖范围但未完全复现小鼠的强thigmotaxis，中心区域使用仍然偏多
 2. **环境局限**：仅在cellworld一个环境验证，泛化性未知。更复杂的连续空间、多捕食者场景需要进一步测试

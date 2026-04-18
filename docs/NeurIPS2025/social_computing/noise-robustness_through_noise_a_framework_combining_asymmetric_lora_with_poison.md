@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Noise-Robustness Through Noise: A Framework Combining Asymmetric LoRA with Poisoning MoE
 description: >-
@@ -94,7 +94,7 @@ LoPE(r=4) 在噪声数据上相比 HydraLoRA 平均提升 1.34%（MMLU），ARC-
 - **完全无需数据清洗**：降低了实际部署门槛——现实中数据噪声无处不在但清洗成本高。
 - DyCompEnSate 的专家依赖补偿思路适用于任何需要动态启停 MoE 专家的场景。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 中毒专家数量固定为 1，在极高噪声或多类噪声共存时可能不够。
 - 仅在 LLaMA2-7B 上验证，未扩展到更大模型或其他 LLM 架构。

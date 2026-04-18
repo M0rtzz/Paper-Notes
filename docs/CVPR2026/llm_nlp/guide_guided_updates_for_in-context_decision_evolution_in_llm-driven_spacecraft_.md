@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations
 description: >-
@@ -93,7 +93,7 @@ tags:
 - **In-context evolution的通用性**：引导式上下文更新的思想不限于航天——任何需要逐步改善且不便微调的场景都适用（如工业控制、紧急响应规划）
 - **约束感知的prompt设计**：如何在prompt中有效编码硬约束（物理极限、通信窗口）是这类应用的关键工程问题
 
-## 局限性 / 可改进方向
+## 局限与展望
 - Workshop论文，实验规模有限，仅在简化仿真中验证
 - LLM的"幻觉"问题在安全关键的航天场景中是严重风险——需要更强的验证机制
 - in-context学习的上下文窗口限制了可积累的历史长度

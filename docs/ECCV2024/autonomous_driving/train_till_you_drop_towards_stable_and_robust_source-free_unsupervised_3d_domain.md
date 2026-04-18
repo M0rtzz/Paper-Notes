@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Train Till You Drop: Towards Stable and Robust Source-free Unsupervised 3D Domain Adaptation
 description: >-
@@ -97,7 +97,7 @@ tags:
 - 基于参考模型一致性的验证准则是一个简单但有力的工具
 - 论文标题"Train Till You Drop"生动地描述了问题——训练越久性能越差
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 一致性准则的有效性依赖于源模型的质量，如果源模型很差，参考可能误导
 - 正则化强度的选择仍然需要一定的经验判断

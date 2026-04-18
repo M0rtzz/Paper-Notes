@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Adaptive High-Frequency Transformer for Diverse Wildlife Re-Identification
 description: >-
@@ -86,7 +86,7 @@ tags:
 - **统一了多个野生动物数据集的实验设置**，为后续研究提供了标准化benchmark
 - 域泛化实验中R1从63.9暴涨到88.5，证明高频特征确实具有跨物种迁移能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **依赖baseline注意力质量**：ODS的token选择完全依赖ViT最后一层的注意力，如果baseline注意力分散或错误，选出的高频token也会包含噪声
 - **$\mu$ 需要按数据集调参**：不同物种在图像中的占比差异大（如大象占满画面 vs 鸟类只占一小部分），固定$\mu$无法自适应
 - **测试时只用原始特征**：训练了高频分支但推理不用，有些浪费

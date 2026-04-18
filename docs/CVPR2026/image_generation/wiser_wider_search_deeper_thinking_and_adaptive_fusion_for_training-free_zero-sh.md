@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] WISER: Wider Search, Deeper Thinking, and Adaptive Fusion for Training-Free Zero-Shot Composed Image Retrieval
 description: >-
@@ -191,7 +191,7 @@ $$\Psi(I^k) = \left(-c_{\text{fused}}^k, \ -\max(c_{\text{T2I}}^k, c_{\text{I2I}
 - **多层融合设计精巧**：Branch-level 判断路径可靠性 + Candidate-level 融合分排序，两个粒度分别解决不确定性和意图匹配两个正交问题
 - **完全无训练+模块化**：所有组件均可替换为更强的现成模型，框架具有持续进化能力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理延迟较大**：每次查询需调用 captioner+editor+dual retrieval+VLM verifier+可能的 refiner，延迟远高于单路径方法
 2. **依赖闭源 API**：refiner 默认使用 GPT-4o，增加成本和部署复杂度（虽然 Qwen-Turbo 也可用）

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments
 description: >-
@@ -99,7 +99,7 @@ tags:
 - **空间信息丰富度编码**：不同于标准位置编码记录绝对/相对位置，CRPE编码的是空间信息密度——距离场景中心更远的区域通常信息更稀疏
 - **CNN-Transformer异构特征桥接**：CMLN为混合架构设计中的特征统计不匹配问题提供了优雅的解决方案
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在室内场景上验证（NYUv2较小），更大规模室内数据集的效果待验证
 - 深度估计质量对整体性能影响大，端到端训练需确保深度网络和补全网络的协同
 - 场景中心用占据体素均值计算可能不鲁棒——如果占据分布偏斜怎么办？

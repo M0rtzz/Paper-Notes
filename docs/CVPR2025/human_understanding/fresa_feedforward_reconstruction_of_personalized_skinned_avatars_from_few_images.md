@@ -1,4 +1,4 @@
----
+﻿---
 title: "FRESA: Feedforward Reconstruction of Personalized Skinned Avatars from Few Images"
 description: "提出前馈式个性化蒙皮Avatar重建方法FRESA，通过3D canonicalization和通用先验模型从少量图像瞬时生成可动画化Avatar"
 tags: ["avatar reconstruction", "skinning", "feed-forward", "animation", "CVPR2025"]
@@ -24,11 +24,11 @@ tags: ["avatar reconstruction", "skinning", "feed-forward", "animation", "CVPR20
 
 **核心矛盾**：个性化蒙皮权重对动画质量至关重要（不同体型、不同服装需要不同的蒙皮策略），但学习这样的权重需要大量多样化数据来建立通用先验。同时，canonical 形状和蒙皮权重之间存在耦合歧义——错误的 canonical 形状配合错误的蒙皮权重可能意外地产生正确的 posed 形状。
 
-**本文要解决什么？** 如何在不做逐人优化的情况下，从少量图像前馈式地联合推理个性化的 canonical 几何、蒙皮权重和姿态依赖变形？
+**本文目标** 如何在不做逐人优化的情况下，从少量图像前馈式地联合推理个性化的 canonical 几何、蒙皮权重和姿态依赖变形？
 
 **切入角度**：作者收集了超过 1100 个穿着不同类型衣物的受试者的大规模 dome 捕获数据集，每人多达 100 个姿态，学习跨体型和服装类型的通用先验。通过显式的 3D canonicalization 产生像素对齐的初始条件，使特征提取更容易；通过多帧聚合消除 canonicalization 伪影并融合人物本征信息。
 
-**核心idea一句话**：用千人规模数据学通用先验，通过 3D canonicalization + 多帧聚合 + 多阶段训练，实现前馈式联合推理个性化蒙皮 Avatar。
+**核心 idea**：用千人规模数据学通用先验，通过 3D canonicalization + 多帧聚合 + 多阶段训练，实现前馈式联合推理个性化蒙皮 Avatar。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ tags: ["avatar reconstruction", "skinning", "feed-forward", "animation", "CVPR20
 - **多帧平均聚合的简洁有效令人印象深刻**：不需要复杂的注意力机制或对齐操作，简单平均就能利用帧间一致性过滤伪影。这说明当初始条件足够好时，简单方法就能奏效
 - **大规模数据驱动的通用先验是核心优势**：1100+ 人的 dome 数据是这篇工作的"护城河"，这种先验使得前馈推理在质量和速度上同时超越优化方法
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 几何精度受四面体网格分辨率限制，微小配饰（如耳环、项链）可能丢失
 - 只建模姿态驱动的变形，忽略了身体-衣物交互动力学和非常宽松衣物/长发的复杂运动

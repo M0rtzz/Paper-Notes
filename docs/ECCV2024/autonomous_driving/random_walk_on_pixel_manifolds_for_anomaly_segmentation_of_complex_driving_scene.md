@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Random Walk on Pixel Manifolds for Anomaly Segmentation of Complex Driving Scenes
 description: >-
@@ -105,7 +105,7 @@ RWPM 不需要任何额外训练，仅在推理阶段使用。直接应用于已
 3. **t-SNE 可视化**令人信服：清晰展示了 RWPM 前后 inlier/outlier 像素的聚类分离效果
 4. 通过 softmax 温度参数替代 k-NN 搜索实现局部约束，巧妙且高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 分割子图之间的边界像素可能缺少跨区域流形信息，校准机制仅是近似解决
 2. 推理时间开销：以 RbA 为例，FPS 从 11.12 降至 2.04（n=2），实时性受限

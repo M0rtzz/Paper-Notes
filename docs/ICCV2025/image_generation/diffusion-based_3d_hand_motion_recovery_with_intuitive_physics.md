@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion-based 3D Hand Motion Recovery with Intuitive Physics
 description: >-
@@ -146,7 +146,7 @@ $$\mathcal{L}_{total} = \mathcal{L}_{data} + \lambda_1 \mathcal{L}_{state} + \la
 - **仅用 MoCap 数据训练**：避免了视频标注的高成本，训练后可即插即用到任何逐帧方法上
 - **运动状态建模**：将离散的物理状态作为条件变量融入扩散过程，属于创新的条件设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - MANO 模型的固有局限：778 个顶点可能不足以精确捕捉细粒度手部形变
 - 运动状态的标注依赖手物距离等启发式规则，在复杂交互中可能不准确

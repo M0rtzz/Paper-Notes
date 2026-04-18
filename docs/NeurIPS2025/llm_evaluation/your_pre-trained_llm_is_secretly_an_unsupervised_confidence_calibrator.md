@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Your Pre-trained LLM is Secretly an Unsupervised Confidence Calibrator
 description: >-
@@ -152,7 +152,7 @@ $$\boldsymbol{\theta}^* = \arg\min_{\tau > 0} \mathbb{E}_{\boldsymbol{x} \in \ma
 4. **方法极简但有效**：本质就是加了一个 indicator function 过滤不一致样本，但效果惊人
 5. **DACA 无标签竟能打败有标签 TS**，说明 PLM 的校准信息非常丰富
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **额外推理开销**：需要额外跑一次 PLM 推理来判断 agreement
 2. **不一致样本被浪费**：过滤掉的 disagreement 样本信息完全没有利用

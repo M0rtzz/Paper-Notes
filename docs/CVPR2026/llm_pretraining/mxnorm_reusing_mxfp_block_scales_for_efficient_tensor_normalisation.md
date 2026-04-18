@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MXNorm: Reusing MXFP Block Scales for Efficient Tensor Normalisation
 description: >-
@@ -164,7 +164,7 @@ MXFP dequantized tensor的$r^2$ goodness-of-fit随block数增加渐近趋向1。
 - **真正的drop-in replacement**：无新超参数、无需修改训练pipeline、backward用RMSNorm梯度做straight-through estimator、gain参数融入权重矩阵→工程集成成本极低
 - **前瞻性强**：随着GPU代际更新，MatMul vs non-MatMul的性能gap持续扩大(Rubin: 280x vs 8.3x)，MXNorm的价值将持续增长
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **增益有限**：Llama 3 8B full layer加速仅+1.3%(MXFP8)/+2.6%(NVFP4)——因为当前模型中normalization本身占比不大。但这个比例会随硬件代际更新而增大
 2. **仅验证Pre-Norm架构**：RMSNorm在Linear之前是MXNorm的前提条件。Post-Norm架构或其他normalization placement不适用

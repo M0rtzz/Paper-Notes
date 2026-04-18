@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond ReAct: A Planner-Centric Framework for Complex Tool-Augmented LLM Reasoning
 description: >-
@@ -137,7 +137,7 @@ $$\mathcal{L}_{\text{SFT}}(\theta) = -\mathbb{E}_{(Q,G_{gt})\sim D_{\text{train}
 - **Plan-Execute解耦架构**允许Planner和Executor独立迭代升级，工程上更灵活
 - 用SFT模型筛选RL训练集的做法，参考了self-play思想，避免了在太简单/太难样本上浪费训练资源
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **单次规划无纠错**：plan-then-execute范式一旦规划出错就没有修正机会，这是与迭代方法（如DTA-Llama、Reflexion）相比的核心劣势。实际应用中query可能有歧义，一次性规划的假设过强
 - **Hard集DAG EM仍然很低**：即使最好的模型也只有0.319，说明复杂规划问题远未解决
 - **依赖外部Executor质量**：端到端效果高度依赖执行器（用的是GPT-4o），Planner的规划质量无法独立保证端到端成功

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedAWA: Adaptive Optimization of Aggregation Weights in Federated Learning Using Client Vectors
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：模型合并领域的任务算术理论表明，参数差值向量（task vector）包含了任务特定知识。将其迁移到 FL——客户端向量 $\tau_k = \theta_k - \theta_g$ 反映了本地数据的特征，可以用来衡量更新的"有用性"。
 
-**核心idea一句话**：用客户端向量与全局聚合向量的对齐度优化聚合权重 = 更一致的全局更新方向。
+**核心 idea**：用客户端向量与全局聚合向量的对齐度优化聚合权重 = 更一致的全局更新方向。
 
 ## 方法详解
 
@@ -87,7 +87,7 @@ CIFAR-10 Top-1 准确率（%）：
 - **Task arithmetic 的联邦学习迁移**——客户端向量 = 任务向量的 FL 版本，这个类比简洁且有效
 - **即插即用设计**——可与任何现有 FL 方法结合，不改变本地训练过程
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 需要存储和传输客户端级参数向量，通信开销增加
 - FedAWA-L 聚合时间 15.21 秒 vs 全局版 0.82 秒
 - 缺少收敛性理论分析

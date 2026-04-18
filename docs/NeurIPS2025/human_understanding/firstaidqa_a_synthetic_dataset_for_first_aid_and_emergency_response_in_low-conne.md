@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FirstAidQA: A Synthetic Dataset for First Aid and Emergency Response in Low-Connectivity Settings
 description: >-
@@ -121,7 +121,7 @@ tags:
 - **透明的质量报告**：坦诚列出安全问题样本，有助于后续使用者规避风险
 - **开放获取**：数据集在 HuggingFace 公开发布
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **安全隐患**：安全性得分仅 3.7/5，在安全关键领域风险较高，需进一步清洗
 - **单一来源偏差**：仅基于一本急救教材，可能存在地区/文化偏差（如各国急救标准差异）
 - **无模型训练实验**：未实际训练/微调模型验证数据集有效性

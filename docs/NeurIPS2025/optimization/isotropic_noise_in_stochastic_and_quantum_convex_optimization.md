@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Isotropic Noise in Stochastic and Quantum Convex Optimization
 description: >-
@@ -108,7 +108,7 @@ $$f(x_t) \leq f(z) + \underbrace{\langle g_t, x_t - z \rangle}_{< 0} + \underbra
 - **sub-exponential 噪声的完整解决**：上下界匹配（多对数因子内），有效地解决了 Open Problem 1 在 sub-exponential 特例下的情形
 - **量子各向同性化的独立价值**：作为通用子程序，可将方差有界量子预言机转为各向同性预言机，可能在其他量子优化问题中有应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **Open Problem 1 在一般 VSGO 下未解决**：VSGO 情形多了 $d$ 因子，$\tilde{O}(R^2\sigma_V^2/\epsilon^2 + d)$ 是否可达仍是开放问题
 - **切平面方法的实用性**：重心法等切平面方法的计算复杂度高（维护凸体表示），实际中不如 SGD 实用
 - **polylog 因子隐藏**：$\tilde{O}$ 记号隐藏了 $\log(1/\epsilon), \log d, \log(1/\delta)$ 等因子，实际常数可能不小

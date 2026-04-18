@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DiaBlo: Diagonal Blocks Are Sufficient For Finetuning
 description: >-
@@ -36,7 +36,7 @@ tags:
 
 **核心洞察**：对角块的梯度 $\mathbf{g}_{\mathbf{D}_i} = \mathbf{X}_i^\top \mathbf{g}_{\mathbf{Y}_i}$ 恰好等于全量微调中对应子块 $\mathbf{W}_{ii}$ 的梯度——不经过任何矩阵乘积中间变量，因此零初始化不会梯度消失，优化景观也远比低秩参数化简单。
 
-**核心idea一句话**：不做低秩分解，直接更新权重矩阵的 $N$ 个对角块 $\mathbf{D}_i \in \mathbb{R}^{d_1 \times d_2}$，用 batched matmul 高效实现。
+**核心 idea**：不做低秩分解，直接更新权重矩阵的 $N$ 个对角块 $\mathbf{D}_i \in \mathbb{R}^{d_1 \times d_2}$，用 batched matmul 高效实现。
 
 ## 方法详解
 
@@ -142,7 +142,7 @@ $$\mathbf{Y} = \mathbf{X}\mathbf{W}_0 + \mathbf{X}\mathbf{D}, \quad \mathbf{D} =
 - **量化友好**：对角块结构在低比特下比低秩乘积更鲁棒
 - **LoRA 的优化困难是根本性的**：低秩矩阵乘积本身就是非凸难题，DiaBlo 完全绕过
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 对角块假设不考虑跨块信息——可能在需要全秩更新的任务上受限
 - $N$ 的选择需要匹配硬件和参数预算
 - 未与 adapter-based 方法系统对比

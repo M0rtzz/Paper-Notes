@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CarFormer: Self-Driving with Learned Object-Centric Representations
 description: >-
@@ -117,7 +117,7 @@ tags:
 3. **低方差高鲁棒性**：slot 表征的跨运行方差仅为 PlanT 的一半，说明对场景变化更稳定
 4. **工程细节扎实**：车辆着色、小型车辆放大、轻量化解码器等技巧有效解决了 slot extraction 在驾驶场景中的实际困难
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 ground truth BEV**：当前假设可获取真实 BEV 地图，实际部署需从相机图像估计 BEV，级联误差会影响 slot 质量
 2. **SAVi 的感知瓶颈**：slot extraction 的质量直接约束下游预测，SAVi 在转弯场景中的模糊预测和拥挤场景中的漏检会传播到 CarFormer

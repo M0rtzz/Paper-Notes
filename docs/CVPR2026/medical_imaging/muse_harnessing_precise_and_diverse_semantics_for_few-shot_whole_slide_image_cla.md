@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MUSE: Harnessing Precise and Diverse Semantics for Few-Shot Whole Slide Image Classification
 description: >-
@@ -117,7 +117,7 @@ MUSE 包含两个核心模块：**SFSE**（Sample-wise Fine-grained Semantic Enh
 3. **随机多视角训练策略设计巧妙**：通过知识库检索 + 随机采样，每次迭代看到不同的语义视角，类似数据增强思想但作用于语义空间，有效抗过拟合。
 4. **实验全面且增益显著**：3 个数据集 × 3 种 shot 设置，大量消融实验覆盖检索策略、优化策略、LLM 选择等维度。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **知识库构建依赖 GPT-4**：概念分解和示例生成阶段需调用 GPT-4 API，成本较高且难以完全离线。
 2. **仅验证二分类任务**：CAMELYON（正常/转移）、NSCLC（LUAD/LUSC）、BRCA（IDC/ILC）均为二分类，多类别场景的可扩展性未验证。

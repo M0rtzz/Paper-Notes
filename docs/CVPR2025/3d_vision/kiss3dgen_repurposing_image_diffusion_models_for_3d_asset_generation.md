@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation
 description: >-
@@ -37,7 +37,7 @@ tags:
 
 **核心矛盾**: 高质量 3D 数据稀缺 vs 2D 扩散模型拥有丰富的图像先验。如何最大程度复用 2D 预训练模型的知识来做 3D 生成？
 
-**本文要解决什么**: 用最简方式将 2D 扩散模型重定向到 3D 生成，同时保持其原有的泛化能力和与 ControlNet 等技术的兼容性。
+**本文目标**: 用最简方式将 2D 扩散模型重定向到 3D 生成，同时保持其原有的泛化能力和与 ControlNet 等技术的兼容性。
 
 ## 方法详解
 
@@ -51,17 +51,17 @@ tags:
 ### 关键设计
 
 **1. 3D Bundle Image 表征**
-- **做什么**: 将 3D 物体渲染为 4 个正交视图（间隔 90° 方位角，5° 俯仰角）的 RGB 图像和法线图，拼接成一张 2D 图像。
+- **功能**: 将 3D 物体渲染为 4 个正交视图（间隔 90° 方位角，5° 俯仰角）的 RGB 图像和法线图，拼接成一张 2D 图像。
 - **核心思路**: 3D Bundle Image 本质上就是一张 2D 图像，完全兼容预训练扩散模型的输入输出结构。DiT 的 attention blocks 天然擅长捕捉不同视图之间以及 RGB 与法线之间的长程依赖。
 - **设计动机**: 对比 Switcher 机制（分别生成 RGB 和法线），3D Bundle Image 在单次生成中确保 RGB-法线一致性。消融实验证实 Switcher 无法维持两种模态间的一致性。
 
 **2. GPT-4V 描述标注**
-- **做什么**: 用 GPT-4V 对每张 3D Bundle Image 的 RGB 部分生成详细文本描述，包括颜色、形状、表面属性等。
+- **功能**: 用 GPT-4V 对每张 3D Bundle Image 的 RGB 部分生成详细文本描述，包括颜色、形状、表面属性等。
 - **核心思路**: 丰富的文本描述提供了额外的语义监督信号，让模型学会文本与 3D 几何/外观的对应关系。
 - **设计动机**: 保留 text-to-image 的文本条件生成能力，这是 text-to-3D 的基础，也使模型能利用 Flux 预训练中学到的文本-图像对齐知识。
 
 **3. ControlNet 扩展**
-- **做什么**: 训练 ControlNet-Tile 和 ControlNet-Normal/Canny 用于 3D 增强和编辑。引入两个超参数：$\lambda_1$（ControlNet 强度）和 $\lambda_2$（生效步数比例）。
+- **功能**: 训练 ControlNet-Tile 和 ControlNet-Normal/Canny 用于 3D 增强和编辑。引入两个超参数：$\lambda_1$（ControlNet 强度）和 $\lambda_2$（生效步数比例）。
 - **核心思路**: 低质量 mesh → 渲染 3D Bundle Image → ControlNet 增强 → ISOMER 重建。增强时用 Florence-2 自动生成描述；编辑时用用户自定义描述。
 - **设计动机**: 因为 Kiss3DGen 本质是扩散模型，天然兼容各种扩散技术（ControlNet、SDEdit 等），无需额外改造。
 
@@ -119,7 +119,7 @@ tags:
 - 数据效率优势来自预训练模型的知识传递——Flux 学到的图像先验被成功迁移到 3D
 - 与 ControlNet 的兼容性开启了 3D 增强/编辑/风格化等丰富应用
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 4 视图 + 法线可能不足以表达复杂几何（如自遮挡严重的物体）
 - 依赖 ISOMER/LRM 做 3D 重建，重建质量是瓶颈

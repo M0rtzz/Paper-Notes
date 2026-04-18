@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Circuit Tracing in Vision-Language Models: Understanding the Internal Mechanisms of Multimodal Thinking
 description: >-
@@ -33,11 +33,11 @@ tags:
 
 **核心矛盾**：我们对 VLM 如何将视觉特征绑定到 token、如何实现跨模态推理、以及视觉和语言注意力如何协调，几乎一无所知。Sparse autoencoders 和 transcoders 已在 LLM 中成功分解多义表示，但从未应用于多模态场景。
 
-**本文要解决什么？** 建立首个完整的 VLM 电路追踪框架，系统分析多模态推理的内部计算机制。
+**本文目标** 建立首个完整的 VLM 电路追踪框架，系统分析多模态推理的内部计算机制。
 
 **切入角度**：将 LLM 中已验证的 transcoder + attribution graph 范式扩展到多模态设定，针对 VLM 特有的图像 token 处理、双向注意力、跨模态信息流等问题开发新方法。
 
-**核心idea一句话**：通过在 VLM 每层 MLP 中插入 transcoder 将多义表示分解为可解释的单义特征，结合归因图追踪特征间因果关系，发现并验证驱动多模态推理的稀疏计算电路。
+**核心 idea**：通过在 VLM 每层 MLP 中插入 transcoder 将多义表示分解为可解释的单义特征，结合归因图追踪特征间因果关系，发现并验证驱动多模态推理的稀疏计算电路。
 
 ## 方法详解
 
@@ -131,7 +131,7 @@ tags:
 - 发现 VLM 语言模型部分保持了独立的视觉表征空间，视觉相似性驱动的特征聚类和共激活独立于语义组织
 - Ad hoc 特征分析策略实用且高效：仅分析当前归因图中的特征，配合小规模任务相关图像集，大幅降低成本同时提升可解释性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅分析 Gemma-3-4B 一个模型，且该模型使用 SigLIP + 双向注意力机制可能引入特有复杂性，结论的普适性未经验证
 - Per-layer transcoder 无法捕获跨层超位（cross-layer superposition），而 VLM 中图像 embedding 的高特征密度使得归因图中频繁出现近似重复的视觉特征

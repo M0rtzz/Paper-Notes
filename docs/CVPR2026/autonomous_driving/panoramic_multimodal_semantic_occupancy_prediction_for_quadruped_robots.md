@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Panoramic Multimodal Semantic Occupancy Prediction for Quadruped Robots
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L}_{occ} = \mathcal{L}_{ce} + \mathcal{L}_{ls} + \mathcal{L}_{scal}^{
 3. **MIPF 非对称融合**：将图像模态压缩为紧凑提示避免密集空间交叉注意力，"几何主导+语义补充"的设计符合传感器特性
 4. **四模态传感**：融合全景 RGB、热成像、偏振、LiDAR 四种互补模态，首次引入偏振成像到占据预测任务
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **绝对性能仍偏低**：最优 mIoU 仅 23.34%，部分类别（bicycle=0.00%, pedestrian=0.00%）完全无法检测，小目标感知严重不足
 2. **VJC 提升有限**：单独 VJC 仅带来 +0.18% 提升，对步态抖动的补偿效果有限，可能需要更复杂的时序建模

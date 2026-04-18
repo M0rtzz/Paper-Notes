@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diffusion Models Meet Contextual Bandits
 description: >-
@@ -150,7 +150,7 @@ LinTS/dTS 累积 regret 比值随 $K$ 从 10 增到 $5 \times 10^4$ 而单调增
 - **Bayes regret 分析**：dTS 的 regret 中动作项仅含 $K\sigma_1^2$（条件方差），LinTS 含 $K\Sigma$（边际方差，远大于条件方差）
 - **稀疏性加速**：当混合矩阵有列稀疏时，隐变量学习的维度从 $d$ 降到 $d_\ell$
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **理论仅限线性情况**：Bayes regret 上界仅对线性高斯设定成立，非线性情况缺乏理论保证
 2. **近似误差无界**：似然近似和扩散近似的误差未被量化

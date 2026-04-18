@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CPM: Class-Conditional Prompting Machine for Audio-Visual Segmentation
 description: >-
@@ -141,7 +141,7 @@ CPM 提升显著：SS +4.80, MS +4.50, Total +6.50 mIoU。
 3. **三重辅助任务设计精妙**：ACP/VCP/PCL 分别从音频、视觉、跨模态三个维度强化学习
 4. **可扩展性**：CPM 可插入任何基于 Mask2Former 的分割框架
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. GMM 的 EM 更新增加训练复杂度，需维护外部记忆库
 2. ACP 依赖非画面噪声数据集，数据获取有额外成本

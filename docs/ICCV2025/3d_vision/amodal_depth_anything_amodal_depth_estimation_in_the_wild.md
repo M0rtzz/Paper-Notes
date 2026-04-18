@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Amodal Depth Anything: Amodal Depth Estimation in the Wild
 description: >-
@@ -110,7 +110,7 @@ tags:
 4. **两种互补范式**：Amodal-DAV2精度高，Amodal-DepthFM细节好且支持多样化预测
 5. **不依赖RGB先验**：直接预测遮挡深度，避免了Inpainting方法的级联误差
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **依赖非模态掩码质量**：不准确或模糊的掩码会导致级联误差
 2. **微调后细节捕获能力略有下降**：可能因SA-1B数据集本身的多样性有限
 3. **仅支持单帧**：可扩展到视频场景的时序非模态深度估计

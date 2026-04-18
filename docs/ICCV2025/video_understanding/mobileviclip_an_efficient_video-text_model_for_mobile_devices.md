@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] MobileViCLIP: An Efficient Video-Text Model for Mobile Devices
 description: >-
@@ -95,7 +95,7 @@ MobileViCLIP-Small在MSR-VTT上与InternVideo2-L14性能相当，但移动端延
 - **移动端延迟分析深入**: 首次系统分析了各基础模块在移动端的延迟特性，发现attention在移动端缺乏GPU那样的优化，延迟随层数指数增长
 - **泛化能力强**: 不仅限于检索，在时序定位、零样本动作检测、视频标注等下游任务上都展现出强泛化
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 在ActivityNet等长视频数据集上性能仍有差距，8帧采样不足以覆盖5-10分钟视频
 - 在GPU上的吞吐量反而不如一些ViT模型（GPU对Transformer有深度优化）

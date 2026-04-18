@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generalization Bounds via Meta-Learned Model Representations: PAC-Bayes and Sample Compression Hypernetworks
 description: >-
@@ -141,7 +141,7 @@ $$\min_{\psi, \phi_1, \phi_2} \frac{1}{n} \sum_{i=1}^n \mathbb{E}\hat{\mathcal{L
 4. **Disintegrated bound**（Theorem 2.5）：将期望值界推广到单个预测器的界，更具实践意义
 5. **DeepSet 编码**：巧妙地使用 $\mathbf{z} = \frac{1}{m}\mathbf{M}^T\mathbf{y}$ 实现置换不变性，简洁有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **可扩展性**：当前在小规模数据集和简单网络（few-shot）上验证，尚未扩展到大规模深度网络
 2. **压缩集大小固定**：$c$ 作为超参数需预设，自适应选择压缩集大小可能进一步提升效果

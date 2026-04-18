@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Referring Expression Comprehension for Small Objects
 description: >-
@@ -131,7 +131,7 @@ $\mathbf{x}_i$ 是第 $i$ 步裁剪后的图像区域。
 - **参数高效**：PIZA 模块仅 0.27M 参数，通过灵活嵌入缩放步信息到不同 PEFT 框架，实现了少量参数的大幅性能提升
 - **数据集构建流程可复制**：半自动化构建流程（SAM+GPT-4o+众包），为其他场景创建类似数据集提供了范例
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 自回归缩放增加推理次数（平均 2-3 步），对实时性要求高的场景可能不够快
 - 目前仅在 GroundingDINO 上验证，其他基础模型（如 GLIPv2、Florence）的迁移性待验证

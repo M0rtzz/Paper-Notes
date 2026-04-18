@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Efficient Diffusion Models for Symmetric Manifolds
 description: >-
@@ -129,7 +129,7 @@ $$dY_t = f^\star(Y_t, t)dt + g^\star(Y_t, t)dB_t$$
 4. **首个poly(d)采样保证**：先前方法的采样精度/运行时保证有未显式指定的流形依赖常数，本文给出显式多项式界
 5. **Optimal Transport耦合**：开发了基于最优传输的概率耦合方法替代Girsanov变换，适用于空间变化协方差SDE
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅限对称流形**：理论保证需要流形对称性和平均情况Lipschitz条件，非对称流形仍是开放问题
 2. **poly(d)中d的幂次较大**：如 $d^9$ 的精度界和 $d^{5.5}$ 的迭代次数，改善维度依赖是未来方向

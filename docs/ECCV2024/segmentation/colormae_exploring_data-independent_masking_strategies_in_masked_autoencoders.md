@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ColorMAE: Exploring Data-Independent Masking Strategies in Masked AutoEncoders
 description: >-
@@ -122,7 +122,7 @@ ColorMAE-G 作为数据无关方法，在语义分割上超过多数数据自适
 3. **普适性强**：可作为任何 MIM 方法的 drop-in 遮罩策略替换随机遮罩
 4. **语义分割增益最大**：+2.72 mIoU 的提升在分割领域相当可观
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 滤波参数 sigma 的选取依赖手工调优，缺乏自适应机制
 2. 仅在 MAE 框架下验证，未扩展到 SimMIM、BEiT 等其他 MIM 方法

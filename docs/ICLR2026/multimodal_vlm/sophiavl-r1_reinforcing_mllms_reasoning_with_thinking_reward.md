@@ -42,14 +42,14 @@ tags:
 
 ### 关键设计一：整体级思维奖励模型(Thinking Reward Model)
 
-- **做什么**：训练一个3B参数的思维奖励模型，对MLLM的整体思维过程打0-1分，不关注最终答案是否正确，仅评估推理质量。
+- **功能**：训练一个3B参数的思维奖励模型，对MLLM的整体思维过程打0-1分，不关注最终答案是否正确，仅评估推理质量。
 - **核心思路**：从GRPO训练轨迹中收集470,331个(问题, 响应)对→用Qwen2.5-VL-72B从五个维度评分(逻辑一致性Logical Soundness、推理正确性Correct Reasoning、错误识别Error Identification、语言一致性Language Consistency、冗余度Redundancy)→规则过滤+均匀采样得到156,703个高质量样本→以Qwen2.5-VL-3B-Instruct为基座SFT训练。
 - **设计动机**：整体级评估比步级更灵活，避免PRM的rigid约束和exploit问题；从GRPO训练轨迹中收集数据确保覆盖真实的推理错误模式。
 - **形式化**：给定问题$q$和思维过程$t$，思维奖励模型输出$R^t = f_{\phi}(q, t) \in [0, 1]$。
 
 ### 关键设计二：Trust-GRPO算法
 
-- **做什么**：在GRPO中融合思维奖励和规则奖励时，为思维奖励分配一个可信度权重$\gamma$，自适应降低不可靠的思维奖励的影响。
+- **功能**：在GRPO中融合思维奖励和规则奖励时，为思维奖励分配一个可信度权重$\gamma$，自适应降低不可靠的思维奖励的影响。
 - **核心思路**：对每个问题$q$的$N$个采样响应，按结果奖励分为正确组$G_{\text{correct}}$和错误组$G_{\text{wrong}}$，分别计算组内平均思维奖励：
 
 $$\mu_c = \frac{1}{|G_{\text{correct}}|}\sum_{i \in G_{\text{correct}}} R_i^t, \quad \mu_w = \frac{1}{|G_{\text{wrong}}|}\sum_{i \in G_{\text{wrong}}} R_i^t$$
@@ -64,7 +64,7 @@ $$\gamma = \begin{cases} 1, & \mu_c \geq \mu_w \\ e^{\mu_c - \mu_w}, & \mu_c < \
 
 ### 关键设计三：退火策略(Time-based Annealing)
 
-- **做什么**：在训练过程中逐步减小思维奖励的影响权重，使模型后期更多依赖准确的规则基outcome奖励。
+- **功能**：在训练过程中逐步减小思维奖励的影响权重，使模型后期更多依赖准确的规则基outcome奖励。
 - **核心思路**：引入指数衰减因子，最终奖励变为：
 
 $$R_i = R_i^o + \gamma \alpha e^{-\text{steps}/T} \cdot R_i^t$$

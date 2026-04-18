@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study
 description: >-
@@ -204,7 +204,7 @@ tags:
 3. **推理摘要优于完整推理**：简洁的推理摘要比冗长的思维链更有效，说明信息密度和逻辑连贯性比长度更重要
 4. **小数据大效果**：仅 2.8k 样本的策略引导合成数据就能让 14B 模型匹配 DeepSeek-v3 在 DiscoveryBench 上的表现
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **数据集规模有限**：2.8k 样本可能不足以覆盖更广泛的分析场景
 2. **训练数据分布偏向 7B 模型**：策略是基于 Qwen2.5-7B 构建的，可能与更大模型的归纳偏置不太匹配

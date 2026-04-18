@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reinforcing the Diffusion Chain of Lateral Thought with Diffusion Language Models
 description: >-
@@ -131,7 +131,7 @@ $$\mathcal{L}_{\theta,n} = -\frac{1}{G}\sum_{g=1}^{G}\frac{\pi_{\theta,n}(x_n^g|
 3. **无监督的推理涌现**：不需要任何推理过程标注，仅靠最终答案的正确性信号就能让模型学会有效的横向推理模式
 4. **渐进式生成涌现**：训练后自然出现从易到难的渐进生成模式（先填入确定性高的token），与人类思维习惯一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在可验证任务（数学/代码）上验证，泛化到开放域需要reward model
 - 训练数据量和计算资源有限，性能仍有提升空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Training Large Language Models To Reason In Parallel With Global Forking Tokens
 description: >-
@@ -114,7 +114,7 @@ $$\mathcal{L}_{\text{Hungarian}}(\boldsymbol{\theta}) = -\mathbb{E}_{\mathbf{x},
 - **可解释的匹配可视化**：训练过程中匹配配置的演化清晰展示了 forking token 与推理模式的自动关联学习
 - **计算开销极小**：匹配代价计算使用 stop-gradient 和仅前 $L$ 个 token，几乎不增加训练时间
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前实验中 $N=6, M=4$ 的设置规模较小，更大规模二分图的效果和计算负担有待探索
 - 多样推理轨迹来源于多教师蒸馏，对教师模型质量和多样性有依赖

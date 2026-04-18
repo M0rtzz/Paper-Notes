@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Pb4U-GNet: Resolution-Adaptive Garment Simulation via Propagation-before-Update Graph Network
 description: >-
@@ -143,7 +143,7 @@ $$\mathbf{s}_i = \frac{1}{|\mathcal{N}(i)|} \sum_{j \in \mathcal{N}(i)} l_{ij}$$
 3. **物理一致性**：传播距离和更新缩放都有清晰的物理解释（弹性波传播距离和连续力学几何相似性原理）。
 4. **全自监督**：不需要昂贵的物理仿真数据作为标签。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 当前仅验证了衰减累积方式（$\gamma$ 固定），可探索更灵活的多跳信息融合策略。
 2. 分辨率缩放基于平均边长的简单线性关系，对非均匀网格可能不够精确。

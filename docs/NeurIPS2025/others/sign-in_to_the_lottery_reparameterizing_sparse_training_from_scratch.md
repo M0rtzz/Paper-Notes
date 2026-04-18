@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Sign-In to the Lottery: Reparameterized Sparse Training from Scratch
 description: >-
@@ -96,7 +96,7 @@ Sign-In将每个权重参数θ重参数化为两个参数的逐元素乘积：θ
 - **正交性**：Sign-In与dense-to-sparse方法互补——它促进的符号翻转与密集训练促进的不同，两者组合可以进一步提升
 - **计算开销低**：虽然参数量翻倍，但在ResNet50 ImageNet训练中仅增加约5%的训练时间，且推理时合并回单参数表示
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 尽管有进步，Sign-In仍无法缩小PaI与dense-to-sparse之间的全部差距
 - 不可能性定理表明，纯粹基于重参数化的方法存在根本限制
 - 实验主要在视觉任务上验证，缺乏NLP任务（如语言模型训练）的验证

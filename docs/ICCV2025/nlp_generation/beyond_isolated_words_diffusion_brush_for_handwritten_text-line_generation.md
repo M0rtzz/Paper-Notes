@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Beyond Isolated Words: Diffusion Brush for Handwritten Text-Line Generation
 description: >-
@@ -117,7 +117,7 @@ $$\mathcal{L}_\mathcal{G} = \mathcal{L}_{diff} + \mathcal{L}_{style} + \lambda \
 - 多尺度判别器的关键洞察：行级保证全局字符顺序，词级保证局部结构正确，两者缺一不可
 - 首次将扩散模型成功应用于手写文本行生成，相比 GAN 方法在质量和控制力上均大幅领先
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 低频字符（标点、希腊字母等）偶尔出现结构错误，可通过数据过采样缓解
 - 宽度超过 1024 的文本行需要 resize，可能丢失细节

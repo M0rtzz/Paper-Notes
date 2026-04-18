@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Retrieval Visual Contrastive Decoding to Mitigate Object Hallucinations in Large Vision-Language Models
 description: >-
@@ -107,7 +107,7 @@ RVCD 的延迟远低于 OPERA 和 HALC，效率优势明显。
 - **正/负 logit 双向调节**：不仅抑制幻觉物体，还通过正 logit 保护真实物体不被误伤，设计巧妙
 - **全面的消融分析**：系统研究了检测精度、α/β 参数、不同 OD 模型对性能的影响，结论扎实
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 CHAIR 字典**：单概念图像数据库基于 MSCOCO 的有限字典（约400词），难以泛化到开放词汇场景
 2. **延迟与 draft 长度正相关**：当 draft caption 提及大量不同物体时，需要为每个物体生成额外 logit，解码延迟增加

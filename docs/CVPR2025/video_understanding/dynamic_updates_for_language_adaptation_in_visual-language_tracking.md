@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Dynamic Updates for Language Adaptation in Visual-Language Tracking
 description: >-
@@ -104,7 +104,7 @@ DUTrack由四个主要组件构成：(1) 多模态交互模块 — 使用one-str
 - **模块设计简洁**：DTCM直接利用已有的注意力图，几乎零额外计算；DLUM的更新策略基于简单的位移/尺度/颜色变化
 - **纯视觉benchmark也有效**：在GOT-10K（无语言标注）上仍能生成语言描述并提升性能
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 更新频率的阈值需要手动调参，缺乏自适应机制
 - LLM生成的语言描述质量受限于BLIP能力

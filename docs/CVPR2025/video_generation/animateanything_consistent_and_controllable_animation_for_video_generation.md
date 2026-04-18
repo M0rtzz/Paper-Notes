@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] AnimateAnything: Consistent and Controllable Animation for Video Generation
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **显式+隐式注入的互补设计**：针对信号特性设计不同注入方式——能直接转光流的用显式路径，不能的用隐式参考特征。这种"因材施教"的设计思路比强行统一更合理
 - **频域视角看视频稳定**：从信号处理的角度理解视频闪烁，并在attention中引入FFT调节频域分量，视角新颖且有效
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实用扩展性：FGM和CRM是两个独立模型，训练和推理成本较高
 - 相机轨迹训练数据有限：Real10K和DL3DV10K主要是室内/静态场景，动态场景泛化可能不足

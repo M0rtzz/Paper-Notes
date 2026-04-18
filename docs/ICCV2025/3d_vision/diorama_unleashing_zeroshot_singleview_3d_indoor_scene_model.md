@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Diorama: Unleashing Zero-shot Single-view 3D Indoor Scene Modeling
 description: >-
@@ -119,7 +119,7 @@ tags:
 
 4. **PlainRecon 的极简设计**：不需要离散优化器或复杂的 CNN，只是"修复 → 深度 → 法线聚类 → 平面拟合"四步组合就超越了之前的方法，且更鲁棒。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **几何和纹理不精确**：CAD 检索天然无法得到与图像完全匹配的几何和材质，对需要精确重建的应用是瓶颈。未来可以在检索后做变形和纹理迁移。
 2. **尺度估计不稳定**：RANSAC 求解对噪声点对应敏感，特别是大遮挡情况下尺度估计容易偏离，sAcc 不如 GigaPose。

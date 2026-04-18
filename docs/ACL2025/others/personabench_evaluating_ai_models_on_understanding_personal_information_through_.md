@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PersonaBench: Evaluating AI Models on Understanding Personal Information through Accessing (Synthetic) Private User Data
 description: >-
@@ -246,7 +246,7 @@ tags:
 - **噪声比作为可控难度旋钮**：不同噪声级别为分析模型的信息提取鲁棒性提供了干净的实验轴
 - **多维雷达图分析**：从噪声鲁棒性、信息更新感知、社交理解等多维度比较模型，比单一指标更有洞察力
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 所有数据完全由 GPT-4o 合成，可能继承模型偏见且与真实用户数据存在分布差距
 - Ground-truth profiles 不公开发布（防止作弊），但限制了社区复现和扩展

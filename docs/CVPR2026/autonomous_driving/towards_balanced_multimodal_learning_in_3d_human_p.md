@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Towards Balanced Multi-Modal Learning in 3D Human Pose Estimation
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：弱模态在回归任务中的特殊表现——预测近乎常值（标准差极低），用 MSE/MAE 评估会错误地认为其"可靠"。Pearson 相关系数衡量预测与 GT 的线性相关性而非距离，不受预测幅度影响，是更合适的贡献度指标。
 
-**核心idea一句话**：用 Pearson 相关系数替代 MSE 作为回归任务的 Shapley 利润函数来检测模态不平衡，再用 FIM 加权的参数偏移正则化来差异化约束各模态的学习速率。
+**核心 idea**：用 Pearson 相关系数替代 MSE 作为回归任务的 Shapley 利润函数来检测模态不平衡，再用 FIM 加权的参数偏移正则化来差异化约束各模态的学习速率。
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{MPJPE}} + \mathcal{L}_{\text{AW
 - **FIM 自然实现差异化正则**：不需要手动设计哪些参数该约束、哪些不该——FIM 值高的参数（强模态中被频繁更新的参数）正是最需要减速的，实现了自适应。这种思路可迁移到 continual learning 或 domain adaptation
 - **Learning Window 概念**：承认"平衡只在早期重要"——后期所有模态都应该自由优化。这个 insight 对其他平衡方法也有参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **仅在 MM-Fi 一个数据集上评估**：4 模态 HPE 本身是个很 niche 的设置，泛化性存疑
 - **Shapley 值计算复杂度指数增长**：4 模态时只需 $2^4=16$ 次前向，但模态数增加到 6+ 时变得不可行，需要采样近似

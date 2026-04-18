@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Improving Generalization with Flat Hilbert Bayesian Inference
 description: >-
@@ -111,7 +111,7 @@ $$f_{k+1} = f_k - \epsilon \nabla_f D_{\text{KL}}(q_{[I+f]} \| p(\cdot|\mathcal{
 4. **实验全面**：19 个数据集 × 9 个基线，在 Top-1 准确率和 ECE 两个指标上均验证有效
 5. **与 LoRA 自然结合**：仅对轻量 LoRA 参数运行多粒子推断，计算开销可控
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本**：$m$ 个粒子意味着 $m$ 倍前向/反向传播+ 核矩阵计算，扩展到大规模模型时开销不可忽视
 2. **仅评估 ViT-B/16 + LoRA**：未在更大模型（ViT-L、LLM）或其他 PEFT 方法上验证

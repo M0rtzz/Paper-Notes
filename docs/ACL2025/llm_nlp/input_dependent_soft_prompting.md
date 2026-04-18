@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Leveraging Self-Attention for Input-Dependent Soft Prompting in LLMs
 description: >-
@@ -45,7 +45,7 @@ tags:
 
 #### 模块一：自注意力聚合层
 
-- **做什么**：对输入嵌入 $\mathbf{E}$ 施加单头自注意力，再沿 token 维度取均值，得到上下文丰富的 $n \times 1$ 维向量 $A$。
+- **功能**：对输入嵌入 $\mathbf{E}$ 施加单头自注意力，再沿 token 维度取均值，得到上下文丰富的 $n \times 1$ 维向量 $A$。
 - **核心思路**：
 $$A = \text{mean}\left\{\text{softmax}\left(\frac{(\mathbf{E}W_Q)(\mathbf{E}W_K)^\top}{\sqrt{d_k}}\right)(\mathbf{E}W_V)\right\}$$
   其中 $W_Q, W_K, W_V$ 为可学习的查询/键/值投影矩阵，$\frac{1}{\sqrt{d_k}}$ 为缩放因子。
@@ -53,7 +53,7 @@ $$A = \text{mean}\left\{\text{softmax}\left(\frac{(\mathbf{E}W_Q)(\mathbf{E}W_K)
 
 #### 模块二：瓶颈 MLP（Down-Up Projection）
 
-- **做什么**：将聚合向量 $A$ 先下投影到低维空间 $c$（$c < n$），经 ReLU 激活后再上投影到 $n \cdot t$ 维，最后 reshape 为 $\mathbf{S}_T \in \mathbb{R}^{n \times t}$。
+- **功能**：将聚合向量 $A$ 先下投影到低维空间 $c$（$c < n$），经 ReLU 激活后再上投影到 $n \cdot t$ 维，最后 reshape 为 $\mathbf{S}_T \in \mathbb{R}^{n \times t}$。
 - **核心思路**：
 $$\mathbf{S}_T = \text{resize}\left(\sigma(W_{up} \cdot \sigma(W_{down} \cdot A))\right)$$
   其中 $W_{down} \in \mathbb{R}^{n \times c}$，$W_{up} \in \mathbb{R}^{c \times (n \cdot t)}$，$\sigma$ 为 ReLU。
@@ -61,7 +61,7 @@ $$\mathbf{S}_T = \text{resize}\left(\sigma(W_{up} \cdot \sigma(W_{down} \cdot A)
 
 #### 模块三：单层拼接策略
 
-- **做什么**：将生成的软提示 $\mathbf{S}_T$ 拼接到 LM 的**单个** Transformer 层（第 $m$ 层）的输入端，而非在多层或所有层拼接。
+- **功能**：将生成的软提示 $\mathbf{S}_T$ 拼接到 LM 的**单个** Transformer 层（第 $m$ 层）的输入端，而非在多层或所有层拼接。
 - **核心思路**：实验发现拼接在中间层（如第 6-8 层）效果最优；早期层效果也不错，因为软提示由输入嵌入生成，与早期层输出的兼容性更好。
 - **设计动机**：(1) 减少架构复杂度，避免在每层都引入额外拼接操作；(2) 降低可训练参数量——与 Prefix Tuning（每层拼接）相比参数大幅减少；(3) 使训练过程更平滑，降低收敛难度。
 
@@ -119,7 +119,7 @@ $$\mathbf{S}_T = \text{resize}\left(\sigma(W_{up} \cdot \sigma(W_{down} \cdot A)
 3. **零样本迁移能力强劲**：输入依赖的提示生成天然具备泛化性——提示随输入变化，因此在分布偏移场景下能更灵活地适应，而固定提示方法则容易过拟合训练域分布。
 4. **与 LoRA 形成互补视角**：LoRA 通过低秩适配权重矩阵，ID-SPAM 通过输入依赖的软提示——两者都追求参数效率但路径不同，ID-SPAM 在多数任务上可与 LoRA 匹敌甚至更优。
 
-## 局限性/可改进方向
+## 局限与展望
 
 1. **骨干模型规模有限**：实验仅在 RoBERTa-BASE/LARGE（125M/355M）和 GPT-2 上验证，未能在 LLaMA-3.1-70B、Mixtral 8×22B 等大规模模型上测试——无法确定该方法在真正的大模型上是否仍有优势。
 2. **层选择为手动超参**：拼接到哪一层 Transformer 需要人工搜索，缺乏自动选择最优层的机制。未来可考虑引入可微的层路由（如 Gumbel-Softmax 选层）或同时在多层加权融合。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SegAgent: Exploring Pixel Understanding Capabilities in MLLMs by Imitating Human Annotator Trajectories
 description: >-
@@ -32,11 +32,11 @@ SegAgent 将 referring expression segmentation 建模为人类标注员的迭代
 
 **核心矛盾**：MLLM 擅长全局语义理解和粗粒度定位，但在像素级精细分割上不擅长；交互式分割模型（SAM 等）擅长精细分割但不理解自然语言。如何结合两者？
 
-**本文要解决什么？** 如何让 MLLM 扮演人类标注员的角色，通过多步迭代与交互式分割工具配合完成高质量 referring segmentation？
+**本文目标** 如何让 MLLM 扮演人类标注员的角色，通过多步迭代与交互式分割工具配合完成高质量 referring segmentation？
 
 **切入角度**：将分割任务建模为 MDP——状态是当前 mask（叠加在原图上），动作是预测正/负点击坐标（纯文本输出），转移由交互式分割模型完成，奖励是与 GT 的 IoU。这样 MLLM 只需做"在哪里点击"的决策，精细分割交给专业模型。
 
-**核心idea一句话**：让 MLLM 模仿人类标注员的点击轨迹，通过多步交互式分割迭代完成 referring segmentation，并用 RL 式策略改进和过程奖励模型提升决策质量。
+**核心 idea**：让 MLLM 模仿人类标注员的点击轨迹，通过多步交互式分割迭代完成 referring segmentation，并用 RL 式策略改进和过程奖励模型提升决策质量。
 
 ## 方法详解
 
@@ -100,7 +100,7 @@ SegAgent 将 referring expression segmentation 建模为人类标注员的迭代
 - **PRM 的天然适配性**：分割任务的 IoU 是一个完美的过程奖励信号——每步都可以计算，不需要学习奖励模型。这让 RL 式方法在分割任务上的应用变得特别优雅
 - **纯文本坐标输出**：不需要修改 MLLM 架构、不需要添加特殊 token，动作完全用文本表示（"Positive point: (175,483)"），保持了 MLLM 的通用性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 只探索了 1 轮 StaR+ 改进，更多轮次可能进一步提升
 - 只用贪心搜索而非 MCTS，更复杂的搜索策略可能更好
 - 无法回撤（undo）之前的错误点击，复杂场景下可能累积误差

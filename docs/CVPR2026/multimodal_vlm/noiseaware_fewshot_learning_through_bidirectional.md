@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Noise-Aware Few-Shot Learning through Bi-directional Multi-View Prompt Alignment
 description: >-
@@ -105,7 +105,7 @@ NA-MVP包含两个核心模块协同工作：
 - 在高噪声率(75%)下的提升尤为显著，说明框架的噪声鲁棒性确实优于prior work
 - 推理公式 $(1-p^n) \cdot p^c$ 简洁优雅
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅在分类任务上验证，未扩展到检测、分割等更复杂视觉任务
 - 依赖CLIP的ResNet-50 backbone，未验证在更强backbone（ViT-L/14）上的表现
 - UOT的Sinkhorn迭代会引入额外计算开销，论文未详细讨论计算成本
@@ -141,7 +141,7 @@ NA-MVP包含两个核心模块协同工作：
 - 双向多视图对齐同时处理 prompt 噪声和标签噪声
 - 在 60% 对称噪声下仍保持较高准确率, 实用性强
 
-## 局限性 / 可改进方向
+## 局限与展望
 - UOT 计算开销随 prompt 数量和样本量增加
 - 仅在分类任务验证, 未扩展到检测/分割等下游任务
 - 噪声类型假设较为理想化 (对称/非对称), 真实噪声模式可能更复杂

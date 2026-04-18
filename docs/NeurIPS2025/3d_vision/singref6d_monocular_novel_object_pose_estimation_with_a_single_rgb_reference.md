@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] SingRef6D: Monocular Novel Object Pose Estimation with a Single RGB Reference
 description: >-
@@ -115,7 +115,7 @@ SingRef6D包含三个阶段：
 - Token-scaler微调策略既保留了DPAv2预训练知识，又实现精确度量深度，冻结主体只训练轻量模块
 - 三个层级的局部损失（Scale+Edge+Normal）覆盖了深度预测的主要几何误差来源，设计系统且动机清晰
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Oracle深度与预测深度之间仍有显著gap（AR: 56.8 vs 28.7），深度预测仍是瓶颈
 - 在Toyota-Light上使用预测深度时低于Oryon+DPAv2，对光照变化的鲁棒性有待提升

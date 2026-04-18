@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Agent-SAMA: State-Aware Mobile Assistant
 description: >-
@@ -68,7 +68,7 @@ Agent-SAMA是一个多Agent框架，包含四个阶段：规划（Planning）→
 - **Agent-SAMA在弱MLLM下也有竞争力**：使用Claude 3.5时仍优于GPT-4o版本的baseline，说明框架本身的增益独立于底座模型
 - **方法是模型无关的**：FSM层可作为轻量级记忆层插入任何现有GUI Agent
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **State Beacon依赖LLM文本匹配**：可能存在误匹配或漏匹配，可考虑替换为视觉-语义嵌入做高效匹配
 - **扁平FSM在超长链任务中可能状态爆炸**：跨5+个App、20+步操作时缺乏层次化抽象
 - **仅评估了三个基准**：缺少对动态内容（广告弹窗等）、外部中断等场景的评估

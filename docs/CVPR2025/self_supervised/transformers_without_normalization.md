@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Transformers without Normalization
 description: >-
@@ -35,7 +35,7 @@ tags:
 
 **切入角度**：可视化 LayerNorm 在训练好模型中的输入-输出映射，发现它呈现出惊人规律的 S 形曲线——几乎就是 tanh 函数。这暗示归一化的核心作用可能只是"压缩"激活范围。
 
-**核心idea一句话**：LayerNorm ≈ 可学习的逐元素 tanh 压缩——无需 token 级统计量即可替代归一化。
+**核心 idea**：LayerNorm ≈ 可学习的逐元素 tanh 压缩——无需 token 级统计量即可替代归一化。
 
 ## 方法详解
 
@@ -89,7 +89,7 @@ tags:
 - **极简但深刻**——整个方法就一行公式，但背后的洞察（LN ≈ tanh）改变了对归一化作用的理解
 - **实践意义**：DyT 不需要 token 级统计，对硬件友好（无 reduce 操作），在长序列/大 batch 下可能更高效
 
-## 局限性 / 可改进方向
+## 局限与展望
 - DyT 不计算 per-token 统计，对 token 间幅度差异大的场景可能不适用
 - LLaMA 需要特殊 $\alpha$ 初始化，通用性稍打折扣
 - 缺少理论解释——为什么 tanh 近似就够了？

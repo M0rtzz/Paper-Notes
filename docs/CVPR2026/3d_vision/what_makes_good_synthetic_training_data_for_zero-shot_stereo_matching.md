@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] What Makes Good Synthetic Training Data for Zero-Shot Stereo Matching?
 description: >-
@@ -156,7 +156,7 @@ tags:
 4. **"更多低质量数据 > 少量高质量数据"**：渲染质量和求解器精度降低 + 6x 加速后，固定算力下性能反而更优。
 5. **程序化生成的方法论价值**：参数消融方法论可推广至光流、深度补全、语义分割等其他视觉任务的数据集设计。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **与 FoundationStereo 仍有较大差距**：Middlebury 2014(H) 上 3.76 vs 1.10，FSD 使用了更大规模的数据和物理模拟。
 2. **缺少驾驶场景**：未包含 CARLA/VirtualKITTI 风格的道路场景，KITTI 上的优势主要来自材质/基线设置而非域内场景分布。

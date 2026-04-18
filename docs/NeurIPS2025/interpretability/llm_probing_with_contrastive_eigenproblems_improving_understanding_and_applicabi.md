@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LLM Probing with Contrastive Eigenproblems: Improving Understanding and Applicability of CCS
 description: >-
@@ -133,7 +133,7 @@ $$\mathbf{C}^\intercal \mathbf{C} \mathbf{n}_k = \lambda_k \mathbf{X}^{+-\interc
 3. **特征值的诊断能力**：特征值分布可以定量指示对比数据是否成功隔离了单一特征，这为数据质量评估提供了新工具
 4. **多变量扩展自然优雅**：无需额外设计，特征值问题天然支持多变量探测，成功复现了真值-极性共享子空间的结果
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **分类与干预方向的统一**：DRC/RRC 方法无法区分分类方向 $\mathbf{n}$ 和干预方向 $\mathbf{t}$（在特征相关时两者不同），未来需要设计能分离两种方向的方法
 2. **在困难数据集上表现一般**：当对比数据质量差（如 copa、rte）时，方法性能仍不理想，但至少能诊断问题

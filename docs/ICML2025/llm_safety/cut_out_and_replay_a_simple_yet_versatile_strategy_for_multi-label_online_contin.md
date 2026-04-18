@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cut out and Replay: A Simple yet Versatile Strategy for Multi-Label Online Continual Learning
 description: >-
@@ -128,7 +128,7 @@ $$L_{asl} = \frac{1}{|C_k|}\sum_{c=1}^{|C_k|} \begin{cases} (1-p_c)^{\gamma^+}\l
 3. **正交性设计**：CUTER 不替代而是补充现有方法，可与 PRS、OCDM、KRT、AGCN 等自由组合。
 4. **理论支撑扎实**：从 Cheeger 常数到 Fiedler 值再到 Theorem 2.3 的核范数约束，形成完整的理论链条。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **依赖 ViT 架构**：方法核心依赖 patch-level 特征构图，在 CNN（ResNet）上性能显著下降。
 2. **计算开销较大**：多轮 MCut 无法 GPU 并行，核范数梯度计算增加额外开销，吞吐量受限。

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BiPreManip: Learning Affordance-Based Bimanual Preparatory Manipulation through Anticipatory Collaboration
 description: >-
@@ -102,7 +102,7 @@ tags:
 - 参数共享使预期阶段和执行阶段语义一致，确保"想象"和"执行"的连贯性
 - 18 个物体类别、882 个实例的基准测试具有很好的系统性
 
-## 局限性 / 可改进方向
+## 局限与展望
 - cVAE 的多模态建模能力有限，更复杂的操作可能需要扩散模型
 - 依赖完整点云观测，遮挡严重时可能失效
 - 目前只支持两步预备（抓取+重定向），更长序列的预备操作未探索

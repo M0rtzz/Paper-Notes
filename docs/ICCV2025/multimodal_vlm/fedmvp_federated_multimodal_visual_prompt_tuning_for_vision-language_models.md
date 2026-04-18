@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] FedMVP: Federated Multimodal Visual Prompt Tuning for Vision-Language Models
 description: >-
@@ -130,7 +130,7 @@ tags:
 3. **视觉提示而非文本提示**：与主流方法相反，FedMVP选择在视觉编码器端注入提示，支持实例级别的动态化
 4. **LoRA自适应策略**：根据客户端数据量自动切换全参数/LoRA训练，兼顾性能和防过拟合——这是对FL异质性的精细化适配
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. 依赖GPT-4o生成属性，增加了部署环节的成本和对外部API的依赖
 2. 在细粒度数据集（OxfordPets、StanfordCars）上表现不如ZS-CLIP，属性重叠可能是根因——需要更细粒度的属性设计
 3. 仅使用ViT-B/16骨架，未验证更大模型（如ViT-L/14）的表现

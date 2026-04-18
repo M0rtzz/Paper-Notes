@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Gaia2: Benchmarking LLM Agents on Dynamic and Asynchronous Environments
 description: >-
@@ -137,7 +137,7 @@ Gaia2 构建在消费者环境（consumer environment）之上，基于开源的
 - **ICLR 2026 Oral 说明其重要性**：被选为口头报告反映了社区对真实Agent评估的迫切需求
 - **开源 ARE 平台的生态价值**：不仅是一个基准，更是一个可持续扩展的研究基础设施
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **消费者环境可能不代表所有领域**：购物、旅行等场景与科学研究、软件开发等专业领域的Agent需求不同
 2. **评估的可复现性挑战**：动态环境的随机性可能导致不同运行间结果波动

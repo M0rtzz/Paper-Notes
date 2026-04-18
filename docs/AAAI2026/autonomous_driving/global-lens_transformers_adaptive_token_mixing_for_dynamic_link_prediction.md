@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Global-Lens Transformers: Adaptive Token Mixing for Dynamic Link Prediction
 description: >-
@@ -129,7 +129,7 @@ GLFormer 的 pipeline：
 - **即插即用**：可直接替换现有方法的注意力模块（TGN/TGAT/DyGFormer 等）
 - 复杂度分析清晰，理论和实验一致
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 在 CAWN 骨干上表现不如 MLP 变体，适应性因骨干而异
 - 部分数据集上提升幅度较小（如 Wikipedia 仅 +0.00），高性能区间改进空间有限
 - 层次化聚合的超参数（基数 $s$、层数 $L$）需要针对不同数据集调优

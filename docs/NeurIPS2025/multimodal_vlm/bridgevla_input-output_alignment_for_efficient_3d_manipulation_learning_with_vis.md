@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] BridgeVLA: Input-Output Alignment for Efficient 3D Manipulation Learning with Vision-Language Models
 description: >-
@@ -109,7 +109,7 @@ $$H_i^{gt}(\mathbf{x}) = \begin{cases} \exp(-\|\mathbf{x}-\hat{\mathbf{x}_i}\|^2
 4. **不注入额外 3D 信息**反而更好——保持与预训练分布一致比加入更多信息更重要
 5. 实验非常全面：3 个仿真基准 + 真机 7 种设定 + 3 个消融实验
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **长时序任务表现差**：GemBench L4 成功率为 0%，缺乏子任务分解能力；可引入 LLM 做任务规划
 2. **遮挡问题**：Place Cups 等任务中目标关键点在所有正交视图中被遮挡，可探索动态选择投影视角
 3. **类别泛化有限**：真机 Category 设定绝对成功率不高，预训练数据与机器人数据视角差异大

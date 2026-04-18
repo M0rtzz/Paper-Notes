@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Meta-learning three-factor plasticity rules for structured credit assignment with sparse feedback
 description: >-
@@ -98,7 +98,7 @@ tags:
 - **前向模式微分的巧妙应用**：避免了通过数百个 trial 反向传播的计算负担，使元学习在长时间尺度信用分配中可行
 - **多项式参数化设计**：为资格迹提供了灵活的函数族，每个系数可独立控制赫布/反赫布方向
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 作为研讨会论文，实验验证相对有限，缺少在复杂认知任务上的系统性评估
 - 仅优化了循环层权重 $\mathbf{W}$，输入和输出权重未用可塑性规则更新

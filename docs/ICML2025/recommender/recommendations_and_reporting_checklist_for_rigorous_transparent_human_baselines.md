@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations
 description: >-
@@ -106,7 +106,7 @@ tags:
 - **实用导向**：提供了可直接使用的报告清单（附录B），降低了采纳门槛
 - 对 AI 政策和治理具有重要启示：如果人类基线不够可靠，基于此做出的关于 AI 能力的政策判断可能有偏
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 115 项研究的综述范围可能不够全面，某些领域（如机器人、自动驾驶）的人类基线可能有不同特点
 - 建议虽然全面，但在高成本场景下（如专家评估、长时间任务）的可操作性仍有挑战

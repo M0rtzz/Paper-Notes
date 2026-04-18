@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Infinity-RoPE: Action-Controllable Infinite Video Generation Emerges From Autoregressive Self-Rollout
 description: >-
@@ -114,7 +114,7 @@ VBench 评测，5秒和60秒视频生成（表格为60秒数据）：
 - **注意力图的可解释性**：通过 attention map 可视化清晰展示了 BRRoPE（对角带+sink列）、KV Flush（切断中间历史）、RoPE Cut（分裂为两个独立对角块）的不同结构
 - **零训练开销**：作为纯推理时方法，可即插即用于任何 Self-Forcing 变体
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 Self-Forcing 蒸馏的基础模型，模型本身的生成质量上限不变
 - 场景切换的语义连贯性依赖 sink 帧的全局信息，复杂场景下可能不足

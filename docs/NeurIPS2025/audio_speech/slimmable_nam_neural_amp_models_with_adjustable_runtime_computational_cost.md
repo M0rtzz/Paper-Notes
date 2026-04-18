@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Slimmable NAM: Neural Amp Models with Adjustable Runtime Computational Cost
 description: >-
@@ -102,7 +102,7 @@ Slimmable 模型在全宽度下仅比专用模型略差（~14%），但获得了
 - **完整的产品化**: 不仅是学术论文，还提供了训练代码、推理代码和带 GUI 的音频插件安装包
 - **即将成为 NAM 默认架构**: 论文提到该架构正在被考虑作为 NAM 的下一代默认模型
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **仅 2 页 Workshop 论文**: 内容非常简短，缺乏详细的消融和分析
 2. **单一架构**: 仅展示了 WaveNet 的裁剪，虽然提到可适用于其他架构但未验证

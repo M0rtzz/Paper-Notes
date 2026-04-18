@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner
 description: >-
@@ -149,7 +149,7 @@ ToM 环境要求模型综合处理多种模态信息：
 
 5. **对推理时间扩展的反思**：论文指出 CoT、o1 等推理时间扩展方法在 ToM 场景中存在根本性局限，这一发现对理解推理扩展的边界具有启发价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **计算成本高**：需要同时维护小模型（专精训练）和大模型（推理执行），405B 级别的模型推理开销巨大，限制了实际部署场景
 

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DRPruning: Efficient Large Language Model Pruning through Distributionally Robust Optimization
 description: >-
@@ -34,11 +34,11 @@ DRPruning 将分布稳健优化（DRO）引入 LLM 结构化剪枝，通过 scal
 
 **核心矛盾**：如何在剪枝后的持续预训练中自动平衡各领域性能，无需大量超参调优？
 
-**本文要解决什么？** 自动化确定 DRO 的 reference loss 和 reference data ratio
+**本文目标** 自动化确定 DRO 的 reference loss 和 reference data ratio
 
 **切入角度**：用 scaling law 预测训练结束时的 loss 作为 reference loss，用 DRO 权重的 EMA 更新 reference data ratio
 
-**核心idea一句话**：用 scaling law 自动预测各领域可达到的最优 loss，结合渐进式数据比例调整，实现剪枝后的全领域均衡恢复
+**核心 idea**：用 scaling law 自动预测各领域可达到的最优 loss，结合渐进式数据比例调整，实现剪枝后的全领域均衡恢复
 
 ## 方法详解
 
@@ -104,7 +104,7 @@ PPL 下降 -5.59%，下游任务提升 +1.52%。
 - **渐进式约束放松**：逐步将 reference ratio 向困难领域移动，兼顾了探索（尝试新分布）和利用（在已知好分布上训练）
 - **不仅用于剪枝**：reference loss 和 data ratio 优化方法可以独立于剪枝使用，适用于任何多领域 continued pretraining
 
-## 局限性 / 可改进方向
+## 局限与展望
 - **仅在 Llama2-7B 上验证**：更大模型和其他架构（Mistral、Qwen）的效果未知
 - **Scaling Law 拟合需要足够数据点**：训练前 20% 无法使用动态 reference loss，对短训练 schedule 可能不充分
 - **领域划分预定义**：需要预先将数据划分为明确的领域，对无标签数据不适用

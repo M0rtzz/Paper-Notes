@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Multimodal Disease Progression Modeling via Spatiotemporal Disentanglement and Multiscale Alignment
 description: >-
@@ -108,7 +108,7 @@ ICU 预测任务（纵向CXR+EHR设置）：
 - **中心聚焦注意力掩码**：处理 EHR-CXR 时间错位的注意力掩码设计精妙，通过 sigmoid 近似实现了软时间窗口选择
 - **可解释性**：注意力权重分析提供了决策过程的可视化解释，有助于临床可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 依赖 Chest ImaGenome 的区域注释（解剖 bbox），虽然消融显示自动 bbox 也有效，但仍是额外依赖
 - 排除了仅有单张 CXR 的住院记录，引入采样偏差

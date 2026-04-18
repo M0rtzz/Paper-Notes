@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Concept-RuleNet: Grounded Multi-Agent Neurosymbolic Reasoning in Vision Language Models
 description: >-
@@ -155,7 +155,7 @@ CRN++平均再提升1-2%。
 4. **CRN++的反事实扩展**思路新颖，通过引入"不应存在的符号"来增强决策边界
 5. **实验在真正challenging的OOD域**（医学影像、遥感、生物物种）上验证，而非常见benchmark上刷分
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **绝对准确率偏低**：BloodMNIST最高仅~21%（8类），DermaMNIST最高~48%（7类）——这些数据集的zero-shot难度确实大，但说明System-2增强仍有限
 2. **高度依赖VLM的二值问答能力**：验证阶段把复杂视觉判断简化为Yes/No，信息损失大。若VLM本身对fine-grained概念判断能力弱，则整个链路受限

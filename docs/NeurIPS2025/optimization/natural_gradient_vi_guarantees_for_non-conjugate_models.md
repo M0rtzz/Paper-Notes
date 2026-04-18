@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Natural Gradient VI: Guarantees for Non-Conjugate Models
 description: >-
@@ -165,7 +165,7 @@ $$D_\phi(\lambda^*, \lambda_t) \leq (1 - \mu\eta)^t \cdot D_\phi(\lambda^*, \lam
 3. **实用算法改进**：非欧投影不仅是理论工具，实际上也改善了 NGVI 的数值稳定性
 4. **统一视角**：将共轭和非共轭模型的 NGVI 分析统一到相对光滑/强凸的框架下
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **Mean-field 假设**：仅分析最简单的 mean-field 参数化（对角高斯），全协方差或更复杂的变分族未涉及
 2. **有界性条件可能过强**：对于神经网络似然，理论要求的有界性条件在实践中不一定满足

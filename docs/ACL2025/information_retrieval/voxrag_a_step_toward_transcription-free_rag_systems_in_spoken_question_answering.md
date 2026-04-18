@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VoxRAG: A Step Toward Transcription-Free RAG Systems in Spoken Question Answering
 description: >-
@@ -136,7 +136,7 @@ VoxRAG 是一个无训练（training-free）的模块化系统，所有组件使
 - **评估方法的创新**：使用 LLM-as-a-judge（RAGElo）的方法评估检索和答案质量，建立了语音 RAG 评估的基线方案
 - **"半转录" 矛盾的坦诚**：作者坦率承认系统在生成阶段仍依赖转录，这种学术诚实值得肯定
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **缺少文本基线对比**：未与 BM25、DPR 等传统文本检索方法对比，无法量化绕过转录的代价
 - **生成仍依赖转录**：检索是纯音频的，但答案生成需要 Whisper 转录，重新引入了 ASR 噪声

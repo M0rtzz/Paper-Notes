@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Model Counting for Dependency Quantified Boolean Formulas
 description: >-
@@ -107,7 +107,7 @@ tags:
 - **FOMC 的新下界**解释了实际中可扩展 FO 模型计数器难以构建的根本原因
 - **分量分解**思想在 DQBF 设定中的应用是自然而有效的
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前算法仅适用于 2-DQBF，推广到 3-DQBF 及一般 DQBF 是重要的下一步
 - 在小依赖集实例上性能不如展开方法，BDD 操作的开销有优化空间

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] TransBench: Breaking Barriers for Transferable Graphical User Interface Agents in Dynamic Digital Environments
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：没有数据集同时涵盖版本差异、平台差异和应用差异，导致无法评估和提升 GUI Agent 的泛化能力。
 
-**本文要解决什么**：(1) 形式化定义 GUI Agent 迁移性的三个层次；(2) 构建全面的迁移性评估 benchmark；(3) 通过微调实验验证迁移性的规律。
+**本文目标**：(1) 形式化定义 GUI Agent 迁移性的三个层次；(2) 构建全面的迁移性评估 benchmark；(3) 通过微调实验验证迁移性的规律。
 
 **切入角度**：从实际使用场景出发，收集同一 App 不同版本、不同平台的截图，并标注统一的 grounding 指令。
 
@@ -109,7 +109,7 @@ TransBench 是一个 **benchmark 数据集**，不提出新模型。核心贡献
 - **距离指标的引入**：准确率之外增加归一化距离指标，发现 UGround 归一化坐标输出比 Qwen2.5VL 绝对坐标更鲁棒——这对 GUI Agent 设计有实际参考价值
 - **"旧数据不过时"的发现**：在旧版本上微调不仅改善旧版表现，还提升新版和其他平台，历史数据的价值被低估
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅覆盖中文 App，英文/多语言 App 的迁移性未评估
 - Grounding 只评估单步点击，未涉及多步交互和滚动/拖拽等复杂操作
 - 微调实验只用 Aria-UI 一个模型，不同基座模型的迁移性规律可能不同

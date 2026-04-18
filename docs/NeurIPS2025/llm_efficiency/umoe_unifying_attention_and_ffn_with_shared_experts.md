@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] UMoE: Unifying Attention and FFN with Shared Experts
 description: >-
@@ -33,7 +33,7 @@ tags:
 
 **核心矛盾**：注意力层看似涉及多重投影和 softmax 非线性，与 FFN 的"两层矩阵乘法"结构截然不同。能否找到某种等价表述让两者统一？
 
-**本文要解决什么**：(a) 能否重构注意力使其揭示 FFN-like 的内在结构？(b) 能否用相同的专家设计同时服务于注意力和 FFN 层，实现参数共享？
+**本文目标**：(a) 能否重构注意力使其揭示 FFN-like 的内在结构？(b) 能否用相同的专家设计同时服务于注意力和 FFN 层，实现参数共享？
 
 **切入角度**：将多头注意力的 $W_o$ 按头分解后，改变矩阵乘法顺序——先做 token mixing（加权聚合），再做 $W_v W_o$ 投影。这样注意力的"投影部分"就变成了与 FFN 相同的两层结构。
 
@@ -116,7 +116,7 @@ Large 模型（1.1B dense → 3.6B MoE）：UMoE PPL 15.95 vs FFN-MoE 16.09 vs M
 - **FFN 是注意力的退化形式**：这个洞察非常有力——当 attention matrix 为单位阵时，注意力层退化为 FFN 层。消融实验也证实了注意力专家比 FFN 专家更有价值
 - **KV 缓存友好**：前混合注意力只需缓存每个 token 的一对 key + hidden state（而非多头各有一对 K/V），天然适配低缓存推理场景
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 前混合注意力不兼容 GQA（已经只有单对 K/V），但可以结合 MLA（Multi-head Latent Attention）做进一步压缩
 - token mixing 在小模型上引入约 1.17× 计算开销，虽然大模型上摊薄到 1.03×，但对资源敏感场景仍需考虑

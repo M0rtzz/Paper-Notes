@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Unpaired Image-to-Image Translation for Segmentation and Signal Unmixing
 description: >-
@@ -111,7 +111,7 @@ $$\mathcal{L} = \mathcal{L}_{\text{adv}} + \lambda_{\text{cyc}}\mathcal{L}_{\tex
 - 从参数归一化角度切入解决特征归一化导致的上下文依赖伪影，思路新颖且简洁
 - IF 信号解混应用极具实用价值——能将 mIF 实验的标记容量翻倍
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在核分割和 IF 解混两个具体任务上评估，泛化性需进一步验证
 - IF 解混的定量评估使用的 HT-T24 数据集并非完全模拟真实单荧光团复用场景

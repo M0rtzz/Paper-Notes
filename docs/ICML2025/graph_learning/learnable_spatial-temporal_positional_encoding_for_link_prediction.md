@@ -1,4 +1,4 @@
-# Learnable Spatial-Temporal Positional Encoding for Link Prediction
+﻿# Learnable Spatial-Temporal Positional Encoding for Link Prediction
 
 **会议**: ICML2025  
 **arXiv**: [2506.08309](https://arxiv.org/abs/2506.08309)  
@@ -80,7 +80,7 @@
 2. MLP 替代 Transformer 的计算效率
 3. 全面的实验覆盖（数据集/算法/设置）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 位置编码维度选择需调参
 - 超大规模图的可扩展性待验证

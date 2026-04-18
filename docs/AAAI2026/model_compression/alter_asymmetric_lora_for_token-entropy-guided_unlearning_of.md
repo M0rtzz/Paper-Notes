@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ALTER: Asymmetric LoRA for Token-Entropy-Guided Unlearning of LLMs
 description: >-
@@ -120,7 +120,7 @@ $$\min_{\omega_{f_d}, \omega_r} \beta \sum_{d=1}^{N} \mathbb{E}_{(q,a)\sim\mathc
 4. **极高的效率**：解耦遗忘过程与LLM的数十亿参数，仅需少量可训练参数即可达到SOTA效果
 5. **三基准全面验证**：在实体遗忘(TOFU)、危险知识遗忘(WMDP)、版权遗忘(MUSE)三类任务上均表现优异
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **熵阈值固定**：高/低熵的分界线（$S_q = 1.2$）似乎是手动设定的，能否自适应学习该阈值？
 2. **子领域数量N的确定**：需要预先通过聚类确定遗忘子领域数量，对未知领域分布的适应性有待探讨

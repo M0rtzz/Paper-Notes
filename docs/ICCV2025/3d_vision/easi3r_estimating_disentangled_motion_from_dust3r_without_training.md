@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Easi3R: Estimating Disentangled Motion from DUSt3R Without Training
 description: >-
@@ -123,7 +123,7 @@ Easi3R 基于两阶段推理流程：
 
 ## 亮点与洞察
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 ## 相关工作与启发
 

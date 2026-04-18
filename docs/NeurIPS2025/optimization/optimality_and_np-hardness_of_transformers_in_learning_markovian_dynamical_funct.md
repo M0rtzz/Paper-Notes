@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Optimality and NP-Hardness of Transformers in Learning Markovian Dynamical Functions
 description: >-
@@ -87,7 +87,7 @@ In-Context Learning（ICL）是 Transformer 的核心能力之一，即模型通
 - **多目标优化视角新颖**：将多层 Transformer 前向传播解释为同时优化多个目标（不仅仅是平方损失），提供了对深度必要性的理论理解
 - **i.i.d. vs 马尔可夫的对比清晰**：精确刻画了输入结构如何影响最优解的数学形式
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅分析线性自注意力，未涉及 softmax attention、MLP、位置编码等实际组件
 - 限于一阶二元马尔可夫链，高阶和大状态空间的情况未覆盖
 - 理论结果与实际 Transformer 训练之间仍有较大 gap

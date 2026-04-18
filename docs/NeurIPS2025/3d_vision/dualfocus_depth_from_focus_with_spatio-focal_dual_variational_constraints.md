@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] DualFocus: Depth from Focus with Spatio-Focal Dual Variational Constraints
 description: >-
@@ -124,7 +124,7 @@ $$\hat{D}(\mathbf{x}) = \sum_{n=1}^N p_n(\mathbf{x}) f_n$$
 3. 仅 27M 参数，远小于 SIDE 模型（336M），零样本迁移性能更好
 4. 在四个数据集上全面 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - NYU 数据集使用合成焦距堆栈，与真实焦点扫描存在 domain gap
 - 对焦堆栈需要 N 帧输入，实时应用受限

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Diffusion Models with Text-Encoder Reinforcement Learning
 description: >-
@@ -151,7 +151,7 @@ $$\mathbb{E}_{\mathbf{z} \sim q_\phi(\mathbf{z}|s)}[\log(p_\theta(\mathbf{x}_{0:
 3. **理论与实证一致**：从 ELBO 分析出发给出微调文本编码器的理论动机，实验完美验证
 4. **灵活性极高**：不需要可微奖励函数，任何可评价图像质量的指标都可作为奖励
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. RL 训练比直接反向传播更慢更昂贵（如图4所示，文本编码器的优化更具挑战性）
 2. 仅在 Stable Diffusion 系列上验证，未测试 SDXL 或更新的架构

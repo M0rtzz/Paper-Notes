@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Position: Solve Layerwise Linear Models First to Understand Neural Dynamical Phenomena
 description: >-
@@ -109,7 +109,7 @@ $$\gamma_+ = \frac{S + \sqrt{\Sigma_0^2 - \mathcal{S}_0^2 + S^2}}{\Sigma_0 + \ma
 4. **Scaling Laws 预测**：通过 sigmoid 动力学 + 幂律技能分布成功预测 2 层网络的 scaling laws
 5. **深度效应**：更深网络使 sigmoid 曲线趋近阶跃函数，加剧贪婪动力学，解释 Lottery Ticket Hypothesis
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **表达力差距**：逐层线性模型无法拟合实际数据，其动力学结论向非线性 DNN 的迁移缺乏严格保证
 2. **假设较强**：多数结论依赖小初始化、白化输入、特定守恒结构等理想化条件

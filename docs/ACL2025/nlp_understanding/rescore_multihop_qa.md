@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] ReSCORE: Label-free Iterative Retriever Training for Multi-hop Question Answering with Relevance-Consistency Supervision
 description: >-
@@ -84,7 +84,7 @@ ReSCORE 在一个迭代 RAG 框架内工作：给定问题 $q$，系统迭代地
 - ReSCORE 可以作为插件提升多种现有迭代 RAG 框架（Self-RAG、FLARE、Adaptive-Note）的性能
 - 统计显著性测试充分（10 seeds, t-test, p < 0.05）
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - **泛化性不足**：模型在特定数据集上微调，跨数据集（不同推理模式、不同 hop 数）的 OOD 泛化能力有限
 - **计算开销**：迭代检索过程增加了延迟和计算成本，每次迭代都需要 LLM 推理

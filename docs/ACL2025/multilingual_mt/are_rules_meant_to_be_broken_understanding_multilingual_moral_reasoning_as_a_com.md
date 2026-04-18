@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Are Rules Meant to be Broken? Understanding Multilingual Moral Reasoning as a Computational Pipeline with UniMoral
 description: >-
@@ -118,7 +118,7 @@ UniMoral的构建和评估流程：
 - **隐式 vs. 显式道德语境**的对比实验设计巧妙，揭示了LLM做道德推理的认知模式
 - 6种语言的选择覆盖了主要的文化圈（阿拉伯-伊斯兰、中华、英语-西方、南亚、斯拉夫、拉美），文化多样性较好
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅测试3个LLM，缺少对更多模型（尤其是开源模型如LLaMA、Mistral）的评估
 - 6种语言虽然有代表性，但仍未覆盖非洲、东南亚等文化圈

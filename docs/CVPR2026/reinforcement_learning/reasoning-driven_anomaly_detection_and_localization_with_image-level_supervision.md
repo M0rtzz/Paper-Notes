@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Reasoning-Driven Anomaly Detection and Localization with Image-Level Supervision
 description: >-
@@ -111,7 +111,7 @@ token 选择策略消融（像素级）：
 - **三维度统一**：一个模型同时完成检测、定位、可解释推理，无需外部模块
 - **一致性奖励设计精巧**：通过 Jaccard Index 的类别条件约束，将推理质量和空间聚焦对齐
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 定位精度仍有提升空间（像素级 AUPR 13.3%，远低于专用分割方法）
 - 推理 token 筛选依赖阈值超参数 $\tau_t, \tau_i$，不同产品可能需要调整

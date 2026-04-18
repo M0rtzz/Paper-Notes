@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences
 description: >-
@@ -164,7 +164,7 @@ $$I_{\text{cond}}^t=\Pi(\mathbf{B}^{0 \to t} \cup \mathbf{B}^{t-1 \to t} \cup \{
 - 完整的 EvalSuite 跨越场景级/物体级/时序级，为后续工作建立了评估标准
 - 支持插入/删除/拖拽等细粒度场景编辑，可生成安全关键角落案例
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 当前仅在 nuScenes（32 线 LiDAR）上验证，高线数 LiDAR（如 128 线）的泛化性未知
 - 场景图由 LLM 生成，复杂场景可能出现解析错误

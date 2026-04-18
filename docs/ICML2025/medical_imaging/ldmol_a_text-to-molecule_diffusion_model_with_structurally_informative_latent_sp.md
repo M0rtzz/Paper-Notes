@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] LDMol: A Text-to-Molecule Diffusion Model with Structurally Informative Latent Space Surpasses AR Models
 description: >-
@@ -112,7 +112,7 @@ LDMol 在几乎所有指标上大幅超越 AR 和 DM 基线。FCD 从 bioT5+ 的
 4. **数据高效**：仅用 32 万对训练数据，远少于 AR 基线的百万级数据，但取得更好效果。
 5. **潜在空间设计的方法论启示**：好的潜在空间不仅要可重建，更要编码语义/结构信息，这对所有潜在扩散模型都有指导价值。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **复杂生物属性的条件遵循仍有不足**：对复杂生物活性描述的生成准确率有待提升。
 2. **Validity 未达 100%**：虽然 0.941 已很高，但 bioT5+ 可达 1.0，说明解码器在处理扩散模型生成的潜在向量时仍有鲁棒性问题。

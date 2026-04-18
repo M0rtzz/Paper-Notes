@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Early Timestep Zero-Shot Candidate Selection for Instruction-Guided Image Editing
 description: >-
@@ -152,7 +152,7 @@ $t_{\text{stop}}$ 对性能的影响（IP2P，PIE-Bench）：
 - 与多种编辑模型兼容（IP2P、MagicBrush、InsDiff、MGIE、UltraEdit），且同时支持扩散和 Rectified Flow 架构
 - VIEScore 等 MLLM 评估指标与人类判断高度一致，增强了结果的可信度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - BIS 是相对比较指标，在所有候选都很差的情况下无法保证绝对质量
 - 可能存在过度优化背景保持而牺牲编辑幅度的风险，但作者指出这种情况罕见且不显著影响性能

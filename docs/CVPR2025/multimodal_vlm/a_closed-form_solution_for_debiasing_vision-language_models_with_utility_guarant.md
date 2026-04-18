@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] A Closed-Form Solution for Debiasing Vision-Language Models with Utility Guarantees Across Modalities and Tasks
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**：去偏（fairness）和效用保持（utility）是一对天然矛盾 — 去掉偏见信息不可避免地损失语义信息。之前的方法要么牺牲效用，要么需要大量调参来平衡，且无法提供性能损失的理论上界。
 
-**本文要解决什么？** 如何在零训练、零数据的条件下，同时对视觉和文本两个模态去偏，且提供可证明的效用损失上界？如何统一处理多个下游任务？
+**本文目标** 如何在零训练、零数据的条件下，同时对视觉和文本两个模态去偏，且提供可证明的效用损失上界？如何统一处理多个下游任务？
 
 **切入角度**：将去偏问题转化为跨模态单位超球面上的优化问题，通过正交分解将 embedding 拆分为"属性泄露"和"中性内容"两个分量，然后在 Pareto 前沿中找最优点。
 
-**核心idea一句话**：将 VLM 去偏建模为超球面上的 Chebyshev scalarisation 问题，推导出闭式最优解 $\alpha^\star$，实现 Pareto-optimal 的公平-效用权衡。
+**核心 idea**：将 VLM 去偏建模为超球面上的 Chebyshev scalarisation 问题，推导出闭式最优解 $\alpha^\star$，实现 Pareto-optimal 的公平-效用权衡。
 
 ## 方法详解
 
@@ -101,7 +101,7 @@ tags:
 - **LLM 辅助属性子空间构建**可迁移到其他需要定义语义子空间的任务：比如可以用 LLM 生成同义变体来构建更鲁棒的概念方向
 - **方法的模块化设计**值得学习：属性子空间构建和闭式求解两个阶段完全解耦，可以独立替换或改进各自组件
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 效用保证是在 embedding 空间（cosine similarity）层面的，不能直接保证下游 task-specific 指标（F1、Recall）；实际部署时需要额外的 task-level 评估来验证端到端性能
 - 属性子空间假设偏见可以用线性子空间建模，对非线性偏见可能不够；现实中的偏见往往是多因素交织的（如种族×性别的 intersectional bias），线性子空间难以完全捕捉
 - 只在 CLIP 系列模型上验证，未测试更新的 VLM（如 LLaVA、InternVL）；这些模型的 embedding 结构不同，闭式解是否仍然适用需要进一步研究

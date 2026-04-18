@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Retrieval is Not Enough: Enhancing RAG Reasoning through Test-Time Critique and Optimization
 description: >-
@@ -161,7 +161,7 @@ AlignRAG 在所有骨干网络和基准上均取得最佳。8B CLM 搭配 7B 生
 5. **Auto 版本实用**：动态停止消除了人工调参需求，是生产级部署的关键特性
 6. **小模型大效果**：8B CLM 超越 72B 标准 CLM，证明专门训练的价值远超规模暴力堆叠
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 需要额外训练 CLM，引入训练成本和合成数据生成开销
 - 迭代修正增加推理延迟，不适合实时低延迟场景

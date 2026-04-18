@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] GenDoP: Auto-regressive Camera Trajectory Generation as a Director of Photography
 description: >-
@@ -121,7 +121,7 @@ $$L = \mathrm{CrossEntropy}(S[1:], \hat{S}[:,-1]) + \lambda \|\mathbf{Z}\|_2^2$$
 - **三层描述设计**（运动标签→Motion Caption→Directorial Caption）：逐步从底层运动到高层意图，是一个优雅的多粒度标注方案
 - **数据集价值**：即使是同一个 Director3D 模型，在 DataDoP 上训练后 CLaTr-CLIP 从 0 跃升至 30+，说明数据集本身的贡献巨大
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 目前仅使用首帧 RGBD 作为视觉条件，未利用数据集中提取的 4D 点云信息
 - 轨迹生成与视频生成是分离的两步流程，未来可统一为端到端系统

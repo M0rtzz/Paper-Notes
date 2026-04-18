@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Flipping Knowledge Distillation: Leveraging Small Models' Expertise to Enhance LLMs in Text Matching
 description: >-
@@ -32,11 +32,11 @@ tags:
 
 **核心矛盾**：LLM 有丰富的语义理解但缺乏精细表示学习能力，SLM 有精细的领域表示但缺乏广泛的语义理解。如何结合两者优势？
 
-**本文要解决什么？** 让 LLM 从 SLM 的表示学习专长中学习，获得更好的文本匹配能力。
+**本文目标** 让 LLM 从 SLM 的表示学习专长中学习，获得更好的文本匹配能力。
 
 **切入角度**：将 LoRA 的低秩矩阵重新解释为 encoder（压缩矩阵）和 decoder（扩展矩阵），使 decoder-only LLM 具备表示学习能力。
 
-**核心idea一句话**：反向蒸馏——LLM 用 LoRA 的 encoder 部分生成文本表示，然后对齐 SLM 教师的相似度分数。
+**核心 idea**：反向蒸馏——LLM 用 LoRA 的 encoder 部分生成文本表示，然后对齐 SLM 教师的相似度分数。
 
 ## 方法详解
 
@@ -94,7 +94,7 @@ SLM 教师（微调的 BERT-like 模型）→ 计算文本对相似度分数 →
 - **LoRA 的新解读**：将 LoRA 的低秩结构重新解释为 encoder-decoder 是很巧妙的做法，赋予了 decoder-only LLM 表示学习的能力
 - **工业部署验证**：不仅是学术研究，已在线上验证，实用性高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了文本匹配任务，未扩展到其他表示学习任务（检索、聚类等）
 - LoRA encoder 的表示维度受限于 LoRA rank，可能不够表达
 - SLM 教师的质量仍然影响上界

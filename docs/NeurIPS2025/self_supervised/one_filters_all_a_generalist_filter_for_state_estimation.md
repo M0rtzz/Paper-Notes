@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] One Filters All: A Generalist Filter for State Estimation
 description: >-
@@ -100,7 +100,7 @@ MSE 损失：$\mathcal{L}(\boldsymbol{\theta}) = \|\boldsymbol{x}_t - \hat{\bold
 - **冻结 LLM 策略**：仅训练输入/输出适配层，保留 LLM 的泛化能力。这个模式可迁移到其他连续信号处理任务。
 - **Scaling Law**：LLM 规模越大滤波精度越高，预示着通用滤波基础模型的可能性。
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - SaP 的设计需要对系统有先验知识（方程形式等）
 - 高频低延迟场景下 LLM 推理速度可能不足

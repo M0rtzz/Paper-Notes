@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] EDCFlow: Exploring Temporally Dense Difference Maps for Event-based Optical Flow Estimation
 description: >-
@@ -101,7 +101,7 @@ $$\mathcal{L} = \sum_{k=1}^{K} 0.8^{K-k} \|\mathbf{f}^{gt} - \mathbf{f}^k\|_1$$
 - **即插即用**：作为细化模块可直接提升现有方法的运动边界质量，具有很好的实用价值
 - **多尺度时间采样**设计巧妙，用简单的步长变化覆盖不同运动速度
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 线性运动假设（$\mathbf{f}_{0 \to i} = \frac{i}{g}\mathbf{f}$）对非线性运动场景可能不适用
 - 特征差分对噪声敏感的问题虽然通过融合缓解，但在极端噪声场景下仍可能成为瓶颈

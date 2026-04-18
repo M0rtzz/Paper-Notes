@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Vision-Language Model Reliability with Uncertainty-Guided Dropout Decoding
 description: >-
@@ -100,7 +100,7 @@ Dropout Decoding包含两个阶段：(1) **解码前**——对所有视觉token
 - **认知不确定性的直觉解释**：高认知不确定性的视觉token = 信息丰富但可能被误解的关键patch——这一发现为理解LVLM的视觉感知提供了新视角，也解释了为什么随机dropout效果差而定向dropout效果好
 - **免训练的即插即用设计**：整个方法仅依赖LVLM自身的forward pass能力（logit lens + 文本投影），不引入外部模型，兼容任意LVLM架构
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 多次前向传播（K次dropout + 可选的初步预测）增加了推理延迟，约5-10倍计算开销，对实时交互场景不友好
 - 依赖logit lens投影的质量——如果模型的视觉-文本对齐本身做得不好，投影出的文本化分布可能不准确，导致不确定性度量失效
 - 对开放式生成任务（如创意写作、复杂推理）的适用性未验证，目前主要在描述性任务（图像描述、VQA）上测试

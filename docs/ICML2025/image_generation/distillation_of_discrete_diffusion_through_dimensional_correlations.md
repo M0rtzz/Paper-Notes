@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Distillation of Discrete Diffusion through Dimensional Correlations (Di4C)
 description: >-
@@ -112,7 +112,7 @@ $$\mathcal{L}_{\text{consis}}(\theta;\psi,r_t,s,u,t) = \mathbb{E}_{x_t \sim r_t}
 4. **与连续域一致性模型的联系**：一致性损失的设计思想类似连续域的consistency model，但作用在条件概率的复合上
 5. **每步近似误差为 $O(\epsilon^2)$**：利用前向过程的维度因子化性质，证明了product模型在小时间间隔内的良好近似性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **一致性损失的计算**：精确计算需要对高维离散空间求和，Monte Carlo近似引入方差
 2. **Mixture模型容量**：$\lambda$ 的分布和维度选择需要经验调优，理论上需要的混合数量可能很大

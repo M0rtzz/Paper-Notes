@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Tensor learning with orthogonal, Lorentz, and symplectic symmetries
 description: >-
@@ -99,7 +99,7 @@ tags:
 - 推广到 Lorentz 和辛群的路径非常清晰：只需替换度量张量和双线性形式
 - 实验规模虽小（$n=100, d=5$），但足以揭示等变性的价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 实验仅在小规模设定（$n=100, d=5$）验证，未测试更大规模
 - 输入为高阶张量或混合奇偶性时，实现效率会下降

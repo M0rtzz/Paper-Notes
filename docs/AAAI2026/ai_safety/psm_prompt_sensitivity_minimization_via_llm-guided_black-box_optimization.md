@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] PSM: Prompt Sensitivity Minimization via LLM-Guided Black-Box Optimization
 description: >-
@@ -175,7 +175,7 @@ $$\text{fitness}(S) = L(P \oplus S) + \lambda \cdot \max(0, \tau - U(P \oplus S)
 3. **利用对抗特性做防御**：后缀放置策略巧妙地反转了提示注入攻击所利用的"LLM 更关注末尾信息"特性
 4. **优化离线、推理零成本**：盾牌是静态文本后缀，一旦找到就无需额外推理计算
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **优化循环计算密集**：需要反复评估对抗和良性查询集
 2. **迁移性未保证**：防御效果依赖于优化中使用的攻击套件的广度和真实性

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Generative Adversarial Perturbations with Cross-paradigm Transferability on Localized Crowd Counting
 description: >-
@@ -103,7 +103,7 @@ tags:
 - 场景密度自适应的 logit 抑制策略（密集 vs 稀疏分支）精巧地处理了不同场景特性
 - 生成式单次前向攻击比迭代优化方法更实用，推理效率高
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 仅验证了数字域攻击，未考虑物理世界（打印、投影）场景
 - 攻击主要采用 under-counting 策略，over-counting（幻造人群）方向未探索
 - 扰动上限 $\epsilon = 8/255$ 比较标准，更小扰动下的效果待验证

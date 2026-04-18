@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] 3DGazeNet: Generalizing 3D Gaze Estimation with Weak-Supervision from Synthetic Views
 description: >-
@@ -79,7 +79,7 @@ tags:
 - **多视图一致性**利用HeadGAN合成视图的几何约束来正则化伪标签噪声，是一种优雅的弱监督方式
 - 模型架构极简（ResNet-18 + 2个FC），说明核心贡献在数据和训练框架而非模型设计
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 伪标签在俯仰轴(pitch)上较弱，可能因数据中垂直视线变化有限或伪标注pipeline本身的偏差
 - 伪标注精度依赖3D人脸对齐和2D虹膜检测的准确性，面对极端遮挡或低分辨率仍有不确定性
 - 无法处理面部不可见（背对相机）的情况

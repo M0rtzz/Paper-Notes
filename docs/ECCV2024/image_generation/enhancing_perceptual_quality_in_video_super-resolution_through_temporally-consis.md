@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Enhancing Perceptual Quality in Video Super-Resolution through Temporally-Consistent Detail Synthesis using Diffusion Models
 description: >-
@@ -164,7 +164,7 @@ end
 3. **帧级双向采样**：简洁的策略有效解决了误差累积和信息传播不平衡的问题
 4. **在像素域做运动补偿**的发现：潜在空间的空间结构不适合直接做运动补偿，这一实验发现对后续工作有重要参考价值
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. **推理速度慢**：每帧需要多次 VAE 解码和光流估计，计算开销显著
 2. **采样步数仍然较多**：推理用 T=50，进一步加速（如使用一致性模型）是重要方向

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] CLIPGaussian: Universal and Multimodal Style Transfer Based on Gaussian Splatting
 description: >-
@@ -173,7 +173,7 @@ $$L_p = \frac{1}{n}\sum_{i=1}^n L_d(p_i(R_\mathcal{G}(I_l)), I_l)$$
 - **风格插值能力**：由于 Gaussian 数量不变，可以通过线性插值参数实现平滑的风格过渡
 - **Patch-based CLIP loss 的扩展**：将 CLIPStyler 的 2D 方法优雅地扩展到 3D/4D 领域
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 2D 图像风格化质量不如大模型或扩散模型方法（如 ChatGPT-4o），这是 GS 方法的固有限制
 - 风格化效果依赖基础模型的重建质量——如果基础模型重建差，风格化可能产生不合理结果

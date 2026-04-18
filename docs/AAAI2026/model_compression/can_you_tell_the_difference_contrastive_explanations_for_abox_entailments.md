@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Can You Tell the Difference? Contrastive Explanations for ABox Entailments
 description: >-
@@ -147,7 +147,7 @@ tags:
 - **实际应用场景丰富**：概念学习中解释正负例区别、医疗领域对比患者历史
 - **冲突集设计**：允许与KB矛盾的解释同时标注矛盾来源，兼顾表达力与诚实性
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 1. 目前仅实现了一种CE变体的计算方法，其余变体（如com-max）的实现有待开发
 2. com-max在$\mathcal{EL}_\bot$下的$\subseteq$-版本复杂度仍未确定（open problem）

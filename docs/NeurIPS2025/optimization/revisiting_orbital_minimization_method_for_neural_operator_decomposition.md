@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Revisiting Orbital Minimization Method for Neural Operator Decomposition
 description: >-
@@ -110,7 +110,7 @@ $$\mathcal{L}_{\text{omm}}(V) = \text{tr}((I_d - VV^\top)^2 A) - \text{tr}(A)$$
 - OMM的"正则化等价于谱偏移"这一性质非常独特且有用
 - 揭示了多个看似不相关领域（流式PCA、算子学习、RL表示学习）之间的深层联系
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - OMM仅适用于**正半定算子**，非PSD情况需要先做谱偏移
 - 逆算子技巧在某些PDE问题上仍有数值不稳定性

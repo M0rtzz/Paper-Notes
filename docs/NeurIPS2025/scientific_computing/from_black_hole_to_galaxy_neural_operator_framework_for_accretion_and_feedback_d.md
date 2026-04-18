@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] From Black Hole to Galaxy: Neural Operator Framework for Accretion and Feedback Dynamics
 description: >-
@@ -31,11 +31,11 @@ tags:
 
 **核心矛盾**: 小尺度吸积动力学是混沌的、时变的，但现有子网格方案（如宇宙学模拟中的 FIRE、IllustrisTNG）使用固定的解析处方，无法动态响应大尺度环境变化。内边界的不忠实设定（如相对论jet无法在跨边界时开关）会向活跃模拟域注入错误信息。
 
-**本文要解决什么？**: 如何用数据驱动方法替代手工子网格闭合，同时保持长时间稳定积分和物理一致性。
+**本文目标**: 如何用数据驱动方法替代手工子网格闭合，同时保持长时间稳定积分和物理一致性。
 
 **切入角度**: 将子网格建模重新表述为算子学习问题——学习小尺度动力学以提供动态更新的边界条件。
 
-**核心idea一句话**: 用 Local Neural Operator 学习细尺度 (GR)MHD 时间演化半群 $u_t \to u_{t+\Delta T}$，嵌入多层级框架实现双向耦合。
+**核心 idea**: 用 Local Neural Operator 学习细尺度 (GR)MHD 时间演化半群 $u_t \to u_{t+\Delta T}$，嵌入多层级框架实现双向耦合。
 
 ## 方法详解
 
@@ -109,7 +109,7 @@ $$\mathcal{L} = \mathcal{L}_{\mathbf{B}} + \mathcal{L}_{\mathbf{v}} + \mathcal{L
 - **物理先验 + 数据驱动的平衡**: 径向缩放律、shell encoding、耗散正则化等物理先验是长期稳定性的关键，纯数据驱动（plain $L^2$）反而失败
 - **通用框架**: 适用于任何含中心吸积体的系统（SMBH、中子星等）
 
-## 局限性 / 可改进方向
+## 局限与展望
 - 当前仅展示两级（fine+coarse），未实现完整的多级 cyclic-zoom/multi-zone 框架
 - 缺乏定量的长期 rollout 误差度量（因计算成本无法获得 ground truth）
 - 训练数据来自单一模拟设置，泛化性（不同黑洞自旋、吸积率等）未充分验证

@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Cross Modal Fine-Grained Alignment via Granularity-Aware and Region-Uncertain Modeling
 description: >-
@@ -105,7 +105,7 @@ GRM 采用双编码器架构（ViT/Swin + BERT），包含三个核心模块：
 - **多层级对齐策略**：原始/显著性/不确定性三级对齐互补，消融证明各级均有独立贡献
 - **跨骨干架构一致提升**：在 ViT/Swin 不同分辨率下均稳定超越 SOTA
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 仅在 Flickr30K 和 MS-COCO 上评估，缺乏在 phrase grounding、referring expression 等更直接的细粒度任务上的验证
 - 高斯分布假设可能过于简单，无法捕捉复杂的多模态语义分布，可探索 normalizing flow 或更灵活的分布族

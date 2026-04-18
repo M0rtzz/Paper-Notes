@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] As Language Models Scale, Low-order Linear Depth Dynamics Emerge
 description: >-
@@ -175,7 +175,7 @@ tags:
 4. 论文非常重视 operating split 与 evaluation split 分离。这避免了用同一批 prompt 同时辨识和验证，从而使“预测有效”这个结论更可信。
 5. 这项工作提供了一个很好的中层抽象：它既不像纯 probing 那样静态，也不像端到端控制那样黑盒，而是抓住了“局部传播结构”这个可计算的中间层。
 
-## 局限性 / 可改进方向
+## 局限与展望
 1. **局部性很强**：作者自己也承认，这不是一个全局替代 Transformer 的线性模型，只在 prompt-conditioned operating trajectory 附近有效。离开这个局部邻域，近似能否保持还不清楚。
 2. **只看最后 token**：这种状态定义对 next-token readout 很自然，但对于需要全序列交互、跨 token aggregation 的机制分析可能不够。
 3. **只验证 GPT-2 家族**：缩放规律目前只在 GPT-2、GPT-2-medium、GPT-2-large 上成立，尚未验证到现代 decoder-only LLM、MoE 或多模态模型。

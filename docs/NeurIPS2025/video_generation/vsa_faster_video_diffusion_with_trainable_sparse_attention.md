@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] VSA: Faster Video Diffusion with Trainable Sparse Attention
 description: >-
@@ -117,7 +117,7 @@ Wan2.1 适配实验：
 - **Sparse-Distill 的先驱性**：首次证明稀疏注意力与蒸馏兼容，同时实现 few-step + sparse acceleration，达到 50.9× 加速
 - **彻底的消融实验设计**：90k H200 小时的系统性实验覆盖了 tile size、pooling 方式、局部先验、稀疏度等所有设计参数
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - Cube 大小固定为 (4,4,4)，要求视频潜变量各维度可被 4 整除——限制了兼容的分辨率集合
 - 最优稀疏度（Top-K 值）的确定仍是开放问题——可能需要将稀疏性作为 scaling law 的额外维度

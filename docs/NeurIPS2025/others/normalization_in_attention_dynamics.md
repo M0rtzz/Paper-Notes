@@ -1,4 +1,4 @@
----
+﻿---
 title: >-
   [论文解读] Normalization in Attention Dynamics
 description: >-
@@ -105,7 +105,7 @@ $$\dot{\theta}_j(t) = \frac{1}{s_j(t)} \mathbf{P}_{\theta_j(t)} A_j^t(\Theta(t))
 - 实验中用 Kaiming 初始化的随机权重验证了理论预测的定性一致性
 - Peri-LN 的理论优越性与其在 Gemma-3 中的实际采用形成呼应
 
-## 局限性 / 可改进方向
+## 局限与展望
 
 - 理论分析依赖 $Q=K=V=I_d$ 等强假设，未涵盖实际训练中的参数多样性
 - 省略了 FFN 层，仅分析纯注意力动力学
